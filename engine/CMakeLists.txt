@@ -25,7 +25,7 @@ file(GLOB PROJECT_HEADERS
     include/awesome/rendering/primitives/*.h	
     include/awesome/rendering/gl/*.h		
     include/awesome/rendering/shading/*.h	
-    include/awesome/windowing/*.h
+    include/awesome/windowing/*.h 
 )
 file(GLOB PROJECT_SOURCES 
     src/*.cpp

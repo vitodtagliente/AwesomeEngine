@@ -12,7 +12,7 @@ public:
 	float color[4]{ 1.0f, 0.0f,0.0f,1.0f };
 
 	void init() override {
-		//setTitle("AwesomeEngine: ColorApplication");
+
 	}
 	
 	void update(float deltaTime) override {

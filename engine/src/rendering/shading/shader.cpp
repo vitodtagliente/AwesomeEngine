@@ -1,12 +1,10 @@
-#include <dreamkeeper/shading/shader.h>
+#include <awesome/rendering/shading/shader.h>
 #include <fstream>
-#include <dreamkeeper/utility/log.h>
+#include <glad/glad.h>
 
-using namespace Dreamkeeper::Utility;
-
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Shading
+	namespace Rendering
 	{
 
 		bool Shader::load_file(std::string filename, std::string& source)
@@ -14,26 +12,26 @@ namespace Dreamkeeper
 			std::string line{};
 			source.clear();
 			std::ifstream file(filename);
-			Log::instance()->log("Shader", "loading file " + filename + "...");
+			//Log::instance()->log("Shader", "loading file " + filename + "...");
 			if (file.is_open())
 			{
 				while (std::getline(file, line)) {
-					Log::instance()->log(line);
+					//Log::instance()->log(line);
 					source += line + "\n";
 				}
 				file.close();
 				return true;
 			}
-			Log::instance()->log("Shader", "cannot find the shader source file");
+			//Log::instance()->log("Shader", "cannot find the shader source file");
 			return false;
 		}
 
-		Shader::Shader(GLenum shader_type)
+		Shader::Shader(ShaderType shader_type)
 		{
 			type = shader_type;
 		}
 
-		Shader::Shader(GLenum shader_type, std::string shader_name)
+		Shader::Shader(ShaderType shader_type, std::string shader_name)
 		{
 			type = shader_type;
 			name = shader_name;
@@ -77,6 +75,13 @@ namespace Dreamkeeper
 		{
 			glDeleteShader(id); 
 			compiled = false;
+		}
+
+		Shader* Shader::load(std::string filename, ShaderType type)
+		{
+			auto shader = new Shader(type, filename);
+			shader->compile(filename);
+			return shader;
 		}
 
 	}
