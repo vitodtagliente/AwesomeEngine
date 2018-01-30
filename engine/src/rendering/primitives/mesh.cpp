@@ -1,46 +1,12 @@
-#include <dreamkeeper/primitives/mesh.h>
+#include <awesome/rendering/primitives/mesh.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Primitives
+	namespace Rendering
 	{
-		Mesh::Mesh() {
-
-		}
-		
-		Mesh::Mesh(std::vector<glm::vec3> vertices)
+		void Mesh::init() 
 		{
-			this->vertices = vertices;
-		}
-
-
-		void Mesh::finalize()
-		{
-			std::vector<float> data{};
-			for (int i = 0; i < vertices.size(); i++) {
-				data.push_back(vertices[i].x);
-				data.push_back(vertices[i].y);
-				data.push_back(vertices[i].z);
-			}
-
-			vao.bind();
-			vbo.bind();
-			vbo.allocate(data.size() * sizeof(float), &data[0]);
-			VertexArrayAttribute position;
-			position.count = 3;
-			position.format(0, 0);
-			position.enable();
-			vao.unbind();
-		}
-		
-		void Mesh::bind()
-		{
-			vao.bind();
-		}
-
-		void Mesh::unbind()
-		{
-			vao.unbind();
+			
 		}
 	}
 }

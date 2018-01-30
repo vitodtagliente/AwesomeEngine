@@ -29,11 +29,11 @@ file(GLOB PROJECT_HEADERS
 )
 file(GLOB PROJECT_SOURCES 
     src/*.cpp
-	src/awesome/rendering/*.cpp    
-    src/awesome/rendering/primitives/*.cpp  
-    src/awesome/rendering/gl/*.cpp      
-    src/awesome/rendering/shading/*.cpp 
-    src/awesome/windowing/*.cpp
+	src/rendering/*.cpp    
+    src/rendering/primitives/*.cpp  
+    src/rendering/gl/*.cpp      
+    src/rendering/shading/*.cpp 
+    src/windowing/*.cpp
 ) 
 
 source_group("Headers" FILES ${PROJECT_HEADERS})

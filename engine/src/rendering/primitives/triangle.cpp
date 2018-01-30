@@ -1,11 +1,11 @@
-#include <dreamkeeper/primitives/triangle.h>
+#include <awesome/rendering/primitives/triangle.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Primitives
+	namespace Rendering
 	{
-		Triangle::Triangle() {
-			/* fill vertices */
+		Triangle::Triangle()
+		{
 			vertices.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
 			vertices.push_back(glm::vec3(1.0f, -1.0f, 0.0f));
 			vertices.push_back(glm::vec3(0.0f, 1.0f, 0.0f));

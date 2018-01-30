@@ -1,6 +1,6 @@
 #pragma once
 
-#include "primitives/mesh.h"
+#include "primitives.h"
 #include "renderer.h"
 
 #ifdef INSTINCT_GL

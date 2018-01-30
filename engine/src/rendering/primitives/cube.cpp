@@ -1,12 +1,9 @@
-#include <dreamkeeper/primitives/cube.h>
+#include <awesome/rendering/primitives/cube.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Primitives
+	namespace Rendering
 	{
-		Cube::Cube() {
-
-
-		}
+		
 	}
 }

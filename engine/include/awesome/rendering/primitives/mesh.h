@@ -1,18 +1,22 @@
 #pragma once
 
 #include <vector>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
-namespace Instinct
+namespace Awesome
 {
 	namespace Rendering
 	{
 		struct Mesh
 		{
-			unsigned int vao;
-			unsigned int vbo;
+			std::vector<glm::vec3> vertices;
+			std::vector<glm::vec2> uvs;
+			std::vector<glm::vec3> normals;
+			
+			std::vector<int> indices;
 
-			std::vector<float> vertices;
-			std::vector<float> uv;
+			virtual void init();
 		};
 	}
 }
