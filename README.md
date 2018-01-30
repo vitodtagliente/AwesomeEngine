@@ -1,1 +1,2 @@
-# AwesomeEngine
+# Awesome Engine
+C++ Game Engine
