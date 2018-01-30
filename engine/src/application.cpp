@@ -1,6 +1,6 @@
-#include <dreamkeeper/application.h>
+#include <awesome/application.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
 	Application::Application() {
 		singleton = this;

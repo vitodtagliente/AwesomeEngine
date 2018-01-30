@@ -1,11 +1,11 @@
 #pragma once 
 
-#include <dreamkeeper/dreamkeeper.h>
+#include <awesome/awesome.h>
 #include <iostream>
 
-using namespace Dreamkeeper;
-using namespace Dreamkeeper::Core;
-using namespace Dreamkeeper::Shading;
+using namespace Awesome;
+using namespace Awesome::Core;
+using namespace Awesome::Shading;
 
 class TriangleApplication : public Application
 {

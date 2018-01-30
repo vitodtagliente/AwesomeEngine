@@ -14,6 +14,7 @@ endif()
 
 include_directories( 
 	. 
+	include/
     ../engine/include/
     ../vendor/glad/include/
 	../vendor/glm/
@@ -22,7 +23,7 @@ include_directories(
 file(GLOB VENDORS_SOURCES 
 
 )
-file(GLOB PROJECT_HEADERS *.h) 
+file(GLOB PROJECT_HEADERS *.h include/*.h) 
 file(GLOB PROJECT_SOURCES *.cpp)
 
 source_group("Headers" FILES ${PROJECT_HEADERS})

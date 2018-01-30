@@ -2,10 +2,11 @@
 
 #include <awesome/awesome.h>
 #include <cmath>
+#include <glad/glad.h>
 
 using namespace Awesome;
 
-class RandomColorApplication : public Application
+class TestApplication : public Application
 {
 public:
 	float color[4]{ 1.0f, 0.0f,0.0f,1.0f };

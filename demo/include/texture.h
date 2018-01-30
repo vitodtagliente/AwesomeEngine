@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <dreamkeeper/dreamkeeper.h>
+#include <awesome/awesome.h>
 #include <iostream>
 
 #include <glm/vec3.hpp> 
@@ -8,9 +8,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/mat4x4.hpp>
 
-using namespace Dreamkeeper;
-using namespace Dreamkeeper::Core;
-using namespace Dreamkeeper::Shading;
+using namespace Awesome;
+using namespace Awesome::Core;
+using namespace Awesome::Shading;
 
 class TextureApplication : public Application
 {

@@ -1,7 +1,10 @@
-#include <dreamkeeper/dreamkeeper.h>
+#include <awesome/awesome.h>
 #include <iostream>
 
-namespace Dreamkeeper
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+namespace Awesome
 {
 
 	int execute_main(Application* app)

@@ -1,9 +1,9 @@
 #pragma once 
 
-#include <dreamkeeper/dreamkeeper.h>
+#include <awesome/awesome.h>
 #include <iostream>
 
-using namespace Dreamkeeper;
+using namespace Awesome;
 using namespace Core;
 using namespace Shading;
 
