@@ -56,9 +56,9 @@ namespace Awesome
 
 			glLinkProgram(id);
 			
-			int status;
-			glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-			if (!status)
+			int compile_status;
+			glGetShaderiv(id, GL_COMPILE_STATUS, &compile_status);
+			if (!compile_status)
 			{
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);

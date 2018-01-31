@@ -10,6 +10,9 @@ namespace Awesome
 	{
 		struct Mesh
 		{
+			unsigned int vao{ 0 };
+			unsigned int vbo{ 0 };
+
 			std::vector<glm::vec3> vertices;
 			std::vector<glm::vec2> uvs;
 			std::vector<glm::vec3> normals;
@@ -17,6 +20,10 @@ namespace Awesome
 			std::vector<int> indices;
 
 			virtual void init();
+			virtual void draw();
+
+			void bind();
+			void unbind();
 		};
 	}
 }

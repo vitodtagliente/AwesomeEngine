@@ -1,5 +1,5 @@
 #pragma once
 
-#include "primitives/mesh.h"
-#include "primitives/triangle.h"
-#include "primitives/cube.h"
+#include "mesh.h"
+#include "triangle.h"
+#include "cube.h"

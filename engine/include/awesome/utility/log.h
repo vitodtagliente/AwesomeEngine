@@ -15,7 +15,7 @@ namespace Awesome
 			std::string current_datetime();
 
 		public:
-			bool std_output{ false };
+			bool std_output{ true };
 			Log(std::string filename);
 			Log(std::string filename, bool enable_std_output);
 

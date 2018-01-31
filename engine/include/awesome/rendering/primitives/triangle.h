@@ -9,6 +9,9 @@ namespace Awesome
 		struct Triangle : public Mesh
 		{
 			Triangle();
+
+			void init() override;
+			void draw() override;
 		};
 	}
 }

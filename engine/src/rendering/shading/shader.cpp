@@ -41,7 +41,13 @@ namespace Awesome
 
 		bool Shader::compile(std::string filename)
 		{
-			id = glCreateShader(type);
+			if (type == ShaderType::VertexShader)
+				id = glCreateShader(GL_VERTEX_SHADER);
+			else if (type == ShaderType::FragmentShader)
+				id = glCreateShader(GL_FRAGMENT_SHADER);
+			else if(type == ShaderType::GeometryShader)
+				id = glCreateShader(GL_GEOMETRY_SHADER);
+
 			status = ShaderStatus::Error;
 
 			std::string source{};
@@ -52,9 +58,9 @@ namespace Awesome
 			glShaderSource(id, 1, &sourcePointer, NULL);
 			glCompileShader(id);
 			
-			int status;
-			glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-			if (!status)
+			int compile_status;
+			glGetShaderiv(id, GL_COMPILE_STATUS, &compile_status);
+			if (!compile_status)
 			{
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);

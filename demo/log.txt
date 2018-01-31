@@ -1,0 +1,330 @@
+[2018-01-31.23:29:16] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:29:16] #version 330 core
+[2018-01-31.23:29:16] 
+[2018-01-31.23:29:16] layout(location = 0) in vec3 in_position;
+[2018-01-31.23:29:16] 
+[2018-01-31.23:29:17] int main()
+[2018-01-31.23:29:17] {
+[2018-01-31.23:29:17] 	gl_Position.xyz = in_position;
+[2018-01-31.23:29:17] 	gl_Position.w = 1.0;
+[2018-01-31.23:29:17] }
+[2018-01-31.23:29:17] Shader: compiled!
+[2018-01-31.23:29:17] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:29:17] #version 330 core
+[2018-01-31.23:29:17] 
+[2018-01-31.23:29:17] layout(location = 0) in vec3 in_position;
+[2018-01-31.23:29:17] 
+[2018-01-31.23:29:17] int main()
+[2018-01-31.23:29:17] {
+[2018-01-31.23:29:17] 	gl_Position.xyz = in_position;
+[2018-01-31.23:29:17] 	gl_Position.w = 1.0;
+[2018-01-31.23:29:17] }
+[2018-01-31.23:29:17] Shader: compiled!
+[2018-01-31.23:29:17] ShaderProgram: ready!
+[2018-01-31.23:30:11] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:30:11] #version 330 core
+[2018-01-31.23:30:11] 
+[2018-01-31.23:30:12] layout(location = 0) in vec3 in_position;
+[2018-01-31.23:30:12] 
+[2018-01-31.23:30:12] int main()
+[2018-01-31.23:30:12] {
+[2018-01-31.23:30:12] 	gl_Position.xyz = in_position;
+[2018-01-31.23:30:12] 	gl_Position.w = 1.0;
+[2018-01-31.23:30:12] }
+[2018-01-31.23:30:12] Shader: compiled!
+[2018-01-31.23:30:12] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:30:12] #version 330 core
+[2018-01-31.23:30:12] 
+[2018-01-31.23:30:12] layout(location = 0) in vec3 in_position;
+[2018-01-31.23:30:12] 
+[2018-01-31.23:30:12] int main()
+[2018-01-31.23:30:12] {
+[2018-01-31.23:30:12] 	gl_Position.xyz = in_position;
+[2018-01-31.23:30:12] 	gl_Position.w = 1.0;
+[2018-01-31.23:30:12] }
+[2018-01-31.23:30:12] Shader: compiled!
+[2018-01-31.23:30:39] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:30:39] #version 330 core
+[2018-01-31.23:30:39] 
+[2018-01-31.23:30:39] layout(location = 0) in vec3 in_position;
+[2018-01-31.23:30:40] 
+[2018-01-31.23:30:40] int main()
+[2018-01-31.23:30:40] {
+[2018-01-31.23:30:40] 	gl_Position.xyz = in_position;
+[2018-01-31.23:30:40] 	gl_Position.w = 1.0;
+[2018-01-31.23:30:40] }
+[2018-01-31.23:30:40] Shader: compiled!
+[2018-01-31.23:30:40] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:30:40] #version 330 core
+[2018-01-31.23:30:40] 
+[2018-01-31.23:30:40] out vec3 color;
+[2018-01-31.23:30:40] 
+[2018-01-31.23:30:40] void main(){
+[2018-01-31.23:30:40] 	color = vec3(1,0,0);
+[2018-01-31.23:30:40] }
+[2018-01-31.23:30:40] Shader: compiled!
+[2018-01-31.23:31:15] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:31:15] #version 110
+[2018-01-31.23:31:15] 
+[2018-01-31.23:31:15] in vec3 in_position;
+[2018-01-31.23:31:15] 
+[2018-01-31.23:31:15] int main()
+[2018-01-31.23:31:15] {
+[2018-01-31.23:31:15] 	gl_Position.xyz = in_position;
+[2018-01-31.23:31:15] 	gl_Position.w = 1.0;
+[2018-01-31.23:31:15] }
+[2018-01-31.23:31:15] Shader: compiled!
+[2018-01-31.23:31:15] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:31:15] #version 110
+[2018-01-31.23:31:15] 
+[2018-01-31.23:31:15] out vec3 color;
+[2018-01-31.23:31:15] 
+[2018-01-31.23:31:15] void main(){
+[2018-01-31.23:31:15] 	color = vec3(1,0,0);
+[2018-01-31.23:31:15] }
+[2018-01-31.23:31:15] Shader: compiled!
+[2018-01-31.23:31:43] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:31:43] #version 110
+[2018-01-31.23:31:43] 
+[2018-01-31.23:31:43] in vec3 in_position;
+[2018-01-31.23:31:43] 
+[2018-01-31.23:31:43] int main()
+[2018-01-31.23:31:43] {
+[2018-01-31.23:31:43] 	gl_Position.xyz = in_position;
+[2018-01-31.23:31:44] 	gl_Position.w = 1.0;
+[2018-01-31.23:31:44] }
+[2018-01-31.23:31:44] Shader: compiled!
+[2018-01-31.23:34:28] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:34:28] #version 110
+[2018-01-31.23:34:28] 
+[2018-01-31.23:34:28] in vec3 in_position;
+[2018-01-31.23:34:28] 
+[2018-01-31.23:34:28] int main()
+[2018-01-31.23:34:28] {
+[2018-01-31.23:34:28] 	gl_Position.xyz = in_position;
+[2018-01-31.23:34:28] 	gl_Position.w = 1.0;
+[2018-01-31.23:34:28] }
+[2018-01-31.23:34:37] Shader: ERROR: 0:3: 'in_position' : geometry shader input varying variable must be declared as an array
+ERROR: 0:5: 'int' :  main function cannot return a value
+ERROR: 0:? : 'gl_Position' : variable is not available in current GLSL version 
+ERROR: 0:7: 'in_position' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'highp float' to '3-component vector of highp float'
+ERROR: 0:? : 'gl_Position' : variable is not available in current GLSL version 
+ERROR: 0:5: '' : function does not return a value: main
+
+
+[2018-01-31.23:34:47] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:34:47] #version 110
+[2018-01-31.23:34:47] 
+[2018-01-31.23:34:47] out vec3 color;
+[2018-01-31.23:34:47] 
+[2018-01-31.23:34:47] void main(){
+[2018-01-31.23:34:47] 	color = vec3(1,0,0);
+[2018-01-31.23:34:47] }
+[2018-01-31.23:34:47] Shader: compiled!
+[2018-01-31.23:34:48] ShaderProgram: ready!
+[2018-01-31.23:34:57] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:34:57] #version 110
+[2018-01-31.23:34:57] 
+[2018-01-31.23:34:57] in vec3 in_position;
+[2018-01-31.23:34:57] 
+[2018-01-31.23:34:57] int main()
+[2018-01-31.23:34:57] {
+[2018-01-31.23:34:57] 	gl_Position.xyz = in_position;
+[2018-01-31.23:34:57] 	gl_Position.w = 1.0;
+[2018-01-31.23:34:57] }
+[2018-01-31.23:34:57] Shader: ERROR: 0:3: 'in_position' : geometry shader input varying variable must be declared as an array
+ERROR: 0:5: 'int' :  main function cannot return a value
+ERROR: 0:? : 'gl_Position' : variable is not available in current GLSL version 
+ERROR: 0:7: 'in_position' : undeclared identifier 
+ERROR: 0:7: 'assign' :  cannot convert from 'highp float' to '3-component vector of highp float'
+ERROR: 0:? : 'gl_Position' : variable is not available in current GLSL version 
+ERROR: 0:5: '' : function does not return a value: main
+
+
+[2018-01-31.23:35:48] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:35:48] #version 110
+[2018-01-31.23:35:48] 
+[2018-01-31.23:35:48] in vec3 in_position;
+[2018-01-31.23:35:48] 
+[2018-01-31.23:35:48] int main()
+[2018-01-31.23:35:48] {
+[2018-01-31.23:35:48] 	gl_Position.xyz = in_position;
+[2018-01-31.23:35:48] 	gl_Position.w = 1.0;
+[2018-01-31.23:35:48] }
+[2018-01-31.23:36:20] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:36:20] #version 110
+[2018-01-31.23:36:20] 
+[2018-01-31.23:36:20] in vec3 in_position;
+[2018-01-31.23:36:20] 
+[2018-01-31.23:36:20] void main()
+[2018-01-31.23:36:20] {
+[2018-01-31.23:36:20] 	gl_Position.xyz = in_position;
+[2018-01-31.23:36:20] 	gl_Position.w = 1.0;
+[2018-01-31.23:36:20] }
+[2018-01-31.23:36:20] Shader: compiled!
+[2018-01-31.23:36:23] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:36:23] #version 110
+[2018-01-31.23:36:23] 
+[2018-01-31.23:36:23] out vec3 color;
+[2018-01-31.23:36:23] 
+[2018-01-31.23:36:23] void main(){
+[2018-01-31.23:36:23] 	color = vec3(1,0,0);
+[2018-01-31.23:36:23] }
+[2018-01-31.23:36:23] Shader: compiled!
+[2018-01-31.23:36:37] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:36:37] #version 110
+[2018-01-31.23:36:37] 
+[2018-01-31.23:36:37] in vec3 in_position;
+[2018-01-31.23:36:37] 
+[2018-01-31.23:36:37] void main()
+[2018-01-31.23:36:37] {
+[2018-01-31.23:36:37] 	gl_Position.xyz = in_position;
+[2018-01-31.23:36:37] 	gl_Position.w = 1.0;
+[2018-01-31.23:36:37] }
+[2018-01-31.23:36:48] Shader: compiled!
+[2018-01-31.23:36:57] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:36:57] #version 110
+[2018-01-31.23:36:57] 
+[2018-01-31.23:36:57] out vec3 color;
+[2018-01-31.23:36:57] 
+[2018-01-31.23:36:57] void main(){
+[2018-01-31.23:36:57] 	color = vec3(1,0,0);
+[2018-01-31.23:36:57] }
+[2018-01-31.23:37:01] Shader: compiled!
+[2018-01-31.23:37:09] ShaderProgram: ready!
+[2018-01-31.23:37:22] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:37:22] #version 110
+[2018-01-31.23:37:22] 
+[2018-01-31.23:37:22] in vec3 in_position;
+[2018-01-31.23:37:22] 
+[2018-01-31.23:37:22] void main()
+[2018-01-31.23:37:22] {
+[2018-01-31.23:37:22] 	gl_Position.xyz = in_position;
+[2018-01-31.23:37:22] 	gl_Position.w = 1.0;
+[2018-01-31.23:37:22] }
+[2018-01-31.23:37:59] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:37:59] #version 110
+[2018-01-31.23:37:59] 
+[2018-01-31.23:37:59] in vec3 in_position;
+[2018-01-31.23:37:59] 
+[2018-01-31.23:37:59] void main()
+[2018-01-31.23:37:59] {
+[2018-01-31.23:37:59] 	gl_Position.xyz = in_position;
+[2018-01-31.23:37:59] 	gl_Position.w = 1.0;
+[2018-01-31.23:37:59] }
+[2018-01-31.23:37:59] Shader: compiled!
+[2018-01-31.23:38:03] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:38:03] #version 110
+[2018-01-31.23:38:03] 
+[2018-01-31.23:38:03] out vec3 color;
+[2018-01-31.23:38:03] 
+[2018-01-31.23:38:03] void main(){
+[2018-01-31.23:38:03] 	color = vec3(1,0,0);
+[2018-01-31.23:38:03] }
+[2018-01-31.23:38:07] Shader: compiled!
+[2018-01-31.23:38:12] ShaderProgram: ready!
+[2018-01-31.23:38:37] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:38:37] #version 110
+[2018-01-31.23:38:37] 
+[2018-01-31.23:38:37] in vec3 in_position;
+[2018-01-31.23:38:37] 
+[2018-01-31.23:38:37] void main()
+[2018-01-31.23:38:37] {
+[2018-01-31.23:38:37] 	gl_Position.xyz = in_position;
+[2018-01-31.23:38:37] 	gl_Position.w = 1.0;
+[2018-01-31.23:38:37] }
+[2018-01-31.23:38:40] Shader: compiled!
+[2018-01-31.23:38:43] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:38:43] #version 110
+[2018-01-31.23:38:43] 
+[2018-01-31.23:38:43] out vec3 color;
+[2018-01-31.23:38:43] 
+[2018-01-31.23:38:43] void main(){
+[2018-01-31.23:38:43] 	color = vec3(1,0,0);
+[2018-01-31.23:38:43] }
+[2018-01-31.23:38:47] Shader: compiled!
+[2018-01-31.23:39:15] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:39:15] #version 110
+[2018-01-31.23:39:15] 
+[2018-01-31.23:39:15] in vec3 in_position;
+[2018-01-31.23:39:15] 
+[2018-01-31.23:39:15] void main()
+[2018-01-31.23:39:15] {
+[2018-01-31.23:39:15] 	gl_Position.xyz = in_position;
+[2018-01-31.23:39:15] 	gl_Position.w = 1.0;
+[2018-01-31.23:39:15] }
+[2018-01-31.23:39:15] Shader: compiled!
+[2018-01-31.23:39:17] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:39:17] #version 110
+[2018-01-31.23:39:17] 
+[2018-01-31.23:39:17] out vec3 color;
+[2018-01-31.23:39:17] 
+[2018-01-31.23:39:17] void main(){
+[2018-01-31.23:39:17] 	color = vec3(1,0,0);
+[2018-01-31.23:39:17] }
+[2018-01-31.23:39:17] Shader: compiled!
+[2018-01-31.23:39:30] ShaderProgram: ready!
+[2018-01-31.23:39:48] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:39:48] #version 110
+[2018-01-31.23:39:48] 
+[2018-01-31.23:39:48] in vec3 in_position;
+[2018-01-31.23:39:48] 
+[2018-01-31.23:39:48] void main()
+[2018-01-31.23:39:48] {
+[2018-01-31.23:39:48] 	gl_Position.xyz = in_position;
+[2018-01-31.23:39:48] 	gl_Position.w = 1.0;
+[2018-01-31.23:39:48] }
+[2018-01-31.23:39:48] Shader: compiled!
+[2018-01-31.23:39:48] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:39:48] #version 110
+[2018-01-31.23:39:48] 
+[2018-01-31.23:39:48] out vec3 color;
+[2018-01-31.23:39:48] 
+[2018-01-31.23:39:48] void main(){
+[2018-01-31.23:39:48] 	color = vec3(1,0,0);
+[2018-01-31.23:39:48] }
+[2018-01-31.23:39:48] Shader: compiled!
+[2018-01-31.23:39:51] ShaderProgram: ready!
+[2018-01-31.23:40:37] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:40:37] #version 110
+[2018-01-31.23:40:37] 
+[2018-01-31.23:40:37] in vec3 in_position;
+[2018-01-31.23:40:37] 
+[2018-01-31.23:40:37] void main()
+[2018-01-31.23:40:37] {
+[2018-01-31.23:40:37] 	gl_Position.xyz = in_position;
+[2018-01-31.23:40:37] 	gl_Position.w = 1.0;
+[2018-01-31.23:40:37] }
+[2018-01-31.23:40:37] Shader: compiled!
+[2018-01-31.23:40:37] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:40:37] #version 110
+[2018-01-31.23:40:37] 
+[2018-01-31.23:40:37] out vec3 color;
+[2018-01-31.23:40:37] 
+[2018-01-31.23:40:37] void main(){
+[2018-01-31.23:40:37] 	color = vec3(1,0,0);
+[2018-01-31.23:40:37] }
+[2018-01-31.23:40:37] Shader: compiled!
+[2018-01-31.23:40:37] ShaderProgram: ready!
+[2018-01-31.23:40:53] Shader: loading file resources/shaders/test.vs...
+[2018-01-31.23:40:53] #version 330 core
+[2018-01-31.23:40:53] 
+[2018-01-31.23:40:53] in vec3 in_position;
+[2018-01-31.23:40:53] 
+[2018-01-31.23:40:53] void main()
+[2018-01-31.23:40:53] {
+[2018-01-31.23:40:53] 	gl_Position.xyz = in_position;
+[2018-01-31.23:40:53] 	gl_Position.w = 1.0;
+[2018-01-31.23:40:53] }
+[2018-01-31.23:40:53] Shader: compiled!
+[2018-01-31.23:40:53] Shader: loading file resources/shaders/test.fs...
+[2018-01-31.23:40:53] #version 330 core
+[2018-01-31.23:40:53] 
+[2018-01-31.23:40:53] out vec3 color;
+[2018-01-31.23:40:53] 
+[2018-01-31.23:40:53] void main(){
+[2018-01-31.23:40:53] 	color = vec3(1,0,0);
+[2018-01-31.23:40:53] }
+[2018-01-31.23:40:53] Shader: compiled!
+[2018-01-31.23:40:53] ShaderProgram: ready!
