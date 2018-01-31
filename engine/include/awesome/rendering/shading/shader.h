@@ -16,29 +16,30 @@ namespace Awesome
 
 		enum ShaderStatus
 		{
-			Error,
-			Compiled
+			Compiled,
+			Error
 		};
 
 		class Shader
 		{
 		private:
+
 			ShaderType type{ ShaderType::VertexShader };
-			bool compiled{ false };
+			ShaderStatus status{ ShaderStatus::Error };
 
 			bool load_file(std::string filename, std::string& source);
 
 		public:
-			std::string name;
+
+			unsigned int id{ 0 };
 
 			Shader(ShaderType type);
-			Shader(ShaderType type, std::string name);
 			~Shader();
 
 			bool compile(std::string filename);
-			bool isCompiled() const { return compiled; }
 
 			ShaderType getType() const { return type; }
+			ShaderStatus getStatus() const { return status; }
 
 			static Shader* load(std::string filename, ShaderType type);
 
@@ -49,21 +50,18 @@ namespace Awesome
 		{
 		public:
 			VertexShader() : Shader(ShaderType::VertexShader) {}
-			VertexShader(std::string name) : Shader(ShaderType::VertexShader, name) {}
 		};
 
 		class FragmentShader : public Shader
 		{
 		public:
 			FragmentShader() : Shader(ShaderType::FragmentShader) {}
-			FragmentShader(std::string name) : Shader(ShaderType::FragmentShader, name) {}
 		};
 
 		class GeometryShader : public Shader
 		{
 		public:
 			GeometryShader() : Shader(ShaderType::GeometryShader) {}
-			GeometryShader(std::string name) : Shader(ShaderType::GeometryShader, name) {}
 		};
 	}
 }

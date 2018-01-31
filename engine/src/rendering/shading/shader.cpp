@@ -30,22 +30,17 @@ namespace Awesome
 		{
 			type = shader_type;
 		}
-
-		Shader::Shader(ShaderType shader_type, std::string shader_name)
-		{
-			type = shader_type;
-			name = shader_name;
-		}
-
+		
 		Shader::~Shader()
 		{
-			if (compiled)
+			if (status == Compiled)
 				free();
 		}
 
 		bool Shader::compile(std::string filename)
 		{
 			id = glCreateShader(type);
+			status = ShaderStatus::Error;
 
 			std::string source{};
 			if (load_file(filename, source) == false)
@@ -62,24 +57,24 @@ namespace Awesome
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);
 				std::string error_message{ log };
-				Log::instance()->log("Shader", error_message);
+				/*Log::instance()->log("Shader", error_message);*/
 				return false;
 			}
-			Log::instance()->log("Shader", "compiled!");
+			/*Log::instance()->log("Shader", "compiled!");*/
 
-			compiled = true;
-			return compiled;
+			status = ShaderStatus::Compiled;
+			return true;
 		}
 
 		void Shader::free()
 		{
 			glDeleteShader(id); 
-			compiled = false;
+			status = ShaderStatus::Error;
 		}
 
 		Shader* Shader::load(std::string filename, ShaderType type)
 		{
-			auto shader = new Shader(type, filename);
+			auto shader = new Shader(type);
 			shader->compile(filename);
 			return shader;
 		}
