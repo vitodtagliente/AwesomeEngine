@@ -1,12 +1,10 @@
-#include <dreamkeeper/shading/program.h>
+#include <awesome/rendering/shading/program.h>
 #include <glad/glad.h>
-#include <dreamkeeper/utility/log.h>
+#include <cassert>
 
-using namespace Dreamkeeper::Utility;
-
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Shading
+	namespace Rendering
 	{
 
 		Program::Program()
@@ -21,21 +19,21 @@ namespace Dreamkeeper
 
 		Program::~Program()
 		{
-			if (isCompiled())
+			if (status == ShaderStatus::Compiled)
 				free();
 		}
 
 		void Program::linkShader(Shader* shader)
 		{
-			if (shader->isCompiled() == false) {
+			if (shader->getStatus() == ShaderStatus::Error) {
 				return;
 			}
 
-			if (shader->isVertexShader())
+			if (shader->getType() == ShaderType::VertexShader)
 				vs = shader;
-			else if (shader->isFragmentShader())
+			else if (shader->getType() == ShaderType::FragmentShader)
 				fs = shader;
-			else if (shader->isGeometryShader())
+			else if (shader->getType() == ShaderType::GeometryShader)
 				gs = shader;
 		}
 
@@ -49,6 +47,7 @@ namespace Dreamkeeper
 		bool Program::compile()
 		{
 			id = glCreateProgram();
+			status = ShaderStatus::Error;
 
 			if (vs != nullptr) glAttachShader(id, vs->id);
 			if (fs != nullptr) glAttachShader(id, fs->id);
@@ -63,36 +62,32 @@ namespace Dreamkeeper
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);
 				std::string error_message{ log };
-				Log::instance()->log("ShaderProgram", error_message);
+				/*Log::instance()->log("ShaderProgram", error_message);*/
 
 				glDeleteProgram(id);
 				return false;
 			}
 
-			Log::instance()->log("ShaderProgram", "ready!");
+			/*Log::instance()->log("ShaderProgram", "ready!");*/
 
 			if (vs != nullptr) glDetachShader(id, vs->id);
 			if (fs != nullptr) glDetachShader(id, fs->id);
 			if (gs != nullptr) glDetachShader(id, gs->id);
 
-			compiled = true;
+			status = ShaderStatus::Compiled;
 			return true;
 		}
 		
 		void Program::use()
 		{
-			if (!compiled) {
-				if (!compile())
-					return;
-			}
-
+			assert(status == ShaderStatus::Compiled);
 			glUseProgram(id);
 		}
 
 		void Program::free(bool free_shaders_too /*= false*/)
 		{
 			glDeleteProgram(id);
-			compiled = false;
+			status = ShaderStatus::Error;
 
 			if (free_shaders_too) {
 				if (vs != nullptr) vs->free();

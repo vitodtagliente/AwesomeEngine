@@ -23,14 +23,12 @@ namespace Awesome
 		class Shader
 		{
 		private:
-
 			ShaderType type{ ShaderType::VertexShader };
 			ShaderStatus status{ ShaderStatus::Error };
 
 			bool load_file(std::string filename, std::string& source);
 
 		public:
-
 			unsigned int id{ 0 };
 
 			Shader(ShaderType type);

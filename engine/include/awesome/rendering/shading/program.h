@@ -1,22 +1,23 @@
 #pragma once
 
-#include <dreamkeeper/core/interfaces/base_element.h>
-#include <dreamkeeper/shading/shader.h>
+#include <awesome/rendering/shading/shader.h>
 #include <initializer_list>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Shading
+	namespace Rendering
 	{
-		class Program : public Core::BaseElement
+		class Program
 		{
 		private:
 			Shader* vs = nullptr;
 			Shader* fs = nullptr;
 			Shader* gs = nullptr;
-			bool compiled = false;
+			ShaderStatus status{ ShaderStatus::Error };
 
 		public:
+			unsigned int id{ 0 };
+
 			Program();
 			Program(std::initializer_list<Shader*> args);
 			~Program();
@@ -25,7 +26,7 @@ namespace Dreamkeeper
 			void linkShaders(std::initializer_list<Shader*> shaders);
 
 			bool compile();
-			bool isCompiled() const { return compiled; }
+			ShaderStatus getStatus() const { return status; }
 
 			void use();
 
