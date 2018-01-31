@@ -1,9 +1,9 @@
-#include <dreamkeeper/utility/log.h>
+#include <awesome/utility/log.h>
 #include <iostream>
 #include <fstream>
 #include <ctime>
 
-namespace Dreamkeeper
+namespace Awesome
 {
 	namespace Utility
 	{

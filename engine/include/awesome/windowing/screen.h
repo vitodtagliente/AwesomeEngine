@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Dreamkeeper
+namespace Awesome
 {
 	namespace Windowing
 	{

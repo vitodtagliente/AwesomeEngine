@@ -1,6 +1,7 @@
 #include <awesome/rendering/shading/program.h>
 #include <glad/glad.h>
 #include <cassert>
+#include <awesome/utility/log.h>
 
 namespace Awesome
 {
@@ -48,7 +49,7 @@ namespace Awesome
 		{
 			id = glCreateProgram();
 			status = ShaderStatus::Error;
-
+			
 			if (vs != nullptr) glAttachShader(id, vs->id);
 			if (fs != nullptr) glAttachShader(id, fs->id);
 			if (gs != nullptr) glAttachShader(id, gs->id);
@@ -62,13 +63,13 @@ namespace Awesome
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);
 				std::string error_message{ log };
-				/*Log::instance()->log("ShaderProgram", error_message);*/
+				Utility::Log::instance()->log("ShaderProgram", error_message);
 
 				glDeleteProgram(id);
 				return false;
 			}
 
-			/*Log::instance()->log("ShaderProgram", "ready!");*/
+			Utility::Log::instance()->log("ShaderProgram", "ready!");
 
 			if (vs != nullptr) glDetachShader(id, vs->id);
 			if (fs != nullptr) glDetachShader(id, fs->id);

@@ -1,20 +1,24 @@
-#include <dreamkeeper/shading/texture.h>
-#include <dreamkeeper/utility/log.h>
+#include <awesome/rendering/shading/texture.h>
+#include <glad/glad.h>
 #include <stb_image.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Shading
+	namespace Rendering
 	{
 
 		Texture::Texture()
 		{
-
+			internalFormat = imageFormat = GL_RGBA;
+			wrapS = wrapT = GL_REPEAT;
+			filterMin = filterMax = GL_LINEAR;
 		}
 
 		Texture::Texture(unsigned int format)
 		{
 			internalFormat = imageFormat = format;
+			wrapS = wrapT = GL_REPEAT;
+			filterMin = filterMax = GL_LINEAR;
 		}
 
 		bool Texture::load(std::string filename)
@@ -24,7 +28,7 @@ namespace Dreamkeeper
 
 			bind();
 
-			// set the texture wrapping/filtering options (on the currently bound texture object)
+			/* set the texture wrapping/filtering options (on the currently bound texture object) */
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMin);

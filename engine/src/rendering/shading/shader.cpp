@@ -1,6 +1,7 @@
 #include <awesome/rendering/shading/shader.h>
 #include <fstream>
 #include <glad/glad.h>
+#include <awesome/utility/log.h>
 
 namespace Awesome
 {
@@ -12,17 +13,18 @@ namespace Awesome
 			std::string line{};
 			source.clear();
 			std::ifstream file(filename);
-			//Log::instance()->log("Shader", "loading file " + filename + "...");
+			auto log = Utility::Log::instance();
+			log->log("Shader", "loading file " + filename + "...");
 			if (file.is_open())
 			{
 				while (std::getline(file, line)) {
-					//Log::instance()->log(line);
+					log->log(line);
 					source += line + "\n";
 				}
 				file.close();
 				return true;
 			}
-			//Log::instance()->log("Shader", "cannot find the shader source file");
+			log->log("Shader", "cannot find the shader source file");
 			return false;
 		}
 
@@ -57,10 +59,10 @@ namespace Awesome
 				char log[1024];
 				glGetShaderInfoLog(id, 1024, NULL, log);
 				std::string error_message{ log };
-				/*Log::instance()->log("Shader", error_message);*/
+				Utility::Log::instance()->log("Shader", error_message);
 				return false;
 			}
-			/*Log::instance()->log("Shader", "compiled!");*/
+			Utility::Log::instance()->log("Shader", "compiled!");
 
 			status = ShaderStatus::Compiled;
 			return true;

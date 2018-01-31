@@ -1,25 +1,33 @@
 #pragma once
 
-#include <dreamkeeper/core/interfaces/base_element.h>
-#include <glad/glad.h>
 #include <string>
 
-namespace Dreamkeeper
+namespace Awesome
 {
-	namespace Shading
+	namespace Rendering
 	{
-		class Texture : public Core::BaseElement
+		class Texture
 		{
 		private:
+			
 			int width{ 0 }, height{ 0 };
 
 		public:
-			GLuint internalFormat{ GL_RGBA }; // Format of texture object
-			GLuint imageFormat{ GL_RGBA }; // Format of loaded image
-			GLuint wrapS{ GL_REPEAT }; // Wrapping mode on S axis
-			GLuint wrapT{ GL_REPEAT }; // Wrapping mode on T axis
-			GLuint filterMin{ GL_LINEAR }; // Filtering mode if texture pixels < screen pixels
-			GLuint filterMax{ GL_LINEAR }; // Filtering mode if texture pixels > screen pixels
+
+			unsigned int id{ 0 };
+
+			/* Format of texture object */
+			unsigned int internalFormat;
+			/* Format of loaded image */
+			unsigned int imageFormat;
+			/* Wrapping mode on S axis */
+			unsigned int wrapS; 
+			/* Wrapping mode on T axis */
+			unsigned int wrapT; 
+			/* Filtering mode if texture pixels < screen pixels */
+			unsigned int filterMin; 
+			/* Filtering mode if texture pixels > screen pixels */
+			unsigned int filterMax; 
 
 			Texture();
 			Texture(unsigned int format);

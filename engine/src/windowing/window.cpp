@@ -1,6 +1,6 @@
-#include <dreamkeeper/windowing/window.h>
+#include <awesome/windowing/window.h>
 
-namespace Dreamkeeper
+namespace Awesome
 {
 	namespace Windowing
 	{		

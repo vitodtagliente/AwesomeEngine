@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Dreamkeeper
+namespace Awesome
 {
 	namespace Utility
 	{
