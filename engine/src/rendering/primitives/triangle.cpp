@@ -19,7 +19,8 @@ namespace Awesome
 			
 			glGenBuffers(1, &vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+			
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 			glVertexAttribPointer(
 				0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				3,                  // size

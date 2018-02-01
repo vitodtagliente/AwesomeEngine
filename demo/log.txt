@@ -592,3 +592,243 @@ ERROR: 0:5: '' : function does not return a value: main
 [2018-02-01.22:38:14] }
 [2018-02-01.22:38:14] Shader: compiled!
 [2018-02-01.22:38:14] ShaderProgram: ready!
+[2018-02-01.22:40:32] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:40:32] #version 330 core
+[2018-02-01.22:40:32] 
+[2018-02-01.22:40:32] in vec3 in_position;
+[2018-02-01.22:40:32] 
+[2018-02-01.22:40:32] void main()
+[2018-02-01.22:40:32] {
+[2018-02-01.22:40:32] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:40:32] }
+[2018-02-01.22:40:32] Shader: compiled!
+[2018-02-01.22:40:32] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:40:32] #version 330 core
+[2018-02-01.22:40:32] 
+[2018-02-01.22:40:32] out vec4 color;
+[2018-02-01.22:40:33] 
+[2018-02-01.22:40:33] void main(){
+[2018-02-01.22:40:33] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:40:33] }
+[2018-02-01.22:40:33] Shader: compiled!
+[2018-02-01.22:40:33] ShaderProgram: ready!
+[2018-02-01.22:42:41] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:42:41] #version 330 core
+[2018-02-01.22:42:41] 
+[2018-02-01.22:42:41] in vec3 in_position;
+[2018-02-01.22:42:41] 
+[2018-02-01.22:42:41] void main()
+[2018-02-01.22:42:41] {
+[2018-02-01.22:42:41] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:42:41] }
+[2018-02-01.22:42:41] Shader: compiled!
+[2018-02-01.22:42:41] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:42:41] #version 330 core
+[2018-02-01.22:42:41] 
+[2018-02-01.22:42:41] out vec4 color;
+[2018-02-01.22:42:41] 
+[2018-02-01.22:42:41] void main(){
+[2018-02-01.22:42:41] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:42:41] }
+[2018-02-01.22:42:41] Shader: compiled!
+[2018-02-01.22:42:41] ShaderProgram: ready!
+[2018-02-01.22:43:13] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:43:13] #version 330 core
+[2018-02-01.22:43:13] 
+[2018-02-01.22:43:13] in vec3 in_position;
+[2018-02-01.22:43:13] 
+[2018-02-01.22:43:13] void main()
+[2018-02-01.22:43:13] {
+[2018-02-01.22:43:13] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:43:13] }
+[2018-02-01.22:43:13] Shader: compiled!
+[2018-02-01.22:43:13] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:43:13] #version 330 core
+[2018-02-01.22:43:13] 
+[2018-02-01.22:43:13] out vec4 color;
+[2018-02-01.22:43:13] 
+[2018-02-01.22:43:13] void main(){
+[2018-02-01.22:43:13] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:43:13] }
+[2018-02-01.22:43:13] Shader: compiled!
+[2018-02-01.22:43:13] ShaderProgram: ready!
+[2018-02-01.22:43:39] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:43:39] #version 330 core
+[2018-02-01.22:43:39] 
+[2018-02-01.22:43:39] in vec3 in_position;
+[2018-02-01.22:43:39] 
+[2018-02-01.22:43:39] void main()
+[2018-02-01.22:43:39] {
+[2018-02-01.22:43:39] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:43:39] }
+[2018-02-01.22:43:39] Shader: compiled!
+[2018-02-01.22:43:39] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:43:39] #version 330 core
+[2018-02-01.22:43:39] 
+[2018-02-01.22:43:39] out vec4 color;
+[2018-02-01.22:43:39] 
+[2018-02-01.22:43:39] void main(){
+[2018-02-01.22:43:39] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:43:39] }
+[2018-02-01.22:43:39] Shader: compiled!
+[2018-02-01.22:43:39] ShaderProgram: ready!
+[2018-02-01.22:44:22] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:44:22] #version 330 core
+[2018-02-01.22:44:23] 
+[2018-02-01.22:44:23] in vec3 in_position;
+[2018-02-01.22:44:23] 
+[2018-02-01.22:44:23] void main()
+[2018-02-01.22:44:23] {
+[2018-02-01.22:44:23] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:44:23] }
+[2018-02-01.22:44:23] Shader: compiled!
+[2018-02-01.22:44:23] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:44:23] #version 330 core
+[2018-02-01.22:44:23] 
+[2018-02-01.22:44:23] out vec4 color;
+[2018-02-01.22:44:23] 
+[2018-02-01.22:44:23] void main(){
+[2018-02-01.22:44:23] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:44:23] }
+[2018-02-01.22:44:23] Shader: compiled!
+[2018-02-01.22:44:23] ShaderProgram: ready!
+[2018-02-01.22:44:47] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:44:47] #version 330 core
+[2018-02-01.22:44:47] 
+[2018-02-01.22:44:47] in vec3 in_position;
+[2018-02-01.22:44:47] 
+[2018-02-01.22:44:47] void main()
+[2018-02-01.22:44:47] {
+[2018-02-01.22:44:47] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:44:47] }
+[2018-02-01.22:44:47] Shader: compiled!
+[2018-02-01.22:44:47] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:44:47] #version 330 core
+[2018-02-01.22:44:47] 
+[2018-02-01.22:44:47] out vec4 color;
+[2018-02-01.22:44:47] 
+[2018-02-01.22:44:47] void main(){
+[2018-02-01.22:44:47] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:44:47] }
+[2018-02-01.22:44:47] Shader: compiled!
+[2018-02-01.22:44:47] ShaderProgram: ready!
+[2018-02-01.22:46:41] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:46:41] #version 330 core
+[2018-02-01.22:46:41] 
+[2018-02-01.22:46:41] in vec3 in_position;
+[2018-02-01.22:46:41] 
+[2018-02-01.22:46:41] void main()
+[2018-02-01.22:46:41] {
+[2018-02-01.22:46:41] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:46:41] }
+[2018-02-01.22:46:41] Shader: compiled!
+[2018-02-01.22:46:41] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:46:41] #version 330 core
+[2018-02-01.22:46:41] 
+[2018-02-01.22:46:41] out vec4 color;
+[2018-02-01.22:46:41] 
+[2018-02-01.22:46:41] void main(){
+[2018-02-01.22:46:41] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:46:41] }
+[2018-02-01.22:46:41] Shader: compiled!
+[2018-02-01.22:46:41] ShaderProgram: ready!
+[2018-02-01.22:46:54] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:46:54] #version 330 core
+[2018-02-01.22:46:54] 
+[2018-02-01.22:46:54] in vec3 in_position;
+[2018-02-01.22:46:54] 
+[2018-02-01.22:46:54] void main()
+[2018-02-01.22:46:54] {
+[2018-02-01.22:46:54] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:46:54] }
+[2018-02-01.22:46:54] Shader: compiled!
+[2018-02-01.22:46:54] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:46:54] #version 330 core
+[2018-02-01.22:46:54] 
+[2018-02-01.22:46:54] out vec4 color;
+[2018-02-01.22:46:54] 
+[2018-02-01.22:46:54] void main(){
+[2018-02-01.22:46:54] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:46:54] }
+[2018-02-01.22:46:54] Shader: compiled!
+[2018-02-01.22:46:54] ShaderProgram: ready!
+[2018-02-01.22:47:09] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:47:09] #version 330 core
+[2018-02-01.22:47:09] 
+[2018-02-01.22:47:09] in vec3 in_position;
+[2018-02-01.22:47:09] 
+[2018-02-01.22:47:09] void main()
+[2018-02-01.22:47:09] {
+[2018-02-01.22:47:09] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:47:09] }
+[2018-02-01.22:47:09] Shader: compiled!
+[2018-02-01.22:47:09] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:47:09] #version 330 core
+[2018-02-01.22:47:09] 
+[2018-02-01.22:47:09] out vec4 color;
+[2018-02-01.22:47:09] 
+[2018-02-01.22:47:09] void main(){
+[2018-02-01.22:47:09] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:47:09] }
+[2018-02-01.22:47:09] Shader: compiled!
+[2018-02-01.22:47:09] ShaderProgram: ready!
+[2018-02-01.22:47:18] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:47:18] #version 330 core
+[2018-02-01.22:47:18] 
+[2018-02-01.22:47:18] in vec3 in_position;
+[2018-02-01.22:47:18] 
+[2018-02-01.22:47:18] void main()
+[2018-02-01.22:47:18] {
+[2018-02-01.22:47:18] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:47:18] }
+[2018-02-01.22:47:18] Shader: compiled!
+[2018-02-01.22:47:18] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:47:18] #version 330 core
+[2018-02-01.22:47:18] 
+[2018-02-01.22:47:18] out vec4 color;
+[2018-02-01.22:47:18] 
+[2018-02-01.22:47:18] void main(){
+[2018-02-01.22:47:18] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:47:18] }
+[2018-02-01.22:47:18] Shader: compiled!
+[2018-02-01.22:47:18] ShaderProgram: ready!
+[2018-02-01.22:49:00] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:49:00] #version 330 core
+[2018-02-01.22:49:00] 
+[2018-02-01.22:49:00] in vec3 in_position;
+[2018-02-01.22:49:00] 
+[2018-02-01.22:49:00] void main()
+[2018-02-01.22:49:00] {
+[2018-02-01.22:49:00] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:49:00] }
+[2018-02-01.22:49:00] Shader: compiled!
+[2018-02-01.22:49:00] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:49:00] #version 330 core
+[2018-02-01.22:49:00] 
+[2018-02-01.22:49:00] out vec4 color;
+[2018-02-01.22:49:00] 
+[2018-02-01.22:49:00] void main(){
+[2018-02-01.22:49:00] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:49:00] }
+[2018-02-01.22:49:00] Shader: compiled!
+[2018-02-01.22:49:00] ShaderProgram: ready!
+[2018-02-01.22:49:15] Shader: loading file resources/shaders/test.vs...
+[2018-02-01.22:49:15] #version 330 core
+[2018-02-01.22:49:15] 
+[2018-02-01.22:49:15] in vec3 in_position;
+[2018-02-01.22:49:15] 
+[2018-02-01.22:49:15] void main()
+[2018-02-01.22:49:15] {
+[2018-02-01.22:49:15] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-01.22:49:15] }
+[2018-02-01.22:49:15] Shader: compiled!
+[2018-02-01.22:49:15] Shader: loading file resources/shaders/test.fs...
+[2018-02-01.22:49:15] #version 330 core
+[2018-02-01.22:49:15] 
+[2018-02-01.22:49:15] out vec4 color;
+[2018-02-01.22:49:15] 
+[2018-02-01.22:49:15] void main(){
+[2018-02-01.22:49:15] 	color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+[2018-02-01.22:49:15] }
+[2018-02-01.22:49:15] Shader: compiled!
+[2018-02-01.22:49:15] ShaderProgram: ready!
