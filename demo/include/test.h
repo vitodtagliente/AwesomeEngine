@@ -11,6 +11,7 @@ class TestApplication : public Application
 {
 public:
 	Triangle triangle;
+	Square square;
 	Program program;
 
 	void init() override {
@@ -21,6 +22,7 @@ public:
 		program.compile();
 
 		triangle.init();
+		square.init();
 	}
 	
 	void update(float deltaTime) override {
@@ -31,6 +33,7 @@ public:
 		/* use the program */
 		program.use();
 		/* draw the triangle */
+		square.draw();
 		triangle.draw();
 	}
 };

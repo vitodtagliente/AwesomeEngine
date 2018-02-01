@@ -12,6 +12,7 @@ namespace Awesome
 		{
 			unsigned int vao{ 0 };
 			unsigned int vbo{ 0 };
+			unsigned int ebo{ 0 };
 
 			std::vector<glm::vec3> vertices;
 			std::vector<glm::vec2> uvs;
