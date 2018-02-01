@@ -20,6 +20,8 @@ public:
 
 		program.linkShaders({ vs, fs });
 		program.compile();
+
+		triangle.init();
 	}
 	
 	void update(float deltaTime) override {
@@ -31,7 +33,7 @@ public:
 		/* use the program */
 		program.use();
 		/* clear the screen background */
-		glClearBufferfv(GL_COLOR, 0, color);
+		//glClearBufferfv(GL_COLOR, 0, color);
 		/* draw the triangle */
 		triangle.draw();
 	}
