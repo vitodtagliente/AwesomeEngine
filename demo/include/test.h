@@ -13,6 +13,7 @@ public:
 	Triangle triangle;
 	Square square;
 	Program program;
+	int colorAttributeLocation{ 0 };
 
 	void init() override {
 		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
@@ -23,6 +24,8 @@ public:
 
 		triangle.init();
 		square.init();
+
+		colorAttributeLocation = program.getUniformLocation("inColor");
 	}
 	
 	void update(float deltaTime) override {
@@ -33,7 +36,9 @@ public:
 		/* use the program */
 		program.use();
 		/* draw the triangle */
+		glUniform4f(colorAttributeLocation, 1.0f, 0.0f, 0.0f, 1.0f);
 		square.draw();
+		glUniform4f(colorAttributeLocation, 0.0f, 1.0f, 0.0f, 1.0f);
 		triangle.draw();
 	}
 };
