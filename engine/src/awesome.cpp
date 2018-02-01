@@ -33,7 +33,7 @@ namespace Awesome
 			//app->screen.getHeight(),
 			640, 
 			480,
-			"DreamkeeperEngine app", NULL, NULL
+			"AwesomeEngine app", NULL, NULL
 		);
 		if (!window) {
 			std::cout << "Cannot create glfw context" << std::endl;
