@@ -3,6 +3,7 @@
 */
 
 #include "test.h"
+#include "texture_demo.h"
 
 /* launch a demo application */
-DECLARE_MAIN(TestApplication);
+DECLARE_MAIN(TextureDemoApplication);
