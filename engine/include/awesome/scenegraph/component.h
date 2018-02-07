@@ -6,7 +6,7 @@ namespace Awesome
 	{
 		struct Component
 		{
-
+			
 		};
 	}
 }
