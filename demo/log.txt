@@ -1058,3 +1058,35 @@ ERROR: 0:5: '' : function does not return a value: main
 [2018-02-05.23:37:38] }
 [2018-02-05.23:37:38] Shader: compiled!
 [2018-02-05.23:37:38] ShaderProgram: ready!
+[2018-02-07.13:28:23] Shader: loading file resources/shaders/texture.vs...
+[2018-02-07.13:28:23] #version 330 core
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] in vec3 in_position;
+[2018-02-07.13:28:23] in vec3 in_color;
+[2018-02-07.13:28:23] in vec2 in_uv;
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] out vec3 textColor;
+[2018-02-07.13:28:23] out vec2 textCoords;
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] void main()
+[2018-02-07.13:28:23] {
+[2018-02-07.13:28:23] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-07.13:28:23] 	textColor = in_color;
+[2018-02-07.13:28:23] 	textCoords = in_uv;
+[2018-02-07.13:28:23] }
+[2018-02-07.13:28:23] Shader: compiled!
+[2018-02-07.13:28:23] Shader: loading file resources/shaders/texture.fs...
+[2018-02-07.13:28:23] #version 330 core
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] out vec4 fragColor;
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] in vec3 textColor;
+[2018-02-07.13:28:23] in vec2 textCoords;
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] uniform sampler2D image;
+[2018-02-07.13:28:23] 
+[2018-02-07.13:28:23] void main(){
+[2018-02-07.13:28:23] 	fragColor = texture(image, textCoords) * vec4(textColor, 1.0);;
+[2018-02-07.13:28:23] }
+[2018-02-07.13:28:23] Shader: compiled!
+[2018-02-07.13:28:23] ShaderProgram: ready!

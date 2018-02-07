@@ -7,6 +7,7 @@
 #include "physics/physics.h"
 #include "rendering/rendering.h"
 #include "physics/physics.h"
+#include "scenegraph/scenegraph.h"
 #include "utility/utility.h"
 #include "windowing/windowing.h"
 
