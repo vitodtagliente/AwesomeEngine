@@ -31,5 +31,15 @@ namespace Awesome
 			}
 			return nullptr;
 		}
+
+		void Object::init()
+		{
+
+		}
+
+		void Object::update(float delta_time)
+		{
+
+		}
 	}
 }

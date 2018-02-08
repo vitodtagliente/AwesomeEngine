@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "component.h"
+#include "transform.h"
 
 namespace Awesome
 {
@@ -12,6 +13,8 @@ namespace Awesome
 		{
 			std::string id{};
 
+			Transform transform;
+
 			std::vector<Component*> components;
 
 			template <class T>
@@ -19,9 +22,15 @@ namespace Awesome
 			template <class T>
 			std::vector<Component*> findComponents();
 
-			virtual void init() = 0;
-			virtual void update(float delta_time) = 0;
-			virtual void draw() = 0;
+			/*
+			template <class T>
+			Component* findComponentInChildren();
+			template <class T>
+			std::vector<Component*> findComponentsInChildren();
+			*/
+
+			virtual void init();
+			virtual void update(float delta_time);
 
 			bool operator== (const Object& other);
 		};

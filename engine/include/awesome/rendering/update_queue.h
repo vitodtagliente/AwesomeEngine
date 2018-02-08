@@ -4,7 +4,7 @@ namespace Awesome
 {
 	namespace Rendering
 	{
-		class Renderer2
+		class UpdateQueue
 		{
 
 		};

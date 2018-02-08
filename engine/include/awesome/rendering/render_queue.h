@@ -4,7 +4,7 @@ namespace Awesome
 {
 	namespace Rendering
 	{
-		class Sprite
+		class RenderQueue
 		{
 
 		};
