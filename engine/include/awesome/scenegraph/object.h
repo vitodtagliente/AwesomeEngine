@@ -2,20 +2,39 @@
 
 #include <string>
 #include <vector>
-#include "component.h"
-#include "transform.h"
+#include <initializer_list>
 
 namespace Awesome
 {
 	namespace Scenegraph
 	{
-		struct Object
+		class Component;
+
+		class Object
 		{
-			std::string id{};
+		private:
+			static unsigned int id_counter;
+
+		protected:
+			std::vector<Component*> components;
+
+		public:
+
+			struct Transform
+			{
+				Object* parent{ nullptr };
+				std::vector<Object*> children{ nullptr };
+			};
+
+			unsigned int id{0};
+			std::string name{};
+
+			Object();
+			Object(std::string object_name);
+			Object(std::initializer_list<Component*> init_components);
+			Object(std::string object_name, std::initializer_list<Component*> init_components);
 
 			Transform transform;
-
-			std::vector<Component*> components;
 
 			template <class T>
 			Component* findComponent();

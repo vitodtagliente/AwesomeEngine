@@ -6,11 +6,13 @@
 
 using namespace Awesome;
 using namespace Awesome::Rendering;
+using namespace Awesome::Scenegraph;
 
 class Test2Application : public Application
 {
 public:
 	Program program;
+	Scene scene;
 
 	void init() override {
 		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
@@ -19,6 +21,12 @@ public:
 		program.linkShaders({ vs, fs });
 		program.compile();
 
+		test();
+	}
+
+	void test()
+	{
+		auto object = new Object("ciao");
 	}
 	
 	void update(float deltaTime) override {
