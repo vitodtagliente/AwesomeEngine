@@ -6,17 +6,9 @@ namespace Awesome
 {
 	namespace Scenegraph
 	{
-		Scene* Scene::singleton = nullptr;
-
 		Scene::Scene()
 		{
-			if (singleton == nullptr)
-				singleton = this;
-		}
 
-		Scene* Scene::instance()
-		{
-			return singleton;
 		}
 
 		template <class T>

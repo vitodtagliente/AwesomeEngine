@@ -29,13 +29,13 @@ namespace Awesome
 			unsigned int id{0};
 			std::string name{};
 
+			Transform transform;
+
 			Object();
 			Object(std::string object_name);
 			Object(std::initializer_list<Component*> init_components);
 			Object(std::string object_name, std::initializer_list<Component*> init_components);
-
-			Transform transform;
-
+			
 			template <class T>
 			Component* findComponent();
 			template <class T>

@@ -12,7 +12,7 @@ class Test2Application : public Application
 {
 public:
 	Program program;
-	Scene scene;
+	Renderer* renderer{ nullptr };
 
 	void init() override {
 		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
@@ -20,6 +20,8 @@ public:
 
 		program.linkShaders({ vs, fs });
 		program.compile();
+
+		renderer = Renderer::instance();
 
 		test();
 	}

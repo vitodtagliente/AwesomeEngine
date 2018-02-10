@@ -21,7 +21,7 @@ namespace Awesome
 			unsigned int id{ 0 };
 						
 			virtual void init() = 0;
-			virtual void update(float delta_time) = 0;
+			virtual void update(float delta_time) = 0;			
 		};
 	}
 }

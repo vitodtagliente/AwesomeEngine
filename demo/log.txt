@@ -1280,3 +1280,24 @@ ERROR: 0:5: '' : function does not return a value: main
 [2018-02-09.20:42:04] }
 [2018-02-09.20:42:04] Shader: compiled!
 [2018-02-09.20:42:04] ShaderProgram: ready!
+[2018-02-10.21:06:10] Shader: loading file resources/shaders/test.vs...
+[2018-02-10.21:06:10] #version 330 core
+[2018-02-10.21:06:10] 
+[2018-02-10.21:06:10] in vec3 in_position;
+[2018-02-10.21:06:10] 
+[2018-02-10.21:06:10] void main()
+[2018-02-10.21:06:10] {
+[2018-02-10.21:06:10] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-10.21:06:10] }
+[2018-02-10.21:06:10] Shader: compiled!
+[2018-02-10.21:06:10] Shader: loading file resources/shaders/test.fs...
+[2018-02-10.21:06:10] #version 330 core
+[2018-02-10.21:06:10] 
+[2018-02-10.21:06:10] out vec4 fragColor;
+[2018-02-10.21:06:10] uniform vec4 inColor;
+[2018-02-10.21:06:10] 
+[2018-02-10.21:06:10] void main(){
+[2018-02-10.21:06:10] 	fragColor = inColor;
+[2018-02-10.21:06:10] }
+[2018-02-10.21:06:10] Shader: compiled!
+[2018-02-10.21:06:10] ShaderProgram: ready!

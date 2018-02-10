@@ -1,28 +1,29 @@
 #pragma once
 
-#include "render_queue.h"
-#include "update_queue.h"
-#include "../scenegraph/scenegraph.h"
+#include "../scenegraph/scene.h"
 
 namespace Awesome
 {
-	using namespace Scenegraph;
-
 	namespace Rendering
 	{
 		class Renderer
 		{
-		protected:
-			UpdateQueue updateQueue;
-			RenderQueue renderQueue;
+		private:
+			static Renderer* singleton;
 
-			Scene scene;
+			Renderer();
+
+		protected:
+			Scenegraph::Scene* scene{ nullptr };
 
 		public:
+			static Renderer* instance();
 
-			virtual void init();
-			virtual void update(float delta_time);
-			virtual void render();
+			void loadScene(Scenegraph::Scene* new_scene);
+
+			void init();
+			void update(float delta_time);
+			void render();
 		};
 	}
 }
