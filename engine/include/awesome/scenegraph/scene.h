@@ -1,6 +1,8 @@
 #pragma once 
 
+#include <string>
 #include <vector>
+
 #include "object.h"
 
 namespace Awesome
@@ -13,6 +15,10 @@ namespace Awesome
 			std::vector<Object*> objects;
 
 		public:			
+			std::string name{};
+
+			Scene(std::string scene_name);
+
 			template <class T>
 			T* spawn(std::string name)
 			{

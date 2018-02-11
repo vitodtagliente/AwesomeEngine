@@ -24,13 +24,13 @@ public:
 		program.compile();
 
 		renderer = Renderer::instance();
-		renderer->scene = new Scene();
+		renderer->scene = new Scene("triangle_scene");
 		scene = renderer->scene;
 
 		/* fill scene objects */
 		auto triangle_object = scene->spawn<Object>("triangle");
 		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
-		triangle_component->mesh = new Triangle();
+		triangle_component->mesh = Primitive::generate<Triangle>();
 		
 		/* init renderer */
 		renderer->init();
