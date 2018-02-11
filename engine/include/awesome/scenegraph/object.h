@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 
+#include "component.h"
+
 namespace Awesome
 {
 	namespace Scenegraph
 	{
-		class Component;
-
 		class Object
 		{
 		private:

@@ -12,10 +12,9 @@ namespace Awesome
 			id = ++id_counter;
 		}
 
-		Component::Component(Object* component_owner)
+		bool Component::operator== (const Component& other)
 		{
-			id = ++id_counter;
-			owner = component_owner;
+			return id == other.id;
 		}
 	}
 }

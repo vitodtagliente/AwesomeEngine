@@ -31,7 +31,7 @@ public:
 		auto triangle_object = scene->spawn<Object>("triangle");
 		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
 		triangle_component->mesh = new Triangle();
-
+		
 		/* init renderer */
 		renderer->init();
 	}

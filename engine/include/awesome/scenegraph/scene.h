@@ -21,7 +21,7 @@ namespace Awesome
 				if (new_object != nullptr)
 				{
 					new_object->name = name;
-					objects.push_back(new_object);
+					addObject(new_object);
 				}
 				return new_object;
 			}
@@ -34,10 +34,39 @@ namespace Awesome
 				if (new_object != nullptr)
 				{
 					new_object->name = name;
-					parent->transform.children.push_back(new_object);
-					new_object->parent = parent;
+					addObject(new_object, parent);
 				}
 				return new_object;
+			}
+
+			void addObject(Object* new_object);
+			void addObject(Object* new_object, Object* parent);
+
+			template <class T>
+			T* findObject()
+			{
+				for (auto it = objects.begin(); it != objects.end(); ++it)
+				{
+					T* current_object = dynamic_cast<T*>(*it);
+					if (current_object != nullptr)
+						return current_object;
+				}
+			}
+
+			template <class T>
+			std::vector<T*> findObjects()
+			{
+				std::vector<T*> found_objects;
+				for (auto it = objects.begin(); it != objects.end(); ++it)
+				{
+					T* current_object = dynamic_cast<T*>(*it);
+					if (current_object != nullptr)
+					{
+						found_objects.push_back(current_object);
+						// TODO
+					}
+				}
+				return found_objects;
 			}
 		};
 	}
