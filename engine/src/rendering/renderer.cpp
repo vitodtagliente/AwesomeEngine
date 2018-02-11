@@ -20,12 +20,6 @@ namespace Awesome
 
 		}
 		
-		void Renderer::loadScene(Scene* new_scene)
-		{
-			//if(scene != nullptr && scene != new_scene)
-			scene = new_scene;
-		}
-
 		void Renderer::init()
 		{
 

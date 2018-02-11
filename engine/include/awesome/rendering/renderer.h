@@ -12,14 +12,11 @@ namespace Awesome
 			static Renderer* singleton;
 
 			Renderer();
-
-		protected:
-			Scenegraph::Scene* scene{ nullptr };
-
+			
 		public:
 			static Renderer* instance();
 
-			void loadScene(Scenegraph::Scene* new_scene);
+			Scenegraph::Scene* scene{ nullptr };
 
 			void init();
 			void update(float delta_time);

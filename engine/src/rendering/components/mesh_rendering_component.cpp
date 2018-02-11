@@ -16,5 +16,11 @@ namespace Awesome
 		{
 
 		}
+
+		void MeshRenderingComponent::render()
+		{
+			if (mesh != nullptr)
+				mesh->draw();
+		}
 	}
 }

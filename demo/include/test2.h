@@ -13,8 +13,10 @@ class Test2Application : public Application
 public:
 	Program program;
 	Renderer* renderer{ nullptr };
+	Scene* scene{ nullptr };
 
-	void init() override {
+	void init() override 
+	{
 		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/test.fs", ShaderType::FragmentShader);
 
@@ -22,23 +24,28 @@ public:
 		program.compile();
 
 		renderer = Renderer::instance();
+		renderer->scene = new Scene();
+		scene = renderer->scene;
 
-		test();
-	}
+		/* fill scene objects */
+		auto triangle_object = scene->spawn<Object>("triangle");
+		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>(new MeshRenderingComponent());
+		triangle_component->mesh = new Triangle();
 
-	void test()
-	{
-		auto object = new Object("ciao");
+		/* init renderer */
+		renderer->init();
 	}
 	
-	void update(float deltaTime) override {
-
+	void update(float delta_time) override 
+	{
+		renderer->update(delta_time);
 	}
 
-	void render() override {
+	void render() override 
+	{
 		/* use the program */
 		program.use();
 
-
+		renderer->render();
 	}
 };

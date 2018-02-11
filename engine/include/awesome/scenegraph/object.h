@@ -1,8 +1,9 @@
 #pragma once
 
+#include <cassert>
+#include <initializer_list>
 #include <string>
 #include <vector>
-#include <initializer_list>
 
 namespace Awesome
 {
@@ -37,9 +38,35 @@ namespace Awesome
 			Object(std::string object_name, std::initializer_list<Component*> init_components);
 			
 			template <class T>
-			Component* findComponent();
+			T* addComponent(T* new_component)
+			{
+				assert(dynamic_cast<const Component*>(new_component) != nullptr);
+				components.push_back(new_component);
+				return new_component;
+			}
+						
 			template <class T>
-			std::vector<Component*> findComponents();
+			Component* findComponent()
+			{
+				for (auto it = myvector.begin(); it != components.end(); ++it)
+				{
+					if (dynamic_cast<const Component*>(*it) != nullptr)
+						return *it;
+				}
+				return nullptr;
+			}
+
+			template <class T>
+			std::vector<Component*> findComponents()
+			{
+				std::vector<Component*> found_components;
+				for (auto it = myvector.begin(); it != components.end(); ++it)
+				{
+					if (dynamic_cast<const Component*>(*it) != nullptr)
+						found_components.push_back(*it);
+				}
+				return found_components;
+			}
 
 			/*
 			template <class T>

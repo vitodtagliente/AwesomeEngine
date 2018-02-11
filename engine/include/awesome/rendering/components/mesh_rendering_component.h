@@ -15,6 +15,7 @@ namespace Awesome
 
 			void init() override;
 			void update(float delta_time) override;
+			virtual void render();
 		};
 	}
 }
