@@ -29,7 +29,7 @@ public:
 
 		/* fill scene objects */
 		auto triangle_object = scene->spawn<Object>("triangle");
-		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>(new MeshRenderingComponent());
+		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
 		triangle_component->mesh = new Triangle();
 
 		/* init renderer */
@@ -45,7 +45,9 @@ public:
 	{
 		/* use the program */
 		program.use();
-
+		/* set the color */
+		glUniform4f(program.getUniformLocation("inColor"), 1.0f, 0.0f, 0.0f, 1.0f);
+		/* draw objects */
 		renderer->render();
 	}
 };

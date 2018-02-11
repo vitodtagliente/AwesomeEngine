@@ -38,12 +38,16 @@ namespace Awesome
 			Object(std::string object_name, std::initializer_list<Component*> init_components);
 			
 			template <class T>
-			T* addComponent(T* new_component)
+			T* addComponent()
 			{
-				assert(dynamic_cast<const Component*>(new_component) != nullptr);
-				components.push_back(new_component);
-				return new_component;
+				T* t_component = new T{};
+				Component* new_component = dynamic_cast<Component*>(t_component);
+				if (new_component != nullptr)
+					components.push_back(t_component);
+				return t_component;
 			}
+
+			Component* addComponent(Component* new_component);
 						
 			template <class T>
 			T* findComponent()

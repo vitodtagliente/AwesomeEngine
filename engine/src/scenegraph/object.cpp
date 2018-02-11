@@ -35,6 +35,14 @@ namespace Awesome
 			}
 		}
 
+		Component* Object::addComponent(Component* new_component)
+		{
+			if (new_component != nullptr)
+				components.push_back(new_component);
+			return new_component;
+		}
+
+
 		bool Object::operator==(const Object& other)
 		{
 			return id == other.id;
@@ -42,12 +50,14 @@ namespace Awesome
 
 		void Object::init()
 		{
-
+			for (auto component : components)
+				component->init();
 		}
 
 		void Object::update(float delta_time)
 		{
-
+			for (auto component : components)
+				component->update(delta_time);
 		}
 	}
 }
