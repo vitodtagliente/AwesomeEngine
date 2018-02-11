@@ -46,24 +46,26 @@ namespace Awesome
 			}
 						
 			template <class T>
-			Component* findComponent()
+			T* findComponent()
 			{
-				for (auto it = myvector.begin(); it != components.end(); ++it)
+				for (auto it = components.begin(); it != components.end(); ++it)
 				{
-					if (dynamic_cast<const Component*>(*it) != nullptr)
-						return *it;
+					T* current_component = dynamic_cast<T*>(*it);
+					if (current_component != nullptr)
+						return current_component;
 				}
 				return nullptr;
 			}
 
 			template <class T>
-			std::vector<Component*> findComponents()
+			std::vector<T*> findComponents()
 			{
-				std::vector<Component*> found_components;
-				for (auto it = myvector.begin(); it != components.end(); ++it)
+				std::vector<T*> found_components;
+				for (auto it = components.begin(); it != components.end(); ++it)
 				{
-					if (dynamic_cast<const Component*>(*it) != nullptr)
-						found_components.push_back(*it);
+					T* current_component = dynamic_cast<T*>(*it);
+					if (current_component != nullptr)
+						found_components.push_back(current_component);
 				}
 				return found_components;
 			}

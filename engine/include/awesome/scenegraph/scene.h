@@ -9,7 +9,7 @@ namespace Awesome
 	{
 		class Scene
 		{
-		protected:
+		public:
 			std::vector<Object*> objects;
 
 		public:			
