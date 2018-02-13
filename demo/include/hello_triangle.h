@@ -14,28 +14,24 @@ public:
 	Program program;
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
-	Texture texture;
 
 	void init() override 
 	{
-		auto vs = Shader::load("resources/shaders/texture.vs", ShaderType::VertexShader);
-		auto fs = Shader::load("resources/shaders/texture.fs", ShaderType::FragmentShader);
+		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
+		auto fs = Shader::load("resources/shaders/test.fs", ShaderType::FragmentShader);
 
 		program.linkShaders({ vs, fs });
 		program.compile();
 
 		renderer = Renderer::instance();
-		renderer->scene = new Scene("sprite_scene");
+		renderer->scene = new Scene("triangle_scene");
 		scene = renderer->scene;
 
-		if (!texture.load("resources/textures/wall.jpg"))
-			exit(-1);
-
 		/* fill scene objects */
-		auto sprite = scene->spawn<Object>("sprite");
-		auto sprite_component = sprite->addComponent<SpriteRenderingComponent>();
-		sprite_component->texture = &texture;
-
+		auto triangle_object = scene->spawn<Object>("triangle");
+		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
+		triangle_component->mesh = Primitive::generate<Triangle>();
+		
 		/* init renderer */
 		renderer->init();
 	}
@@ -49,6 +45,8 @@ public:
 	{
 		/* use the program */
 		program.use();
+		/* set the color */
+		glUniform4f(program.getUniformLocation("inColor"), 1.0f, 0.0f, 0.0f, 1.0f);
 		/* draw objects */
 		renderer->render();
 	}

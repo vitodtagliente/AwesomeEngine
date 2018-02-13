@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rendering_component.h"
+#include "mesh_rendering_component.h"
 
 namespace Awesome
 {
@@ -8,7 +8,7 @@ namespace Awesome
 	{
 		class Texture;
 
-		class SpriteRenderingComponent : public RenderingComponent
+		class SpriteRenderingComponent : public MeshRenderingComponent
 		{
 		public:
 			Texture* texture{ nullptr };
