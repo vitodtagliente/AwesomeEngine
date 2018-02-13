@@ -3,15 +3,15 @@
 #include "rendering_component.h"
 
 namespace Awesome
-{	
+{
 	namespace Rendering
 	{
-		class Mesh;
+		class Texture;
 
-		class MeshRenderingComponent : public RenderingComponent
+		class SpriteRenderingComponent : public RenderingComponent
 		{
 		public:
-			Mesh* mesh{ nullptr };
+			Texture* texture{ nullptr };
 
 			void init() override;
 			void update(float delta_time) override;

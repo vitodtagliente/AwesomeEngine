@@ -1,5 +1,4 @@
 #include <awesome/rendering/components/mesh_rendering_component.h>
-#include <awesome/scenegraph/component.h>
 #include <awesome/rendering/primitives/mesh.h>
 
 namespace Awesome

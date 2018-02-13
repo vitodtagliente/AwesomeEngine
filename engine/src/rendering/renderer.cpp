@@ -1,7 +1,7 @@
 #include <awesome/rendering/renderer.h>
 #include <awesome/scenegraph/scene.h>
 #include <awesome/scenegraph/object.h>
-#include <awesome/rendering/components/mesh_rendering_component.h>
+#include <awesome/rendering/components/rendering_component.h>
 
 namespace Awesome
 {
@@ -42,7 +42,7 @@ namespace Awesome
 		{
 			for (auto object : scene->objects)
 			{
-				auto rendering_component = object->findComponent<MeshRenderingComponent>();
+				auto rendering_component = object->findComponent<RenderingComponent>();
 				if (rendering_component != nullptr)
 					rendering_component->render();
 			}
