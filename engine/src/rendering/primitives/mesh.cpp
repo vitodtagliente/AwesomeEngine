@@ -9,12 +9,7 @@ namespace Awesome
 		{
 			
 		}
-
-		void Mesh::draw()
-		{
-
-		}
-
+		
 		void Mesh::bind() 
 		{
 			glBindVertexArray(vao);

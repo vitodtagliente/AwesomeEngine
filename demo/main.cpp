@@ -5,6 +5,7 @@
 #include "test.h"
 #include "test2.h"
 #include "texture_demo.h"
+#include "hello_triangle.h"
 
 /* launch a demo application */
-DECLARE_MAIN(Test2Application);
+DECLARE_MAIN(HelloTriangleApplication);

@@ -11,7 +11,6 @@ namespace Awesome
 			Square();
 
 			void init() override;
-			void draw() override;
 		};
 	}
 }

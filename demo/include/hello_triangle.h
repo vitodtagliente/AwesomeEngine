@@ -8,7 +8,7 @@ using namespace Awesome;
 using namespace Awesome::Rendering;
 using namespace Awesome::Scenegraph;
 
-class Test2Application : public Application
+class HelloTriangleApplication : public Application
 {
 public:
 	Program program;
@@ -17,8 +17,8 @@ public:
 
 	void init() override 
 	{
-		auto vs = Shader::load("resources/shaders/test.vs", ShaderType::VertexShader);
-		auto fs = Shader::load("resources/shaders/test.fs", ShaderType::FragmentShader);
+		auto vs = Shader::load("resources/shaders/hello_triangle.vs", ShaderType::VertexShader);
+		auto fs = Shader::load("resources/shaders/hello_triangle.fs", ShaderType::FragmentShader);
 
 		program.linkShaders({ vs, fs });
 		program.compile();

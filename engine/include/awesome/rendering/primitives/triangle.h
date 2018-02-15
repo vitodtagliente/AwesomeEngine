@@ -11,7 +11,6 @@ namespace Awesome
 			Triangle();
 
 			void init() override;
-			void draw() override;
 		};
 	}
 }

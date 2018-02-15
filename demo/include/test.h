@@ -35,10 +35,5 @@ public:
 	void render() override {
 		/* use the program */
 		program.use();
-		/* draw the triangle */
-		glUniform4f(colorAttributeLocation, 1.0f, 0.0f, 0.0f, 1.0f);
-		square.draw();
-		glUniform4f(colorAttributeLocation, 0.0f, 1.0f, 0.0f, 1.0f);
-		triangle.draw();
 	}
 };

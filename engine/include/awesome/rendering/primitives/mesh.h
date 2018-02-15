@@ -21,7 +21,6 @@ namespace Awesome
 			std::vector<int> indices;
 
 			virtual void init();
-			virtual void draw();
 
 			void bind();
 			void unbind();
