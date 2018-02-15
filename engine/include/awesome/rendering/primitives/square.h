@@ -9,8 +9,6 @@ namespace Awesome
 		struct Square : public Mesh
 		{
 			Square();
-
-			void init() override;
 		};
 	}
 }

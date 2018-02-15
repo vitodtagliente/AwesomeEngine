@@ -2651,3 +2651,542 @@ ERROR: 0:7: 'assign' :  cannot convert from 'const highp float' to 'FragUserData
 [2018-02-15.13:51:54] }
 [2018-02-15.13:51:54] Shader: compiled!
 [2018-02-15.13:51:54] ShaderProgram: ready!
+[2018-02-15.22:26:06] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:26:06] #version 330 core
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] in vec3 in_position;
+[2018-02-15.22:26:06] in vec2 aTexCoord;
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] out vec2 TexCoord;
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] void main()
+[2018-02-15.22:26:06] {
+[2018-02-15.22:26:06] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:26:06] 	TexCoord = aTexCoord;
+[2018-02-15.22:26:06] }
+[2018-02-15.22:26:06] Shader: compiled!
+[2018-02-15.22:26:06] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:26:06] #version 330 core
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] out vec4 fragColor;
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] in vec2 TexCoord;
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] uniform sampler2D ourTexture;
+[2018-02-15.22:26:06] 
+[2018-02-15.22:26:06] void main(){
+[2018-02-15.22:26:06] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:26:06] }
+[2018-02-15.22:26:06] Shader: compiled!
+[2018-02-15.22:26:06] ShaderProgram: ready!
+[2018-02-15.22:32:08] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:32:08] #version 330 core
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] in vec3 in_position;
+[2018-02-15.22:32:08] in vec2 aTexCoord;
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] out vec2 TexCoord;
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] void main()
+[2018-02-15.22:32:08] {
+[2018-02-15.22:32:08] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:32:08] 	TexCoord = aTexCoord;
+[2018-02-15.22:32:08] }
+[2018-02-15.22:32:08] Shader: compiled!
+[2018-02-15.22:32:08] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:32:08] #version 330 core
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] out vec4 fragColor;
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] in vec2 TexCoord;
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] uniform sampler2D ourTexture;
+[2018-02-15.22:32:08] 
+[2018-02-15.22:32:08] void main(){
+[2018-02-15.22:32:08] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:32:08] }
+[2018-02-15.22:32:08] Shader: compiled!
+[2018-02-15.22:32:08] ShaderProgram: ready!
+[2018-02-15.22:32:20] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:32:20] #version 330 core
+[2018-02-15.22:32:20] 
+[2018-02-15.22:32:20] in vec3 in_position;
+[2018-02-15.22:32:20] in vec2 aTexCoord;
+[2018-02-15.22:32:20] 
+[2018-02-15.22:32:20] out vec2 TexCoord;
+[2018-02-15.22:32:20] 
+[2018-02-15.22:32:20] void main()
+[2018-02-15.22:32:20] {
+[2018-02-15.22:32:20] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:32:20] 	TexCoord = aTexCoord;
+[2018-02-15.22:32:20] }
+[2018-02-15.22:32:20] Shader: compiled!
+[2018-02-15.22:32:20] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:32:21] #version 330 core
+[2018-02-15.22:32:21] 
+[2018-02-15.22:32:21] out vec4 fragColor;
+[2018-02-15.22:32:21] 
+[2018-02-15.22:32:21] in vec2 TexCoord;
+[2018-02-15.22:32:21] 
+[2018-02-15.22:32:21] uniform sampler2D ourTexture;
+[2018-02-15.22:32:21] 
+[2018-02-15.22:32:21] void main(){
+[2018-02-15.22:32:21] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:32:21] }
+[2018-02-15.22:32:21] Shader: compiled!
+[2018-02-15.22:32:21] ShaderProgram: ready!
+[2018-02-15.22:34:04] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:34:04] #version 330 core
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] in vec3 in_position;
+[2018-02-15.22:34:04] in vec2 aTexCoord;
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] out vec2 TexCoord;
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] void main()
+[2018-02-15.22:34:04] {
+[2018-02-15.22:34:04] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:34:04] 	TexCoord = aTexCoord;
+[2018-02-15.22:34:04] }
+[2018-02-15.22:34:04] Shader: compiled!
+[2018-02-15.22:34:04] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:34:04] #version 330 core
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] out vec4 fragColor;
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] in vec2 TexCoord;
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] uniform sampler2D ourTexture;
+[2018-02-15.22:34:04] 
+[2018-02-15.22:34:04] void main(){
+[2018-02-15.22:34:04] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:34:04] }
+[2018-02-15.22:34:04] Shader: compiled!
+[2018-02-15.22:34:04] ShaderProgram: ready!
+[2018-02-15.22:34:24] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:34:24] #version 330 core
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] in vec3 in_position;
+[2018-02-15.22:34:24] in vec2 aTexCoord;
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] out vec2 TexCoord;
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] void main()
+[2018-02-15.22:34:24] {
+[2018-02-15.22:34:24] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:34:24] 	TexCoord = aTexCoord;
+[2018-02-15.22:34:24] }
+[2018-02-15.22:34:24] Shader: compiled!
+[2018-02-15.22:34:24] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:34:24] #version 330 core
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] out vec4 fragColor;
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] in vec2 TexCoord;
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] uniform sampler2D ourTexture;
+[2018-02-15.22:34:24] 
+[2018-02-15.22:34:24] void main(){
+[2018-02-15.22:34:24] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:34:24] }
+[2018-02-15.22:34:24] Shader: compiled!
+[2018-02-15.22:34:24] ShaderProgram: ready!
+[2018-02-15.22:34:50] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:34:50] #version 330 core
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] in vec3 in_position;
+[2018-02-15.22:34:50] in vec2 aTexCoord;
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] out vec2 TexCoord;
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] void main()
+[2018-02-15.22:34:50] {
+[2018-02-15.22:34:50] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:34:50] 	TexCoord = aTexCoord;
+[2018-02-15.22:34:50] }
+[2018-02-15.22:34:50] Shader: compiled!
+[2018-02-15.22:34:50] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:34:50] #version 330 core
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] out vec4 fragColor;
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] in vec2 TexCoord;
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] uniform sampler2D ourTexture;
+[2018-02-15.22:34:50] 
+[2018-02-15.22:34:50] void main(){
+[2018-02-15.22:34:50] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:34:50] }
+[2018-02-15.22:34:50] Shader: compiled!
+[2018-02-15.22:34:50] ShaderProgram: ready!
+[2018-02-15.22:49:48] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.22:49:48] #version 330 core
+[2018-02-15.22:49:48] 
+[2018-02-15.22:49:48] in vec3 in_position;
+[2018-02-15.22:49:48] 
+[2018-02-15.22:49:48] void main()
+[2018-02-15.22:49:48] {
+[2018-02-15.22:49:48] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:49:48] }
+[2018-02-15.22:49:48] Shader: compiled!
+[2018-02-15.22:49:48] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.22:49:48] #version 330 core
+[2018-02-15.22:49:48] 
+[2018-02-15.22:49:48] out vec4 fragColor;
+[2018-02-15.22:49:48] uniform vec4 inColor;
+[2018-02-15.22:49:48] 
+[2018-02-15.22:49:48] void main(){
+[2018-02-15.22:49:48] 	fragColor = inColor;
+[2018-02-15.22:49:48] }
+[2018-02-15.22:49:48] Shader: compiled!
+[2018-02-15.22:49:48] ShaderProgram: ready!
+[2018-02-15.22:51:32] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:51:32] #version 330 core
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] in vec3 in_position;
+[2018-02-15.22:51:32] in vec2 aTexCoord;
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] out vec2 TexCoord;
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] void main()
+[2018-02-15.22:51:32] {
+[2018-02-15.22:51:32] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:51:32] 	TexCoord = aTexCoord;
+[2018-02-15.22:51:32] }
+[2018-02-15.22:51:32] Shader: compiled!
+[2018-02-15.22:51:32] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:51:32] #version 330 core
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] out vec4 fragColor;
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] in vec2 TexCoord;
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] uniform sampler2D ourTexture;
+[2018-02-15.22:51:32] 
+[2018-02-15.22:51:32] void main(){
+[2018-02-15.22:51:32] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:51:32] }
+[2018-02-15.22:51:32] Shader: compiled!
+[2018-02-15.22:51:32] ShaderProgram: ready!
+[2018-02-15.22:51:52] Shader: loading file resources/shaders/texture.vs...
+[2018-02-15.22:51:52] #version 330 core
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] in vec3 in_position;
+[2018-02-15.22:51:52] in vec2 aTexCoord;
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] out vec2 TexCoord;
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] void main()
+[2018-02-15.22:51:52] {
+[2018-02-15.22:51:52] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:51:52] 	TexCoord = aTexCoord;
+[2018-02-15.22:51:52] }
+[2018-02-15.22:51:52] Shader: compiled!
+[2018-02-15.22:51:52] Shader: loading file resources/shaders/texture.fs...
+[2018-02-15.22:51:52] #version 330 core
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] out vec4 fragColor;
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] in vec2 TexCoord;
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] uniform sampler2D ourTexture;
+[2018-02-15.22:51:52] 
+[2018-02-15.22:51:52] void main(){
+[2018-02-15.22:51:52] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-15.22:51:52] }
+[2018-02-15.22:51:52] Shader: compiled!
+[2018-02-15.22:51:52] ShaderProgram: ready!
+[2018-02-15.22:52:54] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.22:52:54] #version 330 core
+[2018-02-15.22:52:54] 
+[2018-02-15.22:52:54] in vec3 in_position;
+[2018-02-15.22:52:54] 
+[2018-02-15.22:52:54] void main()
+[2018-02-15.22:52:54] {
+[2018-02-15.22:52:54] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:52:54] }
+[2018-02-15.22:52:54] Shader: compiled!
+[2018-02-15.22:52:54] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.22:52:54] #version 330 core
+[2018-02-15.22:52:54] 
+[2018-02-15.22:52:54] out vec4 fragColor;
+[2018-02-15.22:52:54] uniform vec4 inColor;
+[2018-02-15.22:52:54] 
+[2018-02-15.22:52:54] void main(){
+[2018-02-15.22:52:54] 	fragColor = inColor;
+[2018-02-15.22:52:54] }
+[2018-02-15.22:52:54] Shader: compiled!
+[2018-02-15.22:52:54] ShaderProgram: ready!
+[2018-02-15.22:53:45] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.22:53:45] #version 330 core
+[2018-02-15.22:53:45] 
+[2018-02-15.22:53:45] in vec3 in_position;
+[2018-02-15.22:53:45] 
+[2018-02-15.22:53:45] void main()
+[2018-02-15.22:53:45] {
+[2018-02-15.22:53:45] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.22:53:45] }
+[2018-02-15.22:53:45] Shader: compiled!
+[2018-02-15.22:53:45] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.22:53:45] #version 330 core
+[2018-02-15.22:53:45] 
+[2018-02-15.22:53:45] out vec4 fragColor;
+[2018-02-15.22:53:45] uniform vec4 inColor;
+[2018-02-15.22:53:46] 
+[2018-02-15.22:53:46] void main(){
+[2018-02-15.22:53:46] 	fragColor = inColor;
+[2018-02-15.22:53:46] }
+[2018-02-15.22:53:46] Shader: compiled!
+[2018-02-15.22:53:46] ShaderProgram: ready!
+[2018-02-15.23:00:26] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:00:26] #version 330 core
+[2018-02-15.23:00:26] 
+[2018-02-15.23:00:26] in vec3 in_position;
+[2018-02-15.23:00:26] 
+[2018-02-15.23:00:26] void main()
+[2018-02-15.23:00:26] {
+[2018-02-15.23:00:26] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:00:26] }
+[2018-02-15.23:00:26] Shader: compiled!
+[2018-02-15.23:00:26] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:00:26] #version 330 core
+[2018-02-15.23:00:26] 
+[2018-02-15.23:00:26] out vec4 fragColor;
+[2018-02-15.23:00:26] uniform vec4 inColor;
+[2018-02-15.23:00:26] 
+[2018-02-15.23:00:26] void main(){
+[2018-02-15.23:00:26] 	fragColor = inColor;
+[2018-02-15.23:00:26] }
+[2018-02-15.23:00:26] Shader: compiled!
+[2018-02-15.23:00:26] ShaderProgram: ready!
+[2018-02-15.23:00:44] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:00:44] #version 330 core
+[2018-02-15.23:00:44] 
+[2018-02-15.23:00:44] in vec3 in_position;
+[2018-02-15.23:00:44] 
+[2018-02-15.23:00:44] void main()
+[2018-02-15.23:00:44] {
+[2018-02-15.23:00:44] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:00:44] }
+[2018-02-15.23:00:44] Shader: compiled!
+[2018-02-15.23:00:44] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:00:44] #version 330 core
+[2018-02-15.23:00:44] 
+[2018-02-15.23:00:44] out vec4 fragColor;
+[2018-02-15.23:00:44] uniform vec4 inColor;
+[2018-02-15.23:00:44] 
+[2018-02-15.23:00:44] void main(){
+[2018-02-15.23:00:44] 	fragColor = inColor;
+[2018-02-15.23:00:44] }
+[2018-02-15.23:00:44] Shader: compiled!
+[2018-02-15.23:00:44] ShaderProgram: ready!
+[2018-02-15.23:04:20] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:04:20] #version 330 core
+[2018-02-15.23:04:20] 
+[2018-02-15.23:04:20] in vec3 in_position;
+[2018-02-15.23:04:20] 
+[2018-02-15.23:04:20] void main()
+[2018-02-15.23:04:20] {
+[2018-02-15.23:04:20] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:04:20] }
+[2018-02-15.23:04:20] Shader: compiled!
+[2018-02-15.23:04:20] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:04:20] #version 330 core
+[2018-02-15.23:04:20] 
+[2018-02-15.23:04:20] out vec4 fragColor;
+[2018-02-15.23:04:20] uniform vec4 inColor;
+[2018-02-15.23:04:20] 
+[2018-02-15.23:04:20] void main(){
+[2018-02-15.23:04:20] 	fragColor = inColor;
+[2018-02-15.23:04:20] }
+[2018-02-15.23:04:20] Shader: compiled!
+[2018-02-15.23:04:20] ShaderProgram: ready!
+[2018-02-15.23:18:32] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:18:32] #version 330 core
+[2018-02-15.23:18:32] 
+[2018-02-15.23:18:32] in vec3 in_position;
+[2018-02-15.23:18:32] 
+[2018-02-15.23:18:32] void main()
+[2018-02-15.23:18:32] {
+[2018-02-15.23:18:32] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:18:32] }
+[2018-02-15.23:18:32] Shader: compiled!
+[2018-02-15.23:18:32] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:18:32] #version 330 core
+[2018-02-15.23:18:32] 
+[2018-02-15.23:18:32] out vec4 fragColor;
+[2018-02-15.23:18:32] uniform vec4 inColor;
+[2018-02-15.23:18:32] 
+[2018-02-15.23:18:32] void main(){
+[2018-02-15.23:18:32] 	fragColor = inColor;
+[2018-02-15.23:18:32] }
+[2018-02-15.23:18:32] Shader: compiled!
+[2018-02-15.23:18:32] ShaderProgram: ready!
+[2018-02-15.23:19:02] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:19:02] #version 330 core
+[2018-02-15.23:19:02] 
+[2018-02-15.23:19:02] in vec3 in_position;
+[2018-02-15.23:19:02] 
+[2018-02-15.23:19:02] void main()
+[2018-02-15.23:19:02] {
+[2018-02-15.23:19:02] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:19:02] }
+[2018-02-15.23:19:02] Shader: compiled!
+[2018-02-15.23:19:02] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:19:02] #version 330 core
+[2018-02-15.23:19:02] 
+[2018-02-15.23:19:02] out vec4 fragColor;
+[2018-02-15.23:19:02] uniform vec4 inColor;
+[2018-02-15.23:19:02] 
+[2018-02-15.23:19:02] void main(){
+[2018-02-15.23:19:02] 	fragColor = inColor;
+[2018-02-15.23:19:02] }
+[2018-02-15.23:19:02] Shader: compiled!
+[2018-02-15.23:19:02] ShaderProgram: ready!
+[2018-02-15.23:19:37] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:19:37] #version 330 core
+[2018-02-15.23:19:37] 
+[2018-02-15.23:19:37] in vec3 in_position;
+[2018-02-15.23:19:37] 
+[2018-02-15.23:19:37] void main()
+[2018-02-15.23:19:37] {
+[2018-02-15.23:19:37] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:19:37] }
+[2018-02-15.23:19:37] Shader: compiled!
+[2018-02-15.23:19:37] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:19:37] #version 330 core
+[2018-02-15.23:19:37] 
+[2018-02-15.23:19:37] out vec4 fragColor;
+[2018-02-15.23:19:37] uniform vec4 inColor;
+[2018-02-15.23:19:37] 
+[2018-02-15.23:19:37] void main(){
+[2018-02-15.23:19:37] 	fragColor = inColor;
+[2018-02-15.23:19:37] }
+[2018-02-15.23:19:37] Shader: compiled!
+[2018-02-15.23:19:37] ShaderProgram: ready!
+[2018-02-15.23:21:24] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:21:24] #version 330 core
+[2018-02-15.23:21:24] 
+[2018-02-15.23:21:24] in vec3 in_position;
+[2018-02-15.23:21:24] 
+[2018-02-15.23:21:24] void main()
+[2018-02-15.23:21:24] {
+[2018-02-15.23:21:24] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:21:24] }
+[2018-02-15.23:21:24] Shader: compiled!
+[2018-02-15.23:21:24] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:21:24] #version 330 core
+[2018-02-15.23:21:24] 
+[2018-02-15.23:21:24] out vec4 fragColor;
+[2018-02-15.23:21:24] uniform vec4 inColor;
+[2018-02-15.23:21:24] 
+[2018-02-15.23:21:24] void main(){
+[2018-02-15.23:21:24] 	fragColor = inColor;
+[2018-02-15.23:21:24] }
+[2018-02-15.23:21:24] Shader: compiled!
+[2018-02-15.23:21:24] ShaderProgram: ready!
+[2018-02-15.23:22:08] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:22:08] #version 330 core
+[2018-02-15.23:22:08] 
+[2018-02-15.23:22:08] in vec3 in_position;
+[2018-02-15.23:22:08] 
+[2018-02-15.23:22:08] void main()
+[2018-02-15.23:22:08] {
+[2018-02-15.23:22:08] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:22:08] }
+[2018-02-15.23:22:08] Shader: compiled!
+[2018-02-15.23:22:08] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:22:08] #version 330 core
+[2018-02-15.23:22:08] 
+[2018-02-15.23:22:08] out vec4 fragColor;
+[2018-02-15.23:22:08] uniform vec4 inColor;
+[2018-02-15.23:22:08] 
+[2018-02-15.23:22:08] void main(){
+[2018-02-15.23:22:08] 	fragColor = inColor;
+[2018-02-15.23:22:08] }
+[2018-02-15.23:22:08] Shader: compiled!
+[2018-02-15.23:22:09] ShaderProgram: ready!
+[2018-02-15.23:22:31] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:22:31] #version 330 core
+[2018-02-15.23:22:31] 
+[2018-02-15.23:22:31] in vec3 in_position;
+[2018-02-15.23:22:31] 
+[2018-02-15.23:22:31] void main()
+[2018-02-15.23:22:31] {
+[2018-02-15.23:22:31] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:22:31] }
+[2018-02-15.23:22:31] Shader: compiled!
+[2018-02-15.23:22:31] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:22:31] #version 330 core
+[2018-02-15.23:22:31] 
+[2018-02-15.23:22:31] out vec4 fragColor;
+[2018-02-15.23:22:31] uniform vec4 inColor;
+[2018-02-15.23:22:31] 
+[2018-02-15.23:22:31] void main(){
+[2018-02-15.23:22:31] 	fragColor = inColor;
+[2018-02-15.23:22:31] }
+[2018-02-15.23:22:31] Shader: compiled!
+[2018-02-15.23:22:31] ShaderProgram: ready!
+[2018-02-15.23:23:03] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:23:03] #version 330 core
+[2018-02-15.23:23:03] 
+[2018-02-15.23:23:03] in vec3 in_position;
+[2018-02-15.23:23:03] 
+[2018-02-15.23:23:03] void main()
+[2018-02-15.23:23:03] {
+[2018-02-15.23:23:03] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:23:03] }
+[2018-02-15.23:23:03] Shader: compiled!
+[2018-02-15.23:23:03] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:23:03] #version 330 core
+[2018-02-15.23:23:03] 
+[2018-02-15.23:23:03] out vec4 fragColor;
+[2018-02-15.23:23:03] uniform vec4 inColor;
+[2018-02-15.23:23:03] 
+[2018-02-15.23:23:03] void main(){
+[2018-02-15.23:23:03] 	fragColor = inColor;
+[2018-02-15.23:23:03] }
+[2018-02-15.23:23:03] Shader: compiled!
+[2018-02-15.23:23:03] ShaderProgram: ready!
+[2018-02-15.23:23:24] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:23:24] #version 330 core
+[2018-02-15.23:23:24] 
+[2018-02-15.23:23:24] in vec3 in_position;
+[2018-02-15.23:23:24] 
+[2018-02-15.23:23:24] void main()
+[2018-02-15.23:23:24] {
+[2018-02-15.23:23:24] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:23:24] }
+[2018-02-15.23:23:24] Shader: compiled!
+[2018-02-15.23:23:24] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:23:24] #version 330 core
+[2018-02-15.23:23:24] 
+[2018-02-15.23:23:24] out vec4 fragColor;
+[2018-02-15.23:23:24] uniform vec4 inColor;
+[2018-02-15.23:23:24] 
+[2018-02-15.23:23:24] void main(){
+[2018-02-15.23:23:24] 	fragColor = inColor;
+[2018-02-15.23:23:24] }
+[2018-02-15.23:23:24] Shader: compiled!
+[2018-02-15.23:23:24] ShaderProgram: ready!
+[2018-02-15.23:23:36] Shader: loading file resources/shaders/hello_triangle.vs...
+[2018-02-15.23:23:36] #version 330 core
+[2018-02-15.23:23:36] 
+[2018-02-15.23:23:36] in vec3 in_position;
+[2018-02-15.23:23:36] 
+[2018-02-15.23:23:36] void main()
+[2018-02-15.23:23:36] {
+[2018-02-15.23:23:36] 	gl_Position = vec4(in_position, 1.0);
+[2018-02-15.23:23:36] }
+[2018-02-15.23:23:36] Shader: compiled!
+[2018-02-15.23:23:36] Shader: loading file resources/shaders/hello_triangle.fs...
+[2018-02-15.23:23:36] #version 330 core
+[2018-02-15.23:23:36] 
+[2018-02-15.23:23:36] out vec4 fragColor;
+[2018-02-15.23:23:36] uniform vec4 inColor;
+[2018-02-15.23:23:36] 
+[2018-02-15.23:23:36] void main(){
+[2018-02-15.23:23:36] 	fragColor = inColor;
+[2018-02-15.23:23:36] }
+[2018-02-15.23:23:36] Shader: compiled!
+[2018-02-15.23:23:36] ShaderProgram: ready!

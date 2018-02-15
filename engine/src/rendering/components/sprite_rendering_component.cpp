@@ -19,6 +19,7 @@ namespace Awesome
 
 		void SpriteRenderingComponent::render()
 		{
+			texture->bind();
 			MeshRenderingComponent::render();
 		}
 	}

@@ -15,6 +15,7 @@ public:
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
 	Texture texture;
+	unsigned int VAO, VBO, EBO;
 
 	void init() override
 	{
@@ -35,7 +36,7 @@ public:
 		auto sprite_object = scene->spawn<Object>("sprite");
 		auto sprite_component = sprite_object->addComponent<SpriteRenderingComponent>();
 		sprite_component->texture = &texture;
-
+						
 		/* init renderer */
 		renderer->init();
 	}
@@ -49,8 +50,6 @@ public:
 	{
 		/* use the program */
 		program.use();
-		/* set the color */
-		glUniform4f(program.getUniformLocation("inColor"), 1.0f, 0.0f, 0.0f, 1.0f);
 		/* draw objects */
 		renderer->render();
 	}

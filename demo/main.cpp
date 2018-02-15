@@ -6,4 +6,4 @@
 #include "hello_triangle.h"
 
 /* launch a demo application */
-DECLARE_MAIN(TextureDemoApplication);
+DECLARE_MAIN(HelloTriangleApplication);
