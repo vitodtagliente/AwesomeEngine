@@ -6,38 +6,48 @@
 
 using namespace Awesome;
 using namespace Awesome::Rendering;
+using namespace Awesome::Scenegraph;
 
 class TextureDemoApplication : public Application
 {
 public:
-	Triangle triangle;
-	Square square;
 	Program program;
-	Texture texture;
-	int colorAttributeLocation{ 0 };
+	Renderer* renderer{ nullptr };
+	Scene* scene{ nullptr };
 
-	void init() override {
+	void init() override
+	{
 		auto vs = Shader::load("resources/shaders/texture.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/texture.fs", ShaderType::FragmentShader);
 
 		program.linkShaders({ vs, fs });
 		program.compile();
 
-		triangle.init();
-		square.init();
+		renderer = Renderer::instance();
+		renderer->scene = new Scene("texture_scene");
+		scene = renderer->scene;
 
-		texture.load("resources/textures/wall.jpg");
+		/* fill scene objects */
+		auto triangle_object = scene->spawn<Object>("triangle");
+		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
+		triangle_component->mesh = Primitive::generate<Triangle>();
 
-		colorAttributeLocation = program.getUniformLocation("inColor");
+		/* init renderer */
+		renderer->init();
 	}
 
-	void update(float deltaTime) override {
-
+	void update(float delta_time) override
+	{
+		renderer->update(delta_time);
 	}
 
-	void render() override {
+	void render() override
+	{
 		/* use the program */
 		program.use();
-		/* draw the triangle */
+		/* set the color */
+		glUniform4f(program.getUniformLocation("inColor"), 1.0f, 0.0f, 0.0f, 1.0f);
+		/* draw objects */
+		renderer->render();
 	}
 };
