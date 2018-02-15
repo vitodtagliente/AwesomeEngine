@@ -14,6 +14,7 @@ public:
 	Program program;
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
+	Texture texture;
 
 	void init() override
 	{
@@ -27,10 +28,13 @@ public:
 		renderer->scene = new Scene("texture_scene");
 		scene = renderer->scene;
 
+		if (!texture.load("resources/textures/wall.jpg"))
+			exit(-1);
+
 		/* fill scene objects */
-		auto triangle_object = scene->spawn<Object>("triangle");
-		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
-		triangle_component->mesh = Primitive::generate<Triangle>();
+		auto sprite_object = scene->spawn<Object>("sprite");
+		auto sprite_component = sprite_object->addComponent<SpriteRenderingComponent>();
+		sprite_component->texture = &texture;
 
 		/* init renderer */
 		renderer->init();
