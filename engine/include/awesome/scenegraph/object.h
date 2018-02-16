@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <string>
 #include <vector>
+#include <glm/vec3.hpp>
 
 #include "component.h"
 
@@ -25,6 +26,10 @@ namespace Awesome
 			{
 				Object* parent{ nullptr };
 				std::vector<Object*> children{ nullptr };
+
+				glm::vec3 position;
+				glm::vec3 rotation;
+				glm::vec3 scale{ 1.0f };
 			};
 
 			unsigned int id{0};

@@ -4,6 +4,8 @@ namespace Awesome
 {
 	namespace Scenegraph
 	{
+		class Object;
+
 		class Component
 		{
 			friend class Object;
