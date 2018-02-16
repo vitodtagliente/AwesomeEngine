@@ -17,7 +17,7 @@ namespace Awesome
 			for (int i = 0; i < uvs.size(); i++)
 			{
 				data.push_back(uvs[i].x);
-				data.push_back(uvs[i].y);				
+				data.push_back(uvs[i].y);
 			}
 
 			glGenVertexArrays(1, &vao);
@@ -25,30 +25,35 @@ namespace Awesome
 
 			glGenBuffers(1, &vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
 			glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), &data[0], GL_STATIC_DRAW);
-
-			unsigned int stride = 0;
-			unsigned int offset = 0;
-			/*
-			stride = 3 * sizeof(float);
-			if (uvs.size() > 0)
-				stride += 2 * sizeof(float);
-			*/
 			
-			stride = 3;
 			glVertexAttribPointer(
 				0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 				3,                  // size
 				GL_FLOAT,           // type
 				GL_FALSE,           // normalized?
-				stride * sizeof(float),				// stride
-				(void*)(offset * sizeof(float))      // array buffer offset
+				0,					// stride
+				(void*)0		    // array buffer offset
 			);
 			glEnableVertexAttribArray(0);
-			
 
+			glVertexAttribPointer(
+				1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+				2,                  // size
+				GL_FLOAT,           // type
+				GL_FALSE,           // normalized?
+				0,					// stride
+				(void*)(vertices.size() * sizeof(glm::vec3))		    // array buffer offset
+			);
+			glEnableVertexAttribArray(1);
+
+			/* create an element array buffer */
+			glGenBuffers(1, &eab);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eab);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), &indices[0], GL_STATIC_DRAW);
+			
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
 		}
 		
