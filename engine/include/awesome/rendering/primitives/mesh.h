@@ -13,7 +13,6 @@ namespace Awesome
 			unsigned int vao{ 0 };
 			unsigned int vbo{ 0 };
 			unsigned int ebo{ 0 };
-			/* element array buffer */
 			unsigned int eab{ 0 }; 
 
 			std::vector<glm::vec3> vertices;
