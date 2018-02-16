@@ -48,9 +48,12 @@ namespace Awesome
 			glEnableVertexAttribArray(1);
 
 			/* create an element array buffer */
-			glGenBuffers(1, &eab);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eab);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), &indices[0], GL_STATIC_DRAW);
+			if (indices.size() > 0)
+			{
+				glGenBuffers(1, &eab);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eab);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), &indices[0], GL_STATIC_DRAW);
+			}
 			
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
