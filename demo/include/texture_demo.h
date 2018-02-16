@@ -3,6 +3,9 @@
 #include <awesome/awesome.h>
 #include <cmath>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace Awesome;
 using namespace Awesome::Rendering;
@@ -15,7 +18,7 @@ public:
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
 	Texture texture;
-	unsigned int VAO, VBO, EBO;
+	glm::mat4 projection, model, view;
 
 	void init() override
 	{
@@ -39,6 +42,14 @@ public:
 						
 		/* init renderer */
 		renderer->init();
+
+		/* setup projection */
+		projection = glm::ortho(-4.0f / 3.0f, 4.0f / 3.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+		view = glm::mat4(1.0f);
+		model = glm::mat4(1.0f);
+
+		model = glm::translate(model, glm::vec3(0.1f, 0.2f, 0.5f));
+		model = glm::rotate(model, 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
 	void update(float delta_time) override
@@ -49,7 +60,10 @@ public:
 	void render() override
 	{
 		/* use the program */
-		program.use();
+		program.use(); 
+		glUniformMatrix4fv(program.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(program.getUniformLocation("view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(program.getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(model));
 		/* draw objects */
 		renderer->render();
 	}
