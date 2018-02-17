@@ -16,13 +16,5 @@
 #define DECLARE_MAIN(ApplicationDerivedType)				                        \
 int main(int argc, const char ** argv)												\
 {																					\
-	Application* app = new ApplicationDerivedType();								\
-	return execute_main(app);														\
+	Application::run<ApplicationDerivedType>();										\
 } 
-
-namespace Awesome
-{
-	int execute_main(Application* app);
-	int desktop_device_main(Application* app);
-	int mobile_device_main(Application* app);
-}

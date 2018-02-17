@@ -20,6 +20,11 @@ public:
 	Texture texture;
 	glm::mat4 projection, model, view;
 
+	TextureDemoApplication()
+	{
+		getWindow()->setTitle("AwesomeEngine::TextureDemo");
+	}
+
 	void init() override
 	{
 		auto vs = Shader::load("resources/shaders/texture.vs", ShaderType::VertexShader);
