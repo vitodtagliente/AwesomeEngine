@@ -19,9 +19,14 @@ namespace Awesome
 
 		Renderer::Renderer()
 		{
-
+			scene = new Scenegraph::Scene("AwesomeScene");
 		}
 		
+		Renderer::~Renderer()
+		{
+			
+		}
+
 		void Renderer::init()
 		{
 			for (auto object : scene->objects)

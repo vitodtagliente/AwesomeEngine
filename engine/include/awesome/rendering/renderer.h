@@ -13,7 +13,9 @@ namespace Awesome
 		private:
 			static Renderer* singleton;
 
+		protected:
 			Renderer();
+			~Renderer();
 			
 		public:
 			static Renderer* instance();

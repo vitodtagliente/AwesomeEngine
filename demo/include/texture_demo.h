@@ -18,7 +18,8 @@ public:
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
 	Texture texture;
-	glm::mat4 projection, model, view;
+	glm::mat4 projection, view;
+	Object* sprite_object;
 
 	TextureDemoApplication()
 	{
@@ -34,16 +35,18 @@ public:
 		program.compile();
 
 		renderer = Renderer::instance();
-		renderer->scene = new Scene("texture_scene");
+		renderer->scene->name = "texture_scene";
 		scene = renderer->scene;
 
 		if (!texture.load("resources/textures/wall.jpg"))
 			exit(-1);
 
 		/* fill scene objects */
-		auto sprite_object = scene->spawn<Object>("sprite");
+		sprite_object = scene->spawn<Object>("sprite");
 		auto sprite_component = sprite_object->addComponent<SpriteRenderingComponent>();
 		sprite_component->texture = &texture;
+		sprite_object->transform.position.x = 0.0f;
+		sprite_object->transform.rotation.z = 20.0f;
 						
 		/* init renderer */
 		renderer->init();
@@ -51,10 +54,6 @@ public:
 		/* setup projection */
 		projection = glm::ortho(-4.0f / 3.0f, 4.0f / 3.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 		view = glm::mat4(1.0f);
-		model = glm::mat4(1.0f);
-
-		model = glm::translate(model, glm::vec3(0.1f, 0.2f, 0.5f));
-		model = glm::rotate(model, 45.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
 	void update(float delta_time) override
@@ -68,7 +67,9 @@ public:
 		program.use(); 
 		glUniformMatrix4fv(program.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(program.getUniformLocation("view"), 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(program.getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(program.getUniformLocation("model"), 1, GL_FALSE, 
+			glm::value_ptr(sprite_object->transform.get())
+		);
 		/* draw objects */
 		renderer->render();
 	}
