@@ -1,6 +1,9 @@
 #pragma once
 
+#include <string>
 #include "../scenegraph/scene.h"
+
+using namespace Awesome::Scenegraph;
 
 namespace Awesome
 {
@@ -8,7 +11,7 @@ namespace Awesome
 	{
 		class Renderer
 		{
-			friend class Scenegraph::Scene;
+			friend class Scene;
 
 		private:
 			static Renderer* singleton;
@@ -20,7 +23,7 @@ namespace Awesome
 		public:
 			static Renderer* instance();
 
-			Scenegraph::Scene* scene{ nullptr };
+			Scene* scene{ nullptr };
 
 			void init();
 			void update(float delta_time);
