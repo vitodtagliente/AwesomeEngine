@@ -33,9 +33,8 @@ namespace Awesome
 
 					window->update();
 				}
-				status = ApplicationStatus::Closing;
-				window->close();
 				status = ApplicationStatus::Closed;
+				window->close();
 			}
 		}
 	}

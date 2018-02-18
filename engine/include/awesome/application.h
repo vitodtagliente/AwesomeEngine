@@ -1,6 +1,7 @@
 #pragma once
 
 #include "windowing/window.h"
+#include "rendering/renderer.h"
 
 using namespace Awesome::Windowing;
 
@@ -23,18 +24,18 @@ namespace Awesome
 
 		Window* window{ nullptr };
 
-		void run();
-
-	protected:
-		Application();
-		~Application();
-
 		virtual void init() = 0;
 		virtual void render() = 0;
 		virtual void update(float deltaTime) = 0;
 
+		void run();
+
+	protected:
 		ApplicationStatus status{ ApplicationStatus::Created };
 		
+		Application();
+		~Application();
+
 	public:
 
 		template <class T>

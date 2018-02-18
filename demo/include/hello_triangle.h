@@ -15,6 +15,11 @@ public:
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
 
+	HelloTriangleApplication()
+	{
+		getWindow()->setTitle("AwesomeEngine::HelloTriangle");
+	}
+
 	void init() override 
 	{
 		auto vs = Shader::load("resources/shaders/hello_triangle.vs", ShaderType::VertexShader);

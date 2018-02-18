@@ -34,13 +34,13 @@ namespace Awesome
 
 			/* GLFW context */
 			GLFWwindow* window_context{ nullptr };
+
 			void update();
 			bool shouldClose() const;
 			
 			static void resize_callback(GLFWwindow* context, int width, int height);
 			static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-		protected:
 			Window();
 			~Window();
 

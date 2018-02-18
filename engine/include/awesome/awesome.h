@@ -13,8 +13,8 @@
 
 #include "application.h"
 
-#define DECLARE_MAIN(ApplicationDerivedType)				                        \
-int main(int argc, const char ** argv)												\
-{																					\
-	Application::run<ApplicationDerivedType>();										\
+#define DECLARE_MAIN(ApplicationDerivedType)				\
+int main(int argc, const char ** argv)						\
+{															\
+	Application::run<ApplicationDerivedType>();				\
 } 

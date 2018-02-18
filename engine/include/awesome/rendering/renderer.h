@@ -9,6 +9,7 @@ namespace Awesome
 		class Renderer
 		{
 			friend class Scenegraph::Scene;
+
 		private:
 			static Renderer* singleton;
 
