@@ -45,6 +45,11 @@ namespace Awesome
 			}
 		}
 
+		Object::~Object()
+		{
+
+		}
+
 		Component* Object::addComponent(Component* new_component)
 		{
 			if (new_component != nullptr)
@@ -59,6 +64,12 @@ namespace Awesome
 		bool Object::operator==(const Object& other)
 		{
 			return id == other.id;
+		}
+
+		void Object::setActive(bool active_value)
+		{
+			/* TODO */
+			active = active_value;
 		}
 
 		void Object::init()

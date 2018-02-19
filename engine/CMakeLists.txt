@@ -22,6 +22,7 @@ file(GLOB VENDORS_SOURCES
 file(GLOB PROJECT_HEADERS 
     include/awesome/*.h	
     include/awesome/rendering/*.h	
+	include/awesome/rendering/objects/*.h
     include/awesome/rendering/primitives/*.h	
     include/awesome/rendering/gl/*.h		
     include/awesome/rendering/shading/*.h	
@@ -33,6 +34,7 @@ file(GLOB PROJECT_HEADERS
 file(GLOB PROJECT_SOURCES 
     src/*.cpp
 	src/rendering/*.cpp    
+	src/rendering/objects/*.cpp
     src/rendering/primitives/*.cpp  
     src/rendering/gl/*.cpp      
     src/rendering/shading/*.cpp 

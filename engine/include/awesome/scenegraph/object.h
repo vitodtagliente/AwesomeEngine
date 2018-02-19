@@ -18,6 +18,8 @@ namespace Awesome
 		private:
 			static unsigned int id_counter;
 
+			bool active{ true };
+
 		protected:
 			std::vector<Component*> components;
 
@@ -32,11 +34,17 @@ namespace Awesome
 				glm::vec3 rotation{ 0.0f };
 				glm::vec3 scale{ 1.0f };
 
+				glm::vec3 up{ 0.0f, 1.0f, 0.0f };
+				glm::vec3 right{ 1.0f, 0.0f, 0.0f };
+				glm::vec3 forward{ 0.0f, 0.0f, -1.0f };
+
 				glm::mat4 get() const;
 			};
 
 			unsigned int id{0};
 			std::string name{};
+
+			bool isStatic{ false };
 
 			Transform transform;
 
@@ -44,6 +52,7 @@ namespace Awesome
 			Object(std::string object_name);
 			Object(std::initializer_list<Component*> init_components);
 			Object(std::string object_name, std::initializer_list<Component*> init_components);
+			~Object();
 			
 			template <class T>
 			T* addComponent()
@@ -88,6 +97,9 @@ namespace Awesome
 			template <class T>
 			std::vector<Component*> findComponentsInChildren();
 			*/
+
+			bool isActive() const { return active; }
+			void setActive(bool active_value);
 
 			virtual void init();
 			virtual void update(float delta_time);
