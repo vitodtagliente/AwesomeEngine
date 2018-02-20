@@ -18,7 +18,7 @@ public:
 	Scene* scene{ nullptr };
 	Texture texture;
 	Object* sprite_object;
-	Camera* camera;
+	Camera camera;
 
 	TextureDemoApplication()
 	{
@@ -44,12 +44,14 @@ public:
 		sprite_object = scene->spawn<Object>("sprite");
 		auto sprite_component = sprite_object->addComponent<SpriteRenderingComponent>();
 		sprite_component->texture = &texture;
+		sprite_component->material = new Material();
+		sprite_component->material->program = &program;
+
 		sprite_object->transform.position.x = 0.0f;
 		sprite_object->transform.rotation.z = 20.0f;
 		
 		/* init camera */
-		camera = new Camera(CameraType::Perspective);
-		camera->transform.position.z = -.2f;
+		camera.transform.position.z = -.2f;
 
 		/* init renderer */
 		renderer->init();
@@ -61,11 +63,11 @@ public:
 	}
 
 	void render() override
-	{
+	{		
 		/* use the program */
-		program.use(); 
-		program.setMat4("projection", camera->getProjection());
-		program.setMat4("view", camera->getView());
+		program.use();
+		program.setMat4("projection", camera.getProjection());
+		program.setMat4("view", camera.getView());
 		program.setMat4("model", sprite_object->transform.get());
 		/* draw objects */
 		renderer->render();

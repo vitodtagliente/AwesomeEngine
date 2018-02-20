@@ -19,6 +19,7 @@ namespace Awesome
 
 		void MeshRenderingComponent::render()
 		{
+			RenderingComponent::render();
 			if (mesh != nullptr)
 			{
 				mesh->bind();

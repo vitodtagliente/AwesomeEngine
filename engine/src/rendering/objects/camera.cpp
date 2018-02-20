@@ -45,7 +45,7 @@ namespace Awesome
 
 				if (type == CameraType::Perspective)
 				{
-					projection = glm::perspective(fieldOfView, aspectRatio, clippingPlanes.near, clippingPlanes.far);
+					projection = glm::perspective(fieldOfView, aspectRatio, near, far);
 				}
 				else
 				{

@@ -21,6 +21,7 @@ file(GLOB VENDORS_SOURCES
 ) 
 file(GLOB PROJECT_HEADERS 
     include/awesome/*.h	
+	include/awesome/math/*.h
     include/awesome/rendering/*.h	
 	include/awesome/rendering/objects/*.h
     include/awesome/rendering/primitives/*.h	

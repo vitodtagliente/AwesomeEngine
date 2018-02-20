@@ -14,9 +14,7 @@ namespace Awesome
 		public:
 			Program* program;
 
-			std::string projection{ "projection" };
-			std::string view{ "view" };
-			std::string model{ "model" };
+
 		};
 	}
 }

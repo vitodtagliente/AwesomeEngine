@@ -12,7 +12,7 @@ namespace Awesome
 		public:
 			Material* material{ nullptr };
 
-			virtual void render() = 0;
+			virtual void render();
 		};
 	}
 }
