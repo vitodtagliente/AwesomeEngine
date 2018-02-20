@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
+#include <glm/vec3.hpp>
 
 namespace Awesome
 {
@@ -46,6 +47,8 @@ namespace Awesome
 
 			void setVec3(const char* name, const glm::vec3& value);
 			void setVec3(const int location, const glm::vec3& value);
+			void setVec4(const char* name, const glm::vec4& value);
+			void setVec4(const int location, const glm::vec4& value);
 			void setMat4(const char* name, const glm::mat4& value);
 			void setMat4(const int location, const glm::mat4& value);
 

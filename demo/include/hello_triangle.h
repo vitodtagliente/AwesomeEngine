@@ -14,6 +14,7 @@ public:
 	Program program;
 	Renderer* renderer{ nullptr };
 	Scene* scene{ nullptr };
+	glm::vec4 color{ 1.0f, 0.0f, 0.0f, 1.0f };
 
 	HelloTriangleApplication()
 	{
@@ -51,7 +52,7 @@ public:
 		/* use the program */
 		program.use();
 		/* set the color */
-		glUniform4f(program.getUniformLocation("inColor"), 1.0f, 0.0f, 0.0f, 1.0f);
+		program.setVec4("inColor", color);
 		/* draw objects */
 		renderer->render();
 	}

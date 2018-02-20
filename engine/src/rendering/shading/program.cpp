@@ -135,12 +135,22 @@ namespace Awesome
 
 		void Program::setVec3(const char* name, const glm::vec3& value)
 		{
-
+			glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
 		}
 
 		void Program::setVec3(const int location, const glm::vec3& value)
 		{
+			glUniform3f(location, value.x, value.y, value.z);
+		}
 
+		void Program::setVec4(const char* name, const glm::vec4& value)
+		{
+			glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
+		}
+
+		void Program::setVec4(const int location, const glm::vec4& value)
+		{
+			glUniform4f(location, value.x, value.y, value.z, value.w);
 		}
 
 		void Program::setMat4(const char* name, const glm::mat4& value)
