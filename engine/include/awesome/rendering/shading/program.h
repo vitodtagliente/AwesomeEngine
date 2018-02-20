@@ -2,6 +2,8 @@
 
 #include <awesome/rendering/shading/shader.h>
 #include <initializer_list>
+#include <glm/mat4x4.hpp>
+#include <glm/vec4.hpp>
 
 namespace Awesome
 {
@@ -35,12 +37,17 @@ namespace Awesome
 			/* get uniform variable location */
 			int getUniformLocation(const char* name);
 			/* set uniforms */
-			void setBool(const char* name, bool value);
-			void setBool(int location, bool value);
-			void setInt(const char* name, int value);
-			void setInt(int location, int value);
-			void setFloat(const char* name, float value);
-			void setFloat(int location, float value);
+			void setBool(const char* name, const bool value);
+			void setBool(const int location, const bool value);
+			void setInt(const char* name, const int value);
+			void setInt(const int location, const int value);
+			void setFloat(const char* name, const float value);
+			void setFloat(const int location, const float value);
+
+			void setVec3(const char* name, const glm::vec3& value);
+			void setVec3(const int location, const glm::vec3& value);
+			void setMat4(const char* name, const glm::mat4& value);
+			void setMat4(const int location, const glm::mat4& value);
 
 		};
 	}

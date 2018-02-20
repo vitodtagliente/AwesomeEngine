@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <cassert>
 #include <awesome/utility/log.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Awesome
 {
@@ -102,34 +103,54 @@ namespace Awesome
 			return glGetUniformLocation(id, name);
 		}
 
-		void Program::setBool(const char* name, bool value)
+		void Program::setBool(const char* name, const bool value)
 		{
 			glUniform1i(getUniformLocation(name), (int)value);
 		}
 
-		void Program::setBool(int location, bool value)
+		void Program::setBool(const int location, const bool value)
 		{
 			glUniform1i(location, (int)value);
 		}
 
-		void Program::setInt(const char* name, int value)
+		void Program::setInt(const char* name, const int value)
 		{
 			glUniform1i(getUniformLocation(name), value);
 		}
 
-		void Program::setInt(int location, int value)
+		void Program::setInt(const int location, const int value)
 		{
 			glUniform1i(location, value);
 		}
 
-		void Program::setFloat(const char* name, float value)
+		void Program::setFloat(const char* name, const float value)
 		{
 			glUniform1f(getUniformLocation(name), value);
 		}
 
-		void Program::setFloat(int location, float value)
+		void Program::setFloat(const int location, const float value)
 		{
 			glUniform1f(location, value);
+		}
+
+		void Program::setVec3(const char* name, const glm::vec3& value)
+		{
+
+		}
+
+		void Program::setVec3(const int location, const glm::vec3& value)
+		{
+
+		}
+
+		void Program::setMat4(const char* name, const glm::mat4& value)
+		{
+			glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+		}
+
+		void Program::setMat4(const int location, const glm::mat4& value)
+		{
+			glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 		}
 
 	}
