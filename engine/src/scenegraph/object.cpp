@@ -32,7 +32,7 @@ namespace Awesome
 		{
 			id = ++id_counter;
 			for (auto it = init_components.begin(); it != init_components.end(); ++it) {
-				components.push_back(*it);
+				addComponent(*it);
 			}
 		}
 
@@ -41,7 +41,7 @@ namespace Awesome
 			id = ++id_counter;
 			name = object_name;
 			for (auto it = init_components.begin(); it != init_components.end(); ++it) {
-				components.push_back(*it);
+				addComponent(*it);
 			}
 		}
 

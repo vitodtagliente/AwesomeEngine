@@ -60,7 +60,7 @@ namespace Awesome
 				T* t_component = new T{};
 				Component* new_component = dynamic_cast<Component*>(t_component);
 				if (new_component != nullptr)
-					components.push_back(t_component);
+					addComponent(new_component);
 				return t_component;
 			}
 

@@ -64,11 +64,6 @@ public:
 
 	void render() override
 	{		
-		/* use the program */
-		program.use();
-		program.setMat4("projection", camera.getProjection());
-		program.setMat4("view", camera.getView());
-		program.setMat4("model", sprite_object->transform.get());
 		/* draw objects */
 		renderer->render();
 	}
