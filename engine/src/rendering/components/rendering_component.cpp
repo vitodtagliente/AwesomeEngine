@@ -12,12 +12,15 @@ namespace Awesome
 			{
 				auto program = material->program;
 				auto camera = Camera::main();
-				program->use();
-				/* setup camera matrices */
-				program->setMat4("projection", camera->getProjection());
-				program->setMat4("view", camera->getView());
-				/* setup model matrix */
-				program->setMat4("model", owner()->transform.get());
+				if (camera != nullptr)
+				{
+					program->use();
+					/* setup camera matrices */
+					program->setMat4("projection", camera->getProjection());
+					program->setMat4("view", camera->getView());
+					/* setup model matrix */
+					program->setMat4("model", owner()->transform.get());
+				}
 			}
 		}
 	}
