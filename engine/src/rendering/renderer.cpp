@@ -19,7 +19,7 @@ namespace Awesome
 
 		Renderer::Renderer()
 		{
-			scene = new Scenegraph::Scene("AwesomeScene");
+
 		}
 		
 		Renderer::~Renderer()
@@ -51,6 +51,11 @@ namespace Awesome
 				if (rendering_component != nullptr)
 					rendering_component->render();
 			}
+		}
+
+		void Renderer::handleScene(Scene* current_scene)
+		{
+			scene = current_scene;
 		}
 	}
 }

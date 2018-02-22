@@ -12,8 +12,6 @@ class HelloTriangleApplication : public Application
 {
 public:
 	Program program;
-	Renderer* renderer{ nullptr };
-	Scene* scene{ nullptr };
 	glm::vec4 color{ 1.0f, 0.0f, 0.0f, 1.0f };
 
 	HelloTriangleApplication()
@@ -21,7 +19,7 @@ public:
 		getWindow()->setTitle("AwesomeEngine::HelloTriangle");
 	}
 
-	void init() override 
+	void init() override
 	{
 		auto vs = Shader::load("resources/shaders/hello_triangle.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/hello_triangle.fs", ShaderType::FragmentShader);
@@ -29,31 +27,19 @@ public:
 		program.linkShaders({ vs, fs });
 		program.compile();
 
-		renderer = Renderer::instance();
-		renderer->scene = new Scene("triangle_scene");
-		scene = renderer->scene;
-
 		/* fill scene objects */
-		auto triangle_object = scene->spawn<Object>("triangle");
+		auto triangle_object = getScene()->spawn<Object>("triangle");
 		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
 		triangle_component->mesh = Primitive::generate<Triangle>();
-		
-		/* init renderer */
-		renderer->init();
 	}
 	
 	void update(float delta_time) override 
 	{
-		renderer->update(delta_time);
+
 	}
 
 	void render() override 
 	{
-		/* use the program */
-		program.use();
-		/* set the color */
 		program.setVec4("inColor", color);
-		/* draw objects */
-		renderer->render();
 	}
 };

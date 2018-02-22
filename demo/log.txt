@@ -6970,3 +6970,99 @@ ERROR: 0:7: 'assign' :  cannot convert from 'const highp float' to 'FragUserData
 [2018-02-22.22:22:10] }
 [2018-02-22.22:22:10] Shader: compiled!
 [2018-02-22.22:22:10] ShaderProgram: ready!
+[2018-02-22.22:30:00] Shader: loading file resources/shaders/texture.vs...
+[2018-02-22.22:30:00] #version 330 core
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] in vec3 in_position;
+[2018-02-22.22:30:00] in vec2 aTexCoord;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] out vec2 TexCoord;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] uniform mat4 projection;
+[2018-02-22.22:30:00] uniform mat4 model;
+[2018-02-22.22:30:00] uniform mat4 view;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] void main()
+[2018-02-22.22:30:00] {
+[2018-02-22.22:30:00] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-02-22.22:30:00] 	TexCoord = aTexCoord;
+[2018-02-22.22:30:00] }
+[2018-02-22.22:30:00] Shader: compiled!
+[2018-02-22.22:30:00] Shader: loading file resources/shaders/texture.fs...
+[2018-02-22.22:30:00] #version 330 core
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] out vec4 fragColor;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] in vec2 TexCoord;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] uniform sampler2D ourTexture;
+[2018-02-22.22:30:00] 
+[2018-02-22.22:30:00] void main(){
+[2018-02-22.22:30:00] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-22.22:30:00] }
+[2018-02-22.22:30:00] Shader: compiled!
+[2018-02-22.22:30:00] ShaderProgram: ready!
+[2018-02-22.22:35:36] Shader: loading file resources/shaders/texture.vs...
+[2018-02-22.22:35:36] #version 330 core
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] in vec3 in_position;
+[2018-02-22.22:35:36] in vec2 aTexCoord;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] out vec2 TexCoord;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] uniform mat4 projection;
+[2018-02-22.22:35:36] uniform mat4 model;
+[2018-02-22.22:35:36] uniform mat4 view;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] void main()
+[2018-02-22.22:35:36] {
+[2018-02-22.22:35:36] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-02-22.22:35:36] 	TexCoord = aTexCoord;
+[2018-02-22.22:35:36] }
+[2018-02-22.22:35:36] Shader: compiled!
+[2018-02-22.22:35:36] Shader: loading file resources/shaders/texture.fs...
+[2018-02-22.22:35:36] #version 330 core
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] out vec4 fragColor;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] in vec2 TexCoord;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] uniform sampler2D ourTexture;
+[2018-02-22.22:35:36] 
+[2018-02-22.22:35:36] void main(){
+[2018-02-22.22:35:36] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-22.22:35:36] }
+[2018-02-22.22:35:36] Shader: compiled!
+[2018-02-22.22:35:36] ShaderProgram: ready!
+[2018-02-22.22:35:59] Shader: loading file resources/shaders/texture.vs...
+[2018-02-22.22:35:59] #version 330 core
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] in vec3 in_position;
+[2018-02-22.22:35:59] in vec2 aTexCoord;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] out vec2 TexCoord;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] uniform mat4 projection;
+[2018-02-22.22:35:59] uniform mat4 model;
+[2018-02-22.22:35:59] uniform mat4 view;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] void main()
+[2018-02-22.22:35:59] {
+[2018-02-22.22:35:59] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-02-22.22:35:59] 	TexCoord = aTexCoord;
+[2018-02-22.22:35:59] }
+[2018-02-22.22:35:59] Shader: compiled!
+[2018-02-22.22:35:59] Shader: loading file resources/shaders/texture.fs...
+[2018-02-22.22:35:59] #version 330 core
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] out vec4 fragColor;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] in vec2 TexCoord;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] uniform sampler2D ourTexture;
+[2018-02-22.22:35:59] 
+[2018-02-22.22:35:59] void main(){
+[2018-02-22.22:35:59] 	fragColor = texture(ourTexture, TexCoord);
+[2018-02-22.22:35:59] }
+[2018-02-22.22:35:59] Shader: compiled!
+[2018-02-22.22:35:59] ShaderProgram: ready!

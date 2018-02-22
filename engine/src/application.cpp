@@ -11,8 +11,9 @@ namespace Awesome
 		window = Window::open<Window>();
 		status = ApplicationStatus::Running;
 		scene = new Scene("default_scene");
+		/* FIX later: Renderer could be changed at runtime */
 		renderer = Renderer::instance();
-		renderer->scene = scene;
+		renderer->handleScene(scene);
 	}
 
 	Application::~Application() {

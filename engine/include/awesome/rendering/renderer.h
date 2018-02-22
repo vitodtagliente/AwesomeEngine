@@ -11,23 +11,23 @@ namespace Awesome
 	{
 		class Renderer
 		{
-			friend class Scene;
-
 		private:
 			static Renderer* singleton;
 
 		protected:
 			Renderer();
 			~Renderer();
-			
-		public:
-			static Renderer* instance();
 
 			Scene* scene{ nullptr };
 
+		public:
+			static Renderer* instance();
+			
 			void init();
 			void update(float delta_time);
 			void render();
+
+			void handleScene(Scene* current_scene);
 		};
 	}
 }
