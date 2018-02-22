@@ -33,9 +33,12 @@ namespace Awesome
 			static Camera* main();
 
 			float fieldOfView{ 60.0f };
-			float aspectRatio{ 1.33f }; /* 4:3 */
-			float near{ 0.1f };
-			float far{ 100.0f };
+			float aspectRatio{ 1.33f };
+			
+			struct ClippingPlanes {
+				float near{ 0.1f };
+				float far{ 100.0f };
+			} clippingPlanes;
 
 			glm::vec4 background{ 0.2f, 0.25f, 0.3f, 1.0f };
 

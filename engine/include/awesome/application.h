@@ -2,8 +2,11 @@
 
 #include "windowing/window.h"
 #include "rendering/renderer.h"
+#include "scenegraph/scene.h"
 
 using namespace Awesome::Windowing;
+using namespace Awesome::Rendering;
+using namespace Awesome::Scenegraph;
 
 namespace Awesome
 {
@@ -24,17 +27,20 @@ namespace Awesome
 
 		Window* window{ nullptr };
 
-		virtual void init() = 0;
-		virtual void render() = 0;
-		virtual void update(float deltaTime) = 0;
-
 		void run();
+
+		Renderer* renderer{ nullptr };
+		Scene* scene{ nullptr };
 
 	protected:
 		ApplicationStatus status{ ApplicationStatus::Created };
 		
 		Application();
 		~Application();
+
+		virtual void init() = 0;
+		virtual void render() = 0;
+		virtual void update(float deltaTime) = 0;
 
 	public:
 
@@ -53,7 +59,9 @@ namespace Awesome
 		static Application* instance() { return singleton; }
 
 		Window* getWindow() const { return window; }
-
+		Renderer* getRenderer() const { return renderer; }
+		Scene* getScene() const { return scene; }
+		
 		ApplicationStatus getStatus() const { return status; }
 
 		void close();

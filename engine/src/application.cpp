@@ -10,12 +10,15 @@ namespace Awesome
 	Application::Application() {
 		window = Window::open<Window>();
 		status = ApplicationStatus::Running;
+		scene = new Scene("default_scene");
+		renderer = Renderer::instance();
+		renderer->scene = scene;
 	}
 
 	Application::~Application() {
 
 	}
-		
+			
 	void Application::run()
 	{
 		if (window != nullptr)
@@ -23,15 +26,22 @@ namespace Awesome
 			if (window->getStatus() == WindowStatus::Created)
 			{
 				init();
+				renderer->init();
 				while (!window->shouldClose() && status != ApplicationStatus::Closing)
 				{
 					glClearColor(0.2f, 0.25f, 0.3f, 1.0f);
-					glClear(GL_COLOR_BUFFER_BIT);
 
-					update(window->getTime());
+					auto delta_time = window->getTime();
+					update(delta_time);
+					if (renderer != nullptr)
+					{
+						renderer->update(delta_time);
+						renderer->render();
+					}
 					render();
 
 					window->update();
+					glClear(GL_COLOR_BUFFER_BIT);
 				}
 				status = ApplicationStatus::Closed;
 				window->close();

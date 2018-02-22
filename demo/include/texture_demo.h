@@ -14,8 +14,6 @@ class TextureDemoApplication : public Application
 {
 public:
 	Program program;
-	Renderer* renderer{ nullptr };
-	Scene* scene{ nullptr };
 	Texture texture;
 	Object* sprite_object;
 	Camera camera;
@@ -32,16 +30,12 @@ public:
 
 		program.linkShaders({ vs, fs });
 		program.compile();
-
-		renderer = Renderer::instance();
-		renderer->scene->name = "texture_scene";
-		scene = renderer->scene;
-
+		
 		if (!texture.load("resources/textures/wall.jpg"))
 			exit(-1);
 
 		/* fill scene objects */
-		sprite_object = scene->spawn<Object>("sprite");
+		sprite_object = getScene()->spawn<Object>("sprite");
 		auto sprite_component = sprite_object->addComponent<SpriteRenderingComponent>();
 		sprite_component->texture = &texture;
 		sprite_component->material = new Material();
@@ -52,19 +46,15 @@ public:
 		
 		/* init camera */
 		camera.transform.position.z = -.2f;
-
-		/* init renderer */
-		renderer->init();
 	}
 
 	void update(float delta_time) override
 	{
-		renderer->update(delta_time);
+
 	}
 
 	void render() override
 	{		
-		/* draw objects */
-		renderer->render();
+
 	}
 };
