@@ -10,7 +10,7 @@ namespace Awesome
 	Application::Application() {
 		window = Window::open<Window>();
 		status = ApplicationStatus::Running;
-		scene = new Scene("default_scene");
+		loadScene("default_scene");
 		/* FIX later: Renderer could be changed at runtime */
 		renderer = Renderer::instance();
 		renderer->handleScene(scene);
@@ -48,6 +48,18 @@ namespace Awesome
 				window->close();
 			}
 		}
+	}
+
+	bool Application::loadScene(std::string name)
+	{
+		if (scene != nullptr)
+		{
+			scene->unload();
+			delete scene;
+		}
+		/* TODO: check for file name */
+		scene = new Scene(name);
+		return true;
 	}
 
 	void Application::close()

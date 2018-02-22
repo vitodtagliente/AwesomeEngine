@@ -74,6 +74,8 @@ namespace Awesome
 				}
 				return found_objects;
 			}
+
+			void unload();
 		};
 	}
 }

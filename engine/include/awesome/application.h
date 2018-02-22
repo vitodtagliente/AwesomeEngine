@@ -61,7 +61,9 @@ namespace Awesome
 		Window* getWindow() const { return window; }
 		Renderer* getRenderer() const { return renderer; }
 		Scene* getScene() const { return scene; }
-		
+
+		bool loadScene(std::string name);
+				
 		ApplicationStatus getStatus() const { return status; }
 
 		void close();

@@ -19,5 +19,10 @@ namespace Awesome
 			parent->transform.children.push_back(new_object);
 			new_object->transform.parent = parent;
 		}
+
+		void Scene::unload()
+		{
+
+		}
 	}
 }
