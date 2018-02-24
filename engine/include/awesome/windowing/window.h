@@ -20,8 +20,6 @@ namespace Awesome
 
 		class Window
 		{
-			friend class Application;
-
 		private:
 			static Window* singleton;
 
@@ -34,9 +32,6 @@ namespace Awesome
 
 			/* GLFW context */
 			GLFWwindow* window_context{ nullptr };
-
-			void update();
-			bool shouldClose() const;
 			
 			static void resize_callback(GLFWwindow* context, int width, int height);
 			static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -69,6 +64,9 @@ namespace Awesome
 			void setResolution(int width, int height, bool fullscreen);
 
 			float getTime() const;
+
+			void update();
+			bool shouldClose() const;
 
 			void close();
 		};
