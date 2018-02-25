@@ -43,6 +43,7 @@ namespace Awesome
 				glm::vec3 forward{ 0.0f, 0.0f, -1.0f };
 
 				glm::mat4 get() const;
+				glm::mat4 getHierarchy() const;
 			} transform;
 
 			unsigned int id{0};

@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "../scenegraph/scene.h"
+#include "components/rendering_component.h"
 
 using namespace Awesome::Scenegraph;
 
@@ -12,6 +13,7 @@ namespace Awesome
 		{
 		private:
 			Scene* scene{ nullptr };
+			std::vector<RenderingComponent*> render_queue{};
 		
 		public:
 			RenderPipeline();

@@ -54,5 +54,10 @@ namespace Awesome
 				}
 			}
 		}
+
+		glm::mat4 Camera::getView() const
+		{
+			return transform.getHierarchy();
+		}
 	}
 }

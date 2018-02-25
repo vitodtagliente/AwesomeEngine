@@ -44,7 +44,7 @@ namespace Awesome
 			CameraType getType() const { return type; }
 
 			glm::mat4 getProjection() const { return projection; }
-			glm::mat4 getView() const { return transform.get(); }
+			glm::mat4 getView() const;
 		};
 
 		class PerspectiveCamera : public Camera

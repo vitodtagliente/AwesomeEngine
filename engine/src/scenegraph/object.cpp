@@ -15,6 +15,17 @@ namespace Awesome
 			return model;
 		}
 
+		glm::mat4 Object::Transform::getHierarchy() const
+		{
+			auto transform_matrix = get();
+			auto parent_transform = parent;
+			while (parent_transform != nullptr) {
+				transform_matrix *= parent->transform.get();
+				parent_transform = parent->transform.parent;
+			}
+			return transform_matrix;
+		}
+
 		unsigned int Object::id_counter = 0;
 
 		Object::Object()
