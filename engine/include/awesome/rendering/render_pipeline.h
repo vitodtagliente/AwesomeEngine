@@ -13,9 +13,17 @@ namespace Awesome
 		private:
 			Scene* scene{ nullptr };
 		
-		protected:
+		public:
 			RenderPipeline();
+			RenderPipeline(Scene* new_scene);
 			~RenderPipeline();
+
+			void init();
+			void update(float delta_time);
+			void render();
+
+			/* init data to render the new scene */
+			void renderScene(Scene* new_scene);
 		};
 	}
 }

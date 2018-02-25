@@ -12,8 +12,7 @@ namespace Awesome
 		status = ApplicationStatus::Running;
 		loadScene("default_scene");
 		/* FIX later: Renderer could be changed at runtime */
-		renderer = Renderer::instance();
-		renderer->handleScene(scene);
+		renderer = new RenderPipeline(scene);
 	}
 
 	Application::~Application() {
@@ -60,6 +59,15 @@ namespace Awesome
 		/* TODO: check for file name */
 		scene = new Scene(name);
 		return true;
+	}
+
+	void Application::switchPipeline(RenderPipeline* new_pipeline, bool free_current/* = false*/)
+	{
+		if (free_current) {
+			delete renderer;
+		}
+		renderer = new_pipeline;
+		renderer->renderScene(scene);
 	}
 
 	void Application::close()

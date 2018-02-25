@@ -1,7 +1,7 @@
 #pragma once
 
 #include "windowing/window.h"
-#include "rendering/renderer.h"
+#include "rendering/render_pipeline.h"
 #include "scenegraph/scene.h"
 
 using namespace Awesome::Windowing;
@@ -29,7 +29,7 @@ namespace Awesome
 
 		void run();
 
-		Renderer* renderer{ nullptr };
+		RenderPipeline* renderer{ nullptr };
 		Scene* scene{ nullptr };
 
 	protected:
@@ -59,10 +59,11 @@ namespace Awesome
 		static Application* instance() { return singleton; }
 
 		Window* getWindow() const { return window; }
-		Renderer* getRenderer() const { return renderer; }
+		RenderPipeline* getRenderer() const { return renderer; }
 		Scene* getScene() const { return scene; }
 
 		bool loadScene(std::string name);
+		void switchPipeline(RenderPipeline* new_pipeline, bool free_current = false);
 				
 		ApplicationStatus getStatus() const { return status; }
 
