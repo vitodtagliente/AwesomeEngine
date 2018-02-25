@@ -1,6 +1,5 @@
 #pragma once
 
-#include <initializer_list>
 #include <string>
 #include <vector>
 
@@ -27,8 +26,6 @@ namespace Awesome
 		public:
 			Object();
 			Object(std::string object_name);
-			Object(std::initializer_list<Component*> init_components);
-			Object(std::string object_name, std::initializer_list<Component*> init_components);
 			~Object();
 			
 			/* object transform info */

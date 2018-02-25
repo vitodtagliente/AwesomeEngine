@@ -1,9 +1,6 @@
 #pragma once
 
 #include "../../scenegraph/object.h"
-#include <vector>
-#include <glm/vec4.hpp>
-#include <glm/mat4x4.hpp>
 
 namespace Awesome
 {
