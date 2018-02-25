@@ -28,9 +28,12 @@ namespace Awesome
 
 		void RenderPipeline::init()
 		{
-			for (auto object : scene->children())
+			auto it = new SceneReader(scene);
+			auto object = it->next();
+			while (object != nullptr)
 			{
 				object->init();
+				object = it->next();
 			}
 		}
 
@@ -60,6 +63,10 @@ namespace Awesome
 		{
 			for (auto render_item : render_queue)
 			{
+				/* TODO: error */
+				if (render_item == nullptr)
+					continue;
+
 				auto owner = render_item->owner();
 				/* check if the object is still active */
 				if (owner->isActive() == false)

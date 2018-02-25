@@ -45,6 +45,8 @@ namespace Awesome
 
 			glm::mat4 getProjection() const { return projection; }
 			glm::mat4 getView() const;
+
+			void clearScreen();
 		};
 
 		class PerspectiveCamera : public Camera

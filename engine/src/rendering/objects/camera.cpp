@@ -1,6 +1,5 @@
 #include <awesome/rendering/objects/camera.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <awesome/math/math.h>
 
 namespace Awesome
 {
@@ -58,6 +57,11 @@ namespace Awesome
 		glm::mat4 Camera::getView() const
 		{
 			return transform.getHierarchy();
+		}
+
+		void Camera::clearScreen()
+		{
+			//glClearColor(background.r, background.g, background.b, background.a);
 		}
 	}
 }
