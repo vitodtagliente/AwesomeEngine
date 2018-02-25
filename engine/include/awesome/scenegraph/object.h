@@ -1,12 +1,9 @@
 #pragma once
 
-#include <cassert>
-#include <initializer_list>
 #include <string>
 #include <vector>
-#include <glm/vec3.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
+#include "../math/math.h"
 #include "component.h"
 
 namespace Awesome
@@ -18,17 +15,21 @@ namespace Awesome
 		private:
 			static unsigned int id_counter;
 
-			bool active{ true };
+			bool active{ true };		
 
 		protected:
 			std::vector<Component*> components;
+
+			Object();
+			Object(std::string object_name);
+			~Object();
 
 		public:
 
 			struct Transform
 			{
 				Object* parent{ nullptr };
-				std::vector<Object*> children{ nullptr };
+				std::vector<Object*> children{};
 
 				glm::vec3 position{ 0.0f };
 				glm::vec3 rotation{ 0.0f };
@@ -47,12 +48,6 @@ namespace Awesome
 			bool isStatic{ false };
 
 			Transform transform;
-
-			Object();
-			Object(std::string object_name);
-			Object(std::initializer_list<Component*> init_components);
-			Object(std::string object_name, std::initializer_list<Component*> init_components);
-			~Object();
 			
 			template <class T>
 			T* addComponent()
@@ -98,8 +93,25 @@ namespace Awesome
 			std::vector<Component*> findComponentsInChildren();
 			*/
 
+			template <class T>
+			T* spawn(std::string name)
+			{
+				T* t_object = new T{};
+				Object* new_object = dynamic_cast<Object*>(t_object);
+				if (new_object != nullptr)
+				{
+					new_object->name = name;
+					transform.children.push_back(new_object);
+					new_object->transform.parent = this;
+				}
+				return t_object;
+			}
+
 			bool isActive() const { return active; }
 			void setActive(bool active_value);
+
+			Object* parent() const { return transform.parent; }
+			std::vector<Object*>& const children() { return transform.children; }
 
 			virtual void init();
 			virtual void update(float delta_time);

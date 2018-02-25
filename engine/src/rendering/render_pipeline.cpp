@@ -22,7 +22,7 @@ namespace Awesome
 
 		void RenderPipeline::init()
 		{
-			for (auto object : scene->objects)
+			for (auto object : scene->children())
 			{
 				object->init();
 			}
@@ -30,7 +30,7 @@ namespace Awesome
 
 		void RenderPipeline::update(float delta_time)
 		{
-			for (auto object : scene->objects)
+			for (auto object : scene->children())
 			{
 				object->update(delta_time);
 			}
@@ -38,7 +38,7 @@ namespace Awesome
 
 		void RenderPipeline::render()
 		{
-			for (auto object : scene->objects)
+			for (auto object : scene->children())
 			{
 				auto rendering_component = object->findComponent<RenderingComponent>();
 				if (rendering_component != nullptr)

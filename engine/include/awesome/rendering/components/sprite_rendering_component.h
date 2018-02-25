@@ -12,6 +12,7 @@ namespace Awesome
 		{
 		public:
 			Texture* texture{ nullptr };
+			bool cropTexture{ false };
 
 			void init() override;
 			void update(float delta_time) override;

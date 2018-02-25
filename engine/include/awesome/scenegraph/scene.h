@@ -1,53 +1,18 @@
 #pragma once 
 
-#include <string>
-#include <vector>
-
 #include "object.h"
 
 namespace Awesome
 {
 	namespace Scenegraph
 	{
-		class Scene
+		class Scene : public Object
 		{
-		public:
-			std::vector<Object*> objects;
-
 		public:			
-			std::string name{};
 
-			Scene(std::string scene_name);
-
-			template <class T>
-			T* spawn(std::string name)
-			{
-				T* t_object = new T{};
-				Object* new_object = dynamic_cast<Object*>(t_object);
-				if (new_object != nullptr)
-				{
-					new_object->name = name;
-					addObject(new_object);
-				}
-				return new_object;
-			}
-
-			template <class T>
-			Object* spawn(std::string name, Object* parent)
-			{
-				T* t_object = new T{};
-				Object* new_object = dynamic_cast<Object*>(t_object);
-				if (new_object != nullptr)
-				{
-					new_object->name = name;
-					addObject(new_object, parent);
-				}
-				return new_object;
-			}
-
-			void addObject(Object* new_object);
-			void addObject(Object* new_object, Object* parent);
-
+			Scene(std::string scene_name) : Object(scene_name) {};
+			
+			/*
 			template <class T>
 			T* findObject()
 			{
@@ -74,6 +39,7 @@ namespace Awesome
 				}
 				return found_objects;
 			}
+			*/
 
 			void unload();
 		};
