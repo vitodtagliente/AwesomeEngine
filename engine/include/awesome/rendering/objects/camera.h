@@ -24,10 +24,10 @@ namespace Awesome
 			glm::mat4 projection{ 1.0f };
 			
 			CameraType type{ CameraType::Perspective };
-
+			
 		public:
 			Camera();
-			Camera(CameraType in_type);
+			Camera(CameraType camera_type);
 			~Camera();
 
 			static Camera* main();
@@ -48,6 +48,16 @@ namespace Awesome
 
 			glm::mat4 getProjection() const { return projection; }
 			glm::mat4 getView() const { return transform.get(); }
+		};
+
+		class PerspectiveCamera : public Camera
+		{
+			PerspectiveCamera() : Camera(CameraType::Perspective) {}
+		};
+
+		class OrthographicCamera : public Camera
+		{
+			OrthographicCamera() : Camera(CameraType::Orthographic) {}
 		};
 	}
 }

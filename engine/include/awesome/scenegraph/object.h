@@ -1,5 +1,6 @@
 #pragma once
 
+#include <initializer_list>
 #include <string>
 #include <vector>
 
@@ -20,11 +21,12 @@ namespace Awesome
 		protected:
 			std::vector<Component*> components;
 
+		public:
 			Object();
 			Object(std::string object_name);
+			Object(std::initializer_list<Component*> init_components);
+			Object(std::string object_name, std::initializer_list<Component*> init_components);
 			~Object();
-
-		public:
 
 			struct Transform
 			{
@@ -96,16 +98,17 @@ namespace Awesome
 			template <class T>
 			T* spawn(std::string name)
 			{
-				T* t_object = new T{};
+				T* t_object = new T();
 				Object* new_object = dynamic_cast<Object*>(t_object);
-				if (new_object != nullptr)
+				if (dynamic_cast<Object*>(t_object) != nullptr)
 				{
 					new_object->name = name;
-					transform.children.push_back(new_object);
-					new_object->transform.parent = this;
+					addChild(new_object);
 				}
 				return t_object;
 			}
+
+			void addChild(Object* child);
 
 			bool isActive() const { return active; }
 			void setActive(bool active_value);

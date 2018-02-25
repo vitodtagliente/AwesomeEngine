@@ -8,7 +8,7 @@ namespace Awesome
 	{
 		Camera* Camera::instance = nullptr;
 
-		Camera::Camera()
+		Camera::Camera() : Object("camera")
 		{
 			//instances.push_back(this);
 			if (instance == nullptr)
@@ -18,16 +18,16 @@ namespace Awesome
 			setType(type, true);
 		}
 
-		Camera::Camera(CameraType in_type)
+		Camera::Camera(CameraType camera_type) : Object("camera")
 		{
 			//instances.push_back(this);
 			if (instance == nullptr)
 				instance = this;
 
 			/* compute projection */
-			setType(in_type, true);
+			setType(camera_type, true);
 		}
-
+		
 		Camera::~Camera()
 		{
 

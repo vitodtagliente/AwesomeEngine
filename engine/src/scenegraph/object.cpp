@@ -27,6 +27,23 @@ namespace Awesome
 			id = ++id_counter;
 			name = object_name;
 		}
+
+		Object::Object(std::initializer_list<Component*> init_components)
+		{
+			id = ++id_counter;
+			for (auto it = init_components.begin(); it != init_components.end(); ++it) {
+				addComponent(*it);
+			}
+		}
+
+		Object::Object(std::string object_name, std::initializer_list<Component*> init_components)
+		{
+			id = ++id_counter;
+			name = object_name;
+			for (auto it = init_components.begin(); it != init_components.end(); ++it) {
+				addComponent(*it);
+			}
+		}
 		
 		Object::~Object()
 		{
@@ -43,6 +60,11 @@ namespace Awesome
 			return new_component;
 		}
 
+		void Object::addChild(Object* child)
+		{
+			transform.children.push_back(child);
+			child->transform.parent = this;
+		}
 
 		bool Object::operator==(const Object& other)
 		{
