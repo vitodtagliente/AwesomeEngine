@@ -11,14 +11,17 @@ namespace Awesome
 {
 	namespace Scenegraph
 	{
+		/* Base engine object */
 		class Object
 		{
 		private:
 			static unsigned int id_counter;
 
+			/* update method is called only if the object is active */
 			bool active{ true };		
 
 		protected:
+			/* the list of components attached to the object */
 			std::vector<Component*> components;
 
 		public:
@@ -27,7 +30,8 @@ namespace Awesome
 			Object(std::initializer_list<Component*> init_components);
 			Object(std::string object_name, std::initializer_list<Component*> init_components);
 			~Object();
-
+			
+			/* object transform info */
 			struct Transform
 			{
 				Object* parent{ nullptr };
@@ -42,15 +46,15 @@ namespace Awesome
 				glm::vec3 forward{ 0.0f, 0.0f, -1.0f };
 
 				glm::mat4 get() const;
-			};
+			} transform;
 
 			unsigned int id{0};
+			/* the object name */
 			std::string name{};
 
 			bool isStatic{ false };
 
-			Transform transform;
-			
+			/* add a new component by class */
 			template <class T>
 			T* addComponent()
 			{
@@ -63,6 +67,7 @@ namespace Awesome
 
 			Component* addComponent(Component* new_component);
 						
+			/* find the first component of class */
 			template <class T>
 			T* findComponent()
 			{
@@ -75,6 +80,7 @@ namespace Awesome
 				return nullptr;
 			}
 
+			/* find all components of class */
 			template <class T>
 			std::vector<T*> findComponents()
 			{
@@ -89,12 +95,14 @@ namespace Awesome
 			}
 
 			/*
+			TODO:
 			template <class T>
 			Component* findComponentInChildren();
 			template <class T>
 			std::vector<Component*> findComponentsInChildren();
 			*/
 
+			/* spawn a new child object */
 			template <class T>
 			T* spawn(std::string name)
 			{
@@ -110,12 +118,15 @@ namespace Awesome
 
 			void addChild(Object* child);
 
+			/* change and get the active state */
 			bool isActive() const { return active; }
 			void setActive(bool active_value);
 
+			/* get transform const info data */
 			Object* parent() const { return transform.parent; }
 			std::vector<Object*>& const children() { return transform.children; }
 
+			/* find a child object of class */
 			template <class T>
 			T* findObject()
 			{
@@ -137,6 +148,7 @@ namespace Awesome
 				return nullptr;
 			}
 
+			/* find all the children objects of class */
 			template <class T>
 			std::vector<T*> findObjects()
 			{
@@ -155,7 +167,9 @@ namespace Awesome
 				return found_objects;
 			}
 
+			/* init the object */
 			virtual void init();
+			/* update only if the object is active */
 			virtual void update(float delta_time);
 
 			bool operator== (const Object& other);
