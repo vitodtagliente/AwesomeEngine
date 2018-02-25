@@ -116,6 +116,45 @@ namespace Awesome
 			Object* parent() const { return transform.parent; }
 			std::vector<Object*>& const children() { return transform.children; }
 
+			template <class T>
+			T* findObject()
+			{
+				for (auto it = children().begin(); it != children().end(); ++it)
+				{
+					T* current_object = dynamic_cast<T*>(*it);
+					if (current_object != nullptr)
+						return current_object;
+					else
+					{
+						if (current_object->children().size() > 0)
+						{
+							T* result = current_object->findObject<T>();
+							if (result != nullptr)
+								return result;
+						}							
+					}
+				}
+				return nullptr;
+			}
+
+			template <class T>
+			std::vector<T*> findObjects()
+			{
+				std::vector<T*> found_objects;
+				for (auto it = objects.begin(); it != objects.end(); ++it)
+				{
+					T* current_object = dynamic_cast<T*>(*it);
+					if (current_object != nullptr)
+						found_objects.push_back(current_object);
+					else
+					{
+						if (current_object->children().size() > 0)
+							found_objects.push_back(current_object->findObjects<T>());
+					}
+				}
+				return found_objects;
+			}
+
 			virtual void init();
 			virtual void update(float delta_time);
 

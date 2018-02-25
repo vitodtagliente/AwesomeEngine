@@ -12,6 +12,8 @@ namespace Awesome
 
 			Scene(std::string scene_name) : Object(scene_name) {};
 			
+
+
 			/*
 			template <class T>
 			T* findObject()
