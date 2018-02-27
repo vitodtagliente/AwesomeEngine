@@ -40,9 +40,9 @@ public:
 			sprite_component->material = new Material();
 			sprite_component->material->program = &program;
 
-			//sprite_component->cropTexture = true;
-			//sprite_component->cropRect.width = 0.75f;
-			//sprite_component->cropRect.height = 0.75f;
+			sprite_component->cropTexture = true;
+			sprite_component->cropRect.width = 0.75f;
+			sprite_component->cropRect.height = 0.75f;
 
 			//sprite_object->transform.position.x = rand() % 5 - 2;
 			//sprite_object->transform.position.y = rand() % 5 - 2;

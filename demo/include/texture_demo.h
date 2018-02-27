@@ -40,9 +40,6 @@ public:
 		sprite_component->texture = &texture;
 		sprite_component->material = new Material();
 		sprite_component->material->program = &program;
-
-		sprite_object->transform.position.x = 0.0f;
-		sprite_object->transform.rotation.z = 20.0f;
 		
 		/* init camera */
 		camera = getScene()->spawn<Camera>("camera");
@@ -51,7 +48,7 @@ public:
 
 	void update(float delta_time) override
 	{
-
+		sprite_object->transform.rotation.z += 0.0005;
 	}
 
 	void render() override
