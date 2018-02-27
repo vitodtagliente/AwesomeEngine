@@ -4,6 +4,7 @@
 
 #include "texture_demo.h"
 #include "hello_triangle.h"
+#include "multi_sprite.h"
 
 /* launch a demo application */
-DECLARE_MAIN(TextureDemoApplication);
+DECLARE_MAIN(MultiSpriteApplication);

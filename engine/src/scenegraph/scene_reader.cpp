@@ -4,9 +4,10 @@ namespace Awesome
 {
 	namespace Scenegraph
 	{
-		SceneReader::SceneReader(Scene* selected_scene)
+		SceneReader::SceneReader(Object* begin_object)
 		{
-			current_object = selected_scene;
+			this->begin_object = begin_object;
+			current_object = begin_object;
 		}
 
 		Object* const SceneReader::next()
@@ -20,10 +21,15 @@ namespace Awesome
 				child_index++;
 				if(child_index < children.size())
 					return children[child_index];
-				else return nullptr;
+				else
+				{
+					reading = false;
+					return nullptr;
+				}
 			}
 			else
 			{
+				reading = false;
 				return nullptr;
 			}
 		}

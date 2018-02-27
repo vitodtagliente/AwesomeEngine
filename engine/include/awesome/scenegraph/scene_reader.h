@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scene.h"
+#include "object.h"
 
 namespace Awesome
 {
@@ -9,13 +9,17 @@ namespace Awesome
 		class SceneReader
 		{
 		private:
+			Object* begin_object{ nullptr };
 			Object* current_object{ nullptr };
 			int child_index{ -1 };
+			bool reading{ true };
 
 		public:
-			SceneReader(Scene* selected_scene);
+			SceneReader(Object* begin_object);
 
+			Object* const begin() { return begin_object; }
 			Object* const next();
+			bool end() const { return !reading; }
 		};
 	}
 }

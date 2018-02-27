@@ -42,7 +42,7 @@ namespace Awesome
 			render_queue.clear();
 			auto it = new SceneReader(scene);
 			auto object = it->next();
-			while (object != nullptr)
+			while (it->end() == false)
 			{
 				/* check if the object is active */
 				if (object->isActive() == false)
