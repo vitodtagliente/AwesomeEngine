@@ -29,9 +29,10 @@ namespace Awesome
 				renderer->init();
 				while (!window->shouldClose() && status != ApplicationStatus::Closing)
 				{
-					glClearColor(0.2f, 0.25f, 0.3f, 1.0f);
 					glEnable(GL_BLEND);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glClear(GL_COLOR_BUFFER_BIT);
+					glClearColor(0.2f, 0.25f, 0.3f, 1.0f);
 
 					auto delta_time = window->getTime();
 					update(delta_time);
@@ -43,7 +44,6 @@ namespace Awesome
 					render();
 
 					window->update();
-					glClear(GL_COLOR_BUFFER_BIT);
 				}
 				status = ApplicationStatus::Closed;
 				window->close();

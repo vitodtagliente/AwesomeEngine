@@ -42,6 +42,8 @@ public:
 
 			sprite_object->transform.position.x = rand() % 5 - 2;
 			sprite_object->transform.position.y = rand() % 5 - 2;
+			sprite_object->transform.scale.x = 0.3f;
+			sprite_object->transform.scale.y = 0.3f;
 		}
 		
 		/* init camera */
