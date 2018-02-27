@@ -13,7 +13,7 @@ public:
 	Texture texture;
 	Object* sprite_object;
 	Camera* camera;
-	const int max_sprites = 10;
+	const int max_sprites = 1;//0;
 
 	MultiSpriteApplication()
 	{
@@ -40,10 +40,14 @@ public:
 			sprite_component->material = new Material();
 			sprite_component->material->program = &program;
 
-			sprite_object->transform.position.x = rand() % 5 - 2;
-			sprite_object->transform.position.y = rand() % 5 - 2;
-			sprite_object->transform.scale.x = 0.3f;
-			sprite_object->transform.scale.y = 0.3f;
+			//sprite_component->cropTexture = true;
+			//sprite_component->cropRect.width = 0.75f;
+			//sprite_component->cropRect.height = 0.75f;
+
+			//sprite_object->transform.position.x = rand() % 5 - 2;
+			//sprite_object->transform.position.y = rand() % 5 - 2;
+			sprite_object->transform.scale.x = 0.5f;
+			sprite_object->transform.scale.y = 0.5f;
 		}
 		
 		/* init camera */

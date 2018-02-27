@@ -9,6 +9,10 @@ namespace Awesome
 		void SpriteRenderingComponent::init()
 		{
 			mesh = Primitive::generate<Square>();
+			if (cropTexture)
+			{
+				//mesh->uvs[0] = glm::vec2(cropRect.width, cropRect.height);
+			}
 			MeshRenderingComponent::init();
 		}
 
