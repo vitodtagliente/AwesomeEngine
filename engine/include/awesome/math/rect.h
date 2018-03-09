@@ -36,13 +36,18 @@ namespace Awesome
 				x = other.x;
 				y = other.y;
 				width = other.width;
-				z = other.height;
+				height = other.height;
 				return *this;
 			}
 
 			bool operator== (const tRect& other) const {
 				return (x == other.x && y == other.y &&
-					width = other.width && height == other.height);
+					width == other.width && height == other.height);
+			}
+
+			bool operator!= (const tRect& other) const {
+				return (x != other.x || y != other.y ||
+					width != other.width || height != other.height);
 			}
 		};
 
