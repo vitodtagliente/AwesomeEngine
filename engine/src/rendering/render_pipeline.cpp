@@ -1,6 +1,7 @@
 #include <awesome/rendering/render_pipeline.h>
 #include <awesome/rendering/components/rendering_component.h>
 #include <awesome/scenegraph/scene_reader.h>
+#include <awesome/rendering/sprite_batch.h>
 
 namespace Awesome
 {
@@ -74,6 +75,10 @@ namespace Awesome
 
 				render_item->render();
 			}
+
+			auto sprite_batch = SpriteBatch::instance();
+			if (sprite_batch != nullptr)
+				sprite_batch->draw();
 		}
 
 		/* change the scene that should be rendered */

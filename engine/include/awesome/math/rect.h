@@ -24,7 +24,7 @@ namespace Awesome
 				x = other.x;
 				y = other.y;
 				width = other.width;
-				z = other.height;
+				height = other.height;
 			}
 
 			tRect<T>& operator= (const tRect<T>& other) {

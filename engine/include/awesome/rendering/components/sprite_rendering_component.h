@@ -11,13 +11,6 @@ namespace Awesome
 
 		class SpriteRenderingComponent : public RenderingComponent
 		{
-		private:
-			unsigned int vao{ 0 };
-			unsigned int vbo{ 0 };
-			unsigned int uv_vbo{ 0 };
-			unsigned int ebo{ 0 };
-			unsigned int eab{ 0 };
-
 		protected:
 			/* used to crop texture atlas */
 			Math::Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
