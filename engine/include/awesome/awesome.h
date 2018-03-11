@@ -3,6 +3,7 @@
 #include "ai/ai.h"
 #include "assets/assets.h"
 #include "audio/audio.h"
+#include "gameplay/gameplay.h"
 #include "math/math.h"
 #include "networking/networking.h"
 #include "physics/physics.h"

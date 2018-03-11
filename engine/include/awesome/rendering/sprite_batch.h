@@ -10,6 +10,7 @@ namespace Awesome
 {
 	namespace Rendering
 	{
+		/* base sprite batch rendering data */
 		struct SpriteBatchRenderingData
 		{
 			glm::mat4 transform{ 1.0f };

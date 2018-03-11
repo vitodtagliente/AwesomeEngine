@@ -13,7 +13,10 @@ namespace Awesome
 		}
 
 		SpriteBatch::~SpriteBatch() {
-
+			glDeleteVertexArrays(1, &vao);
+			glDeleteBuffers(1, &vbo);
+			glDeleteBuffers(1, &uv_vbo);
+			glDeleteBuffers(1, &eab);
 		}
 
 		SpriteBatch* SpriteBatch::instance() 
@@ -88,7 +91,8 @@ namespace Awesome
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-
+			
+			/* clear rendering data */
 			data.clear();
 		}
 
@@ -103,10 +107,7 @@ namespace Awesome
 				std::vector<SpriteBatchRenderingData> v;
 				data.insert(std::make_pair(texture, v));
 			}
-			else
-			{
-				data[texture].push_back(in_data);				
-			}
+			data[texture].push_back(in_data);
 		}
 
 		void SpriteBatch::draw() 
@@ -165,6 +166,7 @@ namespace Awesome
 					glBindVertexArray(0);
 				}
 			}
+			/* clear rendering data at the end of drawing phase */
 			clear();
 		}
 	}
