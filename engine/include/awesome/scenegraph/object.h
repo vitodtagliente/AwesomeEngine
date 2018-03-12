@@ -122,7 +122,7 @@ namespace Awesome
 
 			/* get transform const info data */
 			Object* parent() const { return transform.parent; }
-			std::vector<Object*>& const children() { return transform.children; }
+			std::vector<Object*>& children() { return transform.children; }
 
 			/* find a child object of class */
 			template <class T>
