@@ -151,7 +151,7 @@ namespace Awesome
 			std::vector<T*> findObjects()
 			{
 				std::vector<T*> found_objects;
-				for (auto it = objects.begin(); it != objects.end(); ++it)
+				for (auto it = children().begin(); it != children().end(); ++it)
 				{
 					T* current_object = dynamic_cast<T*>(*it);
 					if (current_object != nullptr)
