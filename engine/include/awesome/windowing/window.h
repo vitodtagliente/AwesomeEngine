@@ -28,6 +28,8 @@ namespace Awesome
 			bool fullscreen = false;
 			std::string title{"AwesomeEngine"};
 
+			float application_time{ 0.0f };
+
 			WindowStatus status{ WindowStatus::Created };
 
 			/* GLFW context */

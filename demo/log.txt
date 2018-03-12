@@ -11930,3 +11930,163 @@ ERROR: 0:7: 'assign' :  cannot convert from 'const highp float' to 'FragUserData
 [2018-03-12.22:00:25] }
 [2018-03-12.22:00:25] Shader: compiled!
 [2018-03-12.22:00:25] ShaderProgram: ready!
+[2018-03-12.22:08:26] Shader: loading file resources/shaders/texture.vs...
+[2018-03-12.22:08:26] #version 330 core
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] in vec3 in_position;
+[2018-03-12.22:08:26] in vec2 aTexCoord;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] out vec2 TexCoord;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] uniform mat4 projection;
+[2018-03-12.22:08:26] uniform mat4 model;
+[2018-03-12.22:08:26] uniform mat4 view;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] void main()
+[2018-03-12.22:08:26] {
+[2018-03-12.22:08:26] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-12.22:08:26] 	TexCoord = aTexCoord;
+[2018-03-12.22:08:26] }
+[2018-03-12.22:08:26] Shader: compiled!
+[2018-03-12.22:08:26] Shader: loading file resources/shaders/texture.fs...
+[2018-03-12.22:08:26] #version 330 core
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] out vec4 fragColor;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] in vec2 TexCoord;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] uniform sampler2D ourTexture;
+[2018-03-12.22:08:26] 
+[2018-03-12.22:08:26] void main(){
+[2018-03-12.22:08:26] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-12.22:08:26] }
+[2018-03-12.22:08:26] Shader: compiled!
+[2018-03-12.22:08:26] ShaderProgram: ready!
+[2018-03-12.22:10:41] Shader: loading file resources/shaders/texture.vs...
+[2018-03-12.22:10:41] #version 330 core
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] in vec3 in_position;
+[2018-03-12.22:10:41] in vec2 aTexCoord;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] out vec2 TexCoord;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] uniform mat4 projection;
+[2018-03-12.22:10:41] uniform mat4 model;
+[2018-03-12.22:10:41] uniform mat4 view;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] void main()
+[2018-03-12.22:10:41] {
+[2018-03-12.22:10:41] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-12.22:10:41] 	TexCoord = aTexCoord;
+[2018-03-12.22:10:41] }
+[2018-03-12.22:10:41] Shader: compiled!
+[2018-03-12.22:10:41] Shader: loading file resources/shaders/texture.fs...
+[2018-03-12.22:10:41] #version 330 core
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] out vec4 fragColor;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] in vec2 TexCoord;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] uniform sampler2D ourTexture;
+[2018-03-12.22:10:41] 
+[2018-03-12.22:10:41] void main(){
+[2018-03-12.22:10:41] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-12.22:10:41] }
+[2018-03-12.22:10:41] Shader: compiled!
+[2018-03-12.22:10:41] ShaderProgram: ready!
+[2018-03-12.22:11:21] Shader: loading file resources/shaders/texture.vs...
+[2018-03-12.22:11:21] #version 330 core
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] in vec3 in_position;
+[2018-03-12.22:11:21] in vec2 aTexCoord;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] out vec2 TexCoord;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] uniform mat4 projection;
+[2018-03-12.22:11:21] uniform mat4 model;
+[2018-03-12.22:11:21] uniform mat4 view;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] void main()
+[2018-03-12.22:11:21] {
+[2018-03-12.22:11:21] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-12.22:11:21] 	TexCoord = aTexCoord;
+[2018-03-12.22:11:21] }
+[2018-03-12.22:11:21] Shader: compiled!
+[2018-03-12.22:11:21] Shader: loading file resources/shaders/texture.fs...
+[2018-03-12.22:11:21] #version 330 core
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] out vec4 fragColor;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] in vec2 TexCoord;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] uniform sampler2D ourTexture;
+[2018-03-12.22:11:21] 
+[2018-03-12.22:11:21] void main(){
+[2018-03-12.22:11:21] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-12.22:11:21] }
+[2018-03-12.22:11:21] Shader: compiled!
+[2018-03-12.22:11:21] ShaderProgram: ready!
+[2018-03-12.22:11:40] Shader: loading file resources/shaders/texture.vs...
+[2018-03-12.22:11:40] #version 330 core
+[2018-03-12.22:11:40] 
+[2018-03-12.22:11:40] in vec3 in_position;
+[2018-03-12.22:11:40] in vec2 aTexCoord;
+[2018-03-12.22:11:40] 
+[2018-03-12.22:11:40] out vec2 TexCoord;
+[2018-03-12.22:11:40] 
+[2018-03-12.22:11:40] uniform mat4 projection;
+[2018-03-12.22:11:40] uniform mat4 model;
+[2018-03-12.22:11:40] uniform mat4 view;
+[2018-03-12.22:11:40] 
+[2018-03-12.22:11:40] void main()
+[2018-03-12.22:11:40] {
+[2018-03-12.22:11:40] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-12.22:11:40] 	TexCoord = aTexCoord;
+[2018-03-12.22:11:40] }
+[2018-03-12.22:11:40] Shader: compiled!
+[2018-03-12.22:11:40] Shader: loading file resources/shaders/texture.fs...
+[2018-03-12.22:11:41] #version 330 core
+[2018-03-12.22:11:41] 
+[2018-03-12.22:11:41] out vec4 fragColor;
+[2018-03-12.22:11:41] 
+[2018-03-12.22:11:41] in vec2 TexCoord;
+[2018-03-12.22:11:41] 
+[2018-03-12.22:11:41] uniform sampler2D ourTexture;
+[2018-03-12.22:11:41] 
+[2018-03-12.22:11:41] void main(){
+[2018-03-12.22:11:41] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-12.22:11:41] }
+[2018-03-12.22:11:41] Shader: compiled!
+[2018-03-12.22:11:41] ShaderProgram: ready!
+[2018-03-12.22:11:54] Shader: loading file resources/shaders/texture.vs...
+[2018-03-12.22:11:54] #version 330 core
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] in vec3 in_position;
+[2018-03-12.22:11:54] in vec2 aTexCoord;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] out vec2 TexCoord;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] uniform mat4 projection;
+[2018-03-12.22:11:54] uniform mat4 model;
+[2018-03-12.22:11:54] uniform mat4 view;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] void main()
+[2018-03-12.22:11:54] {
+[2018-03-12.22:11:54] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-12.22:11:54] 	TexCoord = aTexCoord;
+[2018-03-12.22:11:54] }
+[2018-03-12.22:11:54] Shader: compiled!
+[2018-03-12.22:11:54] Shader: loading file resources/shaders/texture.fs...
+[2018-03-12.22:11:54] #version 330 core
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] out vec4 fragColor;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] in vec2 TexCoord;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] uniform sampler2D ourTexture;
+[2018-03-12.22:11:54] 
+[2018-03-12.22:11:54] void main(){
+[2018-03-12.22:11:54] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-12.22:11:54] }
+[2018-03-12.22:11:54] Shader: compiled!
+[2018-03-12.22:11:54] ShaderProgram: ready!

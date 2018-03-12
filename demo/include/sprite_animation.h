@@ -40,8 +40,8 @@ public:
 		auto sprite_animation_component = sprite_object->addComponent<SpriteAnimationComponent>();
 
 		SpriteAnimation walk_right;
-		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.4f, 0.375f, 0.2f, 0.125f }, 400.0f });
-		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.6f, 0.375f, 0.2f, 0.125f }, 400.0f });
+		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.4f, 0.375f, 0.2f, 0.125f }, 0.01f });
+		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.6f, 0.375f, 0.2f, 0.125f }, 0.01f });
 
 		sprite_animation_component->animations["walk_right"] = walk_right;
 
