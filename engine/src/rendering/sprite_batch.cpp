@@ -148,10 +148,10 @@ namespace Awesome
 						{
 							std::vector<glm::vec2> uvs;
 							auto crop = rendering_data.textureCoords;
-							uvs.push_back(glm::vec2(crop.x, crop.height));
+							uvs.push_back(glm::vec2(crop.x, crop.y + crop.height));
 							uvs.push_back(glm::vec2(crop.x, crop.y));
-							uvs.push_back(glm::vec2(crop.width, crop.y));
-							uvs.push_back(glm::vec2(crop.width, crop.height));
+							uvs.push_back(glm::vec2(crop.x + crop.width, crop.y));
+							uvs.push_back(glm::vec2(crop.x + crop.width, crop.y + crop.height));
 
 							glBindBuffer(GL_ARRAY_BUFFER, uv_vbo);
 							glBufferSubData(GL_ARRAY_BUFFER, 0, uvs.size() * sizeof(glm::vec2), &uvs[0]);
