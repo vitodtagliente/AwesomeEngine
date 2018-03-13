@@ -1,5 +1,5 @@
 #include <awesome/application.h>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 
 using namespace Awesome::Windowing;
 

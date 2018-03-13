@@ -1,6 +1,5 @@
 #pragma once
 
-#include "rendering_data.h"
 #include "objects/camera.h"
 #include "objects/sprite.h"
 #include "sprite_batch.h"

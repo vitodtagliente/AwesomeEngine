@@ -1,5 +1,9 @@
 #include <awesome/scenegraph/scene_reader.h>
 
+/*
+	TODO: improve this
+*/
+
 namespace Awesome
 {
 	namespace Scenegraph

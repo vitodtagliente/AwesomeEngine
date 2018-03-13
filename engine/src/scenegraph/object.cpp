@@ -1,4 +1,5 @@
 #include <awesome/scenegraph/object.h>
+#include <awesome/scenegraph/component.h>
 
 namespace Awesome
 {

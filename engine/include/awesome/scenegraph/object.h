@@ -4,12 +4,13 @@
 #include <vector>
 
 #include "../math/math.h"
-#include "component.h"
 
 namespace Awesome
 {
 	namespace Scenegraph
 	{
+		class Component;
+
 		/* Base engine object */
 		class Object
 		{
@@ -120,8 +121,8 @@ namespace Awesome
 			bool isActive() const { return active; }
 			void setActive(bool active_value);
 
-			/* get transform const info data */
-			Object* parent() const { return transform.parent; }
+			/* get transform hierarchy data */
+			Object* parent() { return transform.parent; }
 			std::vector<Object*>& children() { return transform.children; }
 
 			/* find a child object of class */
@@ -165,9 +166,8 @@ namespace Awesome
 				return found_objects;
 			}
 
-			/* init the object */
+			/* engine events */
 			virtual void init();
-			/* update only if the object is active */
 			virtual void update(float delta_time);
 
 			bool operator== (const Object& other);

@@ -1,11 +1,11 @@
 #pragma once 
 
+#include "object.h"
+
 namespace Awesome
 {
 	namespace Scenegraph
 	{
-		class Object;
-
 		class Component
 		{
 			friend class Object;
@@ -18,9 +18,11 @@ namespace Awesome
 			unsigned int id{ 0 };
 
 			Component();
-						
-			Object* owner() const { return owner_object; }
 
+			/* return the owner object */
+			Object* owner() { return owner_object; }
+
+			/* engine events */
 			virtual void init() = 0;
 			virtual void update(float delta_time) = 0;		
 
