@@ -1,11 +1,5 @@
 #include <awesome/rendering/components/sprite_rendering_component.h>
-#include <awesome/rendering/shading/texture.h>
-#include <awesome/rendering/primitives/primitives.h>
 #include <awesome/rendering/sprite_batch.h>
-#include <awesome/scenegraph/object.h>
-
-#include <glad/glad.h>
-#include <vector>
 
 namespace Awesome
 {

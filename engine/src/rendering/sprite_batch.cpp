@@ -1,6 +1,6 @@
 #include <awesome/rendering/sprite_batch.h>
 #include <awesome/rendering/objects/camera.h>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 
 namespace Awesome
 {

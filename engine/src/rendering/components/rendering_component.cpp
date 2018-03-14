@@ -1,6 +1,5 @@
 #include <awesome/rendering/components/rendering_component.h>
 #include <awesome/rendering/objects/camera.h>
-#include <awesome/scenegraph/object.h>
 
 namespace Awesome
 {

@@ -2,9 +2,7 @@
 
 #include <awesome/rendering/shading/shader.h>
 #include <initializer_list>
-#include <glm/mat4x4.hpp>
-#include <glm/vec4.hpp>
-#include <glm/vec3.hpp>
+#include "../../math/math.h"
 
 namespace Awesome
 {

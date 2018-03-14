@@ -1,5 +1,5 @@
 #include <awesome/rendering/shading/texture.h>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 

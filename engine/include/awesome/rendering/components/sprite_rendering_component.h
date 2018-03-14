@@ -1,14 +1,13 @@
 #pragma once
 
 #include "rendering_component.h"
+#include "../shading/texture.h"
 #include "../../math/rect.h"
 
 namespace Awesome
 {
 	namespace Rendering
 	{
-		class Texture;
-
 		class SpriteRenderingComponent : public RenderingComponent
 		{
 		protected:

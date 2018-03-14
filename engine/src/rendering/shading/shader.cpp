@@ -1,7 +1,7 @@
 #include <awesome/rendering/shading/shader.h>
-#include <fstream>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 #include <awesome/utility/log.h>
+#include <fstream>
 
 namespace Awesome
 {

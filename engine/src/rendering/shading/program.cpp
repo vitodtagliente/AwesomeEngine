@@ -1,8 +1,7 @@
 #include <awesome/rendering/shading/program.h>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 #include <cassert>
 #include <awesome/utility/log.h>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace Awesome
 {

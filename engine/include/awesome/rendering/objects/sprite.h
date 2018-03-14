@@ -14,7 +14,7 @@ namespace Awesome
 
 		public:
 			Sprite(std::string name);
-			SpriteRenderingComponent* spriteRenderer() const { return spriteRenderingComponent; }
+			SpriteRenderingComponent* spriteRenderer() { return spriteRenderingComponent; }
 		};
 	}
 }
