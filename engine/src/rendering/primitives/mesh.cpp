@@ -1,5 +1,5 @@
 #include <awesome/rendering/primitives/mesh.h>
-#include <glad/glad.h>
+#include <awesome/rendering/context.h>
 
 namespace Awesome
 {

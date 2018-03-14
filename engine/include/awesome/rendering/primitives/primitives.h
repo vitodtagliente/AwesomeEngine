@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "mesh.h"
 #include "cube.h"
+#include "mesh.h"
 #include "rectangle.h"
 #include "square.h"
 #include "triangle.h"

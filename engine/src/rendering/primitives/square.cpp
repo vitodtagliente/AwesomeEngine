@@ -1,5 +1,4 @@
 #include <awesome/rendering/primitives/square.h>
-#include <glad/glad.h>
 
 namespace Awesome
 {

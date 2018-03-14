@@ -1,5 +1,4 @@
 #include <awesome/rendering/primitives/triangle.h>
-#include <glad/glad.h>
 
 namespace Awesome
 {
