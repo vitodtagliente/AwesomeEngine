@@ -47,7 +47,7 @@ public:
 
 		/* init camera */
 		camera = getScene()->spawn<Camera>("camera");
-		camera->transform.position.z = -.2f;
+		camera->transform.position.z = -.4f;
 	}
 
 	void update(float delta_time) override

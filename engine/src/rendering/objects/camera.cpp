@@ -1,5 +1,7 @@
 #include <awesome/rendering/objects/camera.h>
+#include <awesome/rendering/context.h>
 #include <awesome/math/math.h>
+#include <awesome/application.h>
 
 namespace Awesome
 {
@@ -9,7 +11,6 @@ namespace Awesome
 
 		Camera::Camera() : Object("camera")
 		{
-			//instances.push_back(this);
 			if (instance == nullptr)
 				instance = this;
 
@@ -34,6 +35,10 @@ namespace Awesome
 
 		Camera* Camera::main() 
 		{
+			if (instance == nullptr)
+			{
+				instance = Application::instance()->getScene()->findObject<Camera>();
+			}
 			return instance;
 		}
 
@@ -44,7 +49,7 @@ namespace Awesome
 
 				if (type == CameraType::Perspective)
 				{
-					projection = glm::perspective(fieldOfView, aspectRatio, clippingPlanes.near, clippingPlanes.far);
+					projection = glm::perspective<float>(fieldOfView, aspectRatio, clipping_near, clipping_far);
 				}
 				else
 				{
@@ -58,10 +63,19 @@ namespace Awesome
 		{
 			return transform.getHierarchy();
 		}
-
-		void Camera::clearScreen()
+		
+		void Camera::clear()
 		{
-			//glClearColor(background.r, background.g, background.b, background.a);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glClear(GL_COLOR_BUFFER_BIT);
+			if (instance != nullptr)
+			{
+				glClearColor(instance->background.r, instance->background.g, 
+					instance->background.b, instance->background.a);
+			}
+			else
+				glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		}
 	}
 }

@@ -15,7 +15,6 @@ namespace Awesome
 		class Camera : public Scenegraph::Object
 		{
 		private:
-			//static std::vector<Camera*> instances;
 			static Camera* instance;
 
 			glm::mat4 projection{ 1.0f };
@@ -31,11 +30,8 @@ namespace Awesome
 
 			float fieldOfView{ 60.0f };
 			float aspectRatio{ 1.33f };
-			
-			struct ClippingPlanes {
-				float near{ 0.1f };
-				float far{ 100.0f };
-			} clippingPlanes;
+			float clipping_near{ 0.1f };
+			float clipping_far{ 100.0f };
 
 			glm::vec4 background{ 0.2f, 0.25f, 0.3f, 1.0f };
 
@@ -45,8 +41,8 @@ namespace Awesome
 
 			glm::mat4 getProjection() const { return projection; }
 			glm::mat4 getView() const;
-
-			void clearScreen();
+			
+			static void clear();
 		};
 
 		class PerspectiveCamera : public Camera
