@@ -17,6 +17,18 @@ namespace Awesome
 			Rendering::Texture* texture{ nullptr };
 			Math::Rect frame_rect{ 0.0f,0.0f,1.0f,1.0f };
 			float frame_time{ 0.5f };
+
+			SpriteAnimationData()
+			{
+
+			}
+
+			SpriteAnimationData(Rendering::Texture* in_texture, const Math::Rect& rect, const float time)
+			{
+				texture = in_texture;
+				frame_rect = rect;
+				frame_time = time;
+			}
 		};
 
 		struct SpriteAnimation
