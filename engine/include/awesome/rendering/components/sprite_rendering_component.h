@@ -10,12 +10,12 @@ namespace Awesome
 	{
 	protected:
 		/* used to crop texture atlas */
-		Math::Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
+		Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
 
 	public:
 		Texture* texture{ nullptr };
 
-		void crop(const Math::Rect& crop);
+		void crop(const Rect& crop);
 
 		void init() override;
 		void update(float delta_time) override;

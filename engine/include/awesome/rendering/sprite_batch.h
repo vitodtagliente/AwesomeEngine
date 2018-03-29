@@ -12,7 +12,7 @@ namespace Awesome
 	struct SpriteBatchRenderingData
 	{
 		glm::mat4 transform{ 1.0f };
-		Math::Rect textureCoords{ 0.0f,0.0f,1.0f,1.0f };
+		Rect textureCoords{ 0.0f,0.0f,1.0f,1.0f };
 		Material* material{ nullptr };
 	};
 

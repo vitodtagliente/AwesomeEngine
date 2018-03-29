@@ -8,7 +8,7 @@ namespace Awesome
 			
 	}
 
-	void SpriteRenderingComponent::crop(const Math::Rect& crop)
+	void SpriteRenderingComponent::crop(const Rect& crop)
 	{
 		if (textureCoords != crop)
 		{
