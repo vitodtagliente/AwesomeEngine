@@ -2,11 +2,8 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	Sprite::Sprite(std::string name)
 	{
-		Sprite::Sprite(std::string name) : Object(name)
-		{
-			spriteRenderingComponent = addComponent<SpriteRenderingComponent>();
-		}
+		spriteRenderingComponent = addComponent<SpriteRenderingComponent>();
 	}
 }

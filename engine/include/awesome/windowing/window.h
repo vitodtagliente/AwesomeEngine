@@ -8,69 +8,66 @@ namespace Awesome
 {
 	class Application;
 
-	namespace Windowing
+	enum WindowStatus
 	{
-		enum WindowStatus
-		{
-			Created,
-			Closing,
-			Closed,
-			Error
-		};
+		Created,
+		Closing,
+		Closed,
+		Error
+	};
 
-		class Window
-		{
-		private:
-			static Window* singleton;
+	class Window
+	{
+	private:
+		static Window* singleton;
 
-			int width = 640;
-			int height = 480;
-			bool fullscreen = false;
-			std::string title{"AwesomeEngine"};
+		int width = 640;
+		int height = 480;
+		bool fullscreen = false;
+		std::string title{"AwesomeEngine"};
 
-			float application_time{ 0.0f };
+		float application_time{ 0.0f };
 
-			WindowStatus status{ WindowStatus::Created };
+		WindowStatus status{ WindowStatus::Created };
 
-			/* GLFW context */
-			GLFWwindow* window_context{ nullptr };
+		/* GLFW context */
+		GLFWwindow* window_context{ nullptr };
 			
-			static void resize_callback(GLFWwindow* context, int width, int height);
-			static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+		static void resize_callback(GLFWwindow* context, int width, int height);
+		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-			Window();
-			~Window();
+		Window();
+		~Window();
 
-		public:
-			template <class T>
-			static Window* open()
+	public:
+		template <class T>
+		static Window* open()
+		{
+			if (singleton == nullptr)
 			{
-				if (singleton == nullptr)
-				{
-					T* t_window = new T{};
-					singleton = dynamic_cast<Window*>(t_window);
-				}
-				return singleton;
+				T* t_window = new T{};
+				singleton = dynamic_cast<Window*>(t_window);
 			}
+			return singleton;
+		}
 
-			static Window* instance() { return singleton; }	
+		static Window* instance() { return singleton; }	
 
-			WindowStatus getStatus() const { return status; }
+		WindowStatus getStatus() const { return status; }
 
-			bool isFullscreen() const { return fullscreen; }
-			int getWidth() const { return width; }
-			int getHeight() const { return height; }
+		bool isFullscreen() const { return fullscreen; }
+		int getWidth() const { return width; }
+		int getHeight() const { return height; }
 
-			void setTitle(const std::string title);
-			void resize(int width, int height);
-			void setResolution(int width, int height, bool fullscreen);
+		void setTitle(const std::string title);
+		void resize(int width, int height);
+		void setResolution(int width, int height, bool fullscreen);
 
-			float getTime() const;
+		float getTime() const;
 
-			void update();
-			bool shouldClose() const;
+		void update();
+		bool shouldClose() const;
 
-			void close();
-		};
-	}
+		void close();
+	};
 }

@@ -2,8 +2,5 @@
 
 namespace Awesome
 {
-	namespace Rendering
-	{
-		std::vector<Mesh*> Primitive::primitives{};
-	}
+	std::vector<Mesh*> Primitive::primitives{};
 }

@@ -2,15 +2,12 @@
 
 #include "windowing/window.h"
 #include "rendering/render_pipeline.h"
-#include "scenegraph/scene.h"
-
-using namespace Awesome::Windowing;
-using namespace Awesome::Rendering;
-using namespace Awesome::Scenegraph;
+#include "scene/scene.h"
+#include "engine_module.h"
 
 namespace Awesome
 {
-	enum ApplicationStatus
+	enum class ApplicationStatus
 	{
 		Closing,
 		Closed,

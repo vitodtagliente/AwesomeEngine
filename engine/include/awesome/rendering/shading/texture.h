@@ -4,42 +4,39 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	class Texture
 	{
-		class Texture
-		{
-		private:
+	private:
 			
-			int width{ 0 }, height{ 0 };
+		int width{ 0 }, height{ 0 };
 
-		public:
+	public:
 
-			unsigned int id{ 0 };
+		unsigned int id{ 0 };
 
-			/* Format of texture object */
-			unsigned int internalFormat;
-			/* Format of loaded image */
-			unsigned int imageFormat;
-			/* Wrapping mode on S axis */
-			unsigned int wrapS; 
-			/* Wrapping mode on T axis */
-			unsigned int wrapT; 
-			/* Filtering mode if texture pixels < screen pixels */
-			unsigned int filterMin; 
-			/* Filtering mode if texture pixels > screen pixels */
-			unsigned int filterMax; 
+		/* Format of texture object */
+		unsigned int internalFormat;
+		/* Format of loaded image */
+		unsigned int imageFormat;
+		/* Wrapping mode on S axis */
+		unsigned int wrapS; 
+		/* Wrapping mode on T axis */
+		unsigned int wrapT; 
+		/* Filtering mode if texture pixels < screen pixels */
+		unsigned int filterMin; 
+		/* Filtering mode if texture pixels > screen pixels */
+		unsigned int filterMax; 
 
-			Texture();
-			Texture(unsigned int format);
+		Texture();
+		Texture(unsigned int format);
 
-			bool load(std::string filename);
+		bool load(std::string filename);
 
-			int getWidth() const;
-			int getHeight() const;
+		int getWidth() const;
+		int getHeight() const;
 
-			void bind();
-			void unbind();
-			void free();
-		};
-	}
+		void bind();
+		void unbind();
+		void free();
+	};
 }

@@ -4,11 +4,8 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	struct Square : public Mesh
 	{
-		struct Square : public Mesh
-		{
-			Square();
-		};
-	}
+		Square();
+	};
 }

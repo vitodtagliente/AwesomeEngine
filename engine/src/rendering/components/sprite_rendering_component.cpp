@@ -3,37 +3,34 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	void SpriteRenderingComponent::init()
 	{
-		void SpriteRenderingComponent::init()
-		{
 			
-		}
+	}
 
-		void SpriteRenderingComponent::crop(const Math::Rect& crop)
+	void SpriteRenderingComponent::crop(const Math::Rect& crop)
+	{
+		if (textureCoords != crop)
 		{
-			if (textureCoords != crop)
-			{
-				textureCoords = crop;
-			}
+			textureCoords = crop;
 		}
+	}
 
-		void SpriteRenderingComponent::update(float delta_time)
+	void SpriteRenderingComponent::update(float delta_time)
+	{
+
+	}
+
+	void SpriteRenderingComponent::render()
+	{
+		auto sprite_batch = SpriteBatch::instance();
+		if (sprite_batch != nullptr)
 		{
-
-		}
-
-		void SpriteRenderingComponent::render()
-		{
-			auto sprite_batch = SpriteBatch::instance();
-			if (sprite_batch != nullptr)
-			{
-				SpriteBatchRenderingData data;
-				data.material = material;
-				data.textureCoords = textureCoords;
-				data.transform = owner()->transform.get();
-				sprite_batch->add(texture, data);
-			}
+			SpriteBatchRenderingData data;
+			data.material = material;
+			data.textureCoords = textureCoords;
+			data.transform = owner()->transform.get();
+			sprite_batch->add(texture, data);
 		}
 	}
 }

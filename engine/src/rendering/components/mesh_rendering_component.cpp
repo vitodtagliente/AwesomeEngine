@@ -4,29 +4,26 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	void MeshRenderingComponent::init()
 	{
-		void MeshRenderingComponent::init()
-		{
-			if (mesh != nullptr)
-				mesh->init();
-		}
+		if (mesh != nullptr)
+			mesh->init();
+	}
 
-		void MeshRenderingComponent::update(float delta_time)
-		{
+	void MeshRenderingComponent::update(float delta_time)
+	{
 
-		}
+	}
 
-		void MeshRenderingComponent::render()
+	void MeshRenderingComponent::render()
+	{
+		RenderingComponent::render();
+		if (mesh != nullptr)
 		{
-			RenderingComponent::render();
-			if (mesh != nullptr)
-			{
-				mesh->bind();
-				if(mesh->indices.size() > 0)
-					glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0); 
-				else glDrawArrays(GL_TRIANGLES, 0, mesh->vertices.size());
-			}
+			mesh->bind();
+			if(mesh->indices.size() > 0)
+				glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0); 
+			else glDrawArrays(GL_TRIANGLES, 0, mesh->vertices.size());
 		}
 	}
 }

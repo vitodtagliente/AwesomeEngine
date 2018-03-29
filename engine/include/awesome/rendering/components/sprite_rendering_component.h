@@ -6,22 +6,19 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	class SpriteRenderingComponent : public RenderingComponent
 	{
-		class SpriteRenderingComponent : public RenderingComponent
-		{
-		protected:
-			/* used to crop texture atlas */
-			Math::Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
+	protected:
+		/* used to crop texture atlas */
+		Math::Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
 
-		public:
-			Texture* texture{ nullptr };
+	public:
+		Texture* texture{ nullptr };
 
-			void crop(const Math::Rect& crop);
+		void crop(const Math::Rect& crop);
 
-			void init() override;
-			void update(float delta_time) override;
-			void render() override;
-		};
-	}
+		void init() override;
+		void update(float delta_time) override;
+		void render() override;
+	};
 }

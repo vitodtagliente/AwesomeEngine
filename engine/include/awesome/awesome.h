@@ -1,19 +1,9 @@
 #pragma once
 
-#include "ai/ai.h"
-#include "assets/assets.h"
-#include "audio/audio.h"
-#include "gameplay/gameplay.h"
-#include "math/math.h"
-#include "networking/networking.h"
-#include "physics/physics.h"
-#include "rendering/rendering.h"
-#include "physics/physics.h"
-#include "scenegraph/scenegraph.h"
-#include "utility/utility.h"
-#include "windowing/windowing.h"
-
 #include "application.h"
+#include "component.h"
+#include "object.h"
+#include "windowing/window.h"
 
 #define DECLARE_MAIN(ApplicationDerivedType)				\
 int main(int argc, const char ** argv)						\

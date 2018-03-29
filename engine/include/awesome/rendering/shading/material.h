@@ -5,16 +5,12 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	class Material
 	{
-		class Material
-		{
-		private:
+	private:
 
-		public:
-			Program* program;
+	public:
+		Program* program;
 
-
-		};
-	}
+	};
 }

@@ -12826,3 +12826,35 @@ ERROR: 0:7: 'assign' :  cannot convert from 'const highp float' to 'FragUserData
 [2018-03-14.22:12:52] }
 [2018-03-14.22:12:52] Shader: compiled!
 [2018-03-14.22:12:52] ShaderProgram: ready!
+[2018-03-14.22:23:02] Shader: loading file resources/shaders/texture.vs...
+[2018-03-14.22:23:02] #version 330 core
+[2018-03-14.22:23:02] 
+[2018-03-14.22:23:02] in vec3 in_position;
+[2018-03-14.22:23:02] in vec2 aTexCoord;
+[2018-03-14.22:23:02] 
+[2018-03-14.22:23:02] out vec2 TexCoord;
+[2018-03-14.22:23:02] 
+[2018-03-14.22:23:02] uniform mat4 projection;
+[2018-03-14.22:23:02] uniform mat4 model;
+[2018-03-14.22:23:02] uniform mat4 view;
+[2018-03-14.22:23:02] 
+[2018-03-14.22:23:02] void main()
+[2018-03-14.22:23:02] {
+[2018-03-14.22:23:02] 	gl_Position = projection * view * model * vec4(in_position, 1.0);
+[2018-03-14.22:23:02] 	TexCoord = aTexCoord;
+[2018-03-14.22:23:02] }
+[2018-03-14.22:23:02] Shader: compiled!
+[2018-03-14.22:23:03] Shader: loading file resources/shaders/texture.fs...
+[2018-03-14.22:23:03] #version 330 core
+[2018-03-14.22:23:03] 
+[2018-03-14.22:23:03] out vec4 fragColor;
+[2018-03-14.22:23:03] 
+[2018-03-14.22:23:03] in vec2 TexCoord;
+[2018-03-14.22:23:03] 
+[2018-03-14.22:23:03] uniform sampler2D ourTexture;
+[2018-03-14.22:23:03] 
+[2018-03-14.22:23:03] void main(){
+[2018-03-14.22:23:03] 	fragColor = texture(ourTexture, TexCoord);
+[2018-03-14.22:23:03] }
+[2018-03-14.22:23:03] Shader: compiled!
+[2018-03-14.22:23:03] ShaderProgram: ready!

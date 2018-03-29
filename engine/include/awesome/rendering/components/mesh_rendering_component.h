@@ -4,18 +4,15 @@
 
 namespace Awesome
 {	
-	namespace Rendering
+	class Mesh;
+
+	class MeshRenderingComponent : public RenderingComponent
 	{
-		class Mesh;
+	public:
+		Mesh* mesh{ nullptr };
 
-		class MeshRenderingComponent : public RenderingComponent
-		{
-		public:
-			Mesh* mesh{ nullptr };
-
-			void init() override;
-			void update(float delta_time) override;
-			void render() override;
-		};
-	}
+		void init() override;
+		void update(float delta_time) override;
+		void render() override;
+	};
 }

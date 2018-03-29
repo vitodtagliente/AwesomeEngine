@@ -1,18 +1,15 @@
 #pragma once
 
-#include "../../scenegraph/component.h"
+#include "../../component.h"
 #include "../shading/material.h"
 
 namespace Awesome
 {
-	namespace Rendering
+	class RenderingComponent : public Component
 	{
-		class RenderingComponent : public Scenegraph::Component
-		{
-		public:
-			Material* material{ nullptr };
+	public:
+		Material* material{ nullptr };
 
-			virtual void render();
-		};
-	}
+		virtual void render();
+	};
 }

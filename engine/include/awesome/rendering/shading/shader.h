@@ -4,62 +4,59 @@
 
 namespace Awesome
 {
-	namespace Rendering
+	enum class ShaderType
 	{
-		enum ShaderType
-		{
-			FragmentShader,
-			GeometryShader,
-			TesselationShader,
-			VertexShader
-		};
+		FragmentShader,
+		GeometryShader,
+		TesselationShader,
+		VertexShader
+	};
 
-		enum ShaderStatus
-		{
-			Compiled,
-			Error
-		};
+	enum class ShaderStatus
+	{
+		Compiled,
+		Error
+	};
 
-		class Shader
-		{
-		private:
-			ShaderType type{ ShaderType::VertexShader };
-			ShaderStatus status{ ShaderStatus::Error };
+	class Shader
+	{
+	private:
+		ShaderType type{ ShaderType::VertexShader };
+		ShaderStatus status{ ShaderStatus::Error };
 
-			bool load_file(std::string filename, std::string& source);
+		bool load_file(std::string filename, std::string& source);
 
-		public:
-			unsigned int id{ 0 };
+	public:
+		unsigned int id{ 0 };
 
-			Shader(ShaderType type);
-			~Shader();
+		Shader(ShaderType type);
+		~Shader();
 
-			bool compile(std::string filename);
+		bool compile(std::string filename);
 
-			ShaderType getType() const { return type; }
-			ShaderStatus getStatus() const { return status; }
+		ShaderType getType() const { return type; }
+		ShaderStatus getStatus() const { return status; }
 
-			static Shader* load(std::string filename, ShaderType type);
+		static Shader* load(std::string filename, ShaderType type);
 
-			void free();
-		};
+		void free();
+	};
 
-		class VertexShader : public Shader
-		{
-		public:
-			VertexShader() : Shader(ShaderType::VertexShader) {}
-		};
+	class VertexShader : public Shader
+	{
+	public:
+		VertexShader() : Shader(ShaderType::VertexShader) {}
+	};
 
-		class FragmentShader : public Shader
-		{
-		public:
-			FragmentShader() : Shader(ShaderType::FragmentShader) {}
-		};
+	class FragmentShader : public Shader
+	{
+	public:
+		FragmentShader() : Shader(ShaderType::FragmentShader) {}
+	};
 
-		class GeometryShader : public Shader
-		{
-		public:
-			GeometryShader() : Shader(ShaderType::GeometryShader) {}
-		};
-	}
+	class GeometryShader : public Shader
+	{
+	public:
+		GeometryShader() : Shader(ShaderType::GeometryShader) {}
+	};
 }

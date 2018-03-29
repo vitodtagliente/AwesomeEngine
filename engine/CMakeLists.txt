@@ -24,27 +24,25 @@ file(GLOB PROJECT_HEADERS
 	include/awesome/math/*.h
 	include/awesome/gameplay/*.h
 	include/awesome/gameplay/components/*.h
-    include/awesome/rendering/*.h	
+	include/awesome/rendering/*.h
+	include/awesome/rendering/components/*.h
 	include/awesome/rendering/objects/*.h
-    include/awesome/rendering/primitives/*.h	
-    include/awesome/rendering/gl/*.h		
-    include/awesome/rendering/shading/*.h	
-    include/awesome/rendering/components/*.h	
-    include/awesome/scenegraph/*.h
+	include/awesome/rendering/primitives/*.h
+	include/awesome/rendering/shading/*.h
+	include/awesome/scene/*.h
 	include/awesome/utility/*.h
-    include/awesome/windowing/*.h 
-)
+    include/awesome/windowing/*.h
+) 
 file(GLOB PROJECT_SOURCES 
     src/*.cpp
 	src/gameplay/*.cpp
 	src/gameplay/components/*.cpp
-	src/rendering/*.cpp    
+	src/rendering/*.cpp
+	src/rendering/components/*.cpp
 	src/rendering/objects/*.cpp
-    src/rendering/primitives/*.cpp  
-    src/rendering/gl/*.cpp      
-    src/rendering/shading/*.cpp 
-    src/rendering/components/*.cpp 
-    src/scenegraph/*.cpp
+	src/rendering/primitives/*.cpp
+	src/rendering/shading/*.cpp
+	src/scene/*.cpp
 	src/utility/*.cpp
     src/windowing/*.cpp
 ) 

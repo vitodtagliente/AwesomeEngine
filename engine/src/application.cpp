@@ -1,8 +1,6 @@
 #include <awesome/application.h>
 #include <awesome/rendering/objects/camera.h>
 
-using namespace Awesome::Windowing;
-
 namespace Awesome
 {
 	Application* Application::singleton = nullptr;
@@ -29,7 +27,7 @@ namespace Awesome
 				renderer->init();
 				while (!window->shouldClose() && status != ApplicationStatus::Closing)
 				{
-					Rendering::Camera::clear();
+					Camera::clear();
 
 					auto delta_time = window->getTime();
 					update(delta_time);
@@ -56,7 +54,7 @@ namespace Awesome
 			delete scene;
 		}
 		/* TODO: check for file name */
-		scene = new Scene(name);
+		scene = new Scene();
 		return true;
 	}
 
