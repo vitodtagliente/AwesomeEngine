@@ -36,14 +36,15 @@ namespace Awesome
 
 	}
 
-	Component* Object::addComponent(Component* new_component)
+	bool Object::addComponent(Component* new_component)
 	{
-		if (new_component != nullptr)
+		if (new_component != nullptr && new_component->owner_object == nullptr)
 		{
 			new_component->owner_object = this;
 			components.push_back(new_component);
+			return true;
 		}
-		return new_component;
+		return false;
 	}
 
 	void Object::addChild(Object* child)

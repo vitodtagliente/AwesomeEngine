@@ -51,18 +51,19 @@ namespace Awesome
 		
 		// add a new component by class 
 		template <class T>
-		T* addComponent()
+		T* addComponent(std::string component_name = std::string())
 		{
 			T* t_component = new T{};
 			Component* new_component = dynamic_cast<Component*>(t_component);
 			if (new_component != nullptr)
 			{
+				new_component->name = component_name;
 				addComponent(new_component);
 			}
 			return t_component;
 		}
 
-		Component* addComponent(Component* new_component);
+		bool addComponent(Component* new_component);
 						
 		// find the first component of class 
 		template <class T>

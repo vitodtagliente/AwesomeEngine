@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <string>
 #include "object.h"
 
 namespace Awesome
@@ -10,15 +11,14 @@ namespace Awesome
 
 	private:
 		Object* owner_object{ nullptr };
-
-		Component();
-		
-	protected:
-		virtual ~Component();
-
+				
 	public:
+		std::string name{};
 		UniqueId id;
 
+		Component();
+		virtual ~Component();
+		
 		// return the owner object 
 		Object* owner() { return owner_object; }
 
