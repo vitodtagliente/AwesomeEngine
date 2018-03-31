@@ -22,6 +22,8 @@ file(GLOB VENDORS_SOURCES
 file(GLOB PROJECT_HEADERS 
     include/awesome/*.h	
 	include/awesome/math/*.h
+	include/awesome/engine/*.h
+	include/awesome/engine/modules/*.h
 	include/awesome/gameplay/*.h
 	include/awesome/gameplay/components/*.h
 	include/awesome/rendering/*.h
@@ -35,6 +37,8 @@ file(GLOB PROJECT_HEADERS
 ) 
 file(GLOB PROJECT_SOURCES 
     src/*.cpp
+	src/engine/*.cpp
+	src/engine/modules/*.cpp
 	src/gameplay/*.cpp
 	src/gameplay/components/*.cpp
 	src/rendering/*.cpp

@@ -2,11 +2,9 @@
 
 #include <awesome/awesome.h>
 #include <random>
+#include <awesome/gameplay/components/sprite_animation_component.h>
 
 using namespace Awesome;
-using namespace Awesome::Rendering;
-using namespace Awesome::Scenegraph;
-using namespace Awesome::Gameplay;
 
 class SpriteAnimationApplication : public Application
 {
@@ -40,8 +38,8 @@ public:
 		auto sprite_animation_component = sprite_object->addComponent<SpriteAnimationComponent>();
 
 		SpriteAnimation walk_right;
-		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.4f, 0.375f, 0.2f, 0.125f }, 0.01f });
-		walk_right.frames.push_back(SpriteAnimationData{ &texture, Math::Rect{ 0.6f, 0.375f, 0.2f, 0.125f }, 0.01f });
+		walk_right.frames.push_back(SpriteAnimationData{ &texture, Rect{ 0.4f, 0.375f, 0.2f, 0.125f }, 0.01f });
+		walk_right.frames.push_back(SpriteAnimationData{ &texture, Rect{ 0.6f, 0.375f, 0.2f, 0.125f }, 0.01f });
 
 		sprite_animation_component->animations["walk_right"] = walk_right;
 

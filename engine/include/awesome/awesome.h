@@ -1,5 +1,6 @@
 #pragma once
 
+#include "math/math.h"
 #include "minimal.h"
 #include "rendering.h"
 #include "windowing/window.h"

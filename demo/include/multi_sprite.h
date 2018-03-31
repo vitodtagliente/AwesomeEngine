@@ -4,8 +4,6 @@
 #include <random>
 
 using namespace Awesome;
-using namespace Awesome::Rendering;
-using namespace Awesome::Scenegraph;
 
 class MultiSpriteApplication : public Application
 {
@@ -48,7 +46,7 @@ public:
 			sprite_component->material = new Material();
 			sprite_component->material->program = &program;
 			
-			sprite_component->crop(Math::Rect{
+			sprite_component->crop(Rect{
 				range(0.0f, 0.5f), range(0.0f, 0.5f),
 				range(0.75f, 1.0f), range(0.75f, 1.0f)
 			});

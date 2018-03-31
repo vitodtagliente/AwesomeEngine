@@ -1,14 +1,8 @@
 #pragma once 
 
 #include <awesome/awesome.h>
-#include <cmath>
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 using namespace Awesome;
-using namespace Awesome::Rendering;
-using namespace Awesome::Scenegraph;
 
 class TextureDemoApplication : public Application
 {
@@ -43,7 +37,7 @@ public:
 		
 		/* init camera */
 		camera = getScene()->spawn<Camera>("camera");
-		camera->transform.position.z = -.2f;
+		camera->transform.position.z = -0.2f;
 	}
 
 	void update(float delta_time) override
