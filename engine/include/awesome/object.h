@@ -53,17 +53,14 @@ namespace Awesome
 		template <class T>
 		T* addComponent(std::string component_name = std::string())
 		{
-			T* t_component = new T{};
-			Component* new_component = dynamic_cast<Component*>(t_component);
+			T* new_component = Component::add<T>(this);
 			if (new_component != nullptr)
 			{
 				new_component->name = component_name;
-				addComponent(new_component);
+				components.push_back(new_component);
 			}
-			return t_component;
+			return new_component;
 		}
-
-		bool addComponent(Component* new_component);
 						
 		// find the first component of class 
 		template <class T>
@@ -168,6 +165,7 @@ namespace Awesome
 		// engine events 
 		void init();
 		void update(float delta_time);
+		virtual void free();
 
 		bool operator== (const Object& other);
 	};

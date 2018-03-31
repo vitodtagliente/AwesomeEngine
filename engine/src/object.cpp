@@ -36,17 +36,6 @@ namespace Awesome
 
 	}
 
-	bool Object::addComponent(Component* new_component)
-	{
-		if (new_component != nullptr && new_component->owner_object == nullptr)
-		{
-			new_component->owner_object = this;
-			components.push_back(new_component);
-			return true;
-		}
-		return false;
-	}
-
 	void Object::addChild(Object* child)
 	{
 		transform.children.push_back(child);
@@ -78,6 +67,15 @@ namespace Awesome
 		for (auto it = components.begin(); it != components.end(); ++it) {
 			if (*it != nullptr)
 				(*it)->update(delta_time);
+			else components.erase(it);
+		}
+	}
+
+	void Object::free()
+	{
+		for (auto it = components.begin(); it != components.end(); ++it) {
+			if (*it != nullptr)
+				(*it)->free();
 			else components.erase(it);
 		}
 	}

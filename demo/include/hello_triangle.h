@@ -1,12 +1,8 @@
 #pragma once 
 
 #include <awesome/awesome.h>
-#include <cmath>
-#include <glad/glad.h>
 
 using namespace Awesome;
-using namespace Awesome::Rendering;
-using namespace Awesome::Scenegraph;
 
 class HelloTriangleApplication : public Application
 {

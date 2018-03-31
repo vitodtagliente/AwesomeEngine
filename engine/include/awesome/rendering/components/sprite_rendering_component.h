@@ -9,7 +9,7 @@ namespace Awesome
 	class SpriteRenderingComponent : public RenderingComponent
 	{
 	protected:
-		/* used to crop texture atlas */
+		// used to crop texture atlas 
 		Rect textureCoords{ 0.0f,0.0f, 1.0f,1.0f };
 
 	public:

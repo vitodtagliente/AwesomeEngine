@@ -12,6 +12,21 @@ namespace Awesome
 
 	}
 
+	void Component::init()
+	{
+
+	}
+
+	void Component::update(float delta_time)
+	{
+
+	}
+
+	void Component::free()
+	{
+
+	}
+
 	bool Component::operator== (const Component& other)
 	{
 		return id == other.id;

@@ -23,6 +23,4 @@ namespace Awesome
 			return value = other_id.value;
 		}
 	};
-
-	unsigned int UniqueId::value_counter = 0;
 }
