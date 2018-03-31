@@ -7,31 +7,6 @@ namespace Awesome
 {
 	Camera* Camera::instance = nullptr;
 
-	Camera::Camera()
-	{
-		name = "camera";
-		if (instance == nullptr)
-			instance = this;
-
-		/* compute projection */
-		setType(type, true);
-	}
-
-	Camera::Camera(CameraType camera_type)
-	{
-		//instances.push_back(this);
-		if (instance == nullptr)
-			instance = this;
-
-		/* compute projection */
-		setType(camera_type, true);
-	}
-		
-	Camera::~Camera()
-	{
-
-	}
-
 	Camera* Camera::main() 
 	{
 		if (instance == nullptr)
@@ -56,6 +31,16 @@ namespace Awesome
 				projection = glm::ortho(-4.0f / 3.0f, 4.0f / 3.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 			}
 		}
+	}
+
+	void Camera::init()
+	{
+		name = "camera";
+		if (instance == nullptr)
+			instance = this;
+
+		Object::init();
+		setType(type);
 	}
 
 	glm::mat4 Camera::getView() const

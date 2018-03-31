@@ -23,7 +23,7 @@ namespace Awesome
 		// no public constructor
 		Object();
 		// destructor
-		virtual ~Object();
+		~Object();
 
 	public:
 		UniqueId id;
@@ -163,8 +163,8 @@ namespace Awesome
 		}
 
 		// engine events 
-		void init();
-		void update(float delta_time);
+		virtual void init();
+		virtual void update(float delta_time);
 		virtual void free();
 
 		bool operator== (const Object& other);

@@ -33,7 +33,7 @@ namespace Awesome
 			
 	Object::~Object()
 	{
-
+		free();
 	}
 
 	void Object::addChild(Object* child)

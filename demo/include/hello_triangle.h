@@ -23,10 +23,19 @@ public:
 		program.linkShaders({ vs, fs });
 		program.compile();
 
-		/* fill scene objects */
+		// fill scene objects
 		auto triangle_object = getScene()->spawn<Object>("triangle");
 		auto triangle_component = triangle_object->addComponent<MeshRenderingComponent>();
 		triangle_component->mesh = Primitive::generate<Triangle>();
+
+		// init camera 
+		auto camera = getScene()->spawn<Camera>("camera");
+		
+		// use program
+		program.use();
+		// set the fragment color
+		int location = program.getUniformLocation("inColor");
+		program.setVec4(location, color);
 	}
 	
 	void update(float delta_time) override 
@@ -36,6 +45,6 @@ public:
 
 	void render() override 
 	{
-		program.setVec4("inColor", color);
+		
 	}
 };

@@ -16,14 +16,11 @@ namespace Awesome
 		static Camera* instance;
 
 		glm::mat4 projection{ 1.0f };
-			
-		CameraType type{ CameraType::Perspective };
-			
-	public:
-		Camera();
-		Camera(CameraType camera_type);
-		~Camera();
 
+	protected:
+		CameraType type{ CameraType::Perspective };
+
+	public:
 		static Camera* main();
 
 		float fieldOfView{ 60.0f };
@@ -40,16 +37,21 @@ namespace Awesome
 		glm::mat4 getProjection() const { return projection; }
 		glm::mat4 getView() const;
 			
+		virtual void init() override;
+
 		static void clear();
 	};
 
 	class PerspectiveCamera : public Camera
 	{
-		PerspectiveCamera() : Camera(CameraType::Perspective) {}
+		PerspectiveCamera() : Camera() {}
 	};
 
 	class OrthographicCamera : public Camera
 	{
-		OrthographicCamera() : Camera(CameraType::Orthographic) {}
+		OrthographicCamera() : Camera() 
+		{
+			type = CameraType::Orthographic;
+		}
 	};
 }
