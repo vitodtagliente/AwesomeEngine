@@ -26,7 +26,7 @@ public:
 		return distr(eng);
 	}
 
-	void init() override
+	void configure() override
 	{
 		auto vs = Shader::load("resources/shaders/texture.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/texture.fs", ShaderType::FragmentShader);
@@ -61,15 +61,5 @@ public:
 		/* init camera */
 		camera = getScene()->spawn<Camera>("camera");
 		camera->transform.position.z = -.2f;
-	}
-
-	void update(float delta_time) override
-	{
-		
-	}
-
-	void render() override
-	{		
-
 	}
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "windowing/window.h"
 #include "rendering/render_pipeline.h"
 #include "scene/scene.h"
@@ -29,15 +30,20 @@ namespace Awesome
 		RenderPipeline* renderer{ nullptr };
 		Scene* scene{ nullptr };
 
+		void init();
+		void render();
+		void update(float deltaTime);
+		void free();
+
 	protected:
 		ApplicationStatus status{ ApplicationStatus::Created };
 		
 		Application();
 		~Application();
 
-		virtual void init() = 0;
-		virtual void render() = 0;
-		virtual void update(float deltaTime) = 0;
+		virtual void configure(){}
+
+		std::vector<EngineModule*> modules;
 
 	public:
 

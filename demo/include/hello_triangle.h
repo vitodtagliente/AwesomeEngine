@@ -15,7 +15,7 @@ public:
 		getWindow()->setTitle("AwesomeEngine::HelloTriangle");
 	}
 
-	void init() override
+	void configure() override
 	{
 		auto vs = Shader::load("resources/shaders/hello_triangle.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/hello_triangle.fs", ShaderType::FragmentShader);
@@ -36,15 +36,5 @@ public:
 		// set the fragment color
 		int location = program.getUniformLocation("inColor");
 		program.setVec4(location, color);
-	}
-	
-	void update(float delta_time) override 
-	{
-
-	}
-
-	void render() override 
-	{
-		
 	}
 };

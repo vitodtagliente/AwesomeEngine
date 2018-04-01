@@ -16,6 +16,42 @@ namespace Awesome
 	Application::~Application() {
 
 	}
+
+	void Application::init()
+	{
+		for (auto it = modules.begin(); it != modules.end(); ++it) {
+			if (*it != nullptr)
+				(*it)->init();
+			else modules.erase(it);
+		}
+	}
+
+	void Application::update(float delta_time)
+	{
+		for (auto it = modules.begin(); it != modules.end(); ++it) {
+			if (*it != nullptr)
+				(*it)->update(delta_time);
+			else modules.erase(it);
+		}
+	}
+
+	void Application::render()
+	{
+		for (auto it = modules.begin(); it != modules.end(); ++it) {
+			if (*it != nullptr)
+				(*it)->render();
+			else modules.erase(it);
+		}
+	}
+
+	void Application::free()
+	{
+		for (auto it = modules.begin(); it != modules.end(); ++it) {
+			if (*it != nullptr)
+				(*it)->free();
+			else modules.erase(it);
+		}
+	}
 			
 	void Application::run()
 	{
@@ -23,6 +59,7 @@ namespace Awesome
 		{
 			if (window->getStatus() == WindowStatus::Created)
 			{
+				configure();
 				init();
 				renderer->init();
 				while (!window->shouldClose() && status != ApplicationStatus::Closing)
@@ -41,6 +78,7 @@ namespace Awesome
 					window->update();
 				}
 				status = ApplicationStatus::Closed;
+				free();
 				window->close();
 			}
 		}

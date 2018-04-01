@@ -17,7 +17,7 @@ public:
 		getWindow()->setTitle("AwesomeEngine::TextureDemo");
 	}
 
-	void init() override
+	void configure() override
 	{
 		auto vs = Shader::load("resources/shaders/texture.vs", ShaderType::VertexShader);
 		auto fs = Shader::load("resources/shaders/texture.fs", ShaderType::FragmentShader);
@@ -38,15 +38,5 @@ public:
 		/* init camera */
 		camera = getScene()->spawn<Camera>("camera");
 		camera->transform.position.z = -0.2f;
-	}
-
-	void update(float delta_time) override
-	{
-		sprite_object->transform.rotation.z += 0.0005;
-	}
-
-	void render() override
-	{		
-
 	}
 };
