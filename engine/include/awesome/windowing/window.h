@@ -64,6 +64,7 @@ namespace Awesome
 		void setResolution(int width, int height, bool fullscreen);
 
 		float getTime() const;
+		float getDeltaTime() const;
 
 		void update();
 		bool shouldClose() const;

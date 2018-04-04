@@ -66,8 +66,9 @@ namespace Awesome
 				{
 					Camera::clear();
 
-					auto delta_time = window->getTime();
+					auto delta_time = window->getDeltaTime();
 					update(delta_time);
+					onUpdate(delta_time);
 					if (renderer != nullptr)
 					{
 						renderer->update(delta_time);

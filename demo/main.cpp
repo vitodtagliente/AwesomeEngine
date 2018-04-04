@@ -14,4 +14,4 @@
 #include "sprite_animation.h"
 
 // launch a demo application
-DECLARE_MAIN(SpriteAnimationApplication);
+DECLARE_MAIN(TextureDemoApplication);

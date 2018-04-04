@@ -10,7 +10,6 @@ public:
 	Program program;
 	Texture texture;
 	Object* sprite_object;
-	Camera* camera;
 
 	TextureDemoApplication()
 	{
@@ -36,7 +35,12 @@ public:
 		sprite_component->material->program = &program;
 		
 		/* init camera */
-		camera = getScene()->spawn<Camera>("camera");
-		camera->transform.position.z = -0.2f;
+		auto camera = getScene()->spawn<Camera>("camera");
+		camera->transform.position.z = -0.4f;
+	}
+
+	void onUpdate(float delta_time) override
+	{
+		sprite_object->transform.rotation.z += delta_time;
 	}
 };

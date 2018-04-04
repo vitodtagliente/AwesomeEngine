@@ -81,9 +81,12 @@ namespace Awesome
 	{
 		glfwSwapBuffers(window_context);
 		glfwPollEvents();
+
+		application_time = getTime();
 	}
 
 	float Window::getTime() const { return glfwGetTime(); }
+	float Window::getDeltaTime() const { return getTime() - application_time; }
 
 	bool Window::shouldClose() const { return glfwWindowShouldClose(window_context); }
 		

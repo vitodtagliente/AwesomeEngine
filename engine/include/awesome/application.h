@@ -41,7 +41,8 @@ namespace Awesome
 		Application();
 		~Application();
 
-		virtual void configure(){}
+		virtual void configure() {}
+		virtual void onUpdate(float delta_time) {}
 
 		std::vector<EngineModule*> modules;
 
