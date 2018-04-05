@@ -1,7 +1,7 @@
 #include <awesome/rendering/render_pipeline.h>
 #include <awesome/rendering/components/rendering_component.h>
-#include <awesome/scene/scene_reader.h>
 #include <awesome/rendering/sprite_batch.h>
+#include <awesome/object_iterator.h>
 
 namespace Awesome
 {
@@ -27,34 +27,29 @@ namespace Awesome
 
 	void RenderPipeline::init()
 	{
-		auto it = new SceneReader(scene);
-		auto object = it->next();
-		while (object != nullptr)
+		for (ObjectIterator it{ scene }; it.has_next(); ++it)
 		{
-			object->init();
-			object = it->next();
+			(*it).init();
 		}
 	}
 
 	void RenderPipeline::update(float delta_time)
 	{
+		// clear the render queue
 		render_queue.clear();
-		auto it = new SceneReader(scene);
-		auto object = it->next();
-		while (it->end() == false)
+
+		for (ObjectIterator it{ scene }; it.has_next(); ++it)
 		{
-			/* check if the object is active */
-			if (object->isActive() == false)
+			// check if the object is active
+			if ((*it).isActive() == false)
 				continue;
 
-			/* update */
-			object->update(delta_time);
-			/* check for rendering components and push them into the render queue */
-			auto rendering_component = object->findComponent<RenderingComponent>();
+			// update
+			(*it).update(delta_time);
+			// check for rendering components and push them into the render queue
+			auto rendering_component = (*it).findComponent<RenderingComponent>();
 			if (rendering_component != nullptr)
 				render_queue.push_back(rendering_component);
-
-			object = it->next();
 		}
 	}
 

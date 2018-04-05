@@ -22,13 +22,13 @@ namespace Awesome
 
 		Object* go_up()
 		{
-			if (current_object->parent() != iterated_object)
+			if (current_object->parent() != nullptr)
 			{
 				auto parent = current_object->parent();
 				auto brother = find_brother(parent, current_object);
 				if (brother != nullptr)
 					return brother;
-				else
+				else if (current_object->parent() != iterated_object)
 				{
 					current_object = current_object->parent();
 					return go_up();
@@ -62,7 +62,7 @@ namespace Awesome
 			{
 				if (iterated_object->children().size() > 0)
 				{
-					current_object = current_object->children()[0];
+					current_object = iterated_object->children()[0];
 				}
 				else can_iterate = false;
 			}
