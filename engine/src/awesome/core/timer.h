@@ -14,15 +14,15 @@ namespace awesome
 	private:
 
 		// how much the timers should tick
-		double m_Duration{ 0.0 };
+		double m_duration{ 0.0 };
 		// time counter
-		double m_TimeCounter{ 0.0 };
+		double m_timeCounter{ 0.0 };
 		// is the timer ticking? or is it in pause?
-		bool m_IsTicking{ false };
+		bool m_isTicking{ false };
 
 		friend class Time;
 		// store all timers instances
-		static std::vector<Timer*> m_Instances;
+		static std::vector<Timer*> m_instances;
 		// called by Time's tick
 		void tick(const double delta_time);
 
@@ -45,19 +45,19 @@ namespace awesome
 
 		// timer management functions
 		void start();
-		inline void pause() { m_IsTicking = false; }
-		inline void resume() { m_IsTicking = true; }
+		inline void pause() { m_isTicking = false; }
+		inline void resume() { m_isTicking = true; }
 		void stop();
 		void reset();
 
 		// set the timer duration
 		// this will lost timer progression
-		inline void setDuration(const double duration) { m_TimeCounter = m_Duration = duration; }
+		inline void setDuration(const double duration) { m_timeCounter = m_duration = duration; }
 
 		// is the timer ticking? or no?
-		inline bool isTicking() const { return m_IsTicking; }
+		inline bool isTicking() const { return m_isTicking; }
 
 		// is the timer elapsed?
-		inline bool isElapsed() const { return m_TimeCounter <= 0.0; }
+		inline bool isElapsed() const { return m_timeCounter <= 0.0; }
 	};
 }

@@ -8,6 +8,8 @@
 *.userosscache
 *.sln.docstates
 
+solution
+
 *.dir
 
 .vs
@@ -29,9 +31,3 @@ bld/
 [Oo]bj/
 [Ll]og/
 Win32
-
-# ---------------------
-#	  Dependecies
-# ---------------------
-glfw
-solution

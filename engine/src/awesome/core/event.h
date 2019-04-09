@@ -10,31 +10,31 @@ namespace awesome
 	{
 	private:
 
-		std::vector<std::function<ReturnType(Params...)>> m_Listeners{};
+		std::vector<std::function<ReturnType(Params...)>> m_listeners{};
 
 	public:
 
 		BaseEvent() = default;
 		~BaseEvent() {
-			m_Listeners.clear();
+			m_listeners.clear();
 		}
 
 		inline void broadcast() {
-			for (auto listener : m_Listeners) {
+			for (auto listener : m_listeners) {
 				listener();
 			}
 		}
 
 		inline void addListener(const std::function<ReturnType(Params...)>& function) {
-			m_Listeners.push_back(function);
+			m_listeners.push_back(function);
 		}
 
 		inline bool removeListener(const std::function<ReturnType(Params...)>& function) {
-			for (auto it = m_Listeners.begin(); it != m_Listeners.end(); ++it)
+			for (auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
 			{
 				if (*it == function)
 				{
-					m_Listeners.erase(it);
+					m_listeners.erase(it);
 					return true;
 				}
 			}
@@ -42,7 +42,7 @@ namespace awesome
 		}
 
 		inline void clear() {
-			m_Listeners.clear();
+			m_listeners.clear();
 		}
 
 	};

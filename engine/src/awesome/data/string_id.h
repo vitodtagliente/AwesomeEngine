@@ -24,12 +24,12 @@ namespace awesome
 		{
 		private:
 
-			uint32 m_Hash{ 0 };
+			uint32 m_hash{ 0 };
 
 			void computeHash(const std::string& str) {
 				for (auto& it : str) {
 					// be sure to use prime numbers
-					m_Hash = 37 * m_Hash + 17 * static_cast<char>(it);
+					m_hash = 37 * m_hash + 17 * static_cast<char>(it);
 				}
 			}
 
@@ -49,7 +49,7 @@ namespace awesome
 
 			inline StringId& operator= (const StringId& other) {
 				if (*this != other) {
-					m_Hash = other.m_Hash;
+					m_hash = other.m_hash;
 				}
 				return *this;
 			}
@@ -59,12 +59,12 @@ namespace awesome
 
 			inline bool operator== (const StringId& other) const
 			{
-				return m_Hash == other.m_Hash;
+				return m_hash == other.m_hash;
 			}
 
 			inline bool operator!= (const StringId& other) const
 			{
-				return m_Hash != other.m_Hash;
+				return m_hash != other.m_hash;
 			}
 		};
 	}

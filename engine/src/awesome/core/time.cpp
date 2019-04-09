@@ -11,10 +11,6 @@ namespace awesome
 		return m_Instance;
 	}
 
-	Time& Time::get() {
-		return *instance();
-	}
-
 	void Time::free()
 	{
 		delete m_Instance;

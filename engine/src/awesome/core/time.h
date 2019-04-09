@@ -23,7 +23,7 @@ namespace awesome
 		double m_DeltaTime{ 0.0 };
 
 		// is the time ticking? or is it in pause?
-		bool m_IsTicking{ true };
+		bool m_isTicking{ false };
 
 		friend class Application;
 		// called by application loop cycle
@@ -35,7 +35,6 @@ namespace awesome
 
 		// singleton pattern
 		static Time* instance();
-		static Time& get(); 
 
 		// destroy the time instance
 		static void free();
@@ -50,11 +49,11 @@ namespace awesome
 		inline double getDeltaTime() const { return m_DeltaTime; }
 		
 		// time can be paused and resumed
-		inline void pause() { m_IsTicking = false; }
-		inline void resume() { m_IsTicking = true; }
+		inline void pause() { m_isTicking = false; }
+		inline void resume() { m_isTicking = true; }
 
 		// is the time ticking? or no?
-		inline bool isTicking() const { return m_IsTicking; }
+		inline bool isTicking() const { return m_isTicking; }
 
 		// quick static access functions
 		inline static double time() { return instance()->getTime(); }
