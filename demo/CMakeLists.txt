@@ -16,30 +16,39 @@ include_directories(
 	. 
 	include/
     ../engine/include/
-    ../vendor/glad/include/
-	../vendor/glm/
 )
 
-file(GLOB VENDORS_SOURCES 
+# recursively include all C++ files
+file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/"include" ${PROJECT_SOURCE_DIR}/"src" "*.h" "*.hpp" "*.cpp")
 
-)
-file(GLOB PROJECT_HEADERS *.h include/*.h) 
-file(GLOB PROJECT_SOURCES *.cpp)
-
-source_group("Headers" FILES ${PROJECT_HEADERS})
-source_group("Sources" FILES ${PROJECT_SOURCES})
-source_group("Vendors" FILES ${VENDORS_SOURCES})
+# I then wrote this Macro, which organize the files in visual studio folders,
+# according to the organization in the file systems
+macro(GroupSources curdir)
+	file(GLOB children RELATIVE ${PROJECT_SOURCE_DIR}/${curdir} ${PROJECT_SOURCE_DIR}/${curdir}/*)
+	foreach(child ${children})
+		if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${curdir}/${child})
+			GroupSources(${curdir}/${child})
+		else()
+			string(REPLACE "/" "\\" groupname ${curdir})
+			source_group(${groupname} FILES	${PROJECT_SOURCE_DIR}/${curdir}/${child})
+		endif()
+	endforeach()
+endmacro()
+   
+# Execute the macro
+GroupSources("include")
+GroupSources("src")
 
 add_executable(
     ${PROJECT_NAME} 
-    ${PROJECT_SOURCES} 
-    ${PROJECT_HEADERS}
-    ${VENDORS_SOURCES}
+    ${PROJECT_SOURCE_FILES} 
 )
 
 target_link_libraries(
     ${PROJECT_NAME} 
     AwesomeEngine
 )
+
+SET(CMAKE_DEFAULT_STARTUP_PROJECT demo)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
