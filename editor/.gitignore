@@ -9,6 +9,7 @@
 *.sln.docstates
 
 *.dir
+solution
 
 .vs
 *.sln
@@ -29,10 +30,3 @@ bld/
 [Oo]bj/
 [Ll]og/
 Win32
-
-# ---------------------
-#	  Dependecies
-# ---------------------
-engine
-glfw
-solution
