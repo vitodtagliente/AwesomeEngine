@@ -1,7 +1,8 @@
 @echo off
+if not exist "solutions" mkdir solutions
+cd solutions
+if not exist "editor" mkdir editor
 cd editor
-if not exist "solution" mkdir solution
-cd solution
 @echo on
-cmake ..
+cmake ../../editor 
 pause

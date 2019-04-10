@@ -1,7 +1,8 @@
 @echo off
+if not exist "solutions" mkdir solutions
+cd solutions
+if not exist "sandbox" mkdir sandbox
 cd sandbox
-if not exist "solution" mkdir solution
-cd solution
 @echo on
-cmake ..
+cmake ../../sandbox 
 pause
