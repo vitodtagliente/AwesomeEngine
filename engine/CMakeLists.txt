@@ -25,6 +25,10 @@ source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.cpp)
+if(WIN32 OR UNIX OR APPLE)
+	file(GLOB_RECURSE DESKTOP_SOURCE_FILES ${PROJECT_SOURCE_DIR}/platform/desktop/*.h ${PROJECT_SOURCE_DIR}/platform/desktop/*.cpp)
+	list(APPEND PROJECT_SOURCE_FILES ${DESKTOP_SOURCE_FILES})
+endif()
 
 foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     get_filename_component(_source_path "${_source}" PATH)

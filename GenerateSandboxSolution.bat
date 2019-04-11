@@ -4,5 +4,5 @@ cd solutions
 if not exist "sandbox" mkdir sandbox
 cd sandbox
 @echo on
-cmake ../../sandbox 
+cmake ../../sandbox
 pause
