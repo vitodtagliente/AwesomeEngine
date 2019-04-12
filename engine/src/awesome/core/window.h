@@ -3,105 +3,64 @@
 #include <map>
 #include <string>
 #include "../types.h"
-#include "input.h"
 
 namespace awesome
 {
-	// window's properties structure
-	struct WindowProperties
+	class Window
 	{
-		uint32 width{ 640 };
-		uint32 height{ 480 };
-		bool fullscreen{ false };
-		bool vSync{ false };
-		uint8 fps{ 60 };
-	};
-
-	// window states
-	enum WindowState
-	{
-		Created,
-		Open,
-		Closing,
-		Closed,
-		Error
-	};
-
-	class Window final
-	{
-	private:
-
-		// Each window has one input manager
-		// and the window is responsible for it's 
-		// input manager updates
-		friend class InputManager;
-
-		// window's title
-		std::string m_Title;
-		// window's properties (width, height, ...)
-		WindowProperties m_Properties;
-		// window's state
-		WindowState m_State{ WindowState::Created };
-		// has the window the focus?
-		bool m_HasFocus{ true };
-
-		// platform specific implementations
-		void platformClear();
-		bool platformOpen();
-		void platformUpdate();
-
-		// window handler, platform specific type
-		void* m_WindowHandler{ nullptr };
-		// input manager
-		InputManager* m_InputManager{ nullptr };
-
-		// store all windows
-		static std::map<void* const, Window* const> m_Windows;
-
-		// time per frames
-		float m_TimePerFrame{ 0.0f };
-
 	public:
 
-		Window(const std::string& title, const WindowProperties& properties);
-		~Window();
+		// generic window settings
+		struct Settings
+		{
+			std::string title;
+			uint32 width, height;
+			bool fullscreen;
+			bool vsync;
 
-		Window& operator=(Window&& window) = delete;
-		Window(const Window& window) = delete;
-		Window(Window&& window) = delete;
-		Window& operator= (const Window& window) = delete;
-		
-		// getters and setters 
-		inline uint32 getWidth() const { return m_Properties.width; }
-		inline uint32 getHeight() const { return m_Properties.height; }
+			Settings();
+		};
 
-		void resize(const uint32 width, const uint32 height);
+		// window state
+		enum class State
+		{
+			Unknown,
+			Created,
+			Open,
+			Closing,
+			Closed,
+			Error
+		};
 
-		inline bool isVSyncEnabled() const { return m_Properties.vSync; }
-		void enableVSync(const bool enabled);
+		Window();
+		virtual ~Window();
 
-		inline uint8 getFPS() const { return m_Properties.fps; }
-		void setFPS(const uint8 fps);
-		inline float getTimePerFrame() const { return m_TimePerFrame; }
+		Window& operator=(Window&& t_window) = delete;
+		Window(const Window& t_window) = delete;
+		Window(Window&& t_window) = delete;
+		Window& operator= (const Window& t_window) = delete;
 
-		inline bool hasFocus() const { return m_HasFocus; }
+		// check the window state
+		inline State getState() const { return m_state; }
 
-		inline bool isFullscreen() const { return m_Properties.fullscreen; }
-
-		inline WindowState getState() const { return m_State; }
-		inline bool isClosed() const { return m_State == WindowState::Closed; }
-
-		void setTitle(const std::string& title);
-
-		inline const void* getHandler() const { return m_WindowHandler; }
-		inline InputManager* getInputManager() const { return m_InputManager; }
-
-		void clear();
-		void open();
+		bool open(const Settings& t_settings);
 		void update();
 		void close();
 
-		// find a window by handler
-		static Window* instance(void* const window_handler);
+		void setTitle(const std::string& t_title);
+		void resize(const uint32 t_width, const uint32 t_height);
+
+	protected:
+
+		virtual bool platformOpen(const Settings& t_settings);
+		virtual void platformUpdate();
+
+	private:
+
+		// window state
+		State m_state;
+		// window handler, platform specific type
+		void* m_windowHandler;
+
 	};
 }
