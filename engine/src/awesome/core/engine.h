@@ -9,9 +9,6 @@ namespace awesome
 	{
 	public:
 
-		Engine(Game* t_game);
-		~Engine();
-
 		template <typename T>
 		static void run()
 		{
@@ -23,6 +20,9 @@ namespace awesome
 		}
 
 	private:
+
+		Engine(Game* t_game);
+		~Engine();
 
 		// launch the engine
 		void launch();

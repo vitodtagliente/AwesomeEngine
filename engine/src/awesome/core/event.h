@@ -19,8 +19,10 @@ namespace awesome
 			m_listeners.clear();
 		}
 
-		inline void broadcast() {
-			for (auto listener : m_listeners) {
+		inline void broadcast() 
+		{
+			for (auto listener : m_listeners) 
+			{
 				listener();
 			}
 		}
