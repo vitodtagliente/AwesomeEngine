@@ -16,10 +16,10 @@ namespace awesome
 		Time();
 		~Time();
 
-		Time& operator=(Time&& t_time) = default;
-		Time(const Time& t_time) = default;
-		Time(Time&& t_time) = default;
-		Time& operator= (const Time& t_time) = default;
+		Time& operator=(Time&& t_time) = delete;
+		Time(const Time& t_time) = delete;
+		Time(Time&& t_time) = delete;
+		Time& operator= (const Time& t_time) = delete;
 
 		// retrieve the time data
 		inline double getTime() const { return m_time; }
