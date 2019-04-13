@@ -1,4 +1,5 @@
 #include "time.h"
+#include "timer.h"
 
 namespace awesome
 {
@@ -18,5 +19,8 @@ namespace awesome
 		const double last_time = m_time;
 		m_time = platformGetTime();
 		m_deltaTime = m_time - last_time;
+
+		// update all the timers
+		Timer::update(m_deltaTime);
 	}
 }

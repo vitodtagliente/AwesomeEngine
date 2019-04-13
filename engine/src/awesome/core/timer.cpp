@@ -2,24 +2,38 @@
 
 namespace awesome
 {
+	std::vector<Timer*> Timer::m_instances {};
+
 	Timer::Timer(const double t_duration, const bool t_loop)
 		: m_duration(t_duration)
 		, m_time(t_duration)
 		, m_loop(t_loop)
-		, m_callback()
 	{
+		// store the pointer to this instance
+		m_instances.push_back(this);
 	}
 
 	Timer::Timer(const double t_duration, const std::function<void()>& t_callback, const bool t_loop)
 		: m_duration(t_duration)
 		, m_time(t_duration)
 		, m_loop(t_loop)
-		, m_callback(t_callback)
 	{
+		m_instances.push_back(this);
+		// set this callback
+		onTimeElapsed.addListener(t_callback);
 	}
 
 	Timer::~Timer()
 	{
+		// this timer is going to be destroyed
+		for (auto it = m_instances.begin(); it != m_instances.end(); ++it)
+		{
+			if (*it == this)
+			{
+				m_instances.erase(it);
+				break;
+			}
+		}
 	}
 
 	void Timer::start()
@@ -40,7 +54,6 @@ namespace awesome
 			m_time -= t_deltaTime;
 			if (m_time <= 0.0)
 			{
-				m_callback();
 				onTimeElapsed.broadcast();
 
 				if (m_loop)
@@ -52,6 +65,14 @@ namespace awesome
 					stop();
 				}
 			}
+		}
+	}
+
+	void Timer::update(const double t_deltaTime)
+	{
+		for (Timer* timer : m_instances)
+		{
+			timer->tick(t_deltaTime);
 		}
 	}
 }

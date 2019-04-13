@@ -2,7 +2,9 @@
 
 namespace awesome
 {
+	// engine's core elements
 	class Game;
+	class Time;
 	class Window;
 
 	class Engine final
@@ -31,6 +33,8 @@ namespace awesome
 		static Engine* m_instance;
 		// game logic
 		Game* m_game;
+		// engine time
+		Time* m_time;
 		// window
 		Window* m_window;
 	};

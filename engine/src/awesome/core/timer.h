@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <vector>
 #include "event.h"
 
 namespace awesome
@@ -36,8 +37,10 @@ namespace awesome
 
 	private:
 
-		// called by Time's tick
+		// update this timer
 		void tick(const double t_deltaTime);
+		// update all timer instances, called by Time
+		static void update(const double t_deltaTime);
 
 		// how much the timer should tick
 		double m_duration;
@@ -47,7 +50,8 @@ namespace awesome
 		bool m_loop;
 		// is the timer ticking?
 		bool m_isTicking;
-		// time elapsed callback
-		std::function<void()> m_callback;
+
+		// all timer instances
+		static std::vector<Timer*> m_instances;
 	};
 }

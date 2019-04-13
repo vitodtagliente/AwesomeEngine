@@ -8,33 +8,34 @@ namespace awesome
 	template <typename ReturnType, typename... Params>
 	class BaseEvent
 	{
-	private:
-
-		std::vector<std::function<ReturnType(Params...)>> m_listeners{};
-
 	public:
 
-		BaseEvent() = default;
-		~BaseEvent() {
-			m_listeners.clear();
+		BaseEvent()
+			: m_listeners()
+		{
+
 		}
 
-		inline void broadcast() 
+		~BaseEvent() = default;
+
+		inline void broadcast(Params... t_args) 
 		{
-			for (auto listener : m_listeners) 
+			for (const auto& listener : m_listeners) 
 			{
-				listener();
+				listener(t_args...);
 			}
 		}
 
-		inline void addListener(const std::function<ReturnType(Params...)>& function) {
-			m_listeners.push_back(function);
+		inline void addListener(const std::function<ReturnType(Params...)>& t_function) 
+		{
+			m_listeners.push_back(t_function);
 		}
 
-		inline bool removeListener(const std::function<ReturnType(Params...)>& function) {
+		inline bool removeListener(const std::function<ReturnType(Params...)>& t_function) 
+		{
 			for (auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
 			{
-				if (*it == function)
+				if (*it == t_function)
 				{
 					m_listeners.erase(it);
 					return true;
@@ -43,10 +44,14 @@ namespace awesome
 			return false;
 		}
 
-		inline void clear() {
+		inline void clear() 
+		{
 			m_listeners.clear();
 		}
 
+	private:
+
+		std::vector<std::function<ReturnType(Params...)>> m_listeners{};
 	};
 
 	typedef BaseEvent<void> Event;
