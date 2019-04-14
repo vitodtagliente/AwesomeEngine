@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cassert>
+
 namespace awesome
 {
 	template<typename T>
@@ -13,6 +15,7 @@ namespace awesome
 
 		Singleton()
 		{
+			assert(m_instance == nullptr);
 			m_instance = static_cast<T*>(this);
 		}
 		~Singleton()
