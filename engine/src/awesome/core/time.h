@@ -1,5 +1,7 @@
 #pragma once
 
+#include "singleton.h"
+
 /*
 	The Time class manages the engine time.
 	It is responsible for generating the delta time used by the engine and its objects.
@@ -7,7 +9,7 @@
 
 namespace awesome
 {
-	class Time final
+	class Time final : public Singleton<Time>
 	{
 	public:
 

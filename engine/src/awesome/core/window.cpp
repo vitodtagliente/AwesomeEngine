@@ -10,6 +10,7 @@ namespace awesome
 		, fullscreen(false)
 		, vsync(false)
 	{
+		
 	}
 
 	Window::Window()

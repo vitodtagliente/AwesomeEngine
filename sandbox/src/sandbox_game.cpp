@@ -25,7 +25,7 @@ void SandboxGame::update()
 {
 	Game::update();
 
-	if (Input* input = Engine::getInstance()->getInput())
+	if (Input* input = Input::instance())
 	{
 		if (input->isKeyPressed(KeyCode::A))
 		{

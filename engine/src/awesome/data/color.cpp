@@ -26,12 +26,7 @@ namespace awesome
 		, alpha(t_alpha)
 	{
 	}
-
-	Color::Color(const std::string t_hecadeximal)
-	{
-		// #todo: to be implemented
-	}
-
+	
 	Color::~Color()
 	{
 	}

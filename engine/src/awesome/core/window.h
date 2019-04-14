@@ -2,13 +2,16 @@
 
 #include <map>
 #include <string>
+#include "singleton.h"
 #include "../types.h"
 
 namespace awesome
 {
-	class Window
+	class Window final : public Singleton<Window>
 	{
 	public:
+
+		friend class Engine;
 
 		// generic window settings
 		struct Settings
@@ -32,9 +35,6 @@ namespace awesome
 			Error
 		};
 
-		Window();
-		virtual ~Window();
-
 		Window& operator=(Window&& t_window) = delete;
 		Window(const Window& t_window) = delete;
 		Window(Window&& t_window) = delete;
@@ -43,25 +43,24 @@ namespace awesome
 		// check the window state
 		inline State getState() const { return m_state; }
 		inline void* getWindowHandler() const { return m_windowHandler; }
-
-		bool open(const Settings& t_settings);
-		void update();
-		void close();
-
+		
 		void setTitle(const std::string& t_title);
 		void resize(const uint32 t_width, const uint32 t_height);
-
-	protected:
-
-		virtual bool platformOpen(const Settings& t_settings);
-		virtual void platformUpdate();
-
+		
 	private:
+		
+		Window();
+		~Window();
+
+		bool open(const Settings& t_settings);
+		bool platformOpen(const Settings& t_settings);
+		void update();
+		void platformUpdate();
+		void close();
 
 		// window state
 		State m_state;
 		// window handler, platform specific type
 		void* m_windowHandler;
-
 	};
 }

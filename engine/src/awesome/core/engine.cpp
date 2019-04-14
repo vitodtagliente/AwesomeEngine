@@ -7,13 +7,6 @@
 
 namespace awesome
 {
-	Engine* Engine::m_instance{ nullptr };
-
-	Engine* Engine::getInstance()
-	{
-		return m_instance;
-	}
-
 	Engine::Engine(Game* t_game)
 		: m_game(t_game)
 		, m_input(nullptr)
@@ -33,10 +26,6 @@ namespace awesome
 
 	void Engine::launch()
 	{
-		assert(m_input == nullptr);
-		assert(m_window == nullptr);
-		assert(m_time == nullptr);
-
 		m_window = new Window();
 		Window::Settings window_settings{};
 		// #todo: read settings from ini

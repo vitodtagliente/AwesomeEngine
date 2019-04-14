@@ -10,10 +10,12 @@ namespace awesome
 		, m_deltaMousePosition()
 		, m_isMouseOverWindow(true) 
 	{
+
 	}
 
 	Input::~Input()
 	{
+
 	}
 
 	bool Input::isKeyDown(const keycode_t t_key) const
@@ -39,12 +41,12 @@ namespace awesome
 		return false;
 	}
 
-	const vec2 & Input::getMousePosition() const
+	const vec2& Input::getMousePosition() const
 	{
 		return m_mousePosition;
 	}
 
-	const vec2 & Input::getDeltaMousePosition() const
+	const vec2& Input::getDeltaMousePosition() const
 	{
 		return m_deltaMousePosition;
 	}
@@ -55,7 +57,7 @@ namespace awesome
 		m_keysState.clear();
 	}
 	
-	void Input::init(void * const t_windowHandler)
+	void Input::init(void* const t_windowHandler)
 	{
 		platformInit(t_windowHandler);
 	}

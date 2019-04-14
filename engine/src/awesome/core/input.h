@@ -1,14 +1,17 @@
 #pragma once
 
 #include <map>
+#include "singleton.h"
 #include "keycode.h"
 #include "../math/vec2.h"
 
 namespace awesome
 {
-	class Input final
+	class Input final : public Singleton<Input>
 	{
 	public:
+
+		friend class Engine;
 
 		Input& operator=(Input&& t_input) = delete;
 		Input(const Input& t_input) = delete;
@@ -28,9 +31,7 @@ namespace awesome
 		void clear();
 
 	private:
-
-		friend class Engine;
-
+		
 		Input();
 		~Input();
 
