@@ -42,6 +42,7 @@ namespace awesome
 
 		// check the window state
 		inline State getState() const { return m_state; }
+		inline void* getWindowHandler() const { return m_windowHandler; }
 
 		bool open(const Settings& t_settings);
 		void update();

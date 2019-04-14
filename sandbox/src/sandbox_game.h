@@ -1,6 +1,8 @@
-#include <awesome/core/game.h>
+#include <awesome/awesome.h>
 
-class SandboxGame : public awesome::Game
+using namespace awesome;
+
+class SandboxGame : public Game
 {
 public:
 

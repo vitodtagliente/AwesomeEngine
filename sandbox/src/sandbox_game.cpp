@@ -1,4 +1,7 @@
 #include "sandbox_game.h"
+#include <iostream>
+
+using namespace std;
 
 SandboxGame::SandboxGame()
 	: Game()
@@ -22,7 +25,13 @@ void SandboxGame::update()
 {
 	Game::update();
 
-
+	if (Input* input = Engine::getInstance()->getInput())
+	{
+		if (input->isKeyPressed(KeyCode::A))
+		{
+			cout << "A down" << endl;
+		}
+	}
 }
 
 void SandboxGame::uninit()
