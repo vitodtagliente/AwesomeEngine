@@ -69,7 +69,28 @@ namespace awesome
 		m_keysState.clear();
 
 		// handle mouse buttons keystate
-		
+		for (auto key_code : { KeyCode::MouseLeftButton, KeyCode::MouseRightButton, KeyCode::MouseWheelButton }) 
+		{
+			auto key_code_it = temp_lastKeysState.find(key_code);
+			if (key_code_it != temp_lastKeysState.end())
+			{
+				if (key_code_it->second == KeyState::Pressed || key_code_it->second == KeyState::Down)
+				{ 
+					auto it = m_lastKeysState.find(key_code);
+					if (it != m_lastKeysState.end())
+					{
+						if (it->second != KeyState::Released)
+						{
+							it->second = KeyState::Down;
+						}
+					}
+					else
+					{
+						m_lastKeysState.insert({ key_code, KeyState::Down });
+					}
+				}
+			}
+		}
 	}
 
 	void Input::uninit()

@@ -13,9 +13,6 @@ namespace awesome
 
 		friend class Engine;
 
-		Time();
-		~Time();
-
 		Time& operator=(Time&& t_time) = delete;
 		Time(const Time& t_time) = delete;
 		Time(Time&& t_time) = delete;
@@ -26,6 +23,9 @@ namespace awesome
 		inline double getDeltaTime() const { return m_deltaTime; }
 
 	private:
+
+		Time();
+		~Time();
 
 		// called by the engine loop
 		void tick();
