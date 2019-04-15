@@ -4,12 +4,15 @@
 #include "input.h"
 #include "time.h"
 #include "window.h"
+#include "../graphics/renderer.h"
+#include "../data/color.h"
 
 namespace awesome
 {
 	Engine::Engine(Game* t_game)
 		: m_game(t_game)
 		, m_input(nullptr)
+		, m_renderer(nullptr)
 		, m_time(nullptr)
 		, m_window(nullptr)
 	{
@@ -20,6 +23,7 @@ namespace awesome
 	{
 		delete m_game;
 		delete m_input;
+		delete m_renderer;
 		delete m_time;
 		delete m_window;
 	}
@@ -33,23 +37,26 @@ namespace awesome
 		{
 			m_input = new Input();
 			m_time = new Time();
+			m_renderer = new Renderer();
 
 			m_input->init(m_window->getWindowHandler());
+			m_renderer->init();
 			m_game->init();
 			// engine lifetime cycle
 			while (m_window->getState() != Window::State::Closing)
 			{
 				m_window->update();
+				m_time->tick();
 				m_input->update();
 
 				// game update
 				m_game->update();
 
-				m_time->tick();
+				m_renderer->clear(Color::Green);
 			}
 			m_game->uninit();
-
 			m_input->uninit();
+			m_renderer->uninit();
 		}
 		else
 		{

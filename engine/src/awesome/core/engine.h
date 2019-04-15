@@ -7,6 +7,7 @@ namespace awesome
 	// engine's core elements
 	class Game;
 	class Input;
+	class Renderer;
 	class Time;
 	class Window;
 
@@ -36,6 +37,8 @@ namespace awesome
 		Game* m_game;
 		// engine input system
 		Input* m_input;
+		// renderer
+		Renderer* m_renderer;
 		// engine time
 		Time* m_time;
 		// window
