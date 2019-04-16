@@ -2,8 +2,5 @@
 
 namespace awesome
 {
-	class Texture
-	{
 
-	};
 }
