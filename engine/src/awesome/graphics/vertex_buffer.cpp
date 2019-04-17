@@ -4,6 +4,7 @@
 namespace awesome
 {
 	VertexBuffer::VertexBuffer(const void* t_data, const std::size_t t_size, const AccessMode t_access)
+		: m_size(t_size)
 	{
 		// generate the buffer
 		glGenBuffers(1, &m_id);
