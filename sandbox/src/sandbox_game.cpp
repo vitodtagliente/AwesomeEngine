@@ -4,21 +4,53 @@
 using namespace std;
 
 SandboxGame::SandboxGame()
-	: Game()
 {
 }
 
 SandboxGame::~SandboxGame()
 {
-	Game::~Game();
-
+	delete program;
+	delete va;
 }
 
 void SandboxGame::init()
 {
 	Game::init();
 
+	std::map<Shader::Type, std::string> sources;
+	Shader::Reader::parse("../../sandbox/assets/triangle.shader", sources);
+	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
+	auto fragment = new Shader(Shader::Type::Vertex, sources[Shader::Type::Fragment]);
 
+	cout << endl << sources[Shader::Type::Vertex] << endl 
+		 << endl << sources[Shader::Type::Fragment] << endl << endl;
+
+	program = new ShaderProgram({ vertex, fragment });
+
+	// free shaders
+	delete vertex;
+	delete fragment;
+
+	// position_x position_y 
+	float positions[] = {
+		-0.5f, -0.5f,
+		 0.0f,  0.5f,
+		 0.5f, -0.5f
+	};
+
+	// Vertex Array
+	va = new VertexArray();
+
+	VertexBuffer vb(positions, 2 * 3 * sizeof(float));
+	vb.bind();
+
+	VertexBufferLayout layout;
+	layout.push<float>(2);
+
+	va->add(vb, layout);
+
+	va->unbind();
+	vb.unbind();
 }
 
 void SandboxGame::update()
@@ -32,6 +64,14 @@ void SandboxGame::update()
 			cout << "A down" << endl;
 		}
 	}
+}
+
+void SandboxGame::draw()
+{
+	program->bind();
+	program->set("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
+	va->bind();
+	Renderer::instance()->draw();
 }
 
 void SandboxGame::uninit()

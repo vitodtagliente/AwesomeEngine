@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
 #include <cstddef>
 #include <vector>
 #include "../types.h"
@@ -42,21 +41,21 @@ namespace awesome
 
 		template <>
 		void push<float>(unsigned int t_count) {
-			VertexBufferElement element(t_count, GL_FLOAT, sizeof(float));
+			VertexBufferElement element(t_count, float_t, sizeof(float));
 			m_elements.push_back(element);
 			m_stride += element.size;
 		}
 
 		template <>
 		void push<unsigned int>(unsigned int t_count) {
-			VertexBufferElement element(t_count, GL_UNSIGNED_INT, sizeof(unsigned int));
+			VertexBufferElement element(t_count, uint_t, sizeof(unsigned int));
 			m_elements.push_back(element);
 			m_stride += element.size;
 		}
 
 		template <>
 		void push<unsigned char>(unsigned int t_count) {
-			VertexBufferElement element(t_count, GL_UNSIGNED_BYTE, sizeof(unsigned int));
+			VertexBufferElement element(t_count, ubyte_t, sizeof(unsigned int));
 			m_elements.push_back(element);
 			m_stride += element.size;
 		}
@@ -67,5 +66,9 @@ namespace awesome
 		std::vector<VertexBufferElement> m_elements;
 		// layout stride
 		std::size_t m_stride;
+
+		static const uint float_t;
+		static const uint uint_t;
+		static const uint ubyte_t;
 	};
 }

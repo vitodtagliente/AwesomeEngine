@@ -23,6 +23,15 @@ namespace awesome
 		if (m_windowHandler != nullptr)
 		{
 			glfwMakeContextCurrent(static_cast<GLFWwindow*>(m_windowHandler));
+
+			// resize callback
+			glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(m_windowHandler), 
+				[](GLFWwindow*, int t_width, int t_height) 
+				{
+					glViewport(0, 0, t_width, t_height);
+				}
+			);
+
 			return true;
 		}
 		return false;

@@ -17,6 +17,10 @@ namespace awesome
 	{
 	}
 
+	void Game::draw()
+	{
+	}
+
 	void Game::uninit()
 	{
 	}

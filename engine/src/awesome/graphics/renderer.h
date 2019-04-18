@@ -13,6 +13,7 @@ namespace awesome
 		friend class Engine;
 
 		void clear(const Color& t_color);
+		void draw(const unsigned int t_vertices = 3);
 
 	private:
 		

@@ -45,14 +45,14 @@ namespace awesome
 			// engine lifetime cycle
 			while (m_window->getState() != Window::State::Closing)
 			{
-				m_window->update();
 				m_time->tick();
 				m_input->update();
 
 				// game update
 				m_game->update();
+				m_game->draw();
 
-				m_renderer->clear(Color::Green);
+				m_window->update();
 			}
 			m_game->uninit();
 			m_input->uninit();

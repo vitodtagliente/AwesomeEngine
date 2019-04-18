@@ -10,6 +10,11 @@ namespace awesome
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(t_color.red, t_color.green, t_color.blue, t_color.alpha);
 	}
+
+	void Renderer::draw(const unsigned int t_vertices)
+	{
+		glDrawArrays(GL_TRIANGLES, 0, t_vertices);
+	}
 	
 	Renderer::Renderer()
 	{

@@ -25,6 +25,7 @@ namespace awesome
 
 		virtual void init();
 		virtual void update();
+		virtual void draw();
 		virtual void uninit();
 		virtual void end();
 
