@@ -25,14 +25,14 @@ namespace awesome
 		// link the program
 		glLinkProgram(m_id);
 
-		int compile_status{};
-		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compile_status);
-		if (compile_status != GL_TRUE)
+		int link_status{};
+		glGetProgramiv(m_id, GL_LINK_STATUS, &link_status);
+		if (link_status != GL_TRUE)
 		{
 			m_state = State::Error;
 			// store the error message
 			char log[1024];
-			glGetShaderInfoLog(m_id, 1024, NULL, log);
+			glGetProgramInfoLog(m_id, 1024, NULL, log);
 			m_errorMessage = std::string{ log };
 
 			// delete the program
