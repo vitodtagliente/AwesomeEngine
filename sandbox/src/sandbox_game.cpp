@@ -20,7 +20,7 @@ void SandboxGame::init()
 	std::map<Shader::Type, std::string> sources;
 	Shader::Reader::parse("../../sandbox/assets/triangle.shader", sources);
 	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
-	auto fragment = new Shader(Shader::Type::Vertex, sources[Shader::Type::Fragment]);
+	auto fragment = new Shader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
 	cout << endl << sources[Shader::Type::Vertex] << endl 
 		 << endl << sources[Shader::Type::Fragment] << endl << endl;

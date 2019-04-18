@@ -25,9 +25,9 @@ namespace awesome
 		// link the program
 		glLinkProgram(m_id);
 
-		int compile_status;
+		int compile_status{};
 		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compile_status);
-		if (!compile_status)
+		if (compile_status != GL_TRUE)
 		{
 			m_state = State::Error;
 			// store the error message

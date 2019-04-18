@@ -16,9 +16,9 @@ namespace awesome
 		glShaderSource(m_id, 1, &source_pointer, NULL);
 		glCompileShader(m_id);
 
-		int compile_state;
+		int compile_state{};
 		glGetShaderiv(m_id, GL_COMPILE_STATUS, &compile_state);
-		if (!compile_state)
+		if (compile_state != GL_TRUE)
 		{
 			m_state = State::Error;
 			char log[1024];
