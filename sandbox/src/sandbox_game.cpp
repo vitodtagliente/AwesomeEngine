@@ -22,10 +22,20 @@ void SandboxGame::init()
 	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
 	auto fragment = new Shader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
-	cout << endl << sources[Shader::Type::Vertex] << endl 
-		 << endl << sources[Shader::Type::Fragment] << endl << endl;
+	if (!vertex->isValid())
+	{
+		cout << "Vertex " << endl << vertex->getErrorMessage() << endl;
+	}
+	if (!fragment->isValid())
+	{
+		cout << "Fragment " << endl << fragment->getErrorMessage() << endl;
+	}
 
 	program = new ShaderProgram({ vertex, fragment });
+	if (!program->isValid())
+	{
+		cout << "Program " << endl << program->getErrorMessage() << endl;
+	}
 
 	// free shaders
 	delete vertex;
