@@ -17,7 +17,7 @@ namespace awesome
 		VertexBuffer(const void* t_data, const std::size_t t_size, const AccessMode t_access = AccessMode::StaticDraw);
 		~VertexBuffer();
 
-		void bind();
+		void bind() const;
 		void unbind();
 
 		uint getId() const;

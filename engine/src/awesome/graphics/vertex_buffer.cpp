@@ -25,7 +25,7 @@ namespace awesome
 		glDeleteBuffers(1, &m_id);
 	}
 
-	void VertexBuffer::bind()
+	void VertexBuffer::bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 	}

@@ -4,6 +4,9 @@
 
 namespace awesome
 {
+	class VertexBuffer;
+	class VertexBufferLayout;
+
 	class VertexArray
 	{
 	public:
@@ -15,6 +18,8 @@ namespace awesome
 		void unbind();
 
 		uint id() const;
+
+		void add(const VertexBuffer& t_buffer, const VertexBufferLayout& t_layout);
 
 	private:
 
