@@ -49,7 +49,7 @@ namespace awesome
 				m_input->update();
 
 				// game update
-				m_game->update();
+				m_game->update(m_time->getDeltaTime());
 				m_game->draw();
 
 				m_window->update();

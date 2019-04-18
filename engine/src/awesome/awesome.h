@@ -2,6 +2,7 @@
 
 #include "minimal.h"
 
+#include "data/color.h"
 // graphics
 #include "graphics/renderer.h"
 #include "graphics/vertex_buffer.h"

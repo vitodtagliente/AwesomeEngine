@@ -24,7 +24,7 @@ namespace awesome
 	protected:
 
 		virtual void init();
-		virtual void update();
+		virtual void update(const double delta_time);
 		virtual void draw();
 		virtual void uninit();
 		virtual void end();

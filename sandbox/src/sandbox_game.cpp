@@ -4,6 +4,7 @@
 using namespace std;
 
 SandboxGame::SandboxGame()
+	: triangleColor(Color::Black)
 {
 }
 
@@ -63,9 +64,9 @@ void SandboxGame::init()
 	vb.unbind();
 }
 
-void SandboxGame::update()
+void SandboxGame::update(const double delta_time)
 {
-	Game::update();
+	Game::update(delta_time);
 
 	if (Input* input = Input::instance())
 	{
@@ -74,12 +75,19 @@ void SandboxGame::update()
 			cout << "A down" << endl;
 		}
 	}
+
+	triangleColor.red += static_cast<float>(delta_time);
+	if (triangleColor.red > 1.0f)
+		triangleColor.red = 0.0f;
 }
 
 void SandboxGame::draw()
 {
+	static const Color background_color(.15f, .1f, .3f);
+	Renderer::instance()->clear(background_color);
+
 	program->bind();
-	program->set("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
+	program->set("u_Color", triangleColor.red, triangleColor.green, triangleColor.green, 1.0f);
 	va->bind();
 	Renderer::instance()->draw();
 }

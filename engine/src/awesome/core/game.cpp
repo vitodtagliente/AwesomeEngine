@@ -13,7 +13,7 @@ namespace awesome
 		m_state = State::Running;
 	}
 
-	void Game::update()
+	void Game::update(const double delta_time)
 	{
 	}
 
