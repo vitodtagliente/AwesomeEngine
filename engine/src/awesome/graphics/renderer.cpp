@@ -15,6 +15,11 @@ namespace awesome
 	{
 		glDrawArrays(GL_TRIANGLES, 0, t_vertices);
 	}
+
+	void Renderer::drawElements(const unsigned int t_vertices)
+	{
+		glDrawElements(GL_TRIANGLES, t_vertices, GL_UNSIGNED_INT, nullptr);
+	}
 	
 	Renderer::Renderer()
 	{
@@ -31,6 +36,10 @@ namespace awesome
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+			// enable blending
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
 	}
 

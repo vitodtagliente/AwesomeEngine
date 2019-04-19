@@ -12,6 +12,7 @@ SandboxGame::~SandboxGame()
 {
 	delete program;
 	delete va;
+	delete texture;
 }
 
 void SandboxGame::init()
@@ -19,7 +20,7 @@ void SandboxGame::init()
 	Game::init();
 
 	std::map<Shader::Type, std::string> sources;
-	Shader::Reader::parse("../../sandbox/assets/triangle.shader", sources);
+	Shader::Reader::parse("../../sandbox/assets/texture.shader", sources);
 	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
 	auto fragment = new Shader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
@@ -42,26 +43,39 @@ void SandboxGame::init()
 	delete vertex;
 	delete fragment;
 
-	// position_x position_y 
+	// position_x position_y uv_x uv_y
 	float positions[] = {
-		-0.5f, -0.5f,
-		 0.0f,  0.5f,
-		 0.5f, -0.5f
+		-0.5f, -0.5f, 0.0f, 0.0f,
+		0.5f, -0.5f, 1.0f, 0.0f,
+		0.5f,  0.5f, 1.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f, 1.0f
+	};
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
 	};
 
 	// Vertex Array
 	va = new VertexArray();
 
-	VertexBuffer vb(positions, 2 * 3 * sizeof(float));
+	VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 	vb.bind();
 
 	VertexBufferLayout layout;
 	layout.push<float>(2);
-
+	layout.push<float>(2);
 	va->add(vb, layout);
+
+	IndexBuffer ib(indices, 6);
+	ib.bind();
 
 	va->unbind();
 	vb.unbind();
+	ib.unbind();
+
+	Image img("../../sandbox/assets/batman_logo.png");
+	texture = new Texture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
 }
 
 void SandboxGame::update(const double delta_time)
@@ -88,8 +102,10 @@ void SandboxGame::draw()
 
 	program->bind();
 	program->set("u_Color", triangleColor.red, triangleColor.green, triangleColor.green, 1.0f);
+	texture->bind();
+	program->set("u_Texture", 0);
 	va->bind();
-	Renderer::instance()->draw();
+	Renderer::instance()->drawElements(6);
 }
 
 void SandboxGame::uninit()

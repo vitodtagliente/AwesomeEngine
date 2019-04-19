@@ -25,4 +25,6 @@ private:
 	ShaderProgram* program;
 	// triangle color
 	Color triangleColor;
+	// texture
+	Texture* texture;
 };

@@ -14,6 +14,7 @@ namespace awesome
 
 		void clear(const Color& t_color);
 		void draw(const unsigned int t_vertices = 3);
+		void drawElements(const unsigned int t_vertices);
 
 	private:
 		
