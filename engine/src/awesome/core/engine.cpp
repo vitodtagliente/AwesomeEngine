@@ -6,6 +6,7 @@
 #include "window.h"
 #include "../graphics/renderer.h"
 #include "../data/color.h"
+#include "subsystem.h"
 
 namespace awesome
 {
@@ -15,6 +16,7 @@ namespace awesome
 		, m_renderer(nullptr)
 		, m_time(nullptr)
 		, m_window(nullptr)
+		, m_subsystems()
 	{
 
 	}

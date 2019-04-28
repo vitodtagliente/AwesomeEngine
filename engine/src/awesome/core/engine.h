@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cassert>
+#include <map>
+#include <string>
+#include <typeinfo>
 #include "singleton.h"
 
 namespace awesome
@@ -10,6 +14,8 @@ namespace awesome
 	class Renderer;
 	class Time;
 	class Window;
+
+	class ISubsystem;
 
 	class Engine final : public Singleton<Engine>
 	{
@@ -23,6 +29,32 @@ namespace awesome
 			m_instance = new Engine(game);
 			m_instance->launch();
 			delete m_instance;
+		}
+
+		template <typename T>
+		void registerSubsystem(T* t_module)
+		{
+			static_assert(std::is_base_of<ISubsystem, T>(), "Invalid subsystem type");
+
+			const std::type_info& typeinfo = typeid(T);
+			m_subsystems.insert({
+				{ typeinfo.name() }, 
+				t_module
+			});
+		}
+
+		template <typename T>
+		T* getSubsystem() const
+		{
+			static_assert(std::is_base_of<ISubsystem, T>(), "Invalid subsystem type");
+
+			const std::type_info& typeinfo = typeid(T);
+			auto it = m_subsystems.find({ typeinfo.name() });
+			if (it != m_subsystems.end())
+			{
+				return static_cast<T*>(it->second);
+			}
+			return nullptr;
 		}
 
 	private:
@@ -43,5 +75,8 @@ namespace awesome
 		Time* m_time;
 		// window
 		Window* m_window;
+
+		// engine modules
+		std::map<std::string, ISubsystem*> m_subsystems;
 	};
 }
