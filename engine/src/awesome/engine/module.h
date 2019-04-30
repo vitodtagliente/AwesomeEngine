@@ -1,8 +1,11 @@
 #pragma once
 
+#include "singleton.h"
+
 namespace awesome
 {
 	// generic Engine Module interface
+
 	class IModule
 	{
 	public:
@@ -16,22 +19,8 @@ namespace awesome
 	};
 
 	template<typename T>
-	class Module : public IModule
+	class Module : public IModule, public Singleton<T>
 	{
-	public:
 
-		Module() { m_instance = this; }
-		~Module() { m_instance = nullptr; }
-
-		// module singleton instance 
-		static T* instance() { return m_instance; }
-
-	private:
-
-		// module instance 
-		static T* m_instance;
 	};
-
-	template<typename T>
-	T* Module<T>::m_instance(nullptr);
 }

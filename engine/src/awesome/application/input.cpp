@@ -2,5 +2,8 @@
 
 namespace awesome
 {
+	Input::Input()
+	{
 
+	}
 }

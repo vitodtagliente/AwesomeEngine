@@ -4,6 +4,9 @@ namespace awesome
 {
 	class Input
 	{
+	public:
 
+		Input();
+		
 	};
 }
