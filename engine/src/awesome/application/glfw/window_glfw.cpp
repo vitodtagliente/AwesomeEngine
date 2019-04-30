@@ -17,12 +17,6 @@ namespace awesome
 
 	bool WindowGLFW::open(const Settings& t_settings)
 	{
-		if (!glfwInit())
-		{
-			// cannot initialize glfw
-			return false;
-		}
-
 		m_windowHandler = glfwCreateWindow(
 			t_settings.width,
 			t_settings.height,
