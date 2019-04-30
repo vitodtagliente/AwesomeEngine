@@ -11,5 +11,8 @@ namespace awesome
 		ApplicationGLFW();
 		virtual ~ApplicationGLFW() override;
 		
+		virtual bool startup() override;
+		virtual void shutdown() override;
+
 	};
 }

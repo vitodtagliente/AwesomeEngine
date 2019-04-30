@@ -8,10 +8,10 @@ namespace awesome
 	public:
 
 		// module initialization 
-		virtual void startup() = 0;
+		virtual bool startup() = 0;
 		virtual void shutdown() = 0;
 		// update the module
-		virtual void update(const double t_deltaTime) = 0;
+		virtual void tick(const double t_deltaTime) = 0;
 
 	};
 

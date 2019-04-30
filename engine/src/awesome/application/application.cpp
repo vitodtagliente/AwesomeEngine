@@ -13,6 +13,15 @@ namespace awesome
 	{
 	}
 
+	bool Application::startup()
+	{
+		return true;
+	}
+
+	void Application::shutdown()
+	{
+	}
+
 	Window* Application::getWindow() const
 	{
 		return m_window;

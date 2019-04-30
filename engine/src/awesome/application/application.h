@@ -12,11 +12,14 @@ namespace awesome
 
 		Application();
 		virtual ~Application();
+		
+		virtual bool startup() override;
+		virtual void shutdown() override;
 
 		// get the main window
 		Window* getWindow() const;
 
-	private:
+	protected:
 
 		// application's window
 		Window* m_window;
