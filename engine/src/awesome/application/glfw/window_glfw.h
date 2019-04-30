@@ -2,14 +2,16 @@
 
 #include "../window.h"
 
+struct ::GLFWwindow;
+
 namespace awesome
 {
-	class GLFWWindow final : public Window
+	class WindowGLFW final : public Window
 	{
 	public:
 
-		GLFWWindow();
-		virtual ~GLFWWindow() override;
+		WindowGLFW();
+		virtual ~WindowGLFW() override;
 
 		virtual bool open(const Settings& t_settings) override;
 		virtual void update() override;
@@ -17,9 +19,11 @@ namespace awesome
 		virtual void setTitle(const std::string& t_title) override;
 		virtual void resize(const uint32 t_width, const uint32 t_height) override;
 
+		inline GLFWwindow* getWindowHandler() const { return m_windowHandler; }
+
 	private:
 
 		// GLFW window handler
-		struct ::GLFWwindow* m_windowHandler;
+		GLFWwindow* m_windowHandler;
 	};
 }
