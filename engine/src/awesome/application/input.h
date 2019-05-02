@@ -36,6 +36,10 @@ namespace awesome
 
 	protected:
 
+		void handleKeyCallback(const keycode_t t_key, const KeyState t_state);
+		void handleMousePositionCallback(const float t_x, const float t_y);
+		void handleMouseEnterCallback(const bool t_inside);
+
 		// last keys states
 		std::map<keycode_t, KeyState> m_lastKeysState;
 		// keys states

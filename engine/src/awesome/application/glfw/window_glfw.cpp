@@ -15,6 +15,15 @@ namespace awesome
 
 	}
 
+	bool WindowGLFW::startup()
+	{
+		return true;
+	}
+
+	void WindowGLFW::shutdown()
+	{
+	}
+
 	bool WindowGLFW::open(const Settings& t_settings)
 	{
 		m_windowHandler = glfwCreateWindow(
@@ -56,11 +65,11 @@ namespace awesome
 
 	void WindowGLFW::setTitle(const std::string& t_title)
 	{
-
+		glfwSetWindowTitle(m_windowHandler, t_title.c_str());
 	}
 
 	void WindowGLFW::resize(const uint32 t_width, const uint32 t_height)
 	{
-
+		glfwSetWindowSize(m_windowHandler, t_width, t_height);
 	}
 }

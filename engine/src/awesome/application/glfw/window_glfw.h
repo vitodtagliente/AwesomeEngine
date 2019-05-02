@@ -13,6 +13,9 @@ namespace awesome
 		WindowGLFW();
 		virtual ~WindowGLFW() override;
 
+		virtual bool startup() override;
+		virtual void shutdown() override;
+
 		virtual bool open(const Settings& t_settings) override;
 		virtual void update() override;
 		 
