@@ -21,4 +21,10 @@ namespace awesome
 	{
 
 	}
+
+	void Engine::registerModules()
+	{
+
+	}
+
 }

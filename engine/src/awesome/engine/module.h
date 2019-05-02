@@ -1,6 +1,6 @@
 #pragma once
 
-#include "singleton.h"
+#include "../core/singleton.h"
 
 namespace awesome
 {

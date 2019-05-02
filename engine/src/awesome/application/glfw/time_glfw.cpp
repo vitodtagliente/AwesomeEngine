@@ -1,25 +1,11 @@
 #include "time_glfw.h"
 
+#include <GLFW/glfw3.h>
+
 namespace awesome
 {
-	TimeGLFW::TimeGLFW()
+	double TimeGLFW::getApplicationTime() const
 	{
-	}
-
-	TimeGLFW::~TimeGLFW()
-	{
-	}
-
-	bool TimeGLFW::startup()
-	{
-		return false;
-	}
-
-	void TimeGLFW::shutdown()
-	{
-	}
-
-	void TimeGLFW::tick(const double t_deltaTime)
-	{
+		return glfwGetTime();
 	}
 }

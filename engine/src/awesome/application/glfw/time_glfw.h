@@ -6,14 +6,10 @@ namespace awesome
 {
 	class TimeGLFW final : public Time
 	{
-	public:
+	private:
 
-		TimeGLFW();
-		virtual ~TimeGLFW() override;
+		// return the GLFW application's time
+		virtual double getApplicationTime() const override;
 
-		virtual bool startup() override;
-		virtual void shutdown() override;
-
-		virtual void tick(const double t_deltaTime = 0) override;
 	};
 }

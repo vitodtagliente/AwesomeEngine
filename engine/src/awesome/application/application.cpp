@@ -1,5 +1,6 @@
 #include "application.h"
 
+#include "input.h"
 #include "time.h"
 #include "window.h"
 
@@ -19,22 +20,35 @@ namespace awesome
 		delete m_time;
 	}
 
-	bool Application::startup()
+	Input* Application::getInput() const
 	{
-		return true;
+		return m_input;
 	}
 
-	void Application::shutdown()
+	Time* Application::getTime() const
 	{
-	}
-
-	void Application::tick(const double t_deltaTime)
-	{
-
+		return m_time;
 	}
 
 	Window* Application::getWindow() const
 	{
 		return m_window;
+	}
+
+	bool Application::startup()
+	{
+		m_window = initializeWindow();
+		m_input = initializeInput();
+		m_time = initializeTime();
+	}
+
+	void Application::shutdown()
+	{
+
+	}
+
+	void Application::tick()
+	{
+
 	}
 }
