@@ -1,5 +1,7 @@
 #include "time.h"
 
+#include "../data/timer.h"
+
 namespace awesome
 {
 	Time::Time()
@@ -22,6 +24,6 @@ namespace awesome
 		m_deltaTime = m_time - last_time;
 
 		// update all the timers
-		// Timer::update(m_deltaTime);
+		Timer::update(m_deltaTime);
 	}
 }

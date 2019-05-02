@@ -2,11 +2,12 @@
 
 #include <map>
 #include <string>
-#include "../types.h"
+#include "../core/types.h"
+#include "../engine/module.h"
 
 namespace awesome
 {
-	class Window 
+	class Window : public Module<Window>
 	{
 	public:
 
@@ -41,7 +42,6 @@ namespace awesome
 		Window& operator= (const Window& t_window) = delete;
 
 		virtual bool open(const Settings& t_settings) = 0;
-		virtual void update() = 0;
 		virtual void close();
 
 		// check the window state

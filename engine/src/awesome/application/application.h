@@ -1,39 +1,40 @@
 #pragma once
 
-#include "../engine/singleton.h"
+#include <initializer_list>
+#include "../engine/module.h"
 
 namespace awesome
 {
 	class Input;
 	class Time;
 	class Window;
+	class IModule;
+	class ModuleManager;
 
-	class Application : public Singleton<Application>
+	class Application : public Module<Application>
 	{
 	public:
-
-		friend class Engine;
 
 		Application();
 		virtual ~Application();
 
+		virtual bool startup() override;
+		virtual void shutdown() override;
+		virtual void update() override;
+		
 		// get the input system
-		Input* getInput() const;
+		inline Input* getInput() const { return m_input; }
 		// get the time system
-		Time* getTime() const;
+		inline Time* getTime() const { return m_time; }
 		// get the main window
-		Window* getWindow() const;
+		inline Window* getWindow() const { return m_window; }
 
 	protected:
+		
+		virtual std::initializer_list<IModule*> getModulesToRegister() const = 0;
 
-		// called by the engine
-		virtual bool startup();
-		virtual void shutdown();
-		virtual void tick();
-
-		virtual Input* initializeInput() const = 0;
-		virtual Time* initializeTime() const = 0;
-		virtual Window* initializeWindow() const = 0;
+		// module's manager
+		ModuleManager* m_moduleManager;
 
 		// application's input
 		Input* m_input;
