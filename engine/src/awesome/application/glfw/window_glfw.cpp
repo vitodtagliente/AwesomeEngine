@@ -10,11 +10,6 @@ namespace awesome
 
 	}
 
-	WindowGLFW::~WindowGLFW()
-	{
-
-	}
-
 	bool WindowGLFW::open(const Settings& t_settings)
 	{
 		m_windowHandler = glfwCreateWindow(
@@ -29,6 +24,7 @@ namespace awesome
 			glfwMakeContextCurrent(m_windowHandler);
 
 			// resize callback
+			/*
 			glfwSetFramebufferSizeCallback(
 				m_windowHandler,
 				[](GLFWwindow*, int t_width, int t_height)
@@ -36,10 +32,15 @@ namespace awesome
 					//
 				}
 			);
+			*/
 
 			return true;
 		}
 		return false;
+	}
+
+	void WindowGLFW::close()
+	{
 	}
 
 	void WindowGLFW::update_imp()
@@ -50,7 +51,7 @@ namespace awesome
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
-			m_state = State::Closing;
+			
 		}
 	}
 

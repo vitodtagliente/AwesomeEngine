@@ -8,14 +8,6 @@
 
 namespace awesome
 {
-	Application::Application()
-	{
-	}
-
-	Application::~Application()
-	{
-	}
-
 	bool Application::startup_imp()
 	{
 		return true;

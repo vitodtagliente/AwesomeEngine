@@ -13,13 +13,7 @@ namespace awesome
 	public:
 
 		Input();
-		~Input();
 
-		Input& operator=(Input&& t_input) = delete;
-		Input(const Input& t_input) = delete;
-		Input(Input&& t_input) = delete;
-		Input& operator= (const Input& t_input) = delete;
-		
 		bool isKeyDown(const keycode_t t_key) const;
 		bool isKeyPressed(const keycode_t t_key) const;
 		bool isKeyReleased(const keycode_t t_key) const;

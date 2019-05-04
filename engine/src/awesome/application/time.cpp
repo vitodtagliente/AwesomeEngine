@@ -11,11 +11,6 @@ namespace awesome
 
 	}
 
-	Time::~Time()
-	{
-
-	}
-
 	void Time::update_imp()
 	{
 		// update time data

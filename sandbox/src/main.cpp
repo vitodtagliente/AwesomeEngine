@@ -4,9 +4,12 @@
  */
 
 #include <awesome/awesome.h>
+
+#include <iostream>
 #include "sandbox_game.h"
 
 using namespace awesome;
+using namespace std;
 
 int main() 
 {

@@ -13,28 +13,9 @@ namespace awesome
 
 	}
 
-
-	Window::Window()
-		: m_state(State::Unknown)
+	bool Window::startup_imp()
 	{
-
-	}
-
-	Window::~Window()
-	{
-
-	}
-
-	Window::State Window::getState() const
-	{
-		return m_state;
-	}
-
-	void Window::close()
-	{
-		if (m_state == State::Open)
-		{
-			m_state = State::Closing;
-		}
+		// #todo: get default app size by config
+		return open({});
 	}
 }
