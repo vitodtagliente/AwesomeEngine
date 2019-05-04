@@ -11,6 +11,9 @@ namespace awesome
 		Application();
 		virtual ~Application();
 
+		// register the application specific engine modules
+		virtual void registerModules() = 0;
+
 	protected:
 		
 		// module interface

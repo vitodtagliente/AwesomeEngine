@@ -3,6 +3,26 @@
 
 using namespace std;
 
+bool SandboxGame::startup_imp()
+{
+	m_input = Input::instance();
+	return true;
+}
+
+void SandboxGame::shutdown_imp()
+{
+
+}
+
+void SandboxGame::update_imp()
+{
+	if (m_input->isKeyReleased(KeyCode::A))
+	{
+		cout << "Key Released: A" << endl;
+	}
+}
+
+/*
 SandboxGame::SandboxGame()
 	: triangleColor(Color::Black)
 {
@@ -121,3 +141,4 @@ void SandboxGame::end()
 
 
 }
+*/

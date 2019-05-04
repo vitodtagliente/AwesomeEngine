@@ -2,10 +2,19 @@
 
 using namespace awesome;
 
-class SandboxGame : public Game
+class SandboxGame final : public Module<SandboxGame>
 {
 public:
 
+private:
+
+	virtual bool startup_imp() override;
+	virtual void shutdown_imp() override;
+	virtual void update_imp() override;
+
+	Input* m_input{ nullptr };
+
+/*
 	SandboxGame();
 	virtual ~SandboxGame() override;
 
@@ -27,4 +36,5 @@ private:
 	Color triangleColor;
 	// texture
 	Texture* texture;
+	*/
 };

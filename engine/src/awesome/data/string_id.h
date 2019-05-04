@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../types.h"
+#include "../core/types.h"
 
 /*
 	Strings require more memory, dynamic memory allocation and

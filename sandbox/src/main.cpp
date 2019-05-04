@@ -10,6 +10,6 @@ using namespace awesome;
 
 int main() 
 {
-	Engine::run<SandboxGame>();
+	Engine::run({ new SandboxGame() });
 	return 0;
 }
