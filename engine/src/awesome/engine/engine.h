@@ -1,10 +1,9 @@
 #pragma once
 
 #include <initializer_list>
-#include <map>
+#include <list>
 #include <string>
 #include <typeinfo>
-#include <vector>
 #include "../core/singleton.h"
 
 namespace awesome
@@ -45,7 +44,7 @@ namespace awesome
 		// application instance
 		Application* m_application;
 		// engine's modules
-		std::map<std::string, IModule*> m_modules;
+		std::list<std::pair<std::string, IModule*>> m_modules;
 	};
 
 	template <class T>
@@ -56,11 +55,14 @@ namespace awesome
 		const std::type_info& ti = typeid(T);
 		const std::string module_name{ ti.name() };
 
-		auto find = m_modules.find(module_name);
-		if (find == m_modules.end())
+		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
 		{
-			m_modules.insert({ module_name, t_module });
+			if (it->first == module_name)
+			{
+				return;
+			}
 		}
+		m_modules.push_back({ module_name, t_module });
 	}
 
 	template <class T>
@@ -71,10 +73,12 @@ namespace awesome
 		const std::type_info& ti = typeid(T);
 		const std::string module_name{ ti.name() };
 
-		auto find = m_modules.find(module_name);
-		if (find == m_modules.end())
+		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
 		{
-			return find->second;
+			if (it->first == module_name)
+			{
+				return it->second;
+			}
 		}
 		return nullptr;
 	}

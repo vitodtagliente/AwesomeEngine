@@ -1,6 +1,7 @@
 #include "engine.h"
 
 #include "../application/application.h"
+#include "../application/window.h"
 #include "module.h"
 
 // #todo
@@ -79,7 +80,8 @@ namespace awesome
 	void Engine::shutdown()
 	{
 		// shutdown modules in reverse order
-		// #todo
+		m_modules.reverse();
+
 		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
 		{
 			IModule* const module = it->second;
@@ -102,7 +104,8 @@ namespace awesome
 
 	bool Engine::isRunning() const
 	{
-		return true;
+		// #todo: hardcoded
+		return Window::instance()->getModuleState() != IModule::State::PendingUninitialize;
 	}
 
 	void Engine::registerModules()

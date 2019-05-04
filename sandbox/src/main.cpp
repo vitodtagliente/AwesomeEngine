@@ -11,7 +11,7 @@
 using namespace awesome;
 using namespace std;
 
-int main() 
+int main()
 {
 	Engine::run({ new SandboxGame() });
 	return 0;

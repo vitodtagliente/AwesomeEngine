@@ -51,7 +51,7 @@ namespace awesome
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
-			
+			m_moduleState = State::PendingUninitialize;
 		}
 	}
 

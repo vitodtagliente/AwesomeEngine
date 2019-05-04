@@ -16,9 +16,9 @@ namespace awesome
 			Error,
 			Initializing,
 			Initialized,
-			Running,
 			Uninitializing,
-			Uninitialized
+			Uninitialized,
+			PendingUninitialize
 		};
 
 		// module initialization 
@@ -32,7 +32,7 @@ namespace awesome
 		// check if the module is available
 		inline bool isModuleAvailable() const 
 		{ 
-			return m_moduleState == State::Initialized || m_moduleState == State::Running; 
+			return m_moduleState == State::Initialized; 
 		}
 
 	protected:
