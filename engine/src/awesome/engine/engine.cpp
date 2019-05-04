@@ -1,13 +1,12 @@
 #include "engine.h"
 
 #include "../application/application.h"
-#include "module_manager.h"
 
 namespace awesome
 {
 	Engine::Engine()
-		: m_application(),
-		m_moduleManager()
+		: m_application()
+		, m_modules()
 	{
 
 	}
@@ -21,10 +20,4 @@ namespace awesome
 	{
 
 	}
-
-	void Engine::registerModules()
-	{
-
-	}
-
 }

@@ -7,7 +7,7 @@ namespace awesome
 	{
 	public:
 
-		Singleton() { m_instance = this; }
+		Singleton() { m_instance = dynamic_cast<T*>(this); }
 		virtual ~Singleton() { m_instance = nullptr; }
 
 		// get the singleton instance 

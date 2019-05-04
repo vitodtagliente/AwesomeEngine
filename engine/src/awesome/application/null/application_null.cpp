@@ -2,11 +2,5 @@
 
 namespace awesome
 {
-	ApplicationNull::ApplicationNull()
-	{
-	}
-	
-	ApplicationNull::~ApplicationNull()
-	{
-	}
+
 }

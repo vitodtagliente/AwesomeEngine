@@ -19,9 +19,7 @@ namespace awesome
 		Input(const Input& t_input) = delete;
 		Input(Input&& t_input) = delete;
 		Input& operator= (const Input& t_input) = delete;
-
-		virtual void update() override;
-
+		
 		bool isKeyDown(const keycode_t t_key) const;
 		bool isKeyPressed(const keycode_t t_key) const;
 		bool isKeyReleased(const keycode_t t_key) const;
@@ -36,6 +34,10 @@ namespace awesome
 
 	protected:
 
+		// module update
+		virtual void update_imp() override;
+
+		// callbacks
 		void handleKeyCallback(const keycode_t t_key, const KeyState t_state);
 		void handleMousePositionCallback(const float t_x, const float t_y);
 		void handleMouseEnterCallback(const bool t_inside);

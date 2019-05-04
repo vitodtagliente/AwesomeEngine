@@ -5,9 +5,9 @@
 
 namespace awesome
 {
-	bool InputGLFW::startup()
+	bool InputGLFW::startup_imp()
 	{
-		if (WindowGLFW * window = dynamic_cast<WindowGLFW*>(Window::instance()))
+		if (WindowGLFW* window = dynamic_cast<WindowGLFW*>(Window::instance()))
 		{
 			glfwSetKeyCallback(
 				window->getWindowHandler(),
@@ -19,7 +19,7 @@ namespace awesome
 					else if (t_action == GLFW_RELEASE)
 						key_state = KeyState::Released;
 
-					if (InputGLFW * const input = dynamic_cast<InputGLFW*>(Input::instance()))
+					if (InputGLFW* const input = dynamic_cast<InputGLFW*>(Input::instance()))
 					{
 						input->handleKeyCallback(t_key, key_state);
 					}
@@ -45,7 +45,7 @@ namespace awesome
 				window->getWindowHandler(),
 				[](GLFWwindow*, const double t_x, const double t_y)
 				{
-					if (InputGLFW * const input = dynamic_cast<InputGLFW*>(Input::instance()))
+					if (InputGLFW* const input = dynamic_cast<InputGLFW*>(Input::instance()))
 					{
 						input->handleMousePositionCallback(static_cast<float>(t_x), static_cast<float>(t_y));
 					}
@@ -65,7 +65,7 @@ namespace awesome
 		return false;
 	}
 
-	void InputGLFW::shutdown()
+	void InputGLFW::shutdown_imp()
 	{
 
 	}

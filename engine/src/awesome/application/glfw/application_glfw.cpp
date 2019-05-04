@@ -5,31 +5,8 @@
 
 namespace awesome
 {
-	ApplicationGLFW::ApplicationGLFW()
+	bool ApplicationGLFW::startup_imp()
 	{
-	}
-
-	ApplicationGLFW::~ApplicationGLFW()
-	{
-	}
-
-	bool ApplicationGLFW::startup()
-	{
-		Application::startup();
-
-		if (!glfwInit())
-		{
-			// cannot initialize the GLFW library
-			return false;
-		}
-		// initialize the main window
-		m_window = new WindowGLFW();
-		return true;
-	}
-
-	void ApplicationGLFW::shutdown()
-	{
-		Application::shutdown();
-
+		return glfwInit();
 	}
 }

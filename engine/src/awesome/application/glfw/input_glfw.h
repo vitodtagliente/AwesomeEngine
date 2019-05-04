@@ -6,9 +6,9 @@ namespace awesome
 {
 	class InputGLFW final : public Input
 	{
-	public:
+	private:
 
-		virtual bool startup() override;
-		virtual void shutdown() override;
+		virtual bool startup_imp() override;
+		virtual void shutdown_imp() override;
 	};
 }

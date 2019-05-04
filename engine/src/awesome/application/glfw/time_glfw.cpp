@@ -5,16 +5,6 @@
 
 namespace awesome
 {
-	bool TimeGLFW::startup()
-	{
-		// be sure the window application is ready
-		return dynamic_cast<WindowGLFW*>(Window::instance()) != nullptr;
-	}
-
-	void TimeGLFW::shutdown()
-	{
-	}
-
 	double TimeGLFW::getApplicationTime() const
 	{
 		return glfwGetTime();

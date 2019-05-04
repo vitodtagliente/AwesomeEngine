@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "../core/singleton.h"
 
 namespace awesome
@@ -13,14 +14,12 @@ namespace awesome
 
 	private:
 
-		void registerModules();
 		void gameloop();
 
 		// application instance
 		class Application* m_application;
 
-		// module manager instance
-		class ModuleManager* m_moduleManager;
-
+		// engine's modules
+		std::vector<class IModule*> m_modules;
 	};
 }

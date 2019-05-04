@@ -5,14 +5,11 @@
 namespace awesome 
 {
 	class ApplicationGLFW : public Application
-	{
-	public:
+	{		
+	private:
 
-		ApplicationGLFW();
-		virtual ~ApplicationGLFW() override;
-		
-		virtual bool startup() override;
-		virtual void shutdown() override;
+		// module startup
+		virtual bool startup_imp() override;
 
 	};
 }

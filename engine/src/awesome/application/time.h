@@ -16,15 +16,14 @@ namespace awesome
 		Time(Time&& t_time) = delete;
 		Time& operator= (const Time& t_time) = delete;
 
-		// application module interface
-		virtual void update() override;
-
 		// retrieve the time data
 		inline double getTime() const { return m_time; }
 		inline double getDeltaTime() const { return m_deltaTime; }
 
 	protected:
 		
+		// module update
+		virtual void update_imp() override;
 		// return the current application's time
 		// platform specific implementation
 		virtual double getApplicationTime() const = 0;

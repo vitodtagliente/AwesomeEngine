@@ -10,11 +10,39 @@ namespace awesome
 	{
 	public:
 
+		enum class State
+		{
+			Unknown,
+			Error,
+			Initializing,
+			Initialized,
+			Running,
+			Uninitializing,
+			Uninitialized
+		};
+
 		// module initialization 
-		virtual bool startup() = 0;
-		virtual void shutdown() = 0;
+		bool startup();
+		void shutdown();
 		// update the module
-		virtual void update() = 0;
+		void update();
+
+		// get the module state
+		inline State getModuleState() const { return m_moduleState; }
+		// check if the module is available
+		inline bool isModuleAvailable() const 
+		{ 
+			return m_moduleState == State::Initialized || m_moduleState == State::Running; 
+		}
+
+	protected:
+
+		virtual bool startup_imp() { return true; }
+		virtual void shutdown_imp() {}
+		virtual void update_imp() = 0;
+
+		// module state
+		State m_moduleState{ State::Unknown };
 
 	};
 

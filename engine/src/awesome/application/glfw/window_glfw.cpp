@@ -15,15 +15,6 @@ namespace awesome
 
 	}
 
-	bool WindowGLFW::startup()
-	{
-		return true;
-	}
-
-	void WindowGLFW::shutdown()
-	{
-	}
-
 	bool WindowGLFW::open(const Settings& t_settings)
 	{
 		m_windowHandler = glfwCreateWindow(
@@ -51,7 +42,7 @@ namespace awesome
 		return false;
 	}
 
-	void WindowGLFW::update()
+	void WindowGLFW::update_imp()
 	{
 		glfwSwapBuffers(m_windowHandler);
 		glfwPollEvents();
