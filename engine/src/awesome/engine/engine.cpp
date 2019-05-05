@@ -6,6 +6,7 @@
 
 // #todo
 #include "../application/glfw/application_glfw.h"
+#include "../graphics/opengl/graphics_gl.h"
 
 namespace awesome
 {
@@ -105,5 +106,6 @@ namespace awesome
 
 	void Engine::registerModules()
 	{
+		registerModule<Graphics>(new GraphicsGL());
 	}
 }
