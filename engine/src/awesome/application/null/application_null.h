@@ -4,7 +4,16 @@
 
 namespace awesome
 {
-	class ApplicationNull final : public Application
+	class ApplicationNULL: public Application
 	{
+	public:
+
+		virtual void registerModules() override;
+
+	private:
+
+		// module startup
+		virtual void update_implementation() override;
+
 	};
 }

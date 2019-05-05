@@ -11,7 +11,7 @@ namespace awesome
 		
 		m_moduleState = State::Initializing;
 
-		const bool success = startup_imp();
+		const bool success = startup_implementation();
 		
 		m_moduleState = success ? State::Initialized : State::Error;
 		return success;
@@ -25,12 +25,12 @@ namespace awesome
 		if (m_moduleState != State::Error && m_moduleState != State::Uninitializing && m_moduleState != State::Uninitialized)
 		{
 			m_moduleState = State::Uninitializing;
-			shutdown_imp();
+			shutdown_implementation();
 			m_moduleState = State::Uninitialized;
 		}
 	}
 	void IModule::update()
 	{
-		update_imp();
+		update_implementation();
 	}
 }

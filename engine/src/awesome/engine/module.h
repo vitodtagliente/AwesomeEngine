@@ -17,8 +17,7 @@ namespace awesome
 			Initializing,
 			Initialized,
 			Uninitializing,
-			Uninitialized,
-			PendingUninitialize
+			Uninitialized
 		};
 
 		// module initialization 
@@ -37,9 +36,9 @@ namespace awesome
 
 	protected:
 
-		virtual bool startup_imp() { return true; }
-		virtual void shutdown_imp() {}
-		virtual void update_imp() = 0;
+		virtual bool startup_implementation() { return true; }
+		virtual void shutdown_implementation() {}
+		virtual void update_implementation() = 0;
 
 		// module state
 		State m_moduleState{ State::Unknown };

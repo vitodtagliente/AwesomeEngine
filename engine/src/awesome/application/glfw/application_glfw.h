@@ -13,8 +13,8 @@ namespace awesome
 	private:
 
 		// module startup
-		virtual bool startup_imp() override;
-		virtual void update_imp() override;
+		virtual bool startup_implementation() override;
+		virtual void update_implementation() override;
 
 	};
 }

@@ -13,9 +13,30 @@ namespace awesome
 
 	}
 
-	bool Window::startup_imp()
+	Window::Window()
+		: m_state(State::Unknown)
+	{
+	}
+
+	bool Window::startup_implementation()
 	{
 		// #todo: get default app size by config
-		return open({});
+		Settings window_settings{};
+		// open the window
+		const bool success = open(window_settings);
+		m_state = success ? State::Open : State::Error;
+		return success;
+	}
+
+	bool Window::close()
+	{
+		if (m_state == State::Open || m_state == State::PendingClose)
+		{
+			m_state = State::Closing;
+			const bool success = close_implementation();
+			m_state = success ? State::Closed : State::Open;
+			return success;
+		}
+		return false;
 	}
 }

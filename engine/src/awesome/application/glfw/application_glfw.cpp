@@ -19,12 +19,12 @@ namespace awesome
 		engine->registerModule<Input>(new InputGLFW());
 	}
 
-	bool ApplicationGLFW::startup_imp()
+	bool ApplicationGLFW::startup_implementation()
 	{
 		return glfwInit();
 	}
 
-	void ApplicationGLFW::update_imp()
+	void ApplicationGLFW::update_implementation()
 	{
 	}
 }

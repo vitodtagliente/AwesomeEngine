@@ -11,9 +11,6 @@ namespace awesome
 	public:
 
 		WindowGLFW();
-		
-		virtual bool open(const Settings& t_settings) override;
-		virtual void close() override;
 		 
 		virtual void setTitle(const std::string& t_title) override;
 		virtual void resize(const uint32 t_width, const uint32 t_height) override;
@@ -22,8 +19,13 @@ namespace awesome
 
 	private:
 
+		// open implementation
+		virtual bool open(const Settings& t_settings) override;
+		// close implementation
+		virtual bool close_implementation() override;
+
 		// module update
-		virtual void update_imp() override;
+		virtual void update_implementation() override;
 
 		// GLFW window handler
 		GLFWwindow* m_windowHandler;

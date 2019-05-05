@@ -1,15 +1,32 @@
 #include "application.h"
 
 #include <cassert>
-#include "input.h"
-#include "time.h"
+#include "../engine/engine.h"
 #include "window.h"
-#include "../engine/module.h"
 
 namespace awesome
 {
-	bool Application::startup_imp()
+	Application::Application()
+		: m_state(State::Unknown)
 	{
+	}
+
+	bool Application::startup_implementation()
+	{
+		Engine* const engine = Engine::instance();
+		assert(engine != nullptr);
+
+		registerModules(engine);
+
+		m_state = State::Running;
 		return true;
+	}
+
+	void Application::update_implementation()
+	{
+		if (Window::instance()->shouldClose())
+		{
+
+		}
 	}
 }

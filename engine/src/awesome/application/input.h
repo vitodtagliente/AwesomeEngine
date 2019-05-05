@@ -29,9 +29,10 @@ namespace awesome
 	protected:
 
 		// module update
-		virtual void update_imp() override;
+		virtual void update_implementation() override;
 
-		// callbacks
+		// callbacks, derived modules should use these callbacks
+		// to update the input states
 		void handleKeyCallback(const keycode_t t_key, const KeyState t_state);
 		void handleMousePositionCallback(const float t_x, const float t_y);
 		void handleMouseEnterCallback(const bool t_inside);

@@ -6,7 +6,7 @@
 
 namespace awesome
 {
-	bool InputGLFW::startup_imp()
+	bool InputGLFW::startup_implementation()
 	{
 		if (WindowGLFW* window = static_cast<WindowGLFW*>(Window::instance()))
 		{
@@ -69,7 +69,7 @@ namespace awesome
 		return false;
 	}
 
-	void InputGLFW::shutdown_imp()
+	void InputGLFW::shutdown_implementation()
 	{
 
 	}

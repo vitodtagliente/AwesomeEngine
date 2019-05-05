@@ -8,13 +8,34 @@ namespace awesome
 	{
 	public:
 
-		// register the application specific engine modules
-		virtual void registerModules() = 0;
+		enum class State
+		{
+			Unknown,
+			Running,
+			Suspended,
+			Closing,
+			Closed
+		};
 
-	protected:
+		Application();
+
+		inline State getState() const { return m_state; }
+		inline bool isRunning() const 
+		{ 
+			return m_state == State::Running || m_state == State::Suspended || m_state == State::Closing;
+		}
 		
-		// module interface
-		virtual bool startup_imp() override;
+	protected:
 
+		// module startup
+		virtual bool startup_implementation() override;
+		// module update
+		virtual void update_implementation() override;
+
+		// register the application specific modules
+		virtual void registerModules(class Engine* const t_engine) = 0;
+
+		// application state
+		State m_state;
 	};
 }

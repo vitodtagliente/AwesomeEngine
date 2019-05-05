@@ -17,7 +17,7 @@ namespace awesome
 	protected:
 		
 		// module update
-		virtual void update_imp() override;
+		virtual void update_implementation() override;
 		// return the current application's time
 		// platform specific implementation
 		virtual double getApplicationTime() const = 0;

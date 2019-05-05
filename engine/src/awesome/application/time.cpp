@@ -11,7 +11,7 @@ namespace awesome
 
 	}
 
-	void Time::update_imp()
+	void Time::update_implementation()
 	{
 		// update time data
 		const double last_time = m_time;

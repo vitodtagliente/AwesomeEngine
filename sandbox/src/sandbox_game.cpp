@@ -3,18 +3,18 @@
 
 using namespace std;
 
-bool SandboxGame::startup_imp()
+bool SandboxGame::startup_implementation()
 {
 	m_input = Input::instance();
 	return true;
 }
 
-void SandboxGame::shutdown_imp()
+void SandboxGame::shutdown_implementation()
 {
 
 }
 
-void SandboxGame::update_imp()
+void SandboxGame::update_implementation()
 {
 	if (m_input->isKeyReleased(KeyCode::A))
 	{
