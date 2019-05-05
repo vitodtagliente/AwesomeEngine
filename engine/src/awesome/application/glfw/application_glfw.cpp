@@ -9,22 +9,19 @@
 
 namespace awesome
 {
-	void ApplicationGLFW::registerModules()
-	{
-		Engine* engine = Engine::instance();
-		assert(engine != nullptr);
-
-		engine->registerModule<Window>(new WindowGLFW());
-		engine->registerModule<Time>(new TimeGLFW());
-		engine->registerModule<Input>(new InputGLFW());
-	}
 
 	bool ApplicationGLFW::startup_implementation()
 	{
-		return glfwInit();
+		if (glfwInit())
+		{
+			return Application::startup_implementation();
+		}
+		return false;
 	}
-
-	void ApplicationGLFW::update_implementation()
+	void ApplicationGLFW::registerModules(Engine* const t_engine)
 	{
+		t_engine->registerModule<Window>(new WindowGLFW());
+		t_engine->registerModule<Time>(new TimeGLFW());
+		t_engine->registerModule<Input>(new InputGLFW());
 	}
 }

@@ -46,11 +46,7 @@ namespace awesome
 	{
 		m_application = new ApplicationGLFW();
 		if (m_application->startup())
-		{
-			// register the application modules
-			// (core modules such as Window, Time, Input)
-			m_application->registerModules();
-			
+		{			
 			// register the engine modules
 			registerModules();
 
@@ -104,8 +100,7 @@ namespace awesome
 
 	bool Engine::isRunning() const
 	{
-		// #todo: hardcoded
-		return Window::instance()->getModuleState() != IModule::State::PendingUninitialize;
+		return m_application->isRunning();
 	}
 
 	void Engine::registerModules()

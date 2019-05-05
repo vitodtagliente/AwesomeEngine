@@ -11,16 +11,6 @@ namespace awesome
 	{
 	public:
 
-		enum class State
-		{
-			Unknown,
-			Open,
-			Closing,
-			Closed,
-			Error,
-			PendingClose
-		};
-
 		// generic window settings
 		struct Settings
 		{
@@ -34,14 +24,9 @@ namespace awesome
 
 		Window();
 
-		inline State getState() const { return m_state; }
-		inline bool isOpen() const
-		{
-			return m_state == State::Open || m_state == State::PendingClose || m_state == State::Closing;
-		}
-		inline bool shouldClose() const { return m_state == State::PendingClose; }
+		inline bool isOpen() const { return m_isOpen; }
 
-		bool close();
+		void close();
 
 		virtual void setTitle(const std::string& t_title) = 0;
 		virtual void resize(const uint32 t_width, const uint32 t_height) = 0;
@@ -50,10 +35,10 @@ namespace awesome
 
 		// open the window 
 		virtual bool open(const Settings& t_settings) = 0;
-		virtual bool close_implementation() = 0;
+		virtual void close_implementation() = 0;
 
 		// window state
-		State m_state;
+		bool m_isOpen;
 
 	private:
 

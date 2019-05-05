@@ -39,9 +39,9 @@ namespace awesome
 		return false;
 	}
 
-	bool WindowGLFW::close_implementation()
+	void WindowGLFW::close_implementation()
 	{
-		return true;
+
 	}
 
 	void WindowGLFW::update_implementation()
@@ -52,7 +52,7 @@ namespace awesome
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
-			m_state = State::PendingClose;
+			m_isOpen = false;
 		}
 	}
 

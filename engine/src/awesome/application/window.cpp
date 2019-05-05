@@ -14,7 +14,7 @@ namespace awesome
 	}
 
 	Window::Window()
-		: m_state(State::Unknown)
+		: m_isOpen(false)
 	{
 	}
 
@@ -23,20 +23,16 @@ namespace awesome
 		// #todo: get default app size by config
 		Settings window_settings{};
 		// open the window
-		const bool success = open(window_settings);
-		m_state = success ? State::Open : State::Error;
-		return success;
+		m_isOpen = open(window_settings);
+		return m_isOpen;
 	}
 
-	bool Window::close()
+	void Window::close()
 	{
-		if (m_state == State::Open || m_state == State::PendingClose)
+		if (m_isOpen)
 		{
-			m_state = State::Closing;
-			const bool success = close_implementation();
-			m_state = success ? State::Closed : State::Open;
-			return success;
+			close_implementation();
+			m_isOpen = false;
 		}
-		return false;
 	}
 }

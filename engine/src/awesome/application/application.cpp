@@ -7,26 +7,26 @@
 namespace awesome
 {
 	Application::Application()
-		: m_state(State::Unknown)
+		: m_isRunning(false)
 	{
 	}
 
 	bool Application::startup_implementation()
 	{
-		Engine* const engine = Engine::instance();
-		assert(engine != nullptr);
+		if (Engine* const engine = Engine::instance())
+		{
+			registerModules(engine);
 
-		registerModules(engine);
-
-		m_state = State::Running;
-		return true;
+			m_isRunning = true;
+			return true;
+		}
+		return false;		
 	}
 
 	void Application::update_implementation()
 	{
-		if (Window::instance()->shouldClose())
-		{
-
-		}
+		// #todo: now the application is running until
+		// its window is open
+		m_isRunning = Window::instance()->isOpen();
 	}
 }

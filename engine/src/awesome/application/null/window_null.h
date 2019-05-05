@@ -16,7 +16,7 @@ namespace awesome
 		// open implementation
 		virtual bool open(const Settings& t_settings) override;
 		// close implementation
-		virtual bool close_implementation() override;
+		virtual void close_implementation() override;
 
 		// module update
 		virtual void update_implementation() override;

@@ -8,17 +8,10 @@
 
 namespace awesome
 {
-	void ApplicationNULL::registerModules()
+	void ApplicationNULL::registerModules(Engine* const t_engine)
 	{
-		Engine* engine = Engine::instance();
-		assert(engine != nullptr);
-
-		engine->registerModule<Window>(new WindowNULL());
-		engine->registerModule<Time>(new TimeNULL());
-		engine->registerModule<Input>(new InputNULL());
-	}
-
-	void ApplicationNULL::update_implementation()
-	{
+		t_engine->registerModule<Window>(new WindowNULL());
+		t_engine->registerModule<Time>(new TimeNULL());
+		t_engine->registerModule<Input>(new InputNULL());
 	}
 }

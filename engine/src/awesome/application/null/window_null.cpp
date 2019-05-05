@@ -15,9 +15,9 @@ namespace awesome
 		return true;
 	}
 
-	bool WindowNULL::close_implementation()
+	void WindowNULL::close_implementation()
 	{
-		return true;
+		
 	}
 
 	void WindowNULL::update_implementation()

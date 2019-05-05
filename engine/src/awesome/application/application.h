@@ -7,23 +7,10 @@ namespace awesome
 	class Application : public Module<Application>
 	{
 	public:
-
-		enum class State
-		{
-			Unknown,
-			Running,
-			Suspended,
-			Closing,
-			Closed
-		};
-
+		
 		Application();
 
-		inline State getState() const { return m_state; }
-		inline bool isRunning() const 
-		{ 
-			return m_state == State::Running || m_state == State::Suspended || m_state == State::Closing;
-		}
+		inline bool isRunning() const { return m_isRunning; }
 		
 	protected:
 
@@ -35,7 +22,7 @@ namespace awesome
 		// register the application specific modules
 		virtual void registerModules(class Engine* const t_engine) = 0;
 
-		// application state
-		State m_state;
+		// application running state
+		bool m_isRunning;
 	};
 }
