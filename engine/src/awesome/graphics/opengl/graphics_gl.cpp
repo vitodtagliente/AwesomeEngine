@@ -1,5 +1,6 @@
 #include "graphics_gl.h"
-#include <glad/glad.h>
+
+#include "opengl.h"
 
 namespace awesome
 {
