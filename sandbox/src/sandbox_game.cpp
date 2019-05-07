@@ -1,46 +1,19 @@
 #include "sandbox_game.h"
 #include <iostream>
+#include <awesome/graphics/opengl/graphics_gl.h>
 
 using namespace std;
 
 bool SandboxGame::startup_implementation()
 {
 	m_input = Input::instance();
-	return true;
-}
 
-void SandboxGame::shutdown_implementation()
-{
+	triangleColor = Color::Black;
 
-}
-
-void SandboxGame::update_implementation()
-{
-	if (m_input->isKeyReleased(KeyCode::A))
-	{
-		cout << "Key Released: A" << endl;
-	}
-}
-
-/*
-SandboxGame::SandboxGame()
-	: triangleColor(Color::Black)
-{
-}
-
-SandboxGame::~SandboxGame()
-{
-	delete program;
-	delete va;
-	delete texture;
-}
-
-void SandboxGame::init()
-{
-	Game::init();
+	renderer = new RendererGL();
 
 	std::map<Shader::Type, std::string> sources;
-	Shader::Reader::parse("../../sandbox/assets/texture.shader", sources);
+	Shader::Reader::parse("texture.shader", sources);
 	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
 	auto fragment = new Shader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
@@ -53,7 +26,7 @@ void SandboxGame::init()
 		cout << "Fragment " << endl << fragment->getErrorMessage() << endl;
 	}
 
-	program = new ShaderProgram({ vertex, fragment });
+	program = new ShaderProgramGL({ vertex, fragment });
 	if (!program->isValid())
 	{
 		cout << "Program " << endl << program->getErrorMessage() << endl;
@@ -77,68 +50,59 @@ void SandboxGame::init()
 	};
 
 	// Vertex Array
-	va = new VertexArray();
+	va = new VertexArrayGL();
 
-	VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-	vb.bind();
+	VertexBuffer* vb = new VertexBufferGL(positions, 4 * 4 * sizeof(float));
+	vb->bind();
 
-	VertexBufferLayout layout;
-	layout.push<float>(2);
-	layout.push<float>(2);
+	VertexBufferLayout* layout = new VertexBufferLayoutGL();
+	layout->push<float>(2);
+	layout->push<float>(2);
 	va->add(vb, layout);
 
-	IndexBuffer ib(indices, 6);
-	ib.bind();
+	IndexBuffer* ib = new IndexBufferGL(indices, 6);
+	ib->bind();
 
 	va->unbind();
-	vb.unbind();
-	ib.unbind();
+	vb->unbind();
+	ib->unbind();
 
-	Image img("../../sandbox/assets/batman_logo.png");
-	texture = new Texture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
+	delete vb;
+	delete ib;
+
+	Image img("assets/batman_logo.png");
+	texture = new TextureGL(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
+
+	return true;
 }
 
-void SandboxGame::update(const double delta_time)
+void SandboxGame::shutdown_implementation()
 {
-	Game::update(delta_time);
+	delete program;
+	delete va;
+	delete texture;
+}
 
-	if (Input* input = Input::instance())
+void SandboxGame::update_implementation()
+{
+	// update
+	if (m_input->isKeyReleased(KeyCode::A))
 	{
-		if (input->isKeyPressed(KeyCode::A))
-		{
-			cout << "A down" << endl;
-		}
+		cout << "Key Released: A" << endl;
 	}
 
-	triangleColor.red += static_cast<float>(delta_time);
+	triangleColor.red += static_cast<float>(Time::instance()->getDeltaTime());
 	if (triangleColor.red > 1.0f)
 		triangleColor.red = 0.0f;
-}
 
-void SandboxGame::draw()
-{
+	// draw
 	static const Color background_color(.15f, .1f, .3f);
-	Renderer::instance()->clear(background_color);
+	renderer->clear(background_color);
 
 	program->bind();
 	program->set("u_Color", triangleColor.red, triangleColor.green, triangleColor.green, 1.0f);
 	texture->bind();
 	program->set("u_Texture", 0);
 	va->bind();
-	Renderer::instance()->drawElements(6);
+	renderer->drawIndexed(6);
 }
-
-void SandboxGame::uninit()
-{
-	Game::uninit();
-
-
-}
-
-void SandboxGame::end()
-{
-	Game::end();
-
-
-}
-*/

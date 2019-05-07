@@ -26,6 +26,7 @@ namespace awesome
 
 		class Reader final
 		{
+		public:
 			// read the file content
 			static bool load(const std::string& t_filename, std::string& t_source);
 			// read different shader sources from the same file

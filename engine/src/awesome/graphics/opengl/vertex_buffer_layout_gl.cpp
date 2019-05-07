@@ -4,5 +4,11 @@
 
 namespace awesome
 {
-	//const uint VertexBufferLayoutGL::float_t = GL_FLOAT;
+	VertexBufferLayoutGL::VertexBufferLayoutGL()
+		: VertexBufferLayout()
+	{
+		float_t = GL_FLOAT;
+		uint_t = GL_UNSIGNED_INT;
+		ubyte_t = GL_UNSIGNED_BYTE;
+	}
 }

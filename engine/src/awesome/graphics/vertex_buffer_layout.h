@@ -4,7 +4,7 @@
 #include <vector>
 #include "../core/types.h"
 
-namespace aweosme
+namespace awesome
 {
 	struct VertexBufferElement
 	{
@@ -78,8 +78,8 @@ namespace aweosme
 		// layout stride
 		std::size_t m_stride;
 
-		static const uint float_t;
-		static const uint uint_t;
-		static const uint ubyte_t;
+		uint float_t;
+		uint uint_t;
+		uint ubyte_t;
 	};
 }

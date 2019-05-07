@@ -14,5 +14,8 @@
 #include "application/window.h"
 
 #include "data/color.h"
+#include "data/image.h"
 #include "data/string_id.h"
 #include "data/timer.h"
+
+#include "graphics/graphics.h"

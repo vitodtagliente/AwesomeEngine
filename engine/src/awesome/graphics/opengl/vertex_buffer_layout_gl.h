@@ -4,6 +4,10 @@
 
 namespace awesome
 {
-	//class VertexBufferLayoutGL final : public VertexBufferLayout
-	
+	class VertexBufferLayoutGL final : public VertexBufferLayout
+	{
+	public:
+
+		VertexBufferLayoutGL();
+	};
 }

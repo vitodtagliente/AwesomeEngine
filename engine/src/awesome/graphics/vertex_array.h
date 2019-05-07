@@ -11,6 +11,6 @@ namespace awesome
 	{
 	public:
 
-		void add(const VertexBuffer& t_buffer, const VertexBufferLayout& t_layout);
+		virtual void add(VertexBuffer* const t_buffer, VertexBufferLayout* const t_layout) = 0;
 	};
 }
