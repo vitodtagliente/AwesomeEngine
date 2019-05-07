@@ -8,7 +8,8 @@ namespace awesome
 	{
 		std::string line{};
 		t_source.clear();
-		std::ifstream file(t_filename);
+		std::ifstream file;
+		file.open(t_filename.c_str(), std::ifstream::in);
 		if (file.is_open())
 		{
 			while (std::getline(file, line))
@@ -25,7 +26,8 @@ namespace awesome
 	{
 		std::string line{};
 		t_sources.clear();
-		std::ifstream file(t_filename);
+		std::ifstream file;
+		file.open(t_filename.c_str(), std::ifstream::in);
 		if (file.is_open())
 		{
 			Type current_shader_type;

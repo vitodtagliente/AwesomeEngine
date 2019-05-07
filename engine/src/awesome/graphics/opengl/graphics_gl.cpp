@@ -6,7 +6,13 @@ namespace awesome
 {
 	bool GraphicsGL::startup_implementation()
 	{
-		return gladLoadGL();
+		if (gladLoadGL())
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			return true;
+		}
+		return false;
 	}
 
 	void GraphicsGL::update_implementation()

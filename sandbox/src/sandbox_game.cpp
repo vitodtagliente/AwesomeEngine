@@ -13,9 +13,9 @@ bool SandboxGame::startup_implementation()
 	renderer = new RendererGL();
 
 	std::map<Shader::Type, std::string> sources;
-	Shader::Reader::parse("texture.shader", sources);
-	auto vertex = new Shader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
-	auto fragment = new Shader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
+	Shader::Reader::parse("assets/texture.shader", sources);
+	auto vertex = new ShaderGL(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
+	auto fragment = new ShaderGL(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
 	if (!vertex->isValid())
 	{
