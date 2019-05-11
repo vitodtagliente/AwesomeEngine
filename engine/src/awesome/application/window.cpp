@@ -18,12 +18,9 @@ namespace awesome
 	{
 	}
 
-	bool Window::startup_implementation()
+	bool Window::open(const Settings& t_settings)
 	{
-		// #todo: get default app size by config
-		Settings window_settings{};
-		// open the window
-		m_isOpen = open(window_settings);
+		m_isOpen = open_implementation(t_settings);
 		return m_isOpen;
 	}
 
@@ -33,6 +30,14 @@ namespace awesome
 		{
 			close_implementation();
 			m_isOpen = false;
+		}
+	}
+
+	void Window::update()
+	{
+		if (m_isOpen)
+		{
+			update_implementation();
 		}
 	}
 }

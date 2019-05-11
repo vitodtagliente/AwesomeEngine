@@ -11,11 +11,11 @@ namespace awesome
 
 	}
 
-	void Time::update_implementation()
+	void Time::tick()
 	{
 		// update time data
 		const double last_time = m_time;
-		m_time = getApplicationTime();
+		m_time = getTime_implementation();
 		m_deltaTime = m_time - last_time;
 
 		// update all the timers

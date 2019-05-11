@@ -20,7 +20,7 @@ namespace awesome
 	private:
 
 		// open implementation
-		virtual bool open(const Settings& t_settings) override;
+		virtual bool open_implementation(const Settings& t_settings) override;
 		// close implementation
 		virtual void close_implementation() override;
 

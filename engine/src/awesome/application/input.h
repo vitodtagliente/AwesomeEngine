@@ -2,17 +2,22 @@
 
 #include <map>
 #include "keycode.h"
+#include "../core/singleton.h"
 #include "../core/types.h"
-#include "../engine/module.h"
 #include "../math/vec2.h"
 
 namespace awesome
 {
-	class Input : public Module<Input>
+	class Input : public Singleton<Input>
 	{
 	public:
 
 		Input();
+
+		// initialize the input system
+		virtual void initialize(class Window* const t_window) = 0;
+		// update the input state
+		void update();
 
 		bool isKeyDown(const keycode_t t_key) const;
 		bool isKeyPressed(const keycode_t t_key) const;
@@ -27,9 +32,6 @@ namespace awesome
 		void clear();
 
 	protected:
-
-		// module update
-		virtual void update_implementation() override;
 
 		// callbacks, derived modules should use these callbacks
 		// to update the input states

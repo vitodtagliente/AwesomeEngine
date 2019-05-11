@@ -10,7 +10,7 @@ namespace awesome
 
 	}
 
-	bool WindowGLFW::open(const Settings& t_settings)
+	bool WindowGLFW::open_implementation(const Settings& t_settings)
 	{
 		m_windowHandler = glfwCreateWindow(
 			t_settings.width,

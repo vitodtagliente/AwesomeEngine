@@ -9,7 +9,7 @@ namespace awesome
 	private:
 
 		// return the GLFW application's time
-		virtual double getApplicationTime() const override;
+		virtual double getTime_implementation() const override;
 
 	};
 }

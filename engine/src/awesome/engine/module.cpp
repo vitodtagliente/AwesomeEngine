@@ -4,33 +4,31 @@
 
 namespace awesome
 {
-	bool IModule::startup()
+	bool Module::startup()
 	{
 		// Cannot call the startup method multiple times
-		assert(m_moduleState == State::Unknown);
-		
-		m_moduleState = State::Initializing;
+		assert(m_state == State::Unknown);
 
 		const bool success = startup_implementation();
 		
-		m_moduleState = success ? State::Initialized : State::Error;
+		m_state = success ? State::Started : State::Error;
 		return success;
 	}
 
-	void IModule::shutdown()
+	void Module::shutdown()
 	{
-		// Cannot shutdown a module that was not started up
-		assert(m_moduleState != State::Unknown);
-		
-		if (m_moduleState != State::Error && m_moduleState != State::Uninitializing && m_moduleState != State::Uninitialized)
+		// Cannot shutdown a module that was not started
+		if (m_state == State::Started)
 		{
-			m_moduleState = State::Uninitializing;
 			shutdown_implementation();
-			m_moduleState = State::Uninitialized;
+			m_state = State::Closed;
 		}
 	}
-	void IModule::update()
+	void Module::update()
 	{
-		update_implementation();
+		if (m_state == State::Started)
+		{
+			update_implementation();
+		}
 	}
 }

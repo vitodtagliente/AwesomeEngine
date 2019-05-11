@@ -13,7 +13,7 @@ namespace awesome
 
 	}
 
-	void Input::update_implementation()
+	void Input::update()
 	{
 		auto temp_lastKeysState = std::move(m_lastKeysState);
 		m_lastKeysState = std::move(m_keysState);

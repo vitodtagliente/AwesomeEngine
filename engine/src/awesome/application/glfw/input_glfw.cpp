@@ -6,9 +6,9 @@
 
 namespace awesome
 {
-	bool InputGLFW::startup_implementation()
+	void InputGLFW::initialize(class Window* const t_window)
 	{
-		if (WindowGLFW* window = static_cast<WindowGLFW*>(Window::instance()))
+		if (WindowGLFW* window = static_cast<WindowGLFW*>(t_window))
 		{
 			GLFWwindow* const window_handler = window->getWindowHandler();
 			assert(window_handler != nullptr);
@@ -64,13 +64,6 @@ namespace awesome
 						input->handleMouseEnterCallback(t_entered);
 					}
 				});
-			return true;
 		}
-		return false;
-	}
-
-	void InputGLFW::shutdown_implementation()
-	{
-
 	}
 }

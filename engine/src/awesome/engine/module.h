@@ -6,7 +6,7 @@ namespace awesome
 {
 	// generic Engine Module interface
 
-	class IModule
+	class Module
 	{
 	public:
 
@@ -14,10 +14,8 @@ namespace awesome
 		{
 			Unknown,
 			Error,
-			Initializing,
-			Initialized,
-			Uninitializing,
-			Uninitialized
+			Started,
+			Closed
 		};
 
 		// module initialization 
@@ -27,27 +25,17 @@ namespace awesome
 		void update();
 
 		// get the module state
-		inline State getModuleState() const { return m_moduleState; }
-		// check if the module is available
-		inline bool isModuleAvailable() const 
-		{ 
-			return m_moduleState == State::Initialized; 
-		}
+		inline State getState() const { return m_state; }
 
 	protected:
 
+		// module specific implementation interface
 		virtual bool startup_implementation() { return true; }
 		virtual void shutdown_implementation() {}
-		virtual void update_implementation() = 0;
+		virtual void update_implementation() {}
 
 		// module state
-		State m_moduleState{ State::Unknown };
-
-	};
-
-	template<typename T>
-	class Module : public IModule, public Singleton<T>
-	{
+		State m_state{ State::Unknown };
 
 	};
 }

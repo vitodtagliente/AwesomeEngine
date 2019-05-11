@@ -1,6 +1,6 @@
 #include "sandbox_game.h"
 #include <iostream>
-#include <awesome/graphics/opengl/graphics_gl.h>
+//#include <awesome/graphics/opengl/graphics_gl.h>
 
 using namespace std;
 
@@ -8,6 +8,7 @@ bool SandboxGame::startup_implementation()
 {
 	m_input = Input::instance();
 
+	/*
 	triangleColor = Color::Black;
 
 	renderer = new RendererGL();
@@ -72,15 +73,17 @@ bool SandboxGame::startup_implementation()
 
 	Image img("assets/batman_logo.png");
 	texture = new TextureGL(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
-
+	*/
 	return true;
 }
 
 void SandboxGame::shutdown_implementation()
 {
+	/*
 	delete program;
 	delete va;
 	delete texture;
+	*/
 }
 
 void SandboxGame::update_implementation()
@@ -90,7 +93,7 @@ void SandboxGame::update_implementation()
 	{
 		cout << "Key Released: A" << endl;
 	}
-
+	/*
 	triangleColor.red += static_cast<float>(Time::instance()->getDeltaTime());
 	if (triangleColor.red > 1.0f)
 		triangleColor.red = 0.0f;
@@ -105,4 +108,5 @@ void SandboxGame::update_implementation()
 	program->set("u_Texture", 0);
 	va->bind();
 	renderer->drawIndexed(6);
+	*/
 }

@@ -2,7 +2,7 @@
 
 using namespace awesome;
 
-class SandboxGame final : public Module<SandboxGame>
+class SandboxGame final : public Module
 {
 public:
 
@@ -13,7 +13,7 @@ private:
 	virtual void update_implementation() override;
 
 	Input* m_input{ nullptr };
-
+	/*
 	// vertex array object
 	VertexArray* va;
 	// shader program
@@ -24,5 +24,6 @@ private:
 	Texture* texture;
 	// renderer
 	Renderer* renderer;
+	*/
 
 };

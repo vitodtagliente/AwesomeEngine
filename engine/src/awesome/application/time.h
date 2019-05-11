@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../engine/module.h"
+#include "../core/singleton.h"
 
 namespace awesome
 {
-	class Time : public Module<Time>
+	class Time : public Singleton<Time>
 	{
 	public:
 			   
@@ -14,13 +14,15 @@ namespace awesome
 		inline double getTime() const { return m_time; }
 		inline double getDeltaTime() const { return m_deltaTime; }
 
+		// initialize
+		void initialize();
+		// tick the time
+		void tick();
+
 	protected:
 		
-		// module update
-		virtual void update_implementation() override;
-		// return the current application's time
-		// platform specific implementation
-		virtual double getApplicationTime() const = 0;
+		// get the current time
+		virtual double getTime_implementation() const = 0;
 
 		// cache time and delta time
 		double m_time;

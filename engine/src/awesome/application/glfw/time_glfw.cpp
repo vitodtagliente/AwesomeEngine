@@ -5,7 +5,7 @@
 
 namespace awesome
 {
-	double TimeGLFW::getApplicationTime() const
+	double TimeGLFW::getTime_implementation() const
 	{
 		return glfwGetTime();
 	}
