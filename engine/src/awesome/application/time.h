@@ -14,8 +14,6 @@ namespace awesome
 		inline double getTime() const { return m_time; }
 		inline double getDeltaTime() const { return m_deltaTime; }
 
-		// initialize
-		void initialize();
 		// tick the time
 		void tick();
 

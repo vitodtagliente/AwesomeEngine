@@ -27,19 +27,19 @@ namespace awesome
 
 	bool ApplicationModule::startup_implementation()
 	{
-		initialize();
-		assert(m_application && m_input && m_time && m_window);
-		// setup the application
-		m_application->initialize();
-		// setup the window
-		// #todo: now are default settings
-		Window::Settings window_settings{};
-		if (m_window->open(window_settings))
+		if (initialize())
 		{
-			m_input->initialize(m_window);
-
-			return true;
-		}
+			assert(m_application && m_input && m_time && m_window);
+			// setup the application
+			m_application->initialize();
+			// setup the window
+			// #todo: now are default settings
+			Window::Settings window_settings{};
+			if (m_window->open(window_settings))
+			{
+				return m_input->initialize(m_window);
+			}
+		}		
 		return false;
 	}
 

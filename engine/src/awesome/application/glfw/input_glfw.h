@@ -8,6 +8,7 @@ namespace awesome
 	{
 	private:
 
-		virtual void initialize(class Window* const t_window) override;
+		virtual bool initialize(class Window* const t_window) override;
+		virtual void update_implementation() override;
 	};
 }

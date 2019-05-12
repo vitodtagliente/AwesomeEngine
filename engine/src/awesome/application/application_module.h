@@ -17,6 +17,11 @@ namespace awesome
 		ApplicationModule();
 		~ApplicationModule();
 
+		inline Application* const getApplication() const { return m_application; }
+		inline Input* const getInput() const { return m_input; }
+		inline Time* const getTime() const { return m_time; }
+		inline Window* const getWindow() const { return m_window; }
+
 	protected:
 
 		virtual bool startup_implementation() override;
@@ -24,7 +29,7 @@ namespace awesome
 		virtual void update_implementation() override;
 
 		// initialize the module elements
-		virtual void initialize() = 0;
+		virtual bool initialize() = 0;
 		
 		// application
 		Application* m_application;

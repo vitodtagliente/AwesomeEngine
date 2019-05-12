@@ -8,7 +8,7 @@ namespace awesome
 	{
 	public:
 
-		virtual void initialize() override;
+		virtual bool initialize() override;
 
 	private:
 

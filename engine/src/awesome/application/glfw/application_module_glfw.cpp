@@ -9,12 +9,13 @@
 
 namespace awesome
 {
-	void ApplicationModuleGLFW::initialize()
+	bool ApplicationModuleGLFW::initialize()
 	{
 		m_application = new ApplicationGLFW();
 		m_input = new InputGLFW();
 		m_time = new TimeGLFW();
 		m_window = new WindowGLFW();
+		return true;
 	}
 
 	bool ApplicationModuleGLFW::startup_implementation()

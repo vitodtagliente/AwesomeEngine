@@ -15,7 +15,7 @@ namespace awesome
 		Input();
 
 		// initialize the input system
-		virtual void initialize(class Window* const t_window) = 0;
+		virtual bool initialize(class Window* const t_window) = 0;
 		// update the input state
 		void update();
 
@@ -38,6 +38,9 @@ namespace awesome
 		void handleKeyCallback(const keycode_t t_key, const KeyState t_state);
 		void handleMousePositionCallback(const float t_x, const float t_y);
 		void handleMouseEnterCallback(const bool t_inside);
+
+		// update implementation
+		virtual void update_implementation() = 0;
 
 		// last keys states
 		std::map<keycode_t, KeyState> m_lastKeysState;

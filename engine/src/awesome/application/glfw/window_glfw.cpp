@@ -52,6 +52,7 @@ namespace awesome
 		// check for closing window
 		if (glfwWindowShouldClose(m_windowHandler))
 		{
+			// #todo
 			m_isOpen = false;
 		}
 	}
