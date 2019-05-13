@@ -4,6 +4,8 @@ namespace awesome
 {
 	class Renderer
 	{
+	public:
+
 
 	};
 }
