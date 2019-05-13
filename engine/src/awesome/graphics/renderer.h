@@ -2,7 +2,7 @@
 
 namespace awesome
 {
-	struct vec3
+	class Renderer
 	{
 
 	};

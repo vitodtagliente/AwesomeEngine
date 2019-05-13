@@ -9,7 +9,6 @@ namespace awesome
 	public:
 
 		GraphicsModuleGL();
-		~GraphicsModuleGL();
 
 	protected:
 

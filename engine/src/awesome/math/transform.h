@@ -1,15 +1,13 @@
 #pragma once
 
-#include "vec3.h"
+#include "matrix.h"
+#include "transformation.h"
+#include "vector.h"
 
 namespace awesome
 {
-	struct Transform
+	struct transform
 	{
-	public:
 
-		vec3 position;
-		vec3 rotation;
-		vec3 scale;
 	};
 }

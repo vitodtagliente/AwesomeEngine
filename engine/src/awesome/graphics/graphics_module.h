@@ -14,7 +14,7 @@ namespace awesome
 			OpenGL
 		};
 
-		GraphicsModule();
+		GraphicsModule(const API t_api);
 		~GraphicsModule();
 
 		inline API getAPI() const { return m_api; }

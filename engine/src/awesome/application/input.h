@@ -4,7 +4,7 @@
 #include "keycode.h"
 #include "../core/singleton.h"
 #include "../core/types.h"
-#include "../math/vec2.h"
+#include "../math/vector.h"
 
 namespace awesome
 {
