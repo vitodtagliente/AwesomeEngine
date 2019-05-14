@@ -92,12 +92,18 @@ void SandboxGame::shutdown_implementation()
 void SandboxGame::update_implementation()
 {
 	// update
+	const double deltaTime = Time::instance()->getDeltaTime();
+
 	if (m_input->isKeyReleased(KeyCode::A))
 	{
 		cout << "Key Released: A" << endl;
 	}
 
-	Renderer::instance()->clear(m_color);
+	// render
+	if (Renderer * renderer = Renderer::instance())
+	{
+		renderer->clear(m_color);
+	}
 
 	/*
 	triangleColor.red += static_cast<float>(Time::instance()->getDeltaTime());
