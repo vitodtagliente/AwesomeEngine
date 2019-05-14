@@ -10,12 +10,12 @@ namespace awesome
 		glClearColor(t_color.red, t_color.green, t_color.blue, t_color.alpha);
 	}
 
-	void RendererGL::draw(const uint t_vertices)
+	void RendererGL::draw(const unsigned int t_vertices)
 	{
 		glDrawArrays(GL_TRIANGLES, 0, t_vertices);
 	}
 
-	void RendererGL::drawIndexed(const uint t_vertices)
+	void RendererGL::drawIndexed(const unsigned int t_vertices)
 	{
 		glDrawElements(GL_TRIANGLES, t_vertices, GL_UNSIGNED_INT, nullptr);
 	}

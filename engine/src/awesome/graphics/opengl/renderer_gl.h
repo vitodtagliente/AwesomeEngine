@@ -9,7 +9,7 @@ namespace awesome
 	public:
 
 		virtual void clear(const Color& t_color) override;
-		virtual void draw(const uint t_vertices = 3) override;
-		virtual void drawIndexed(const uint t_vertices) override;
+		virtual void draw(const unsigned int t_vertices = 3) override;
+		virtual void drawIndexed(const unsigned int t_vertices) override;
 	};
 }
