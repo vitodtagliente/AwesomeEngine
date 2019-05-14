@@ -4,6 +4,8 @@
 
 namespace awesome
 {
+	class Renderer;
+
 	class GraphicsModule : public Module
 	{
 	public:
@@ -18,6 +20,7 @@ namespace awesome
 		~GraphicsModule();
 
 		inline API getAPI() const { return m_api; }
+		inline Renderer* getRenderer() const { return m_renderer; }
 
 	protected:
 
@@ -27,6 +30,7 @@ namespace awesome
 
 		// used api
 		API m_api;
-
+		// renderer
+		Renderer* m_renderer;
 	};
 }

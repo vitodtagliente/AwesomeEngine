@@ -1,10 +1,11 @@
 #pragma once
 
+#include "../core/singleton.h"
 #include "../data/color.h"
 
 namespace awesome
 {
-	class Renderer
+	class Renderer : public Singleton<Renderer>
 	{
 	public:
 

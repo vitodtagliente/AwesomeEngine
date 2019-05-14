@@ -13,6 +13,9 @@ private:
 	virtual void update_implementation() override;
 
 	Input* m_input{ nullptr };
+	// background color
+	Color m_color;
+
 	/*
 	// vertex array object
 	VertexArray* va;

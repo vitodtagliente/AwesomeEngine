@@ -17,3 +17,8 @@
 #include "data/image.h"
 #include "data/string_id.h"
 #include "data/timer.h"
+
+#include "graphics/renderer.h"
+#include "graphics/texture.h"
+#include "graphics/shader.h"
+#include "graphics/shader_program.h"

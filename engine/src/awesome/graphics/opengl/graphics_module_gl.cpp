@@ -1,6 +1,7 @@
 #include "graphics_module_gl.h"
 
-#include <glad/glad.h>
+#include "opengl.h"
+#include "renderer_gl.h"
 
 namespace awesome
 {
@@ -11,6 +12,11 @@ namespace awesome
 	
 	bool GraphicsModuleGL::startup_implementation()
 	{
-		return gladLoadGL();
+		if (gladLoadGL())
+		{
+			m_renderer = new RendererGL();
+			return true;
+		}
+		return false;
 	}
 }

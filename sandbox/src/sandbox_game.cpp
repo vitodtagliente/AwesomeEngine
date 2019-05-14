@@ -8,6 +8,9 @@ bool SandboxGame::startup_implementation()
 {
 	m_input = Input::instance();
 
+	// set the background color
+	m_color = { .2f, .2f, .2f };
+
 	/*
 	triangleColor = Color::Black;
 
@@ -93,6 +96,9 @@ void SandboxGame::update_implementation()
 	{
 		cout << "Key Released: A" << endl;
 	}
+
+	Renderer::instance()->clear(m_color);
+
 	/*
 	triangleColor.red += static_cast<float>(Time::instance()->getDeltaTime());
 	if (triangleColor.red > 1.0f)
