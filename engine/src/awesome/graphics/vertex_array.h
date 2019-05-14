@@ -1,13 +1,13 @@
 #pragma once
 
-#include "graphics_element.h"
+#include "graphics_buffer.h"
 
 namespace awesome
 {
 	class VertexBuffer;
 	class VertexBufferLayout;
 
-	class VertexArray : public IGraphicsElement
+	class VertexArray : public GraphicsBuffer
 	{
 	public:
 

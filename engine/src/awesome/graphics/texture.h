@@ -29,6 +29,9 @@ namespace awesome
 		inline unsigned int getWidth() const { return m_width; }
 		inline unsigned int getHeight() const { return m_height; }
 
+		virtual void bind() = 0;
+		virtual void unbind() = 0;
+
 	protected:
 
 		// texture id
