@@ -6,7 +6,6 @@ using namespace std;
 // #todo
 #include <awesome/graphics/opengl/vertex_array_gl.h>
 #include <awesome/graphics/opengl/index_buffer_gl.h>
-#include <awesome/graphics/opengl/vertex_buffer_layout_gl.h>
 #include <awesome/graphics/opengl/vertex_buffer_gl.h>
 
 bool SandboxGame::startup_implementation()
@@ -60,9 +59,9 @@ bool SandboxGame::startup_implementation()
 		VertexBuffer* vb = new VertexBufferGL(positions, 4 * 4 * sizeof(float));
 		vb->bind();
 
-		VertexBufferLayout* layout = new VertexBufferLayoutGL();
-		layout->push<float>(2);
-		layout->push<float>(2);
+		VertexBufferLayout* layout = new VertexBufferLayout();
+		layout->push({ 2, VertexBufferElement::Type::Float, sizeof(float) });
+		layout->push({ 2, VertexBufferElement::Type::Float, sizeof(float) });
 		m_va->add(vb, layout);
 
 		IndexBuffer* ib = new IndexBufferGL(indices, 6);
