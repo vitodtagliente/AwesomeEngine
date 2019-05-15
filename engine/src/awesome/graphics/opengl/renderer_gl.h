@@ -8,6 +8,7 @@ namespace awesome
 	{
 	public:
 
+		virtual void enableAlpha(const bool bEnabled = true) override;
 		virtual void clear(const Color& t_color) override;
 		virtual void draw(const unsigned int t_vertices = 3) override;
 		virtual void drawIndexed(const unsigned int t_vertices) override;

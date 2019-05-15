@@ -12,21 +12,15 @@ private:
 	virtual void shutdown_implementation() override;
 	virtual void update_implementation() override;
 
-	Input* m_input{ nullptr };
 	// background color
 	Color m_color;
-
-	/*
-	// vertex array object
-	VertexArray* va;
-	// shader program
-	ShaderProgram* program;
 	// triangle color
-	Color triangleColor;
+	Color m_triangleColor;
+	// shader program
+	ShaderProgram* m_program;
 	// texture
-	Texture* texture;
-	// renderer
-	Renderer* renderer;
-	*/
+	Texture* m_texture;
+	// VAO
+	VertexArray* m_va;
 
 };

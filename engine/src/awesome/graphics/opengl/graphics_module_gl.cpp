@@ -3,11 +3,30 @@
 #include "opengl.h"
 #include "renderer_gl.h"
 
+#include "shader_gl.h"
+#include "shader_program_gl.h"
+#include "texture_gl.h"
+
 namespace awesome
 {
 	GraphicsModuleGL::GraphicsModuleGL()
 		: GraphicsModule(API::OpenGL)
 	{
+	}
+
+	Shader* GraphicsModuleGL::createShader(const Shader::Type t_type, const std::string& t_source) const
+	{
+		return new ShaderGL(t_type, t_source);
+	}
+
+	ShaderProgram* GraphicsModuleGL::createShaderProgram(const std::initializer_list<Shader*>& t_shaders) const
+	{
+		return new ShaderProgramGL(t_shaders);
+	}
+
+	Texture* GraphicsModuleGL::createTexture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height, const unsigned int t_components, const Texture::Options& t_options) const
+	{
+		return new TextureGL(t_data, t_width, t_height, t_components, t_options);
 	}
 	
 	bool GraphicsModuleGL::startup_implementation()

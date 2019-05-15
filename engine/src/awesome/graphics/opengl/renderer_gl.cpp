@@ -4,6 +4,16 @@
 
 namespace awesome
 {
+	void RendererGL::enableAlpha(const bool bEnabled)
+	{
+		if (bEnabled)
+		{
+			// Enable blending
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+	}
+
 	void RendererGL::clear(const Color& t_color)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
