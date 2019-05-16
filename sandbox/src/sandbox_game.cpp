@@ -96,7 +96,7 @@ void SandboxGame::update_implementation()
 		m_triangleColor.red = 0.0f;
 
 	// render
-	if (Renderer * renderer = Renderer::instance())
+	if (Renderer * const renderer = Renderer::instance())
 	{
 		renderer->clear(m_color);
 

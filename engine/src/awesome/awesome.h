@@ -24,3 +24,7 @@
 #include "graphics/texture.h"
 #include "graphics/shader.h"
 #include "graphics/shader_program.h"
+
+#include "scene/component.h"
+#include "scene/object.h"
+#include "scene/scene.h"
