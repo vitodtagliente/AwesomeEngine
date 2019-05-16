@@ -3,11 +3,6 @@
 
 using namespace std;
 
-// #todo
-#include <awesome/graphics/opengl/vertex_array_gl.h>
-#include <awesome/graphics/opengl/index_buffer_gl.h>
-#include <awesome/graphics/opengl/vertex_buffer_gl.h>
-
 bool SandboxGame::startup_implementation()
 {
 	// set the background color
@@ -52,22 +47,18 @@ bool SandboxGame::startup_implementation()
 			2, 3, 0
 		};
 
-		// #todo: to be incapsulated
-		// Vertex Array
-		m_va = new VertexArrayGL();
+		// create the vertex buffer
+		GraphicsBuffer* vb = graphics->createBuffer(GraphicsBuffer::Type::Vertex, positions, 4 * 4 * sizeof(float));
+		vb->layout.push({ 2, GraphicsBufferElement::Type::Float, sizeof(float) });
+		vb->layout.push({ 2, GraphicsBufferElement::Type::Float, sizeof(float) });
 
-		VertexBuffer* vb = new VertexBufferGL(positions, 4 * 4 * sizeof(float));
-		vb->bind();
+		// create the index buffer
+		GraphicsBuffer* ib = graphics->createBuffer(GraphicsBuffer::Type::Index, indices, 6 * sizeof(unsigned int));
 
-		VertexBufferLayout* layout = new VertexBufferLayout();
-		layout->push({ 2, VertexBufferElement::Type::Float, sizeof(float) });
-		layout->push({ 2, VertexBufferElement::Type::Float, sizeof(float) });
-		m_va->add(vb, layout);
+		// create the renderable object
+		m_sprite = graphics->createRenderable(vb, ib);
 
-		IndexBuffer* ib = new IndexBufferGL(indices, 6);
-		ib->bind();
-
-		m_va->unbind();
+		m_sprite->unbind();
 		vb->unbind();
 		ib->unbind();
 
@@ -85,7 +76,7 @@ void SandboxGame::shutdown_implementation()
 {
 	delete m_program;
 	delete m_texture;
-	delete m_va;
+	delete m_sprite;
 }
 
 void SandboxGame::update_implementation()
@@ -113,7 +104,7 @@ void SandboxGame::update_implementation()
 		m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
 		m_texture->bind();
 		m_program->set("u_Texture", 0);
-		m_va->bind();
+		m_sprite->bind();
 		renderer->drawIndexed(6);
 	}
 }

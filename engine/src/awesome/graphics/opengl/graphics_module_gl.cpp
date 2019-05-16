@@ -3,6 +3,8 @@
 #include "opengl.h"
 #include "renderer_gl.h"
 
+#include "graphics_buffer_gl.h"
+#include "renderable_gl.h"
 #include "shader_gl.h"
 #include "shader_program_gl.h"
 #include "texture_gl.h"
@@ -27,6 +29,16 @@ namespace awesome
 	Texture* GraphicsModuleGL::createTexture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height, const unsigned int t_components, const Texture::Options& t_options) const
 	{
 		return new TextureGL(t_data, t_width, t_height, t_components, t_options);
+	}
+
+	GraphicsBuffer* GraphicsModuleGL::createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data, const std::size_t t_size)
+	{
+		return new GraphicsBufferGL(t_type, t_data, t_size);
+	}
+
+	Renderable* GraphicsModuleGL::createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index)
+	{
+		return new RenderableGL(t_vertex, t_index);
 	}
 	
 	bool GraphicsModuleGL::startup_implementation()

@@ -4,6 +4,8 @@
 #include <string>
 #include "../core/singleton.h"
 #include "../engine/module.h"
+#include "graphics_buffer.h"
+#include "renderable.h"
 #include "shader.h"
 #include "shader_program.h"
 #include "texture.h"
@@ -32,6 +34,9 @@ namespace awesome
 		virtual ShaderProgram* createShaderProgram(const std::initializer_list<Shader*>& t_shaders) const = 0;
 		virtual Texture* createTexture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height,
 			const unsigned int t_components, const Texture::Options& t_options = Texture::Options{}) const = 0;
+		virtual GraphicsBuffer* createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data, 
+			const std::size_t t_size) = 0;
+		virtual Renderable* createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index) = 0;
 
 	protected:
 

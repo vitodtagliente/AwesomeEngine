@@ -20,7 +20,7 @@ private:
 	ShaderProgram* m_program;
 	// texture
 	Texture* m_texture;
-	// VAO
-	VertexArray* m_va;
+	// square object
+	Renderable* m_sprite;
 
 };
