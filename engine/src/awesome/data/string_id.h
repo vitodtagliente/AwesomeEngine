@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "../core/types.h"
 
 /*
 	Strings require more memory, dynamic memory allocation and
@@ -20,19 +19,13 @@ namespace awesome
 {
 	class StringId final
 	{
-		StringId(const std::string& t_data)
-			: m_hash()
-			, m_data(t_data)
-		{
-			for (const auto& it : t_data) 
-			{
-				// be sure to use prime numbers
-				m_hash = 37 * m_hash + 17 * static_cast<char>(it);
-			}
-		}
-		~StringId() = default;
+	public:
 
-		const std::string& data() const { return m_data; }
+		StringId();
+		StringId(const std::string& t_data);
+		~StringId();
+
+		inline const std::string& data() const { return m_data; }
 
 		inline bool operator== (const StringId& t_other) const
 		{
@@ -44,10 +37,12 @@ namespace awesome
 			return m_hash != t_other.m_hash;
 		}
 
+		static const StringId None;
+
 	private:
 
 		// hashed data
-		uint32 m_hash;
+		unsigned int m_hash;
 		// native data
 		std::string m_data;
 	};
