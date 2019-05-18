@@ -63,7 +63,15 @@ namespace awesome
 			return std::move(found_components);
 		}
 
+		// object lifetime
+		void initialize();
+
 	protected:
+
+		// object lifetime
+		virtual void initialize_implementation() {};
+
+	private:
 
 		// object id
 		unsigned int m_id;

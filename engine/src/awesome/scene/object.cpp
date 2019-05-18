@@ -7,6 +7,7 @@ namespace awesome
 		: m_id()
 		, m_name()
 		, m_children()
+		, m_components()
 	{
 	}
 
@@ -77,6 +78,11 @@ namespace awesome
 	Component* const Object::getComponentByName(const std::string& t_name) const
 	{
 		return getComponentByName(StringId{ t_name });
+	}
+
+	void Object::initialize()
+	{
+		initialize_implementation();
 	}
 
 }
