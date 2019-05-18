@@ -27,4 +27,4 @@
 
 #include "scene/component.h"
 #include "scene/object.h"
-#include "scene/scene.h"
+#include "scene/world.h"

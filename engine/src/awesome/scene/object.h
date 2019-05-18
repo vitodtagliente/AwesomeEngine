@@ -31,6 +31,16 @@ namespace awesome
 		Object* const getChildByIndex(unsigned int t_index) const;
 		Object* const getChildByName(const StringId& t_name) const;
 		Object* const getChildByName(const std::string& t_name) const;
+		template <typename T = Object>
+		Object* const getChild() const
+		{
+			for (Object* const child : m_children)
+			{
+				if (T * const found_child = dynamic_cast<T>(child))
+					return found_child;
+			}
+			return nullptr;
+		}
 		
 		void addChild(Object* const t_child);
 		bool removeChild(Object* const t_child);
@@ -44,21 +54,26 @@ namespace awesome
 		Component* const getComponentByName(const StringId& t_name) const;
 		Component* const getComponentByName(const std::string& t_name) const;
 		template <typename T = Component>
-		T* getComponent() const
+		T* const getComponent() const
 		{
 			for (Component* const component : m_components)
 			{
-				
+				if (T * const found_component = dynamic_cast<T>(component))
+					return found_component;
 			}
 			return nullptr;
 		}
 		template <typename T = Component>
-		std::vector<T*> getComponents() const
+		std::vector<T* const> getComponents() const
 		{
-			std::vector<T*> found_components;
+			std::vector<T* const> found_components;
 			for (Component* const component : m_components)
 			{
-
+				for (Component* const component : m_components)
+				{
+					if (T * const found_component = dynamic_cast<T>(component))
+						found_components.push_back(found_component);
+				}
 			}
 			return std::move(found_components);
 		}
