@@ -152,6 +152,7 @@ namespace awesome
 			m(i, i) *= v[i];
 	}
 
+	/*
 	// transform matrix
 	template <std::size_t N, typename T>
 	base_matrix<N + 1, N + 1, T> transform(const base_vector<N, T>& position,
@@ -164,7 +165,7 @@ namespace awesome
 		// scaling
 		math4games::scale(m, scale);
 		return m;
-	}
+	}	
 
 	template <typename T>
 	base_matrix<3, 3, T> transform(const base_vector<2, T>& position,
@@ -179,6 +180,7 @@ namespace awesome
 		math4games::scale(m, scale);
 		return m;
 	}
+	*/
 	
 	// orthograpic pojection
 	base_matrix<4, 4, float> orthographic(const float left, const float right, 
@@ -203,7 +205,7 @@ namespace awesome
     {
         base_matrix<4, 4, float> m(0.0f);
 
-        float top    = near_plane * std::tan(fov / 2.0);
+        float top    = near_plane * std::tan(fov / 2.0f);
         float bottom = -top;
         float right  =  top * aspect;
         float left   = -top * aspect;

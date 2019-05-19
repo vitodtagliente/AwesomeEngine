@@ -9,22 +9,17 @@ namespace awesome
 	const float rad2deg_factor = 180.0f / pi;
 
 	// degrees to radians
-	float radians(const float theta) {
-		return theta * deg2rad_factor;
-	}
-
+	float radians(const float t_theta);
 	// radians to degrees
-	float degrees(const float theta) {
-		return theta * rad2deg_factor;
+	float degrees(const float t_theta);
+
+	template <typename T>
+	T lerp(const T& t_a, const T& t_b, const float t_time) {
+		return (1.0f - t_time) * t_a + t_b * t_time;
 	}
 
 	template <typename T>
-	T lerp(const T& a, const T& b, const float t) {
-		return (1.0f - t) * a + b * t;
-	}
-
-	template <typename T>
-	T clamp(const T& val, const T& min, const T& max) {
-		return std::max(min, std::min(val, max));
+	T clamp(const T& t_val, const T& t_min, const T& t_max) {
+		return std::max(t_min, std::min(t_val, t_max));
 	}
 };

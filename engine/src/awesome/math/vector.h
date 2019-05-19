@@ -1,220 +1,9 @@
 #pragma once
 
-#include <array>
-#include <cassert>
-#include <cmath>
-#include <initializer_list>
+#include "base_vector.h"
 
 namespace awesome
 {
-	template<std::size_t N, typename T>
-	struct base_vector
-	{
-		// vector size
-		const std::size_t length = N;
-
-		// store data into a managed array
-		std::array<T, N> data;
-
-		// default constructor
-		base_vector() {
-			data.fill(T{});
-		}
-
-		// this constructor fill all components with the same value
-		base_vector(const T value) {
-			data.fill(value);
-		}
-
-		// construct with initialzie list
-		base_vector(const std::initializer_list<T>& args) {
-			data.fill(T{});
-			unsigned int i = 0;
-			for (auto it = args.begin(); it != args.end() && i < length; ++it) {
-				data[i] = *it;
-				++i;
-			}
-		}
-
-		// copy constructor
-		base_vector(const base_vector<N, T>& other)
-		{
-			data = other.data;
-		}
-
-		// templated copy constructor
-		template<std::size_t M>
-		base_vector(const base_vector<M, T>& other)
-		{
-			data.fill(T{});
-			unsigned int i = 0;
-			for (auto it = other.data.begin(); it != other.data.end() && i < length; ++it)
-			{
-				data[i] = *it;
-				++i;
-			}
-		}
-
-		// return the vector length
-		std::size_t size() const {
-			return length;
-		}
-
-		// return the i-index component
-		T& operator[] (const unsigned int i) {
-			return data[i];
-		}
-
-		T operator[] (const unsigned int i) const {
-			return data[i];
-		}
-
-		T& operator() (const unsigned int i)
-		{
-			return data.at(i);
-		}
-
-		T operator() (const unsigned int i) const
-		{
-			return data.at(i);
-		}
-
-		// compute the magnitude
-		// magnitude = x1 * x1 + x2 * x2 + ... + xn * xn
-		T magnitude() const {
-			T result = {};
-			for (unsigned int i = 0; i < length; ++i)
-				result += data[i] * data[i];
-			return static_cast<T>(sqrt(result));
-		}
-
-		// compute the distance between another vector
-		T distance(const base_vector<N, T> & other) const {
-			return (*this - other).magnitude();
-		}
-
-		// dot product
-		T dot(const base_vector<N, T> & other) const {
-			return (*this)* other;
-		}
-
-		// normalize the vector
-		base_vector<N, T> normalize() {
-			return (*this *= (static_cast<T>(1.0) / magnitude()));
-		}
-
-		base_vector<N, T> project(const base_vector<N, T> & v) {
-			T d = v * v;
-			assert(d != static_cast<T>(0.0));
-			return v * ((*this * v) / d);
-		}
-
-		base_vector<N, T> reject(const base_vector<N, T> & v) {
-			T d = v * v;
-			assert(d != static_cast<T>(0.0));
-			return (*this - v) * ((*this * v) / d);
-		}
-
-		// Operators overloading 
-
-		base_vector<N, T> & operator= (const base_vector<N, T> & other) {
-			// check for self-assignment
-			if (this == &other)
-				return *this;
-
-			// copy 
-			data = other.data;
-			return *this;
-		}
-
-		bool operator== (const base_vector<N, T> & other) const {
-			return (*this).data == other.data;
-		}
-
-		bool operator!= (const base_vector<N, T> & other) const {
-			return !(*this == other);
-		}
-
-		base_vector<N, T>& operator+= (const base_vector<N, T> & other) {
-			for (unsigned int i = 0; i < length; i++)
-				data[i] += other[i];
-			return *this;
-		}
-
-		base_vector<N, T>& operator-= (const base_vector<N, T> & other) {
-			for (unsigned int i = 0; i < length; i++)
-				data[i] -= other[i];
-			return *this;
-		}
-
-		base_vector<N, T>& operator*= (const T s) {
-			for (unsigned int i = 0; i < length; i++)
-				data[i] *= s;
-			return *this;
-		}
-
-		base_vector<N, T>& operator/= (const T s) {
-			assert(s != static_cast<T>(0.0));
-			T f = static_cast<T>(1.0) / s;
-			for (unsigned int i = 0; i < length; i++)
-				data[i] *= f;
-			return *this;
-		}
-
-		base_vector<N, T> operator- () const {
-			base_vector<N, T> v;
-			for (unsigned int i = 0; i < length; i++)
-				v[i] = -data[i];
-			return v;
-		}
-
-		base_vector<N, T> operator+ (const base_vector<N, T> & w) const {
-			base_vector<N, T> v;
-			for (unsigned int i = 0; i < length; i++)
-				v[i] = data[i] + w[i];
-			return v;
-		}
-
-		base_vector<N, T> operator- (const base_vector<N, T> & w) const {
-			base_vector<N, T> v;
-			for (unsigned int i = 0; i < length; i++)
-				v[i] = data[i] - w[i];
-			return v;
-		}
-
-		base_vector<N, T> operator* (const T s) const {
-			base_vector<N, T> v;
-			for (unsigned int i = 0; i < length; i++)
-				v[i] = data[i] * s;
-			return v;
-		}
-
-		base_vector<N, T> operator/ (const T s) const {
-			assert(s != static_cast<T>(0.0));
-			T f = static_cast<T>(1.0) / s;
-			base_vector<N, T> v;
-			for (unsigned int i = 0; i < length; i++)
-				v[i] = data[i] * f;
-			return v;
-		}
-
-		// dot product 
-		T operator*(const base_vector<N, T> & v) const {
-			T dot{};
-			for (unsigned int i = 0; i < length; i++)
-				dot += data[i] * v[i];
-			return dot;
-		}
-	};
-
-	template<std::size_t N, class T>
-	inline base_vector<N, T> operator* (const T s, const base_vector<N, T> & v) {
-		base_vector<N, T> w;
-		for (unsigned int i = 0; i < N; i++)
-			w[i] = v[i] * s;
-		return w;
-	}
-
 	// undefined order zero vector
 	template<typename T>
 	struct base_vector<0, T>;
@@ -226,19 +15,24 @@ namespace awesome
 		// inherits base class constructors
 		using base_vector<2, T>::base_vector;
 
-		base_vector2() :base_vector<2, T>() {}
+		base_vector2() 
+			: base_vector<2, T>() 
+		{
+
+		}
 
 		T& x = base_vector<2, T>::data[0];
 		T& y = base_vector<2, T>::data[1];
 
-		base_vector2(const T _x, const T _y)
+		base_vector2(const T t_x, const T t_y)
 		{
-			base_vector<2, T>::data[0] = _x;
-			base_vector<2, T>::data[1] = _y;
+			x = t_x;
+			y = t_y;
 		}
 
-		base_vector2& operator= (const base_vector2& other) {
-			base_vector<2, T>::data = other.data;
+		base_vector2& operator= (const base_vector2& t_other) 
+		{
+			data = t_other.data;
 			return (*this);
 		}
 
@@ -258,34 +52,42 @@ namespace awesome
 		// inherits base class constructors
 		using base_vector<3, T>::base_vector;
 
-		base_vector3() :base_vector<3, T>() {}
+		base_vector3() 
+			: base_vector<3, T>() 
+		{
+		
+		}
 
 		T& x = base_vector<3, T>::data[0];
 		T& y = base_vector<3, T>::data[1];
 		T& z = base_vector<3, T>::data[2];
 
-		base_vector3(const T _x, const T _y, const T _z) {
-			base_vector<3, T>::data[0] = _x;
-			base_vector<3, T>::data[1] = _y;
-			base_vector<3, T>::data[2] = _z;
+		base_vector3(const T t_x, const T t_y, const T t_z) 
+		{
+			x = t_x;
+			y = t_y;
+			z = t_z;
 		}
 
 		//cross product
-		base_vector3<T> cross(const base_vector3<T>& v) const {
+		base_vector3<T> cross(const base_vector3<T>& t_v) const 
+		{
 			return base_vector3<T>(
-				y * v.z - z * v.y,
-				z * v.x - x * v.z,
-				x * v.y - y * v.x
+				y * t_v.z - z * t_v.y,
+				z * t_v.x - x * t_v.z,
+				x * t_v.y - y * t_v.x
 				);
 		}
 
 		// scalar triple product
-		float triple(const  base_vector3<T> & v, const  base_vector3<T> & w) const {
-			return ((*this).cross(v))* w;
+		float triple(const  base_vector3<T> & t_v, const  base_vector3<T> & t_w) const 
+		{
+			return ((*this).cross(t_v))* t_w;
 		}
 
-		base_vector3& operator= (const base_vector3 & other) {
-			base_vector<3, T>::data = other.data;
+		base_vector3& operator= (const base_vector3 & other) 
+		{
+			data = other.data;
 			return (*this);
 		}
 
@@ -307,22 +109,28 @@ namespace awesome
 		// inherits base class constructors
 		using base_vector<4, T>::base_vector;
 
-		base_vector4() :base_vector<4, T>() {}
+		base_vector4() 
+			: base_vector<4, T>() 
+		{
+		
+		}
 
 		T& x = base_vector<4, T>::data[0];
 		T& y = base_vector<4, T>::data[1];
 		T& z = base_vector<4, T>::data[2];
 		T& w = base_vector<4, T>::data[3];
 
-		base_vector4(const T _x, const T _y, const T _z, const T _w) {
-			base_vector<4, T>::data[0] = _x;
-			base_vector<4, T>::data[1] = _y;
-			base_vector<4, T>::data[2] = _z;
-			base_vector<4, T>::data[3] = _w;
+		base_vector4(const T t_x, const T t_y, const T t_z, const T t_w) 
+		{
+			x = t_x;
+			y = t_y;
+			z = t_z;
+			w = t_w;
 		}
 
-		base_vector4& operator= (const base_vector4& other) {
-			base_vector<4, T>::data = other.data;
+		base_vector4& operator= (const base_vector4& t_other) 
+		{
+			data = other.data;
 			return (*this);
 		}
 
