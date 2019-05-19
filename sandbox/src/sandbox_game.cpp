@@ -72,6 +72,17 @@ bool SandboxGame::startup_implementation()
 
 		Renderer::instance()->enableAlpha();
 
+		// tests
+
+		vec2 v1 = vec2::ones;
+		vec2 v2 = vec2::ones;
+		v1.reject(v2);
+		v1 == v2;
+		auto v3 = v1 * v2;
+		vec2 v4(v2);
+
+		// tests
+
 		return true;
 	}
 	return false;

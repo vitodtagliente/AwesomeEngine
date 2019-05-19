@@ -45,6 +45,7 @@ namespace awesome
 
 		// copy constructor
 		base_vector(const base_vector<N, T>& t_other)
+			: data()
 		{
 			data = t_other.data;
 		}
@@ -52,6 +53,7 @@ namespace awesome
 		// templated copy constructor
 		template<std::size_t M>
 		base_vector(const base_vector<M, T>& t_other)
+			: data()
 		{
 			data.fill(T{});
 			unsigned int i = 0;
