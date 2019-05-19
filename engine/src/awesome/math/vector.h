@@ -39,11 +39,13 @@ namespace awesome
 		static const base_vector2<T> zero;
 		static const base_vector2<T> up;
 		static const base_vector2<T> right;
+		static const base_vector2<T> ones;
 	};
 
 	template<typename T> const base_vector2<T> base_vector2<T>::zero = base_vector2<T>(0.0, 0.0);
 	template<typename T> const base_vector2<T> base_vector2<T>::up = base_vector2<T>(0.0, 1.0);
 	template<typename T> const base_vector2<T> base_vector2<T>::right = base_vector2<T>(1.0, 0.0);
+	template<typename T> const base_vector2<T> base_vector2<T>::ones = base_vector2<T>(1.0, 1.0);
 
 	// order 3 vector
 	template<typename T>
@@ -95,12 +97,14 @@ namespace awesome
 		static const base_vector3<T> up;
 		static const base_vector3<T> right;
 		static const base_vector3<T> forward;
+		static const base_vector3<T> ones;
 	};
 
 	template<typename T> const base_vector3<T> base_vector3<T>::zero = base_vector3<T>(0.0, 0.0, 0.0);
 	template<typename T> const base_vector3<T> base_vector3<T>::up = base_vector3<T>(0.0, 1.0, 0.0);
 	template<typename T> const base_vector3<T> base_vector3<T>::right = base_vector3<T>(1.0, 0.0, 0.0);
 	template<typename T> const base_vector3<T> base_vector3<T>::forward = base_vector3<T>(0.0, 0.0, -1.0);
+	template<typename T> const base_vector3<T> base_vector3<T>::ones = base_vector3<T>(1.0, 1.0, 1.0);
 
 	// order 4 vector
 	template<typename T>
@@ -135,9 +139,11 @@ namespace awesome
 		}
 
 		static const base_vector4<T> zero;
+		static const base_vector4<T> ones;
 	};
 
 	template<typename T> const base_vector4<T> base_vector4<T>::zero = base_vector4<T>(0.0, 0.0, 0.0, 0.0);
+	template<typename T> const base_vector4<T> base_vector4<T>::ones = base_vector4<T>(0.0, 0.0, 0.0, 0.0);
 
 	// vector types
 	typedef base_vector2<float> vec2;
