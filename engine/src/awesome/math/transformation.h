@@ -166,35 +166,56 @@ namespace awesome
 			t_m(i, i) *= t_v[i];
 	}
 
-	/*
 	// transform matrix
 	template <std::size_t N, typename T>
-	base_matrix<N + 1, N + 1, T> transform(const base_vector<N, T>& position,
-		const base_vector<N, T>& rotation, const base_vector<N, T>& scale) {
+	base_matrix<N + 1, N + 1, T> transform(
+		const base_vector<N, T>& t_position,
+		const base_vector<N, T>& t_rotation, 
+		const base_vector<N, T>& t_scale) 
+	{
 		base_matrix<N + 1, N + 1, T> m = identity<N + 1, T>();
 		// translation
-		translate(m, position);
+		translate(m, t_position);
 		// rotation
 		// TODO
 		// scaling
-		math4games::scale(m, scale);
+		scale(m, t_scale);
 		return m;
 	}	
 
 	template <typename T>
-	base_matrix<3, 3, T> transform(const base_vector<2, T>& position,
-		const base_vector<2, T>& rotation, const base_vector<2, T>& scale) {
+	base_matrix<3, 3, T> transform(
+		const base_vector<2, T>& t_position,
+		const base_vector<2, T>& t_rotation, 
+		const base_vector<2, T>& t_scale) 
+	{
 		base_matrix<3, 3, T> m = identity<3, T>();
 		// translation
-		translate(m, position);
+		translate(m, t_position);
 		// rotation
-		const float theta = degrees(std::acosf(rotation.x / rotation.magnitude()));
+		const float theta = degrees(std::acosf(t_rotation.x / t_rotation.magnitude()));
 		m = m * rotate_z(theta);
 		// scaling
-		math4games::scale(m, scale);
+		scale(m, t_scale);
 		return m;
 	}
-	*/
+
+	template <typename T>
+	base_matrix<4, 4, T> transform(
+		const base_vector<3, T>& t_position,
+		const base_vector<3, T>& t_rotation,
+		const base_vector<3, T>& t_scale)
+	{
+		base_matrix<4, 4, T> m = identity<4, T>();
+		// translation
+		translate(m, t_position);
+		// rotation
+		//const float theta = degrees(std::acosf(t_rotation.data[0] / t_rotation.magnitude()));
+		//m = m * rotate_z(theta);
+		// scaling
+		scale(m, t_scale);
+		return m;
+	}
 	
 	// orthograpic pojection
 	base_matrix<4, 4, float> orthographic(

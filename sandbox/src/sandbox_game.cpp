@@ -8,10 +8,15 @@ bool SandboxGame::startup_implementation()
 	// set the background color
 	m_color = { .2f, .2f, .2f };
 
+	// projection matrix
+	m_projection = orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	// view matrix
+	m_view = mat4::identity;
+
 	if (GraphicsModule * const graphics = GraphicsModule::instance())
 	{
 		std::map<Shader::Type, std::string> sources;
-		Shader::Reader::parse("assets/texture.shader", sources);
+		Shader::Reader::parse("assets/projection.shader", sources);
 		auto vertex = graphics->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
 		auto fragment = graphics->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
@@ -101,9 +106,16 @@ void SandboxGame::update_implementation()
 		renderer->clear(m_color);
 
 		m_program->bind();
+
 		m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
+		
+		// model view projection
+		const mat4& mvp = m_projection * m_view * transform(m_position, m_rotation.v, m_scale);
+		m_program->set("u_MVP", &mvp.data[0]);
+
 		m_texture->bind();
 		m_program->set("u_Texture", 0);
+
 		m_sprite->bind();
 		renderer->drawIndexed(6);
 	}

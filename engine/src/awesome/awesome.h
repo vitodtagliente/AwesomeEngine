@@ -25,6 +25,12 @@
 #include "graphics/shader.h"
 #include "graphics/shader_program.h"
 
+#include "math/common.h"
+#include "math/point.h"
+#include "math/matrix.h"
+#include "math/transformation.h"
+#include "math/vector.h"
+
 #include "scene/component.h"
 #include "scene/object.h"
 #include "scene/world.h"

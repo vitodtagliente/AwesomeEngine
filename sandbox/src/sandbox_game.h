@@ -23,4 +23,14 @@ private:
 	// square object
 	Renderable* m_sprite;
 
+	// projection matrix
+	mat4 m_projection;
+	// view matrix : camera transform
+	mat4 m_view;
+	
+	// sprite transform
+	vec3 m_position;
+	quaternion m_rotation;
+	vec3 m_scale{1.0f, 1.0f, 1.0f};
+
 };

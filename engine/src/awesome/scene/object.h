@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "../data/string_id.h"
-#include "../math/transform.h"
 
 namespace awesome
 {
@@ -94,7 +93,7 @@ namespace awesome
 		// object name
 		StringId m_name;
 		// transform
-		transform m_transform;
+		//transform m_transform;
 		// children
 		std::vector<Object*> m_children;
 		// components
