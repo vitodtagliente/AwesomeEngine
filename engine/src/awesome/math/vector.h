@@ -30,7 +30,7 @@ namespace awesome
 			y = t_y;
 		}
 
-		base_vector2& operator= (const base_vector2& t_other) 
+		base_vector2& operator= (const base_vector2& t_other)
 		{
 			data = t_other.data;
 			return (*this);
@@ -85,9 +85,9 @@ namespace awesome
 			return ((*this).cross(t_v))* t_w;
 		}
 
-		base_vector3& operator= (const base_vector3 & other) 
+		base_vector3& operator= (const base_vector3& t_other)
 		{
-			data = other.data;
+			data = t_other.data;
 			return (*this);
 		}
 
@@ -128,9 +128,9 @@ namespace awesome
 			w = t_w;
 		}
 
-		base_vector4& operator= (const base_vector4& t_other) 
+		base_vector4& operator= (const base_vector4& t_other)
 		{
-			data = other.data;
+			data = t_other.data;
 			return (*this);
 		}
 

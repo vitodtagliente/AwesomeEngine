@@ -9,7 +9,8 @@ namespace awesome
 {
 	// identity matrix
 	template <std::size_t N, typename T>
-	base_matrix<N, N, T> identity() {
+	base_matrix<N, N, T> identity() 
+	{
 		base_matrix<N, N, T> m;
 		for (unsigned int i = 0; i < N; ++i)
 			m(i, i) = static_cast<T>(1.0);
@@ -18,68 +19,76 @@ namespace awesome
 
 	// point to vector
 	template <std::size_t N, typename T>
-	base_vector<N + 1, T> vector(const base_point<N, T>& p) {
+	base_vector<N + 1, T> vector(const base_point<N, T>& t_p) 
+	{
 		base_vector<N + 1, T> v;
 		for (unsigned int i = 0; i < N; ++i)
-			v[i] = p[i];
+			v[i] = t_p[i];
 		v[N] = static_cast<T>(1.0);
 		return v;
 	}
 
 	// vector to point
 	template <std::size_t N, typename T>
-	base_point<N - 1, T> point(const base_vector<N, T>& v) {
+	base_point<N - 1, T> point(const base_vector<N, T>& t_v) 
+	{
 		static_assert(N > 1, "invalid N");
 		base_point<N - 1, T> p;
 		for (unsigned int i = 0; i < N - 1; ++i)
-			n[i] = v[i];
+			n[i] = t_v[i];
 		return p;
 	}
 
 	// point - point operation
 	template <std::size_t N, typename T>
-	base_vector<N, T> operator- (const base_point<N, T>& p1, const base_point<N, T>& p2) {
+	base_vector<N, T> operator- (const base_point<N, T>& t_p1, const base_point<N, T>& t_p2) 
+	{
 		base_vector<N, T> v;
 		for (unsigned int i = 0; i < N; ++i)
-			v[i] = p1[i] - p2[i];
+			v[i] = t_p1[i] - t_p2[i];
 		return v;
 	}
 
 	// point + vector operation
 	template <std::size_t N, typename T>
-	base_point<N, T> operator+ (const base_point<N, T>& p, const base_vector<N, T>& v) {
+	base_point<N, T> operator+ (const base_point<N, T>& t_p, const base_vector<N, T>& t_v) 
+	{
 		base_point<N, T> new_point;
 		for (unsigned int i = 0; i < N; ++i)
-			new_point[i] = p[i] + v[i];
+			new_point[i] = t_p[i] + t_v[i];
 		return new_point;
 	}
 
 	// point + vector operation
 	template <std::size_t N, typename T>
-	base_point<N, T> operator+ (const base_vector<N, T>& v, const base_point<N, T>& p) {
-		return p + v;
+	base_point<N, T> operator+ (const base_vector<N, T>& t_v, const base_point<N, T>& t_p) 
+	{
+		return t_p + t_v;
 	}
 
 	// translation operation
 	template <std::size_t N, typename T>
-	base_matrix<N + 1, N + 1, T> translate(const base_vector<N, T>& v) {
+	base_matrix<N + 1, N + 1, T> translate(const base_vector<N, T>& t_v) 
+	{
 		base_matrix<N + 1, N + 1, T> m = identity<N + 1, T>();
 		for (unsigned int j = 0; j < N; ++j)
-			m(N, j) = v[j];
+			m(N, j) = t_v[j];
 		m(N, N) = static_cast<T>(1.0);
 		return m;
 	}
 
 	template <std::size_t N, typename T>
-	void translate(base_matrix<N + 1, N + 1, T>& m, const base_vector<N, T>& v) {
+	void translate(base_matrix<N + 1, N + 1, T>& t_m, const base_vector<N, T>& t_v) 
+	{
 		for (unsigned int j = 0; j < N; ++j)
-			m(N, j) += v[j];
+			t_m(N, j) += t_v[j];
 	}
 
 	// rotate operation
 	template <std::size_t N, typename T>
-	base_matrix<N, N, T> rotate_x(const float theta) {
-		const float rad = radians(theta);
+	base_matrix<N, N, T> rotate_x(const float t_theta) 
+	{
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -92,8 +101,9 @@ namespace awesome
 	}
 
 	template <std::size_t N, typename T>
-	base_matrix<N, N, T> rotate_y(const float theta) {
-		const float rad = radians(theta);
+	base_matrix<N, N, T> rotate_y(const float t_theta) 
+	{
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -106,8 +116,9 @@ namespace awesome
 	}
 
 	template <std::size_t N, typename T>
-	base_matrix<N, N, T> rotate_z(const float theta) {
-		const float rad = radians(theta);
+	base_matrix<N, N, T> rotate_z(const float t_theta) 
+	{
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -121,35 +132,38 @@ namespace awesome
 
 	// 3D rotation about an arbitrary axis v by an angle theta
 	template <typename T>
-	base_matrix<4, 4, T> rotate(const base_vector<3, T>& v, const float theta) {
-		const float rad = radians(theta);
+	base_matrix<4, 4, T> rotate(const base_vector<3, T>& t_v, const float t_theta) 
+	{
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 		const float c1 = 1 - c;
 
 		base_matrix<4, 4, T> m({
-			std::pow(v.x,2)*c1 + c,	v.x*v.y*c1 - v.z*s,		v.x*v.normalize*c1 + v.y*s,		0,
-			v.x*v.y*c1 + v.z*s,		std::pow(v.y,2)*c1 + c, v.y*v.z*c1 - v.x*s,				0,
-			v.x*v.y*c1 - v.y*s,		v.y*v.z*c1 - v.x*s,		std::pow(v.z,2)*c1 + c,			0,
-			0,						0,						0,								1
+			std::pow(t_v.x,2)*c1 + c,	t_v.x*t_v.y*c1 - t_v.z*s,	t_v.x*t_v.normalize*c1 + t_v.y*s,	0,
+			t_v.x*t_v.y*c1 + t_v.z*s,	std::pow(t_v.y,2)*c1 + c,	t_v.y*t_v.z*c1 - t_v.x*s,			0,
+			t_v.x*t_v.y*c1 - t_v.y*s,	t_v.y*t_v.z*c1 - t_v.x*s,	std::pow(t_v.z,2)*c1 + c,			0,
+			0,							0,							0,									1
 		});
 		return m;
 	}
 
 	// scale operation
 	template <std::size_t N, typename T>
-	base_matrix<N + 1, N + 1, T> scale(const base_vector<N, T>& v) {
+	base_matrix<N + 1, N + 1, T> scale(const base_vector<N, T>& t_v) 
+	{
 		base_matrix<N + 1, N + 1, T> m;
 		for (unsigned int i = 0; i < N; ++i)
-			m(i, i) = v[i];
+			m(i, i) = t_v[i];
 		m(N, N) = static_cast<T>(1.0);
 		return m;
 	}
 
 	template <std::size_t N, typename T>
-	void scale(base_matrix<N + 1, N + 1, T>& m, const base_vector<N, T>& v) {
+	void scale(base_matrix<N + 1, N + 1, T>& t_m, const base_vector<N, T>& t_v) 
+	{
 		for (unsigned int i = 0; i < N; ++i) 
-			m(i, i) *= v[i];
+			t_m(i, i) *= t_v[i];
 	}
 
 	/*
@@ -183,41 +197,18 @@ namespace awesome
 	*/
 	
 	// orthograpic pojection
-	base_matrix<4, 4, float> orthographic(const float left, const float right, 
-		const float bottom, const float top, 
-		const float near_plane, const float far_plane) 
-	{
-		base_matrix<4, 4, float> m = identity<4, float>();
-		
-		m(0, 0) = 2.0f / (right - left);        
-        m(1, 1) = 2.0f / (top - bottom);
-        m(2, 2) = -2.0f / (far_plane - near_plane);
-
-        m(3, 0) = -(right + left) / (right - left);
-        m(3, 1) = -(top + bottom) / (top - bottom);
-        m(3, 2) = -(far_plane + near_plane) / (far_plane - near_plane);
-		
-		return m;
-	}
+	base_matrix<4, 4, float> orthographic(
+		const float t_left, 
+		const float t_right,
+		const float t_bottom, 
+		const float t_top,
+		const float t_near_plane, 
+		const float t_far_plane);
 	
 	// perspective projection
-    base_matrix<4, 4, float> perspective(const float fov, const float aspect, const float near_plane, const float far_plane)
-    {
-        base_matrix<4, 4, float> m(0.0f);
-
-        float top    = near_plane * std::tan(fov / 2.0f);
-        float bottom = -top;
-        float right  =  top * aspect;
-        float left   = -top * aspect;
-
-        m(0, 0) = (2.0f * near_plane) / (right - left);
-        m(1, 1) = (2.0f * near_plane) / (top - bottom);
-        m(2, 2) = -(far_plane + near_plane) / (far_plane - near_plane); 
-		
-        m(2, 3) = -1.0f;
-        m(3, 2) = -(2.0f * near_plane*far_plane) / (far_plane - near_plane); 
-        
-
-        return m;
-    }
+	base_matrix<4, 4, float> perspective(
+		const float t_fov, 
+		const float t_aspect,
+		const float t_near_plane, 
+		const float t_far_plane);
 }

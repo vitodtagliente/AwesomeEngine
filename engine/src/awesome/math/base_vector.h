@@ -18,18 +18,21 @@ namespace awesome
 
 		// default constructor
 		base_vector()
+			: data()
 		{
 			data.fill(T{});
 		}
 
 		// this constructor fill all components with the same value
 		base_vector(const T t_value)
+			: data()
 		{
 			data.fill(t_value);
 		}
 
 		// construct with initialzie list
 		base_vector(const std::initializer_list<T>& t_args)
+			: data()
 		{
 			data.fill(T{});
 			unsigned int i = 0;
