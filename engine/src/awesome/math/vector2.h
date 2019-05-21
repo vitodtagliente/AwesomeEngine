@@ -151,8 +151,8 @@ namespace awesome
 
 		vector2_t& operator*= (const T t_scalar)
 		{
-			x *= t_vector.x;
-			y *= t_vector.y;
+			x *= t_scalar;
+			y *= t_scalar;
 			return *this;
 		}
 
@@ -182,14 +182,14 @@ namespace awesome
 
 		vector2_t operator* (const T t_scalar) const
 		{
-			return { x * t_vector.x, y * t_vector.y };
+			return { x * t_scalar, y * t_scalar };
 		}
 
 		vector2_t operator/ (const T t_scalar) const
 		{
 			assert(t_scalar != static_cast<T>(0.0));
 			const T f = static_cast<T>(1.0) / t_scalar;
-			return { x / f, y / f };
+			return { x * f, y * f };
 		}
 
 		// dot product 

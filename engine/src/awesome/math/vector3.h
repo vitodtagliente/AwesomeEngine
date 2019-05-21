@@ -8,6 +8,7 @@ namespace awesome
 		static const vector3_t zero;
 		static const vector3_t up;
 		static const vector3_t right;
+		static const vector3_t forward;
 		static const vector3_t ones;
 
 		union
@@ -92,6 +93,22 @@ namespace awesome
 			return (*this) * t_vector;
 		}
 
+		//cross product
+		vector3_t cross(const vector3_t & t_vector) const
+		{
+			return vector3_t(
+				y * t_vector.z - z * t_vector.y,
+				z * t_vector.x - x * t_vector.z,
+				x * t_vector.y - y * t_vector.x
+			);
+		}
+
+		// scalar triple product
+		float triple(const vector3_t& t_vector1, const vector3_t& t_vector2) const
+		{
+			return ((*this).cross(t_vector1)) * t_vector2;
+		}
+
 		// normalize the vector
 		vector3_t normalize()
 		{
@@ -155,9 +172,9 @@ namespace awesome
 
 		vector3_t& operator*= (const T t_scalar)
 		{
-			x *= t_vector.x;
-			y *= t_vector.y;
-			z *= t_scalar.z;
+			x *= t_scalar;
+			y *= t_scalar;
+			z *= t_scalar;
 			return *this;
 		}
 
@@ -188,20 +205,20 @@ namespace awesome
 
 		vector3_t operator* (const T t_scalar) const
 		{
-			return { x * t_vector.x, y * t_vector.y };
+			return { x * t_scalar, y * t_scalar, z * t_scalar };
 		}
 
 		vector3_t operator/ (const T t_scalar) const
 		{
 			assert(t_scalar != static_cast<T>(0.0));
 			const T f = static_cast<T>(1.0) / t_scalar;
-			return { x / f, y / f };
+			return { x * f, y * f, z * f };
 		}
 
 		// dot product 
 		T operator*(const vector3_t & t_vector) const
 		{
-			return x * t_vector.x + y * t_vector.y;
+			return x * t_vector.x + y * t_vector.y + z * t_vector.z;
 		}
 	};
 
@@ -213,6 +230,6 @@ namespace awesome
 
 	// vector types
 
-	typedef vector3_t<float> vec2;
-	typedef vec2 vector2;
+	typedef vector3_t<float> vec3;
+	typedef vec3 vector3;
 }
