@@ -4,11 +4,13 @@
 #include <cmath>
 #include <cstring>
 #include "matrix3.h"
+#include "vector4.h"
+#include "vector3.h"
 
 namespace awesome
 {
 	template <typename T>
-	class matrix4_t
+	struct matrix4_t
 	{
 		static const matrix4_t zero;
 		static const matrix4_t identity;
@@ -18,7 +20,7 @@ namespace awesome
 		// num of columns
 		const std::size_t columns = 4;
 		// matrix size
-		const std::size_t length = 4 * 4;
+		const std::size_t length = rows * columns;
 
 		// matrix data
 		union
@@ -36,7 +38,7 @@ namespace awesome
 
 		matrix4_t()
 		{
-			std::memset(data, static_cast<T>(0), length);
+			std::memset(data, static_cast<int>(0), length);
 		}
 
 		matrix4_t(const T t_value)
@@ -154,6 +156,26 @@ namespace awesome
 			return result;
 		}
 
+		// orthograpic pojection
+		static matrix4_t orthographic(
+			const float t_left,
+			const float t_right,
+			const float t_bottom,
+			const float t_top,
+			const float t_near_plane,
+			const float t_far_plane);
+
+		// perspective projection
+		static matrix4_t perspective(
+			const float t_fov,
+			const float t_aspect,
+			const float t_near_plane,
+			const float t_far_plane);
+
+		// translation matrix
+		static matrix4_t translate(const vector3_t<T>& t_vector);
+		static matrix4_t translate(const vector4_t<T>& t_vector);
+
 		/* Operators overloading */
 
 		matrix4_t& operator= (const matrix4_t & t_matrix)
@@ -248,11 +270,104 @@ namespace awesome
 			T f = static_cast<T>(1.0) / t_scalar;
 			return (*this) * f;
 		}
+
+		matrix4_t operator* (const matrix4_t& t_matrix) const
+		{
+			matrix4_t result;
+			for (unsigned int j = 0; j < rows; ++j)
+			{
+				for (unsigned int y = 0; y < columns; ++y)
+				{
+					T value{};
+					for (unsigned int i = 0; i < rows; ++i)
+					{
+						value += (*this)(i, j) * t_matrix(y, i);
+					}
+					result(y, j) = value;
+				}
+			}
+			return result;
+		}
+
+		vector4_t<T> operator* (const vector4_t<T>& t_vector) const
+		{
+			vector4_t<T> result;
+			for (unsigned int j = 0; j < rows; ++j)
+			{
+				T value{};
+				for (unsigned int i = 0; i < columns; ++i)
+				{
+					value += (*this)(i, j) * t_vector[i];
+				}
+				result[j] = value;
+			}
+			return result;
+		}
 	};
 
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::orthographic(const float t_left, const float t_right, const float t_bottom, const float t_top, const float t_near_plane, const float t_far_plane)
+	{
+		matrix4_t<T> m = matrix4_t<T>::identity;
+
+		const T two = static_cast<T>(2.0);
+
+		m.m00 = two / (t_right - t_left);
+		m.m11 = two / (t_top - t_bottom);
+		m.m22 = -two / (t_far_plane - t_near_plane);
+
+		m.m30 = -(t_right + t_left) / (t_right - t_left);
+		m.m31 = -(t_top + t_bottom) / (t_top - t_bottom);
+		m.m32 = -(t_far_plane + t_near_plane) / (t_far_plane - t_near_plane);
+
+		return m;
+	}
+	
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::perspective(const float t_fov, const float t_aspect, const float t_near_plane, const float t_far_plane)
+	{
+		matrix4_t<T> m = matrix4_t<T>::identity;
+
+		const T two = static_cast<T>(2.0);
+
+		float top = t_near_plane * std::tan(t_fov / two);
+		float bottom = -top;
+		float right = top * t_aspect;
+		float left = -top * t_aspect;
+
+		m.m00 = (two * t_near_plane) / (right - left);
+		m.m11 = (two * t_near_plane) / (top - bottom);
+		m.m22 = -(t_far_plane + t_near_plane) / (t_far_plane - t_near_plane);
+		 
+		m.m23 = -static_cast<T>(1.0);
+		m.m32 = -(2.0f * t_near_plane * t_far_plane) / (t_far_plane - t_near_plane);
+
+		return m;
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::translate(const vector3_t<T>& t_vector)
+	{
+		return matrix4_t();
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::translate(const vector4_t<T>& t_vector)
+	{
+		return matrix4_t();
+	}
+
+	template<typename T> const matrix4_t<T> matrix4_t<T>::zero = matrix4_t<T>(0.0);
+	template<typename T> const matrix4_t<T> matrix4_t<T>::identity = matrix4_t<T>(
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0
+		);
 
 	// matrix types
 
 	typedef matrix4_t<float> matrix4;
 	typedef matrix4 mat4;
+
 }

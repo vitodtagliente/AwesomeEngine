@@ -7,7 +7,7 @@
 namespace awesome
 {
 	template <typename T>
-	class matrix2_t
+	struct matrix2_t
 	{
 		static const matrix2_t zero;
 		static const matrix2_t identity;
@@ -206,6 +206,12 @@ namespace awesome
 			return (*this) * f;
 		}
 	};
+
+	template<typename T> const matrix2_t<T> matrix2_t<T>::zero = matrix2_t<T>(0.0);
+	template<typename T> const matrix2_t<T> matrix2_t<T>::identity = matrix2_t<T>(
+		1.0, 0.0,
+		0.0, 1.0
+		);
 
 	// matrix types
 

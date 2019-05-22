@@ -9,7 +9,7 @@ bool SandboxGame::startup_implementation()
 	m_color = { .2f, .2f, .2f };
 
 	// projection matrix
-	m_projection = orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	m_projection = mat4::orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	// view matrix
 	m_view = mat4::identity;
 
@@ -121,7 +121,7 @@ void SandboxGame::update_implementation()
 		m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
 		
 		// model view projection
-		mat4 mvp = m_projection * m_view * transform(m_position, m_rotation.v, m_scale);
+		mat4 mvp = m_projection; //m_projection * m_view * transform(m_position, m_rotation.v, m_scale);
 		m_program->set("u_MVP", &mvp.data[0]);
 
 		m_texture->bind();
@@ -133,8 +133,8 @@ void SandboxGame::update_implementation()
 		// try to draw a second sprite
 
 		// model view projection
-		mvp = m_projection * m_view * transform({1.6f, 0.0f, 0.0f}, m_rotation.v, m_scale);
-		m_program->set("u_MVP", &mvp.data[0]);
-		renderer->drawIndexed(6);
+		//mvp = m_projection * m_view * transform({1.6f, 0.0f, 0.0f}, m_rotation.v, m_scale);
+		//m_program->set("u_MVP", &mvp.data[0]);
+		//renderer->drawIndexed(6);
 	}
 }
