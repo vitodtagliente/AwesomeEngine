@@ -121,7 +121,7 @@ void SandboxGame::update_implementation()
 		m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
 		
 		// model view projection
-		mat4 mvp = m_projection; //m_projection * m_view * transform(m_position, m_rotation.v, m_scale);
+		mat4 mvp = m_projection * m_view; //m_projection * m_view * transform(m_position, m_rotation.v, m_scale);
 		m_program->set("u_MVP", &mvp.data[0]);
 
 		m_texture->bind();

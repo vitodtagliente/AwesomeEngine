@@ -72,12 +72,12 @@ namespace awesome
 		T& operator() (const unsigned int i, const unsigned int t_j)
 		{
 			// row major implementation
-			return data.at(i + t_j * columns);
+			return data[i + t_j * columns];
 		}
 
 		T operator() (const unsigned int i, const unsigned int t_j) const
 		{
-			return data.at(i + t_j * columns);
+			return data[i + t_j * columns];
 		}
 
 		// transpose matrix
