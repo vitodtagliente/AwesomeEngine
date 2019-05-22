@@ -1,71 +1,11 @@
 #pragma once
 
 #include "matrix.h"
-#include "point.h"
 #include "quaternion.h"
 #include "vector.h"
 
 namespace awesome
 {
-	// identity matrix
-	template <std::size_t N, typename T>
-	base_matrix<N, N, T> identity() 
-	{
-		base_matrix<N, N, T> m;
-		for (unsigned int i = 0; i < N; ++i)
-			m(i, i) = static_cast<T>(1.0);
-		return m;
-	}
-
-	// point to vector
-	template <std::size_t N, typename T>
-	base_vector<N + 1, T> vector(const base_point<N, T>& t_p) 
-	{
-		base_vector<N + 1, T> v;
-		for (unsigned int i = 0; i < N; ++i)
-			v[i] = t_p[i];
-		v[N] = static_cast<T>(1.0);
-		return v;
-	}
-
-	// vector to point
-	template <std::size_t N, typename T>
-	base_point<N - 1, T> point(const base_vector<N, T>& t_v) 
-	{
-		static_assert(N > 1, "invalid N");
-		base_point<N - 1, T> p;
-		for (unsigned int i = 0; i < N - 1; ++i)
-			n[i] = t_v[i];
-		return p;
-	}
-
-	// point - point operation
-	template <std::size_t N, typename T>
-	base_vector<N, T> operator- (const base_point<N, T>& t_p1, const base_point<N, T>& t_p2) 
-	{
-		base_vector<N, T> v;
-		for (unsigned int i = 0; i < N; ++i)
-			v[i] = t_p1[i] - t_p2[i];
-		return v;
-	}
-
-	// point + vector operation
-	template <std::size_t N, typename T>
-	base_point<N, T> operator+ (const base_point<N, T>& t_p, const base_vector<N, T>& t_v) 
-	{
-		base_point<N, T> new_point;
-		for (unsigned int i = 0; i < N; ++i)
-			new_point[i] = t_p[i] + t_v[i];
-		return new_point;
-	}
-
-	// point + vector operation
-	template <std::size_t N, typename T>
-	base_point<N, T> operator+ (const base_vector<N, T>& t_v, const base_point<N, T>& t_p) 
-	{
-		return t_p + t_v;
-	}
-
 	// translation operation
 	template <std::size_t N, typename T>
 	base_matrix<N + 1, N + 1, T> translate(const base_vector<N, T>& t_v) 
