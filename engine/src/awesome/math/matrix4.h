@@ -53,7 +53,7 @@ namespace awesome
 			const T t_m10, const T t_m11, const T t_m12, const T t_m13,
 			const T t_m20, const T t_m21, const T t_m22, const T t_m23,
 			const T t_m30, const T t_m31, const T t_m32, const T t_m33
-		) :
+		) : 
 			m00(t_m00), m01(t_m01), m02(t_m02), m03(t_m03),
 			m10(t_m10), m11(t_m11), m12(t_m12), m13(t_m13),
 			m20(t_m20), m21(t_m21), m22(t_m22), m23(t_m23),
@@ -63,6 +63,7 @@ namespace awesome
 		}
 
 		matrix4_t(const matrix4_t& t_matrix)
+			: data()
 		{
 			std::memcpy(data, t_matrix.data, length * sizeof(T));
 		}
