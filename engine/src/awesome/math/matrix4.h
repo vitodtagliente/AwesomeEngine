@@ -37,13 +37,15 @@ namespace awesome
 		};
 
 		matrix4_t()
+			: data()
 		{
-			std::memset(data, static_cast<int>(0), length);
+			std::memset(data, static_cast<int>(0), length * sizeof(T));
 		}
 
 		matrix4_t(const T t_value)
+			: data()
 		{
-			std::memset(data, t_value, length);
+			std::memset(data, t_value, length * sizeof(T));
 		}
 
 		matrix4_t(
@@ -62,7 +64,7 @@ namespace awesome
 
 		matrix4_t(const matrix4_t& t_matrix)
 		{
-			std::memcpy(data, t_matrix.data, length);
+			std::memcpy(data, t_matrix.data, length * sizeof(T));
 		}
 
 		std::size_t size() const
@@ -184,7 +186,7 @@ namespace awesome
 			if (this == &t_matrix)
 				return *this;
 
-			std::memcpy(data, t_matrix.data, length);
+			std::memcpy(data, t_matrix.data, length * sizeof(T));
 			return *this;
 		}
 
