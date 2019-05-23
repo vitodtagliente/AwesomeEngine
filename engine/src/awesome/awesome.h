@@ -28,6 +28,8 @@
 #include "math/math.h"
 #include "math/matrix.h"
 #include "math/vector.h"
+#include "math/quaternion.h"
+#include "math/transform.h"
 
 #include "scene/component.h"
 #include "scene/object.h"

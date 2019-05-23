@@ -374,7 +374,7 @@ namespace awesome
 	template<typename T>
 	inline matrix4_t<T> matrix4_t<T>::rotate_x(const float t_theta)
 	{
-		const float rad = math::radians(t_theta);
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -391,7 +391,7 @@ namespace awesome
 	template<typename T>
 	inline matrix4_t<T> matrix4_t<T>::rotate_y(const float t_theta)
 	{
-		const float rad = math::radians(t_theta);
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -408,7 +408,7 @@ namespace awesome
 	template<typename T>
 	inline matrix4_t<T> matrix4_t<T>::rotate_z(const float t_theta)
 	{
-		const float rad = math::radians(t_theta);
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 
@@ -425,7 +425,7 @@ namespace awesome
 	template<typename T>
 	inline matrix4_t<T> matrix4_t<T>::rotate(const vector3_t<T>& t_vector, const float t_theta)
 	{
-		const float rad = math::radians(t_theta);
+		const float rad = radians(t_theta);
 		const float c = std::cos(rad);
 		const float s = std::sin(rad);
 		const float c1 = 1 - c;

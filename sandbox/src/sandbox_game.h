@@ -29,8 +29,8 @@ private:
 	mat4 m_view;
 	
 	// sprite transform
-	vec3 m_position;
-	//quaternion m_rotation;
-	vec3 m_scale{1.0f, 1.0f, 1.0f};
+	awesome::transform m_transform1;
+	// sprite 2 transform
+	awesome::transform m_transform2;
 
 };
