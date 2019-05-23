@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstring>
+#include "math.h"
 #include "matrix3.h"
 #include "vector4.h"
 #include "vector3.h"
@@ -178,7 +179,15 @@ namespace awesome
 
 		// translation matrix
 		static matrix4_t translate(const vector3_t<T>& t_vector);
-		static matrix4_t translate(const vector4_t<T>& t_vector);
+
+		// rotation
+		static matrix4_t rotate_x(const float t_theta);
+		static matrix4_t rotate_y(const float t_theta);
+		static matrix4_t rotate_z(const float t_theta);
+		static matrix4_t rotate(const vector3_t<T> & t_vector, const float t_theta);
+
+		// scale
+		static matrix4_t scale(const vector3_t<T>& t_vector);
 
 		/* Operators overloading */
 
@@ -352,13 +361,94 @@ namespace awesome
 	template<typename T>
 	inline matrix4_t<T> matrix4_t<T>::translate(const vector3_t<T>& t_vector)
 	{
-		return matrix4_t();
+		matrix4_t<T> matrix = matrix4_t<T>::identity;
+
+		matrix.m30 = t_vector.x;
+		matrix.m31 = t_vector.y;
+		matrix.m32 = t_vector.z;
+		matrix.m33 = static_cast<T>(1.0);
+
+		return matrix;
 	}
 
 	template<typename T>
-	inline matrix4_t<T> matrix4_t<T>::translate(const vector4_t<T>& t_vector)
+	inline matrix4_t<T> matrix4_t<T>::rotate_x(const float t_theta)
 	{
-		return matrix4_t();
+		const float rad = math::radians(t_theta);
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+
+		matrix4_t<T> matrix = matrix4_t<T>::identity;
+		
+		matrix.m11 = c;
+		matrix.m21 = s;
+		matrix.m12 = -s;
+		matrix.m22 = c;
+
+		return matrix;
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::rotate_y(const float t_theta)
+	{
+		const float rad = math::radians(t_theta);
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+
+		matrix4_t<T> matrix = matrix4_t<T>::identity;
+
+		matrix.m00 = c;
+		matrix.m20 = -s;
+		matrix.m02 = s;
+		matrix.m22 = c;
+
+		return matrix;
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::rotate_z(const float t_theta)
+	{
+		const float rad = math::radians(t_theta);
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+
+		matrix4_t<T> matrix = matrix4_t<T>::identity;
+
+		matrix.m00 = c;
+		matrix.m10 = s;
+		matrix.m01 = -s;
+		matrix.m11 = c;
+
+		return matrix;
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::rotate(const vector3_t<T>& t_vector, const float t_theta)
+	{
+		const float rad = math::radians(t_theta);
+		const float c = std::cos(rad);
+		const float s = std::sin(rad);
+		const float c1 = 1 - c;
+
+		matrix4_t<T> matrix({
+			std::pow(t_vector.x,2) * c1 + c,				t_vector.x * t_vector.y * c1 - t_vector.z * s,	t_vector.x * t_vector.normalize * c1 + t_vector.y * s,	0,
+			t_vector.x * t_vector.y * c1 + t_vector.z * s,	std::pow(t_vector.y,2) * c1 + c,				t_vector.y * t_vector.z * c1 - t_vector.x * s,			0,
+			t_vector.x * t_vector.y * c1 - t_vector.y * s,	t_vector.y * t_vector.z * c1 - t_vector.x * s,	std::pow(t_vector.z,2) * c1 + c,						0,
+			0,												0,												0,														1
+			});
+		return matrix;
+	}
+
+	template<typename T>
+	inline matrix4_t<T> matrix4_t<T>::scale(const vector3_t<T>& t_vector)
+	{
+		matrix4_t<T> matrix = matrix4_t<T>::identity;
+
+		matrix.m00 = t_vector.x;
+		matrix.m11 = t_vector.y;
+		matrix.m22 = t_vector.z;
+
+		return matrix;
 	}
 
 	template<typename T> const matrix4_t<T> matrix4_t<T>::zero = matrix4_t<T>(0.0);
