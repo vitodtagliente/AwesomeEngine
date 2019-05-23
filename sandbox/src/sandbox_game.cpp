@@ -134,8 +134,8 @@ void SandboxGame::update_implementation()
 		// try to draw a second sprite
 
 		// model view projection
-		//mvp = m_projection * m_view * transform({1.6f, 0.0f, 0.0f}, m_rotation.v, m_scale);
-		//m_program->set("u_MVP", &mvp.data[0]);
-		//renderer->drawIndexed(6);
+		mvp = m_projection * m_view * mat4::translate({-.3f, 0.0f, 0.0f});
+		m_program->set("u_MVP", &mvp.data[0]);
+		renderer->drawIndexed(6);
 	}
 }
