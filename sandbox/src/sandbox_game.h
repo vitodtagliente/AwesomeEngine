@@ -12,6 +12,10 @@ private:
 	virtual void shutdown_implementation() override;
 	virtual void update_implementation() override;
 
+	virtual void pre_rendering_implementation() override;
+	virtual void render_implementation() override;
+	virtual void post_rendering_implementation() override;
+
 	// background color
 	Color m_color;
 	// triangle color
@@ -22,6 +26,8 @@ private:
 	Texture* m_texture;
 	// square object
 	Renderable* m_sprite;
+	// renderer
+	Renderer* m_renderer;
 
 	// projection matrix
 	mat4 m_projection;

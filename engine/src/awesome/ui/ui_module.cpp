@@ -35,16 +35,22 @@ namespace awesome
 		ImGui::DestroyContext();
 	}
 
-	void UIModule::update_implementation()
+	void UIModule::pre_rendering_implementation()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+	}
 
-		ImGui::Begin("Hello, world!");  
+	void UIModule::render_implementation()
+	{
+		ImGui::Begin("Hello, world!");
 		ImGui::Text("This is some useful text.");
 		ImGui::End();
+	}
 
+	void UIModule::post_rendering_implementation()
+	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}

@@ -70,7 +70,8 @@ bool SandboxGame::startup_implementation()
 		delete vb;
 		delete ib;
 
-		Renderer::instance()->enableAlpha();
+		m_renderer = Renderer::instance();
+		m_renderer->enableAlpha();
 
 		// tests
 
@@ -102,35 +103,38 @@ void SandboxGame::update_implementation()
 	{
 		cout << "Key Released: A" << endl;
 	}
+}
 
-	m_triangleColor.red += static_cast<float>(deltaTime);
-	if (m_triangleColor.red > 1.0f)
-		m_triangleColor.red = 0.0f;
+void SandboxGame::pre_rendering_implementation()
+{
+	m_renderer->clear(m_color);
+}
 
-	// render
-	if (Renderer * const renderer = Renderer::instance())
-	{
-		renderer->clear(m_color);
+void SandboxGame::render_implementation()
+{
+	m_program->bind();
 
-		m_program->bind();
+	m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
 
-		m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
-		
-		// model view projection: scale * rotation * trnslation
-		mat4 mvp = m_projection * m_view * m_transform1.matrix(); 
-		m_program->set("u_MVP", &mvp.data[0]);
+	// model view projection: scale * rotation * trnslation
+	mat4 mvp = m_projection * m_view * m_transform1.matrix();
+	m_program->set("u_MVP", &mvp.data[0]);
 
-		m_texture->bind();
-		m_program->set("u_Texture", 0);
+	m_texture->bind();
+	m_program->set("u_Texture", 0);
 
-		m_sprite->bind();
-		renderer->drawIndexed(6);
+	m_sprite->bind();
+	m_renderer->drawIndexed(6);
 
-		// try to draw a second sprite
+	// try to draw a second sprite
 
-		// model view projection
-		mvp = m_projection * m_view * m_transform2.matrix();
-		m_program->set("u_MVP", &mvp.data[0]);
-		renderer->drawIndexed(6);
-	}
+	// model view projection
+	mvp = m_projection * m_view * m_transform2.matrix();
+	m_program->set("u_MVP", &mvp.data[0]);
+	m_renderer->drawIndexed(6);
+}
+
+void SandboxGame::post_rendering_implementation()
+{
+
 }

@@ -31,4 +31,28 @@ namespace awesome
 			update_implementation();
 		}
 	}
+
+	void Module::pre_rendering()
+	{
+		if (m_state == State::Started)
+		{
+			pre_rendering_implementation();
+		}
+	}
+
+	void Module::render()
+	{
+		if (m_state == State::Started)
+		{
+			render_implementation();
+		}
+	}
+
+	void Module::post_rendering()
+	{
+		if (m_state == State::Started)
+		{
+			post_rendering_implementation();
+		}
+	}
 }

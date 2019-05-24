@@ -39,6 +39,7 @@ namespace awesome
 			while (isRunning())
 			{
 				update();
+				render();
 			}
 		}
 		shutdown();
@@ -88,6 +89,25 @@ namespace awesome
 		{
 			Module* const module = it->second;
 			module->update();
+		}
+	}
+
+	void Engine::render()
+	{
+		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
+		{
+			Module* const module = it->second;
+			module->pre_rendering();
+		}
+		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
+		{
+			Module* const module = it->second;
+			module->render();
+		}
+		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
+		{
+			Module* const module = it->second;
+			module->post_rendering();
 		}
 	}
 

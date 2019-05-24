@@ -35,6 +35,7 @@ namespace awesome
 		void shutdown();
 		// engine loop
 		void update();
+		void render();
 		bool isRunning() const;
 
 		// register the engine modules
