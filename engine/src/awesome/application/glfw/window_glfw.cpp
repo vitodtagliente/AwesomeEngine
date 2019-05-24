@@ -46,7 +46,6 @@ namespace awesome
 
 	void WindowGLFW::update_implementation()
 	{
-		glfwSwapBuffers(m_windowHandler);
 		glfwPollEvents();
 
 		// check for closing window
@@ -55,6 +54,7 @@ namespace awesome
 			// #todo
 			m_isOpen = false;
 		}
+		glfwSwapBuffers(m_windowHandler);
 	}
 
 	void WindowGLFW::setTitle(const std::string& t_title)

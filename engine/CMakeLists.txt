@@ -12,6 +12,7 @@ include_directories(
     vendor/glad/include/
 	vendor/glfw/include/
 	vendor/stb/
+	vendor/imgui/
 )
 
 # GLFW options
@@ -20,7 +21,15 @@ option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 
 # include vendors files
-file(GLOB VENDORS_SOURCES vendor/glad/src/glad.c) 
+file(GLOB VENDORS_SOURCES 
+	vendor/glad/src/glad.c
+	vendor/imgui/examples/imgui_impl_glfw.cpp
+	vendor/imgui/examples/imgui_impl_opengl3.cpp
+	vendor/imgui/imgui.cpp
+	vendor/imgui/imgui_demo.cpp
+	vendor/imgui/imgui_draw.cpp
+	vendor/imgui/imgui_widgets.cpp
+) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 # recursively include all source files

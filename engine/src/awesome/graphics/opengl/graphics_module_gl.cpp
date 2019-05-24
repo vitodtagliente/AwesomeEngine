@@ -46,6 +46,8 @@ namespace awesome
 		if (gladLoadGL())
 		{
 			m_renderer = new RendererGL();
+			// #todo: to be removed
+			glViewport(0, 0, 640, 480);
 			return true;
 		}
 		return false;
