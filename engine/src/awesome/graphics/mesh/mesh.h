@@ -1,0 +1,49 @@
+#pragma once
+
+#include <vector>
+#include "../../math/vector.h"
+
+namespace awesome
+{
+	class Mesh
+	{
+	public:
+
+		enum class Topology
+		{
+			Points,
+			Lines,
+			LineStrip,
+			Triangles,
+			TriangleStrip
+		};
+
+		enum class Primitive
+		{
+			Triangle,
+			Quad,
+			Cube
+		};
+
+		Mesh();
+		virtual ~Mesh();
+
+		inline Topology getTopology() const { return m_topology; }
+		inline const std::vector<vector3>& getPositions() const { return m_positions; }
+		inline const std::vector<vector2>& getUV() const { return m_uv; }
+		inline const std::vector<vector3>& getNormals() const { return m_normals; }
+
+		static Mesh * const create(const Primitive t_primitive);
+
+	protected:
+
+		Topology m_topology;
+
+		// vertex data
+		std::vector<vector3> m_positions;
+		std::vector<vector2> m_uv;
+		std::vector<vector3> m_normals;
+		// index data
+		std::vector<unsigned int> m_indices;
+	};
+}
