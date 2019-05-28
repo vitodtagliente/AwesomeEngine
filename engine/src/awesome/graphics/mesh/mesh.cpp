@@ -47,9 +47,4 @@ namespace awesome
 	Mesh::~Mesh()
 	{
 	}
-
-	Mesh * const Mesh::create(const Primitive t_primitive)
-	{
-		return nullptr;
-	}
 }

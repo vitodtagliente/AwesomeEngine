@@ -9,6 +9,7 @@
 #include "shader.h"
 #include "shader_program.h"
 #include "texture.h"
+#include "mesh/mesh.h"
 
 namespace awesome
 {
@@ -37,6 +38,7 @@ namespace awesome
 		virtual GraphicsBuffer* createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data, 
 			const std::size_t t_size) = 0;
 		virtual Renderable* createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index) = 0;
+		Renderable* createRenderable(const Mesh& t_mesh);
 
 	protected:
 

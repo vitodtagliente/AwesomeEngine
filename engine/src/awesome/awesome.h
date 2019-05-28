@@ -24,6 +24,8 @@
 #include "graphics/texture.h"
 #include "graphics/shader.h"
 #include "graphics/shader_program.h"
+#include "graphics/mesh/mesh.h"
+#include "graphics/mesh/quad.h"
 
 #include "math/math.h"
 #include "math/matrix.h"

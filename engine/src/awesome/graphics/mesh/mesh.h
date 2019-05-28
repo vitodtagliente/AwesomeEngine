@@ -36,8 +36,6 @@ namespace awesome
 			const std::vector<unsigned int>& t_indices);
 		virtual ~Mesh();
 		
-		static Mesh * const create(const Primitive t_primitive);
-		
 		// mesh topology
 		Topology topology;
 

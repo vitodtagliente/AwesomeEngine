@@ -38,7 +38,8 @@ bool SandboxGame::startup_implementation()
 
 		Image img("assets/batman_logo.png");
 		m_texture = graphics->createTexture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
-
+		
+		/*
 		// position_x position_y uv_x uv_y
 		float positions[] = {
 			-0.5f, -0.5f, 0.0f, 0.0f,
@@ -69,6 +70,9 @@ bool SandboxGame::startup_implementation()
 
 		delete vb;
 		delete ib;
+		*/
+
+		m_sprite = graphics->createRenderable(Quad{});
 
 		m_renderer = Renderer::instance();
 		m_renderer->enableAlpha();
