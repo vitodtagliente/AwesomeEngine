@@ -48,9 +48,7 @@ namespace awesome
 
 		Renderable* const renderable = createRenderable(vb, ib);
 
-		renderable->unbind();
-		vb->unbind();
-		ib->unbind();
+		
 
 		delete vb;
 		delete ib;

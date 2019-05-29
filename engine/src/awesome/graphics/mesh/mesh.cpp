@@ -44,7 +44,25 @@ namespace awesome
 	{
 	}
 
+	Mesh::Mesh(const Mesh& t_mesh)
+	{
+		positions = t_mesh.positions;
+		uv = t_mesh.uv;
+		normals = t_mesh.normals;
+		indices = t_mesh.indices;
+	}
+
 	Mesh::~Mesh()
 	{
 	}
+
+	Mesh& Mesh::operator=(const Mesh& t_mesh)
+	{
+		positions = t_mesh.positions;
+		uv = t_mesh.uv;
+		normals = t_mesh.normals;
+		indices = t_mesh.indices;
+		return *this;
+	}
+
 }

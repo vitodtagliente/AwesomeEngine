@@ -34,8 +34,11 @@ namespace awesome
 			const std::vector<vector3>& t_positions,
 			const std::vector<vector2>& t_uv, 
 			const std::vector<unsigned int>& t_indices);
+		Mesh(const Mesh& t_mesh);
 		virtual ~Mesh();
-		
+
+		Mesh& operator= (const Mesh& t_mesh);
+
 		// mesh topology
 		Topology topology;
 

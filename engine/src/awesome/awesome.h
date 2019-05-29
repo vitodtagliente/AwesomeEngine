@@ -26,6 +26,7 @@
 #include "graphics/shader_program.h"
 #include "graphics/mesh/mesh.h"
 #include "graphics/mesh/quad.h"
+#include "graphics/render_command.h"
 
 #include "math/math.h"
 #include "math/matrix.h"

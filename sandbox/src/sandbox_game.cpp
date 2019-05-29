@@ -38,39 +38,6 @@ bool SandboxGame::startup_implementation()
 
 		Image img("assets/batman_logo.png");
 		m_texture = graphics->createTexture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
-		
-		/*
-		// position_x position_y uv_x uv_y
-		float positions[] = {
-			-0.5f, -0.5f, 0.0f, 0.0f,
-			0.5f, -0.5f, 1.0f, 0.0f,
-			0.5f,  0.5f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		// create the vertex buffer
-		GraphicsBuffer* vb = graphics->createBuffer(GraphicsBuffer::Type::Vertex, positions, 4 * 4 * sizeof(float));
-		vb->layout.push({ 2, GraphicsBufferElement::Type::Float, sizeof(float) });
-		vb->layout.push({ 2, GraphicsBufferElement::Type::Float, sizeof(float) });
-
-		// create the index buffer
-		GraphicsBuffer* ib = graphics->createBuffer(GraphicsBuffer::Type::Index, indices, 6 * sizeof(unsigned int));
-
-		// create the renderable object
-		m_sprite = graphics->createRenderable(vb, ib);
-
-		m_sprite->unbind();
-		vb->unbind();
-		ib->unbind();
-
-		delete vb;
-		delete ib;
-		*/
 
 		m_sprite = graphics->createRenderable(Quad{});
 
