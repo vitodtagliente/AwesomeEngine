@@ -47,12 +47,7 @@ namespace awesome
 		);
 
 		Renderable* const renderable = createRenderable(vb, ib);
-
 		
-
-		delete vb;
-		delete ib;
-
 		return renderable;
 	}
 
