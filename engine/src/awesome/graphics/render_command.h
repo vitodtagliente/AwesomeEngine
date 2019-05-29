@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../math/matrix4.h"
+
 namespace awesome
 {
 	// All render state required for submitting a render command.
@@ -11,5 +13,6 @@ namespace awesome
 	{
 		Material* material;
 		Mesh* mesh;
+		matrix4 transform;
 	};
 }
