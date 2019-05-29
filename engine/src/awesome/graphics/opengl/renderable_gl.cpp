@@ -13,15 +13,12 @@ namespace awesome
 		bind();
 
 		t_vertex->bind();
-		t_index->bind();
 
 		const auto& elements = t_vertex->layout.getElements();
 		unsigned int offset = 0;
 		for (unsigned int i = 0; i < elements.size(); ++i)
 		{
 			const auto& element = elements[i];
-			glEnableVertexAttribArray(i);
-
 			unsigned int element_type{};
 			switch (element.type)
 			{
@@ -45,8 +42,17 @@ namespace awesome
 				t_vertex->layout.getStride(),
 				(const void*)offset
 			);
+
+			glEnableVertexAttribArray(i);
+
 			offset += element.size;
 		}
+		
+		t_index->bind();
+
+		t_vertex->unbind();
+		t_index->unbind();
+		unbind();
 	}
 
 	RenderableGL::~RenderableGL()
