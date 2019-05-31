@@ -32,18 +32,23 @@ namespace awesome
 		// bind buffers
 		bind();
 		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-		glBufferData(GL_ARRAY_BUFFER, vertex_data.capacity(), vertex_data.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER
+			, sizeof(float) * vertex_data.size()
+			, &vertex_data.front()
+			, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, t_mesh.indices.size() * sizeof(unsigned int),
-			t_mesh.indices.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER
+			, t_mesh.indices.size() * sizeof(unsigned int)
+			, &t_mesh.indices.front()
+			, GL_STATIC_DRAW);
 
 		// vertex positions
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vector3), (void*)0);
 		// vertex texture coords
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vector2), (void*)sizeof(vector3));
 
 		unbind();
 	}
