@@ -2,13 +2,14 @@
 
 namespace awesome
 {
-	class GraphicsBuffer;
+	struct Mesh;
 
 	class Renderable
 	{
 	public:
 
-		Renderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index);
+		Renderable();
+		Renderable(const Mesh& t_mesh);
 		virtual ~Renderable();
 
 		virtual void bind() = 0;

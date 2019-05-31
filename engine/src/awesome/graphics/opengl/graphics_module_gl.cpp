@@ -36,11 +36,11 @@ namespace awesome
 		return new GraphicsBufferGL(t_type, t_data, t_size);
 	}
 
-	Renderable* GraphicsModuleGL::createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index)
+	Renderable* GraphicsModuleGL::createRenderable(const Mesh& t_mesh)
 	{
-		return new RenderableGL(t_vertex, t_index);
+		return new RenderableGL(t_mesh);
 	}
-	
+		
 	bool GraphicsModuleGL::startup_implementation()
 	{
 		if (gladLoadGL())

@@ -10,10 +10,10 @@ namespace awesome
 		positions.push_back({ 1.0f,	1.0f, 0.0f });
 		positions.push_back({ -1.0f, 1.0f, 0.0f });
 
-		uv.push_back({ 0.0f, 0.0f });
-		uv.push_back({ 1.0f, 0.0f });
-		uv.push_back({ 1.0f, 1.0f });
-		uv.push_back({ 0.0f, 1.0f });
+		uvs.push_back({ 0.0f, 0.0f });
+		uvs.push_back({ 1.0f, 0.0f });
+		uvs.push_back({ 1.0f, 1.0f });
+		uvs.push_back({ 0.0f, 1.0f });
 
 		indices = { 0, 1, 2, 2, 3, 0 };
 	}

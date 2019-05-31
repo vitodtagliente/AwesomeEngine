@@ -1,68 +1,63 @@
 #include "renderable_gl.h"
 
+#include <vector>
 #include "opengl.h"
 #include "graphics_buffer_gl.h"
+#include "../mesh/mesh.h"
 
 namespace awesome
 {
-	RenderableGL::RenderableGL(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index)
-		: Renderable(t_vertex, t_index)
-		, m_id()
+	RenderableGL::RenderableGL()
+		: Renderable()
+		, m_vao()
+		, m_vbo()
+		, m_ebo()
 	{
-		glGenVertexArrays(1, &m_id);
+	}
+
+	RenderableGL::RenderableGL(const Mesh& t_mesh)
+		: Renderable(t_mesh)
+		, m_vao()
+		, m_vbo()
+		, m_ebo()
+	{
+		// get mesh vertex data
+		std::vector<float> vertex_data;
+		t_mesh.getData(vertex_data);
+		// generate the vertex array object
+		glGenVertexArrays(1, &m_vao);
+		glGenBuffers(1, &m_vbo);
+		glGenBuffers(1, &m_ebo);
+
+		// bind buffers
 		bind();
+		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+		glBufferData(GL_ARRAY_BUFFER, vertex_data.capacity(), vertex_data.data(), GL_STATIC_DRAW);
 
-		t_vertex->bind();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, t_mesh.indices.size() * sizeof(unsigned int),
+			t_mesh.indices.data(), GL_STATIC_DRAW);
 
-		const auto& elements = t_vertex->layout.getElements();
-		unsigned int offset = 0;
-		for (unsigned int i = 0; i < elements.size(); ++i)
-		{
-			const auto& element = elements[i];
-			unsigned int element_type{};
-			switch (element.type)
-			{
-			case GraphicsBufferElement::Type::Char:
-				element_type = GL_BYTE;
-				break;
-			case GraphicsBufferElement::Type::Integer:
-				element_type = GL_INT;
-				break;
-			case GraphicsBufferElement::Type::UnsignedInteger:
-				element_type = GL_UNSIGNED_INT;
-				break;
-			default:
-			case GraphicsBufferElement::Type::Float:
-				element_type = GL_FLOAT;
-				break;
-			}
+		// vertex positions
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vector3), (void*)0);
+		// vertex texture coords
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vector2), (void*)sizeof(vector3));
 
-			glVertexAttribPointer(i, element.count, element_type,
-				element.normalized ? GL_TRUE : GL_FALSE,
-				t_vertex->layout.getStride(),
-				(const void*)offset
-			);
-
-			glEnableVertexAttribArray(i);
-
-			offset += element.size;
-		}
-		
-		t_index->bind();
-
-		t_vertex->unbind();
-		t_index->unbind();
 		unbind();
 	}
 
 	RenderableGL::~RenderableGL()
 	{
-		glDeleteVertexArrays(1, &m_id);
+		glDeleteVertexArrays(1, &m_vao);
+		glDeleteBuffers(1, &m_vbo);
+		glDeleteBuffers(1, &m_ebo);
 	}
 
 	void RenderableGL::bind()
 	{
-		glBindVertexArray(m_id);
+		glBindVertexArray(m_vao);
 	}
 
 	void RenderableGL::unbind()

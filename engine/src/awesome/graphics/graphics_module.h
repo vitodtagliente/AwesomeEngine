@@ -37,8 +37,7 @@ namespace awesome
 			const unsigned int t_components, const Texture::Options& t_options = Texture::Options{}) const = 0;
 		virtual GraphicsBuffer* createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data, 
 			const std::size_t t_size) = 0;
-		virtual Renderable* createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index) = 0;
-		Renderable* createRenderable(const Mesh& t_mesh);
+		virtual Renderable* createRenderable(const Mesh& t_mesh) = 0;
 
 	protected:
 

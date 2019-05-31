@@ -8,17 +8,20 @@ namespace awesome
 	{
 	public:
 
-		RenderableGL(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index);
+		RenderableGL();
+		RenderableGL(const Mesh& t_mesh);
 		virtual ~RenderableGL() override;
-
-		inline unsigned int id() const { return m_id; }
 
 		virtual void bind() override;
 		virtual void unbind() override;
 
 	private:
 
-		// id
-		unsigned int m_id;
+		// vertex array object
+		unsigned int m_vao;
+		// vertex buffer object
+		unsigned int m_vbo;
+		// elements buffer object
+		unsigned int m_ebo;
 	};
 }

@@ -4,7 +4,11 @@
 
 namespace awesome
 {
-	Renderable::Renderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index)
+	Renderable::Renderable()
+	{
+	}
+
+	Renderable::Renderable(const Mesh& t_mesh)
 	{
 	}
 

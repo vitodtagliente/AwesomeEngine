@@ -16,7 +16,7 @@ namespace awesome
 			const unsigned int t_components, const Texture::Options& t_options = Texture::Options{}) const override;
 		virtual GraphicsBuffer* createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data,
 			const std::size_t t_size) override;
-		virtual Renderable* createRenderable(GraphicsBuffer* const t_vertex, GraphicsBuffer* const t_index) override;
+		virtual Renderable* createRenderable(const Mesh& t_mesh) override;
 
 	protected:
 
