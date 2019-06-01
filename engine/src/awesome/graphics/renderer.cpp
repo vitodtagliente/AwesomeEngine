@@ -13,12 +13,7 @@ namespace awesome
 	Renderer::~Renderer()
 	{
 	}
-
-	void Renderer::push(const Mesh& t_mesh)
-	{
-		push(m_graphicsModule->createRenderable(t_mesh), nullptr);
-	}
-
+	
 	void Renderer::push(Renderable* const t_renderable, Material* const t_material, const matrix4& t_transform)
 	{
 		m_commandBuffer.push_back(RenderCommand(t_renderable, t_material, t_transform));

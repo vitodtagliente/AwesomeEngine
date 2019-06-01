@@ -24,6 +24,8 @@ private:
 	ShaderProgram* m_program;
 	// texture
 	Texture* m_texture;
+	// square object
+	Renderable* m_quad;
 	// renderer
 	Renderer* m_renderer;
 

@@ -42,6 +42,9 @@ bool SandboxGame::startup_implementation()
 		m_renderer = Renderer::instance();
 		m_renderer->enableAlpha();
 
+		// generate the quad renderable
+		m_quad = graphics->createRenderable(Quad{});
+
 		// tests
 
 
@@ -90,7 +93,7 @@ void SandboxGame::render_implementation()
 	m_texture->bind();
 	m_program->set("u_Texture", 0);
 
-	m_renderer->push(Quad{});
+	m_renderer->push(m_quad, nullptr);
 
 	// try to draw a second sprite
 

@@ -25,7 +25,6 @@ namespace awesome
 		virtual void draw(const unsigned int t_vertices = 3) = 0;
 		virtual void drawIndexed(const unsigned int t_vertices) = 0;
 		
-		void push(const Mesh& t_mesh);
 		void push(Renderable* const t_renderable, Material* const t_material, const matrix4& t_transform = matrix4::identity);
 		// render all pushed commands
 		void render();
