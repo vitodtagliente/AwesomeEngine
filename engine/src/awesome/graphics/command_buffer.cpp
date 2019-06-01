@@ -2,5 +2,27 @@
 
 namespace awesome
 {
+	CommandBuffer::CommandBuffer()
+		: m_commands()
+	{
+	}
 
+	CommandBuffer::~CommandBuffer()
+	{
+	}
+
+	void CommandBuffer::sort()
+	{
+		// to be implemented
+	}
+
+	void CommandBuffer::push_back(RenderCommand * const t_command)
+	{
+		m_commands.push_back(t_command);
+	}
+	
+	void CommandBuffer::clear()
+	{
+		m_commands.clear();
+	}
 }

@@ -2,5 +2,11 @@
 
 namespace awesome
 {
-
+	Renderer::Renderer()
+	{
+	}
+	
+	Renderer::~Renderer()
+	{
+	}
 }
