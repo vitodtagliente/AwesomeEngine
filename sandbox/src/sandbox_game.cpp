@@ -39,15 +39,12 @@ bool SandboxGame::startup_implementation()
 		Image img("assets/batman_logo.png");
 		m_texture = graphics->createTexture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
 
-		m_sprite = graphics->createRenderable(Quad{});
-
 		m_renderer = Renderer::instance();
 		m_renderer->enableAlpha();
 
 		// tests
 
-		m_transform1.position.x = 0.3f;
-		m_transform1.update();
+
 
 		// tests
 
@@ -60,7 +57,6 @@ void SandboxGame::shutdown_implementation()
 {
 	delete m_program;
 	delete m_texture;
-	delete m_sprite;
 }
 
 void SandboxGame::update_implementation()
@@ -87,22 +83,23 @@ void SandboxGame::render_implementation()
 
 	m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
 
-	// model view projection: scale * rotation * trnslation
+	// model transform: scale * rotation * translation
 	mat4 mvp = m_projection * m_view * m_transform1.matrix();
 	m_program->set("u_MVP", &mvp.data[0]);
 
 	m_texture->bind();
 	m_program->set("u_Texture", 0);
 
-	m_sprite->bind();
-	m_renderer->drawIndexed(6);
+	m_renderer->push(Quad{});
 
 	// try to draw a second sprite
 
 	// model view projection
-	mvp = m_projection * m_view * m_transform2.matrix();
-	m_program->set("u_MVP", &mvp.data[0]);
-	m_renderer->drawIndexed(6);
+	//mvp = m_projection * m_view * m_transform2.matrix();
+	//m_program->set("u_MVP", &mvp.data[0]);
+	//m_renderer->drawIndexed(6);
+
+	m_renderer->render();
 }
 
 void SandboxGame::post_rendering_implementation()

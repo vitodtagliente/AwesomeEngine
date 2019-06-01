@@ -1,9 +1,15 @@
 #include "renderer_gl.h"
 
 #include "opengl.h"
+#include "graphics_module_gl.h"
 
 namespace awesome
 {
+	RendererGL::RendererGL(GraphicsModule* const t_graphicsModule)
+		: Renderer(t_graphicsModule)
+	{
+	}
+
 	void RendererGL::enableAlpha(const bool bEnabled)
 	{
 		if (bEnabled)

@@ -6,6 +6,7 @@ namespace awesome
 {
 	GraphicsModule::GraphicsModule(const API t_api)
 		: m_api(t_api)
+		, m_renderer()
 	{
 	}
 

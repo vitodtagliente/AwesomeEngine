@@ -16,7 +16,7 @@ namespace awesome
 		// to be implemented
 	}
 
-	void CommandBuffer::push_back(RenderCommand * const t_command)
+	void CommandBuffer::push_back(const RenderCommand& t_command)
 	{
 		m_commands.push_back(t_command);
 	}
