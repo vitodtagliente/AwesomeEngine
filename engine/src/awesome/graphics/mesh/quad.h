@@ -8,7 +8,7 @@ namespace awesome
 	{
 	public:
 
-		Quad(const Mesh::Topology t_topology = Mesh::Topology::Triangles);
+		Quad();
 
 	};
 }
