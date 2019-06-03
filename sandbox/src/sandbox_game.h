@@ -29,7 +29,7 @@ private:
 	// renderer
 	Renderer* m_renderer;
 	// sprite material
-	Material m_spriteMaterial;
+	Material* m_spriteMaterial;
 
 	// projection matrix
 	mat4 m_projection;

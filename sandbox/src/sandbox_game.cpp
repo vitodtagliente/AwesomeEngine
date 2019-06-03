@@ -46,7 +46,8 @@ bool SandboxGame::startup_implementation()
 		m_quad = graphics->createRenderable(Quad{});
 
 		// sprite material initialization
-		// #todo
+		m_spriteMaterial = new Material(m_program);
+		m_spriteMaterial->set("u_Texture", m_texture);
 
 		return true;
 	}
@@ -79,25 +80,9 @@ void SandboxGame::pre_rendering_implementation()
 
 void SandboxGame::render_implementation()
 {
-	m_program->bind();
+	m_renderer->push(m_quad, m_spriteMaterial, m_projection * m_view * m_transform1.matrix());
 
-	m_program->set("u_Color", m_triangleColor.red, m_triangleColor.green, m_triangleColor.green, 1.0f);
-
-	// model transform: scale * rotation * translation
-	mat4 mvp = m_projection * m_view * m_transform1.matrix();
-	m_program->set("u_MVP", &mvp.data[0]);
-
-	m_texture->bind();
-	m_program->set("u_Texture", 0);
-
-	m_renderer->push(m_quad, nullptr);
-
-	// try to draw a second sprite
-
-	// model view projection
-	//mvp = m_projection * m_view * m_transform2.matrix();
-	//m_program->set("u_MVP", &mvp.data[0]);
-	//m_renderer->drawIndexed(6);
+	// ... push other data
 
 	m_renderer->render();
 }

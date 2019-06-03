@@ -1,6 +1,10 @@
 #include "renderer.h"
+
 #include "graphics_module.h"
 #include "render_command.h"
+#include "shader_program.h"
+#include "material.h"
+#include "texture.h"
 
 namespace awesome
 {
@@ -23,8 +27,31 @@ namespace awesome
 	{
 		for (const RenderCommand& command : m_commandBuffer.getCommands())
 		{
+			// material stuff
+			if (Material * const material = command.material)
+			{
+				if (ShaderProgram * const program = material->getShaderProgram())
+				{
+					program->bind();
+					program->set("u_MVP", &command.transform.data[0]);
+
+					const std::vector<MaterialProperty>& textures = material->getProperties(MaterialProperty::Type::Texture2D);
+					for (int i = 0; i < textures.size(); ++i)
+					{
+						const MaterialProperty& property = textures[i];
+						Texture* const texture = std::get<Texture*>(property.value);
+						if (texture)
+						{
+							texture->bind();
+							program->set("u_Texture", i);
+						}
+					}
+				}
+			}
+			// bind the data to render
 			command.renderable->bind();
-			// #todo: make it generic
+			// apply textures
+
 			drawIndexed(6);
 		}
 
