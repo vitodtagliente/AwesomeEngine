@@ -45,11 +45,8 @@ bool SandboxGame::startup_implementation()
 		// generate the quad renderable
 		m_quad = graphics->createRenderable(Quad{});
 
-		// tests
-
-
-
-		// tests
+		// sprite material initialization
+		// #todo
 
 		return true;
 	}

@@ -27,6 +27,7 @@
 #include "graphics/mesh/mesh.h"
 #include "graphics/mesh/quad.h"
 #include "graphics/render_command.h"
+#include "graphics/material.h"
 
 #include "math/math.h"
 #include "math/matrix.h"
