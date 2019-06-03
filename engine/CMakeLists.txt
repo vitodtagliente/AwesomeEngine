@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2)
 project(AwesomeEngine)
 
 # enable the C++ 11 standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 # set the default path for built libraries to the "lib" directory
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY lib/)
 

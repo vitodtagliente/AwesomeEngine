@@ -3,14 +3,19 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <variant>
 #include "../math/vector.h"
+#include "../math/matrix.h"
 
 namespace awesome
 {
 	class ShaderProgram;
+	class Texture;
 
-	struct MaterialAttribute
+	struct MaterialProperty
 	{
+		using value_t = std::variant<bool, float, int, vec2, vec3, vec4, mat2, mat3, mat4, Texture*>;
+
 		enum class Type
 		{
 			Bool,
@@ -29,7 +34,7 @@ namespace awesome
 		};
 
 		Type type;
-		// variant value
+		value_t value;
 	};
 
 	class Material
@@ -48,10 +53,19 @@ namespace awesome
 
 		inline ShaderProgram * const getShaderProgram() const { return m_shaderProgram; }
 
-		// material color
-		vec4 color;
+		inline const std::map<std::string, MaterialProperty>& getProperties() const { return m_properties; }
+		std::vector<MaterialProperty> getProperties(const MaterialProperty::Type t_type) const;
 
-		inline const std::map<std::string, MaterialAttribute>& getAttributes() const { return m_attributes; }
+		void set(const std::string& t_name, const bool t_value);
+		void set(const std::string& t_name, const int t_value);
+		void set(const std::string& t_name, const float t_value);
+		void set(const std::string& t_name, const vec2 t_value);
+		void set(const std::string& t_name, const vec3 t_value);
+		void set(const std::string& t_name, const vec4 t_value);
+		void set(const std::string& t_name, const mat2 t_value);
+		void set(const std::string& t_name, const mat3 t_value);
+		void set(const std::string& t_name, const mat4 t_value);
+		void set(const std::string& t_name, Texture * const t_value);
 
 	private:
 
@@ -60,7 +74,7 @@ namespace awesome
 		// shader program
 		ShaderProgram* m_shaderProgram;
 		// material attributes
-		std::map<std::string, MaterialAttribute> m_attributes;
+		std::map<std::string, MaterialProperty> m_properties;
 
 	};
 }
