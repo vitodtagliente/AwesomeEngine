@@ -50,9 +50,8 @@ namespace awesome
 			}
 			// bind the data to render
 			command.renderable->bind();
-			// apply textures
-
-			drawIndexed(6);
+			// render the command
+			drawIndexed(command.renderable->getMesh().indices.size());
 		}
 
 		m_commandBuffer.clear();

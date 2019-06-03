@@ -1,9 +1,9 @@
 #pragma once
 
+#include "mesh/mesh.h"
+
 namespace awesome
 {
-	struct Mesh;
-
 	class Renderable
 	{
 	public:
@@ -14,5 +14,12 @@ namespace awesome
 
 		virtual void bind() = 0;
 		virtual void unbind() = 0;
+
+		inline const Mesh& getMesh() const { return m_mesh; }
+
+	private:
+
+		// mesh
+		Mesh m_mesh;
 	};
 }
