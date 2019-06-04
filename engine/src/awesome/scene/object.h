@@ -59,14 +59,14 @@ namespace awesome
 			return nullptr;
 		}
 		template <typename T = Component>
-		std::vector<T* const> getComponents() const
+		std::vector<T*> getComponents() const
 		{
-			std::vector<T* const> found_components;
+			std::vector<T*> found_components;
 			for (Component* const component : m_components)
 			{
 				for (Component* const component : m_components)
 				{
-					if (T * const found_component = dynamic_cast<T>(component))
+					if (T * const found_component = static_cast<T*>(component))
 						found_components.push_back(found_component);
 				}
 			}

@@ -4,6 +4,8 @@
 #include "object.h"
 #include "component.h"
 #include "../application/time.h"
+#include "../graphics/components/rendering_component.h"
+#include "..//graphics/renderer.h"
 
 namespace awesome
 {
@@ -42,6 +44,14 @@ namespace awesome
 
 	void SceneModule::render_implementation()
 	{
+		Renderer* const renderer = Renderer::instance();
+		for (Object* const object : m_world->getObjects())
+		{
+			for (RenderingComponent* rendering_component : object->getComponents<RenderingComponent>())
+			{
+				rendering_component->push_data(renderer);
+			}
+		}
 	}
 
 	void SceneModule::post_rendering_implementation()
