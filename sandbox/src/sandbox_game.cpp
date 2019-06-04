@@ -49,6 +49,12 @@ bool SandboxGame::startup_implementation()
 		m_spriteMaterial = new Material(m_program);
 		m_spriteMaterial->set("u_Texture", m_texture);
 
+		// tests
+
+		m_transform1.scale = { 0.5f, 0.5f, 1.0f };
+		//m_transform1.rotation.z = 20.0f;
+		m_transform1.update();
+
 		return true;
 	}
 	return false;

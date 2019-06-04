@@ -4,8 +4,9 @@
 namespace awesome
 {
 	Object::Object()
-		: m_id()
-		, m_name()
+		: name()
+		, transform()
+		, m_id()
 		, m_children()
 		, m_components()
 	{
@@ -15,7 +16,7 @@ namespace awesome
 	{
 	}
 
-	Object* const Object::getChildById(unsigned int t_id) const
+	Object* const Object::getChildById(const StringId& t_id) const
 	{
 		for (Object* const child : m_children)
 		{
@@ -36,7 +37,7 @@ namespace awesome
 	{
 		for (Object* const child : m_children)
 		{
-			if (child->getName() == t_name)
+			if (child->name == t_name)
 				return child;
 		}
 		return nullptr;

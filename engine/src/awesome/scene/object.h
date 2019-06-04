@@ -16,11 +16,7 @@ namespace awesome
 		virtual ~Object();
 
 		// get the id
-		inline unsigned int getId() const { return m_id; }
-
-		// name 
-		inline void setName(const StringId& t_name) { m_name = t_name; }
-		inline const StringId& getName() const { return m_name; }
+		inline const StringId& getId() const { return m_id; }
 
 		// object transform
 		// #todo
@@ -28,7 +24,7 @@ namespace awesome
 		// children management
 		inline const std::vector<Object*>& getChildren() const { return m_children; }
 		inline unsigned int getChildrenNum() const { return static_cast<unsigned int>(m_children.size()); }
-		Object* const getChildById(unsigned int t_id) const;
+		Object* const getChildById(const StringId& t_id) const;
 		Object* const getChildByIndex(unsigned int t_index) const;
 		Object* const getChildByName(const StringId& t_name) const;
 		Object* const getChildByName(const std::string& t_name) const;
@@ -45,9 +41,6 @@ namespace awesome
 		
 		void addChild(Object* const t_child);
 		bool removeChild(Object* const t_child);
-
-		// transform utilities
-		// #todo
 
 		// component utilities
 		inline const std::vector<Component*>& getComponents() const { return m_components; }
@@ -81,6 +74,11 @@ namespace awesome
 
 		// object lifetime
 		void initialize();
+		
+		// object name
+		StringId name;
+		// transform
+		transform transform;
 
 	protected:
 
@@ -90,11 +88,7 @@ namespace awesome
 	private:
 
 		// object id
-		unsigned int m_id;
-		// object name
-		StringId m_name;
-		// transform
-		transform m_transform;
+		StringId m_id;
 		// children
 		std::vector<Object*> m_children;
 		// components
