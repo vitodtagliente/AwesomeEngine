@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../core/singleton.h"
+#include "../math/transform.h"
 
 namespace awesome
 {
@@ -15,10 +16,21 @@ namespace awesome
 		~World();
 
 		template <typename T = Object>
-		Object* const spawn()
+		T * const spawn(const transform & t_transform = {})
 		{
+			T * const object = new T();
+			object->transform = t_transform;
+			m_objects.push_back(object);
+			return object;
+		}
 
-			return nullptr;
+		template <typename T = Object>
+		T * const spawn(Object * const t_parent, const transform & t_transform = {})
+		{
+			T * const object = new T();
+			object->transform = t_transform;
+			t_parent->addChild(object);
+			return object;
 		}
 
 	private:

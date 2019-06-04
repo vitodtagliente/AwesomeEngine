@@ -41,6 +41,7 @@ namespace awesome
 		
 		void addChild(Object* const t_child);
 		bool removeChild(Object* const t_child);
+		inline Object* const getParent() const { return m_parent; }
 
 		// component utilities
 		inline const std::vector<Component*>& getComponents() const { return m_components; }
@@ -71,6 +72,13 @@ namespace awesome
 			}
 			return std::move(found_components);
 		}
+		template <typename T = Component>
+		T * const addComponent()
+		{
+			T * const component = new T();
+			m_components.push_back(component);
+			return component;
+		}
 
 		// object lifetime
 		void initialize();
@@ -91,6 +99,8 @@ namespace awesome
 		StringId m_id;
 		// children
 		std::vector<Object*> m_children;
+		// parent object
+		Object* m_parent;
 		// components
 		std::vector<Component*> m_components;
 	};

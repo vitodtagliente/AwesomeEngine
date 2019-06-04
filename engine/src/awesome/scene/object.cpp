@@ -8,6 +8,7 @@ namespace awesome
 		, transform()
 		, m_id()
 		, m_children()
+		, m_parent()
 		, m_components()
 	{
 	}
@@ -51,6 +52,7 @@ namespace awesome
 	void Object::addChild(Object* const t_child)
 	{
 		m_children.push_back(t_child);
+		t_child->m_parent = this;
 	}
 
 	bool Object::removeChild(Object* const t_child)
@@ -59,6 +61,7 @@ namespace awesome
 		{
 			if (*it == t_child)
 			{
+				t_child->m_parent = nullptr;
 				m_children.erase(it);
 				return true;
 			}

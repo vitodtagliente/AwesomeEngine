@@ -31,6 +31,9 @@ private:
 	// sprite material
 	Material* m_spriteMaterial;
 
+	// sprite object
+	Object* m_sprite;
+
 	// projection matrix
 	mat4 m_projection;
 	// view matrix : camera transform
