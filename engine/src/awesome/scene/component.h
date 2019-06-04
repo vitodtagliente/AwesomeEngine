@@ -6,13 +6,17 @@ namespace awesome
 {
 	class Component
 	{
+		friend class Object;
+
 	public:
 
 		Component();
 		virtual ~Component();
 
-		// id
+		// get the id
 		inline const StringId& getId() const { return m_id; }
+		// get the owner object
+		inline Object* const getOwner() const { return m_owner; }
 
 		// component name
 		StringId name;
@@ -21,5 +25,7 @@ namespace awesome
 
 		// component id
 		StringId m_id;
+		// owner object
+		Object* m_owner;
 	};
 }

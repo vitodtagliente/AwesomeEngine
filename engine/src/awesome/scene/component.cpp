@@ -5,6 +5,7 @@ namespace awesome
 	Component::Component()
 		: name()
 		, m_id()
+		, m_owner()
 	{
 	}
 	

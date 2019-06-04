@@ -77,6 +77,7 @@ namespace awesome
 		{
 			T * const component = new T();
 			m_components.push_back(component);
+			component->m_owner = this;
 			return component;
 		}
 
