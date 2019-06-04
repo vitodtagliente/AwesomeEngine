@@ -13,6 +13,8 @@ namespace awesome
 		Component();
 		virtual ~Component();
 
+		virtual void update(const double t_deltaTime) {}
+
 		// get the id
 		inline const StringId& getId() const { return m_id; }
 		// get the owner object

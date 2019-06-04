@@ -6,6 +6,7 @@ namespace awesome
 	Object::Object()
 		: name()
 		, transform()
+		, isStatic(false)
 		, m_id()
 		, m_children()
 		, m_parent()
@@ -87,6 +88,19 @@ namespace awesome
 	void Object::initialize()
 	{
 		initialize_implementation();
+	}
+
+	void Object::update(const double t_deltaTime)
+	{
+		// update the transform
+		transform.update();
+		// update components
+		for (Component* const component : m_components)
+		{
+			component->update(t_deltaTime);
+		}
+		// specific implementation
+		update_implementation(t_deltaTime);
 	}
 
 }

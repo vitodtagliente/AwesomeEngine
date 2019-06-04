@@ -30,8 +30,15 @@ namespace awesome
 			T * const object = new T();
 			object->transform = t_transform;
 			t_parent->addChild(object);
+			m_objects.push_back(object);
 			return object;
 		}
+
+		// get all objects in the world
+		inline const std::vector<Object*>& getObjects() const { return m_objects; }
+
+		// destroy all objects
+		void clear();
 
 	private:
 

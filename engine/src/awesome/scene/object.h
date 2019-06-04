@@ -83,16 +83,21 @@ namespace awesome
 
 		// object lifetime
 		void initialize();
+		// object update 
+		void update(const double t_deltaTime);
 		
 		// object name
 		StringId name;
 		// transform
 		transform transform;
+		// if true, this object cannot be moved
+		bool isStatic;
 
 	protected:
 
 		// object lifetime
 		virtual void initialize_implementation() {};
+		virtual void update_implementation(const double t_deltaTime){}
 
 	private:
 

@@ -12,4 +12,9 @@ namespace awesome
 	World::~World()
 	{
 	}
+
+	void World::clear()
+	{
+		// to be implemented
+	}
 }

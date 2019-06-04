@@ -50,7 +50,7 @@ bool SandboxGame::startup_implementation()
 		m_spriteMaterial->set("u_Texture", m_texture);
 
 		// objects tests
-		World* world = new World();
+		World* const world = World::instance();
 		m_sprite = world->spawn();
 		m_sprite->transform.scale = { 0.5f, 0.5f, 1.0f };
 		SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();
