@@ -12,17 +12,14 @@ namespace awesome
 		virtual ~Component();
 
 		// id
-		inline unsigned int getId() const { return m_id; }
+		inline const StringId& getId() const { return m_id; }
 
-		// name
-		inline const StringId& getName() const { return m_name; }
-		inline void setName(const StringId& t_name) { m_name = t_name; }
+		// component name
+		StringId name;
 
 	protected:
 
 		// component id
-		unsigned int m_id;
-		// component name
-		StringId m_name;
+		StringId m_id;
 	};
 }

@@ -3,8 +3,8 @@
 namespace awesome
 {
 	Component::Component()
-		: m_id()
-		, m_name()
+		: name()
+		, m_id()
 	{
 	}
 	

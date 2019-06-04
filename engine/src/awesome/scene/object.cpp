@@ -70,7 +70,7 @@ namespace awesome
 	{
 		for (Component* const component : m_components)
 		{
-			if (component->getName() == t_name)
+			if (component->name == t_name)
 				return component;
 		}
 		return nullptr;
