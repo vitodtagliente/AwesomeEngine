@@ -35,7 +35,8 @@ namespace awesome
 
 		inline void update()
 		{
-			m_matrix = matrix4::scale(scale) * rotation.matrix() * matrix4::translate(position);
+			//m_matrix = matrix4::scale(scale) * rotation.matrix() * matrix4::translate(position);
+			m_matrix = matrix4::scale(scale) * matrix4::rotate_z(rotation.z) * matrix4::translate(position);
 		}
 
 	private:

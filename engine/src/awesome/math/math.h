@@ -1,5 +1,7 @@
 #pragma once
 
+#include <random>
+
 namespace awesome
 {
 	const float pi = 3.1415927f;
@@ -25,5 +27,26 @@ namespace awesome
 	template <typename T>
 	T clamp(const T & t_val, const T & t_min, const T & t_max) {
 		return std::max(t_min, std::min(t_val, t_max));
+	}
+
+	inline int random(const int t_min, const int t_max)
+	{
+		std::random_device r;
+		std::default_random_engine e1(r());
+		std::uniform_int_distribution<int> uniform_dist(t_min, t_max);
+		return uniform_dist(e1);
+	}
+
+	inline float random(const float t_min, const float t_max)
+	{
+		std::random_device r;
+		std::default_random_engine e1(r());
+		std::uniform_real_distribution<float> uniform_dist(t_min, t_max);
+		return uniform_dist(e1);
+	}
+
+	inline float random()
+	{
+		return random(0.0f, 1.0f);
 	}
 }

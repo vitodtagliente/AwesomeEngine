@@ -24,24 +24,13 @@ private:
 	ShaderProgram* m_program;
 	// texture
 	Texture* m_texture;
-	// square object
-	Renderable* m_quad;
 	// renderer
 	Renderer* m_renderer;
 	// sprite material
 	Material* m_spriteMaterial;
-
-	// sprite object
-	Object* m_sprite;
-
 	// projection matrix
 	mat4 m_projection;
 	// view matrix : camera transform
 	mat4 m_view;
-	
-	// sprite transform
-	awesome::transform m_transform1;
-	// sprite 2 transform
-	awesome::transform m_transform2;
 
 };

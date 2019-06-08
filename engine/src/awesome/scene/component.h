@@ -13,7 +13,9 @@ namespace awesome
 		Component();
 		virtual ~Component();
 
+		virtual void init() {}
 		virtual void update(const double t_deltaTime) {}
+		virtual void uninit() {}
 
 		// get the id
 		inline const StringId& getId() const { return m_id; }

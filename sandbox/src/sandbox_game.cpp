@@ -42,24 +42,20 @@ bool SandboxGame::startup_implementation()
 		m_renderer = Renderer::instance();
 		m_renderer->enableAlpha();
 
-		// generate the quad renderable
-		m_quad = graphics->createRenderable(Quad{});
-
 		// sprite material initialization
 		m_spriteMaterial = new Material(m_program);
 		m_spriteMaterial->set("u_Texture", m_texture);
 
 		// objects tests
-		World* const world = World::instance();
-		m_sprite = world->spawn();
-		m_sprite->transform.scale = { 0.5f, 0.5f, 1.0f };
-		SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();
-
-		// tests
-
-		m_transform1.scale = { 0.5f, 0.5f, 1.0f };
-		//m_transform1.rotation.z = 20.0f;
-		m_transform1.update();
+		for (unsigned int i = 0; i < 60; ++i)
+		{
+			World* const world = World::instance();
+			auto m_sprite = world->spawn();
+			m_sprite->transform.position = { random(-1.0f, 1.0f), random(-1.0f, 1.0f), 0.0f };
+			m_sprite->transform.scale = { random(0.1f, 0.3f), random(0.1f, 0.3f), 1.0f };
+			SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();
+			sprite_component->material = m_spriteMaterial;
+		}
 
 		return true;
 	}
@@ -83,20 +79,28 @@ void SandboxGame::update_implementation()
 	{
 		cout << "Key Released: A" << endl;
 	}
+
+	if (World * const world = World::instance())
+	{
+		for (Object* const object : world->getObjects())
+		{
+			object->transform.rotation.z += random(0.0f, 360.0f) * deltaTime;
+		}
+	}
 }
 
 void SandboxGame::pre_rendering_implementation()
 {
 	m_renderer->clear(m_color);
+
+	//m_renderer->push(m_quad, m_spriteMaterial, m_projection * m_view * m_transform1.matrix());
+
+	// ... push render data
 }
 
 void SandboxGame::render_implementation()
 {
-	m_renderer->push(m_quad, m_spriteMaterial, m_projection * m_view * m_transform1.matrix());
-
-	// ... push other data
-
-	m_renderer->render();
+	
 }
 
 void SandboxGame::post_rendering_implementation()
