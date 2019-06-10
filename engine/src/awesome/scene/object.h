@@ -10,21 +10,21 @@ namespace awesome
 
 	class Object
 	{
+		friend class World;
+
 	public:
 
-		Object();
-		virtual ~Object();
-
-		template <typename T = Object>
-		static T * const create()
+		enum class State
 		{
-			T* const created_object = new T{};
-			created_object->m_id = StringId::unique();
-			return created_object;
-		}
+			Unknown,
+			Normal,
+			PendingDestroy
+		};
 
 		// get the id
 		inline const StringId& getId() const { return m_id; }
+		// get object state
+		inline State getState() const { return m_state; }
 		
 		// children management
 		inline const std::vector<Object*>& getChildren() const { return m_children; }
@@ -46,6 +46,9 @@ namespace awesome
 		// add and remove childrend objects
 		void addChild(Object* const t_child);
 		bool removeChild(Object* const t_child);
+
+		// destroy this object
+		void destroy();
 
 		// return the parent object
 		inline Object* const getParent() const { return m_parent; }
@@ -104,11 +107,23 @@ namespace awesome
 
 	protected:
 
+		Object();
+		virtual ~Object();
+
 		// object lifetime
 		virtual void initialize_implementation() {};
 		virtual void update_implementation(const double t_deltaTime){}
 
 	private:
+
+		template <typename T = Object>
+		static T * const create()
+		{
+			T* const created_object = new T{};
+			created_object->m_id = StringId::unique();
+			created_object->m_state = State::Normal;
+			return created_object;
+		}
 
 		// object id
 		StringId m_id;
@@ -118,5 +133,7 @@ namespace awesome
 		Object* m_parent;
 		// components
 		std::vector<Component*> m_components;
+		// object state
+		State m_state;
 	};
 }

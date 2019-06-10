@@ -11,11 +11,17 @@ namespace awesome
 		, m_children()
 		, m_parent()
 		, m_components()
+		, m_state(State::Unknown)
 	{
 	}
 
 	Object::~Object()
 	{
+		for (Component* const component : m_components)
+		{
+			component->uninit();
+			delete component;
+		}
 	}
 
 	Object* const Object::getChildById(const StringId& t_id) const
@@ -70,6 +76,23 @@ namespace awesome
 		return false;
 	}
 
+	void Object::destroy()
+	{
+		m_state = State::PendingDestroy;
+
+		for (Object* const child : m_children)
+		{
+			child->destroy();
+		}
+
+		if (!isRoot())
+		{
+			m_parent->removeChild(this);
+		}
+
+		delete this;
+	}
+
 	Component* const Object::getComponentByName(const StringId& t_name) const
 	{
 		for (Component* const component : m_components)
@@ -93,6 +116,7 @@ namespace awesome
 			{
 				t_component->uninit();
 				m_components.erase(it);
+				delete t_component;
 				return true;
 			}
 		}
