@@ -1,30 +1,14 @@
 #pragma once
 
-#include "../data/string_id.h"
+#include <awesome/data/string_id.h>
 
 namespace awesome
 {
-	class Object;
-
 	class Component
 	{
+		friend class Object;
+
 	public:
-
-		Component();
-		virtual ~Component();
-
-		template <typename T = Component>
-		static T * const create(Object * t_object)
-		{
-			if (t_object != nullptr)
-			{
-				T* const created_component = new T{};
-				created_component->m_id = StringId::unique();
-				created_component->m_owner = t_object;
-				return created_component;
-			}
-			return nullptr;
-		}
 
 		virtual void init() {}
 		virtual void update(const double t_deltaTime) {}
@@ -40,7 +24,25 @@ namespace awesome
 		// if true the component is enabled
 		bool enabled;
 
+	protected:
+
+		Component();
+		virtual ~Component();
+
 	private:
+
+		template <typename T = Component>
+		static T * const create(Object * t_object)
+		{
+			if (t_object != nullptr)
+			{
+				T* const created_component = new T{};
+				created_component->m_id = StringId::unique();
+				created_component->m_owner = t_object;
+				return created_component;
+			}
+			return nullptr;
+		}
 
 		// component id
 		StringId m_id;

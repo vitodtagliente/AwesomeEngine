@@ -15,6 +15,14 @@ namespace awesome
 		Object();
 		virtual ~Object();
 
+		template <typename T = Object>
+		static T * const create()
+		{
+			T* const created_object = new T{};
+			created_object->m_id = StringId::unique();
+			return created_object;
+		}
+
 		// get the id
 		inline const StringId& getId() const { return m_id; }
 		
