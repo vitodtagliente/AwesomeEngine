@@ -19,7 +19,6 @@ namespace awesome
 	{
 		for (Component* const component : m_components)
 		{
-			component->uninit();
 			delete component;
 		}
 	}
@@ -88,6 +87,11 @@ namespace awesome
 		if (!isRoot())
 		{
 			m_parent->removeChild(this);
+		}
+
+		for (Component* const component : m_components)
+		{
+			component->uninit();
 		}
 
 		delete this;
