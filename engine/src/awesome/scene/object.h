@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../data/string_id.h"
-#include "../math/transform.h"
+#include <awesome/data/string_id.h>
+#include <awesome/math/transform.h>
 
 namespace awesome
 {
@@ -17,10 +17,7 @@ namespace awesome
 
 		// get the id
 		inline const StringId& getId() const { return m_id; }
-
-		// object transform
-		// #todo
-
+		
 		// children management
 		inline const std::vector<Object*>& getChildren() const { return m_children; }
 		inline unsigned int getChildrenNum() const { return static_cast<unsigned int>(m_children.size()); }
@@ -33,15 +30,21 @@ namespace awesome
 		{
 			for (Object* const child : m_children)
 			{
-				if (T * const found_child = dynamic_cast<T>(child))
+				if (T * const found_child = static_cast<T>(child))
 					return found_child;
 			}
 			return nullptr;
 		}
-		
+		// add and remove childrend objects
 		void addChild(Object* const t_child);
 		bool removeChild(Object* const t_child);
+
+		// return the parent object
 		inline Object* const getParent() const { return m_parent; }
+		// check if this object is a leaf in scene tree
+		inline bool isLeaf() const { return m_children.size() == 0; }
+		// check if this object is root in scene tree
+		inline bool isRoot() const { return m_parent == nullptr; }
 
 		// component utilities
 		inline const std::vector<Component*>& getComponents() const { return m_components; }
@@ -53,7 +56,7 @@ namespace awesome
 		{
 			for (Component* const component : m_components)
 			{
-				if (T * const found_component = dynamic_cast<T>(component))
+				if (T * const found_component = static_cast<T>(component))
 					return found_component;
 			}
 			return nullptr;
@@ -64,22 +67,20 @@ namespace awesome
 			std::vector<T*> found_components;
 			for (Component* const component : m_components)
 			{
-				for (Component* const component : m_components)
-				{
-					if (T * const found_component = static_cast<T*>(component))
-						found_components.push_back(found_component);
-				}
+				if (T * const found_component = static_cast<T*>(component))
+					found_components.push_back(found_component);
 			}
 			return std::move(found_components);
 		}
 		template <typename T = Component>
 		T * const addComponent()
 		{
-			T * const component = new T();
+			T * const component = Component::create<T>(this);
 			m_components.push_back(component);
-			component->m_owner = this;
+			component->init();
 			return component;
 		}
+		bool removeComponent(Component* const t_component);
 
 		// object lifetime
 		void initialize();

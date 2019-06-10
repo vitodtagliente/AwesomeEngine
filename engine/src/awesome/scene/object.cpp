@@ -85,6 +85,20 @@ namespace awesome
 		return getComponentByName(StringId{ t_name });
 	}
 
+	bool Object::removeComponent(Component* const t_component)
+	{
+		for (auto it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			if (*it == t_component)
+			{
+				t_component->uninit();
+				m_components.erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void Object::initialize()
 	{
 		initialize_implementation();

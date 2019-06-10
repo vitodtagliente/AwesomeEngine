@@ -37,6 +37,8 @@ namespace awesome
 			return m_hash != t_other.m_hash;
 		}
 
+		static StringId unique();
+
 		static const StringId None;
 
 	private:

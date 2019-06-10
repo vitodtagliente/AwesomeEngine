@@ -25,5 +25,11 @@ namespace awesome
 
 	}
 
+	StringId StringId::unique()
+	{
+		// #todo
+		return StringId();
+	}
+
 	const StringId StringId::None = {};
 }
