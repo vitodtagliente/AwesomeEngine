@@ -77,8 +77,6 @@ namespace awesome
 
 	void Object::destroy()
 	{
-		m_state = State::PendingDestroy;
-
 		for (Object* const child : m_children)
 		{
 			child->destroy();
@@ -94,7 +92,7 @@ namespace awesome
 			component->uninit();
 		}
 
-		delete this;
+		m_state = State::PendingDestroy;
 	}
 
 	Component* const Object::getComponentByName(const StringId& t_name) const
