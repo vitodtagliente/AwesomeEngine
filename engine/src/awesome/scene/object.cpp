@@ -7,6 +7,7 @@ namespace awesome
 		: name()
 		, transform()
 		, isStatic(false)
+		, enabled(true)
 		, m_id()
 		, m_children()
 		, m_parent()
@@ -132,15 +133,25 @@ namespace awesome
 
 	void Object::update(const double t_deltaTime)
 	{
-		// update the transform
-		transform.update();
-		// update components
-		for (Component* const component : m_components)
+		// update the transform if the object is not static
+		if (!isStatic)
 		{
-			component->update(t_deltaTime);
+			transform.update();
 		}
-		// specific implementation
-		update_implementation(t_deltaTime);
+		// if enabled update all the components
+		if (enabled)
+		{
+			// update enabled components
+			for (Component* const component : m_components)
+			{
+				if (component->enabled)
+				{
+					component->update(t_deltaTime);
+				}
+			}
+			// specific implementation
+			update_implementation(t_deltaTime);
+		}
 	}
 
 }
