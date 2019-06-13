@@ -7,7 +7,7 @@ namespace awesome
 		: name()
 		, transform()
 		, isStatic(false)
-		, enabled(true)
+		, active(true)
 		, m_id()
 		, m_children()
 		, m_parent()
@@ -138,8 +138,8 @@ namespace awesome
 		{
 			transform.update();
 		}
-		// if enabled update all the components
-		if (enabled)
+		// if active update all the components
+		if (active)
 		{
 			// update enabled components
 			for (Component* const component : m_components)

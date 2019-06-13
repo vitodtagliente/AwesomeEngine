@@ -104,8 +104,8 @@ namespace awesome
 		transform transform;
 		// if true, this object cannot be moved
 		bool isStatic;
-		// if true this object is enabled
-		bool enabled;
+		// if true this object is active
+		bool active;
 
 	protected:
 
