@@ -18,6 +18,8 @@
 #include "data/string_id.h"
 #include "data/timer.h"
 
+#include "editor/editor_module.h"
+
 #include "graphics/graphics_module.h"
 #include "graphics/renderable.h"
 #include "graphics/renderer.h"
