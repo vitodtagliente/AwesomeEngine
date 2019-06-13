@@ -15,6 +15,13 @@ namespace awesome
 
 	void World::clear()
 	{
-		// to be implemented
+		for (Object* const object : m_objects)
+		{
+			if (object != nullptr)
+			{
+				object->destroy();
+				delete object;
+			}
+		}
 	}
 }

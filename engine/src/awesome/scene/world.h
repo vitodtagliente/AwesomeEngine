@@ -45,4 +45,16 @@ namespace awesome
 		// objects
 		std::vector<Object*> m_objects;
 	};
+
+	template <typename T = Object>
+	T * const spawn(const transform & t_transform = {})
+	{
+		return World::instance()->spawn<T>(t_transform);		
+	}
+
+	template <typename T = Object>
+	T * const spawn(Object * const t_parent, const transform & t_transform = {})
+	{
+		return World::instance()->spawn<T>(t_parent, t_transform);
+	}
 }

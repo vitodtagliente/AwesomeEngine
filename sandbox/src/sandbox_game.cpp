@@ -49,8 +49,7 @@ bool SandboxGame::startup_implementation()
 		// objects tests
 		for (unsigned int i = 0; i < 60; ++i)
 		{
-			World* const world = World::instance();
-			auto m_sprite = world->spawn();
+			auto m_sprite = spawn();
 			m_sprite->transform.position = { random(-1.0f, 1.0f), random(-1.0f, 1.0f), 0.0f };
 			m_sprite->transform.scale = { random(0.1f, 0.2f), random(0.1f, 0.2f), 1.0f };
 			SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();

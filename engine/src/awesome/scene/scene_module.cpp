@@ -3,7 +3,7 @@
 #include "world.h"
 #include "object.h"
 #include "component.h"
-#include "../application/time.h"
+#include <awesome/application/time.h>
 
 namespace awesome
 {
@@ -32,7 +32,14 @@ namespace awesome
 		const double delta_time = Time::instance()->getDeltaTime();
 		for (Object* const object : m_world->getObjects())
 		{
-			object->update(delta_time);
+			if (object->getState() == Object::State::Normal)
+			{
+				object->update(delta_time);
+			}
+			else if (object->getState() == Object::State::PendingDestroy)
+			{
+				// #todo
+			}
 		}
 	}
 }
