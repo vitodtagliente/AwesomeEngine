@@ -10,4 +10,8 @@ namespace awesome
 	{
 	}
 
+	std::string Config::get_config(const std::string& t_name) const
+	{
+		return std::string();
+	}
 }

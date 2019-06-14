@@ -10,6 +10,7 @@
 #include "../graphics/opengl/graphics_module_gl.h"
 #include "../ui/ui_module.h"
 #include "../scene/scene_module.h"
+#include "../editor/editor_module.h"
 
 namespace awesome
 {
@@ -124,5 +125,6 @@ namespace awesome
 		registerModule<GraphicsModule>(new GraphicsModuleGL());
 		registerModule<UIModule>(new UIModule());
 		registerModule<SceneModule>(new SceneModule());
+		registerModule<EditorModule>(new EditorModule());
 	}
 }
