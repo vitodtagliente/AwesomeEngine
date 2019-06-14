@@ -1,10 +1,10 @@
 #pragma once
 
-#include <awesome/editor/editor_element.h>
+#include <awesome/editor/editor_view.h>
 
 namespace awesome
 {
-	class SceneViewer : public EditorElement
+	class SceneViewer : public EditorView
 	{
 	public:
 
@@ -12,7 +12,7 @@ namespace awesome
 		~SceneViewer();
 
 		virtual void init() override;
-		virtual void gui() override;
+		virtual void render() override;
 		virtual void uninit() override;
 
 	private:

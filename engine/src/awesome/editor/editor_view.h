@@ -2,12 +2,14 @@
 
 namespace awesome
 {
-	class EditorElement
+	class EditorView
 	{
 	public:
 
 		virtual void init() {}
-		virtual void gui() {}
+		virtual void render() {}
 		virtual void uninit() {}
+
+		bool visible{ true };
 	};
 }

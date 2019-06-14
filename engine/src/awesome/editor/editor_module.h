@@ -4,6 +4,8 @@
 
 namespace awesome
 {
+	class Editor;
+
 	class EditorModule : public Module
 	{
 	public:
@@ -18,5 +20,10 @@ namespace awesome
 		virtual void pre_rendering_implementation() override;
 		virtual void render_implementation() override;
 		virtual void post_rendering_implementation() override;
+
+	private:
+
+		// editor instance
+		Editor* m_editor;
 	};
 }

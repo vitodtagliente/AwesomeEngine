@@ -5,10 +5,12 @@
 #include <examples/imgui_impl_glfw.h>
 #include <examples/imgui_impl_opengl3.h>
 #include <awesome/application/glfw/window_glfw.h>
+#include "editor.h"
 
 namespace awesome
 {
 	EditorModule::EditorModule()
+		: m_editor()
 	{
 	}
 	
@@ -24,6 +26,9 @@ namespace awesome
 		WindowGLFW* const window = static_cast<WindowGLFW*>(Window::instance());
 		ImGui_ImplGlfw_InitForOpenGL(window->getWindowHandler(), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
+
+		m_editor = new Editor();
+		m_editor->initialize();
 		return true;
 	}
 	
@@ -43,9 +48,10 @@ namespace awesome
 	
 	void EditorModule::render_implementation()
 	{
-		ImGui::Begin("Awesome Engine");
-		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
+		if (m_editor->enabled)
+		{
+			m_editor->render();
+		}
 	}
 	
 	void EditorModule::post_rendering_implementation()

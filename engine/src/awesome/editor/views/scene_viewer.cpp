@@ -1,5 +1,7 @@
 #include "scene_viewer.h"
 
+#include <awesome/scene/world.h>
+
 namespace awesome
 {
 	SceneViewer::SceneViewer()
@@ -13,10 +15,15 @@ namespace awesome
 
 	void SceneViewer::init()
 	{
+		m_world = World::instance();
 	}
 
-	void SceneViewer::gui()
+	void SceneViewer::render()
 	{
+		if (m_world)
+		{
+
+		}
 	}
 
 	void SceneViewer::uninit()

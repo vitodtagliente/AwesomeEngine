@@ -5,7 +5,7 @@
 
 namespace awesome
 {
-	class EditorElement;
+	class EditorView;
 
 	class Editor : public Singleton<Editor>
 	{
@@ -13,10 +13,24 @@ namespace awesome
 
 		Editor();
 		~Editor();
+
+		template <typename T = EditorView>
+		T * const show()
+		{
+			T* const view = new T{};
+			m_views.push_back(view);
+			return view;
+		}
+
+		void initialize();
+		void render();
 		
+		// if true the editor is visible
+		bool enabled;
+
 	private:
 
 		// editor elmements
-		std::vector<EditorElement*> m_elements;
+		std::vector<EditorView*> m_views;
 	};
 }
