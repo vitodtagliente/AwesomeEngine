@@ -1,9 +1,12 @@
 #pragma once
 
+#include <awesome/core/event.h>
 #include <awesome/editor/editor_view.h>
 
 namespace awesome
 {
+	class Object;
+
 	class SceneViewer : public EditorView
 	{
 	public:
@@ -11,14 +14,17 @@ namespace awesome
 		SceneViewer();
 		~SceneViewer();
 
-		virtual void init() override;
 		virtual void render() override;
-		virtual void uninit() override;
+
+		// selection event
+		BaseEvent<Object*> onSelectedObjectChanged;
 
 	private:
 
-		// world instance
-		class World* m_world;
+		// current selection
+		int m_selection_index;
+		// last selected object
+		Object* m_selection_object;
 
 	};
 }
