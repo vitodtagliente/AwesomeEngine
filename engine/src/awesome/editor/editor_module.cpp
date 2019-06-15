@@ -6,6 +6,7 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <awesome/application/glfw/window_glfw.h>
 #include "editor.h"
+#include <awesome/application/input.h>
 
 namespace awesome
 {
@@ -37,6 +38,14 @@ namespace awesome
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+	void EditorModule::update_implementation()
+	{
+		if (Input::instance()->isKeyReleased(KeyCode::F2))
+		{
+			m_editor->enabled = !m_editor->enabled;
+		}
 	}
 	
 	void EditorModule::pre_rendering_implementation()
