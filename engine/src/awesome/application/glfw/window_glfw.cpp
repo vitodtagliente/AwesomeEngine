@@ -1,6 +1,7 @@
 #include "window_glfw.h"
 
 #include <GLFW/glfw3.h>
+#include <awesome/graphics/renderer.h>
 
 namespace awesome
 {
@@ -24,15 +25,16 @@ namespace awesome
 			glfwMakeContextCurrent(m_windowHandler);
 
 			// resize callback
-			/*
 			glfwSetFramebufferSizeCallback(
 				m_windowHandler,
 				[](GLFWwindow*, int t_width, int t_height)
 				{
-					//
+					if (Renderer * const renderer = Renderer::instance())
+					{
+						renderer->setViewport(t_width, t_height);
+					}
 				}
 			);
-			*/
 
 			return true;
 		}

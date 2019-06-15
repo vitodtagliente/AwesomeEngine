@@ -35,4 +35,9 @@ namespace awesome
 	{
 		glDrawElements(GL_TRIANGLES, t_vertices, GL_UNSIGNED_INT, nullptr);
 	}
+	
+	void RendererGL::setViewport(const int t_width, const int t_height)
+	{
+		glViewport(0, 0, t_width, t_height);
+	}
 }

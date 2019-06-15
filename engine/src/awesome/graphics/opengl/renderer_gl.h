@@ -16,5 +16,6 @@ namespace awesome
 		virtual void clear(const Color& t_color) override;
 		virtual void draw(const unsigned int t_vertices = 3) override;
 		virtual void drawIndexed(const unsigned int t_vertices) override;
+		virtual void setViewport(const int t_width, const int t_height) override;
 	};
 }
