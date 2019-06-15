@@ -22,6 +22,17 @@ namespace awesome
 			return view;
 		}
 
+		template <typename T = EditorView>
+		T * const getView() const
+		{
+			for (EditorView* const view : m_views)
+			{
+				if (T * found_view = dynamic_cast<T*>(view))
+					return found_view;
+			}
+			return nullptr;
+		}
+
 		void initialize();
 		void render();
 		

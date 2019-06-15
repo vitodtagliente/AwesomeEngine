@@ -67,7 +67,7 @@ namespace awesome
 		{
 			for (Component* const component : m_components)
 			{
-				if (T * const found_component = static_cast<T>(component))
+				if (T * const found_component = dynamic_cast<T*>(component))
 					return found_component;
 			}
 			return nullptr;

@@ -3,6 +3,7 @@
 #include "editor_view.h"
 #include "views/performance_viewer.h"
 #include "views/scene_viewer.h"
+#include "views/object_viewer.h"
 
 namespace awesome
 {
@@ -20,6 +21,7 @@ namespace awesome
 	{
 		show<PerformanceViewer>();
 		show<SceneViewer>();
+		show<ObjectViewer>();
 	}
 
 	void Editor::render()

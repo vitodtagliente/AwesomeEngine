@@ -5,6 +5,8 @@
 #include <vector>
 #include <awesome/scene/world.h>
 #include <awesome/scene/object.h>
+#include "object_viewer.h"
+#include <awesome/editor/editor.h>
 
 namespace awesome
 {
@@ -38,7 +40,7 @@ namespace awesome
 
 			ImGui::Begin("Scene Viewer");
 			if (ImGui::ListBox(
-				"SceneViewer",
+				"##scene_viewer",
 				&m_selection_index,
 				vector_getter,
 				static_cast<void*>(&items),
@@ -49,8 +51,10 @@ namespace awesome
 				if (m_selection_object != new_selection)
 				{
 					m_selection_object = new_selection;
-					// #todo
-					//onSelectedObjectChanged.broadcast(m_selection_object);
+					if (ObjectViewer * object_viewer = Editor::instance()->getView<ObjectViewer>())
+					{
+						object_viewer->selection = new_selection;
+					}
 				}
 			}
 			ImGui::End();

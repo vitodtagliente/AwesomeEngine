@@ -17,7 +17,7 @@ namespace awesome
 		virtual void render() override;
 
 		// selection event
-		BaseEvent<Object*> onSelectedObjectChanged;
+		BaseEvent<void, Object*> onSelectedObjectChanged;
 
 	private:
 
