@@ -38,7 +38,7 @@ namespace awesome
 		{
 			for (Object* const child : m_children)
 			{
-				if (T * const found_child = static_cast<T>(child))
+				if (T * const found_child = dynamic_cast<T*>(child))
 					return found_child;
 			}
 			return nullptr;
@@ -78,7 +78,7 @@ namespace awesome
 			std::vector<T*> found_components;
 			for (Component* const component : m_components)
 			{
-				if (T * const found_component = static_cast<T*>(component))
+				if (T * const found_component = dynamic_cast<T*>(component))
 					found_components.push_back(found_component);
 			}
 			return std::move(found_components);

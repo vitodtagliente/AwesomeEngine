@@ -30,16 +30,6 @@ namespace awesome
 	void SceneModule::update_implementation()
 	{
 		const double delta_time = Time::instance()->getDeltaTime();
-		for (Object* const object : m_world->getObjects())
-		{
-			if (object->getState() == Object::State::Normal)
-			{
-				object->update(delta_time);
-			}
-			else if (object->getState() == Object::State::PendingDestroy)
-			{
-				// #todo
-			}
-		}
+		m_world->update(delta_time);
 	}
 }

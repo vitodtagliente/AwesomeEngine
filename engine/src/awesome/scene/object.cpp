@@ -18,9 +18,9 @@ namespace awesome
 
 	Object::~Object()
 	{
-		for (Component* const component : m_components)
+		if (m_state == State::Normal)
 		{
-			delete component;
+			destroy();
 		}
 	}
 
@@ -91,6 +91,7 @@ namespace awesome
 		for (Component* const component : m_components)
 		{
 			component->uninit();
+			delete component;
 		}
 
 		m_state = State::PendingDestroy;

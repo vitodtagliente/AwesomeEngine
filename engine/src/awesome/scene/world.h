@@ -37,6 +37,8 @@ namespace awesome
 		// get all objects in the world
 		inline const std::vector<Object*>& getObjects() const { return m_objects; }
 
+		// update
+		void update(const double t_deltaTime);
 		// destroy all objects
 		void clear();
 
