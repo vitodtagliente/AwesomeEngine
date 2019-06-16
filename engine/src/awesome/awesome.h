@@ -31,6 +31,8 @@
 #include "graphics/render_command.h"
 #include "graphics/material.h"
 #include "graphics/components/sprite_component.h"
+#include "graphics/material_library.h"
+#include "graphics/texture_library.h"
 
 #include "math/math.h"
 #include "math/matrix.h"
