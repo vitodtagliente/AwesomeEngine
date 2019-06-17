@@ -4,15 +4,17 @@
 #include "render_command.h"
 #include "shader_program.h"
 #include "material.h"
+#include "material_library.h"
 #include "texture.h"
+#include "texture_library.h"
 
 namespace awesome
 {
 	Renderer::Renderer(GraphicsModule * const t_graphicsModule)
 		: m_graphicsModule(t_graphicsModule)
 		, m_commandBuffer()
-		, m_materialLibrary()
-		, m_textureLibrary()
+		, m_materialLibrary(new MaterialLibrary())
+		, m_textureLibrary(new TextureLibrary(t_graphicsModule))
 	{
 	}
 	

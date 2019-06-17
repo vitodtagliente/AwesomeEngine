@@ -36,15 +36,13 @@ bool SandboxGame::startup_implementation()
 		delete vertex;
 		delete fragment;
 
-		Image img("assets/batman_logo.png");
-		m_texture = graphics->createTexture(img.data(), img.getWidth(), img.getHeight(), img.getComponents());
-
 		m_renderer = Renderer::instance();
 		m_renderer->enableAlpha();
+		Texture* const texture = m_renderer->getTextureLibrary()->add("batman", "assets/batman_logo.png");
 
 		// sprite material initialization
 		m_spriteMaterial = new Material(m_program);
-		m_spriteMaterial->set("u_Texture", m_texture);
+		m_spriteMaterial->set("u_Texture", texture);
 
 		// objects tests
 		for (unsigned int i = 0; i < 60; ++i)
@@ -65,7 +63,6 @@ bool SandboxGame::startup_implementation()
 void SandboxGame::shutdown_implementation()
 {
 	delete m_program;
-	delete m_texture;
 }
 
 void SandboxGame::update_implementation()

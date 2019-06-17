@@ -22,8 +22,6 @@ private:
 	Color m_triangleColor;
 	// shader program
 	ShaderProgram* m_program;
-	// texture
-	Texture* m_texture;
 	// renderer
 	Renderer* m_renderer;
 	// sprite material
