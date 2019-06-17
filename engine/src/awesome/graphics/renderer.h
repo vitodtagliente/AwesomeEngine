@@ -11,6 +11,8 @@ namespace awesome
 	class Renderable;
 	class Material;
 	class GraphicsModule;
+	class MaterialLibrary;
+	class TextureLibrary;
 
 	class Renderer : public Singleton<Renderer>
 	{
@@ -30,11 +32,18 @@ namespace awesome
 		// render all pushed commands
 		void render();
 
+		inline MaterialLibrary* const getMaterialLibrary() const { return m_materialLibrary; }
+		inline TextureLibrary* const getTextureLibrary() const { return m_textureLibrary; }
+
 	protected:
 
 		// graphics api
 		GraphicsModule* m_graphicsModule;
 		// command buffer
 		CommandBuffer m_commandBuffer;
+		// material library
+		MaterialLibrary* m_materialLibrary;
+		// texture library
+		TextureLibrary* m_textureLibrary;
 	};
 }

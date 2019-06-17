@@ -23,12 +23,10 @@ namespace awesome
 		Shader* const getShader(const std::string& t_name) const;
 		ShaderProgram* const getShaderProgram(const std::string& t_name) const;
 
-		// some default material names
-		static const std::string DefaultSpriteMaterialName;
+		// load materials in folder
+		unsigned int loadMaterials(const std::string& t_path);
 
 	private:
-
-		void generateDefaultMaterials();
 
 		std::map<std::string, Material*> m_materials;
 		std::map<std::string, Shader*> m_shaders;
