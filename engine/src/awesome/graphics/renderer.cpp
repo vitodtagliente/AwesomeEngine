@@ -13,7 +13,7 @@ namespace awesome
 	Renderer::Renderer(GraphicsModule * const t_graphicsModule)
 		: m_graphicsModule(t_graphicsModule)
 		, m_commandBuffer()
-		, m_materialLibrary(new MaterialLibrary())
+		, m_materialLibrary(new MaterialLibrary(t_graphicsModule))
 		, m_textureLibrary(new TextureLibrary(t_graphicsModule))
 	{
 	}

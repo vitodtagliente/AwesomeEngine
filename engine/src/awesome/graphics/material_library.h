@@ -9,12 +9,13 @@ namespace awesome
 	class Material;
 	class Shader;
 	class ShaderProgram;
+	class GraphicsModule;
 
 	class MaterialLibrary final
 	{
 	public:
 
-		MaterialLibrary();
+		MaterialLibrary(GraphicsModule* const t_graphicsModule);
 		~MaterialLibrary();
 
 		void clear();
@@ -28,6 +29,7 @@ namespace awesome
 
 	private:
 
+		GraphicsModule* m_graphics;
 		std::map<std::string, Material*> m_materials;
 		std::map<std::string, Shader*> m_shaders;
 		std::map<std::string, ShaderProgram*> m_programs;
