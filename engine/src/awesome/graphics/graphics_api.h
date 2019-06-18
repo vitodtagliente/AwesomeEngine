@@ -22,11 +22,17 @@ namespace awesome
 			OpenGL
 		};
 
-		GraphicsAPI() = default;
+		GraphicsAPI(const Type t_type)
+			: m_type(t_type)
+		{
+
+		}
 		~GraphicsAPI() = default;
 
 		virtual bool startup() = 0;
 		virtual void shutdown() = 0;
+
+		inline Type getType() const { return m_type; }
 
 		// low level api abstraction
 		virtual void clear(const Color& t_color) = 0;
@@ -42,5 +48,10 @@ namespace awesome
 		virtual Texture* createTexture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height,
 			const unsigned int t_components, const Texture::Options& t_options = Texture::Options{}) const = 0;
 		virtual Renderable* createRenderable(const Mesh& t_mesh) = 0;
+
+	private:
+
+		// api type
+		Type m_type;
 	};
 }
