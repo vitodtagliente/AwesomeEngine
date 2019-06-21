@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-#include "graphics_module.h"
+#include "graphics_api.h"
 #include "render_command.h"
 #include "shader_program.h"
 #include "material.h"
@@ -10,11 +10,11 @@
 
 namespace awesome
 {
-	Renderer::Renderer(GraphicsModule * const t_graphicsModule)
-		: m_graphicsModule(t_graphicsModule)
+	Renderer::Renderer(GraphicsAPI* const t_api)
+		: m_api(t_api)
 		, m_commandBuffer()
-		, m_materialLibrary(new MaterialLibrary(t_graphicsModule))
-		, m_textureLibrary(new TextureLibrary(t_graphicsModule))
+		, m_materialLibrary(new MaterialLibrary(t_api))
+		, m_textureLibrary(new TextureLibrary(t_api))
 	{
 	}
 	

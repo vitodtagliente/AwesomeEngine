@@ -2,44 +2,27 @@
 
 #include <initializer_list>
 #include <string>
-#include "../core/singleton.h"
-#include "../engine/module.h"
-#include "graphics_buffer.h"
-#include "renderable.h"
-#include "shader.h"
-#include "shader_program.h"
-#include "texture.h"
-#include "mesh/mesh.h"
+#include <awesome/engine/module.h>
 
 namespace awesome
 {
+	class GraphicsAPI;
 	class Renderer;
 
-	class GraphicsModule : public Module, public Singleton<GraphicsModule>
+	class GraphicsModule : public Module
 	{
 	public:
 
-		enum class API
-		{
-			Null,
-			OpenGL
-		};
-
-		GraphicsModule(const API t_api);
+		GraphicsModule();
 		~GraphicsModule();
 
-		inline API getAPI() const { return m_api; }
+		inline GraphicsAPI* getAPI() const { return m_api; }
 		inline Renderer* getRenderer() const { return m_renderer; }
 
-		virtual Shader* createShader(const Shader::Type t_type, const std::string& t_source) const = 0;
-		virtual ShaderProgram* createShaderProgram(const std::initializer_list<Shader*>& t_shaders) const = 0;
-		virtual Texture* createTexture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height,
-			const unsigned int t_components, const Texture::Options& t_options = Texture::Options{}) const = 0;
-		virtual GraphicsBuffer* createBuffer(const GraphicsBuffer::Type t_type, const void* const t_data, 
-			const std::size_t t_size) = 0;
-		virtual Renderable* createRenderable(const Mesh& t_mesh) = 0;
-
 	protected:
+
+		virtual GraphicsAPI* const createAPI() const = 0;
+		virtual Renderer* const createRenderer(GraphicsAPI* const t_api) const = 0;
 
 		virtual bool startup_implementation() override;
 		virtual void shutdown_implementation() override;
@@ -49,7 +32,7 @@ namespace awesome
 		virtual void post_rendering_implementation() override;
 
 		// used api
-		API m_api;
+		GraphicsAPI* m_api;
 		// renderer
 		Renderer* m_renderer;
 	};

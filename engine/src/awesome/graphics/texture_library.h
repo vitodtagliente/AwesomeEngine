@@ -7,14 +7,14 @@
 
 namespace awesome
 {
-	class GraphicsModule;
+	class GraphicsAPI;
 	class Texture;
 
 	class TextureLibrary
 	{
 	public:
 
-		TextureLibrary(GraphicsModule* t_graphicsModules);
+		TextureLibrary(GraphicsAPI* t_api);
 		~TextureLibrary();
 
 		void clear();
@@ -37,7 +37,7 @@ namespace awesome
 	private:
 
 		// graphics api
-		GraphicsModule* m_graphics;
+		GraphicsAPI* m_api;
 		// cached textures
 		std::map<std::string, Texture*> m_textures;
 

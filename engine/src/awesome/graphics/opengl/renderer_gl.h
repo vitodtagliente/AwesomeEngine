@@ -10,7 +10,7 @@ namespace awesome
 	{
 	public:
 
-		RendererGL(GraphicsModule* const t_graphicsModule);
+		RendererGL(GraphicsAPI* const t_api);
 
 		virtual void enableAlpha(const bool bEnabled = true) override;
 		virtual void clear(const Color& t_color) override;

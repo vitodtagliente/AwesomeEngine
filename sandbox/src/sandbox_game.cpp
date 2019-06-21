@@ -13,12 +13,14 @@ bool SandboxGame::startup_implementation()
 	// view matrix
 	m_view = mat4::identity;
 
-	if (GraphicsModule * const graphics = GraphicsModule::instance())
+	if (m_renderer = Renderer::instance())
 	{
+		GraphicsAPI* api = m_renderer->getAPI();
+
 		std::map<Shader::Type, std::string> sources;
 		Shader::Reader::parse("assets/projection.shader", sources);
-		auto vertex = graphics->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
-		auto fragment = graphics->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
+		auto vertex = api->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
+		auto fragment = api->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 
 		cout << "Vertex " << endl;
 		cout << ((vertex->isValid()) ? sources[Shader::Type::Vertex] : vertex->getErrorMessage()) << endl;
@@ -26,7 +28,7 @@ bool SandboxGame::startup_implementation()
 		cout << "Fragment " << endl;
 		cout << ((fragment->isValid()) ? sources[Shader::Type::Fragment] : fragment->getErrorMessage()) << endl;
 
-		m_program = graphics->createShaderProgram({ vertex, fragment });
+		m_program = api->createShaderProgram({ vertex, fragment });
 		if (!m_program->isValid())
 		{
 			cout << "Program " << endl << m_program->getErrorMessage() << endl;

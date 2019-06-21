@@ -1,12 +1,12 @@
 #include "renderer_gl.h"
 
 #include "opengl.h"
-#include "graphics_module_gl.h"
+#include "graphics_api_gl.h"
 
 namespace awesome
 {
-	RendererGL::RendererGL(GraphicsModule* const t_graphicsModule)
-		: Renderer(t_graphicsModule)
+	RendererGL::RendererGL(GraphicsAPI* const t_api)
+		: Renderer(t_api)
 	{
 	}
 

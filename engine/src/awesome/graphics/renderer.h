@@ -10,7 +10,7 @@ namespace awesome
 	struct Mesh;
 	class Renderable;
 	class Material;
-	class GraphicsModule;
+	class GraphicsAPI;
 	class MaterialLibrary;
 	class TextureLibrary;
 
@@ -19,7 +19,7 @@ namespace awesome
 	public:
 
 		// dependency injection
-		Renderer(GraphicsModule * const t_graphicsModule);
+		Renderer(GraphicsAPI* const t_api);
 		virtual ~Renderer();
 		
 		virtual void enableAlpha(const bool bEnabled = true) = 0;
@@ -32,13 +32,14 @@ namespace awesome
 		// render all pushed commands
 		void render();
 
+		inline GraphicsAPI* const getAPI() const { return m_api; }
 		inline MaterialLibrary* const getMaterialLibrary() const { return m_materialLibrary; }
 		inline TextureLibrary* const getTextureLibrary() const { return m_textureLibrary; }
 
 	protected:
 
 		// graphics api
-		GraphicsModule* m_graphicsModule;
+		GraphicsAPI* m_api;
 		// command buffer
 		CommandBuffer m_commandBuffer;
 		// material library

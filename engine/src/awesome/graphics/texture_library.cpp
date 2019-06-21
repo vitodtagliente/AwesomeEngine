@@ -3,13 +3,13 @@
 #include <fstream>
 #include <awesome/data/image.h>
 #include "texture.h"
-#include "graphics_module.h"
+#include "graphics_api.h"
 
 namespace awesome
 {
 
-	TextureLibrary::TextureLibrary(GraphicsModule* const t_graphics)
-		: m_graphics(t_graphics)
+	TextureLibrary::TextureLibrary(GraphicsAPI* const t_api)
+		: m_api(t_api)
 		, m_textures()
 	{
 
@@ -46,7 +46,7 @@ namespace awesome
 		if (it == m_textures.end())
 		{
 			Image img(t_filename);
-			Texture* texture = m_graphics->createTexture(
+			Texture* texture = m_api->createTexture(
 				img.data(), img.getWidth(), img.getHeight(), img.getComponents()
 			);
 			m_textures.insert({ t_name, texture });

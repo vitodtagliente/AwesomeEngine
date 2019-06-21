@@ -1,6 +1,7 @@
 #include "graphics_module.h"
 
 #include <vector>
+#include "graphics_api.h"
 #include "renderer.h"
 #include "components/rendering_component.h"
 #include "../scene/world.h"
@@ -8,8 +9,8 @@
 
 namespace awesome
 {
-	GraphicsModule::GraphicsModule(const API t_api)
-		: m_api(t_api)
+	GraphicsModule::GraphicsModule()
+		: m_api()
 		, m_renderer()
 	{
 	}
@@ -20,11 +21,18 @@ namespace awesome
 
 	bool GraphicsModule::startup_implementation()
 	{
+		m_api = createAPI();
+		if (m_api->startup())
+		{
+			m_renderer = createRenderer(m_api);
+			return true;
+		}
 		return false;
 	}
 	
 	void GraphicsModule::shutdown_implementation()
 	{
+		m_api->shutdown();
 	}
 	
 	void GraphicsModule::update_implementation()

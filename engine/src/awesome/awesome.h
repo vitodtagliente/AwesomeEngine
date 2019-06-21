@@ -21,6 +21,7 @@
 #include "editor/editor_module.h"
 
 #include "graphics/graphics_module.h"
+#include "graphics/graphics_api.h"
 #include "graphics/renderable.h"
 #include "graphics/renderer.h"
 #include "graphics/texture.h"

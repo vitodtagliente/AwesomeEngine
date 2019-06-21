@@ -4,12 +4,12 @@
 #include "material.h"
 #include "shader.h"
 #include "shader_program.h"
-#include "graphics_module.h"
+#include "graphics_api.h"
 
 namespace awesome
 {
-	MaterialLibrary::MaterialLibrary(GraphicsModule* const t_graphics)
-		: m_graphics(t_graphics)
+	MaterialLibrary::MaterialLibrary(GraphicsAPI* const t_api)
+		: m_api(t_api)
 		, m_materials()
 		, m_shaders()
 		, m_programs()
