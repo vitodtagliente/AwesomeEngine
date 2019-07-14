@@ -23,7 +23,7 @@ namespace awesome
 
 	void MaterialLibrary::clear()
 	{
-		
+
 	}
 
 	Material* const MaterialLibrary::getMaterial(const std::string t_name) const
@@ -59,6 +59,11 @@ namespace awesome
 	unsigned int MaterialLibrary::loadMaterials(const std::string& t_path)
 	{
 
+		return 0;
+	}
+
+	unsigned int MaterialLibrary::loadShaders(const std::string& t_path)
+	{
 		return 0;
 	}
 }

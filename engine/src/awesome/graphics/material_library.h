@@ -26,6 +26,7 @@ namespace awesome
 
 		// load materials in folder
 		unsigned int loadMaterials(const std::string& t_path);
+		unsigned int loadShaders(const std::string& t_path);
 
 	private:
 
