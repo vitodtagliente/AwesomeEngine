@@ -4,6 +4,8 @@
 
 namespace awesome
 {
+	class ApplicationAPI;
+
 	class Application : public Singleton<Application>
 	{
 	public:
