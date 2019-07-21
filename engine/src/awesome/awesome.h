@@ -40,6 +40,7 @@
 #include "math/vector.h"
 #include "math/quaternion.h"
 #include "math/transform.h"
+#include "math/rectangle.h"
 
 #include "scene/component.h"
 #include "scene/object.h"
