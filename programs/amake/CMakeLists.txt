@@ -19,3 +19,5 @@ add_executable(
 target_link_libraries(
     ${PROJECT_NAME} 
 )
+
+SET(CMAKE_DEFAULT_STARTUP_PROJECT amake)
