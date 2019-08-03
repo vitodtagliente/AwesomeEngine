@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../core/singleton.h"
-
 namespace awesome
 {
 	// generic Engine Module interface

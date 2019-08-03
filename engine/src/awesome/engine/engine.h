@@ -4,7 +4,7 @@
 #include <list>
 #include <string>
 #include <typeinfo>
-#include "../core/singleton.h"
+#include <awesome/core/singleton.h>
 
 namespace awesome
 {

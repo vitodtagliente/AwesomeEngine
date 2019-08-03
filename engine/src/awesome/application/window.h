@@ -2,8 +2,8 @@
 
 #include <map>
 #include <string>
-#include "../core/singleton.h"
-#include "../core/types.h"
+#include <awesome/core/singleton.h>
+#include <awesome/core/types.h>
 
 namespace awesome
 {

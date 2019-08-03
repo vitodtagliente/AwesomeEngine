@@ -1,6 +1,6 @@
 #include "time.h"
 
-#include "../data/timer.h"
+#include <awesome/data/timer.h>
 
 namespace awesome
 {

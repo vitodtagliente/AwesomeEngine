@@ -1,10 +1,9 @@
 #pragma once
 
 #include <map>
+#include <awesome/core/singleton.h>
+#include <awesome/math/vector2.h>
 #include "keycode.h"
-#include "../core/singleton.h"
-#include "../core/types.h"
-#include "../math/vector.h"
 
 namespace awesome
 {

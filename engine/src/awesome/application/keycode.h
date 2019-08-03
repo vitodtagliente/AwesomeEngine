@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/types.h"
+#include <awesome/core/types.h>
 
 namespace awesome
 {
