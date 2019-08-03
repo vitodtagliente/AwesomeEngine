@@ -93,7 +93,7 @@ namespace awesome
 		glUniform4f(getUniformLocation(t_name), t_f1, t_f2, t_f3, t_f4);
 	}
 
-	int ShaderProgramGL::getUniformLocation(const std::string& t_name)
+	int ShaderProgramGL::getUniformLocation(const std::string& t_name) const
 	{
 		if (m_uniformLocations.find(t_name) != m_uniformLocations.end())
 		{

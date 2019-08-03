@@ -24,9 +24,9 @@ namespace awesome
 	private:
 
 		// find the uniform layout location
-		int getUniformLocation(const std::string& t_name);
+		int getUniformLocation(const std::string& t_name) const;
 
 		// uniform locations
-		std::map<std::string, unsigned int> m_uniformLocations;
+		mutable std::map<std::string, unsigned int> m_uniformLocations;
 	};
 }
