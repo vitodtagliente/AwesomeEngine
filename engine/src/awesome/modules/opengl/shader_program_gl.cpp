@@ -1,7 +1,7 @@
 #include "shader_program_gl.h"
 
 #include "opengl.h"
-#include "../shader.h"
+#include <awesome/graphics/shader.h>
 
 namespace awesome
 {

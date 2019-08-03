@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../graphics_buffer.h"
+#include <awesome/graphics/graphics_buffer.h>
 
 namespace awesome
 {

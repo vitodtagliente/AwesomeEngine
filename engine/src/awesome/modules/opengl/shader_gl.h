@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../shader.h"
+#include <awesome/graphics/shader.h>
 
 namespace awesome
 {

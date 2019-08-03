@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../texture.h"
+#include <awesome/graphics/texture.h>
 
 namespace awesome
 {

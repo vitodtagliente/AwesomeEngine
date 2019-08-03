@@ -4,7 +4,7 @@
 // #todo
 #include <awesome/modules/glfw/application_module_glfw.h>
 #include "../application/window.h"
-#include "../graphics/opengl/graphics_module_gl.h"
+#include <awesome/modules/opengl/graphics_module_gl.h>
 #include "../ui/ui_module.h"
 #include "../scene/scene_module.h"
 #include "../editor/editor_module.h"

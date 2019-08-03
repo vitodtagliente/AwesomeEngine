@@ -1,9 +1,9 @@
 #include "renderable_gl.h"
 
 #include <vector>
+#include <awesome/graphics/mesh/mesh.h>
 #include "opengl.h"
 #include "graphics_buffer_gl.h"
-#include "../mesh/mesh.h"
 
 namespace awesome
 {
