@@ -1,9 +1,6 @@
 #include "engine.h"
 
-#include "../application/application.h"
-#include "../application/window.h"
 #include "module.h"
-
 // #todo
 #include <awesome/modules/glfw/application_module_glfw.h>
 #include "../application/window.h"

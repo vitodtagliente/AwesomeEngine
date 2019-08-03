@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../core/types.h"
+#include <awesome/core/types.h>
 
 namespace awesome
 {

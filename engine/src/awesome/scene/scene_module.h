@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../engine/module.h"
+#include <awesome/engine/module.h>
 
 namespace awesome
 {

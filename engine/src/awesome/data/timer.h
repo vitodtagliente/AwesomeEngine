@@ -2,7 +2,7 @@
 
 #include <functional>
 #include <vector>
-#include "../core/event.h"
+#include <awesome/core/event.h>
 
 namespace awesome
 {
