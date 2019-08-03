@@ -5,7 +5,6 @@
 #include <awesome/modules/glfw/application_module_glfw.h>
 #include "../application/window.h"
 #include <awesome/modules/opengl/graphics_module_gl.h>
-#include "../ui/ui_module.h"
 #include "../scene/scene_module.h"
 #include "../editor/editor_module.h"
 
@@ -120,7 +119,6 @@ namespace awesome
 		// #todo
 		registerModule<ApplicationModule>(new ApplicationModuleGLFW());
 		registerModule<GraphicsModule>(new GraphicsModuleGL());
-		registerModule<UIModule>(new UIModule());
 		registerModule<SceneModule>(new SceneModule());
 		registerModule<EditorModule>(new EditorModule());
 	}
