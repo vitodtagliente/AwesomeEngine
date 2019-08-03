@@ -29,6 +29,7 @@ namespace awesome
 				m_windowHandler,
 				[](GLFWwindow*, int t_width, int t_height)
 				{
+					// #todo
 					if (Renderer * const renderer = Renderer::instance())
 					{
 						renderer->setViewport(t_width, t_height);

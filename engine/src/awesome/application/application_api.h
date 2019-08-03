@@ -2,6 +2,7 @@
 
 namespace awesome
 {
+	class Application;
 	class Input;
 	class Time;
 	class Window;
@@ -30,9 +31,10 @@ namespace awesome
 		inline Type getType() const { return m_type; }
 
 		// create application's objects
-		virtual Input* createInput() const = 0;
-		virtual Time* createTime() const = 0;
-		virtual Window* createWindow() const = 0;
+		virtual Application* const createApplication() const = 0;
+		virtual Input* const createInput() const = 0;
+		virtual Time* const createTime() const = 0;
+		virtual Window* const createWindow() const = 0;
 
 	private:
 

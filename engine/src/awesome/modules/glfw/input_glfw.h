@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../input.h"
+#include <awesome/application/input.h>
 
 namespace awesome
 {

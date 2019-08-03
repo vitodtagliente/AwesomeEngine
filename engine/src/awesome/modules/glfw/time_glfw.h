@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../time.h"
+#include <awesome/application/time.h>
 
 namespace awesome
 {

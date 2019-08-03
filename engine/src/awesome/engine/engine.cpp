@@ -5,7 +5,7 @@
 #include "module.h"
 
 // #todo
-#include "../application/glfw/application_module_glfw.h"
+#include <awesome/modules/glfw/application_module_glfw.h>
 #include "../application/window.h"
 #include "../graphics/opengl/graphics_module_gl.h"
 #include "../ui/ui_module.h"

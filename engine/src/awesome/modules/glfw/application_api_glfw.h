@@ -19,8 +19,9 @@ namespace awesome
 		virtual void shutdown() override;
 
 		// create application's objects
-		virtual Input* createInput() const override;
-		virtual Time* createTime() const override;
-		virtual Window* createWindow() const override;
+		virtual Application* const createApplication() const override;
+		virtual Input* const createInput() const override;
+		virtual Time* const createTime() const override;
+		virtual Window* const createWindow() const override;
 	};
 }
