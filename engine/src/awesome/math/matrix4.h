@@ -291,12 +291,10 @@ namespace awesome
 			{
 				for (unsigned int y = 0; y < columns; ++y)
 				{
-					T value{};
 					for (unsigned int i = 0; i < rows; ++i)
 					{
-						value += (*this)(i, j) * t_matrix(y, i);
+						result(y, j) += (*this)(i, j) * t_matrix(y, i);
 					}
-					result(y, j) = value;
 				}
 			}
 			return result;
