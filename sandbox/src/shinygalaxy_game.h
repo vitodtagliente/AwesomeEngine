@@ -16,6 +16,9 @@ private:
 	virtual void render_implementation() override;
 	virtual void post_rendering_implementation() override;
 
+	Object* createCircle(const vector3& t_position, const vector3& t_scale) const;
+	vector3 getMousePosition() const;
+
 	// background color
 	Color m_backgroundColor;
 	// renderer
@@ -24,5 +27,11 @@ private:
 	Time* m_time;
 	// input
 	Input* m_input;
+
+	Object* m_playerPawn;
+	vector3 m_lastPosition;
+
+	// sprite material
+	Material* m_spriteMaterial;
 
 };
