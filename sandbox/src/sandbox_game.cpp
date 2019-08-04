@@ -47,7 +47,7 @@ bool SandboxGame::startup_implementation()
 		m_spriteMaterial->set("u_Texture", texture);
 
 		// objects tests
-		for (unsigned int i = 0; i < 20; ++i)
+		for (unsigned int i = 0; i < 5; ++i)
 		{
 			auto m_sprite = spawn();
 			m_sprite->name = "Sprite " + std::to_string(i);
