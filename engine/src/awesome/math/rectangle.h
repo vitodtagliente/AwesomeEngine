@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "vector2.h"
+
 namespace awesome
 {
 	template <typename T>
@@ -21,6 +23,65 @@ namespace awesome
 			, height(t_height)
 		{
 
+		}
+
+		bool operator== (const rectangle_t& t_other) const
+		{
+			return x == t_other.x && y == t_other.y
+				&& width == t_other.width && height == t_other.height;
+		}
+
+		bool operator!= (const rectangle_t& t_other) const
+		{
+			return !(*this == t_other);
+		}
+
+		rectangle_t& operator*= (const T t_scalar)
+		{
+			x *= t_scalar;
+			y *= t_scalar;
+			width *= t_scalar;
+			height *= t_scalar;
+			return *this;
+		}
+
+		rectangle_t& operator/= (const T t_scalar)
+		{
+			const T factor = static_cast<T>(1) / t_scalar;
+			x *= factor;
+			y *= factor;
+			width *= factor;
+			height *= factor;
+			return *this;
+		}
+
+		rectangle_t operator* (const T t_scalar)
+		{
+			return 
+			{ 
+				x * t_scalar, 
+				y * t_scalar, 
+				width * t_scalar, 
+				height * t_scalar 
+			};
+		}
+
+		rectangle_t operator/ (const T t_scalar)
+		{
+			const T factor = static_cast<T>(1) / t_scalar;
+			return
+			{
+				x * factor,
+				y * factor,
+				width * factor,
+				height * factor
+			};
+		}
+
+		bool intersects(const rectangle_t& t_other) const
+		{
+			// #todo
+			return false;
 		}
 
 	};
