@@ -7,6 +7,7 @@ bool ShinyGalaxy::startup_implementation()
 	m_renderer = Renderer::instance();
 	m_input = Input::instance();
 	m_time = Time::instance();
+	m_window = Window::instance();
 
 	GraphicsAPI* api = m_renderer->getAPI();
 
@@ -42,14 +43,15 @@ void ShinyGalaxy::shutdown_implementation()
 void ShinyGalaxy::update_implementation()
 {
 	const double deltaTime = m_time->getDeltaTime();
-	static const float speed = 0.05f;
+	static const float speed = 1.5f;
 
-	const vector2 mouse_position = m_input->getMousePosition();
-	if (isMousePositionValid(mouse_position))
+	if (m_input->isMouseOverWindow())
 	{
+		const vector2 mouse_position = m_input->getMousePosition();
 		const vector3 worldMousePosition = mousePositionToWorld(mouse_position);
+		auto diff = worldMousePosition - m_playerPawn->transform.position;
 
-		m_playerPawn->transform.position = worldMousePosition;
+		m_playerPawn->transform.position += diff * speed * deltaTime;
 	}
 }
 
@@ -85,15 +87,8 @@ vector3 ShinyGalaxy::mousePositionToWorld(const vector2& t_position) const
 	// manca come riottenere le dimensioni della finestra
 	return
 	{
-		t_position.x / 640.0f * 2 - 1.0f,
-		-t_position.y / 480.0f * 2 + 1.0f,
+		t_position.x / m_window->getWidth() * 2 - 1.0f,
+		-t_position.y / m_window->getHeight() * 2 + 1.0f,
 		0.0f
 	};
-}
-
-bool ShinyGalaxy::isMousePositionValid(const vector2& t_position) const
-{
-	// #todo check mouse valid
-	return t_position.x >= 0 && t_position.x <= 640
-		&& t_position.y >= 0 && t_position.y <= 480;
 }

@@ -20,7 +20,6 @@ private:
 
 	// #todo
 	vector3 mousePositionToWorld(const vector2& t_position) const;
-	bool isMousePositionValid(const vector2& t_position) const;
 
 	// background color
 	Color m_backgroundColor;
@@ -30,6 +29,8 @@ private:
 	Time* m_time;
 	// input
 	Input* m_input;
+	// window
+	Window* m_window;
 
 	Object* m_playerPawn;
 	vector3 m_lastPosition;

@@ -7,6 +7,7 @@ namespace awesome
 {
 	WindowGLFW::WindowGLFW()
 		: m_windowHandler()
+		, m_size()
 	{
 
 	}
@@ -20,6 +21,9 @@ namespace awesome
 			false, false
 		);
 
+		// internal storage
+		m_size = { t_settings.width, t_settings.height };
+
 		if (m_windowHandler != nullptr)
 		{
 			glfwMakeContextCurrent(m_windowHandler);
@@ -29,6 +33,13 @@ namespace awesome
 				m_windowHandler,
 				[](GLFWwindow*, int t_width, int t_height)
 				{
+					if (WindowGLFW * const window = static_cast<WindowGLFW*>(Window::instance()))
+					{
+						window->m_size = {
+							static_cast<uint32>(t_width),
+							static_cast<uint32>(t_height)
+						};
+					}
 					// #todo
 					if (Renderer * const renderer = Renderer::instance())
 					{

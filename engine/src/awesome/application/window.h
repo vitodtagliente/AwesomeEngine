@@ -35,6 +35,9 @@ namespace awesome
 		virtual void setTitle(const std::string& t_title) = 0;
 		virtual void resize(const uint32 t_width, const uint32 t_height) = 0;
 
+		virtual uint32 getWidth() const = 0;
+		virtual uint32 getHeight() const = 0;
+
 	protected:
 
 		// open the window 
