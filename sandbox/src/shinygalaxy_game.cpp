@@ -44,6 +44,7 @@ void ShinyGalaxy::update_implementation()
 {
 	const double deltaTime = m_time->getDeltaTime();
 	static const float speed = 1.5f;
+	static float scale_time = .5f;
 
 	if (m_input->isMouseOverWindow())
 	{
@@ -53,6 +54,18 @@ void ShinyGalaxy::update_implementation()
 
 		m_playerPawn->transform.position += diff * speed * deltaTime;
 	}
+
+	if (scale_time <= 0.0f)
+	{
+		const float amount = random(-.01f, .01f);
+		float new_size = std::max(0.03f, m_playerPawn->transform.scale.x + amount);
+		new_size = std::min(new_size, 0.1f);
+
+		m_playerPawn->transform.scale = { new_size, new_size, 0.0f };
+		
+		scale_time = .5f;
+	}
+	scale_time -= deltaTime;
 }
 
 void ShinyGalaxy::pre_rendering_implementation()
