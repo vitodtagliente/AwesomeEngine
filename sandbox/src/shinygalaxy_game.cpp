@@ -42,9 +42,15 @@ void ShinyGalaxy::shutdown_implementation()
 void ShinyGalaxy::update_implementation()
 {
 	const double deltaTime = m_time->getDeltaTime();
+	static const float speed = 0.05f;
 
-	m_playerPawn->transform.position =
-		(getMousePosition());
+	const vector2 mouse_position = m_input->getMousePosition();
+	if (isMousePositionValid(mouse_position))
+	{
+		const vector3 worldMousePosition = mousePositionToWorld(mouse_position);
+
+		m_playerPawn->transform.position = worldMousePosition;
+	}
 }
 
 void ShinyGalaxy::pre_rendering_implementation()
@@ -73,15 +79,21 @@ Object* ShinyGalaxy::createCircle(const vector3& t_position, const vector3& t_sc
 	return m_sprite;
 }
 
-vector3 ShinyGalaxy::getMousePosition() const
+vector3 ShinyGalaxy::mousePositionToWorld(const vector2& t_position) const
 {
-	const vec2 m_position = m_input->getMousePosition();
 	// #todo manca come mappare il mouse dalla finestra al mondo
 	// manca come riottenere le dimensioni della finestra
 	return
 	{
-		m_position.x / 640.0f,
-		-m_position.y / 480.0f,
+		t_position.x / 640.0f * 2 - 1.0f,
+		-t_position.y / 480.0f * 2 + 1.0f,
 		0.0f
 	};
+}
+
+bool ShinyGalaxy::isMousePositionValid(const vector2& t_position) const
+{
+	// #todo check mouse valid
+	return t_position.x >= 0 && t_position.x <= 640
+		&& t_position.y >= 0 && t_position.y <= 480;
 }

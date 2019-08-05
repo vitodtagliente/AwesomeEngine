@@ -17,7 +17,10 @@ private:
 	virtual void post_rendering_implementation() override;
 
 	Object* createCircle(const vector3& t_position, const vector3& t_scale) const;
-	vector3 getMousePosition() const;
+
+	// #todo
+	vector3 mousePositionToWorld(const vector2& t_position) const;
+	bool isMousePositionValid(const vector2& t_position) const;
 
 	// background color
 	Color m_backgroundColor;
