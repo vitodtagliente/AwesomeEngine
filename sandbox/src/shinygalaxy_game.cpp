@@ -11,8 +11,11 @@ bool ShinyGalaxy::startup_implementation()
 
 	GraphicsAPI* api = m_renderer->getAPI();
 
+	/*
 	std::map<Shader::Type, std::string> sources;
-	Shader::Reader::parse("assets/projection.shader", sources);
+	std::string file_content;
+	Shader::Reader::load("assets/projection.shader", file_content);
+	Shader::Reader::parse(file_content, sources);
 	auto vertex = api->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
 	auto fragment = api->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
 	auto m_program = api->createShaderProgram({ vertex, fragment });
@@ -20,18 +23,22 @@ bool ShinyGalaxy::startup_implementation()
 	// free shaders
 	delete vertex;
 	delete fragment;
+	*/
 
 	m_renderer->enableAlpha();
 	Texture* const texture = m_renderer->getTextureLibrary()->add("circle", "assets/circle.png");
 
 	// sprite material initialization
-	m_spriteMaterial = new Material(m_program);
-	m_spriteMaterial->set("u_Texture", texture);
+	// m_spriteMaterial = new Material(m_program);
+	// m_spriteMaterial->set("u_Texture", texture);
+
+	if (Material * const material = m_renderer->getMaterialLibrary()->get("sprite"))
+	{
+		material->set("u_Texture", texture);
+	}
 
 	// #todo: errori con lo scale?
 	m_playerPawn = createCircle({}, {.05f, .1f, 0.0f});
-
-
 
 	return true;
 }
@@ -90,7 +97,7 @@ Object* ShinyGalaxy::createCircle(const vector3& t_position, const vector3& t_sc
 	m_sprite->transform.position = t_position;
 	m_sprite->transform.scale = t_scale;
 	SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();
-	sprite_component->material = m_spriteMaterial;
+	sprite_component->material = m_renderer->getMaterialLibrary()->get("sprite");
 	return m_sprite;
 }
 

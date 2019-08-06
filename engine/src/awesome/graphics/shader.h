@@ -29,7 +29,7 @@ namespace awesome
 			// read the file content
 			static bool load(const std::string& t_filename, std::string& t_source);
 			// read different shader sources from the same file
-			static bool parse(const std::string& t_filename, std::map<Type, std::string>& t_sources);
+			static bool parse(const std::string& t_content, std::map<Type, std::string>& t_sources);
 		};
 
 		Shader(const Type t_type, const std::string& t_source);

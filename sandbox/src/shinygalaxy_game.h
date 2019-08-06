@@ -36,6 +36,6 @@ private:
 	vector3 m_lastPosition;
 
 	// sprite material
-	Material* m_spriteMaterial;
+	// Material* m_spriteMaterial;
 
 };

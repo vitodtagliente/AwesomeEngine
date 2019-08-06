@@ -14,7 +14,12 @@ namespace awesome
 
 	struct MaterialProperty
 	{
-		using value_t = std::variant<bool, float, int, vec2, vec3, vec4, mat2, mat3, mat4, Texture*>;
+		using value_t = std::variant<
+			bool, float, int, 
+			vec2, vec3, vec4, 
+			mat2, mat3, mat4, 
+			Texture*
+		>;
 
 		enum class Type
 		{
