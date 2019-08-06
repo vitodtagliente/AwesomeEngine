@@ -28,6 +28,17 @@ namespace awesome
 		unsigned int loadMaterials(const std::string& t_path);
 		unsigned int loadShaders(const std::string& t_path);
 
+		bool add(const std::string& t_name, Material* const t_material);
+		bool add(const std::string& t_name, Shader* const t_shader);
+		bool add(const std::string& t_name, ShaderProgram* const t_program);
+
+		// retrieve a material
+		Material* const get(const std::string& t_name) const;
+
+		const std::map<std::string, Material*>& getMaterials() const { return m_materials; }
+		const std::map<std::string, Shader*>& getShaders() const { return m_shaders; }
+		const std::map<std::string, ShaderProgram*>& getPrograms() const { return m_programs; }
+
 	private:
 
 		GraphicsAPI* m_api;

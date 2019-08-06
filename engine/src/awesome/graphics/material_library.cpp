@@ -66,4 +66,47 @@ namespace awesome
 	{
 		return 0;
 	}
+	
+	bool MaterialLibrary::add(const std::string& t_name, Material* const t_material)
+	{
+		const auto it = m_materials.find(t_name);
+		if (it == m_materials.end())
+		{
+			m_materials.insert({ t_name, t_material });
+			return true;
+		}
+		return false;
+	}
+	
+	bool MaterialLibrary::add(const std::string& t_name, Shader* const t_shader)
+	{
+		const auto it = m_shaders.find(t_name);
+		if (it == m_shaders.end())
+		{
+			m_shaders.insert({ t_name, t_shader });
+			return true;
+		}
+		return false;
+	}
+	
+	bool MaterialLibrary::add(const std::string& t_name, ShaderProgram* const t_program)
+	{
+		const auto it = m_programs.find(t_name);
+		if (it == m_programs.end())
+		{
+			m_programs.insert({ t_name, t_program });
+			return true;
+		}
+		return false;
+	}
+	
+	Material* const MaterialLibrary::get(const std::string& t_name) const
+	{
+		const auto it = m_materials.find(t_name);
+		if (it != m_materials.end())
+		{
+			return it->second;
+		}
+		return nullptr;
+	}
 }

@@ -4,8 +4,8 @@
 #include <vector>
 #include <map>
 #include <variant>
-#include "../math/vector.h"
-#include "../math/matrix.h"
+#include <awesome/math/vector.h>
+#include <awesome/math/matrix.h>
 
 namespace awesome
 {

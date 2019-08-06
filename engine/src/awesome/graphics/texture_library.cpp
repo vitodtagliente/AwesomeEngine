@@ -27,17 +27,20 @@ namespace awesome
 
 	unsigned int TextureLibrary::load(const std::string& t_path)
 	{
+		// #todo retrieve all file in a folder
 		return 0;
 	}
 
 	unsigned int TextureLibrary::load(const std::vector<std::string>& t_files)
 	{
-		return 0;
-	}
-
-	unsigned int TextureLibrary::load(const std::initializer_list<std::string>& t_files)
-	{
-		return 0;
+		unsigned int count = 0;
+		for (const std::string& filename : t_files)
+		{
+			// #todo: extract the filename
+			if (add(filename, filename))
+				++count;
+		}
+		return count;
 	}
 
 	Texture* const TextureLibrary::add(const std::string& t_name, const std::string& t_filename)

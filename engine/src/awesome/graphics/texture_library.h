@@ -23,7 +23,6 @@ namespace awesome
 		unsigned int load(const std::string& t_path);
 		// load texture given filenames
 		unsigned int load(const std::vector<std::string>& t_files);
-		unsigned int load(const std::initializer_list<std::string>& t_files);
 
 		// add a texture
 		Texture* const add(const std::string& t_name, const std::string& t_filename);
@@ -33,6 +32,9 @@ namespace awesome
 
 		// retrieve a texture
 		Texture* const get(const std::string& t_name) const;
+
+		// retrieve all textures
+		const std::map<std::string, Texture*>& getTextures() const { return m_textures; }
 
 	private:
 
