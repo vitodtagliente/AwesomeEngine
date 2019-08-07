@@ -63,12 +63,14 @@ namespace awesome
 		m_commandBuffer.clear();
 	}
 	
-	void Renderer::drawTexture(Texture* const t_texture, const vec2& t_position)
+	void Renderer::drawTexture(Texture* const t_texture, const vec2& t_position, const vec2& t_scale)
 	{
 		static Renderable* const quad_renderable = Renderer::instance()->getAPI()->createRenderable(Quad{});
 
 		Material* const material = m_materialLibrary->get("sprite");
 		material->set(Material::params::Texture, t_texture);
-		push(quad_renderable, material, mat4::translate({ t_position.x, t_position.y, 0.0f }));
+		mat4 matrix = mat4::scale({ t_scale.x, t_scale.y, 0.0f}) 
+			* mat4::translate({ t_position.x, t_position.y, 0.0f });
+		push(quad_renderable, material, matrix);
 	}
 }

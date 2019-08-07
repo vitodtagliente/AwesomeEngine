@@ -39,7 +39,7 @@ namespace awesome
 		inline TextureLibrary* const getTextureLibrary() const { return m_textureLibrary; }
 
 		// basic 2d drawing utilites
-		void drawTexture(Texture* const t_texture, const vec2& t_position);
+		void drawTexture(Texture* const t_texture, const vec2& t_position, const vec2& t_scale = vec2::ones);
 
 	protected:
 
