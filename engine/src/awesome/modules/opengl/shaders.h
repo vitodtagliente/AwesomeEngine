@@ -27,13 +27,13 @@ namespace awesome
 
 				#version 330 core
 
-				out vec4 out_fragColor;
+				out vec4 out_FragColor;
 
-				uniform vec4 u_color;
+				uniform vec4 u_Color;
 
 				void main()
 				{
-					out_fragColor = u_color;
+					out_FragColor = u_Color;
 				}			
 			)" },
 

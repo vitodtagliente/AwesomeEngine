@@ -9,28 +9,8 @@ bool ShinyGalaxy::startup_implementation()
 	m_time = Time::instance();
 	m_window = Window::instance();
 
-	GraphicsAPI* api = m_renderer->getAPI();
-
-	/*
-	std::map<Shader::Type, std::string> sources;
-	std::string file_content;
-	Shader::Reader::load("assets/projection.shader", file_content);
-	Shader::Reader::parse(file_content, sources);
-	auto vertex = api->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
-	auto fragment = api->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
-	auto m_program = api->createShaderProgram({ vertex, fragment });
-
-	// free shaders
-	delete vertex;
-	delete fragment;
-	*/
-
 	m_renderer->enableAlpha();
 	Texture* const texture = m_renderer->getTextureLibrary()->add("circle", "assets/circle.png");
-
-	// sprite material initialization
-	// m_spriteMaterial = new Material(m_program);
-	// m_spriteMaterial->set("u_Texture", texture);
 
 	if (Material * const material = m_renderer->getMaterialLibrary()->get("sprite"))
 	{
@@ -98,6 +78,10 @@ Object* ShinyGalaxy::createCircle(const vector3& t_position, const vector3& t_sc
 	m_sprite->transform.scale = t_scale;
 	SpriteComponent* const sprite_component = m_sprite->addComponent<SpriteComponent>();
 	sprite_component->material = m_renderer->getMaterialLibrary()->get("sprite");
+	//MeshComponent* const mesh_component = m_sprite->addComponent<MeshComponent>();
+	//mesh_component->material = m_renderer->getMaterialLibrary()->get("solid");
+	//mesh_component->material->set(Material::params::Color, vec3(1.0f, 0.0f, 0.0f));
+	//mesh_component->mesh = new Quad();
 	return m_sprite;
 }
 

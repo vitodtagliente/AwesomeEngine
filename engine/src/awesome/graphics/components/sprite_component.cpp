@@ -1,12 +1,10 @@
 #include "sprite_component.h"
 
-#include "../graphics_api.h"
-#include "../renderer.h"
-#include "../texture.h"
-#include "../renderable.h"
-#include "../graphics_module.h"
-#include "../mesh/quad.h"
-#include "../../scene/object.h"
+#include <awesome/graphics/graphics_api.h>
+#include <awesome/graphics/renderer.h>
+#include <awesome/graphics/renderable.h>
+#include <awesome/graphics/mesh/quad.h>
+#include <awesome/scene/object.h>
 
 namespace awesome
 {

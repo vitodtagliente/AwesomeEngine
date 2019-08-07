@@ -32,6 +32,7 @@
 #include "graphics/render_command.h"
 #include "graphics/material.h"
 #include "graphics/components/sprite_component.h"
+#include "graphics/components/mesh_component.h"
 #include "graphics/material_library.h"
 #include "graphics/texture_library.h"
 

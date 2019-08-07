@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../scene/component.h"
-#include "../material.h"
+#include <awesome/scene/component.h>
+#include <awesome/graphics/material.h>
 
 namespace awesome
 {
