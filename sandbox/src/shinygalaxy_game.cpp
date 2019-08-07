@@ -34,7 +34,7 @@ bool ShinyGalaxy::startup_implementation()
 
 	if (Material * const material = m_renderer->getMaterialLibrary()->get("sprite"))
 	{
-		material->set("u_Texture", texture);
+		material->set(Material::params::Texture, texture);
 	}
 
 	// #todo: errori con lo scale?

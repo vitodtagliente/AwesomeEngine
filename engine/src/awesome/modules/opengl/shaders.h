@@ -47,11 +47,11 @@ namespace awesome
 
 				out vec2 v_TexCoord;
 
-				uniform mat4 u_MVP;
+				uniform mat4 u_ModelViewProjectionMatrix;
 
 				void main()
 				{
-					gl_Position = u_MVP * position;
+					gl_Position = u_ModelViewProjectionMatrix * position;
 					v_TexCoord = texCoord;
 				}
 

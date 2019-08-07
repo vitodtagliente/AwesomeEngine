@@ -56,6 +56,9 @@ namespace awesome
 		Material(const Material& t_materal);
 		~Material();
 
+		void bind();
+		void unbind();
+
 		inline ShaderProgram * const getShaderProgram() const { return m_shaderProgram; }
 
 		inline const std::map<std::string, MaterialProperty>& getProperties() const { return m_properties; }
@@ -71,6 +74,15 @@ namespace awesome
 		void set(const std::string& t_name, const mat3 t_value);
 		void set(const std::string& t_name, const mat4 t_value);
 		void set(const std::string& t_name, Texture * const t_value);
+
+		struct params
+		{
+			params() = delete;
+
+			static const std::string ModelViewProjectionMatrix;
+			static const std::string Texture;
+			static const std::string Color;
+		};
 
 	private:
 

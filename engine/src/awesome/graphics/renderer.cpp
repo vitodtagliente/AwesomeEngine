@@ -37,7 +37,7 @@ namespace awesome
 				if (ShaderProgram * const program = material->getShaderProgram())
 				{
 					program->bind();
-					program->set("u_MVP", &command.transform.data[0]);
+					program->set(Material::params::ModelViewProjectionMatrix, &command.transform.data[0]);
 
 					const std::vector<MaterialProperty>& textures = material->getProperties(MaterialProperty::Type::Texture2D);
 					for (int i = 0; i < textures.size(); ++i)
@@ -47,7 +47,7 @@ namespace awesome
 						if (texture)
 						{
 							texture->bind();
-							program->set("u_Texture", i);
+							program->set(Material::params::Texture, i);
 						}
 					}
 				}

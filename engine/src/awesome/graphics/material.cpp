@@ -4,6 +4,10 @@
 
 namespace awesome
 {
+	const std::string Material::params::Color = "u_Color";
+	const std::string Material::params::ModelViewProjectionMatrix = "u_ModelViewProjectionMatrix";
+	const std::string Material::params::Texture = "u_Texture";
+
 	Material::Material(const Type t_type /*= Type::Default*/)
 		: m_type(t_type)
 		, m_shaderProgram()
@@ -28,6 +32,16 @@ namespace awesome
 	Material::~Material()
 	{
 
+	}
+
+	void Material::bind()
+	{
+		m_shaderProgram->bind();
+	}
+
+	void Material::unbind()
+	{
+		m_shaderProgram->unbind();
 	}
 
 	std::vector<MaterialProperty> Material::getProperties(const MaterialProperty::Type t_type) const
