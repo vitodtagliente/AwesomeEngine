@@ -52,6 +52,9 @@ namespace awesome
 							program->set(Material::params::Texture, i);
 						}
 					}
+
+					// #todo color
+					program->set(Material::params::Color, 1.0f, 0.0f, 0.0f, 1.0f);
 				}
 			}
 			// bind the data to render
@@ -71,6 +74,15 @@ namespace awesome
 		material->set(Material::params::Texture, t_texture);
 		mat4 matrix = mat4::scale({ t_scale.x, t_scale.y, 0.0f}) 
 			* mat4::translate({ t_position.x, t_position.y, 0.0f });
+		push(quad_renderable, material, matrix);
+	}
+	
+	void Renderer::drawRectangle(const vec2& t_position, const Color& t_color)
+	{
+		static Renderable* const quad_renderable = Renderer::instance()->getAPI()->createRenderable(Quad{});
+
+		Material* const material = m_materialLibrary->get("solid");
+		mat4 matrix = mat4::translate({ t_position.x, t_position.y, 0.0f });
 		push(quad_renderable, material, matrix);
 	}
 }

@@ -40,6 +40,8 @@ namespace awesome
 
 		// basic 2d drawing utilites
 		void drawTexture(Texture* const t_texture, const vec2& t_position, const vec2& t_scale = vec2::ones);
+		// draw a rectangle 
+		void drawRectangle(const vec2& t_position, const Color& t_color);
 
 	protected:
 
