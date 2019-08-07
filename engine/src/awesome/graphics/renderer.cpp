@@ -7,6 +7,8 @@
 #include "material_library.h"
 #include "texture.h"
 #include "texture_library.h"
+#include "mesh/mesh.h"
+#include "mesh/quad.h"
 
 namespace awesome
 {
@@ -59,5 +61,14 @@ namespace awesome
 		}
 
 		m_commandBuffer.clear();
+	}
+	
+	void Renderer::drawTexture(Texture* const t_texture, const vec2& t_position)
+	{
+		static Renderable* const quad_renderable = Renderer::instance()->getAPI()->createRenderable(Quad{});
+
+		Material* const material = m_materialLibrary->get("sprite");
+		material->set(Material::params::Texture, t_texture);
+		push(quad_renderable, material, mat4::translate({ t_position.x, t_position.y, 0.0f }));
 	}
 }

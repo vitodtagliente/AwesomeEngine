@@ -12,6 +12,7 @@ bool ShinyGalaxy::startup_implementation()
 	m_renderer->enableAlpha();
 	Texture* const texture = m_renderer->getTextureLibrary()->add("circle", "assets/circle.png");
 
+	/*
 	if (Material * const material = m_renderer->getMaterialLibrary()->get("sprite"))
 	{
 		material->set(Material::params::Texture, texture);
@@ -19,7 +20,7 @@ bool ShinyGalaxy::startup_implementation()
 
 	// #todo: errori con lo scale?
 	m_playerPawn = createCircle({}, {.05f, .1f, 0.0f});
-
+	*/
 	return true;
 }
 
@@ -33,31 +34,36 @@ void ShinyGalaxy::update_implementation()
 	static const float speed = 1.5f;
 	static float scale_time = .5f;
 
-	if (m_input->isMouseOverWindow())
+	if (m_playerPawn)
 	{
-		const vector2 mouse_position = m_input->getMousePosition();
-		const vector3 worldMousePosition = mousePositionToWorld(mouse_position);
-		auto diff = worldMousePosition - m_playerPawn->transform.position;
+		if (m_input->isMouseOverWindow())
+		{
+			const vector2 mouse_position = m_input->getMousePosition();
+			const vector3 worldMousePosition = mousePositionToWorld(mouse_position);
+			auto diff = worldMousePosition - m_playerPawn->transform.position;
 
-		m_playerPawn->transform.position += diff * speed * deltaTime;
+			m_playerPawn->transform.position += diff * speed * deltaTime;
+		}
+
+		if (scale_time <= 0.0f)
+		{
+			const float amount = random(-.01f, .01f);
+			float new_size = std::max(0.03f, m_playerPawn->transform.scale.x + amount);
+			new_size = std::min(new_size, 0.1f);
+
+			m_playerPawn->transform.scale = { new_size, new_size, 0.0f };
+
+			scale_time = .5f;
+		}
+		scale_time -= deltaTime;
 	}
-
-	if (scale_time <= 0.0f)
-	{
-		const float amount = random(-.01f, .01f);
-		float new_size = std::max(0.03f, m_playerPawn->transform.scale.x + amount);
-		new_size = std::min(new_size, 0.1f);
-
-		m_playerPawn->transform.scale = { new_size, new_size, 0.0f };
-		
-		scale_time = .5f;
-	}
-	scale_time -= deltaTime;
 }
 
 void ShinyGalaxy::pre_rendering_implementation()
 {
 	m_renderer->clear(m_backgroundColor);
+
+	m_renderer->drawTexture(m_renderer->getTextureLibrary()->get("circle"), {});
 }
 
 void ShinyGalaxy::render_implementation()

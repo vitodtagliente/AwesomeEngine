@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../core/singleton.h"
-#include "../data/color.h"
-#include "../math/matrix4.h"
+#include <awesome/core/singleton.h>
+#include <awesome/data/color.h>
+#include <awesome/math/vector2.h>
+#include <awesome/math/matrix4.h>
 #include "command_buffer.h"
 
 namespace awesome
@@ -13,6 +14,7 @@ namespace awesome
 	class GraphicsAPI;
 	class MaterialLibrary;
 	class TextureLibrary;
+	class Texture;
 
 	class Renderer : public Singleton<Renderer>
 	{
@@ -35,6 +37,9 @@ namespace awesome
 		inline GraphicsAPI* const getAPI() const { return m_api; }
 		inline MaterialLibrary* const getMaterialLibrary() const { return m_materialLibrary; }
 		inline TextureLibrary* const getTextureLibrary() const { return m_textureLibrary; }
+
+		// basic 2d drawing utilites
+		void drawTexture(Texture* const t_texture, const vec2& t_position);
 
 	protected:
 
