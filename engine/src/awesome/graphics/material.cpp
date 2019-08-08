@@ -8,6 +8,9 @@ namespace awesome
 	const std::string Material::params::ModelViewProjectionMatrix = "u_ModelViewProjectionMatrix";
 	const std::string Material::params::Texture = "u_Texture";
 
+	const std::string Material::defaults::Solid = "solid";
+	const std::string Material::defaults::Sprite = "sprite";
+
 	Material::Material(const Type t_type /*= Type::Default*/)
 		: m_type(t_type)
 		, m_shaderProgram()

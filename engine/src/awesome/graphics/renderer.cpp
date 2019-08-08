@@ -101,14 +101,14 @@ namespace awesome
 
 	void Renderer::drawTexture(Texture* const t_texture, const matrix4& t_transform)
 	{
-		push(m_quad, m_materialLibrary->get("sprite"), t_transform);
+		push(m_quad, m_materialLibrary->get(Material::defaults::Sprite), t_transform);
 	}
 
 	void Renderer::drawRectangle(const vec2& t_position, const Color& t_color, const vec2& t_scale)
 	{
 		static Renderable* const quad_renderable = Renderer::instance()->getAPI()->createRenderable(Quad{});
 
-		Material* const material = m_materialLibrary->get("solid");
+		Material* const material = m_materialLibrary->get(Material::defaults::Solid);
 		mat4 matrix = mat4::scale({ t_scale.x, t_scale.y, 0.0f })
 			* mat4::translate({ t_position.x, t_position.y, 0.0f });
 		push(quad_renderable, material, matrix);

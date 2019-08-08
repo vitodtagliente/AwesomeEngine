@@ -84,6 +84,14 @@ namespace awesome
 			static const std::string Color;
 		};
 
+		struct defaults
+		{
+			defaults() = delete;
+
+			static const std::string Solid;
+			static const std::string Sprite;
+		};
+
 	private:
 
 		// material type
