@@ -34,30 +34,11 @@ namespace awesome
 	{
 		for (const RenderCommand& command : m_commandBuffer.getCommands())
 		{
-			// material stuff
-			if (Material * const material = command.material)
-			{
-				if (ShaderProgram * const program = material->getShaderProgram())
-				{
-					program->bind();
-					program->set(Material::params::ModelViewProjectionMatrix, &command.transform.data[0]);
-
-					const std::vector<MaterialProperty>& textures = material->getProperties(MaterialProperty::Type::Texture2D);
-					for (int i = 0; i < textures.size(); ++i)
-					{
-						const MaterialProperty& property = textures[i];
-						Texture* const texture = std::get<Texture*>(property.value);
-						if (texture)
-						{
-							texture->bind();
-							program->set(Material::params::Texture, i);
-						}
-					}
-
-					// #todo color
-					program->set(Material::params::Color, 1.0f, 0.0f, 0.0f, 1.0f);
-				}
-			}
+			// bind the material
+			// #todo remove these
+			command.material->set(Material::params::ModelViewProjectionMatrix, command.transform);
+			command.material->set(Material::params::Color, Color::Blue);
+			command.material->bind();
 			// bind the data to render
 			command.renderable->bind();
 			// render the command
@@ -104,13 +85,40 @@ namespace awesome
 		push(m_quad, m_materialLibrary->get(Material::defaults::Sprite), t_transform);
 	}
 
-	void Renderer::drawRectangle(const vec2& t_position, const Color& t_color, const vec2& t_scale)
+	void Renderer::drawRect(const Color& t_color, const vector2& t_position)
 	{
-		static Renderable* const quad_renderable = Renderer::instance()->getAPI()->createRenderable(Quad{});
+		drawRect(
+			t_color,
+			matrix4::translate(to_vec3(t_position))
+		);
+	}
 
-		Material* const material = m_materialLibrary->get(Material::defaults::Solid);
-		mat4 matrix = mat4::scale({ t_scale.x, t_scale.y, 0.0f })
-			* mat4::translate({ t_position.x, t_position.y, 0.0f });
-		push(quad_renderable, material, matrix);
+	void Renderer::drawRect(const Color& t_color, const vector2& t_position, const vector2& t_scale)
+	{
+		drawRect(
+			t_color,
+			matrix4::scale(to_vec3(t_scale)) * matrix4::translate(to_vec3(t_position))
+		);
+	}
+
+	void Renderer::drawRect(const Color& t_color, const vector2& t_position, const float t_theta)
+	{
+		drawRect(
+			t_color,
+			matrix4::rotate_z(t_theta) * matrix4::translate(to_vec3(t_position))
+		);
+	}
+
+	void Renderer::drawRect(const Color& t_color, const vector2& t_position, const float t_theta, const vector2& t_scale)
+	{
+		drawRect(
+			t_color,
+			matrix4::scale(to_vec3(t_scale)) * matrix4::rotate_z(t_theta) * matrix4::translate(to_vec3(t_position))
+		);
+	}
+
+	void Renderer::drawRect(const Color& t_color, const matrix4& t_transform)
+	{
+		push(m_quad, m_materialLibrary->get(Material::defaults::Solid), t_transform);
 	}
 }

@@ -45,7 +45,11 @@ namespace awesome
 		void drawTexture(Texture* const t_texture, const vector2& t_position, const float t_theta, const vector2& t_scale);
 		void drawTexture(Texture* const t_texture, const matrix4& t_transform);
 		// draw a rectangle 
-		void drawRectangle(const vec2& t_position, const Color& t_color, const vec2& t_scale = vec2::ones);
+		void drawRect(const Color& t_color, const vector2& t_position);
+		void drawRect(const Color& t_color, const vector2& t_position, const vector2& t_scale);
+		void drawRect(const Color& t_color, const vector2& t_position, const float t_theta);
+		void drawRect(const Color& t_color, const vector2& t_position, const float t_theta, const vector2& t_scale);
+		void drawRect(const Color& t_color, const matrix4& t_transform);
 
 	protected:
 

@@ -6,6 +6,7 @@
 #include <variant>
 #include <awesome/math/vector.h>
 #include <awesome/math/matrix.h>
+#include <awesome/data/color.h>
 
 namespace awesome
 {
@@ -18,7 +19,7 @@ namespace awesome
 			bool, float, int, 
 			vec2, vec3, vec4, 
 			mat2, mat3, mat4, 
-			Texture*
+			Texture*, Color
 		>;
 
 		enum class Type
@@ -35,7 +36,8 @@ namespace awesome
 			Vec4,
 			Mat2,
 			Mat3,
-			Mat4
+			Mat4,
+			Color
 		};
 
 		Type type;
@@ -74,6 +76,7 @@ namespace awesome
 		void set(const std::string& t_name, const mat3 t_value);
 		void set(const std::string& t_name, const mat4 t_value);
 		void set(const std::string& t_name, Texture * const t_value);
+		void set(const std::string& t_name, const Color& t_value);
 
 		struct params
 		{

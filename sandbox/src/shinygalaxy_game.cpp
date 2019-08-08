@@ -37,7 +37,7 @@ void ShinyGalaxy::pre_rendering_implementation()
 	Texture* const batman_texture = m_renderer->getTextureLibrary()->get("batman");
 	m_renderer->drawTexture(batman_texture, vec2{});
 	m_renderer->drawTexture(batman_texture, { .2f, 0.0f }, { .2f, .4f });
-	m_renderer->drawRectangle({}, Color::Blue, { .2f, .4f });
+	m_renderer->drawRect(Color::Blue, {}, { .2f, .4f });
 }
 
 void ShinyGalaxy::render_implementation()

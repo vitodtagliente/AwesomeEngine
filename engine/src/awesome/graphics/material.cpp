@@ -1,6 +1,7 @@
 #include "material.h"
 
 #include "shader_program.h"
+#include "texture.h"
 
 namespace awesome
 {
@@ -40,6 +41,30 @@ namespace awesome
 	void Material::bind()
 	{
 		m_shaderProgram->bind();
+
+		int textures_counter = 0;
+		for (const auto& pair : m_properties)
+		{
+			if (pair.second.type == MaterialProperty::Type::Texture2D)
+			{
+				Texture* const texture = std::get<Texture*>(pair.second.value);
+				if (texture)
+				{
+					texture->bind();
+					m_shaderProgram->set(pair.first, textures_counter++);
+				}
+			}
+			else if (pair.second.type == MaterialProperty::Type::Color)
+			{
+				const Color& color = std::get<Color>(pair.second.value);
+				m_shaderProgram->set(pair.first, color.red, color.green, color.blue, color.alpha);
+			}
+			else if (pair.second.type == MaterialProperty::Type::Mat4)
+			{
+				const matrix4& matrix = std::get<matrix4>(pair.second.value);
+				m_shaderProgram->set(pair.first, &matrix.data[0]);
+			}
+		}
 	}
 
 	void Material::unbind()
@@ -59,7 +84,7 @@ namespace awesome
 			}
 		}
 
-		return std::move(result);
+		return result;
 	}
 
 	void Material::set(const std::string& t_name, const bool t_value)
@@ -110,6 +135,11 @@ namespace awesome
 	void Material::set(const std::string& t_name, Texture* const t_value)
 	{
 		m_properties.insert({ t_name, {MaterialProperty::Type::Texture2D, t_value} });
+	}
+
+	void Material::set(const std::string& t_name, const Color& t_value)
+	{
+		m_properties.insert({ t_name, {MaterialProperty::Type::Color, t_value} });
 	}
 
 }
