@@ -2,8 +2,8 @@
 
 #include <awesome/core/singleton.h>
 #include <awesome/data/color.h>
-#include <awesome/math/vector2.h>
-#include <awesome/math/matrix4.h>
+#include <awesome/math/vector.h>
+#include <awesome/math/matrix.h>
 #include "command_buffer.h"
 
 namespace awesome
@@ -39,9 +39,12 @@ namespace awesome
 		inline TextureLibrary* const getTextureLibrary() const { return m_textureLibrary; }
 
 		// basic 2d drawing utilites
-		void drawTexture(Texture* const t_texture, const vec2& t_position, const vec2& t_scale = vec2::ones);
+		void drawTexture(Texture* const t_texture, const vector2& t_position);
+		void drawTexture(Texture* const t_texture, const vector2& t_position, const vector2& t_scale);
+		void drawTexture(Texture* const t_texture, const vector2& t_position, const vector2& t_rotation, const vector2& t_scale);
+		void drawTexture(Texture* const t_texture, const matrix4& t_transform);
 		// draw a rectangle 
-		void drawRectangle(const vec2& t_position, const Color& t_color);
+		void drawRectangle(const vec2& t_position, const Color& t_color, const vec2& t_scale = vec2::ones);
 
 	protected:
 
@@ -53,5 +56,8 @@ namespace awesome
 		MaterialLibrary* m_materialLibrary;
 		// texture library
 		TextureLibrary* m_textureLibrary;
+
+		// renderable for sprites
+		Renderable* m_quad;
 	};
 }
