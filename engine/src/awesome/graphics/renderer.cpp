@@ -69,17 +69,34 @@ namespace awesome
 	
 	void Renderer::drawTexture(Texture* const t_texture, const vector2& t_position)
 	{
-		drawTexture(t_texture, matrix4::translate({ t_position.x, t_position.y, 0.0f }));
+		drawTexture(
+			t_texture, 
+			matrix4::translate(to_vec3(t_position))
+		);
 	}
 
 	void Renderer::drawTexture(Texture* const t_texture, const vector2& t_position, const vector2& t_scale)
 	{
-		drawTexture(t_texture, matrix4::scale({}) * matrix4::translate({}));
+		drawTexture(
+			t_texture, 
+			matrix4::scale(to_vec3(t_scale)) * matrix4::translate(to_vec3(t_position))
+		);
 	}
 
-	void Renderer::drawTexture(Texture* const t_texture, const vector2& t_position, const vector2& t_rotation, const vector2& t_scale)
+	void Renderer::drawTexture(Texture* const t_texture, const vector2& t_position, const float t_theta)
 	{
-		drawTexture(t_texture, matrix4::scale({}) * matrix4::rotate_z({}) * matrix4::translate({}));
+		drawTexture(
+			t_texture,
+			matrix4::rotate_z(t_theta) * matrix4::translate(to_vec3(t_position))
+		);
+	}
+
+	void Renderer::drawTexture(Texture* const t_texture, const vector2& t_position, const float t_theta, const vector2& t_scale)
+	{
+		drawTexture(
+			t_texture,
+			matrix4::scale(to_vec3(t_scale)) * matrix4::rotate_z(t_theta) * matrix4::translate(to_vec3(t_position))
+		);
 	}
 
 	void Renderer::drawTexture(Texture* const t_texture, const matrix4& t_transform)
