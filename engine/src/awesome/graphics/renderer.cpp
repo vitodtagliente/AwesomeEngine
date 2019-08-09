@@ -35,9 +35,6 @@ namespace awesome
 		for (const RenderCommand& command : m_commandBuffer.getCommands())
 		{
 			// bind the material
-			// #todo remove these
-			command.material->set(Material::params::ModelViewProjectionMatrix, command.transform);
-			command.material->set(Material::params::Color, Color::Blue);
 			command.material->bind();
 			// bind the data to render
 			command.renderable->bind();
@@ -82,7 +79,10 @@ namespace awesome
 
 	void Renderer::drawTexture(Texture* const t_texture, const matrix4& t_transform)
 	{
-		push(m_quad, m_materialLibrary->get(Material::defaults::Sprite), t_transform);
+		Material* const spriteMaterial = m_materialLibrary->get(Material::defaults::Sprite)->createInstance();
+		spriteMaterial->set(Material::params::ModelViewProjectionMatrix, t_transform);
+		spriteMaterial->set(Material::params::Texture, t_texture);
+		push(m_quad, spriteMaterial, t_transform);
 	}
 
 	void Renderer::drawRect(const Color& t_color, const vector2& t_position)
@@ -119,6 +119,9 @@ namespace awesome
 
 	void Renderer::drawRect(const Color& t_color, const matrix4& t_transform)
 	{
-		push(m_quad, m_materialLibrary->get(Material::defaults::Solid), t_transform);
+		Material* const solidMaterial = m_materialLibrary->get(Material::defaults::Solid)->createInstance();
+		solidMaterial->set(Material::params::Color, t_color);
+		solidMaterial->set(Material::params::ModelViewProjectionMatrix, t_transform);
+		push(m_quad, solidMaterial, t_transform);
 	}
 }

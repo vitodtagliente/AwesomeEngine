@@ -16,6 +16,7 @@ namespace awesome
 		: m_type(t_type)
 		, m_shaderProgram()
 		, m_properties()
+		, m_instances()
 	{
 
 	}
@@ -35,7 +36,10 @@ namespace awesome
 
 	Material::~Material()
 	{
-
+		for (Material* const instance : m_instances)
+		{
+			delete instance;
+		}
 	}
 
 	void Material::bind()
@@ -142,4 +146,10 @@ namespace awesome
 		m_properties.insert({ t_name, {MaterialProperty::Type::Color, t_value} });
 	}
 
+	Material* const Material::createInstance() const
+	{
+		Material* const new_instance = new Material(*this);
+		m_instances.push_back(new_instance);
+		return new_instance;
+	}
 }

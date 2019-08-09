@@ -78,6 +78,10 @@ namespace awesome
 		void set(const std::string& t_name, Texture * const t_value);
 		void set(const std::string& t_name, const Color& t_value);
 
+		// create a new instance of this material
+		// example: many sprites that use differents uniforms parameters
+		Material* const createInstance() const;
+
 		struct params
 		{
 			params() = delete;
@@ -103,6 +107,7 @@ namespace awesome
 		ShaderProgram* m_shaderProgram;
 		// material attributes
 		std::map<std::string, MaterialProperty> m_properties;
-
+		// take track of all instances
+		mutable std::vector<Material*> m_instances;
 	};
 }
