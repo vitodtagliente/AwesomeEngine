@@ -38,7 +38,20 @@ void ShinyGalaxy::pre_rendering_implementation()
 	m_renderer->drawTexture(batman_texture, vec2{});
 	m_renderer->drawTexture(circle_texture, { .2f, 0.0f }, { .4f, .4f });
 	m_renderer->drawRect(Color::Blue, { -.3f, -.3f }, { .2f, .4f });
-	m_renderer->drawRect(Color::Blue, { .3f, .3f }, 30.0f, { .2f, .4f });
+	m_renderer->drawRect(Color::Red, { .3f, .3f }, 30.0f, { .2f, .4f });
+
+	// stress test
+	/*
+	for (int i = 0; i < 300; ++i)
+	{
+		m_renderer->drawRect(
+			Color(random(0.0f, 1.0f), random(0.0f, 1.0f), random(0.0f, 1.0f)),
+			vector2(random(-.8f, .8f), random(-.8f, .8f)),
+			random(0.0f, 360.f),
+			vector2(random(-.5f, .5f), random(-.5f, .5f))
+		);
+	}
+	*/
 }
 
 void ShinyGalaxy::render_implementation()
