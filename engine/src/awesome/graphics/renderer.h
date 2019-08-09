@@ -20,6 +20,12 @@ namespace awesome
 	{
 	public:
 
+		enum class DrawingMode
+		{
+			Fill,
+			Lines
+		};
+
 		// dependency injection
 		Renderer(GraphicsAPI* const t_api);
 		virtual ~Renderer();
@@ -29,6 +35,7 @@ namespace awesome
 		virtual void draw(const unsigned int t_vertices = 3) = 0;
 		virtual void drawIndexed(const unsigned int t_vertices) = 0;
 		virtual void setViewport(const int t_width, const int t_height) = 0;
+		virtual void setDrawingMode(const DrawingMode t_drawingMode);
 		
 		void push(Renderable* const t_renderable, Material* const t_material, const matrix4& t_transform = matrix4::identity);
 		// render all pushed commands
@@ -64,5 +71,7 @@ namespace awesome
 
 		// renderable for sprites
 		Renderable* m_quad;
+		// drawing mode
+		DrawingMode m_drawingMode;
 	};
 }

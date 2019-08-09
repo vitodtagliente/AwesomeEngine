@@ -40,4 +40,18 @@ namespace awesome
 	{
 		glViewport(0, 0, t_width, t_height);
 	}
+
+	void RendererGL::setDrawingMode(const DrawingMode t_drawingMode)
+	{
+		switch (t_drawingMode)
+		{
+		case Renderer::DrawingMode::Lines:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			break;
+		case Renderer::DrawingMode::Fill:
+		default:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		}
+	}
 }

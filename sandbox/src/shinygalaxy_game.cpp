@@ -10,6 +10,7 @@ bool ShinyGalaxy::startup_implementation()
 	m_window = Window::instance();
 
 	m_renderer->enableAlpha();
+	// m_renderer->setDrawingMode(Renderer::DrawingMode::Lines);
 	// load textures
 	if (TextureLibrary * const library = m_renderer->getTextureLibrary())
 	{

@@ -18,6 +18,7 @@ namespace awesome
 		, m_materialLibrary(new MaterialLibrary(t_api))
 		, m_textureLibrary(new TextureLibrary(t_api))
 		, m_quad(t_api->createRenderable(Quad{}))
+		, m_drawingMode(DrawingMode::Fill)
 	{
 	}
 	
@@ -25,6 +26,11 @@ namespace awesome
 	{
 	}
 	
+	void Renderer::setDrawingMode(const DrawingMode t_drawingMode)
+	{
+		m_drawingMode = t_drawingMode;
+	}
+
 	void Renderer::push(Renderable* const t_renderable, Material* const t_material, const matrix4& t_transform)
 	{
 		m_commandBuffer.push_back(RenderCommand(t_renderable, t_material, t_transform));
