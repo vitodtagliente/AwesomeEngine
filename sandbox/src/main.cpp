@@ -13,10 +13,13 @@
 #include "shinygalaxy_game.h"
 
 using namespace awesome;
-using namespace std;
 
 int main()
 {
+	// filesystem tests
+	std::cout << Directory::getCurrentDirectory() << std::endl;
+	std::cout << Path::combine("ciao", "allora") << std::endl;
+
 	Engine::run({ new ShinyGalaxy() });
 	return 0;
 }
