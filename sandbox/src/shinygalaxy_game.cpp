@@ -53,6 +53,18 @@ void ShinyGalaxy::pre_rendering_implementation()
 		);
 	}
 	*/
+
+	/*
+	for (int i = 0; i < 200; ++i)
+	{
+		m_renderer->drawTexture(
+			batman_texture,
+			vector2(random(-.8f, .8f), random(-.8f, .8f)),
+			random(0.0f, 360.f),
+			vector2(random(-.5f, .5f), random(-.5f, .5f))
+		);
+	}
+	*/
 }
 
 void ShinyGalaxy::render_implementation()

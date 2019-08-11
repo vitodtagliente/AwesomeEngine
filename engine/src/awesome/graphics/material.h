@@ -55,13 +55,15 @@ namespace awesome
 
 		Material(const Type t_type = Type::Default);
 		Material(ShaderProgram * const t_shaderProgram, const Type t_type = Type::Default);
-		Material(const Material& t_materal);
+		Material(const Material& t_materal) = delete;
 		~Material();
 
 		void bind();
 		void unbind();
 
 		inline ShaderProgram * const getShaderProgram() const { return m_shaderProgram; }
+		inline bool isInstance() const { return m_parent != nullptr; }
+		inline Material* const getParent() const { return m_parent; }
 
 		inline const std::map<std::string, MaterialProperty>& getProperties() const { return m_properties; }
 		std::vector<MaterialProperty> getProperties(const MaterialProperty::Type t_type) const;
@@ -87,6 +89,8 @@ namespace awesome
 			params() = delete;
 
 			static const std::string ModelViewProjectionMatrix;
+			static const std::string ViewProjectionMatrix;
+			static const std::string ModelTransformMatrix;
 			static const std::string Texture;
 			static const std::string Color;
 		};
@@ -109,5 +113,7 @@ namespace awesome
 		std::map<std::string, MaterialProperty> m_properties;
 		// take track of all instances
 		mutable std::vector<Material*> m_instances;
+		// if it is an instance it shoud point to the parent material 
+		Material* m_parent;
 	};
 }

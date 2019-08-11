@@ -7,6 +7,8 @@ namespace awesome
 {
 	const std::string Material::params::Color = "u_Color";
 	const std::string Material::params::ModelViewProjectionMatrix = "u_ModelViewProjectionMatrix";
+	const std::string Material::params::ViewProjectionMatrix = "u_ViewProjectionMatrix";
+	const std::string Material::params::ModelTransformMatrix = "u_Transform";
 	const std::string Material::params::Texture = "u_Texture";
 
 	const std::string Material::defaults::Solid = "solid";
@@ -17,21 +19,19 @@ namespace awesome
 		, m_shaderProgram()
 		, m_properties()
 		, m_instances()
+		, m_parent()
 	{
 
 	}
 
 	Material::Material(ShaderProgram * const t_shaderProgram, const Type t_type /*= Type::Default*/)
-		: m_shaderProgram(t_shaderProgram)
-		, m_type(t_type)
+		: m_type(t_type)
+		, m_shaderProgram(t_shaderProgram)
+		, m_properties()
+		, m_instances()
+		, m_parent()
 	{
 
-	}
-
-	Material::Material(const Material& t_materal)
-	{
-		m_type = t_materal.m_type;
-		m_shaderProgram = t_materal.m_shaderProgram;
 	}
 
 	Material::~Material()
@@ -148,8 +148,17 @@ namespace awesome
 
 	Material* const Material::createInstance() const
 	{
-		Material* const new_instance = new Material(*this);
-		m_instances.push_back(new_instance);
+		Material* const new_instance = new Material(m_shaderProgram, m_type);
+		new_instance->m_properties = m_properties;
+		if (!isInstance())
+		{
+			m_instances.push_back(new_instance);
+			new_instance->m_parent = const_cast<Material*>(this);
+		}
+		else
+		{
+			new_instance->m_parent = m_parent;
+		}
 		return new_instance;
 	}
 }
