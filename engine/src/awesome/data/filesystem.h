@@ -32,7 +32,7 @@ namespace awesome
 		~Directory() = delete;
 		
 		// create a directory 
-		static bool create(const std::string& t_name);
+		static bool create(const std::string& t_path);
 		static std::vector<std::string> getDirectories(const std::string& t_path);
 		static std::vector<std::string> getFiles(const std::string& t_path);
 		// return true if the directory exists
@@ -42,8 +42,14 @@ namespace awesome
 
 	};
 
-	class File
+	struct File
 	{
+		File() = delete;
+		~File() = delete;
 
+		// read all text and close the file
+		static std::string readAll(const std::string& t_path);
+		// read all lines
+		static std::vector<std::string> readLines(const std::string& t_path);
 	};
 }
