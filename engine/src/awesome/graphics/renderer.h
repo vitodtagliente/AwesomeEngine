@@ -64,6 +64,8 @@ namespace awesome
 		void drawRect(const Color& t_color, const vector2& t_position, const float t_theta);
 		void drawRect(const Color& t_color, const vector2& t_position, const float t_theta, const vector2& t_scale);
 		void drawRect(const Color& t_color, const matrix4& t_transform);
+		// draw circle
+		void drawCircle(const Color& t_color, const vector2& t_position, const float t_radius);
 
 	protected:
 
@@ -78,6 +80,7 @@ namespace awesome
 
 		// renderable for sprites
 		Renderable* m_quad;
+		Renderable* m_circle;
 		// drawing mode
 		DrawingMode m_drawingMode;
 	};

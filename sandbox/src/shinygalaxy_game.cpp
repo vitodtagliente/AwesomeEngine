@@ -50,6 +50,7 @@ void ShinyGalaxy::pre_rendering_implementation()
 		vec2(),
 		vec2( atlas_size, atlas_size )
 	);
+	m_renderer->drawCircle(Color::Green, {}, .4f);
 
 	// stress test
 	/*

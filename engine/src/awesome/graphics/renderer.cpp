@@ -9,6 +9,7 @@
 #include "texture_library.h"
 #include "mesh/mesh.h"
 #include "mesh/quad.h"
+#include "mesh/circle.h"
 #include "shaders.h"
 
 namespace awesome
@@ -19,6 +20,7 @@ namespace awesome
 		, m_materialLibrary(new MaterialLibrary(t_api))
 		, m_textureLibrary(new TextureLibrary(t_api))
 		, m_quad(t_api->createRenderable(Quad{}))
+		, m_circle(t_api->createRenderable(Circle{}))
 		, m_drawingMode(DrawingMode::Fill)
 	{
 	}
@@ -193,6 +195,20 @@ namespace awesome
 			materialInstance->set(Shaders::params::Color, t_color);
 			materialInstance->set(Shaders::params::ModelViewProjectionMatrix, t_transform);
 			push(m_quad, materialInstance, t_transform);
+		}
+	}
+
+	void Renderer::drawCircle(const Color& t_color, const vector2& t_position, const float t_radius)
+	{
+		static Material* const material = m_materialLibrary->get(Shaders::names::ColorShader);
+
+		if (material != nullptr)
+		{
+			matrix4 transform = matrix4::scale(vec3(t_radius, t_radius, 0.0f)) * matrix4::translate(to_vec3(t_position));
+			Material* const materialInstance = material->createInstance();
+			materialInstance->set(Shaders::params::Color, t_color);
+			materialInstance->set(Shaders::params::ModelViewProjectionMatrix, transform);
+			push(m_circle, materialInstance, transform);
 		}
 	}
 }
