@@ -54,6 +54,10 @@ namespace awesome
 		void drawTexture(Texture* const t_texture, const matrix4& t_transform);
 		// draw texture atlas
 		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position);
+		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position, const vector2& t_scale);
+		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position, const float t_theta);
+		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position, const float t_theta, const vector2& t_scale);
+		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const matrix4& t_transform);
 		// draw a rectangle 
 		void drawRect(const Color& t_color, const vector2& t_position);
 		void drawRect(const Color& t_color, const vector2& t_position, const vector2& t_scale);

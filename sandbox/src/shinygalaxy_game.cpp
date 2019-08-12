@@ -47,7 +47,8 @@ void ShinyGalaxy::pre_rendering_implementation()
 	m_renderer->drawTextureCrop(
 		atlas_texture, 
 		{ 0.0f, atlas_size * 2, atlas_size, atlas_size },
-		{ /*-.3f, -.3f*/ }
+		vec2(),
+		vec2( atlas_size, atlas_size )
 	);
 
 	// stress test
