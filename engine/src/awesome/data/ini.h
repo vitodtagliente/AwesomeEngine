@@ -18,8 +18,10 @@ namespace awesome
 
 		FileINI();
 
+		bool hasSection(const std::string& t_name) const;
+
 	private:
 
-		std::map<std::string, std::map<std::string, std::string>> m_sections;
+		std::map<std::string, std::map<std::string, std::string>> m_data;
 	};
 }
