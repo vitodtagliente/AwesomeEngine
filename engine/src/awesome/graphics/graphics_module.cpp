@@ -70,7 +70,7 @@ namespace awesome
 
 	void GraphicsModule::initializeDefaultMaterials()
 	{
-		for (const std::pair<std::string, std::string>& shader : Shaders::sources)
+		for (const std::pair<std::string, std::string>& shader : getDefaultShaderSources())
 		{
 			std::map<Shader::Type, std::string> sources;
 			Shader::Reader::parse(shader.second, sources);

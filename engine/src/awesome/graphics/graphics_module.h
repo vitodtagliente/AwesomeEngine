@@ -1,6 +1,7 @@
 #pragma once
 
 #include <initializer_list>
+#include <map>
 #include <string>
 #include <awesome/engine/module.h>
 
@@ -30,6 +31,8 @@ namespace awesome
 		virtual void pre_rendering_implementation() override;
 		virtual void render_implementation() override;
 		virtual void post_rendering_implementation() override;
+
+		virtual const std::map<std::string, std::string>& getDefaultShaderSources() const = 0;
 
 		// used api
 		GraphicsAPI* m_api;

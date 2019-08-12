@@ -12,8 +12,6 @@ namespace awesome
 	{
 		Shaders() = delete;
 
-		static const std::map<std::string, std::string> sources;
-
 		struct params
 		{
 			params() = delete;

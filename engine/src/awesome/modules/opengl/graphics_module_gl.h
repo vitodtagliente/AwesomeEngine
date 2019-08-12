@@ -14,6 +14,7 @@ namespace awesome
 
 		virtual GraphicsAPI* const createAPI() const override;
 		virtual Renderer* const createRenderer(GraphicsAPI* const t_api) const override;
+		virtual const std::map<std::string, std::string>& getDefaultShaderSources() const override;
 
 	};
 }
