@@ -101,6 +101,7 @@ namespace awesome
 
 			static const std::string Solid;
 			static const std::string Sprite;
+			static const std::string SpriteAtlas;
 		};
 
 	private:

@@ -16,6 +16,7 @@ bool ShinyGalaxy::startup_implementation()
 	{
 		library->add("circle", "assets/circle.png");
 		library->add("batman", "assets/batman_logo.png");
+		library->add("atlas", "assets/texture_atlas.png");
 	}
 
 	return true;
@@ -32,14 +33,22 @@ void ShinyGalaxy::update_implementation()
 
 void ShinyGalaxy::pre_rendering_implementation()
 {
+	static const float atlas_size = 1.0f / 4.0f;
+
 	m_renderer->clear(m_backgroundColor);
 
 	Texture* const circle_texture = m_renderer->getTextureLibrary()->get("circle");
 	Texture* const batman_texture = m_renderer->getTextureLibrary()->get("batman");
+	Texture* const atlas_texture = m_renderer->getTextureLibrary()->get("atlas");
 	m_renderer->drawTexture(batman_texture, vec2{});
 	m_renderer->drawTexture(circle_texture, { .2f, 0.0f }, { .4f, .4f });
 	m_renderer->drawRect(Color::Blue, { -.3f, -.3f }, { .2f, .4f });
 	m_renderer->drawRect(Color::Red, { .3f, .3f }, 30.0f, { .2f, .4f });
+	m_renderer->drawTextureCrop(
+		atlas_texture, 
+		{ 0.0f, 0.0f, atlas_size, atlas_size }, 
+		{ -.3f, -.3f }
+	);
 
 	// stress test
 	/*

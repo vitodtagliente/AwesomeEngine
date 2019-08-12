@@ -4,6 +4,7 @@
 #include <awesome/data/color.h>
 #include <awesome/math/vector.h>
 #include <awesome/math/matrix.h>
+#include <awesome/math/rectangle.h>
 #include "command_buffer.h"
 
 namespace awesome
@@ -51,6 +52,8 @@ namespace awesome
 		void drawTexture(Texture* const t_texture, const vector2& t_position, const float t_theta);
 		void drawTexture(Texture* const t_texture, const vector2& t_position, const float t_theta, const vector2& t_scale);
 		void drawTexture(Texture* const t_texture, const matrix4& t_transform);
+		// draw texture atlas
+		void drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position);
 		// draw a rectangle 
 		void drawRect(const Color& t_color, const vector2& t_position);
 		void drawRect(const Color& t_color, const vector2& t_position, const vector2& t_scale);

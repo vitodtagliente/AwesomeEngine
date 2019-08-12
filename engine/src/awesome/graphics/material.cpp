@@ -13,6 +13,7 @@ namespace awesome
 
 	const std::string Material::defaults::Solid = "solid";
 	const std::string Material::defaults::Sprite = "sprite";
+	const std::string Material::defaults::SpriteAtlas = "sprite_atlas";
 
 	Material::Material(const Type t_type /*= Type::Default*/)
 		: m_type(t_type)

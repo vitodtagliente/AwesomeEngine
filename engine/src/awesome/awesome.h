@@ -36,6 +36,7 @@
 #include "graphics/components/mesh_component.h"
 #include "graphics/material_library.h"
 #include "graphics/texture_library.h"
+#include "graphics/shaders.h"
 
 #include "math/math.h"
 #include "math/matrix.h"

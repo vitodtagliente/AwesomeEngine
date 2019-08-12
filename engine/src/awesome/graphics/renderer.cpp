@@ -91,6 +91,16 @@ namespace awesome
 		push(m_quad, spriteMaterial, t_transform);
 	}
 
+	void Renderer::drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position)
+	{
+		Material* const spriteAtlasMaterial = m_materialLibrary->get(Material::defaults::SpriteAtlas)->createInstance();
+		mat4 transform = matrix4::translate(to_vec3(t_position));
+		spriteAtlasMaterial->set(Material::params::ModelViewProjectionMatrix, transform);
+		spriteAtlasMaterial->set(Material::params::Texture, t_texture);
+		// #todo: crop
+		push(m_quad, spriteAtlasMaterial, transform);
+	}
+
 	void Renderer::drawRect(const Color& t_color, const vector2& t_position)
 	{
 		drawRect(
