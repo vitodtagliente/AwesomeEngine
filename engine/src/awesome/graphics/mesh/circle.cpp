@@ -2,18 +2,21 @@
 
 namespace awesome
 {
-	Circle::Circle()
+	Circle::Circle(const unsigned int t_steps)
 		: Mesh()
 	{
-		// top right
-		vertices.push_back({ { 1.0f, 1.0f, 0.0f }, {1.0, 1.0f} });
-		// bottom right
-		vertices.push_back({ { 1.0f, -1.0f, 0.0f }, {1.0, 0.0f} });
-		// bottom left
-		vertices.push_back({ { -1.0f, -1.0f, 0.0f }, {0.0, 0.0f} });
-		// top left
-		vertices.push_back({ { -1.0f, 1.0f, 0.0f }, {0.0, 1.0f} });
-
-		indices = { 0, 1, 3, 1, 2, 3 };
+		float theta = 0.0f;
+		const float step_amount = 360.0f / t_steps;
+		// center vertex
+		vertices.push_back({});
+		vertices.push_back({ {cosf(theta), sinf(theta), 0.0f}, {0.0f, 0.0f} });
+		for (unsigned int i = 0; i < t_steps; ++i)
+		{
+			vertices.push_back({ {cosf(theta), sinf(theta), 0.0f}, {0.0f, 0.0f} });
+			indices.push_back(0);
+			indices.push_back(1);
+			indices.push_back(i + 2);
+			theta += step_amount;
+		}
 	}
 }
