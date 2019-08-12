@@ -1,9 +1,10 @@
 #pragma once
 
-#include "core/platform.h"
-#include "core/types.h"
 #include "core/event.h"
 #include "core/macros.h"
+#include "core/platform.h"
+#include "core/service_locator.h"
+#include "core/types.h"
 
 #include "engine/engine.h"
 #include "engine/module.h"
