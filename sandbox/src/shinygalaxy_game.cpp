@@ -46,8 +46,8 @@ void ShinyGalaxy::pre_rendering_implementation()
 	m_renderer->drawRect(Color::Red, { .3f, .3f }, 30.0f, { .2f, .4f });
 	m_renderer->drawTextureCrop(
 		atlas_texture, 
-		{ 0.0f, 0.0f, atlas_size, atlas_size }, 
-		{ -.3f, -.3f }
+		{ 0.0f, atlas_size * 2, atlas_size, atlas_size },
+		{ /*-.3f, -.3f*/ }
 	);
 
 	// stress test

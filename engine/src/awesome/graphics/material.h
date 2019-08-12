@@ -93,6 +93,7 @@ namespace awesome
 			static const std::string ModelTransformMatrix;
 			static const std::string Texture;
 			static const std::string Color;
+			static const std::string Crop;
 		};
 
 		struct defaults

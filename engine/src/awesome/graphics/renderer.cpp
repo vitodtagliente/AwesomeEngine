@@ -97,7 +97,9 @@ namespace awesome
 		mat4 transform = matrix4::translate(to_vec3(t_position));
 		spriteAtlasMaterial->set(Material::params::ModelViewProjectionMatrix, transform);
 		spriteAtlasMaterial->set(Material::params::Texture, t_texture);
-		// #todo: crop
+		spriteAtlasMaterial->set(Material::params::Crop, vec4(
+			t_rect.x, t_rect.y, t_rect.width, t_rect.height
+		));
 		push(m_quad, spriteAtlasMaterial, transform);
 	}
 

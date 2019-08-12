@@ -99,12 +99,16 @@ namespace awesome
 
 				uniform vec4 u_Color;
 				uniform sampler2D u_Texture;
+				uniform vec4 u_Crop;
 
 				in vec2 v_TexCoord;
 
 				void main()
 				{
-					vec4 texColor = texture(u_Texture, v_TexCoord);
+					vec2 cropCoords;
+					cropCoords.x = (v_TexCoord.x * u_Crop.z + u_Crop.x);
+					cropCoords.y = (v_TexCoord.y * u_Crop.w + u_Crop.y);
+					vec4 texColor = texture(u_Texture, cropCoords);
 					fragColor = texColor;
 				}
 			)" }

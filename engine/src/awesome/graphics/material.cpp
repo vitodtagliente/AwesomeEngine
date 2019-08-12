@@ -10,6 +10,7 @@ namespace awesome
 	const std::string Material::params::ViewProjectionMatrix = "u_ViewProjectionMatrix";
 	const std::string Material::params::ModelTransformMatrix = "u_Transform";
 	const std::string Material::params::Texture = "u_Texture";
+	const std::string Material::params::Crop = "u_Crop";
 
 	const std::string Material::defaults::Solid = "solid";
 	const std::string Material::defaults::Sprite = "sprite";
@@ -63,6 +64,11 @@ namespace awesome
 			{
 				const Color& color = std::get<Color>(pair.second.value);
 				m_shaderProgram->set(pair.first, color.red, color.green, color.blue, color.alpha);
+			}
+			else if (pair.second.type == MaterialProperty::Type::Vec4)
+			{
+				const vec4& vec = std::get<vector4>(pair.second.value);
+				m_shaderProgram->set(pair.first, vec.x, vec.y, vec.z, vec.w);
 			}
 			else if (pair.second.type == MaterialProperty::Type::Mat4)
 			{
