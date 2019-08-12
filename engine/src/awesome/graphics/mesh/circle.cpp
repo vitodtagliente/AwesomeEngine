@@ -10,12 +10,12 @@ namespace awesome
 		// center vertex
 		vertices.push_back({});
 		vertices.push_back({ {cosf(theta), sinf(theta), 0.0f}, {0.0f, 0.0f} });
-		for (unsigned int i = 0; i < t_steps; ++i)
+		for (unsigned int i = 1; i < t_steps; ++i)
 		{
 			vertices.push_back({ {cosf(theta), sinf(theta), 0.0f}, {0.0f, 0.0f} });
 			indices.push_back(0);
-			indices.push_back(1);
-			indices.push_back(i + 2);
+			indices.push_back(vertices.size() - 1);
+			indices.push_back(vertices.size());
 			theta += step_amount;
 		}
 	}
