@@ -84,27 +84,6 @@ namespace awesome
 		// example: many sprites that use differents uniforms parameters
 		Material* const createInstance() const;
 
-		struct params
-		{
-			params() = delete;
-
-			static const std::string ModelViewProjectionMatrix;
-			static const std::string ViewProjectionMatrix;
-			static const std::string ModelTransformMatrix;
-			static const std::string Texture;
-			static const std::string Color;
-			static const std::string Crop;
-		};
-
-		struct defaults
-		{
-			defaults() = delete;
-
-			static const std::string Solid;
-			static const std::string Sprite;
-			static const std::string SpriteAtlas;
-		};
-
 	private:
 
 		// material type

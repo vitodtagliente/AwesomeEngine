@@ -35,5 +35,9 @@ namespace awesome
 		GraphicsAPI* m_api;
 		// renderer
 		Renderer* m_renderer;
+
+	private:
+
+		void initializeDefaultMaterials();
 	};
 }

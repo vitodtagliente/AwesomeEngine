@@ -9,6 +9,7 @@
 #include "texture_library.h"
 #include "mesh/mesh.h"
 #include "mesh/quad.h"
+#include "shaders.h"
 
 namespace awesome
 {
@@ -85,19 +86,19 @@ namespace awesome
 
 	void Renderer::drawTexture(Texture* const t_texture, const matrix4& t_transform)
 	{
-		Material* const spriteMaterial = m_materialLibrary->get(Material::defaults::Sprite)->createInstance();
-		spriteMaterial->set(Material::params::ModelViewProjectionMatrix, t_transform);
-		spriteMaterial->set(Material::params::Texture, t_texture);
+		Material* const spriteMaterial = m_materialLibrary->get(Shaders::names::TextureShader)->createInstance();
+		spriteMaterial->set(Shaders::params::ModelViewProjectionMatrix, t_transform);
+		spriteMaterial->set(Shaders::params::Texture, t_texture);
 		push(m_quad, spriteMaterial, t_transform);
 	}
 
 	void Renderer::drawTextureCrop(Texture* const t_texture, const rect& t_rect, const vector2& t_position)
 	{
-		Material* const spriteAtlasMaterial = m_materialLibrary->get(Material::defaults::SpriteAtlas)->createInstance();
+		Material* const spriteAtlasMaterial = m_materialLibrary->get(Shaders::names::CroppedTextureShader)->createInstance();
 		mat4 transform = matrix4::translate(to_vec3(t_position));
-		spriteAtlasMaterial->set(Material::params::ModelViewProjectionMatrix, transform);
-		spriteAtlasMaterial->set(Material::params::Texture, t_texture);
-		spriteAtlasMaterial->set(Material::params::Crop, vec4(
+		spriteAtlasMaterial->set(Shaders::params::ModelViewProjectionMatrix, transform);
+		spriteAtlasMaterial->set(Shaders::params::Texture, t_texture);
+		spriteAtlasMaterial->set(Shaders::params::TextureCropping, vec4(
 			t_rect.x, t_rect.y, t_rect.width, t_rect.height
 		));
 		push(m_quad, spriteAtlasMaterial, transform);
@@ -137,9 +138,9 @@ namespace awesome
 
 	void Renderer::drawRect(const Color& t_color, const matrix4& t_transform)
 	{
-		Material* const solidMaterial = m_materialLibrary->get(Material::defaults::Solid)->createInstance();
-		solidMaterial->set(Material::params::Color, t_color);
-		solidMaterial->set(Material::params::ModelViewProjectionMatrix, t_transform);
+		Material* const solidMaterial = m_materialLibrary->get(Shaders::names::ColorShader)->createInstance();
+		solidMaterial->set(Shaders::params::Color, t_color);
+		solidMaterial->set(Shaders::params::ModelViewProjectionMatrix, t_transform);
 		push(m_quad, solidMaterial, t_transform);
 	}
 }

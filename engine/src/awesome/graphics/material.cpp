@@ -5,17 +5,6 @@
 
 namespace awesome
 {
-	const std::string Material::params::Color = "u_Color";
-	const std::string Material::params::ModelViewProjectionMatrix = "u_ModelViewProjectionMatrix";
-	const std::string Material::params::ViewProjectionMatrix = "u_ViewProjectionMatrix";
-	const std::string Material::params::ModelTransformMatrix = "u_Transform";
-	const std::string Material::params::Texture = "u_Texture";
-	const std::string Material::params::Crop = "u_Crop";
-
-	const std::string Material::defaults::Solid = "solid";
-	const std::string Material::defaults::Sprite = "sprite";
-	const std::string Material::defaults::SpriteAtlas = "sprite_atlas";
-
 	Material::Material(const Type t_type /*= Type::Default*/)
 		: m_type(t_type)
 		, m_shaderProgram()

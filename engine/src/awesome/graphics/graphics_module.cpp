@@ -6,6 +6,11 @@
 #include "components/rendering_component.h"
 #include "../scene/world.h"
 #include "../scene/object.h"
+#include "shaders.h"
+#include "shader.h"
+#include "shader_program.h"
+#include "material.h"
+#include "material_library.h"
 
 namespace awesome
 {
@@ -25,7 +30,11 @@ namespace awesome
 		if (m_api->startup())
 		{
 			m_renderer = createRenderer(m_api);
-			return true;
+			if (m_renderer != nullptr)
+			{
+				initializeDefaultMaterials();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -57,5 +66,32 @@ namespace awesome
 
 	void GraphicsModule::post_rendering_implementation()
 	{
+	}
+
+	void GraphicsModule::initializeDefaultMaterials()
+	{
+		for (const std::pair<std::string, std::string>& shader : Shaders::sources)
+		{
+			std::map<Shader::Type, std::string> sources;
+			Shader::Reader::parse(shader.second, sources);
+			// create shaders
+			auto vertex = m_api->createShader(Shader::Type::Vertex, sources[Shader::Type::Vertex]);
+			auto fragment = m_api->createShader(Shader::Type::Fragment, sources[Shader::Type::Fragment]);
+			auto program = m_api->createShaderProgram({ vertex, fragment });
+
+			// free shaders
+			delete vertex;
+			delete fragment;
+
+			if (program->getState() == ShaderProgram::State::Linked)
+			{
+				Material* const material = new Material(program);
+				m_renderer->getMaterialLibrary()->add(shader.first, material);
+			}
+			else
+			{
+				delete program;
+			}
+		}
 	}
 }
