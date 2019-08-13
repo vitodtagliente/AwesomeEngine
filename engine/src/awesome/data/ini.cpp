@@ -1,6 +1,7 @@
 #include "ini.h"
 
 #include <awesome/core/filesystem.h>
+#include "string.h"
 
 namespace awesome
 {
@@ -10,7 +11,18 @@ namespace awesome
 		std::string currentSection;
 		for (const std::string& line : File::readLines(t_filename))
 		{
-
+			if (String::contains(line, "[") && String::contains(line, "]"))
+			{
+				// #todo
+				currentSection = String::trim(line);
+			}
+			else if(String::contains(line, "=") && !currentSection.empty())
+			{
+				const std::vector<std::string>& tokens = String::split(line, '=');
+				file.m_data[currentSection].insert(
+					{ String::trim(tokens[0]), String::trim(tokens[1]) }
+				);
+			}
 		}
 		return file;
 	}
