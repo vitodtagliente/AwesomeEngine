@@ -34,15 +34,8 @@ namespace awesome
 			return t_str.find(t_match) == 0;
 		}
 		else
-		{
-			//std::string copy_me = *this;
-			// Convert mainStr to lower case
-			//std::transform(copy_me.begin(), copy_me.end(), copy_me.begin(), ::tolower);
-			// Convert toMatch to lower case
-			// std::transform(t_str.begin(), t_str.end(), t_str.begin(), ::tolower);
-
-			//return copy_me.find(t_str) == 0;
-			return false;
+		{		
+			return toLower(t_str).find(toLower(t_match)) == 0;
 		}
 	}
 	
@@ -53,12 +46,16 @@ namespace awesome
 	
 	std::string String::toLower(const std::string& t_str)
 	{
-		return std::string();
+		std::string result(t_str);
+		std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+		return result;
 	}
 	
 	std::string String::toUpper(const std::string& t_str)
 	{
-		return std::string();
+		std::string result(t_str);
+		std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+		return result;
 	}
 	
 	std::string String::trim(const std::string& t_str)

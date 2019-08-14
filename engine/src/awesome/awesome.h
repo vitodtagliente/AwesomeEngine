@@ -18,6 +18,7 @@
 #include "data/color.h"
 #include "data/image.h"
 #include "data/ini.h"
+#include "data/string.h"
 #include "data/string_id.h"
 #include "data/timer.h"
 
