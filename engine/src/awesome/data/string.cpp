@@ -60,16 +60,32 @@ namespace awesome
 	
 	std::string String::trim(const std::string& t_str)
 	{
-		return std::string();
+		return ltrim(rtrim(t_str));
 	}
 	
 	std::string String::ltrim(const std::string& t_str)
 	{
-		return std::string();
+		std::string result(t_str);
+		auto it2 = std::find_if(
+			result.begin(), 
+			result.end(), 
+			[](char ch) 
+			{ return !std::isspace(ch); }
+		);
+		result.erase(result.begin(), it2);
+		return result;
 	}
 	
 	std::string String::rtrim(const std::string& t_str)
 	{
-		return std::string();
+		std::string result(t_str);
+		auto it1 = std::find_if(
+			result.rbegin(), 
+			result.rend(), 
+			[](char ch) 
+			{ return !std::isspace(ch); }
+		);
+		result.erase(it1.base(), result.end());
+		return result;
 	}
 }

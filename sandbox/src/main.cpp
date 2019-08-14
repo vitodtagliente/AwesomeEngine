@@ -13,6 +13,8 @@ using namespace awesome;
 
 int main()
 {
+	std::cout << String::trim("   cioa   ") << "dd" << std::endl;
+
 	Engine::run({ new ShinyGalaxy() });
 	return 0;
 }
