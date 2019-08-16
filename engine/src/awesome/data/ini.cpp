@@ -1,6 +1,5 @@
 #include "ini.h"
 
-#include <iostream>
 #include <awesome/core/filesystem.h>
 #include "string.h"
 
