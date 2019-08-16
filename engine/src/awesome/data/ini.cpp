@@ -1,57 +1,70 @@
 #include "ini.h"
 
+#include <iostream>
 #include <awesome/core/filesystem.h>
 #include "string.h"
 
 namespace awesome
-{
-	FileINI FileINI::Reader::parse(const std::string& t_filename)
-	{
-		/*
-		FileINI file;
-		std::string currentSection;
-		for (const std::string& line : File::readLines(t_filename))
-		{
-			if (String::contains(line, "[") && String::contains(line, "]"))
-			{
-				// #todo
-				currentSection = String::trim(line);
-			}
-			else if(String::contains(line, "=") && !currentSection.empty())
-			{
-				const std::vector<std::string>& tokens = String::split(line, '=');
-				file.m_data[currentSection].insert(
-					{ String::trim(tokens[0]), String::trim(tokens[1]) }
-				);
-			}
-		}
-		return file;
-		*/
-		return {};
-	}
-
-	FileINI::FileINI()
-		: m_sections()
-	{
-
-	}
-	
-	bool FileINI::hasSection(const std::string& t_name) const
+{	
+	bool IniData::hasSection(const std::string& t_name) const
 	{
 		return m_sections.find(t_name) != m_sections.end();
 	}
 
-	FileINI::Section& FileINI::getSection(const std::string& t_name)
+	IniData::Section& IniData::getSection(const std::string& t_name)
 	{
 		return m_sections[t_name];
 	}
+
+	void IniData::addSection(const Section& t_section)
+	{
+		m_sections.insert({ t_section.getName(), t_section });
+	}
+
+	std::string IniData::toString() const
+	{
+		std::string result;
+
+		for (const auto& pair : m_sections)
+		{
+			result.append(pair.second.toString()).append("\n"); 
+		}
+
+		return result;
+	}
+
+	IniData IniData::parse(const std::string& t_content)
+	{
+		IniData data;
+
+		std::string currentSection;
+		for (const std::string& line : String::getLines(t_content))
+		{
+			if (String::contains(line, "[") && String::contains(line, "]"))
+			{
+				currentSection = String::trim(
+					String::rtrim(String::ltrim(String::trim(line), '['), ']')
+				);
+				data.addSection(Section(currentSection));
+			}
+			else if (String::contains(line, "=") && !currentSection.empty())
+			{
+				const std::vector<std::string>& tokens = String::split(line, '=');
+
+				data.getSection(currentSection)
+					.set(String::trim(tokens[0]), String::trim(tokens[1]));
+			}
+		}
+
+		return data;
+	}
 	
-	bool FileINI::Section::contains(const std::string& t_key) const
+	bool IniData::Section::contains(const std::string& t_key) const
 	{
 		return m_data.find(t_key) != m_data.end();
 	}
 	
-	std::string FileINI::Section::get(const std::string& t_key) const
+	std::string IniData::Section::get(const std::string& t_key) const
 	{
 		auto it = m_data.find(t_key);
 		if (it != m_data.end())
@@ -60,26 +73,40 @@ namespace awesome
 		}
 		return std::string();
 	}
+
+	const std::string& IniData::Section::get(const std::string& t_key, const std::string& t_default) const
+	{
+		auto it = m_data.find(t_key);
+		if (it != m_data.end())
+		{
+			return it->second;
+		}
+		return t_default;
+	}
 	
-	void FileINI::Section::set(const std::string& t_key, const std::string& t_value)
+	void IniData::Section::set(const std::string& t_key, const std::string& t_value)
 	{
 		auto it = m_data.find(t_key);
 		if (it != m_data.end())
 		{
 			it->second = t_value;
 		}
+		else
+		{
+			m_data.insert({ t_key, t_value });
+		}
 	}
 	
-	void FileINI::Section::remove(const std::string& t_key)
+	void IniData::Section::remove(const std::string& t_key)
 	{
 		m_data.erase(t_key);
 	}
 	
-	std::string FileINI::Section::to_string() const
+	std::string IniData::Section::toString() const
 	{
 		std::string result;
 
-		result.append("[").append(m_name).append("]\n");
+		result.append("[").append(m_name).append("]").append("\n");
 		for (const auto& pair : m_data)
 		{
 			result.append(pair.first).append("=").append(pair.second).append("\n");

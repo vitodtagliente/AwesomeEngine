@@ -62,6 +62,11 @@ namespace awesome
 	{
 		return ltrim(rtrim(t_str));
 	}
+
+	std::string String::trim(const std::string& t_str, const char t_char)
+	{
+		return ltrim(rtrim(t_str, t_char), t_char);
+	}
 	
 	std::string String::ltrim(const std::string& t_str)
 	{
@@ -71,6 +76,19 @@ namespace awesome
 			result.end(), 
 			[](char ch) 
 			{ return !std::isspace(ch); }
+		);
+		result.erase(result.begin(), it2);
+		return result;
+	}
+
+	std::string String::ltrim(const std::string& t_str, const char t_char)
+	{
+		std::string result(t_str);
+		auto it2 = std::find_if(
+			result.begin(),
+			result.end(),
+			[t_char](char ch)
+			{ return ch != t_char; }
 		);
 		result.erase(result.begin(), it2);
 		return result;
@@ -87,5 +105,30 @@ namespace awesome
 		);
 		result.erase(it1.base(), result.end());
 		return result;
+	}
+	
+	std::string String::rtrim(const std::string& t_str, const char t_char)
+	{
+		std::string result(t_str);
+		auto it1 = std::find_if(
+			result.rbegin(),
+			result.rend(),
+			[t_char](char ch)
+			{ return ch != t_char; }
+		);
+		result.erase(it1.base(), result.end());
+		return result;
+	}
+	
+	std::vector<std::string> String::getLines(const std::string& t_str)
+	{
+		std::vector<std::string> lines;
+		std::istringstream stream(t_str);
+		std::string line;
+		while (std::getline(stream, line))
+		{
+			lines.push_back(line);
+		}
+		return lines;
 	}
 }

@@ -25,8 +25,13 @@ namespace awesome
 		static std::string toLower(const std::string& t_str);
 		static std::string toUpper(const std::string& t_str);
 		static std::string trim(const std::string& t_str);
+		static std::string trim(const std::string& t_str, const char t_char);
 		static std::string ltrim(const std::string& t_str);
+		static std::string ltrim(const std::string& t_str, const char t_char);
 		static std::string rtrim(const std::string& t_str);
+		static std::string rtrim(const std::string& t_str, const char t_char);
+		// retrieve all the string lines
+		static std::vector<std::string> getLines(const std::string& t_str);
 
 	};
 }

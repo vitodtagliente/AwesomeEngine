@@ -5,7 +5,7 @@
 
 namespace awesome
 {
-	class FileINI final
+	class IniData final
 	{
 	public:
 
@@ -21,9 +21,7 @@ namespace awesome
 			Section(const std::string& t_name)
 				: m_name(t_name)
 				, m_data()
-			{
-
-			}
+			{}
 
 			// retrieve section name
 			inline const std::string& getName() const { return m_name; }
@@ -32,10 +30,11 @@ namespace awesome
 
 			bool contains(const std::string& t_key) const;
 			std::string get(const std::string& t_key) const;
+			const std::string& get(const std::string& t_key, const std::string& t_default) const;
 			void set(const std::string& t_key, const std::string& t_value);
 			void remove(const std::string& t_key);
 
-			std::string to_string() const;
+			std::string toString() const;
 
 		private:
 
@@ -45,20 +44,23 @@ namespace awesome
 			std::map<std::string, std::string> m_data;
 		};
 
-		class Reader
-		{
-			Reader() = delete;
-
-			static FileINI parse(const std::string& t_filename);
-		};
-
-		FileINI();
+		IniData()
+			: m_sections()
+		{}
 
 		bool hasSection(const std::string& t_name) const;
 		Section& getSection(const std::string& t_name);
+		void addSection(const Section& t_section);
+
+		inline const std::map<std::string, Section>& getSections() const { return m_sections; }
+
+		std::string toString() const;
+
+		static IniData parse(const std::string& t_content);
 
 	private:
 
+		// sections collection
 		std::map<std::string, Section> m_sections;
 	};
 }
