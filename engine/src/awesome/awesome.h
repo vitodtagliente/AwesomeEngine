@@ -47,3 +47,5 @@
 #include "scene/component.h"
 #include "scene/object.h"
 #include "scene/world.h"
+
+#include "systems/localization.h"
