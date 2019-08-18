@@ -6,7 +6,7 @@
 #include <awesome/scene/world.h>
 #include <awesome/scene/object.h>
 #include "object_viewer.h"
-#include <awesome/editor/editor.h>
+#include "../editor.h"
 
 namespace awesome
 {

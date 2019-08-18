@@ -4,8 +4,8 @@
 #include <awesome/modules/glfw/application_module_glfw.h>
 #include <awesome/application/window.h>
 #include <awesome/modules/opengl/graphics_module_gl.h>
-#include "../scene/scene_module.h"
-#include "../editor/editor_module.h"
+#include <awesome/scene/scene_module.h>
+#include <awesome/modules/editor/editor_module.h>
 
 namespace awesome
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <awesome/core/event.h>
-#include <awesome/editor/editor_view.h>
+#include "../editor_view.h"
 
 namespace awesome
 {
