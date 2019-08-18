@@ -1,13 +1,13 @@
 #pragma once
 
-#include <awesome/engine/module.h>
+#include <awesome/core/engine.h>
 
 namespace awesome
 {
 	class ApplicationAPI;
 	class Application;
 
-	class ApplicationModule : public Module
+	class ApplicationModule : public Engine::Module
 	{
 	public:
 

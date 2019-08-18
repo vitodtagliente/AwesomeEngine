@@ -2,7 +2,7 @@
 
 using namespace awesome;
 
-class SandboxGame final : public Module
+class SandboxGame final : public Engine::Module
 {
 public:
 

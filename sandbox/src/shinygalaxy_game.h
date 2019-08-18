@@ -2,7 +2,7 @@
 
 using namespace awesome;
 
-class ShinyGalaxy final : public Module
+class ShinyGalaxy final : public Engine::Module
 {
 public:
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <awesome/engine/module.h>
+#include <awesome/core/engine.h>
 
 namespace awesome
 {
-	class ModuleSteam : public Module
+	class ModuleSteam : public Engine::Module
 	{
 
 	};

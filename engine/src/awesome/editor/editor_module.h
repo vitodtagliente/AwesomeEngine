@@ -1,12 +1,12 @@
 #pragma once
 
-#include <awesome/engine/module.h>
+#include <awesome/core/engine.h>
 
 namespace awesome
 {
 	class Editor;
 
-	class EditorModule : public Module
+	class EditorModule : public Engine::Module
 	{
 	public:
 

@@ -1,10 +1,10 @@
-#include "module.h"
+#include "engine.h"
 
 #include <cassert>
 
 namespace awesome
 {
-	bool Module::startup()
+	bool Engine::Module::startup()
 	{
 		// Cannot call the startup method multiple times
 		assert(m_state == State::Unknown);
@@ -15,7 +15,7 @@ namespace awesome
 		return success;
 	}
 
-	void Module::shutdown()
+	void Engine::Module::shutdown()
 	{
 		// Cannot shutdown a module that was not started
 		if (m_state == State::Started)
@@ -24,7 +24,7 @@ namespace awesome
 			m_state = State::Closed;
 		}
 	}
-	void Module::update()
+	void Engine::Module::update()
 	{
 		if (m_state == State::Started)
 		{
@@ -32,7 +32,7 @@ namespace awesome
 		}
 	}
 
-	void Module::pre_rendering()
+	void Engine::Module::pre_rendering()
 	{
 		if (m_state == State::Started)
 		{
@@ -40,7 +40,7 @@ namespace awesome
 		}
 	}
 
-	void Module::render()
+	void Engine::Module::render()
 	{
 		if (m_state == State::Started)
 		{
@@ -48,7 +48,7 @@ namespace awesome
 		}
 	}
 
-	void Module::post_rendering()
+	void Engine::Module::post_rendering()
 	{
 		if (m_state == State::Started)
 		{

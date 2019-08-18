@@ -1,12 +1,12 @@
 #pragma once
 
-#include <awesome/engine/module.h>
+#include <awesome/core/engine.h>
 
 namespace awesome
 {
 	class World;
 
-	class SceneModule : public Module
+	class SceneModule : public Engine::Module
 	{
 	public:
 

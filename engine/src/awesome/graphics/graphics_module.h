@@ -3,14 +3,14 @@
 #include <initializer_list>
 #include <map>
 #include <string>
-#include <awesome/engine/module.h>
+#include <awesome/core/engine.h>
 
 namespace awesome
 {
 	class GraphicsAPI;
 	class Renderer;
 
-	class GraphicsModule : public Module
+	class GraphicsModule : public Engine::Module
 	{
 	public:
 
