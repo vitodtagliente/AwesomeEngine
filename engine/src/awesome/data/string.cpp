@@ -1,6 +1,7 @@
 #include "string.h"
 
 #include <algorithm>
+#include <cctype>
 #include <sstream>
 
 namespace awesome
