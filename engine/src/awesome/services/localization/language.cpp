@@ -1,4 +1,4 @@
-#pragma once 
+#include "language.h"
 
 namespace awesome
 {
