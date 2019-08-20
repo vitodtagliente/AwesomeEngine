@@ -23,9 +23,7 @@ namespace awesome
 
 	void Engine::run(const std::initializer_list<Module*>& t_modules)
 	{
-		auto engine = new Engine();
-		engine->launch(t_modules);
-		delete engine;
+		Engine().launch(t_modules);
 	}
 
 	void Engine::launch(const std::initializer_list<Module*>& t_modules)
