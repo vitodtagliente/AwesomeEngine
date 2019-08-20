@@ -33,7 +33,7 @@ namespace awesome
 		inline bool isElapsed() const { return m_time <= 0.0; }
 
 		// events
-		Event onTimeElapsed;
+		event onTimeElapsed;
 
 	private:
 

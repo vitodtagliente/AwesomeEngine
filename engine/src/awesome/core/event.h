@@ -6,17 +6,17 @@
 namespace awesome
 {
 	template <typename ReturnType, typename... Params>
-	class BaseEvent
+	class event_t
 	{
 	public:
 
-		BaseEvent()
+		event_t()
 			: m_listeners()
 		{
 
 		}
 
-		~BaseEvent() = default;
+		~event_t() = default;
 
 		inline void broadcast(Params... t_args) 
 		{
@@ -54,5 +54,5 @@ namespace awesome
 		std::vector<std::function<ReturnType(Params...)>> m_listeners{};
 	};
 
-	typedef BaseEvent<void> Event;
+	typedef event_t<void> event;
 }
