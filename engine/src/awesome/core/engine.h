@@ -56,6 +56,17 @@ namespace awesome
 
 		};
 
+		class Service
+		{
+		public:
+
+			Service() = default;
+			virtual ~Service() = default;
+
+			virtual bool startup() = 0;
+			virtual void shutdown() = 0;
+		};
+
 		Engine();
 		~Engine();
 
@@ -66,6 +77,9 @@ namespace awesome
 
 		template <class T>
 		T* const getModule() const;
+
+		template <class T>
+		T* const getService() const;
 
 	private:
 
@@ -85,6 +99,8 @@ namespace awesome
 
 		// engine's modules
 		std::list<std::pair<std::string, Module*>> m_modules;
+		// engine's services
+		std::list<Service*> m_services;
 	};
 
 	template <class T>
@@ -120,6 +136,12 @@ namespace awesome
 				return it->second;
 			}
 		}
+		return nullptr;
+	}
+
+	template <class T>
+	T* const Engine::getService() const
+	{
 		return nullptr;
 	}
 }

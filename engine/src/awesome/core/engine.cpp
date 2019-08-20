@@ -11,6 +11,7 @@ namespace awesome
 {
 	Engine::Engine()
 		: m_modules()
+		, m_services()
 	{
 
 	}
