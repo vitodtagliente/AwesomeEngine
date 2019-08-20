@@ -20,7 +20,7 @@ namespace awesome
 	{
 		m_instances.push_back(this);
 		// set this callback
-		onTimeElapsed.addListener(t_callback);
+		onTimeElapsed.bind(t_callback);
 	}
 
 	Timer::~Timer()
