@@ -154,6 +154,27 @@ namespace awesome
 			return false;
 		}
 
+		template <class T>
+		inline bool unbind(const T* const t_object, void(T::* t_method)(Params...) const)
+		{
+			handler_t* const handler = new method_handler_t(t_instance, method_name);
+			m_handlers.push_back(handler);
+			return handlerfor(auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				if (method_handler_t<T> * method_handler = dynamic_cast<method_handler_t<T>*>(*it))
+				{
+					if (method_handler->instance == t_instance
+						&& method_handler->method == method_name)
+					{
+						delete (*it);
+						m_handlers.erase(it);
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		// clear all handlers
 		inline void clear()
 		{
