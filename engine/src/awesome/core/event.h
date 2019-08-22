@@ -16,7 +16,7 @@
 
 		// declare event variable:
 
-		event_t<void, const std::string&> e;
+		event_t<const std::string&> e;
 
 		// add listeners using three ways:
 
@@ -37,87 +37,132 @@
 
 namespace awesome
 {
-	template <typename ReturnType, typename... Params>
+	template <typename... Params>
 	class event_t
 	{
 	public:
 
+		using function_t = std::function<void(Params...)>;
+
 		event_t()
-			: m_listeners()
+			: m_handlers()
 		{
 
 		}
 
-		~event_t() = default;
-
-		inline void broadcast(Params... t_args) 
+		~event_t()
 		{
-			for (const auto& listener : m_listeners) 
+			for (event_handler_t* const handler : m_handlers)
 			{
-				listener(t_args...);
+				delete handler;
 			}
 		}
 
-		inline void bind(const std::function<ReturnType(Params...)>& t_function) 
+		inline void broadcast(Params... t_args) 
 		{
-			m_listeners.push_back(t_function);
-		}
-
-		template <class ObjectClass>
-		inline void bind(ObjectClass* const t_object, ReturnType(ObjectClass::* t_method)(Params...))
-		{
-			m_listeners.push_back(
-				[=](auto&& ... args) { return (t_object->*t_method)(std::forward<decltype(args)>(args)...); }
-			);
-		}
-
-		template <class ObjectClass>
-		inline void bind(const ObjectClass* const t_object, ReturnType(ObjectClass::* t_method)(Params...) const)
-		{
-			m_listeners.push_back(
-				[=](auto&& ... args) { return (t_object->*t_method)(std::forward<decltype(args)>(args)...); }
-			);
-		}
-
-		inline bool unbind(const std::function<ReturnType(Params...)>& t_function) 
-		{
-			for (auto it = m_listeners.begin(); it != m_listeners.end(); ++it)
+			for (event_handler_t* const handler : m_handlers) 
 			{
-				const std::function<ReturnType(Params...)>& it_function = *it;
-				if (it_function.target_type() == t_function.target_type())
+				handler->execute(t_args...);
+			}
+		}
+
+		inline void bind(const function_t& t_function)
+		{
+			m_handlers.push_back(new event_handler_t(t_function));
+		}
+
+		template <class T>
+		inline void bind(T* const t_instance, void (T::*method_name)(Params...))
+		{
+			m_handlers.push_back(new method_event_handler_t(t_instance, method_name));
+		}
+
+		template <class T>
+		inline void bind(const T* const t_object, void(T::* t_method)(Params...) const)
+		{
+			m_handlers.push_back(new method_event_handler_t(t_instance, method_name));
+		}
+
+		template <class T>
+		inline bool unbind(T* const t_instance, void (T::*method_name)(Params...))
+		{
+			method_event_handler_t wrapper(t_instance, method_name);
+
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				event_handler_t* const handler = *it;
+				if (method_event_handler_t<T>* method_handler = dynamic_cast<method_event_handler_t<T>*>(handler))
 				{
-					m_listeners.erase(it);
-					return true;
+					if (method_handler == wrapper)
+					{
+						delete handler;
+						m_handlers.erase(it);
+						return true;
+					}
 				}
 			}
 			return false;
 		}
 
-		template <class ObjectClass>
-		inline void unbind(ObjectClass* const t_object, ReturnType(ObjectClass::* t_method)(Params...))
+		inline void clear()
 		{
-			unbind(
-				[=](auto&& ... args) { return (t_object->*t_method)(std::forward<decltype(args)>(args)...); }
-			);
-		}
-
-		template <class ObjectClass>
-		inline void unbind(const ObjectClass* const t_object, ReturnType(ObjectClass::* t_method)(Params...) const)
-		{
-			unbind(
-				[=](auto&& ... args) { return (t_object->*t_method)(std::forward<decltype(args)>(args)...); }
-			);
-		}
-
-		inline void clear() 
-		{
-			m_listeners.clear();
+			m_handlers.clear();
 		}
 
 	private:
 
-		std::vector<std::function<ReturnType(Params...)>> m_listeners{};
+		struct event_handler_t
+		{
+			event_handler_t()
+				: function()
+			{}
+
+			event_handler_t(const function_t& t_function)
+				: function(t_function)
+			{}
+
+			function_t function;
+			
+			virtual void execute(Params... t_args)
+			{
+				if (function)
+				{
+					function(t_args...);
+				}
+			}
+		};
+
+		template <class T>
+		struct method_event_handler_t : public event_handler_t
+		{
+			typedef void (T::*method_t)(Params...);
+
+			method_event_handler_t()
+				: event_handler_t()
+				, instance()
+				, method()
+			{}
+
+			method_event_handler_t(T* const t_instance, const method_t& t_method)
+				: event_handler_t()
+				, instance(t_instance)
+				, method(t_method)
+			{}
+
+			T* instance;
+			method_t method;
+
+			virtual void execute(Params... t_args) override
+			{
+				if (instance && method)
+				{
+					std::invoke(method, instance, t_args...);
+				}
+			}
+		};
+
+		std::vector<event_handler_t*> m_handlers{};
 	};
 
-	typedef event_t<void> event;
+	typedef event_t<> event;
 }

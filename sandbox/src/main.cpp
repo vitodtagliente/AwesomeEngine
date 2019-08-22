@@ -41,7 +41,7 @@ int main()
 {
 	Foo* foo = new Foo(3);
 
-	event_t<void, const std::string&> e;
+	event_t<const std::string&> e;
 	e.bind([](const std::string& t_str) {
 		std::cout << "hello " << t_str << std::endl;
 	});

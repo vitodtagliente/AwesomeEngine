@@ -20,7 +20,7 @@ namespace awesome
 	{
 		m_instances.push_back(this);
 		// set this callback
-		onTimeElapsed.bind(t_callback);
+		//onTimeElapsed.bind(t_callback);
 	}
 
 	Timer::~Timer()
@@ -54,7 +54,7 @@ namespace awesome
 			m_time -= t_deltaTime;
 			if (m_time <= 0.0)
 			{
-				onTimeElapsed.broadcast();
+				//onTimeElapsed.broadcast();
 
 				if (m_loop)
 				{
