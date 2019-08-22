@@ -29,7 +29,12 @@ public:
 
 	void print(const std::string& t_str)
 	{
-		std::cout << t_str << m_i << std::endl;
+		std::cout << t_str;
+	}
+
+	void println(const std::string& t_str)
+	{
+		std::cout << t_str << std::endl;
 	}
 
 private:
@@ -42,13 +47,14 @@ int main()
 	Foo* foo = new Foo(3);
 
 	event_t<const std::string&> e;
-	e.bind([](const std::string& t_str) {
+	auto handler = e.bind([](const std::string& t_str) {
 		std::cout << "hello " << t_str << std::endl;
 	});
 	e.bind(foo, &Foo::print);
+	e.bind(foo, &Foo::println);
 	e.unbind(foo, &Foo::print);
 	e.broadcast("world");
 
-	// Engine::run({ new ShinyGalaxy() });
+	Engine::run({ new ShinyGalaxy() });
 	return 0;
 }

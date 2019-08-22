@@ -5,7 +5,7 @@
 
 	Event Data Type
 
-	- Use case:
+	- Usage example:
 
 		struct Foo
 		{
@@ -22,14 +22,17 @@
 
 		e.bind(foo, &Foo::print);
 		e.bind(std::bind(&Foo::print, foo, std::placeholders::_1));
-		e.bind([](const std::string& t_str){
+		auto handler = e.bind([](const std::string& t_str){
 			std::cout << t_str << std::endl;
 		});
+
+		// unbind 
+		e.unbind(handler);
+		e.unbind(foo, &Foo::print);
 
 		// call events:
 
 		e.broadcast("hello");
-
 */
 
 #include <functional>
@@ -44,6 +47,35 @@ namespace awesome
 
 		using function_t = std::function<void(Params...)>;
 
+		class handler_t
+		{
+		public:
+
+			handler_t()
+			{
+				static unsigned int counter = 0;
+
+				m_id = ++counter;
+			}
+
+			virtual void execute(Params... t_args) = 0;
+
+			bool operator== (const handler_t& t_handler) const
+			{
+				return m_id == t_handler.m_id;
+			}
+
+			bool operator!= (const handler_t& t_handler) const
+			{
+				return m_id != t_handler.m_id;
+			}
+
+		private:
+
+			unsigned int m_id;
+
+		};
+
 		event_t()
 			: m_handlers()
 		{
@@ -52,7 +84,7 @@ namespace awesome
 
 		~event_t()
 		{
-			for (event_handler_t* const handler : m_handlers)
+			for (handler_t* const handler : m_handlers)
 			{
 				delete handler;
 			}
@@ -60,42 +92,60 @@ namespace awesome
 
 		inline void broadcast(Params... t_args) 
 		{
-			for (event_handler_t* const handler : m_handlers) 
+			for (handler_t* const handler : m_handlers) 
 			{
 				handler->execute(t_args...);
 			}
 		}
 
-		inline void bind(const function_t& t_function)
+		inline handler_t* const bind(const function_t& t_function)
 		{
-			m_handlers.push_back(new event_handler_t(t_function));
+			handler_t* const handler = new function_handler_t(t_function);
+			m_handlers.push_back(handler);
+			return handler;
 		}
 
 		template <class T>
-		inline void bind(T* const t_instance, void (T::*method_name)(Params...))
+		inline handler_t* const bind(T* const t_instance, void (T::*method_name)(Params...))
 		{
-			m_handlers.push_back(new method_event_handler_t(t_instance, method_name));
+			handler_t* const handler = new method_handler_t(t_instance, method_name);
+			m_handlers.push_back(handler);
+			return handler;
 		}
 
 		template <class T>
-		inline void bind(const T* const t_object, void(T::* t_method)(Params...) const)
+		inline handler_t* const bind(const T* const t_object, void(T::* t_method)(Params...) const)
 		{
-			m_handlers.push_back(new method_event_handler_t(t_instance, method_name));
+			handler_t* const handler = new method_handler_t(t_instance, method_name);
+			m_handlers.push_back(handler);
+			return handler;
+		}
+
+		inline bool unbind(handler_t* const t_handler)
+		{
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				if (*it == t_handler)
+				{
+					delete (*it);
+					m_handlers.erase(it);
+					return true;
+				}
+			}
+			return false;
 		}
 
 		template <class T>
 		inline bool unbind(T* const t_instance, void (T::*method_name)(Params...))
 		{
-			method_event_handler_t wrapper(t_instance, method_name);
-
 			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				event_handler_t* const handler = *it;
-				if (method_event_handler_t<T>* method_handler = dynamic_cast<method_event_handler_t<T>*>(handler))
+				if (method_handler_t<T>* method_handler = dynamic_cast<method_handler_t<T>*>(*it))
 				{
-					if (method_handler == wrapper)
+					if (method_handler->instance == t_instance
+						&& method_handler->method == method_name)
 					{
-						delete handler;
+						delete (*it);
 						m_handlers.erase(it);
 						return true;
 					}
@@ -104,53 +154,59 @@ namespace awesome
 			return false;
 		}
 
+		// clear all handlers
 		inline void clear()
 		{
 			m_handlers.clear();
 		}
 
+		// clear all handlers for a specific object
+		template <class T>
+		inline void clear(T* const t_instance)
+		{
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				if (method_handler_t<T> * method_handler = dynamic_cast<method_handler_t<T>*>(*it))
+				{
+					if (method_handler->instance == t_instance)
+					{
+						delete (*it);
+						m_handlers.erase(it);
+					}
+				}
+			}
+		}
+
 	private:
 
-		struct event_handler_t
+		struct function_handler_t : public handler_t
 		{
-			event_handler_t()
-				: function()
+			function_handler_t(const function_t& t_function)
+				: handler_t()
+				, function(t_function)
 			{}
-
-			event_handler_t(const function_t& t_function)
-				: function(t_function)
-			{}
-
-			function_t function;
 			
-			virtual void execute(Params... t_args)
+			virtual void execute(Params... t_args) override
 			{
 				if (function)
 				{
 					function(t_args...);
 				}
 			}
+			
+			function_t function;
 		};
 
 		template <class T>
-		struct method_event_handler_t : public event_handler_t
+		struct method_handler_t : public handler_t
 		{
 			typedef void (T::*method_t)(Params...);
-
-			method_event_handler_t()
-				: event_handler_t()
-				, instance()
-				, method()
-			{}
-
-			method_event_handler_t(T* const t_instance, const method_t& t_method)
-				: event_handler_t()
+			
+			method_handler_t(T* const t_instance, const method_t& t_method)
+				: handler_t()
 				, instance(t_instance)
 				, method(t_method)
 			{}
-
-			T* instance;
-			method_t method;
 
 			virtual void execute(Params... t_args) override
 			{
@@ -159,9 +215,12 @@ namespace awesome
 					std::invoke(method, instance, t_args...);
 				}
 			}
+
+			T* instance;
+			method_t method;
 		};
 
-		std::vector<event_handler_t*> m_handlers{};
+		std::vector<handler_t*> m_handlers{};
 	};
 
 	typedef event_t<> event;
