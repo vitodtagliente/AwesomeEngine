@@ -50,7 +50,7 @@ namespace awesome
 		{
 			Image img(t_filename);
 			Texture* texture = m_api->createTexture(
-				img.data(), img.getWidth(), img.getHeight(), img.getComponents()
+				img.data(), img.getWidth(), img.getHeight(), img.getChannels()
 			);
 			m_textures.insert({ t_name, texture });
 			return texture;

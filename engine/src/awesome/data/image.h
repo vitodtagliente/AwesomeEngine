@@ -14,7 +14,7 @@ namespace awesome
 		unsigned char* data() const;
 		int getWidth() const;
 		int getHeight() const;
-		int getComponents() const;
+		int getChannels() const;
 
 	private:
 
@@ -25,6 +25,6 @@ namespace awesome
 		// image height
 		int m_height;
 		// num of components
-		int m_components;
+		int m_channels;
 	};
 }

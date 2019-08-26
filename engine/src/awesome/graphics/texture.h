@@ -21,7 +21,7 @@ namespace awesome
 		};
 
 		Texture(const unsigned char* const t_data, const unsigned int t_width, const unsigned int t_height,
-			const unsigned int t_components, const Options& t_options = Options{});
+			const unsigned int t_channels, const Options& t_options = Options{});
 
 		inline unsigned int id() const { return m_id; }
 		inline bool isValid() const { return m_id != 0; }

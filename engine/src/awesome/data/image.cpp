@@ -8,10 +8,10 @@ namespace awesome
 		: m_data()
 		, m_width()
 		, m_height()
-		, m_components()
+		, m_channels()
 	{
 		stbi_set_flip_vertically_on_load(1);
-		m_data = stbi_load(t_filename.c_str(), &m_width, &m_height, &m_components, 4);
+		m_data = stbi_load(t_filename.c_str(), &m_width, &m_height, &m_channels, 4);
 	}
 
 	Image::~Image()
@@ -34,8 +34,8 @@ namespace awesome
 		return m_height;
 	}
 
-	int Image::getComponents() const
+	int Image::getChannels() const
 	{
-		return m_components;
+		return m_channels;
 	}
 }
