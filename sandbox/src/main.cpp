@@ -53,6 +53,7 @@ int main()
 	e.bind(foo, &Foo::print);
 	e.bind(foo, &Foo::println);
 	e.unbind(foo, &Foo::print);
+	e.unbind((handler));
 	e.broadcast("world");
 
 	Engine::run({ new ShinyGalaxy() });

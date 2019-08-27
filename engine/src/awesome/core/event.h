@@ -35,6 +35,7 @@
 		e.broadcast("hello");
 */
 
+#include <cassert>
 #include <functional>
 #include <vector>
 
@@ -108,6 +109,14 @@ namespace awesome
 		template <class T>
 		inline handler_t* const bind(T* const t_instance, void (T::*method_name)(Params...))
 		{
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				if (method_handler_t<T>* method_handler = dynamic_cast<method_handler_t<T>*>(*it))
+				{
+					assert(!(method_handler->instance == t_instance && method_handler->method == method_name)
+						&& "method already binded");
+				}
+			}
 			handler_t* const handler = new method_handler_t(t_instance, method_name);
 			m_handlers.push_back(handler);
 			return handler;
@@ -116,6 +125,14 @@ namespace awesome
 		template <class T>
 		inline handler_t* const bind(const T* const t_object, void(T::* t_method)(Params...) const)
 		{
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			{
+				if (method_handler_t<T>* method_handler = dynamic_cast<method_handler_t<T>*>(*it))
+				{
+					assert(!(method_handler->instance == t_instance && method_handler->method == method_name)
+						&& "method already binded");
+				}
+			}
 			handler_t* const handler = new method_handler_t(t_instance, method_name);
 			m_handlers.push_back(handler);
 			return handler;
@@ -157,11 +174,9 @@ namespace awesome
 		template <class T>
 		inline bool unbind(const T* const t_object, void(T::* t_method)(Params...) const)
 		{
-			handler_t* const handler = new method_handler_t(t_instance, method_name);
-			m_handlers.push_back(handler);
-			return handlerfor(auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
+			for (auto it = m_handlers.begin(); it != m_handlers.end(); ++it)
 			{
-				if (method_handler_t<T> * method_handler = dynamic_cast<method_handler_t<T>*>(*it))
+				if (method_handler_t<T>* method_handler = dynamic_cast<method_handler_t<T>*>(*it))
 				{
 					if (method_handler->instance == t_instance
 						&& method_handler->method == method_name)
