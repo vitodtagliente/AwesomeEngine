@@ -2,10 +2,17 @@
 
 #include "core/engine.h"
 #include "core/event.h"
-#include "core/filesystem.h"
 #include "core/macros.h"
 #include "core/platform.h"
 #include "core/types.h"
+#include "core/io/file.h"
+#include "core/io/directory.h"
+#include "core/io/path.h"
+#include "core/io/stream.h"
+#include "core/io/stream_reader.h"
+#include "core/io/stream_writer.h"
+#include "core/io/string_reader.h"
+#include "core/io/string_writer.h"
 
 #include "application/application.h"
 #include "application/input.h"

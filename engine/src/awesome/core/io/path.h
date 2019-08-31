@@ -1,7 +1,7 @@
 #pragma once
 
+#include <initializer_list>
 #include <string>
-#include <vector>
 
 namespace awesome
 {
@@ -24,32 +24,5 @@ namespace awesome
 
 		static const char directorySeparatorChar;
 
-	};
-
-	struct Directory
-	{
-		Directory() = delete;
-		~Directory() = delete;
-		
-		// create a directory 
-		static bool create(const std::string& t_path);
-		static std::vector<std::string> getDirectories(const std::string& t_path);
-		static std::vector<std::string> getFiles(const std::string& t_path);
-		// return true if the directory exists
-		static bool exists(const std::string& t_path);
-		// retrieve the current working directory
-		static std::string getCurrentDirectory();
-
-	};
-
-	struct File
-	{
-		File() = delete;
-		~File() = delete;
-
-		// read all text and close the file
-		static std::string readAll(const std::string& t_path);
-		// read all lines
-		static std::vector<std::string> readLines(const std::string& t_path);
 	};
 }

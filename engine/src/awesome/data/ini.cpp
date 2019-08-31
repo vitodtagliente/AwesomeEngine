@@ -1,6 +1,5 @@
 #include "ini.h"
 
-#include <awesome/core/filesystem.h>
 #include "string.h"
 
 namespace awesome
