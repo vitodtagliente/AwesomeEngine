@@ -2,8 +2,9 @@
 
 #include "core/engine.h"
 #include "core/event.h"
-#include "core/macros.h"
 #include "core/platform.h"
+#include "core/string.h"
+#include "core/string_builder.h"
 #include "core/string_id.h"
 #include "core/types.h"
 #include "core/io/file.h"
@@ -23,7 +24,6 @@
 #include "data/color.h"
 #include "data/image.h"
 #include "data/ini.h"
-#include "data/string.h"
 #include "data/timer.h"
 
 #include "graphics/graphics_module.h"

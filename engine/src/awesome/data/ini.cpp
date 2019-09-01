@@ -1,6 +1,6 @@
 #include "ini.h"
 
-#include "string.h"
+#include <awesome/core/string.h>
 
 namespace awesome
 {	
@@ -34,23 +34,21 @@ namespace awesome
 	IniData IniData::parse(const std::string& t_content)
 	{
 		IniData data;
-
+		 
 		std::string currentSection;
-		for (const std::string& line : String::getLines(t_content))
+		for (const String& line : String(t_content).getLines())
 		{
-			if (String::contains(line, "[") && String::contains(line, "]"))
+			if (line.contains("[") && line.contains("]"))
 			{
-				currentSection = String::trim(
-					String::rtrim(String::ltrim(String::trim(line), '['), ']')
-				);
+				currentSection = line.trim().ltrim('[').rtrim(']').trim();
 				data.addSection(Section(currentSection));
 			}
-			else if (String::contains(line, "=") && !currentSection.empty())
+			else if (line.contains("=") && !currentSection.empty())
 			{
-				const std::vector<std::string>& tokens = String::split(line, '=');
+				const std::vector<String>& tokens = line.split('=');
 
 				data.getSection(currentSection)
-					.set(String::trim(tokens[0]), String::trim(tokens[1]));
+					.set(tokens[0].trim(), tokens[1].trim());
 			}
 		}
 

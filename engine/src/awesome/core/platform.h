@@ -21,6 +21,7 @@ namespace awesome
 	{
 		enum class Type
 		{
+			Null,
 			Windows,
 			Linux,
 			OSX,
@@ -38,16 +39,8 @@ namespace awesome
 			All
 		};
 
-		static Type get()  
-		{
-			// #todo
-			return Platform::Type::Windows;
-		}
+		static Type type();
 
-		static Category category()
-		{
-			// #todo
-			return Platform::Category::Desktop;
-		}
+		static Category category();
 	};
 }
