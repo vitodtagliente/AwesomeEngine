@@ -2,5 +2,8 @@
 
 namespace awesome
 {
+	class InputSystem
+	{
 
+	};
 }
