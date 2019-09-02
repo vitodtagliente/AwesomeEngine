@@ -3,7 +3,7 @@
 #include <map>
 #include <awesome/core/singleton.h>
 #include <awesome/math/vector2.h>
-#include "keycode.h"
+#include <awesome/input/keycode.h>
 
 namespace awesome
 {
