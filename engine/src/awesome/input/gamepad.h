@@ -6,6 +6,9 @@ namespace awesome
 {
 	class Gamepad : public InputDevice
 	{
+	public:
+
+		Gamepad(InputSystem* const t_inputSystem);
 
 	};
 }

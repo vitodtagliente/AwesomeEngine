@@ -6,6 +6,8 @@ namespace awesome
 {
 	class Keyboard : public InputDevice
 	{
+	public:
 
+		Keyboard(InputSystem * const t_inputSystem);
 	};
 }

@@ -9,6 +9,19 @@ namespace awesome
 	{
 	public:
 
+		enum class Button
+		{
+			Left,
+			Right,
+			Wheel
+		};
+
+		Mouse(InputSystem* const t_inputSystem);
+
+		bool isButtonDown(const Button t_button) const;
+		bool isButtonClicked(const Button t_button) const;
+		bool isButtonReleased(const Button t_button) const;
+
 		inline const vec2& getPosition() const { return m_position; }
 		inline const vec2& getDeltaPosition() const { return m_deltaPosition; }
 		inline bool hasValidPosition() const { return m_hasValidPosition; }
