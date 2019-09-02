@@ -1,6 +1,8 @@
 #pragma once
 #pragma warning(disable : 4201)
 
+#include <cstddef>
+
 namespace awesome
 {
 	template <typename T>
