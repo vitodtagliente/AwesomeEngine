@@ -18,7 +18,8 @@ namespace awesome
 			Unknown,
 			Gamepad,
 			Keyboard,
-			Mouse
+			Mouse,
+			Touchpad
 		};
 
 		// dependency injection
@@ -30,6 +31,11 @@ namespace awesome
 		}
 
 		virtual ~InputDevice() = default;
+
+		InputDevice(const InputDevice&) = delete;
+		InputDevice& operator=(const InputDevice&) = delete;
+		InputDevice(InputDevice&&) = delete;
+		InputDevice& operator=(InputDevice&&) = delete;
 
 		// return the device type
 		inline Type getType() const { return m_type; }

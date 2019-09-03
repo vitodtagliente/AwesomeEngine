@@ -11,9 +11,13 @@ namespace awesome
 
 		enum class Button
 		{
+			Unknown,
 			Left,
 			Right,
-			Wheel
+			Middle, // wheel button
+			Extra1,
+			Extra2,
+			Count
 		};
 
 		Mouse(InputSystem* const t_inputSystem);
