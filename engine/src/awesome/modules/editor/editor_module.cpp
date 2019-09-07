@@ -6,7 +6,7 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <awesome/modules/glfw/window_glfw.h>
 #include "editor.h"
-#include <awesome/application/input.h>
+#include <awesome/input/input.h>
 
 namespace awesome
 {
@@ -42,9 +42,10 @@ namespace awesome
 
 	void EditorModule::update_implementation()
 	{
-		if (Input::instance()->isKeyReleased(KeyCode::F2))
+		if (Input* const input = Input::instance())
 		{
-			m_editor->enabled = !m_editor->enabled;
+			if (input->isKeyReleased(KeyCode::F2))
+				m_editor->enabled = !m_editor->enabled;
 		}
 	}
 	

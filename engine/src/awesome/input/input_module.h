@@ -1,14 +1,23 @@
 #pragma once
 
+#include <awesome/core/api_wrapper.h>
 #include <awesome/core/engine.h>
 
 namespace awesome
 {
-	class InputAPI;
+	class Input;
 
 	class InputModule : public Engine::Module
 	{
 	public:
+		
+		// Input API abstraction
+		class API : public APIWrapper
+		{
+		public:
+			API() = default; 
+			virtual ~API() = default;
+		};
 
 		InputModule();
 		virtual ~InputModule();
@@ -19,10 +28,15 @@ namespace awesome
 		virtual void shutdown_implementation() override;
 		virtual void update_implementation() override;
 
-		virtual InputAPI* const createAPI() const = 0;
+		// create the appropriate api
+		virtual API* const createAPI() const = 0;
+
+	private:
 
 		// api
-		InputAPI* m_api;
+		API* m_api;
+		// input system
+		Input* m_input;
 
 	};
 }

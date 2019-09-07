@@ -1,46 +1,48 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include <awesome/core/singleton.h>
 #include <awesome/math/vector2.h>
-#include <awesome/input/keycode.h>
+#include "keycode.h"
+#include "input_module.h"
 
 namespace awesome
 {
-	class Input : public Singleton<Input>
+	class InputDevice;
+
+	class Input final : public Singleton<Input>
 	{
 	public:
 
-		Input();
+		friend class InputModule;
 
-		// initialize the input system
-		virtual bool initialize(class Window* const t_window) = 0;
-		// update the input state
-		void update();
-
+		Input(InputModule::API* const t_api);
+		
 		bool isKeyDown(const keycode_t t_key) const;
 		bool isKeyPressed(const keycode_t t_key) const;
 		bool isKeyReleased(const keycode_t t_key) const;
 		bool hasKeyState(const keycode_t t_key, const KeyState t_state) const;
 
+		void setKeyState(const keycode_t t_key, const KeyState t_state);
+		void setMousePosition(const float t_x, const float t_y);
+		void setMousePosition(const vector2& t_position);
+		void setMousePositionValid(const bool t_valid);
+
 		const vec2& getMousePosition() const;
 		const vec2& getDeltaMousePosition() const;
-		bool isMouseOverWindow() const;
+		bool isMousePositionValid() const;
 
 		// reset the input state
 		void clear();
 
-	protected:
+	private:
 
-		// callbacks, derived modules should use these callbacks
-		// to update the input states
-		void handleKeyCallback(const keycode_t t_key, const KeyState t_state);
-		void handleMousePositionCallback(const float t_x, const float t_y);
-		void handleMouseEnterCallback(const bool t_inside);
+		// update the input state
+		void update();
 
-		// update implementation
-		virtual void update_implementation() = 0;
-
+		// input api
+		InputModule::API* m_api;
 		// last keys states
 		std::map<keycode_t, KeyState> m_lastKeysState;
 		// keys states
@@ -52,7 +54,9 @@ namespace awesome
 		// delta mouse position
 		vec2 m_deltaMousePosition;
 		// is mouse over window?
-		bool m_isMouseOverWindow;
+		bool m_isMousePositionValid;
+		// input devices
+		std::vector<InputDevice*> m_devices;
 		
 	};
 }

@@ -1,12 +1,13 @@
 #include "input_module.h"
 
 #include <cassert>
-#include "input_api.h"
+#include "input.h"
 
 namespace awesome
 {
 	InputModule::InputModule()
 		: m_api()
+		, m_input()
 	{
 
 	}
@@ -14,6 +15,7 @@ namespace awesome
 	InputModule::~InputModule()
 	{
 		delete m_api;
+		delete m_input;
 	}
 
 	bool InputModule::startup_implementation()
@@ -21,17 +23,21 @@ namespace awesome
 		// initialize the application API
 		m_api = createAPI();
 		assert(m_api != nullptr);
-		return true;
+		if (m_api->startup())
+		{
+			m_input = new Input(m_api);
+			return true;
+		}
+		return false;
 	}
 
 	void InputModule::shutdown_implementation()
 	{
-
+		m_api->shutdown();
 	}
 
 	void InputModule::update_implementation()
 	{
-
+		m_input->update();
 	}
-
 }

@@ -17,7 +17,6 @@
 #include "core/io/string_writer.h"
 
 #include "application/application.h"
-#include "application/input.h"
 #include "application/time.h"
 #include "application/window.h"
 
@@ -42,6 +41,14 @@
 #include "graphics/material_library.h"
 #include "graphics/texture_library.h"
 #include "graphics/shaders.h"
+
+#include "input/input_module.h"
+#include "input/input.h"
+#include "input/input_device.h"
+#include "input/keycode.h"
+#include "input/gamepad.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
 
 #include "math/math.h"
 #include "math/matrix.h"

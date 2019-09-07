@@ -1,6 +1,6 @@
 #pragma once
 
-#include <awesome/application/input.h>
+#include <awesome/input/keycode.h>
 #include <GLFW/glfw3.h>
 
 namespace awesome

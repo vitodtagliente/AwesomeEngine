@@ -20,7 +20,6 @@ namespace awesome
 
 		// create application's objects
 		virtual Application* const createApplication() const override;
-		virtual Input* const createInput() const override;
 		virtual Time* const createTime() const override;
 		virtual Window* const createWindow() const override;
 	};

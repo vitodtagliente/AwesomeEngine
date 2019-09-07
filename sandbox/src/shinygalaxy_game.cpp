@@ -1,5 +1,7 @@
 #include "shinygalaxy_game.h"
 
+#include <iostream>
+
 bool ShinyGalaxy::startup_implementation()
 {
 	m_backgroundColor = Color::Black;
@@ -29,6 +31,8 @@ void ShinyGalaxy::shutdown_implementation()
 void ShinyGalaxy::update_implementation()
 {
 	const double deltaTime = m_time->getDeltaTime();
+
+
 }
 
 void ShinyGalaxy::pre_rendering_implementation()

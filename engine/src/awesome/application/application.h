@@ -5,7 +5,6 @@
 namespace awesome
 {
 	class ApplicationAPI;
-	class Input;
 	class Time;
 	class Window;
 
@@ -21,7 +20,6 @@ namespace awesome
 		virtual void update();
 		virtual void close();
 
-		const Input* const getInput() const { return m_input; }
 		const Time* const getTime() const { return m_time; }
 		const Window* const getWindow() const { return m_window; }
 
@@ -29,8 +27,6 @@ namespace awesome
 
 		// api 
 		ApplicationAPI* m_api;
-		// input
-		Input* m_input;
 		// time 
 		Time* m_time;
 		// window
