@@ -8,7 +8,7 @@ namespace awesome
 	{
 	public:
 
-		Gamepad(InputSystem* const t_inputSystem, const unsigned int t_index);
+		Gamepad(Input& t_input, const unsigned int t_index);
 
 		inline unsigned int getIndex() const { return m_index; }
 

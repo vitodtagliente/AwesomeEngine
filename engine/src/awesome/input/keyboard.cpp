@@ -1,9 +1,11 @@
 #include "keyboard.h"
 
+#include "input.h"
+
 namespace awesome
 {
-	Keyboard::Keyboard(InputSystem * const t_inputSystem)
-		: InputDevice(t_inputSystem, Type::Keyboard)
+	Keyboard::Keyboard(Input& t_input)
+		: InputDevice(t_input, Type::Keyboard)
 	{
 
 	}

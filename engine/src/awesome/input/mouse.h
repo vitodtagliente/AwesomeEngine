@@ -20,26 +20,14 @@ namespace awesome
 			Count
 		};
 
-		Mouse(InputSystem* const t_inputSystem);
+		Mouse(Input& t_input);
 
 		bool isButtonDown(const Button t_button) const;
 		bool isButtonClicked(const Button t_button) const;
 		bool isButtonReleased(const Button t_button) const;
 
-		inline const vec2& getPosition() const { return m_position; }
-		inline const vec2& getDeltaPosition() const { return m_deltaPosition; }
-		inline bool hasValidPosition() const { return m_hasValidPosition; }
-
-	private:
-
-		// last position
-		vec2 m_lastPosition;
-		// position
-		vec2 m_position;
-		// delta position
-		vec2 m_deltaPosition;
-		// is mouse over window?
-		bool m_hasValidPosition;
-
+		inline const vec2& getPosition() const;
+		inline const vec2& getDeltaPosition() const;
+		inline bool hasValidPosition() const;
 	};
 }

@@ -7,7 +7,7 @@
 
 namespace awesome
 {
-	class InputSystem;
+	class Input;
 
 	class InputDevice
 	{
@@ -23,8 +23,8 @@ namespace awesome
 		};
 
 		// dependency injection
-		InputDevice(InputSystem* const t_inputSystem, const Type t_type = Type::Unknown)
-			: m_inputSystem(t_inputSystem)
+		InputDevice(Input& t_input, const Type t_type = Type::Unknown)
+			: m_input(t_input)
 			, m_type(t_type)
 		{
 
@@ -42,10 +42,10 @@ namespace awesome
 		// return true if the device is properly running on the current system
 		virtual bool isValid() const { return true; }
 
-	private:
+	protected:
 
 		// input system
-		InputSystem* m_inputSystem;
+		Input& m_input;
 		// device type
 		Type m_type;
 		

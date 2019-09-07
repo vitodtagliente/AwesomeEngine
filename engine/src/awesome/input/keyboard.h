@@ -8,6 +8,6 @@ namespace awesome
 	{
 	public:
 
-		Keyboard(InputSystem * const t_inputSystem);
+		Keyboard(Input& t_input);
 	};
 }
