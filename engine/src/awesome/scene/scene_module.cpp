@@ -3,7 +3,7 @@
 #include "world.h"
 #include "object.h"
 #include "component.h"
-#include <awesome/application/time.h>
+#include <awesome/core/time.h>
 
 namespace awesome
 {

@@ -4,7 +4,6 @@ namespace awesome
 {
 	class Application;
 	class Input;
-	class Time;
 	class Window;
 
 	class ApplicationAPI
@@ -32,7 +31,6 @@ namespace awesome
 
 		// create application's objects
 		virtual Application* const createApplication() const = 0;
-		virtual Time* const createTime() const = 0;
 		virtual Window* const createWindow() const = 0;
 
 	private:

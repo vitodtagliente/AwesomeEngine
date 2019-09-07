@@ -11,7 +11,8 @@
 namespace awesome
 {
 	Engine::Engine()
-		: m_modules()
+		: m_time()
+		, m_modules()
 		, m_services()
 	{
 
@@ -82,6 +83,8 @@ namespace awesome
 
 	void Engine::update()
 	{
+		m_time.tick();
+
 		for (auto it = m_modules.begin(); it != m_modules.end(); it++)
 		{
 			Module* const module = it->second;

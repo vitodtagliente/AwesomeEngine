@@ -5,6 +5,7 @@
 #include <string>
 #include <typeinfo>
 #include "singleton.h"
+#include "time.h"
 
 namespace awesome
 {
@@ -97,6 +98,8 @@ namespace awesome
 		// register the engine modules
 		void registerModules();
 
+		// engine time management
+		Time m_time;
 		// engine's modules
 		std::list<std::pair<std::string, Module*>> m_modules;
 		// engine's services

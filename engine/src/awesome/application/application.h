@@ -5,9 +5,7 @@
 namespace awesome
 {
 	class ApplicationAPI;
-	class Time;
 	class Window;
-
 
 	class Application : public Singleton<Application>
 	{
@@ -20,15 +18,12 @@ namespace awesome
 		virtual void update();
 		virtual void close();
 
-		const Time* const getTime() const { return m_time; }
 		const Window* const getWindow() const { return m_window; }
 
 	protected:
 
 		// api 
 		ApplicationAPI* m_api;
-		// time 
-		Time* m_time;
 		// window
 		Window* m_window;
 	};
