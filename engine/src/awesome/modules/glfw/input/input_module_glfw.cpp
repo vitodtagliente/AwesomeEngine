@@ -15,11 +15,11 @@ namespace awesome
 	{
 	}
 	
-	InputModule::API* const InputModuleGLFW::createAPI() const
+	std::unique_ptr<InputModule::API> InputModuleGLFW::make_api() const
 	{
-		return new API_GLFW();
+		return std::make_unique<API_GLFW>();
 	}
-	
+
 	bool InputModuleGLFW::startup_implementation()
 	{
 		if (InputModule::startup_implementation())

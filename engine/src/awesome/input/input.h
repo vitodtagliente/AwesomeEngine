@@ -15,9 +15,10 @@ namespace awesome
 	{
 	public:
 
-		friend class InputModule;
+		Input(InputModule::API& t_api);
 
-		Input(InputModule::API* const t_api);
+		// update the input state
+		void update();
 		
 		bool isKeyDown(const keycode_t t_key) const;
 		bool isKeyPressed(const keycode_t t_key) const;
@@ -38,11 +39,8 @@ namespace awesome
 
 	private:
 
-		// update the input state
-		void update();
-
 		// input api
-		InputModule::API* m_api;
+		InputModule::API& m_api;
 		// last keys states
 		std::map<keycode_t, KeyState> m_lastKeysState;
 		// keys states

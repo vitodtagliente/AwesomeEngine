@@ -5,7 +5,7 @@
 
 namespace awesome
 {
-	Input::Input(InputModule::API* const t_api)
+	Input::Input(InputModule::API& t_api)
 		: Singleton<Input>()
 		, m_api(t_api)
 		, m_lastKeysState()
@@ -17,6 +17,37 @@ namespace awesome
 		, m_devices()
 	{
 
+	}
+
+	void Input::update()
+	{
+		auto temp_lastKeysState = std::move(m_lastKeysState);
+		m_lastKeysState = std::move(m_keysState);
+		m_keysState.clear();
+
+		// handle mouse buttons keystate
+		for (auto key_code : { KeyCode::MouseLeftButton, KeyCode::MouseRightButton, KeyCode::MouseWheelButton })
+		{
+			auto key_code_it = temp_lastKeysState.find(key_code);
+			if (key_code_it != temp_lastKeysState.end())
+			{
+				if (key_code_it->second == KeyState::Pressed || key_code_it->second == KeyState::Down)
+				{
+					auto it = m_lastKeysState.find(key_code);
+					if (it != m_lastKeysState.end())
+					{
+						if (it->second != KeyState::Released)
+						{
+							it->second = KeyState::Down;
+						}
+					}
+					else
+					{
+						m_lastKeysState.insert({ key_code, KeyState::Down });
+					}
+				}
+			}
+		}
 	}
 
 	bool Input::isKeyDown(const keycode_t t_key) const
@@ -93,36 +124,5 @@ namespace awesome
 	{
 		m_lastKeysState.clear();
 		m_keysState.clear();
-	}
-
-	void Input::update()
-	{
-		auto temp_lastKeysState = std::move(m_lastKeysState);
-		m_lastKeysState = std::move(m_keysState);
-		m_keysState.clear();
-
-		// handle mouse buttons keystate
-		for (auto key_code : { KeyCode::MouseLeftButton, KeyCode::MouseRightButton, KeyCode::MouseWheelButton })
-		{
-			auto key_code_it = temp_lastKeysState.find(key_code);
-			if (key_code_it != temp_lastKeysState.end())
-			{
-				if (key_code_it->second == KeyState::Pressed || key_code_it->second == KeyState::Down)
-				{
-					auto it = m_lastKeysState.find(key_code);
-					if (it != m_lastKeysState.end())
-					{
-						if (it->second != KeyState::Released)
-						{
-							it->second = KeyState::Down;
-						}
-					}
-					else
-					{
-						m_lastKeysState.insert({ key_code, KeyState::Down });
-					}
-				}
-			}
-		}
 	}
 }

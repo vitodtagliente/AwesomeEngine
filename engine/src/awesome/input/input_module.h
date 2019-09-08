@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <awesome/core/api_wrapper.h>
 #include <awesome/core/engine.h>
 
@@ -29,14 +30,14 @@ namespace awesome
 		virtual void update_implementation() override;
 
 		// create the appropriate api
-		virtual API* const createAPI() const = 0;
+		virtual std::unique_ptr<API> make_api() const = 0;
 
 	private:
 
 		// api
-		API* m_api;
+		std::unique_ptr<API> m_api;
 		// input system
-		Input* m_input;
+		std::unique_ptr<Input> m_input;
 
 	};
 }

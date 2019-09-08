@@ -14,18 +14,17 @@ namespace awesome
 
 	InputModule::~InputModule()
 	{
-		delete m_api;
-		delete m_input;
+
 	}
 
 	bool InputModule::startup_implementation()
 	{
 		// initialize the application API
-		m_api = createAPI();
+		m_api = std::move(make_api());
 		assert(m_api != nullptr);
 		if (m_api->startup())
 		{
-			m_input = new Input(m_api);
+			m_input = std::make_unique<Input>(*m_api);
 			return true;
 		}
 		return false;

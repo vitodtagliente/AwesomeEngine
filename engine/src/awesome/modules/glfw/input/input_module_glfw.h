@@ -22,7 +22,7 @@ namespace awesome
 	protected:
 
 		// create the input api
-		virtual API* const createAPI() const override;
+		virtual std::unique_ptr<API> make_api() const override;
 
 		virtual bool startup_implementation() override;
 		virtual void shutdown_implementation() override;
