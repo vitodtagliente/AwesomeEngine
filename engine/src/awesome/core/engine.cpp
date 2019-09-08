@@ -1,7 +1,7 @@
 #include "engine.h"
 
 // #todo
-#include <awesome/modules/glfw/application_module_glfw.h>
+#include <awesome/modules/glfw/application/application_module_glfw.h>
 #include <awesome/modules/glfw/input/input_module_glfw.h>
 #include <awesome/application/window.h>
 #include <awesome/modules/opengl/graphics_module_gl.h>

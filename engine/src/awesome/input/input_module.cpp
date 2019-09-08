@@ -19,7 +19,6 @@ namespace awesome
 
 	bool InputModule::startup_implementation()
 	{
-		// initialize the application API
 		m_api = std::move(make_api());
 		assert(m_api != nullptr);
 		if (m_api->startup())

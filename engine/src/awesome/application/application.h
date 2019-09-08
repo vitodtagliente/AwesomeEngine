@@ -1,6 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <awesome/core/singleton.h>
+#include "application_module.h"
 
 namespace awesome
 {
@@ -11,20 +13,20 @@ namespace awesome
 	{
 	public:
 		
-		Application(ApplicationAPI * const t_api);
+		Application(const ApplicationModule::API& t_api);
 		virtual ~Application();
 
 		virtual bool initialize();
 		virtual void update();
 		virtual void close();
 
-		const Window* const getWindow() const { return m_window; }
+		const Window& getWindow() const { return *m_window; }
 
 	protected:
 
 		// api 
-		ApplicationAPI* m_api;
+		const ApplicationModule::API& m_api;
 		// window
-		Window* m_window;
+		std::unique_ptr<Window> m_window;
 	};
 }

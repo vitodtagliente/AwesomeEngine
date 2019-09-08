@@ -1,8 +1,6 @@
 #include "application_module.h"
 
 #include <cassert>
-
-#include "application_api.h"
 #include "application.h"
 
 namespace awesome
@@ -15,25 +13,25 @@ namespace awesome
 
 	ApplicationModule::~ApplicationModule()
 	{
-		delete m_api;
-		delete m_application;
+
 	}
 
 	bool ApplicationModule::startup_implementation()
 	{
-		// initialize the application API
-		m_api = createAPI();
+		m_api = std::move(make_api());
 		assert(m_api != nullptr);
-		// get the application context
-		m_application = m_api->createApplication();
-		assert(m_application != nullptr);
-		// initialize the application
-		return m_application->initialize();
+		if (m_api->startup())
+		{
+			m_application = std::move(m_api->make_application());
+			assert(m_application);
+			// initialize the application
+			return m_application->initialize();
+		}
+		return false;
 	}
 
 	void ApplicationModule::shutdown_implementation()
 	{
-		assert(m_application != nullptr);
 		m_application->close();
 	}
 

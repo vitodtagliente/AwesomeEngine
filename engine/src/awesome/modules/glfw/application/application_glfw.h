@@ -8,6 +8,6 @@ namespace awesome
 	{	
 	public:
 
-		ApplicationGLFW(ApplicationAPI* const t_api);
+		ApplicationGLFW(const ApplicationModule::API& t_api);
 	};
 }

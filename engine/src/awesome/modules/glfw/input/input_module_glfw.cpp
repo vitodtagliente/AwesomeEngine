@@ -1,7 +1,7 @@
 #include "input_module_glfw.h"
 
 #include <GLFW/glfw3.h>
-#include "../window_glfw.h"
+#include "../application/window_glfw.h"
 #include <awesome/input/keycode.h>
 #include <awesome/input/input.h>
 

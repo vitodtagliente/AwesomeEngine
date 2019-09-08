@@ -2,7 +2,7 @@
 
 namespace awesome
 {
-	ApplicationGLFW::ApplicationGLFW(ApplicationAPI* const t_api)
+	ApplicationGLFW::ApplicationGLFW(const ApplicationModule::API& t_api)
 		: Application(t_api)
 	{
 

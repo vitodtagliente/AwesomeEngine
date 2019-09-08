@@ -1,11 +1,10 @@
 #include "application.h"
 
-#include "application_api.h"
 #include "window.h"
 
 namespace awesome
 {
-	Application::Application(ApplicationAPI* const t_api)
+	Application::Application(const ApplicationModule::API& t_api)
 		: m_api(t_api)
 		, m_window()
 	{
@@ -13,20 +12,16 @@ namespace awesome
 
 	Application::~Application()
 	{
-		delete m_window;
+
 	}
 
 	bool Application::initialize()
 	{
-		m_window = m_api->createWindow();
-
-		if (m_window)
-		{
-			// #todo: now are default settings
-			Window::Settings window_settings{};
-			return m_window->open(window_settings);
-		}
-		return false;
+		m_window = std::move(m_api.make_window());
+		assert(m_window);
+		// #todo: now are default settings
+		Window::Settings window_settings{};
+		return m_window->open(window_settings);
 	}
 
 	void Application::update()
