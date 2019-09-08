@@ -3,7 +3,7 @@
 #include <awesome/graphics/graphics_api.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/renderable.h>
-#include <awesome/scene/object.h>
+#include <awesome/engine/object.h>
 
 namespace awesome
 {

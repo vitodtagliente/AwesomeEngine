@@ -4,8 +4,8 @@
 #include <list>
 #include <string>
 #include <typeinfo>
-#include "singleton.h"
-#include "time.h"
+#include <awesome/core/singleton.h>
+#include <awesome/core/time.h>
 
 namespace awesome
 {

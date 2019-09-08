@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <string>
 #include <vector>
-#include <awesome/scene/world.h>
-#include <awesome/scene/object.h>
+#include <awesome/engine/world.h>
+#include <awesome/engine/object.h>
 #include "object_viewer.h"
 #include "../editor.h"
 

@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <map>
 #include <string>
-#include <awesome/core/engine.h>
+#include <awesome/engine/engine.h>
 
 namespace awesome
 {

@@ -5,7 +5,7 @@
 #include <awesome/modules/glfw/input/input_module_glfw.h>
 #include <awesome/application/window.h>
 #include <awesome/modules/opengl/graphics_module_gl.h>
-#include <awesome/scene/scene_module.h>
+#include "scene_module.h"
 #include <awesome/modules/editor/editor_module.h>
 
 namespace awesome

@@ -1,7 +1,7 @@
 #include "object_viewer.h"
 
 #include <imgui.h>
-#include <awesome/scene/object.h>
+#include <awesome/engine/object.h>
 #include "../editor.h"
 #include "scene_viewer.h"
 

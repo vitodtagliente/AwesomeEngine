@@ -5,7 +5,9 @@
 
 #include <awesome/awesome.h>
 
+#include <cassert>
 #include <iostream>
+#include <memory>
 #include <functional>
 #include "sandbox_game.h"
 #include "shinygalaxy_game.h"
@@ -16,45 +18,80 @@ class Foo
 {
 public:
 
-	Foo(int t_i)
-		: m_i(t_i)
+	Foo() = default;
+	Foo(const int t_a)
+		: a(t_a)
 	{
 
 	}
 
-	void foo()
+	void println(const std::string& t_str) const
 	{
-		std::cout << "foo\n";
-	}
-
-	void print(const std::string& t_str)
-	{
-		std::cout << t_str;
-	}
-
-	void println(const std::string& t_str)
-	{
-		std::cout << t_str << std::endl;
+		std::cout << t_str << "." << a << std::endl;
 	}
 
 private:
 
-	int m_i;
+	int a;
 };
+
+class Foo1 : public Foo {};
+
+template <typename T>
+class singleton_ptr
+{
+public:
+
+	template <typename... Args>
+	static singleton_ptr make(Args... t_args)
+	{
+		assert(m_instance == nullptr);
+		m_instance = new T(std::forward<Args>(t_args)...);
+		return {};
+	}
+
+	template <typename... Args>
+	static singleton_ptr get(Args... t_args)
+	{
+		if (m_instance == nullptr)
+		{
+			return make(t_args...);
+		}
+		return {};
+	}
+
+	template <typename... Args>
+	singleton_ptr(Args... t_args)
+	{
+		if (m_instance == nullptr)
+		{
+			make(t_args...);
+		}
+	}
+
+	T& operator* ()
+	{
+		assert(m_instance != nullptr);
+		return *m_instance;
+	}
+
+	T* operator->() const {
+		return m_instance;
+	}
+
+private:
+
+	static T* m_instance;
+};
+
+template <typename T>
+T* singleton_ptr<T>::m_instance = nullptr;
 
 int main()
 {
-	Foo* foo = new Foo(3);
-
-	event_t<const std::string&> e;
-	auto handler = e.bind([](const std::string& t_str) {
-		std::cout << "hello " << t_str << std::endl;
-	});
-	e.bind(foo, &Foo::print);
-	e.bind(foo, &Foo::println);
-	e.unbind(foo, &Foo::print);
-	e.unbind((handler));
-	e.broadcast("world");
+	singleton_ptr<Foo> foo = singleton_ptr<Foo>::make(4);
+	singleton_ptr<Foo1>();
+	foo->println("ciao");
 
 	Engine::run({ new ShinyGalaxy() });
 	return 0;

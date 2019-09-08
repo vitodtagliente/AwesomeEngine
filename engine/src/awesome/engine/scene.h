@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <awesome/data/string_id.h>
+#include <awesome/core/string_id.h>
 
 namespace awesome
 {

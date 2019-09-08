@@ -4,7 +4,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/renderable.h>
 #include <awesome/graphics/mesh/quad.h>
-#include <awesome/scene/object.h>
+#include <awesome/engine/object.h>
 
 namespace awesome
 {

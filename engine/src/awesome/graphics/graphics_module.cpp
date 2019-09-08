@@ -4,8 +4,8 @@
 #include "graphics_api.h"
 #include "renderer.h"
 #include "components/rendering_component.h"
-#include "../scene/world.h"
-#include "../scene/object.h"
+#include <awesome/engine/world.h>
+#include <awesome/engine/object.h>
 #include "shaders.h"
 #include "shader.h"
 #include "shader_program.h"

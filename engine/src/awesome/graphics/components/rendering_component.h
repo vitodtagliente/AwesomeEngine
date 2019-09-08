@@ -1,6 +1,6 @@
 #pragma once
 
-#include <awesome/scene/component.h>
+#include <awesome/engine/component.h>
 #include <awesome/graphics/material.h>
 
 namespace awesome

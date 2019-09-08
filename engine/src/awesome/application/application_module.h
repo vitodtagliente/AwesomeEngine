@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <awesome/core/api_wrapper.h>
-#include <awesome/core/engine.h>
+#include <awesome/engine/engine.h>
 
 namespace awesome
 {

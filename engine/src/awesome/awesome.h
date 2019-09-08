@@ -1,7 +1,6 @@
 #pragma once
 
 #include "core/color.h"
-#include "core/engine.h"
 #include "core/event.h"
 #include "core/platform.h"
 #include "core/string.h"
@@ -57,8 +56,9 @@
 #include "math/transform.h"
 #include "math/rectangle.h"
 
-#include "scene/component.h"
-#include "scene/object.h"
-#include "scene/world.h"
+#include "engine/engine.h"
+#include "engine/component.h"
+#include "engine/object.h"
+#include "engine/world.h"
 
 #include "services/localization/localization.h"
