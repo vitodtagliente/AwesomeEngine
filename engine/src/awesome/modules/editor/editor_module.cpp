@@ -4,7 +4,7 @@
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD 
 #include <examples/imgui_impl_glfw.h>
 #include <examples/imgui_impl_opengl3.h>
-#include <awesome/modules/glfw/window_glfw.h>
+#include <awesome/modules/glfw/application/window_glfw.h>
 #include "editor.h"
 #include <awesome/input/input.h>
 
