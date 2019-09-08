@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/color.h"
 #include "core/engine.h"
 #include "core/event.h"
 #include "core/platform.h"
@@ -20,7 +21,6 @@
 #include "application/application.h"
 #include "application/window.h"
 
-#include "data/color.h"
 #include "data/image.h"
 #include "data/ini.h"
 #include "data/timer.h"

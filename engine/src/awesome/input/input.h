@@ -6,11 +6,10 @@
 #include <awesome/math/vector2.h>
 #include "keycode.h"
 #include "input_module.h"
+#include "input_device.h"
 
 namespace awesome
 {
-	class InputDevice;
-
 	class Input final : public Singleton<Input>
 	{
 	public:
@@ -54,7 +53,7 @@ namespace awesome
 		// is mouse over window?
 		bool m_isMousePositionValid;
 		// input devices
-		std::vector<InputDevice*> m_devices;
+		std::vector<std::unique_ptr<InputDevice>> m_devices;
 		
 	};
 }

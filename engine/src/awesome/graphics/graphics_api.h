@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <string>
 
-#include <awesome/data/color.h>
+#include <awesome/core/color.h>
 #include "mesh/mesh.h"
 #include "renderable.h"
 #include "shader.h"

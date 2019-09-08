@@ -1,7 +1,7 @@
 #pragma once
 
 #include <awesome/core/singleton.h>
-#include <awesome/data/color.h>
+#include <awesome/core/color.h>
 #include <awesome/math/vector.h>
 #include <awesome/math/matrix.h>
 #include <awesome/math/rectangle.h>
