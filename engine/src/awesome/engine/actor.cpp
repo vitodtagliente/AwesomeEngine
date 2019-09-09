@@ -34,6 +34,22 @@ namespace awesome
 
 	void Actor::destroy()
 	{
+		// for (Object* const child : m_children)
+		// {
+		// 	child->destroy();
+		// }
 
+		// if (!isRoot())
+		// {
+		// 	m_parent->removeChild(this);
+		// }
+
+		// for (Component* const component : m_components)
+		// {
+		// 	component->uninit();
+		// 	delete component;
+		// }
+
+		m_state = State::PendingDestroy;
 	}
 }
