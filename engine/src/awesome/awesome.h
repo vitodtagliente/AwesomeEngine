@@ -2,6 +2,7 @@
 
 #include "core/color.h"
 #include "core/event.h"
+#include "core/fps.h"
 #include "core/platform.h"
 #include "core/string.h"
 #include "core/string_builder.h"

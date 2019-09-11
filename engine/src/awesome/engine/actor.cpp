@@ -4,6 +4,18 @@
 
 namespace awesome
 {
+	Actor::Actor()
+	{
+	}
+	
+	Actor::~Actor()
+	{
+		if (m_state != State::PendingDestroy)
+		{
+			destroy();
+		}
+	}
+	
 	void Actor::initialize()
 	{
 		initialize_implementation();
@@ -51,5 +63,14 @@ namespace awesome
 		// }
 
 		m_state = State::PendingDestroy;
+	}
+	
+	void Actor::removeChild(const Actor* const t_child)
+	{
+		auto it = std::find(m_children.begin(), m_children.end(), t_child);
+		if (it != m_children.end())
+		{
+			m_children.erase(it);
+		}
 	}
 }

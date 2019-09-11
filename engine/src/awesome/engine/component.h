@@ -24,7 +24,7 @@ namespace awesome
 		// if true the component is enabled
 		bool enabled;
 
-	protected:
+	
 
 		Component();
 		virtual ~Component();
@@ -36,10 +36,10 @@ namespace awesome
 		{
 			if (t_object != nullptr)
 			{
-				T* const created_component = new T{};
-				created_component->m_id = StringId::unique();
-				created_component->m_owner = t_object;
-				return created_component;
+				// T* const created_component = new T{};
+				// created_component->m_id = StringId::unique();
+				// created_component->m_owner = t_object;
+				// return created_component;
 			}
 			return nullptr;
 		}
