@@ -3,7 +3,9 @@ project(ECS)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(src)
+include_directories(
+	src/
+)
 
 file(GLOB PROJECT_HEADERS src/*.h) 
 file(GLOB PROJECT_SOURCES src/*.cpp)
@@ -14,6 +16,7 @@ source_group("Sources" FILES ${PROJECT_SOURCES})
 add_executable(
     ${PROJECT_NAME} 
     ${PROJECT_SOURCES} 
+	${PROJECT_HEADERS}
 )
 
 target_link_libraries(
