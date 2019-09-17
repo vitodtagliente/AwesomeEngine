@@ -13,8 +13,5 @@ namespace ECS
 		inline bool operator== (const Component& t_component) const { return false; }
 		inline bool operator!= (const Component& t_component) const { return false; }
 
-	private:
-
-
 	};
 }

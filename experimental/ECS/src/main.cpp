@@ -9,10 +9,25 @@
 using namespace ECS;
 using namespace std;
 
+class A {};
+class B : public A {};
+class C {};
+
+class Tranform : public Component<Tranform> {};
+class Health : public Component<Health> {};
+
 int main(int argc, char* argv[])
 {
-	TypeId id1, id2;
-	cout << id1.get() << " " << id2.get() << endl;
+	cout << typeid(A).hash_code() << endl;
+	cout << typeid(B).hash_code() << endl;
+	cout << typeid(B).hash_code() << endl;
+	cout << typeid(C).hash_code() << endl;
+
+	cout << type<A>().id() 
+		<< " " << type<B>().id()
+		<< " " << type<B>().id() 
+		<< endl;
+
 
 	return 0;
 }
