@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+#include <vector>
+#include "system.h"
+
 namespace ECS
 {
 	class Engine
@@ -8,8 +12,13 @@ namespace ECS
 
 		Engine() = default;
 
+		void update(const float t_deltaTime)
+		{
+
+		}
+
 	private:
 
-
+		std::map<size_t, ISystem*> m_systems;
 	};
 }
