@@ -2,7 +2,6 @@
 
 namespace ECS
 {
-	template <class T>
 	class Component
 	{
 	public:
