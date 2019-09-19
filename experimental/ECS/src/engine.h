@@ -19,6 +19,6 @@ namespace ECS
 
 	private:
 
-		std::map<size_t, ISystem*> m_systems;
+		// std::map<size_t, > m_systems;
 	};
 }
