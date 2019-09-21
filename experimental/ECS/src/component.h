@@ -2,18 +2,18 @@
 
 namespace ECS
 {
-	class IComponent
+	class Component
 	{
 	public:
 
 		using Id = size_t;
 
-		IComponent()
+		Component()
 			: m_id(id_counter++)
 		{
 
 		}
-		virtual ~IComponent() = default;
+		virtual ~Component() = default;
 
 		Id id() const { return m_id; }
 
@@ -26,5 +26,5 @@ namespace ECS
 
 	};
 
-	IComponent::Id IComponent::id_counter = 0;
+	Component::Id Component::id_counter = 0;
 }

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "icomponent.h"
+#include "component.h"
 
 namespace ECS
 {
-	class DataComponent : public IComponent
+	class DataComponent : public Component
 	{
 	public:
 		
 		DataComponent()
-			: IComponent()
+			: Component()
 		{
 
 		}
