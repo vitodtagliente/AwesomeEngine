@@ -17,6 +17,15 @@ namespace ECS
 
 		Id id() const { return m_id; }
 
+		inline virtual bool operator== (const Component& t_other) const
+		{
+			return m_id == t_other.m_id;
+		}
+		inline virtual bool operator!= (const Component& t_other) const
+		{
+			return m_id != t_other.m_id;
+		}
+
 	private:
 
 		static Id id_counter;

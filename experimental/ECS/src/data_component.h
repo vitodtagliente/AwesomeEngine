@@ -15,14 +15,5 @@ namespace ECS
 		}
 		virtual ~DataComponent() = default;
 
-		inline virtual bool operator== (const DataComponent& t_other) const 
-		{ 
-			return id() == t_other.id();
-		}
-		inline virtual bool operator!= (const DataComponent& t_other) const
-		{
-			return id() != t_other.id();
-		}
-
 	};
 }
