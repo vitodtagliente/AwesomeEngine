@@ -1,18 +1,15 @@
 #pragma once
 
-#include "entity.h"
+#include "icomponent.h"
 
 namespace ECS
 {
-	class DataComponent
+	class DataComponent : public IComponent
 	{
 	public:
-
-		using Id = size_t;
-
+		
 		DataComponent()
-			: m_id()
-			, m_entityId()
+			: IComponent()
 		{
 
 		}
@@ -20,21 +17,12 @@ namespace ECS
 
 		inline virtual bool operator== (const DataComponent& t_other) const 
 		{ 
-			return m_id == t_other.m_id
-				&& m_entityId == t_other.m_entityId;
+			return id() == t_other.id();
 		}
 		inline virtual bool operator!= (const DataComponent& t_other) const
 		{
-			return m_id != t_other.m_id
-				|| m_entityId != t_other.m_entityId;
+			return id() != t_other.id();
 		}
-
-	private:
-
-		// component id
-		Id m_id;
-		// owner entity id
-		Entity::Id m_entityId;
 
 	};
 }
