@@ -6,6 +6,8 @@ namespace ECS
 	{
 	public:
 
+		using Id = size_t;
+
 		using id_t = size_t;
 
 		Entity() = default;

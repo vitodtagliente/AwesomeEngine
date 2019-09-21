@@ -2,7 +2,7 @@
 
 namespace ECS
 {
-	class EntityManager
+	class Behaviour
 	{
 
 	};
