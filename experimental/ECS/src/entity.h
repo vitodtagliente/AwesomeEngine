@@ -8,8 +8,6 @@ namespace ECS
 
 		using Id = size_t;
 
-		using id_t = size_t;
-
 		Entity() = default;
 		virtual ~Entity() = default;
 

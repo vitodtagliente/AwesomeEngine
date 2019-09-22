@@ -27,7 +27,7 @@ namespace ECS
 		inline const std::vector<T>& getComponents() const { return m_components; }
 
 		template <typename... P>
-		inline T& addComponent(const Entity::id_t t_entityId, P... t_args)
+		inline T& addComponent(const Entity::Id t_entityId, P... t_args)
 		{
 			static_assert(std::is_base_of<T, DataComponent>());
 
@@ -35,10 +35,17 @@ namespace ECS
 			return m_components.back();
 		}
 
+		void removeComponent(const Entity::Id t_entityId)
+		{
+
+		}
+
 		inline void clear()
 		{
 			m_components.clear();
 		}
+
+		virtual void update(const float t_deltaTime) = 0;
 
 	private:
 
