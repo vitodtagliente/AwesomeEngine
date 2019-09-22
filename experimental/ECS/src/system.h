@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <vector>
-#include <unordered_map>
+#include "data_component.h"
 #include "entity.h"
 
 namespace ECS
@@ -16,6 +16,7 @@ namespace ECS
 
 		System()
 			: m_components()
+			, m_entityComponents()
 		{
 		}
 

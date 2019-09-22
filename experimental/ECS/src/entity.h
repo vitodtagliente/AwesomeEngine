@@ -8,31 +8,37 @@ namespace ECS
 
 		using Id = size_t;
 
-		Entity() = default;
+		Entity()
+			: m_id(++id_counter)
+		{
+
+		}
 		virtual ~Entity() = default;
 
-		template <class T>
-		T* getComponent() const
+		Id id() const { return m_id; }
+
+		template <typename T, typename... P>
+		void addComponent(P... t_args)
 		{
-			return nullptr; // todo
+			
 		}
 
-		template <class T, class... A>
-		T* addComponent(A&&... t_args)
-		{
-			return nullptr; // todo
+		inline virtual bool operator== (const Entity& t_other) const
+		{ 
+			return m_id == t_other.m_id; 
+		}
+		inline virtual bool operator!= (const Entity& t_other) const
+		{ 
+			return m_id != t_other.m_id; 
 		}
 
-		template <class T>
-		void removeComponent()
-		{
+	private:
 
-		}
+		static Id id_counter;
 
-		virtual void enable() {}
-		virtual void disable() {}
-		
-		inline bool operator== (const Entity& t_entity) const { return false; }
-		inline bool operator!= (const Entity& t_entity) const { return false; }
+		// entity id
+		Id m_id;
 	};
+
+	Entity::Id Entity::id_counter = 0;
 }
