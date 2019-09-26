@@ -2,6 +2,7 @@
 
 #include <map>
 #include <vector>
+#include <unordered_map>
 #include "system.h"
 
 namespace ECS
@@ -11,14 +12,23 @@ namespace ECS
 	public:
 
 		Engine() = default;
-
-		void update(const float t_deltaTime)
+		~Engine()
 		{
 
 		}
 
+
+
+		void update(const float t_deltaTime)
+		{
+			for (const auto& pair : m_systems)
+			{
+				pair.second->update(t_deltaTime);
+			}
+		}
+
 	private:
 
-		// std::map<size_t, > m_systems;
+		std::unordered_map<id_t, ISystem*> m_systems;
 	};
 }

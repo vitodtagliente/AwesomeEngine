@@ -11,16 +11,26 @@ class A {};
 class B : public A {};
 class C {};
 
-class Tranform : public DataComponent {};
-class Health : public DataComponent {};
-
-class Foo : public DataComponent
+template <typename T>
+struct reflect
 {
-public:
+	using type = T;
+};
 
-	~Foo()
+struct transform
+{
+	int x, y, z;
+};
+
+class TransformSystem : public System<transform>
+{
+protected:
+
+	virtual void each(const transform& t_data) override
 	{
-		std::cout << "dstructed\n";
+		cout << t_data.x << " " 
+			<< t_data.y << " " 
+			<< t_data.z << endl;
 	}
 };
 
@@ -35,6 +45,13 @@ int main(int argc, char* argv[])
 		<< " " << type<B>().id()
 		<< " " << type<B>().id() 
 		<< endl;
+
+	Engine engine;
+
+	TransformSystem system;
+	system.addComponent(1);
+	system.addComponent(2, transform{ 1, 2, 3 });
+	system.update(0.1f);
 
 	return 0;
 }

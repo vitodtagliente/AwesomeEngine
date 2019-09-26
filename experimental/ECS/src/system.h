@@ -3,42 +3,48 @@
 #include <cassert>
 #include <vector>
 #include "data_component.h"
-#include "entity.h"
+#include "type_id.h"
 
 namespace ECS
 {
-	class DataComponent;
-
-	template <class T>
-	class System
+	class ISystem
 	{
 	public:
 
+		virtual void update(const float t_deltaTime) = 0;
+	};
+
+	template <class T>
+	class System : public ISystem
+	{
+	public:
+
+		using component_t = DataComponent<T>;
+
 		System()
 			: m_components()
-			, m_entityComponents()
 		{
 		}
 
-		~System()
-		{
-
-		}
+		~System() = default;
 
 		inline const std::vector<T>& getComponents() const { return m_components; }
 
 		template <typename... P>
-		inline T& addComponent(const Entity::Id t_entityId, P... t_args)
+		inline void addComponent(const id_t t_entityId, P... t_args)
 		{
-			static_assert(std::is_base_of<T, DataComponent>());
-
-			m_components.push_back(T(std::forward<P>(t_args)...));
-			return m_components.back();
+			m_components.push_back(DataComponent<T>(
+				++id_counter,
+				t_entityId,
+				T{ std::forward<P>(t_args)... })
+			);
 		}
 
-		void removeComponent(const Entity::Id t_entityId)
+		void removeComponent(const id_t t_entityId)
 		{
-
+			auto it = std::find(m_components.begin(), m_components.end(), [t_entityId](const DataComponent<T>& t_component) {
+				return t_component.entityId = t_entityId;
+			});
 		}
 
 		inline void clear()
@@ -46,10 +52,25 @@ namespace ECS
 			m_components.clear();
 		}
 
-		virtual void update(const float t_deltaTime) = 0;
+		virtual void update(const float t_deltaTime) override
+		{
+			for (const auto& t_component : m_components)
+			{
+				each(t_component.data);
+			}
+		}
+
+	protected:
+
+		virtual void each(const T& t_data) = 0;
 
 	private:
 
-		std::vector<T> m_components;
+		std::vector<component_t> m_components;
+
+		static id_t id_counter;
 	};
+
+	template <typename T>
+	id_t System<T>::id_counter = 0;
 }

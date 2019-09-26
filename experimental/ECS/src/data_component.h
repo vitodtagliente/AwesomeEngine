@@ -1,19 +1,35 @@
 #pragma once
 
-#include "component.h"
+#include "type_id.h"
 
 namespace ECS
 {
-	class DataComponent : public Component
+	template <typename T>
+	struct DataComponent
 	{
-	public:
-		
 		DataComponent()
-			: Component()
+			: m_id()
+			, entityId()
+			, data()
+		{}
+
+		DataComponent(const id_t t_id, const id_t t_entityId, const T& t_data)
+			: id(t_id)
+			, entityId(t_entityId)
+			, data(t_data)
+		{}
+
+		bool operator== (const DataComponent<T>& t_other) const
 		{
-
+			return id == t_other.id;
 		}
-		virtual ~DataComponent() = default;
+		bool operator!= (const DataComponent<T>& t_other) const
+		{
+			return id != t_other.id;
+		}
 
+		id_t id;
+		id_t entityId;
+		T data;
 	};
 }
