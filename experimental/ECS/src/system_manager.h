@@ -27,7 +27,9 @@ namespace ECS
 		{
 			//assert(std::is_base_of<T, BaseSystem>());
 
-			const id_t type_id = Foo<T>(); // type<T>.id();
+			auto f = type_id<T>();
+
+			constexpr id_t type_id = 1; // 
 			const auto it = m_systems.find(type_id);
 			// add if not found
 			if (it == m_systems.end())

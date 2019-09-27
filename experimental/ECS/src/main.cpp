@@ -41,15 +41,14 @@ int main(int argc, char* argv[])
 	cout << typeid(B).hash_code() << endl;
 	cout << typeid(C).hash_code() << endl;
 
-	cout << type<A>().id
-		<< " " << type<B>().id
-		<< " " << type<B>().id
+	cout << type_id<A>()
+		<< " " << type_id<B>()
 		<< endl;
 
 	Engine engine;
 	Entity actor1 = engine.createEntity();
-
-	engine.addSystem<TransformSystem>();
+	
+	//engine.addSystem<TransformSystem>();
 
 	SystemManager manager;
 	manager.add<TransformSystem>();
