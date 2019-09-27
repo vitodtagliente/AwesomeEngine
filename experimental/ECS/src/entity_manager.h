@@ -27,7 +27,7 @@ namespace ECS
 			return new_entity;
 		}
 
-		void destory(const id_t t_id)
+		void destroy(const id_t t_id)
 		{
 			auto it = std::find(m_entities.begin(), m_entities.end(), t_id);
 			if (it != m_entities.end())

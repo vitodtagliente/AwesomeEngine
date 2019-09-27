@@ -34,7 +34,7 @@ namespace ECS
 
 		void invalidate()
 		{
-			m_manager.destory(m_id);
+			m_manager.destroy(m_id);
 			m_id = INVALID_ID;
 		}
 
