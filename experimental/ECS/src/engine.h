@@ -3,7 +3,8 @@
 #include <map>
 #include <vector>
 #include <unordered_map>
-#include "system.h"
+#include "entity_manager.h"
+#include "system_manager.h"
 #include "type_id.h"
 
 namespace ECS
@@ -12,37 +13,21 @@ namespace ECS
 	{
 	public:
 
-		Engine() = default;
-		~Engine()
-		{
-			for (const auto& pair : m_systems)
-			{
-				delete pair.second;
-			}
+		Engine()
+			: m_entityManager()
+			, m_systemManager()
+		{ }
 
-			m_systems.clear();
-		}
-
-		template <typename T>
-		T* const addSystem()
-		{
-			assert(std::is_base_of<T, ISystem>());
-
-			T* const new_system = new T();
-			m_systems.insert(type<T>.id(), new_system);
-			return T;
-		}
+		~Engine() = default;
 
 		void update(const float t_deltaTime)
 		{
-			for (const auto& pair : m_systems)
-			{
-				pair.second->update(t_deltaTime);
-			}
+			m_systemManager.update(t_deltaTime);
 		}
 
 	private:
 
-		std::unordered_map<id_t, BaseSystem*> m_systems;
+		EntityManager m_entityManager;
+		SystemManager m_systemManager;
 	};
 }

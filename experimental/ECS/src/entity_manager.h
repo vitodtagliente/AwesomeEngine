@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "entity.h"
 #include "type_id.h"
 
 namespace ECS
