@@ -31,7 +31,7 @@ namespace ECS
 		inline const std::vector<T>& getComponents() const { return m_components; }
 
 		template <typename... P>
-		inline void addComponent(const id_t t_entityId, P... t_args)
+		inline void addComponent(const size_t t_entityId, P... t_args)
 		{
 			m_components.push_back(DataComponent<T>(
 				++id_counter,
@@ -40,7 +40,7 @@ namespace ECS
 			);
 		}
 
-		void removeComponent(const id_t t_entityId)
+		void removeComponent(const size_t t_entityId)
 		{
 			auto it = std::find(m_components.begin(), m_components.end(), [t_entityId](const DataComponent<T>& t_component) {
 				return t_component.entityId = t_entityId;
@@ -68,9 +68,9 @@ namespace ECS
 
 		std::vector<component_t> m_components;
 
-		static id_t id_counter;
+		static size_t id_counter;
 	};
 
 	template <typename T>
-	id_t System<T>::id_counter = 0;
+	size_t System<T>::id_counter = 0;
 }

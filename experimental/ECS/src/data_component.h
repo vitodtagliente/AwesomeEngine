@@ -13,7 +13,7 @@ namespace ECS
 			, data()
 		{}
 
-		DataComponent(const id_t t_id, const id_t t_entityId, const T& t_data)
+		DataComponent(const size_t t_id, const size_t t_entityId, const T& t_data)
 			: id(t_id)
 			, entityId(t_entityId)
 			, data(t_data)
@@ -28,8 +28,8 @@ namespace ECS
 			return id != t_other.id;
 		}
 
-		id_t id;
-		id_t entityId;
+		size_t id;
+		size_t entityId;
 		T data;
 	};
 }

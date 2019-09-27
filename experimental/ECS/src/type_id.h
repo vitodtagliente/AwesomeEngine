@@ -25,9 +25,7 @@ namespace ECS
 	 * The type of a type id.
 	 */
 
-	using id_t = size_t;
-
-
+	using type_id_t = const void*;
 
 	/**
 	 * The function that returns the type id.
@@ -37,7 +35,7 @@ namespace ECS
 	 */
 
 	template <typename T>
-	constexpr auto type_id() noexcept -> const void* {
+	constexpr auto type_id() noexcept -> type_id_t {
 		return &detail::type_id_ptr<T>::existance;
 	}
 }

@@ -11,9 +11,9 @@ namespace ECS
 	{
 	public:
 
-		static constexpr id_t INVALID_ID = 0;
+		static constexpr size_t INVALID_ID = 0;
 		
-		Entity(EntityManager& t_manager, SystemManager& t_systems, const id_t t_id)
+		Entity(EntityManager& t_manager, SystemManager& t_systems, const size_t t_id)
 			: m_id(t_id)
 			, m_manager(t_manager)
 			, m_systems(t_systems)
@@ -23,7 +23,7 @@ namespace ECS
 
 		virtual ~Entity() = default;
 
-		id_t id() const { return m_id; }
+		size_t id() const { return m_id; }
 		
 		operator bool() const
 		{
@@ -59,7 +59,7 @@ namespace ECS
 
 	private:
 		// entity id
-		id_t m_id;
+		size_t m_id;
 		// entity manager reference
 		EntityManager& m_manager;
 		// system manager reference

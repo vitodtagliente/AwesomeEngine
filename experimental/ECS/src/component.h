@@ -8,8 +8,6 @@ namespace ECS
 	{
 	public:
 
-		using Id = size_t;
-
 		Component()
 			: m_id(++id_counter)
 			, m_entityId()
@@ -18,9 +16,9 @@ namespace ECS
 		}
 		virtual ~Component() = default;
 
-		Id id() const { return m_id; }
+		size_t id() const { return m_id; }
 
-		id_t getEntityId() const { return m_entityId; }
+		size_t getEntityId() const { return m_entityId; }
 
 		inline virtual bool operator== (const Component& t_other) const
 		{
@@ -33,14 +31,14 @@ namespace ECS
 
 	private:
 
-		static Id id_counter;
+		static size_t id_counter;
 
 		// component id
-		Id m_id;
+		size_t m_id;
 		// owner entity id
-		id_t m_entityId;
+		size_t m_entityId;
 
 	};
 
-	Component::Id Component::id_counter = 0;
+	size_t Component::id_counter = 0;
 }

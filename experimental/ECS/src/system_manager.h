@@ -26,16 +26,14 @@ namespace ECS
 		void add(P... t_args)
 		{
 			//assert(std::is_base_of<T, BaseSystem>());
-
-			auto f = type_id<T>();
-
-			constexpr id_t type_id = 1; // 
-			const auto it = m_systems.find(type_id);
+			
+			type_id_t id = type_id<T>(); 
+			const auto it = m_systems.find(id);
 			// add if not found
 			if (it == m_systems.end())
 			{
 				m_systems.insert({
-					type_id,
+					id,
 					std::make_unique<T>(std::forward<P>(t_args)...)
 					});
 			}			
@@ -56,6 +54,6 @@ namespace ECS
 
 	private:
 
-		std::unordered_map<id_t, std::unique_ptr<BaseSystem>> m_systems;
+		std::unordered_map<type_id_t, std::unique_ptr<BaseSystem>> m_systems;
 	};
 }
