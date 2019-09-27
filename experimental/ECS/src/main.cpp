@@ -48,10 +48,7 @@ int main(int argc, char* argv[])
 	Engine engine;
 	Entity actor1 = engine.createEntity();
 	
-	//engine.addSystem<TransformSystem>();
-
-	SystemManager manager;
-	manager.add<TransformSystem>();
+	engine.addSystem<TransformSystem>();
 
 	// fake game loop
 	for (auto i = 0; i < 10; ++i)

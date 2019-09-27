@@ -25,7 +25,7 @@ namespace ECS
 		template <typename T, typename... P>
 		void add(P... t_args)
 		{
-			//assert(std::is_base_of<T, BaseSystem>());
+			// assert(std::is_base_of<BaseSystem, T>::value == true);
 			
 			type_id_t id = type_id<T>(); 
 			const auto it = m_systems.find(id);
@@ -39,12 +39,34 @@ namespace ECS
 			}			
 		}
 
+		template <typename T>
+		void remove()
+		{
+			type_id_t id = type_id<T>();
+			const auto it = m_systems.find(id);
+			// add if not found
+			if (it != m_systems.end())
+			{
+				m_systems.erase(it);
+			}
+		}
+
+		void init()
+		{
+
+		}
+
 		void update(const float t_deltaTime)
 		{
 			for (const auto& pair : m_systems)
 			{
 				pair.second->update(t_deltaTime);
 			}
+		}
+
+		void uninit()
+		{
+
 		}
 
 		void clear()

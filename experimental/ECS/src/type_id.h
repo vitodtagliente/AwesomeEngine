@@ -16,7 +16,7 @@ namespace ECS
 		struct type_id_ptr {
 			// Having a static data member will ensure (I hope) that it has only one address for the whole program.
 			// Furthermore, the static data member having different types will ensure (I hope) it won't get optimized.
-			static constexpr bool existance = true;
+			static constexpr bool value = true;
 		};
 
 	} // namespace detail
@@ -36,6 +36,6 @@ namespace ECS
 
 	template <typename T>
 	constexpr auto type_id() noexcept -> type_id_t {
-		return &detail::type_id_ptr<T>::existance;
+		return &detail::type_id_ptr<T>::value;
 	}
 }

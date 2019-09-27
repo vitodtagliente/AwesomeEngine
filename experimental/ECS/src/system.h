@@ -11,7 +11,9 @@ namespace ECS
 	{
 	public:
 
+		virtual void init() {}
 		virtual void update(const float t_deltaTime) = 0;
+		virtual void uninit() {}
 	};
 
 	template <class T>
