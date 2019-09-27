@@ -7,7 +7,7 @@
 
 namespace ECS
 {
-	class ISystem
+	class BaseSystem
 	{
 	public:
 
@@ -15,7 +15,7 @@ namespace ECS
 	};
 
 	template <class T>
-	class System : public ISystem
+	class System : public BaseSystem
 	{
 	public:
 

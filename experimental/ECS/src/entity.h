@@ -1,26 +1,41 @@
 #pragma once
 
+#include "entity_manager.h"
+#include "type_id.h"
+
 namespace ECS
 {
 	class Entity
 	{
 	public:
 
-		using Id = size_t;
-
-		Entity()
-			: m_id(++id_counter)
-		{
-
+		static constexpr id_t INVALID_ID = 0;
+		
+		Entity(EntityManager& t_manager, const id_t t_id)
+			: m_id(t_id)
+			, m_manager(t_manager)
+		{  
+			
 		}
+
 		virtual ~Entity() = default;
 
-		Id id() const { return m_id; }
-
-		template <typename T, typename... P>
-		void addComponent(P... t_args)
+		id_t id() const { return m_id; }
+		
+		operator bool() const
 		{
-			
+			return valid();
+		}
+
+		bool valid() const
+		{
+			return m_id != INVALID_ID;
+		}
+
+		void invalidate()
+		{
+			m_manager.destory(m_id);
+			m_id = INVALID_ID;
 		}
 
 		inline virtual bool operator== (const Entity& t_other) const
@@ -33,12 +48,9 @@ namespace ECS
 		}
 
 	private:
-
-		static Id id_counter;
-
 		// entity id
-		Id m_id;
+		id_t m_id;
+		// entity manager reference
+		EntityManager& m_manager;
 	};
-
-	Entity::Id Entity::id_counter = 0;
 }
