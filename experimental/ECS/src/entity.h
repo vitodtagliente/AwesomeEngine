@@ -1,6 +1,8 @@
 #pragma once
 
+#include "component_ptr.h"
 #include "entity_manager.h"
+#include "system_manager.h"
 #include "type_id.h"
 
 namespace ECS
@@ -11,9 +13,10 @@ namespace ECS
 
 		static constexpr id_t INVALID_ID = 0;
 		
-		Entity(EntityManager& t_manager, const id_t t_id)
+		Entity(EntityManager& t_manager, SystemManager& t_systems, const id_t t_id)
 			: m_id(t_id)
 			, m_manager(t_manager)
+			, m_systems(t_systems)
 		{  
 			
 		}
@@ -47,10 +50,19 @@ namespace ECS
 			return m_id != t_other.m_id; 
 		}
 
+		// component interface
+		template <typename T, typename... P>
+		void addComponent(P... t_args)
+		{
+
+		}
+
 	private:
 		// entity id
 		id_t m_id;
 		// entity manager reference
 		EntityManager& m_manager;
+		// system manager reference
+		SystemManager& m_systems;
 	};
 }

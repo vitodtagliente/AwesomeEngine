@@ -8,6 +8,12 @@
 
 namespace ECS
 {
+	template <typename T>
+	constexpr unsigned int Foo()
+	{
+		return 0;
+	}
+	
 	class SystemManager
 	{
 	public:
@@ -19,16 +25,17 @@ namespace ECS
 		template <typename T, typename... P>
 		void add(P... t_args)
 		{
-			assert(std::is_base_of<T, BaseSystem>());
+			//assert(std::is_base_of<T, BaseSystem>());
 
-			const id_t type_id = type<T>.id();
+			const id_t type_id = Foo<T>(); // type<T>.id();
 			const auto it = m_systems.find(type_id);
-			if (it != m_systems.end())
+			// add if not found
+			if (it == m_systems.end())
 			{
-				m_systems.insert(
-					type<T>.id(),
-					std::make_unique(std::forward<P>(t_args)...)
-				);
+				m_systems.insert({
+					type_id,
+					std::make_unique<T>(std::forward<P>(t_args)...)
+					});
 			}			
 		}
 

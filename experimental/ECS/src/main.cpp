@@ -41,17 +41,22 @@ int main(int argc, char* argv[])
 	cout << typeid(B).hash_code() << endl;
 	cout << typeid(C).hash_code() << endl;
 
-	cout << type<A>().id() 
-		<< " " << type<B>().id()
-		<< " " << type<B>().id() 
+	cout << type<A>().id
+		<< " " << type<B>().id
+		<< " " << type<B>().id
 		<< endl;
 
 	Engine engine;
+	Entity actor1 = engine.createEntity();
 
-	TransformSystem system;
-	system.addComponent(1);
-	system.addComponent(2, transform{ 1, 2, 3 });
-	system.update(0.1f);
+	engine.addSystem<TransformSystem>();
+
+	SystemManager manager;
+	manager.add<TransformSystem>();
+
+	// fake game loop
+	for (auto i = 0; i < 10; ++i)
+		engine.update(0.01f);
 
 	return 0;
 }
