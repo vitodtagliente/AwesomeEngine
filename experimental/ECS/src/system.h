@@ -3,6 +3,7 @@
 #include <cassert>
 #include <vector>
 #include "data_component.h"
+#include "entity.h"
 #include "type_id.h"
 
 namespace ECS
@@ -22,6 +23,7 @@ namespace ECS
 	public:
 
 		using component_t = DataComponent<T>;
+		using entity_t = size_t;
 
 		System()
 			: m_components()
@@ -33,13 +35,29 @@ namespace ECS
 		inline const std::vector<T>& getComponents() const { return m_components; }
 
 		template <typename... P>
-		inline void addComponent(const size_t t_entityId, P... t_args)
+		inline DataComponent<T>& addComponent(const size_t t_entity, P... t_args)
 		{
+			// only valid entities are allowed
+			assert(t_entity != Entity::INVALID_ID);
+
+			// only one component per entity is allowed
+			assert(m_lookup.find(t_entity) == m_lookup.end());
+			assert(m_lookup.size() == m_components.size());
+
+			// new components are always pushed at the end
+			m_lookup.insert(t_entity, m_components.size());
+			m_entities.push_back(t_entity);
 			m_components.push_back(DataComponent<T>(
 				++id_counter,
-				t_entityId,
 				T{ std::forward<P>(t_args)... })
 			);
+
+			return m_components.back();
+		}
+
+		inline entity_t getEntity(const size_t t_index) const
+		{
+			return m_entities[t_index];
 		}
 
 		void removeComponent(const size_t t_entityId)
@@ -69,6 +87,8 @@ namespace ECS
 	private:
 
 		std::vector<component_t> m_components;
+		std::vector<entity_t> m_entities;
+		std::unordered_map<entity_t, size_t> m_lookup;
 
 		static size_t id_counter;
 	};
