@@ -55,21 +55,40 @@ namespace ECS
 			return m_components.back();
 		}
 
-		inline entity_t getEntity(const size_t t_index) const
+		void removeComponent(const size_t t_entity)
 		{
-			return m_entities[t_index];
-		}
+			auto it = m_lookup.find(t_entity);
+			if (it != m_lookup.end())
+			{
+				const size_t index = it->second;
 
-		void removeComponent(const size_t t_entityId)
-		{
-			auto it = std::find(m_components.begin(), m_components.end(), [t_entityId](const DataComponent<T>& t_component) {
-				return t_component.entityId = t_entityId;
-			});
+				if (index < m_components->size() - 1)
+				{
+					// swap out the dead element with the last one
+					m_components[index] = std::move(m_components.back());
+					m_entities[index] = m_entities.back();
+
+					// update the lookup table
+					m_lookup[m_entities[index]] = index;
+				}
+
+				// shrink the container
+				m_components->pop_back();
+				m_entities.pop_back();
+				m_lookup.erase(it);
+			}
 		}
 
 		inline void clear()
 		{
+			m_lookup.clear();
 			m_components.clear();
+			m_entities.clear();
+		}
+			   
+		inline entity_t getEntity(const size_t t_index) const
+		{
+			return m_entities[t_index];
 		}
 
 		virtual void update(const float t_deltaTime) override
