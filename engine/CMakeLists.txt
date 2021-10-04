@@ -61,3 +61,9 @@ target_link_libraries(
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+if(NOT TARGET vdtjson)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtjson)
+endif()
+if(NOT TARGET vdtmath)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
+endif()

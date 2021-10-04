@@ -1,0 +1,9 @@
+[submodule "engine/vendor/vdtmath"]
+	path = engine/vendor/vdtmath
+	url = https://github.com/vitodtagliente/vdtmath
+[submodule "engine/vendor/vdtjson"]
+	path = engine/vendor/vdtjson
+	url = https://github.com/vitodtagliente/vdtjson
+[submodule "engine/vendor/vdtecs"]
+	path = engine/vendor/vdtecs
+	url = https://github.com/vitodtagliente/vdtecs
