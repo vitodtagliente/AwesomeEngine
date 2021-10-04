@@ -11,8 +11,8 @@ public:
 
 	struct Settings
 	{
-		int width = 600;
-		int height = 600;
+		int width = 1080;
+		int height = 720;
 		std::string title = "Awesome";
 		bool vSync = true;
 	};

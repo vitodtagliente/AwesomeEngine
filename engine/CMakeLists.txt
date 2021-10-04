@@ -23,12 +23,12 @@ option(GLFW_BUILD_TESTS OFF)
 # include vendors files
 file(GLOB VENDORS_SOURCES 
 	vendor/glad/src/glad.c
-	vendor/imgui/examples/imgui_impl_glfw.cpp
-	vendor/imgui/examples/imgui_impl_opengl3.cpp
 	vendor/imgui/imgui.cpp
-	vendor/imgui/imgui_demo.cpp
 	vendor/imgui/imgui_draw.cpp
+	vendor/imgui/imgui_tables.cpp
 	vendor/imgui/imgui_widgets.cpp
+	vendor/imgui/backends/imgui_impl_glfw.cpp
+	vendor/imgui/backends/imgui_impl_opengl3.cpp
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
