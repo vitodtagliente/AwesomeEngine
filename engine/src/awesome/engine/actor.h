@@ -24,7 +24,7 @@ namespace awesome
 		};
 
 		// get the id
-		inline const StringId& getId() const { return m_id; }
+		inline const string_id& getId() const { return m_id; }
 		// get object state
 		inline State getState() const { return m_state; }
 
@@ -89,7 +89,7 @@ namespace awesome
 	private:
 
 		// actor id
-		StringId m_id;
+		string_id m_id;
 		// actor state
 		State m_state;
 		// parent actor

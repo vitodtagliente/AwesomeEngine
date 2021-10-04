@@ -18,7 +18,7 @@ namespace awesome
 
 		}
 
-		StringId name;
+		string_id name;
 		std::vector<Object*> objects;
 	};
 }

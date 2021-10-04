@@ -1,3 +1,5 @@
+/// Copyright (c) Vito Domenico Tagliente
+
 #pragma once
 
 #include <string>
@@ -5,19 +7,21 @@
 
 namespace awesome
 {
-	class StringBuilder
-	{
-	public:
 
-		StringBuilder();
+class StringBuilder
+{
+public:
 
-		void append(const std::string& t_str);
-		void appendLine(const std::string& t_str);
+	StringBuilder();
 
-		std::string toString() const;
+	void append(const std::string& t_str);
+	void appendLine(const std::string& t_str);
 
-	private:
+	std::string toString() const;
 
-		std::vector<std::string> m_data;
-	};
-}
+private:
+
+	std::vector<std::string> m_data;
+};
+
+} // awesome

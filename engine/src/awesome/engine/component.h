@@ -15,12 +15,12 @@ namespace awesome
 		virtual void uninit() {}
 
 		// get the id
-		inline const StringId& getId() const { return m_id; }
+		inline const string_id& getId() const { return m_id; }
 		// get the owner object
 		inline Object* const getOwner() const { return m_owner; }
 
 		// component name
-		StringId name;
+		string_id name;
 		// if true the component is enabled
 		bool enabled;
 
@@ -45,7 +45,7 @@ namespace awesome
 		}
 
 		// component id
-		StringId m_id;
+		string_id m_id;
 		// owner object
 		Object* m_owner;
 	};

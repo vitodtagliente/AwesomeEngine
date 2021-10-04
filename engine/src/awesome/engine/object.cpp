@@ -24,7 +24,7 @@ namespace awesome
 		}
 	}
 
-	Object* const Object::getChildById(const StringId& t_id) const
+	Object* const Object::getChildById(const string_id& t_id) const
 	{
 		for (Object* const child : m_children)
 		{
@@ -41,7 +41,7 @@ namespace awesome
 		return nullptr;
 	}
 
-	Object* const Object::getChildByName(const StringId& t_name) const
+	Object* const Object::getChildByName(const string_id& t_name) const
 	{
 		for (Object* const child : m_children)
 		{
@@ -53,7 +53,7 @@ namespace awesome
 	
 	Object* const Object::getChildByName(const std::string& t_name) const
 	{
-		return getChildByName(StringId(t_name));
+		return getChildByName(string_id(t_name));
 	}
 
 	void Object::addChild(Object* const t_child)
@@ -97,7 +97,7 @@ namespace awesome
 		m_state = State::PendingDestroy;
 	}
 
-	Component* const Object::getComponentByName(const StringId& t_name) const
+	Component* const Object::getComponentByName(const string_id& t_name) const
 	{
 		for (Component* const component : m_components)
 		{
@@ -109,7 +109,7 @@ namespace awesome
 
 	Component* const Object::getComponentByName(const std::string& t_name) const
 	{
-		return getComponentByName(StringId{ t_name });
+		return getComponentByName(string_id{ t_name });
 	}
 
 	bool Object::removeComponent(Component* const t_component)

@@ -22,16 +22,16 @@ namespace awesome
 		};
 
 		// get the id
-		inline const StringId& getId() const { return m_id; }
+		inline const string_id& getId() const { return m_id; }
 		// get object state
 		inline State getState() const { return m_state; }
 		
 		// children management
 		inline const std::vector<Object*>& getChildren() const { return m_children; }
 		inline unsigned int getChildrenNum() const { return static_cast<unsigned int>(m_children.size()); }
-		Object* const getChildById(const StringId& t_id) const;
+		Object* const getChildById(const string_id& t_id) const;
 		Object* const getChildByIndex(unsigned int t_index) const;
-		Object* const getChildByName(const StringId& t_name) const;
+		Object* const getChildByName(const string_id& t_name) const;
 		Object* const getChildByName(const std::string& t_name) const;
 		template <typename T = Object>
 		Object* const getChild() const
@@ -60,7 +60,7 @@ namespace awesome
 		// component utilities
 		inline const std::vector<Component*>& getComponents() const { return m_components; }
 		inline unsigned int getComponentsNum() const { return static_cast<unsigned int>(m_components.size()); }
-		Component* const getComponentByName(const StringId& t_name) const;
+		Component* const getComponentByName(const string_id& t_name) const;
 		Component* const getComponentByName(const std::string& t_name) const;
 		template <typename T = Component>
 		T* const getComponent() const
@@ -99,7 +99,7 @@ namespace awesome
 		void update(const double t_deltaTime);
 		
 		// object name
-		StringId name;
+		string_id name;
 		// transform
 		transform transform;
 		// if true, this object cannot be moved
@@ -122,13 +122,13 @@ namespace awesome
 		static T * const create()
 		{
 			T* const created_object = new T{};
-			created_object->m_id = StringId::unique();
+			created_object->m_id = string_id::unique();
 			created_object->m_state = State::Normal;
 			return created_object;
 		}
 
 		// object id
-		StringId m_id;
+		string_id m_id;
 		// children
 		std::vector<Object*> m_children;
 		// parent object

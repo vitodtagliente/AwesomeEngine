@@ -2,34 +2,34 @@
 
 namespace awesome
 {
-	StringId::StringId()
-		: m_hash()
-		, m_data()
+string_id::string_id()
+	: m_hash()
+	, m_data()
+{
+
+}
+
+string_id::string_id(const std::string& t_data)
+	: m_hash()
+	, m_data(t_data)
+{
+	for (const auto& it : t_data)
 	{
-
+		// be sure to use prime numbers
+		m_hash = 37 * m_hash + 17 * static_cast<char>(it);
 	}
+}
 
-	StringId::StringId(const std::string& t_data)
-		: m_hash()
-		, m_data(t_data)
-	{
-		for (const auto& it : t_data)
-		{
-			// be sure to use prime numbers
-			m_hash = 37 * m_hash + 17 * static_cast<char>(it);
-		}
-	}
+string_id::~string_id()
+{
 
-	StringId::~StringId()
-	{
+}
 
-	}
+string_id string_id::unique()
+{
+	// #todo
+	return string_id();
+}
 
-	StringId StringId::unique()
-	{
-		// #todo
-		return StringId();
-	}
-
-	const StringId StringId::None = {};
+const string_id string_id::Invalid = {};
 }
