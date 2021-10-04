@@ -24,6 +24,8 @@ int Application::run()
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplGlfw_InitForOpenGL(m_canvas.getHandler(), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
@@ -38,8 +40,14 @@ int Application::run()
 
 		render();
 
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+
 		ImGui::Begin("Performance Viewer");
 		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+
+		ImGui::Begin("Performance fff Viewer");
+		ImGui::Text("Foo");
 		ImGui::End();
 
 		ImGui::Render();
