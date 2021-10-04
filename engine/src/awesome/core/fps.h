@@ -6,27 +6,25 @@
 
 namespace awesome
 {
+	class FPS
+	{
+	public:
 
-class FPS
-{
-public:
+		FPS();
+		~FPS();
 
-	FPS();
-	~FPS();
+		void update();
+		inline unsigned int value() const { return m_fps; }
 
-	void update();
-	inline unsigned int value() const { return m_fps; }
+	private:
 
-private:
-
-	// last clock tick
-	std::chrono::steady_clock::time_point m_clock;
-	// frames counter
-	unsigned int m_counter;
-	// frame time
-	std::chrono::duration<float> m_time;
-	// current fps
-	unsigned int m_fps;
-};
-
+		// last clock tick
+		std::chrono::steady_clock::time_point m_clock;
+		// frames counter
+		unsigned int m_counter;
+		// frame time
+		std::chrono::duration<float> m_time;
+		// current fps
+		unsigned int m_fps;
+	};
 } // awesome

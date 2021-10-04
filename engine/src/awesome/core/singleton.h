@@ -1,3 +1,5 @@
+/// Copyright (c) Vito Domenico Tagliente
+
 #pragma once
 
 #include <cassert>
@@ -9,15 +11,15 @@ namespace awesome
 	{
 	public:
 
-		Singleton() 
-		{ 
+		Singleton()
+		{
 			assert(m_instance == nullptr);
-			m_instance = static_cast<T*>(this); 
+			m_instance = static_cast<T*>(this);
 		}
 
-		virtual ~Singleton() 
-		{ 
-			m_instance = nullptr; 
+		virtual ~Singleton()
+		{
+			m_instance = nullptr;
 		}
 
 		// cannot move or copy
@@ -37,4 +39,4 @@ namespace awesome
 
 	template<typename T>
 	T* Singleton<T>::m_instance(nullptr);
-}
+} // awesome

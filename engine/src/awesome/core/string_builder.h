@@ -7,21 +7,19 @@
 
 namespace awesome
 {
+	class StringBuilder
+	{
+	public:
 
-class StringBuilder
-{
-public:
+		StringBuilder();
 
-	StringBuilder();
+		void append(const std::string& text);
+		void appendLine(const std::string& line);
 
-	void append(const std::string& text);
-	void appendLine(const std::string& line);
+		std::string toString() const;
 
-	std::string toString() const;
+	private:
 
-private:
-
-	std::vector<std::string> m_lines;
-};
-
+		std::vector<std::string> m_lines;
+	};
 } // awesome

@@ -1,3 +1,5 @@
+/// Copyright (c) Vito Domenico Tagliente
+
 #pragma once
 
 #include <chrono>
@@ -9,20 +11,16 @@ namespace awesome
 	{
 	public:
 
-		// only the engine can let the time to tick
-		friend class Engine;
-
 		Time();
 
 		// retrieve the time data
 		inline double getTime() const { return m_time; }
 		inline double getDeltaTime() const { return m_deltaTime; }
 
-
-	private:
-
 		// tick the time
 		void tick();
+
+	private:
 
 		// high resolution clocks
 		std::chrono::high_resolution_clock::time_point m_clock1;
@@ -32,4 +30,4 @@ namespace awesome
 		double m_time;
 		double m_deltaTime;
 	};
-}
+} // awesome
