@@ -6,6 +6,9 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <awesome/graphics/color.h>
+#include <awesome/graphics/context.h>
+
 Application::Application()
 {
 }
@@ -20,6 +23,8 @@ int Application::run()
 	m_canvas.open();
 
 	gladLoadGL();
+
+	Context context;
 
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
@@ -39,6 +44,7 @@ int Application::run()
 		ImGui::NewFrame();
 
 		render();
+		context.clear(Color::Yellow);
 
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
