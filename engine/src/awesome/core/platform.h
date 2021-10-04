@@ -17,30 +17,30 @@ namespace awesome
 #define PLATFORM_MOBILE 1
 #endif
 
-	struct Platform
+struct Platform
+{
+	enum class Type
 	{
-		enum class Type
-		{
-			Null,
-			Windows,
-			Linux,
-			OSX,
-			Android,
-			PS4,
-			XBoxOne,
-			Switch
-		};
-
-		// #todo: find better names
-		enum class Category
-		{
-			Desktop,
-			Mobile,
-			All
-		};
-
-		static Type type();
-
-		static Category category();
+		Null,
+		Windows,
+		Linux,
+		OSX,
+		Android,
+		PS4,
+		XBoxOne,
+		Switch
 	};
-}
+
+	// #todo: find better names
+	enum class Category
+	{
+		Desktop,
+		Mobile,
+		All
+	};
+
+	static Type type();
+	static Category category();
+};
+
+} // awesome

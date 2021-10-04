@@ -6,35 +6,34 @@
 Copyright 2019 Vito Domenico Tagliente. All rights reserved.
 
 Event Data Type
+Usage example:
 
-- Usage example:
+struct Foo
+{
+	void print(const std::string& t_str){ ... }
+};
 
-	struct Foo
-	{
-		void print(const std::string& t_str){ ... }
-	};
+Foo* foo = new Foo();
 
-	Foo* foo = new Foo();
+// declare event variable:
 
-	// declare event variable:
+event_t<const std::string&> e;
 
-	event_t<const std::string&> e;
+// add listeners using three ways:
 
-	// add listeners using three ways:
+e.bind(foo, &Foo::print);
+e.bind(std::bind(&Foo::print, foo, std::placeholders::_1));
+auto handler = e.bind([](const std::string& t_str){
+	std::cout << t_str << std::endl;
+});
 
-	e.bind(foo, &Foo::print);
-	e.bind(std::bind(&Foo::print, foo, std::placeholders::_1));
-	auto handler = e.bind([](const std::string& t_str){
-		std::cout << t_str << std::endl;
-	});
+// unbind 
+e.unbind(handler);
+e.unbind(foo, &Foo::print);
 
-	// unbind 
-	e.unbind(handler);
-	e.unbind(foo, &Foo::print);
+// call events:
 
-	// call events:
-
-	e.broadcast("hello");
+e.broadcast("hello");
 */
 
 #include <cassert>
