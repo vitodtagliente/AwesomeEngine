@@ -60,4 +60,4 @@ target_link_libraries(
 	${GLFW_LIBRARIES}
 )
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw ${CMAKE_CURRENT_BINARY_DIR}/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
