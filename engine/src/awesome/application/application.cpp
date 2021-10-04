@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glad/glad.h>
 #include "application.h"
 
@@ -11,6 +12,9 @@
 
 #include <awesome/editor/scene_tree_viewer.h>
 
+#include <vdtmath/math.h>
+#include <awesome/scene/entity.h>
+
 Application::Application()
 {
 }
@@ -21,6 +25,8 @@ Application::~Application()
 
 int Application::run()
 {
+	static int id = 0;
+
 	m_canvas.init();
 	m_canvas.open();
 
@@ -59,10 +65,17 @@ int Application::run()
 
 		sceneTree.render();
 
+		if (m_input.isKeyPressed(KeyCode::A))
+		{
+			Entity* const entity = m_world.spawn(math::vec3::zero, {});
+			entity->name = "entity-" + std::to_string(++id);
+		}
+		m_input.update();
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
-	
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
@@ -72,7 +85,7 @@ int Application::run()
 
 void Application::update()
 {
-	
+
 }
 
 void Application::render()

@@ -20,7 +20,7 @@ void SceneTreeViewer::render()
 	for (auto it = m_world->getEntities().begin(); it != m_world->getEntities().end(); ++it)
 	{
 		Entity* const entity = *it;
-		ImGui::TreeNode(entity->name.c_str());
+		ImGui::BulletText(entity->name.c_str());
 	}
 	ImGui::End();
 }

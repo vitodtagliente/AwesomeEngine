@@ -19,9 +19,10 @@ public:
 
 	inline const Canvas& getCanvas() const { return m_canvas; }
 	inline Canvas& getCanvas() { return m_canvas; }
+	inline const Input& getInput() const { return m_input; }
+	inline Input& getInput() { return m_input; }
 	inline const World& getWorld() const { return m_world; }
 	inline World& getWorld() { return m_world; }
-
 
 private:
 
