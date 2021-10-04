@@ -62,4 +62,6 @@ target_link_libraries(
     ${GLAD_LIBRARIES}
 	glfw
 	${GLFW_LIBRARIES}
+	vdtjson
+	vdtmath
 )
