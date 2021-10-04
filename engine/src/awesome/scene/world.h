@@ -17,6 +17,8 @@ public:
 	void update(double deltaTime);
 	void render();
 
+	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
+
 	Entity* const spawn(const math::vec3& position, const math::quaternion& quaternion);
 	void destroy(Entity* const entity);
 

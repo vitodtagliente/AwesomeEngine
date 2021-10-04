@@ -9,6 +9,8 @@
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/context.h>
 
+#include <awesome/editor/scene_tree_viewer.h>
+
 Application::Application()
 {
 }
@@ -34,6 +36,9 @@ int Application::run()
 	ImGui_ImplGlfw_InitForOpenGL(m_canvas.getHandler(), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
+	SceneTreeViewer sceneTree;
+	sceneTree.init(&m_world);
+
 	while (m_canvas.isOpen())
 	{
 		m_canvas.update();
@@ -52,9 +57,7 @@ int Application::run()
 		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 
-		ImGui::Begin("Performance fff Viewer");
-		ImGui::Text("Foo");
-		ImGui::End();
+		sceneTree.render();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
