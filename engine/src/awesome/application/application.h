@@ -1,32 +1,26 @@
+/// Copyright (c) Vito Domenico Tagliente
+
 #pragma once
 
 #include <memory>
-#include <awesome/core/singleton.h>
-#include "application_module.h"
 
-namespace awesome
+#include "canvas.h"
+
+class Application
 {
-	class ApplicationAPI;
-	class Window;
+public:
 
-	class Application : public Singleton<Application>
-	{
-	public:
-		
-		Application(const ApplicationModule::API& t_api);
-		virtual ~Application();
+	Application();
+	virtual ~Application();
 
-		virtual bool initialize();
-		virtual void update();
-		virtual void close();
+	int run();
 
-		const Window& getWindow() const { return *m_window; }
+	inline const Canvas& getCanvas() const { return m_canvas; }
 
-	protected:
+private:
 
-		// api 
-		const ApplicationModule::API& m_api;
-		// window
-		std::unique_ptr<Window> m_window;
-	};
-}
+	void update();
+	void render();
+
+	Canvas m_canvas;
+};

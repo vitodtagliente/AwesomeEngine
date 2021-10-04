@@ -32,11 +32,11 @@ add_executable(
     ${PROJECT_SOURCE_FILES} 
 )
 
+SET(CMAKE_DEFAULT_STARTUP_PROJECT Sandbox)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
+
 target_link_libraries(
     ${PROJECT_NAME} 
     AwesomeEngine
 )
-
-SET(CMAKE_DEFAULT_STARTUP_PROJECT Sandbox)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)

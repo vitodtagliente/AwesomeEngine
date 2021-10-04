@@ -2,40 +2,37 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-namespace awesome
+Image::Image(const std::string& filename)
+	: m_data()
+	, m_width()
+	, m_height()
+	, m_channels()
 {
-	Image::Image(const std::string& t_filename)
-		: m_data()
-		, m_width()
-		, m_height()
-		, m_channels()
-	{
-		stbi_set_flip_vertically_on_load(1);
-		m_data = stbi_load(t_filename.c_str(), &m_width, &m_height, &m_channels, 4);
-	}
+	stbi_set_flip_vertically_on_load(1);
+	m_data = stbi_load(filename.c_str(), &m_width, &m_height, &m_channels, 4);
+}
 
-	Image::~Image()
-	{
-		stbi_image_free(m_data);
-	}
+Image::~Image()
+{
+	stbi_image_free(m_data);
+}
 
-	unsigned char* Image::data() const
-	{
-		return m_data;
-	}
+unsigned char* Image::data() const
+{
+	return m_data;
+}
 
-	int Image::getWidth() const
-	{
-		return m_width;
-	}
+int Image::getWidth() const
+{
+	return m_width;
+}
 
-	int Image::getHeight() const
-	{
-		return m_height;
-	}
+int Image::getHeight() const
+{
+	return m_height;
+}
 
-	int Image::getChannels() const
-	{
-		return m_channels;
-	}
+int Image::getChannels() const
+{
+	return m_channels;
 }

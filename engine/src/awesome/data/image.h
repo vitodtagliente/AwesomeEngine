@@ -1,30 +1,28 @@
+/// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
 #include <string>
 
-namespace awesome
+class Image final
 {
-	class Image final
-	{
-	public:
+public:
 
-		Image(const std::string& t_filename);
-		~Image();
+	Image(const std::string& filename);
+	~Image();
 
-		unsigned char* data() const;
-		int getWidth() const;
-		int getHeight() const;
-		int getChannels() const;
+	unsigned char* data() const;
+	int getWidth() const;
+	int getHeight() const;
+	int getChannels() const;
 
-	private:
+private:
 
-		// image data
-		unsigned char* m_data;
-		// image width
-		int m_width;
-		// image height
-		int m_height;
-		// num of components
-		int m_channels;
-	};
-}
+	// image data
+	unsigned char* m_data;
+	// image width
+	int m_width;
+	// image height
+	int m_height;
+	// num of components
+	int m_channels;
+};
