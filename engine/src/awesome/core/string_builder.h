@@ -14,14 +14,14 @@ public:
 
 	StringBuilder();
 
-	void append(const std::string& t_str);
-	void appendLine(const std::string& t_str);
+	void append(const std::string& text);
+	void appendLine(const std::string& line);
 
 	std::string toString() const;
 
 private:
 
-	std::vector<std::string> m_data;
+	std::vector<std::string> m_lines;
 };
 
 } // awesome

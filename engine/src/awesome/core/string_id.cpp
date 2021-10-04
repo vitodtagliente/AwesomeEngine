@@ -9,11 +9,11 @@ string_id::string_id()
 
 }
 
-string_id::string_id(const std::string& t_data)
+string_id::string_id(const std::string& data)
 	: m_hash()
-	, m_data(t_data)
+	, m_data(data)
 {
-	for (const auto& it : t_data)
+	for (const auto& it : data)
 	{
 		// be sure to use prime numbers
 		m_hash = 37 * m_hash + 17 * static_cast<char>(it);

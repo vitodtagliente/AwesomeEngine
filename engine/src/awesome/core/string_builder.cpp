@@ -4,34 +4,34 @@ namespace awesome
 {
 
 StringBuilder::StringBuilder()
-	: m_data()
+	: m_lines()
 {
 		
 }
 
-void StringBuilder::append(const std::string& t_str)
+void StringBuilder::append(const std::string& text)
 {
-	if (m_data.size() > 0)
+	if (text.size() > 0)
 	{
-		m_data.back().append(t_str);
+		m_lines.back().append(text);
 	}
 	else
 	{
-		m_data.push_back(t_str);
+		m_lines.push_back(text);
 	}
 }
 
 void StringBuilder::appendLine(const std::string& t_str)
 {
-	m_data.push_back(t_str);
+	m_lines.push_back(t_str);
 }
 	
 std::string StringBuilder::toString() const
 {
 	std::string result;
-	for (const std::string& str : m_data)
+	for (const std::string& line : m_lines)
 	{
-		result.append(str);
+		result.append(line);
 		result.append("\n");
 	}
 	return result;
