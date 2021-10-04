@@ -17,37 +17,34 @@ it's best to hash a string to get its unique
 and use the integer id for all further computations.
 */
 
-namespace awesome
+class string_id final
 {
-	class string_id final
+public:
+
+	string_id();
+	string_id(const std::string& data);
+	~string_id();
+
+	inline const std::string& data() const { return m_data; }
+
+	inline bool operator== (const string_id& other) const
 	{
-	public:
+		return m_hash == other.m_hash;
+	}
 
-		string_id();
-		string_id(const std::string& data);
-		~string_id();
+	inline bool operator!= (const string_id& other) const
+	{
+		return m_hash != other.m_hash;
+	}
 
-		inline const std::string& data() const { return m_data; }
+	static string_id unique();
 
-		inline bool operator== (const string_id& other) const
-		{
-			return m_hash == other.m_hash;
-		}
+	static const string_id Invalid;
 
-		inline bool operator!= (const string_id& other) const
-		{
-			return m_hash != other.m_hash;
-		}
+private:
 
-		static string_id unique();
-
-		static const string_id Invalid;
-
-	private:
-
-		// hashed data
-		unsigned int m_hash;
-		// native data
-		std::string m_data;
-	};
-} // awesome
+	// hashed data
+	unsigned int m_hash;
+	// native data
+	std::string m_data;
+};

@@ -4,39 +4,36 @@
 
 #include <cassert>
 
-namespace awesome
+template<typename T>
+class Singleton
 {
-	template<typename T>
-	class Singleton
+public:
+
+	Singleton()
 	{
-	public:
+		assert(m_instance == nullptr);
+		m_instance = static_cast<T*>(this);
+	}
 
-		Singleton()
-		{
-			assert(m_instance == nullptr);
-			m_instance = static_cast<T*>(this);
-		}
+	virtual ~Singleton()
+	{
+		m_instance = nullptr;
+	}
 
-		virtual ~Singleton()
-		{
-			m_instance = nullptr;
-		}
+	// cannot move or copy
+	Singleton& operator=(Singleton&&) = delete;
+	Singleton(const Singleton&) = delete;
+	Singleton(Singleton&&) = delete;
+	Singleton& operator= (const Singleton&) = delete;
 
-		// cannot move or copy
-		Singleton& operator=(Singleton&&) = delete;
-		Singleton(const Singleton&) = delete;
-		Singleton(Singleton&&) = delete;
-		Singleton& operator= (const Singleton&) = delete;
+	// get the singleton instance 
+	static T* instance() { return m_instance; }
 
-		// get the singleton instance 
-		static T* instance() { return m_instance; }
+private:
 
-	private:
+	// singleton instance 
+	static T* m_instance;
+};
 
-		// singleton instance 
-		static T* m_instance;
-	};
-
-	template<typename T>
-	T* Singleton<T>::m_instance(nullptr);
-} // awesome
+template<typename T>
+T* Singleton<T>::m_instance(nullptr);

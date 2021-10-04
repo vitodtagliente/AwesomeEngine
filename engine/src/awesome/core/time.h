@@ -5,29 +5,26 @@
 #include <chrono>
 #include "singleton.h"
 
-namespace awesome
+class Time : public Singleton<Time>
 {
-	class Time : public Singleton<Time>
-	{
-	public:
+public:
 
-		Time();
+	Time();
 
-		// retrieve the time data
-		inline double getTime() const { return m_time; }
-		inline double getDeltaTime() const { return m_deltaTime; }
+	// retrieve the time data
+	inline double getTime() const { return m_time; }
+	inline double getDeltaTime() const { return m_deltaTime; }
 
-		// tick the time
-		void tick();
+	// tick the time
+	void tick();
 
-	private:
+private:
 
-		// high resolution clocks
-		std::chrono::high_resolution_clock::time_point m_clock1;
-		std::chrono::high_resolution_clock::time_point m_clock2;
+	// high resolution clocks
+	std::chrono::high_resolution_clock::time_point m_clock1;
+	std::chrono::high_resolution_clock::time_point m_clock2;
 
-		// cache time and delta time
-		double m_time;
-		double m_deltaTime;
-	};
-} // awesome
+	// cache time and delta time
+	double m_time;
+	double m_deltaTime;
+};

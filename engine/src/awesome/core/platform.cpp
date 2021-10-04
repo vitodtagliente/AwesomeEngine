@@ -1,8 +1,5 @@
 #include "platform.h"
 
-namespace awesome
-{
-
 Platform::Type Platform::type()
 {
 #ifdef PLATFORM_WINDOWS
@@ -20,5 +17,3 @@ Platform::Category Platform::category()
 {
 	return Category::Desktop;
 }
-
-} // awesome
