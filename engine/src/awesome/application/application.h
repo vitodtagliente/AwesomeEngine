@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "canvas.h"
+#include "input.h"
 #include <awesome/scene/world.h>
 
 class Application
@@ -21,11 +22,13 @@ public:
 	inline const World& getWorld() const { return m_world; }
 	inline World& getWorld() { return m_world; }
 
+
 private:
 
 	void update();
 	void render();
 
 	Canvas m_canvas;
+	Input m_input;
 	World m_world;
 };

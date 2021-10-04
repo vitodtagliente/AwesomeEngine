@@ -1,5 +1,8 @@
 #include "canvas.h"
 
+#include "keycode.h"
+#include "input.h"
+
 Canvas::Canvas()
 	: m_isOpen(false)
 	, m_handler()
@@ -52,6 +55,63 @@ bool Canvas::open(Settings settings)
 				// }
 			}
 		);
+
+		glfwSetKeyCallback(
+			m_handler,
+			[](GLFWwindow*, const int t_key, const int, const int t_action, const int)
+			{
+				auto key_state = KeyState::Down;
+				if (t_action == GLFW_PRESS)
+					key_state = KeyState::Pressed;
+				else if (t_action == GLFW_RELEASE)
+					key_state = KeyState::Released;
+
+				if (Input* const input = Input::instance())
+				{
+					input->setKeyState(t_key, key_state);
+				}
+			}
+		);
+
+		glfwSetMouseButtonCallback(
+			m_handler,
+			[](GLFWwindow*, const int t_button, const int t_action, int)
+			{
+				auto key_state = KeyState::Down;
+				if (t_action == GLFW_PRESS)
+					key_state = KeyState::Pressed;
+				else if (t_action == GLFW_RELEASE)
+					key_state = KeyState::Released;
+
+				if (Input* const input = Input::instance())
+				{
+					input->setKeyState(t_button, key_state);
+				}
+			}
+		);
+
+		glfwSetCursorPosCallback(
+			m_handler,
+			[](GLFWwindow*, const double t_x, const double t_y)
+			{
+				if (Input* const input = Input::instance())
+				{
+					input->setMousePosition(static_cast<float>(t_x), static_cast<float>(t_y));
+				}
+			}
+		);
+
+		glfwSetCursorEnterCallback(
+			m_handler,
+			[](GLFWwindow*, const int t_entered)
+			{
+				if (Input* const input = Input::instance())
+				{
+					input->setMousePositionValid(t_entered);
+				}
+			}
+		);
+
 		m_isOpen = true;
 		return true;
 	}
