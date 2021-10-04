@@ -18,9 +18,37 @@ public:
 	std::string tag;
 	math::transform transform;
 
+	inline Entity* const getParent()const { return m_parent; }
+	inline const std::vector<Entity*>& getChildren() const { return m_children; }
+
 	void prepareToSpawn(World& world);
 	void prepareToDestroy();
+	void setParent(Entity* const entity);
+	void update(World& world, double deltaTime);
+	void render();
 
+	template <typename T = Component>
+	std::vector<T*> getComponents() const
+	{
+		std::vector<T*> found_components;
+		for (Component* const component : m_components)
+		{
+			if (T* const found_component = dynamic_cast<T*>(component))
+				found_components.push_back(found_component);
+		}
+		return std::move(found_components);
+	}
+
+	template <typename T = Component>
+	T* const addComponent()
+	{
+		T* const component = new T();
+		m_components.push_back(component);
+		// component->init();
+		return component;
+	}
+
+	void removeComponent(Component* const component);
 
 private:
 
