@@ -61,5 +61,3 @@
 #include "engine/component.h"
 #include "engine/object.h"
 #include "engine/world.h"
-
-#include "services/localization/localization.h"

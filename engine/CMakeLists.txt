@@ -53,13 +53,6 @@ add_library(
     ${PROJECT_SOURCE_FILES} 
 )
 
-target_link_libraries(
-    ${PROJECT_NAME}  
-    ${GLAD_LIBRARIES}
-	glfw
-	${GLFW_LIBRARIES}
-)
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 if(NOT TARGET vdtjson)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtjson)
@@ -67,3 +60,15 @@ endif()
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
 endif()
+
+if(NOT TARGET fundation)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/modules/fundation)
+endif()
+
+target_link_libraries(
+    ${PROJECT_NAME} 
+    ${GLAD_LIBRARIES}
+	glfw
+	${GLFW_LIBRARIES}
+	fundation
+)
