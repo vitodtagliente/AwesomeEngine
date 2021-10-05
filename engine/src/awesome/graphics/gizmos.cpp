@@ -1,1 +1,42 @@
 #include "gizmos.h"
+
+#include <vdtmath/algorithm.h>
+
+void Gizmos::line(const math::vec3& a, const math::vec3& b, const Color& color)
+{
+	m_batch.batch(a, color);
+	m_batch.batch(b, color);
+}
+
+void Gizmos::rect(const math::vec3& position, const float width, const float height, const Color& color)
+{
+	m_batch.batch(position + math::vec3(width, height, 0), color);
+	m_batch.batch(position + math::vec3(-width, height, 0), color);
+	m_batch.batch(position + math::vec3(-width, height, 0), color);
+	m_batch.batch(position + math::vec3(-width, -height, 0), color);
+	m_batch.batch(position + math::vec3(-width, -height, 0), color);
+	m_batch.batch(position + math::vec3(width, -height, 0), color);
+	m_batch.batch(position + math::vec3(width, -height, 0), color);
+	m_batch.batch(position + math::vec3(width, height, 0), color);
+}
+
+void Gizmos::circle(const math::vec3& position, const float radius, const Color& color)
+{
+	const float accuracy = 20 * radius;
+	const float step = (2 * math::pi) / accuracy;
+	float angle = 0.0f;
+	for (int i = 0; i < accuracy; ++i)
+	{
+		line(
+			position + math::vec3(radius * std::sin(angle), radius * std::cos(angle), 0),
+			position + math::vec3(radius * std::sin(angle + step), radius * std::cos(angle + step), 0),
+			color
+		);
+		angle += step;
+	}
+}
+
+void Gizmos::clear()
+{
+	m_batch.clear();
+}
