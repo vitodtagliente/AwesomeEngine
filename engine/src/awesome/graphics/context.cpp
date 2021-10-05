@@ -13,7 +13,7 @@ void Context::viewport(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void Context::drawLines(const std::vector<std::pair<math::vec2, Color>>& lines)
+void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& lines)
 {
 	if (lines.empty()) return;
 
@@ -23,9 +23,11 @@ void Context::drawLines(const std::vector<std::pair<math::vec2, Color>>& lines)
 	{
 		vertices.push_back(it->first.x);
 		vertices.push_back(it->first.y);
+		vertices.push_back(it->first.z);
 		vertices.push_back(it->second.getRed());
 		vertices.push_back(it->second.getGreen());
 		vertices.push_back(it->second.getBlue());
+		vertices.push_back(it->second.getAlpha());
 	}
 
 	/*
