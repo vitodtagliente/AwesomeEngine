@@ -4,6 +4,7 @@
 #include <vector>
 #include "color.h"
 #include <awesome/core/singleton.h>
+#include "gizmos.h"
 
 class Command;
 class Context;
@@ -20,9 +21,12 @@ public:
 
 	Color backgroundColor;
 
+	inline Gizmos& getGizmos() { return m_gizmos; }
+
 private:
 
 	Context& m_context;
+	Gizmos m_gizmos;
 	std::vector<Command*> m_commands;
 
 };

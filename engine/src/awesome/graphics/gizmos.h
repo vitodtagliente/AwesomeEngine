@@ -12,6 +12,8 @@ class Gizmos : public Singleton<Gizmos>
 {
 public:
 
+	Gizmos();
+
 	void line(const math::vec3& a, const math::vec3& b, const Color& color);
 	void rect(const math::vec3& position, float width, float height, const Color& color);
 	void circle(const math::vec3& position, float radius, const Color& color);

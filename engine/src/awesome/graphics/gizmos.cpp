@@ -2,6 +2,11 @@
 
 #include <vdtmath/algorithm.h>
 
+Gizmos::Gizmos()
+	: m_batch()
+{
+}
+
 void Gizmos::line(const math::vec3& a, const math::vec3& b, const Color& color)
 {
 	m_batch.batch(a, color);

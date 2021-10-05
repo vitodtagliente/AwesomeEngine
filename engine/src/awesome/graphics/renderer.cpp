@@ -7,6 +7,7 @@
 Renderer::Renderer(Context& context)
 	: backgroundColor(Color::Black)
 	, m_context(context)
+	, m_gizmos()
 	, m_commands()
 {
 }
@@ -25,8 +26,8 @@ void Renderer::flush()
 		command->execute(m_context);
 	}
 
-	std::vector<Command*> gizomsCommands = Gizmos::instance()->commands();
-	for (auto it = gizomsCommands.begin(); it != gizomsCommands.end(); ++it)
+	std::vector<Command*> gizmosCommands = m_gizmos.commands();
+	for (auto it = gizmosCommands.begin(); it != gizmosCommands.end(); ++it)
 	{
 		Command* const command = *it;
 		command->execute(m_context);

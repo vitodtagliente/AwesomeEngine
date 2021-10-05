@@ -9,9 +9,12 @@
 
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/context.h>
+#include <awesome/graphics/gizmos.h>
+#include <awesome/graphics/renderer.h>
 
-#include <awesome/editor/scene_tree_viewer.h>
 #include <awesome/editor/entity_inspector.h>
+#include <awesome/editor/renderer_inspector.h>
+#include <awesome/editor/scene_tree_viewer.h>
 
 #include <vdtmath/math.h>
 #include <awesome/scene/entity.h>
@@ -43,8 +46,11 @@ int Application::run()
 	ImGui_ImplGlfw_InitForOpenGL(m_canvas.getHandler(), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
-	SceneTreeViewer sceneTree;
 	EntityInspector inspector;
+	SceneTreeViewer sceneTree;
+	RendererInspector rendererInspector;
+
+	Renderer renderer(context);
 
 	while (m_canvas.isOpen())
 	{
@@ -56,7 +62,7 @@ int Application::run()
 		ImGui::NewFrame();
 
 		render();
-		context.clear(Color::Yellow);
+		renderer.begin();
 
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
@@ -64,8 +70,9 @@ int Application::run()
 		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 
-		sceneTree.render();
 		inspector.render(sceneTree.getSelectedEntity());
+		sceneTree.render();
+		rendererInspector.render(renderer);
 
 		if (m_input.isKeyPressed(KeyCode::A))
 		{
@@ -73,6 +80,8 @@ int Application::run()
 			entity->name = "entity-" + std::to_string(++id);
 		}
 		m_input.update();
+
+		renderer.flush();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

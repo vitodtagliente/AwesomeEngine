@@ -43,6 +43,8 @@ std::vector<Command*> GizmosBatch::commands() const
 	std::vector<Command*> commands;
 	for (auto it = m_batches.begin(); it != m_batches.end(); ++it)
 	{
+		if (it->data().empty()) continue;
+
 		GizmosCommand* command = new GizmosCommand();
 		command->data = it->data();
 		commands.push_back(command);
