@@ -1,7 +1,10 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class Renderer
+class GizmosBatch
 {
+public:
+
+private:
 
 };
