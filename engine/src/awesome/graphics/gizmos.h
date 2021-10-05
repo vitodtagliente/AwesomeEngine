@@ -17,6 +17,8 @@ public:
 	void circle(const math::vec3& position, float radius, const Color& color);
 	void clear();
 
+	std::vector<Command*> commands() const;
+
 private:
 
 	GizmosBatch m_batch;

@@ -50,7 +50,7 @@ public:
 	void batch(const math::vec3& position, const Color& color);
 	void clear();
 
-	std::vector<Command*> generateCommands() const;
+	std::vector<Command*> commands() const;
 
 private:
 

@@ -40,3 +40,8 @@ void Gizmos::clear()
 {
 	m_batch.clear();
 }
+
+std::vector<Command*> Gizmos::commands() const
+{
+	return m_batch.commands();
+}
