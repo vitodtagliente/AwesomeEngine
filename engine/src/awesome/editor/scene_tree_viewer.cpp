@@ -5,22 +5,22 @@
 #include <awesome/scene/world.h>
 
 SceneTreeViewer::SceneTreeViewer()
-	: m_world()
+	: m_selectedEntity()
 {
 }
 
-void SceneTreeViewer::init(World* const world)
-{
-	m_world = world;
-}
 
 void SceneTreeViewer::render()
 {
 	ImGui::Begin("SceneTree");
-	for (auto it = m_world->getEntities().begin(); it != m_world->getEntities().end(); ++it)
+	World* const world = World::instance();
+	for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
 	{
 		Entity* const entity = *it;
-		ImGui::BulletText(entity->name.c_str());
+		if (ImGui::Selectable(entity->name.c_str(), entity == m_selectedEntity))
+		{
+			m_selectedEntity = entity;
+		}
 	}
 	ImGui::End();
 }

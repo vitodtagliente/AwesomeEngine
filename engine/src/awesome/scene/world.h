@@ -2,12 +2,14 @@
 #pragma once
 
 #include <vector>
+
+#include <awesome/core/singleton.h>
 #include <vdtmath/quaternion.h>
 #include <vdtmath/vector3.h>
 
 class Entity;
 
-class World
+class World : public Singleton<World>
 {
 public:
 

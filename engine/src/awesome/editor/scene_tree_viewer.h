@@ -3,16 +3,18 @@
 
 #include "panel.h"
 
-class World;
+class Entity;
 
 class SceneTreeViewer : Panel
 {
 public:
 	SceneTreeViewer();
 
-	void init(World* const world);
 	virtual void render() override;
 
+	inline Entity* const getSelectedEntity() const { return m_selectedEntity; }
+
 private:
-	World* m_world;
+
+	Entity* m_selectedEntity;
 };

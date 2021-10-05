@@ -11,6 +11,7 @@
 #include <awesome/graphics/context.h>
 
 #include <awesome/editor/scene_tree_viewer.h>
+#include <awesome/editor/entity_inspector.h>
 
 #include <vdtmath/math.h>
 #include <awesome/scene/entity.h>
@@ -43,7 +44,7 @@ int Application::run()
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
 	SceneTreeViewer sceneTree;
-	sceneTree.init(&m_world);
+	EntityInspector inspector;
 
 	while (m_canvas.isOpen())
 	{
@@ -64,6 +65,7 @@ int Application::run()
 		ImGui::End();
 
 		sceneTree.render();
+		inspector.render(sceneTree.getSelectedEntity());
 
 		if (m_input.isKeyPressed(KeyCode::A))
 		{
