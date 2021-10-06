@@ -2,10 +2,8 @@
 
 #include <glad/glad.h>
 
-Renderable::Renderable(size_t vertices, size_t indices, BufferUsageMode usageMode)
+Renderable::Renderable()
 	: m_id()
-	, m_vertexBuffer(vertices, usageMode)
-	, m_indexBuffer(indices, usageMode)
 	, m_firstBinding(true)
 {
 	glGenVertexArrays(1, &m_id);
@@ -21,9 +19,15 @@ void Renderable::bind(bool forceBuffersBinding)
 	glBindVertexArray(m_id);
 	if (m_firstBinding || forceBuffersBinding)
 	{
-		m_vertexBuffer.bind();
-		m_vertexBuffer.activateLayout();
-		m_indexBuffer.bind();
+		for (VertexBuffer& vertexBuffer : vertexBuffers)
+		{
+			vertexBuffer.bind();
+			vertexBuffer.activateLayout();
+		}
+		for (IndexBuffer& indexBuffer : indexBuffers)
+		{
+			indexBuffer.bind();
+		}
 		m_firstBinding = false;
 	}
 }
@@ -36,6 +40,24 @@ void Renderable::unbind()
 void Renderable::free()
 {
 	glDeleteVertexArrays(1, &m_id);
-	m_vertexBuffer.free();
-	m_indexBuffer.free();
+	for (VertexBuffer& vertexBuffer : vertexBuffers)
+	{
+		vertexBuffer.free();
+	}
+	for (IndexBuffer& indexBuffer : indexBuffers)
+	{
+		indexBuffer.free();
+	}
+}
+
+VertexBuffer* Renderable::addVertexBuffer(size_t size, BufferUsageMode usageMode)
+{
+	VertexBuffer& vertexBuffer = vertexBuffers.emplace_back(size, usageMode);
+	return &vertexBuffer;
+}
+
+IndexBuffer* Renderable::addIndexBuffer(size_t size, BufferUsageMode usageMode)
+{
+	IndexBuffer& indexBuffer = indexBuffers.emplace_back(size, usageMode);
+	return &indexBuffer;
 }

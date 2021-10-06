@@ -57,6 +57,8 @@ public:
 	void push(const VertexBufferElement& element);
 	void clear();
 
+	unsigned int startingIndex = 0;
+
 private:
 	// buffer elements
 	std::vector<VertexBufferElement> m_elements;
@@ -76,7 +78,7 @@ public:
 	virtual void fillData(void* const data, size_t size) override;
 	virtual void fillSubData(void* const data, size_t size, int offset) override;
 
-	void activateLayout(int startingIdex = 0);
+	void activateLayout();
 
 	VertexBufferLayout layout;
 

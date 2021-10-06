@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vector>
+
 #include "index_buffer.h"
 #include "vertex_buffer.h"
 
@@ -8,21 +10,24 @@ class Renderable
 {
 public:
 
-	Renderable(size_t vertices, size_t indices, BufferUsageMode usageMode);
+	Renderable();
 	~Renderable();
 
 	void bind(bool forceBuffersBinding = false);
 	void unbind();
 	void free();
 
-	inline VertexBuffer& getVertexBuffer() { return m_vertexBuffer; }
-	inline IndexBuffer& getIndexBuffer() { return m_indexBuffer; }
+	inline VertexBuffer* getMainVertexBuffer() { return vertexBuffers.empty() ? nullptr : &vertexBuffers.front(); }
+	VertexBuffer* addVertexBuffer(size_t size, BufferUsageMode usageMode);
+	inline IndexBuffer* getMainIndexBuffer() { return indexBuffers.empty() ? nullptr : &indexBuffers.front(); }
+	IndexBuffer* addIndexBuffer(size_t size, BufferUsageMode usageMode);
+
+	std::vector<VertexBuffer> vertexBuffers;
+	std::vector<IndexBuffer> indexBuffers;
 
 private:
 
 	// vertex array object
 	unsigned int m_id;
-	VertexBuffer m_vertexBuffer;
-	IndexBuffer m_indexBuffer;
 	bool m_firstBinding;
 };

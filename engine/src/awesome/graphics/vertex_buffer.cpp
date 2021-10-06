@@ -57,9 +57,9 @@ void VertexBuffer::fillSubData(void* const data, size_t size, int offset)
 	glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
 }
 
-void VertexBuffer::activateLayout(int startingIdex)
+void VertexBuffer::activateLayout()
 {
-	int elementIndex = startingIdex;
+	int elementIndex = layout.startingIndex;
 	int offset = 0;
 
 	for (const VertexBufferElement& element : layout.getElements())

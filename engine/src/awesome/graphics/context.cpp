@@ -9,9 +9,11 @@
 Context::Context()
 	: camera(math::mat4::identity)
 	, m_shaderLibrary()
-	, m_gizmosRenderingData(7 * 2000 * sizeof(float), 0, BufferUsageMode::Stream)
+	, m_gizmosRenderingData()
+	, m_spritebatchRenderingData()
 	, m_gizmosProgram()
 	, m_colorProgram()
+	, m_spritebatchProgram()
 {
 	// color
 	{
@@ -24,9 +26,21 @@ Context::Context()
 		m_gizmosProgram = createProgram(ShaderLibrary::names::GizmosShader);
 
 		// render data
-		VertexBufferLayout& layout = m_gizmosRenderingData.getVertexBuffer().layout;
+		VertexBuffer& vb = *m_gizmosRenderingData.addVertexBuffer(7 * 2000 * sizeof(float), BufferUsageMode::Static);
+		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+	}
+	// spritebatch
+	{
+		// shaders
+		m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
+
+		// render data
+		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(20 * 2000 * sizeof(float), BufferUsageMode::Static);
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("textcoords", VertexBufferElement::Type::Float, 2));
 	}
 }
 
@@ -60,9 +74,9 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
 		vertices.push_back(it->second.alpha);
 	}
 
-	VertexBuffer& vertexBuffer = m_gizmosRenderingData.getVertexBuffer();
-	vertexBuffer.bind();
-	vertexBuffer.fillData(&vertices[0], vertices.size() * sizeof(float));
+	VertexBuffer* vertexBuffer = m_gizmosRenderingData.getMainVertexBuffer();
+	vertexBuffer->bind();
+	vertexBuffer->fillData(&vertices[0], vertices.size() * sizeof(float));
 
 	m_gizmosProgram->bind();
 	m_gizmosProgram->set("u_matrix", camera);
@@ -84,8 +98,8 @@ void Context::test()
 		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
 		};
 
-		Renderable renderable(21 * sizeof(float), 0, BufferUsageMode::Static);
-		VertexBuffer& vb = renderable.getVertexBuffer();
+		Renderable renderable;
+		VertexBuffer& vb = *renderable.addVertexBuffer(21 * sizeof(float), BufferUsageMode::Static);
 		vb.fillData(vertices, 21 * sizeof(float));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
@@ -105,9 +119,9 @@ void Context::test()
 		 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
 		};
 
-		Renderable renderable(12 * sizeof(float), 0, BufferUsageMode::Stream);
-		VertexBuffer& vb = renderable.getVertexBuffer();
-		vb.fillData(vertices, 12 * sizeof(float));
+		Renderable renderable;
+		VertexBuffer& vb = *renderable.addVertexBuffer(12 * sizeof(float), BufferUsageMode::Static);
+		vb.fillData(vertices, 21 * sizeof(float));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));

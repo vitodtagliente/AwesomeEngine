@@ -20,7 +20,7 @@ IndexBuffer::IndexBuffer(size_t size, BufferUsageMode mode)
 	bind();
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
-		size * sizeof(unsigned int),
+		size,
 		nullptr,
 		usage
 	);

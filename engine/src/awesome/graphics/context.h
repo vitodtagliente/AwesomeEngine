@@ -28,6 +28,8 @@ private:
 
 	ShaderLibrary m_shaderLibrary;
 	Renderable m_gizmosRenderingData;
+	Renderable m_spritebatchRenderingData;
 	ShaderProgram* m_gizmosProgram;
 	ShaderProgram* m_colorProgram;
+	ShaderProgram* m_spritebatchProgram;
 };
