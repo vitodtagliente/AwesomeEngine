@@ -103,6 +103,7 @@ void VertexBuffer::activateLayout(int startingIdex)
 void VertexBufferLayout::push(const VertexBufferElement& element)
 {
 	m_elements.push_back(element);
+	m_stride += element.size;
 }
 
 void VertexBufferLayout::clear()

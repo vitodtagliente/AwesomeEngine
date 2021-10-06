@@ -83,9 +83,9 @@ void Context::test()
 		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
 		};
 
-		Renderable renderable(9 * sizeof(float), 0, BufferUsageMode::Static);
+		Renderable renderable(21 * sizeof(float), 0, BufferUsageMode::Static);
 		VertexBuffer& vb = renderable.getVertexBuffer();
-		vb.fillData(vertices, 9 * sizeof(float));
+		vb.fillData(vertices, 21 * sizeof(float));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
@@ -104,9 +104,9 @@ void Context::test()
 		 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
 		};
 
-		Renderable renderable(6 * sizeof(float), 0, BufferUsageMode::Stream);
+		Renderable renderable(12 * sizeof(float), 0, BufferUsageMode::Stream);
 		VertexBuffer& vb = renderable.getVertexBuffer();
-		vb.fillData(vertices, 6 * sizeof(float));
+		vb.fillData(vertices, 12 * sizeof(float));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
