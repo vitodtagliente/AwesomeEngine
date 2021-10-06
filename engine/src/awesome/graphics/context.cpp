@@ -36,11 +36,37 @@ Context::Context()
 		// shaders
 		m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
 
+		float vertices[] = {
+			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		unsigned int indices[] = {
+			0, 1, 3, 1, 2, 3
+		};
+
 		// render data
-		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(20 * 2000 * sizeof(float), BufferUsageMode::Static);
+		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(20 * sizeof(float), BufferUsageMode::Static);
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("textcoords", VertexBufferElement::Type::Float, 2));
+		vb.fillData(vertices, 20 * sizeof(float));
+
+		IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(6 * sizeof(unsigned int), BufferUsageMode::Static);
+		ib.fillData(indices, 6 * sizeof(unsigned int));
+
+		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer(4 * 2000 * sizeof(float), BufferUsageMode::Static);
+		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
+		cropBuffer.layout.startingIndex = 2;
+
+		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer(16 * 2000 * sizeof(float), BufferUsageMode::Static);
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.startingIndex = 3;
 	}
 }
 

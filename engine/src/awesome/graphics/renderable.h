@@ -17,9 +17,9 @@ public:
 	void unbind();
 	void free();
 
-	inline VertexBuffer* getMainVertexBuffer() { return vertexBuffers.empty() ? nullptr : &vertexBuffers.front(); }
+	inline VertexBuffer* getMainVertexBuffer() { return vertexBuffers.empty() ? nullptr : &vertexBuffers.at(0); }
 	VertexBuffer* addVertexBuffer(size_t size, BufferUsageMode usageMode);
-	inline IndexBuffer* getMainIndexBuffer() { return indexBuffers.empty() ? nullptr : &indexBuffers.front(); }
+	inline IndexBuffer* getMainIndexBuffer() { return indexBuffers.empty() ? nullptr : &indexBuffers.at(0); }
 	IndexBuffer* addIndexBuffer(size_t size, BufferUsageMode usageMode);
 
 	std::vector<VertexBuffer> vertexBuffers;
