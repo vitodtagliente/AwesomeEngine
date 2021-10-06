@@ -83,9 +83,9 @@ void ShaderProgram::set(const std::string& name, const float value)
 	glUniform1f(getUniformLocation(name), value);
 }
 
-void ShaderProgram::set(const std::string& name, float* const matrix)
+void ShaderProgram::set(const std::string& name, const math::mat4& matrix)
 {
-	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, matrix);
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, matrix.data);
 }
 
 void ShaderProgram::set(const std::string& name, const float f1, const float f2, const float f3, const float f4)

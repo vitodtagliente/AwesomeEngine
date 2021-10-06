@@ -10,6 +10,6 @@ RendererInspector::RendererInspector()
 void RendererInspector::render(Renderer& renderer)
 {
 	ImGui::Begin("Renderer Inspector");
-	ImGui::ColorEdit4("background", &renderer.backgroundColor.getData()[0]);
+	ImGui::ColorEdit4("background", renderer.backgroundColor.data);
 	ImGui::End();
 }

@@ -3,38 +3,43 @@
 #include <sstream>
 
 Color::Color()
-	: m_data({ 0.0f, 0.0f, 0.0f, 1.0f })
+	: red()
+	, green()
+	, blue()
+	, alpha(1.0f)
 {
 }
 
 Color::Color(const int red, const int green, const int blue, const int alpha)
-	: m_data()
+	: red(red / 255)
+	, green(green / 255)
+	, blue(blue / 255)
+	, alpha(alpha)
 {
-	setRed(static_cast<float>(red / 255));
-	setGreen(static_cast<float>(green / 255));
-	setBlue(static_cast<float>(blue / 255));
-	setAlpha(static_cast<float>(alpha / 255));
 }
 
 Color::Color(const float red, const float green, const float blue, const float alpha)
-	: m_data({ red, green, blue, 1.0f })
+	: red(red)
+	, green(green)
+	, blue(blue)
+	, alpha(alpha)
 {
 }
 
 bool Color::operator==(const Color& color) const
 {
-	return m_data == color.m_data;
+	return red == color.red && green == color.green && blue == color.blue && alpha == color.alpha;
 }
 
 bool Color::operator!=(const Color& color) const
 {
-	return m_data != color.m_data;
+	return red != color.red || green != color.green || blue != color.blue || alpha != color.alpha;
 }
 
 std::string Color::toString() const
 {
 	std::ostringstream format;
-	format << "red:" << getRed() << ",green:" << getGreen() << ",blue:" << getBlue() << ",alpha:" << getAlpha();
+	format << "red:" << red << ",green:" << green << ",blue:" << blue << ",alpha:" << alpha;
 	return format.str();
 }
 

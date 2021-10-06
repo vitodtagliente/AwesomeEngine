@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <map>
 #include <string>
+#include <vdtmath/matrix4.h>
 
 class Shader;
 
@@ -34,7 +35,7 @@ public:
 	void set(const std::string& name, bool value);
 	void set(const std::string& name, int value);
 	void set(const std::string& name, float value);
-	void set(const std::string& name, float* const matrix);
+	void set(const std::string& name, const math::mat4& matrix);
 	void set(const std::string& name, float f1, float f2, float f3, float f4);
 
 protected:
