@@ -18,9 +18,10 @@ VertexBuffer::VertexBuffer(size_t size, BufferUsageMode mode)
 	}
 
 	glGenBuffers(1, &m_id);
+	bind();
 	glBufferData(
 		GL_ARRAY_BUFFER,
-		size * sizeof(unsigned int),
+		size,
 		nullptr,
 		usage
 	);

@@ -17,8 +17,14 @@ public:
 	void viewport(int width, int height);
 	void drawLines(const std::vector<std::pair<math::vec3, Color>>& lines);
 
+	void test();
+
 private:
+
+	ShaderProgram* const createProgram(const std::string& name);
+
 	ShaderLibrary m_shaderLibrary;
 	Renderable m_gizmosRenderingData;
 	ShaderProgram* m_gizmosProgram;
+	ShaderProgram* m_colorProgram;
 };

@@ -15,6 +15,7 @@ public:
 	{
 		names() = delete;
 
+		static const std::string ColorShader;
 		static const std::string GizmosShader;
 	};
 

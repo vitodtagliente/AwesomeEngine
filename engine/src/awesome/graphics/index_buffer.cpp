@@ -17,6 +17,7 @@ IndexBuffer::IndexBuffer(size_t size, BufferUsageMode mode)
 	}
 
 	glGenBuffers(1, &m_id);
+	bind();
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
 		size * sizeof(unsigned int),

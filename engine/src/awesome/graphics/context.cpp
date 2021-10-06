@@ -8,20 +8,19 @@
 
 Context::Context()
 	: m_shaderLibrary()
-	, m_gizmosRenderingData(7 * 2000, 0, BufferUsageMode::Stream)
+	, m_gizmosRenderingData(7 * 2000 * sizeof(float), 0, BufferUsageMode::Stream)
 	, m_gizmosProgram()
+	, m_colorProgram()
 {
+	// color
+	{
+		// shaders
+		m_colorProgram = createProgram(ShaderLibrary::names::ColorShader);
+	}
 	// gizmos
 	{
 		// shaders
-		std::map<Shader::Type, std::string> sources;
-		auto shaderIt = m_shaderLibrary.getShaders().find(ShaderLibrary::names::GizmosShader);
-		if (Shader::Reader::parse(shaderIt->second, sources));
-		{
-			Shader vs(Shader::Type::Vertex, sources.find(Shader::Type::Vertex)->second);
-			Shader fs(Shader::Type::Fragment, sources.find(Shader::Type::Fragment)->second);
-			m_gizmosProgram = new ShaderProgram({ &vs, &fs });
-		}
+		m_gizmosProgram = createProgram(ShaderLibrary::names::GizmosShader);
 
 		// render data
 		VertexBufferLayout& layout = m_gizmosRenderingData.getVertexBuffer().layout;
@@ -62,7 +61,7 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& lines)
 
 	VertexBuffer& vertexBuffer = m_gizmosRenderingData.getVertexBuffer();
 	vertexBuffer.bind();
-	vertexBuffer.fillData(&vertices[0], vertices.size());
+	vertexBuffer.fillData(&vertices[0], vertices.size() * sizeof(float));
 
 	m_gizmosProgram->bind();
 	m_gizmosProgram->set("u_matrix", math::mat4::identity.data[0]); // camera
@@ -71,4 +70,64 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& lines)
 	const int offset = 0;
 	const int count = lines.size();
 	glDrawArrays(primitiveType, offset, count);
+}
+
+void Context::test()
+{
+	// hello triangle
+	if (true)
+	{
+		float vertices[] = {
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
+		};
+
+		Renderable renderable(9 * sizeof(float), 0, BufferUsageMode::Static);
+		VertexBuffer& vb = renderable.getVertexBuffer();
+		vb.fillData(vertices, 9 * sizeof(float));
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		renderable.bind();
+
+		m_colorProgram->bind();
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+
+	// hello line
+	if (false)
+	{
+		float vertices[] = {
+		 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+		};
+
+		Renderable renderable(6 * sizeof(float), 0, BufferUsageMode::Stream);
+		VertexBuffer& vb = renderable.getVertexBuffer();
+		vb.fillData(vertices, 6 * sizeof(float));
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		renderable.bind();
+
+		m_colorProgram->bind();
+
+		glDrawArrays(GL_LINES, 0, 2);
+	}
+}
+
+ShaderProgram* const Context::createProgram(const std::string& name)
+{
+	std::map<Shader::Type, std::string> sources;
+	auto it = m_shaderLibrary.getShaders().find(name);
+	if (it != m_shaderLibrary.getShaders().end()
+		&& Shader::Reader::parse(it->second, sources));
+	{
+		Shader vs(Shader::Type::Vertex, sources.find(Shader::Type::Vertex)->second);
+		Shader fs(Shader::Type::Fragment, sources.find(Shader::Type::Fragment)->second);
+		return new ShaderProgram({ &vs, &fs });
+	}
+	return nullptr;
 }
