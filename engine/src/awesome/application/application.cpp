@@ -75,7 +75,7 @@ int Application::run()
 		rendererInspector.render(renderer);
 
 		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
-		renderer.getGizmos().circle(math::vec3::zero, 0.2f, Color::Yellow);
+		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))
