@@ -81,7 +81,54 @@ ShaderLibrary::ShaderLibrary()
 			}		
 		)"
 	));
+	m_shaders.insert(std::make_pair(names::SpriteBatchShader, R"(
+			#shader vertex
+
+			#version 330 core
+ 
+			// an attribute is an input (in) to a vertex shader.
+			// It will receive data from a buffer
+			in vec4 a_position;
+			in vec2 a_texcoord;
+			in vec4 a_crop;
+			in mat4 a_transform;
+
+			uniform mat4 u_matrix;
+ 
+			// a varying to pass the texture coordinates to the fragment shader
+			out vec2 v_texcoord;
+			out vec4 v_crop;
+ 
+			void main() {
+				// Multiply the position by the matrix.
+				gl_Position = u_matrix * a_transform * a_position;
+ 
+				// Pass the texcoord to the fragment shader.
+				v_texcoord = a_texcoord;
+				v_crop = a_crop;
+			}
+
+			#shader fragment
+
+			#version 330 core
+			precision highp float;
+ 
+			// Passed in from the vertex shader.
+			in vec2 v_texcoord;
+			in vec4 v_crop;
+ 
+			// The texture.
+			uniform sampler2D u_texture;
+ 
+			out vec4 outColor;
+ 
+			void main() {
+				outColor = texture(u_texture, clamp(v_texcoord * v_crop.zw + v_crop.xy, vec2(0, 0), vec2(1, 1)));
+			}
+		)"
+	));
 }
 
 const std::string ShaderLibrary::names::ColorShader = "Color";
 const std::string ShaderLibrary::names::GizmosShader = "Gizmos";
+const std::string ShaderLibrary::names::SpriteBatchShader = "SpriteBatch";
