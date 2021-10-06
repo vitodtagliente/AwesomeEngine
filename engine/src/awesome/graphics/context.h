@@ -8,6 +8,8 @@
 #include "renderable.h"
 #include "shader_program.h"
 #include "shader_library.h"
+#include "texture.h"
+#include "texture_rect.h"
 
 class Context
 {
@@ -17,6 +19,7 @@ public:
 	void clear(const Color& color);
 	void viewport(int width, int height);
 	void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
+	void drawSprites(const Texture& texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
 
 	void test();
 

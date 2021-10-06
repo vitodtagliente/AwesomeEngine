@@ -3,6 +3,8 @@
 
 class TextureRect
 {
+public:
+
 	union
 	{
 		struct

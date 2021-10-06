@@ -3,6 +3,7 @@
 
 class TextureCoords
 {
+public:
 	static const TextureCoords zero;
 	static const TextureCoords ones;
 

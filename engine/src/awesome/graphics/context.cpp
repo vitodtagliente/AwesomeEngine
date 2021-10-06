@@ -113,6 +113,48 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
 	glDrawArrays(primitiveType, offset, count);
 }
 
+void Context::drawSprites(const Texture& texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
+{
+	if (sprites.empty()) return;
+
+	m_spritebatchRenderingData.bind();
+
+	// fill geometry data
+	std::vector<float> crops;
+	std::vector<float> transforms;
+	for (auto it = sprites.begin(); it != sprites.end(); ++it)
+	{
+		crops.push_back(it->second.x);
+		crops.push_back(it->second.y);
+		crops.push_back(it->second.width);
+		crops.push_back(it->second.height);
+
+		for (int i = 0; i < 16; ++i)
+		{
+			transforms.push_back(it->first.data[i]);
+		}
+	}
+
+	VertexBuffer& cropBuffer = m_spritebatchRenderingData.vertexBuffers[1];
+	cropBuffer.bind();
+	cropBuffer.fillData(&crops[0], crops.size() * sizeof(float));
+
+	VertexBuffer& transformBuffer = m_spritebatchRenderingData.vertexBuffers[2];
+	transformBuffer.bind();
+	transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
+
+	m_gizmosProgram->bind();
+	m_gizmosProgram->set("u_texture", 0);
+	m_gizmosProgram->set("u_matrix", camera);
+
+	const int primitiveType = GL_TRIANGLES;
+	const int offset = 0;
+	const int count = 6;
+	const int numInstances = sprites.size();
+	const int indexType = GL_UNSIGNED_SHORT;
+	glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
+}
+
 void Context::test()
 {
 	// hello triangle
