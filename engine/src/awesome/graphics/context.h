@@ -5,6 +5,8 @@
 #include <vdtmath/vector3.h>
 #include "color.h"
 #include "renderable.h"
+#include "shader_program.h"
+#include "shader_library.h"
 
 class Context
 {
@@ -16,5 +18,7 @@ public:
 	void drawLines(const std::vector<std::pair<math::vec3, Color>>& lines);
 
 private:
+	ShaderLibrary m_shaderLibrary;
 	Renderable m_gizmosRenderingData;
+	ShaderProgram* m_gizmosProgram;
 };
