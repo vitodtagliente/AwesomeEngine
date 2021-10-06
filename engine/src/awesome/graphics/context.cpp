@@ -2,6 +2,17 @@
 
 #include <glad/glad.h>
 
+Context::Context()
+	: m_gizmosRenderingData(7 * 2000, 0, BufferUsageMode::Stream)
+{
+	// gizmos
+	{
+		VertexBufferLayout& layout = m_gizmosRenderingData.getVertexBuffer().layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+	}
+}
+
 void Context::clear(const Color& color)
 {
 	glClearColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
@@ -17,6 +28,8 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& lines)
 {
 	if (lines.empty()) return;
 
+	m_gizmosRenderingData.bind();
+
 	// fill geometry data
 	std::vector<float> vertices;
 	for (auto it = lines.begin(); it != lines.end(); ++it)
@@ -29,6 +42,10 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& lines)
 		vertices.push_back(it->second.getBlue());
 		vertices.push_back(it->second.getAlpha());
 	}
+
+	VertexBuffer& vertexBuffer = m_gizmosRenderingData.getVertexBuffer();
+	vertexBuffer.bind();
+	vertexBuffer.fillData(&vertices[0], vertices.size());
 
 	/*
 	this._gizmosBatchRenderData.bind();

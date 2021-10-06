@@ -10,6 +10,7 @@ Renderer::Renderer(Context& context)
 	, m_gizmos()
 	, m_commands()
 {
+	
 }
 
 void Renderer::begin()
