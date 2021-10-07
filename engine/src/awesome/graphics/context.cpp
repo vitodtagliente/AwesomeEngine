@@ -68,6 +68,14 @@ Context::Context()
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 		transformBuffer.layout.startingIndex = 3;
 	}
+	// texture
+	{
+		// shaders
+		m_textureProgram = createProgram(ShaderLibrary::names::TextureShader);
+	}
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Context::clear(const Color& color)
@@ -226,6 +234,34 @@ void Context::test()
 		renderable.bind();
 
 		m_colorProgram->bind();
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	// hello texture
+	{
+		float vertices[] = {
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		unsigned int indices[] = {
+			0, 1, 3, 1, 2, 3
+		};
+
+		Renderable renderable;
+		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
+		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+		ib.fillData(indices, sizeof(indices));
+		renderable.bind();
+
+		m_textureProgram->bind();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}

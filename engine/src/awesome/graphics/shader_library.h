@@ -18,6 +18,7 @@ public:
 		static const std::string ColorShader;
 		static const std::string GizmosShader;
 		static const std::string SpriteBatchShader;
+		static const std::string TextureShader;
 	};
 
 private:

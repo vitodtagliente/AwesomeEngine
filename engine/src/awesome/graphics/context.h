@@ -36,4 +36,5 @@ private:
 	ShaderProgram* m_gizmosProgram;
 	ShaderProgram* m_colorProgram;
 	ShaderProgram* m_spritebatchProgram;
+	ShaderProgram* m_textureProgram;
 };

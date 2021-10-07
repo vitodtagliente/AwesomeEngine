@@ -83,8 +83,8 @@ int Application::run()
 		sceneTree.render();
 		rendererInspector.render(renderer);
 
-		// renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
-		// renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
+		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
+		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
 		// renderer.drawSprite(library.get("batman"), identityTransform);
 		context.test();
 
