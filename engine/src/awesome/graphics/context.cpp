@@ -200,6 +200,12 @@ void Context::test()
 
 		glDrawArrays(GL_LINES, 0, 2);
 	}
+
+	// hello sprite
+	if (true)
+	{
+
+	}
 }
 
 ShaderProgram* const Context::createProgram(const std::string& name)

@@ -2,6 +2,8 @@
 
 #include <vdtmath/algorithm.h>
 
+const float CIRCLE_ACCURACY = 40.0f;
+
 Gizmos::Gizmos()
 	: m_batch()
 {
@@ -27,7 +29,7 @@ void Gizmos::rect(const math::vec3& position, const float width, const float hei
 
 void Gizmos::circle(const math::vec3& position, const float radius, const Color& color)
 {
-	const float accuracy = 20 * radius;
+	const float accuracy = CIRCLE_ACCURACY * radius;
 	const float step = (2 * math::pi) / accuracy;
 	float angle = 0.0f;
 	for (int i = 0; i < accuracy; ++i)
