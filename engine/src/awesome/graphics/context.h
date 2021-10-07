@@ -2,7 +2,7 @@
 #pragma once
 
 #include <vector>
-#include <vdtmath/matrix4.h>
+#include <vdtmath/transform.h>
 #include <vdtmath/vector3.h>
 #include "color.h"
 #include "renderable.h"
@@ -19,7 +19,7 @@ public:
 	void clear(const Color& color);
 	void viewport(int width, int height);
 	void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
-	void drawSprites(const Texture& texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
+	void drawSprites(Texture* const texture, const std::vector<std::pair<math::transform, TextureRect>>& sprites);
 
 	void test();
 

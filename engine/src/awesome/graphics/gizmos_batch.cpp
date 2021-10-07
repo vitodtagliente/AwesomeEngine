@@ -2,18 +2,18 @@
 
 #include "context.h"
 
-Batch::Batch(int size)
+GizmosBatch::Batch::Batch(int size)
 	: m_size(size)
 	, m_data()
 {
 }
 
-void Batch::batch(const math::vec3& position, const Color& color)
+void GizmosBatch::Batch::batch(const math::vec3& position, const Color& color)
 {
 	m_data.push_back(std::make_pair(position, color));
 }
 
-void Batch::clear()
+void GizmosBatch::Batch::clear()
 {
 	m_data.clear();
 }
@@ -52,7 +52,7 @@ std::vector<Command*> GizmosBatch::commands() const
 	return commands;
 }
 
-Batch& GizmosBatch::findNextBatch()
+GizmosBatch::Batch& GizmosBatch::findNextBatch()
 {
 	if (m_batches[m_batchIndex].full())
 	{
@@ -62,7 +62,7 @@ Batch& GizmosBatch::findNextBatch()
 	return m_batches[m_batchIndex];
 }
 
-void GizmosCommand::execute(Context& contex)
+void GizmosCommand::execute(Context& context)
 {
-	contex.drawLines(data);
+	context.drawLines(data);
 }

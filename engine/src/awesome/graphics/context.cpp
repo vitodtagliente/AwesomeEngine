@@ -113,7 +113,7 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
 	glDrawArrays(primitiveType, offset, count);
 }
 
-void Context::drawSprites(const Texture& texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
+void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::transform, TextureRect>>& sprites)
 {
 	if (sprites.empty()) return;
 
@@ -131,7 +131,7 @@ void Context::drawSprites(const Texture& texture, const std::vector<std::pair<ma
 
 		for (int i = 0; i < 16; ++i)
 		{
-			transforms.push_back(it->first.data[i]);
+			transforms.push_back(it->first.matrix().data[i]);
 		}
 	}
 
@@ -144,6 +144,7 @@ void Context::drawSprites(const Texture& texture, const std::vector<std::pair<ma
 	transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
 
 	m_gizmosProgram->bind();
+	texture->bind(0);
 	m_gizmosProgram->set("u_texture", 0);
 	m_gizmosProgram->set("u_matrix", camera);
 

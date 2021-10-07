@@ -8,6 +8,7 @@ Renderer::Renderer(Context& context)
 	: backgroundColor(Color::Black)
 	, m_context(context)
 	, m_gizmos()
+	, m_spriteBatch()
 	, m_commands()
 {
 	
@@ -16,12 +17,20 @@ Renderer::Renderer(Context& context)
 void Renderer::begin()
 {
 	m_context.clear(backgroundColor);
-	Gizmos::instance()->clear();
+	m_spriteBatch.clear();
+	m_gizmos.clear();
 }
 
 void Renderer::flush()
 {
 	for (auto it = m_commands.begin(); it != m_commands.end(); ++it)
+	{
+		Command* const command = *it;
+		command->execute(m_context);
+	}
+
+	std::vector<Command*> spritebatchCommands = m_spriteBatch.commands();
+	for (auto it = spritebatchCommands.begin(); it != spritebatchCommands.end(); ++it)
 	{
 		Command* const command = *it;
 		command->execute(m_context);
@@ -38,4 +47,9 @@ void Renderer::flush()
 void Renderer::clear()
 {
 	m_commands.clear();
+}
+
+void Renderer::drawSprite(Texture* const texture, const math::transform& transform, const TextureRect& rect)
+{
+	m_spriteBatch.batch(texture, transform, rect);
 }
