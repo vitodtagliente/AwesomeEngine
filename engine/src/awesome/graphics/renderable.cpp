@@ -4,7 +4,9 @@
 
 Renderable::Renderable()
 	: m_id()
-	, m_firstBinding(true)
+	, m_vertexBuffers()
+	, m_indexBuffers()
+	, m_binded(false)
 {
 	glGenVertexArrays(1, &m_id);
 }
@@ -14,21 +16,21 @@ Renderable::~Renderable()
 	free();
 }
 
-void Renderable::bind(bool forceBuffersBinding)
+void Renderable::bind(const bool forceBinding)
 {
 	glBindVertexArray(m_id);
-	if (m_firstBinding || forceBuffersBinding)
+	if (!m_binded || forceBinding)
 	{
-		for (VertexBuffer& vertexBuffer : vertexBuffers)
+		for (auto& pair : m_vertexBuffers)
 		{
-			vertexBuffer.bind();
-			vertexBuffer.activateLayout();
+			pair.second.bind();
+			pair.second.activateLayout();
 		}
-		for (IndexBuffer& indexBuffer : indexBuffers)
+		for (auto& pair : m_indexBuffers)
 		{
-			indexBuffer.bind();
+			pair.second.bind();
 		}
-		m_firstBinding = false;
+		m_binded = true;
 	}
 }
 
@@ -40,24 +42,41 @@ void Renderable::unbind()
 void Renderable::free()
 {
 	glDeleteVertexArrays(1, &m_id);
-	for (VertexBuffer& vertexBuffer : vertexBuffers)
+	for (auto& pair : m_vertexBuffers)
 	{
-		vertexBuffer.free();
+		pair.second.free();
 	}
-	for (IndexBuffer& indexBuffer : indexBuffers)
+	m_vertexBuffers.clear();
+
+	for (auto& pair : m_indexBuffers)
 	{
-		indexBuffer.free();
+		pair.second.free();
 	}
+	m_indexBuffers.clear();
 }
 
-VertexBuffer* Renderable::addVertexBuffer(size_t size, BufferUsageMode usageMode)
+IndexBuffer* const Renderable::findIndexBuffer(const std::string& name)
 {
-	VertexBuffer& vertexBuffer = vertexBuffers.emplace_back(size, usageMode);
-	return &vertexBuffer;
+	const auto& it = m_indexBuffers.find(name);
+	return it != m_indexBuffers.end() ? &it->second : nullptr;
 }
 
-IndexBuffer* Renderable::addIndexBuffer(size_t size, BufferUsageMode usageMode)
+VertexBuffer* const Renderable::findVertexBuffer(const std::string& name)
 {
-	IndexBuffer& indexBuffer = indexBuffers.emplace_back(size, usageMode);
-	return &indexBuffer;
+	const auto& it = m_vertexBuffers.find(name);
+	return it != m_vertexBuffers.end() ? &it->second : nullptr;
 }
+
+IndexBuffer* const Renderable::addIndexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode)
+{
+	 m_indexBuffers.insert(std::make_pair(name, IndexBuffer(size, usageMode)));
+	return findIndexBuffer(name);
+}
+
+VertexBuffer* const Renderable::addVertexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode)
+{
+	m_vertexBuffers.insert(std::make_pair(name, VertexBuffer(size, usageMode)));
+	return findVertexBuffer(name);
+}
+
+const std::string Renderable::names::MainBuffer = "main";

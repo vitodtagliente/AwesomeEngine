@@ -1,7 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vector>
+#include <map>
+#include <string>
 
 #include "index_buffer.h"
 #include "vertex_buffer.h"
@@ -13,21 +14,28 @@ public:
 	Renderable();
 	~Renderable();
 
-	void bind(bool forceBuffersBinding = false);
+	void bind(bool forceBinding = false);
 	void unbind();
 	void free();
 
-	inline VertexBuffer* getMainVertexBuffer() { return vertexBuffers.empty() ? nullptr : &vertexBuffers.at(0); }
-	VertexBuffer* addVertexBuffer(size_t size, BufferUsageMode usageMode);
-	inline IndexBuffer* getMainIndexBuffer() { return indexBuffers.empty() ? nullptr : &indexBuffers.at(0); }
-	IndexBuffer* addIndexBuffer(size_t size, BufferUsageMode usageMode);
+	IndexBuffer* const findIndexBuffer(const std::string& name);
+	VertexBuffer* const findVertexBuffer(const std::string& name);
 
-	std::vector<VertexBuffer> vertexBuffers;
-	std::vector<IndexBuffer> indexBuffers;
+	IndexBuffer* const addIndexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
+	VertexBuffer* const addVertexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
+
+	struct names
+	{
+		names() = delete;
+
+		static const std::string MainBuffer;
+	};
 
 private:
 
 	// vertex array object
 	unsigned int m_id;
-	bool m_firstBinding;
+	std::map<std::string, VertexBuffer> m_vertexBuffers;
+	std::map<std::string, IndexBuffer> m_indexBuffers;
+	bool m_binded;
 };
