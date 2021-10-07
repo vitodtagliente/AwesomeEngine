@@ -168,8 +168,8 @@ void Context::test()
 		};
 
 		Renderable renderable;
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, 21 * sizeof(float), BufferUsageMode::Static);
-		vb.fillData(vertices, 21 * sizeof(float));
+		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
@@ -189,8 +189,8 @@ void Context::test()
 		};
 
 		Renderable renderable;
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, 12 * sizeof(float), BufferUsageMode::Static);
-		vb.fillData(vertices, 21 * sizeof(float));
+		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
@@ -204,7 +204,30 @@ void Context::test()
 	// hello sprite
 	if (true)
 	{
+		float vertices[] = {
+			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+			-1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f
+		};
 
+		unsigned int indices[] = {
+			0, 1, 3, 1, 2, 3
+		};
+
+		Renderable renderable;
+		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+		ib.fillData(indices, sizeof(indices));
+		renderable.bind();
+
+		m_colorProgram->bind();
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 }
 

@@ -55,7 +55,9 @@ int Application::run()
 	Renderer renderer(context);
 
 	TextureLibrary library;
-	library.add("batman", "C:/Users/vitod/Desktop/AwesomeEngine/sandbox/assets/batman_logo.png");
+	library.add("batman", "../assets/batman_logo.png");
+
+	context.testTexture = library.get("batman");
 
 	math::transform identityTransform;
 
@@ -81,9 +83,9 @@ int Application::run()
 		sceneTree.render();
 		rendererInspector.render(renderer);
 
-		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
-		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
-		renderer.drawSprite(library.get("batman"), identityTransform);
+		// renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
+		// renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
+		// renderer.drawSprite(library.get("batman"), identityTransform);
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))

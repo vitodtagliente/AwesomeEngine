@@ -77,7 +77,6 @@ void VertexBuffer::activateLayout()
 		}
 		}
 
-		glEnableVertexAttribArray(elementIndex);
 		glVertexAttribPointer(
 			elementIndex,
 			// num of components
@@ -89,6 +88,7 @@ void VertexBuffer::activateLayout()
 			// start at the beginning of the buffer
 			(void*)(offset * size)
 		);
+		glEnableVertexAttribArray(elementIndex);
 
 		if (element.instanced)
 		{

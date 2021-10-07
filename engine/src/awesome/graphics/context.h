@@ -24,6 +24,7 @@ public:
 	void test();
 
 	math::mat4 camera;
+	Texture* testTexture;
 
 private:
 

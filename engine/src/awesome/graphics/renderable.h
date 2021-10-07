@@ -35,7 +35,7 @@ private:
 
 	// vertex array object
 	unsigned int m_id;
-	std::map<std::string, VertexBuffer> m_vertexBuffers;
-	std::map<std::string, IndexBuffer> m_indexBuffers;
+	std::map<std::string, VertexBuffer*> m_vertexBuffers;
+	std::map<std::string, IndexBuffer*> m_indexBuffers;
 	bool m_binded;
 };
