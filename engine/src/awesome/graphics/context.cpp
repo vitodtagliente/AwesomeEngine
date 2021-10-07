@@ -143,10 +143,10 @@ void Context::drawSprites(Texture* const texture, const std::vector<std::pair<ma
 	transformBuffer.bind();
 	transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
 
-	m_gizmosProgram->bind();
+	m_spritebatchProgram->bind();
 	texture->bind(0);
-	m_gizmosProgram->set("u_texture", 0);
-	m_gizmosProgram->set("u_matrix", camera);
+	m_spritebatchProgram->set("u_texture", 0);
+	m_spritebatchProgram->set("u_matrix", camera);
 
 	const int primitiveType = GL_TRIANGLES;
 	const int offset = 0;

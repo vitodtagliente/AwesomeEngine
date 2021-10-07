@@ -55,7 +55,7 @@ int Application::run()
 	Renderer renderer(context);
 
 	TextureLibrary library;
-	library.add("batman", "../assets/batman_logo.png");
+	library.add("batman", "C:/Users/vitod/Desktop/AwesomeEngine/sandbox/assets/batman_logo.png");
 
 	math::transform identityTransform;
 
