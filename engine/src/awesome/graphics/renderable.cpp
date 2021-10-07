@@ -69,14 +69,14 @@ VertexBuffer* const Renderable::findVertexBuffer(const std::string& name)
 
 IndexBuffer* const Renderable::addIndexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode)
 {
-	 m_indexBuffers.insert(std::make_pair(name, IndexBuffer(size, usageMode)));
-	return findIndexBuffer(name);
+	const auto& it = m_indexBuffers.insert(std::make_pair(name, IndexBuffer(size, usageMode)));
+	return &it.first->second;
 }
 
 VertexBuffer* const Renderable::addVertexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode)
 {
-	m_vertexBuffers.insert(std::make_pair(name, VertexBuffer(size, usageMode)));
-	return findVertexBuffer(name);
+	const auto& it = m_vertexBuffers.insert(std::make_pair(name, VertexBuffer(size, usageMode)));
+	return &it.first->second;
 }
 
 const std::string Renderable::names::MainBuffer = "main";

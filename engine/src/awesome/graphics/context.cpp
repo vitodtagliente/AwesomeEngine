@@ -139,7 +139,7 @@ void Context::drawSprites(Texture* const texture, const std::vector<std::pair<ma
 	cropBuffer.bind();
 	cropBuffer.fillData(&crops[0], crops.size() * sizeof(float));
 
-	VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffers");
+	VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffer");
 	transformBuffer.bind();
 	transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
 
