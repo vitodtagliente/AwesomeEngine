@@ -11,6 +11,8 @@
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/graphics/texture.h>
+#include <awesome/graphics/texture_library.h>
 
 #include <awesome/editor/entity_inspector.h>
 #include <awesome/editor/renderer_inspector.h>
@@ -52,6 +54,11 @@ int Application::run()
 
 	Renderer renderer(context);
 
+	TextureLibrary library;
+	library.add("batman", "../assets/batman_logo.png");
+
+	math::transform identityTransform;
+
 	while (m_canvas.isOpen())
 	{
 		m_canvas.update();
@@ -76,6 +83,7 @@ int Application::run()
 
 		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
 		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
+		renderer.drawSprite(library.get("batman"), identityTransform);
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))
