@@ -37,25 +37,23 @@ Context::Context()
 		m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
 
 		float vertices[] = {
-			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			-1.0f, 1.0f, 0.0f, 0.0f, 1.0f
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
 		};
 
 		unsigned int indices[] = {
 			0, 1, 3, 1, 2, 3
 		};
 
-		// render data
-		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(Renderable::names::MainBuffer, 20 * sizeof(float), BufferUsageMode::Static);
+		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("textcoords", VertexBufferElement::Type::Float, 2));
-		vb.fillData(vertices, 20 * sizeof(float));
-
-		IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(Renderable::names::MainBuffer, 6 * sizeof(unsigned int), BufferUsageMode::Static);
-		ib.fillData(indices, 6 * sizeof(unsigned int));
+		layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
+		IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+		ib.fillData(indices, sizeof(indices));
 
 		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer("cropsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Static);
 		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
@@ -67,6 +65,8 @@ Context::Context()
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 		transformBuffer.layout.startingIndex = 3;
+
+		m_spritebatchRenderingData.bind();
 	}
 	// texture
 	{
@@ -160,7 +160,7 @@ void Context::drawSprites(Texture* const texture, const std::vector<std::pair<ma
 	const int offset = 0;
 	const int count = 6;
 	const int numInstances = sprites.size();
-	const int indexType = GL_UNSIGNED_SHORT;
+	const int indexType = GL_UNSIGNED_INT;
 	glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 }
 
@@ -209,8 +209,8 @@ void Context::test()
 		glDrawArrays(GL_LINES, 0, 2);
 	}
 
-	// hello sprite
-	if (true)
+	// hello quad
+	if (false)
 	{
 		float vertices[] = {
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
@@ -224,14 +224,15 @@ void Context::test()
 		};
 
 		Renderable renderable;
+		renderable.bind();
 		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
 		vb.fillData(vertices, sizeof(vertices));
 		VertexBufferLayout& layout = vb.layout;
 		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
 		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		vb.activateLayout();
 		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
 		ib.fillData(indices, sizeof(indices));
-		renderable.bind();
 
 		m_colorProgram->bind();
 
@@ -239,6 +240,7 @@ void Context::test()
 	}
 
 	// hello texture
+	if (false)
 	{
 		float vertices[] = {
 			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
@@ -262,8 +264,71 @@ void Context::test()
 		renderable.bind();
 
 		m_textureProgram->bind();
+		testTexture->bind(0);
+		m_spritebatchProgram->set("u_texture", 0);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	}
+
+	// hello spritebatch
+	if (false)
+	{
+		float vertices[] = {
+			 1.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+		};
+
+		unsigned int indices[] = {
+			0, 1, 3, 1, 2, 3
+		};
+
+		float crops[] = {
+			0.0f, 0.0f, 1.0, 1.0f
+		};
+
+		float transforms[] = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		Renderable renderable;
+		renderable.bind();
+		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+		vb.fillData(vertices, sizeof(vertices));
+		VertexBufferLayout& layout = vb.layout;
+		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		vb.activateLayout();
+		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+		ib.fillData(indices, sizeof(indices));
+
+		VertexBuffer cropBuffer = VertexBuffer(4 * 2000 * sizeof(float), BufferUsageMode::Static);
+		cropBuffer.fillData(crops, sizeof(crops));
+		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
+		cropBuffer.layout.startingIndex = 2;
+		cropBuffer.activateLayout();
+
+		VertexBuffer transformBuffer = VertexBuffer(16 * 2000 * sizeof(float), BufferUsageMode::Static);
+		transformBuffer.fillData(transforms, sizeof(transforms));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+		transformBuffer.layout.startingIndex = 3;
+		transformBuffer.activateLayout();
+
+		m_spritebatchProgram->bind();
+		testTexture->bind(0);
+		m_spritebatchProgram->set("u_texture", 0);
+		m_spritebatchProgram->set("u_matrix", camera);
+
+		const int primitiveType = GL_TRIANGLES;
+		const int offset = 0;
+		const int count = 6;
+		const int numInstances = 1;
+		const int indexType = GL_UNSIGNED_INT;
+		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 	}
 }
 

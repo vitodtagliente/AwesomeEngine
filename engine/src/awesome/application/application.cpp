@@ -59,7 +59,8 @@ int Application::run()
 
 	context.testTexture = library.get("batman");
 
-	math::transform identityTransform;
+	math::transform t1, t2;
+
 
 	while (m_canvas.isOpen())
 	{
@@ -85,7 +86,8 @@ int Application::run()
 
 		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
 		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
-		// renderer.drawSprite(library.get("batman"), identityTransform);
+		renderer.drawSprite(library.get("batman"), t1);
+		// renderer.drawSprite(library.get("batman"), t2);
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))
