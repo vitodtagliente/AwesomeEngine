@@ -41,18 +41,7 @@ bool Canvas::open(Settings settings)
 			m_handler,
 			[](GLFWwindow*, int width, int height)
 			{
-				// if (WindowGLFW* const window = static_cast<WindowGLFW*>(Window::instance()))
-				// {
-				// 	window->m_size = {
-				// 		static_cast<uint32>(width),
-				// 		static_cast<uint32>(height)
-				// 	};
-				// }
-				// // #todo
-				// if (Renderer* const renderer = Renderer::instance())
-				// {
-				// 	renderer->setViewport(width, height);
-				// }
+
 			}
 		);
 
@@ -132,4 +121,18 @@ void Canvas::update()
 
 void Canvas::close()
 {
+}
+
+int Canvas::width() const
+{
+	int width, height;
+	glfwGetWindowSize(m_handler, &width, &height);
+	return width;
+}
+
+int Canvas::height() const
+{
+	int width, height;
+	glfwGetWindowSize(m_handler, &width, &height);
+	return height;
 }

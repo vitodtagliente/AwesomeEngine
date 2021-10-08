@@ -65,7 +65,7 @@ int Application::run()
 		for (int i = 0; i < 100; ++i)
 		{
 			math::transform t;
-			t.scale = math::vec3(math::random(0.2f, 0.4f));
+			t.scale = math::vec3(math::random(0.1f, 0.25f));
 			t.position = math::vec3(math::random(-.8f, .8f), math::random(-.8f, .8f), 0.0f);
 			t.rotation.z = math::random(0.f, 360.f);
 			t.update();
@@ -73,7 +73,7 @@ int Application::run()
 			sprites.push_back(std::make_pair(t, math::random(4, 10)));
 		}
 	};
-	const float generateTime = 50.0f;
+	const float generateTime = 10.0f;
 	float timer = generateTime;
 
 	while (m_canvas.isOpen())
@@ -81,6 +81,7 @@ int Application::run()
 		m_canvas.update();
 		m_time.tick();
 		update();
+		context.viewport(m_canvas.width(), m_canvas.height());
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
