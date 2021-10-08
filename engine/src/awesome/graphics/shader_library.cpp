@@ -10,8 +10,8 @@ ShaderLibrary::ShaderLibrary()
  
 			// an attribute is an input (in) to a vertex shader.
 			// It will receive data from a buffer
-			in vec4 a_position;
-			in vec4 a_color;
+			layout(location = 0) in vec4 a_position;
+			layout(location = 1) in vec4 a_color;
 
 			out vec4 v_color;
  
@@ -48,8 +48,8 @@ ShaderLibrary::ShaderLibrary()
  
 			// an attribute is an input (in) to a vertex shader.
 			// It will receive data from a buffer
-			in vec4 a_position;
-			in vec4 a_color;
+			layout(location = 0) in vec4 a_position;
+			layout(location = 1) in vec4 a_color;
 
 			out vec4 v_color;
 
@@ -88,10 +88,10 @@ ShaderLibrary::ShaderLibrary()
  
 			// an attribute is an input (in) to a vertex shader.
 			// It will receive data from a buffer
-			in vec4 a_position;
-			in vec2 a_texcoord;
-			in vec4 a_crop;
-			in mat4 a_transform;
+			layout(location = 0) in vec4 a_position;
+			layout(location = 1) in vec2 a_texcoord;
+			layout(location = 2) in vec4 a_crop;
+			layout(location = 3) in mat4 a_transform;
 
 			uniform mat4 u_matrix;
  
@@ -101,7 +101,6 @@ ShaderLibrary::ShaderLibrary()
  
 			void main() {
 				// Multiply the position by the matrix.
-				// gl_Position = u_matrix * a_transform * a_position;
 				gl_Position = u_matrix * a_transform * a_position;
  
 				// Pass the texcoord to the fragment shader.

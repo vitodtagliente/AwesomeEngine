@@ -55,21 +55,31 @@ int Application::run()
 	Renderer renderer(context);
 
 	TextureLibrary library;
-	library.add("batman", "../assets/batman_logo.png");
+	library.add("sheet", "../assets/spritesheet.png");
+	context.testTexture = library.get("sheet");
 
-	context.testTexture = library.get("batman");
+	std::vector<std::pair<math::transform, int>> sprites;
+	const auto& generateSprites = [&sprites]() -> void
+	{
+		sprites.clear();
+		for (int i = 0; i < 100; ++i)
+		{
+			math::transform t;
+			t.scale = math::vec3(math::random(0.2f, 0.4f));
+			t.position = math::vec3(math::random(-.8f, .8f), math::random(-.8f, .8f), 0.0f);
+			t.rotation.z = math::random(0.f, 360.f);
+			t.update();
 
-	math::transform t1, t2;
-	t1.scale = math::vec3(0.4f);
-	t2.scale = math::vec3(0.4f);
-	t1.position.x = .5f;
-	t1.rotation.z = 45;
-	t1.update();
-	t2.update();
+			sprites.push_back(std::make_pair(t, math::random(4, 10)));
+		}
+	};
+	const float generateTime = 50.0f;
+	float timer = generateTime;
 
 	while (m_canvas.isOpen())
 	{
 		m_canvas.update();
+		m_time.tick();
 		update();
 
 		ImGui_ImplOpenGL3_NewFrame();
@@ -91,8 +101,21 @@ int Application::run()
 
 		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
 		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
-		renderer.drawSprite(library.get("batman"), math::mat4::identity);
-		// renderer.drawSprite(library.get("batman"), t2.matrix());
+
+		const float size = 1.0f / 11;
+		for (int i = 0; i < sprites.size(); ++i)
+		{
+			const auto& pair = sprites[i];
+			renderer.drawSprite(library.get("sheet"), pair.first.matrix(), TextureRect(size * 9, size * pair.second, size, size));
+		}
+
+		timer -= m_time.getDeltaTime();
+		if (timer <= 0.0f)
+		{
+			generateSprites();
+			timer = generateTime;
+		}
+
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))

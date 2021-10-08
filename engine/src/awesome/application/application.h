@@ -7,6 +7,7 @@
 #include "canvas.h"
 #include "input.h"
 #include <awesome/scene/world.h>
+#include <awesome/core/time.h>
 
 class Application
 {
@@ -31,5 +32,6 @@ private:
 
 	Canvas m_canvas;
 	Input m_input;
+	Time m_time;
 	World m_world;
 };
