@@ -60,7 +60,12 @@ int Application::run()
 	context.testTexture = library.get("batman");
 
 	math::transform t1, t2;
-
+	t1.scale = math::vec3(0.4f);
+	t2.scale = math::vec3(0.4f);
+	t1.position.x = .5f;
+	t1.rotation.z = 45;
+	t1.update();
+	t2.update();
 
 	while (m_canvas.isOpen())
 	{
@@ -86,8 +91,8 @@ int Application::run()
 
 		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
 		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
-		renderer.drawSprite(library.get("batman"), t1);
-		// renderer.drawSprite(library.get("batman"), t2);
+		renderer.drawSprite(library.get("batman"), math::mat4::identity);
+		// renderer.drawSprite(library.get("batman"), t2.matrix());
 		context.test();
 
 		if (m_input.isKeyPressed(KeyCode::A))

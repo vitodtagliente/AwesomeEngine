@@ -7,7 +7,7 @@
 #include <vdtmath/vector3.h>
 #include "command.h"
 #include "texture.h"
-#include <vdtmath/transform.h>
+#include <vdtmath/matrix4.h>
 #include "texture_rect.h"
 
 #define DEFAULT_SPRITE_BATCH_SIZE 2000
@@ -20,7 +20,7 @@ public:
 	SpriteCommand();
 
 	Texture* texture;
-	std::vector<std::pair<math::transform, TextureRect>> data;
+	std::vector<std::pair<math::mat4, TextureRect>> data;
 
 	virtual void execute(Context& context) override;
 };
@@ -31,7 +31,7 @@ public:
 
 	SpriteBatch(int batchSize = DEFAULT_SPRITE_BATCH_SIZE);
 
-	void batch(Texture* const texture, const math::transform& transform, const TextureRect& rect);
+	void batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect);
 	void clear();
 
 	std::vector<Command*> commands() const;
@@ -46,16 +46,16 @@ private:
 		inline int size() const { return m_data.size(); }
 		inline int capacity() const { return m_size; }
 		inline bool empty() const { return m_data.empty(); }
-		inline const std::vector<std::pair<math::transform, TextureRect>>& data() const { return m_data; }
+		inline const std::vector<std::pair<math::mat4, TextureRect>>& data() const { return m_data; }
 		inline bool full() const { return m_size <= m_data.size(); }
 
-		void batch(const math::transform& transform, const TextureRect& rect);
+		void batch(const math::mat4& matrix, const TextureRect& rect);
 		void clear();
 
 	private:
 
 		int m_size;
-		std::vector<std::pair<math::transform, TextureRect>> m_data;
+		std::vector<std::pair<math::mat4, TextureRect>> m_data;
 
 	};
 

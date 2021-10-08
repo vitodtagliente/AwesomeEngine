@@ -6,7 +6,7 @@
 #include <awesome/core/singleton.h>
 #include "gizmos.h"
 #include "texture.h"
-#include <vdtmath/transform.h>
+#include <vdtmath/matrix4.h>
 #include "texture_rect.h"
 #include "sprite_batch.h"
 
@@ -23,7 +23,7 @@ public:
 	void flush();
 	void clear();
 
-	void drawSprite(Texture* const texture, const math::transform& transform, const TextureRect& rect = {});
+	void drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect = {});
 
 	Color backgroundColor;
 

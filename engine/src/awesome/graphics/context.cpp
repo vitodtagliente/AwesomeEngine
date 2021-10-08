@@ -55,11 +55,11 @@ Context::Context()
 		IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
 		ib.fillData(indices, sizeof(indices));
 
-		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer("cropsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Static);
+		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer("cropsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Stream);
 		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
 		cropBuffer.layout.startingIndex = 2;
 
-		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer("transformsBuffer", 16 * 2000 * sizeof(float), BufferUsageMode::Static);
+		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer("transformsBuffer", 16 * 2000 * sizeof(float), BufferUsageMode::Stream);
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
@@ -121,7 +121,7 @@ void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
 	glDrawArrays(primitiveType, offset, count);
 }
 
-void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::transform, TextureRect>>& sprites)
+void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
 {
 	if (sprites.empty()) return;
 
@@ -137,10 +137,7 @@ void Context::drawSprites(Texture* const texture, const std::vector<std::pair<ma
 		crops.push_back(it->second.width);
 		crops.push_back(it->second.height);
 
-		for (int i = 0; i < 16; ++i)
-		{
-			transforms.push_back(it->first.matrix().data[i]);
-		}
+		transforms.insert(transforms.end(), it->first.data, it->first.data + it->first.length);
 	}
 
 	VertexBuffer& cropBuffer = *m_spritebatchRenderingData.findVertexBuffer("cropsBuffer");
@@ -210,7 +207,7 @@ void Context::test()
 	}
 
 	// hello quad
-	if (false)
+	if (true)
 	{
 		float vertices[] = {
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
@@ -268,67 +265,6 @@ void Context::test()
 		m_spritebatchProgram->set("u_texture", 0);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
-
-	// hello spritebatch
-	if (false)
-	{
-		float vertices[] = {
-			 1.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 3, 1, 2, 3
-		};
-
-		float crops[] = {
-			0.0f, 0.0f, 1.0, 1.0f
-		};
-
-		float transforms[] = {
-			1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-		};
-
-		Renderable renderable;
-		renderable.bind();
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
-		vb.activateLayout();
-		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
-		ib.fillData(indices, sizeof(indices));
-
-		VertexBuffer cropBuffer = VertexBuffer(4 * 2000 * sizeof(float), BufferUsageMode::Static);
-		cropBuffer.fillData(crops, sizeof(crops));
-		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
-		cropBuffer.layout.startingIndex = 2;
-		cropBuffer.activateLayout();
-
-		VertexBuffer transformBuffer = VertexBuffer(16 * 2000 * sizeof(float), BufferUsageMode::Static);
-		transformBuffer.fillData(transforms, sizeof(transforms));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.startingIndex = 3;
-		transformBuffer.activateLayout();
-
-		m_spritebatchProgram->bind();
-		testTexture->bind(0);
-		m_spritebatchProgram->set("u_texture", 0);
-		m_spritebatchProgram->set("u_matrix", camera);
-
-		const int primitiveType = GL_TRIANGLES;
-		const int offset = 0;
-		const int count = 6;
-		const int numInstances = 1;
-		const int indexType = GL_UNSIGNED_INT;
-		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 	}
 }
 

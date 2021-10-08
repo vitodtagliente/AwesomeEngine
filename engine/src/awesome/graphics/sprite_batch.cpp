@@ -8,9 +8,9 @@ SpriteBatch::Batch::Batch(int size)
 {
 }
 
-void SpriteBatch::Batch::batch(const math::transform& transform, const TextureRect& rect)
+void SpriteBatch::Batch::batch(const math::mat4& matrix, const TextureRect& rect)
 {
-	m_data.push_back(std::make_pair(transform, rect));
+	m_data.push_back(std::make_pair(matrix, rect));
 }
 
 void SpriteBatch::Batch::clear()
@@ -24,9 +24,9 @@ SpriteBatch::SpriteBatch(int batchSize)
 {
 }
 
-void SpriteBatch::batch(Texture* const texture, const math::transform& transform, const TextureRect& rect)
+void SpriteBatch::batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
 {
-	findNextBatch(texture).batch(transform, rect);
+	findNextBatch(texture).batch(matrix, rect);
 }
 
 void SpriteBatch::clear()

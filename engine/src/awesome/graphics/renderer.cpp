@@ -49,7 +49,7 @@ void Renderer::clear()
 	m_commands.clear();
 }
 
-void Renderer::drawSprite(Texture* const texture, const math::transform& transform, const TextureRect& rect)
+void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
 {
-	m_spriteBatch.batch(texture, transform, rect);
+	m_spriteBatch.batch(texture, matrix, rect);
 }
