@@ -207,7 +207,7 @@ void Context::test()
 	}
 
 	// hello quad
-	if (true)
+	if (false)
 	{
 		float vertices[] = {
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,

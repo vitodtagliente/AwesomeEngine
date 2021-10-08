@@ -59,21 +59,21 @@ int Application::run()
 	context.testTexture = library.get("sheet");
 
 	std::vector<std::pair<math::transform, int>> sprites;
-	const auto& generateSprites = [&sprites]() -> void
+	const auto& generateSprites = [&sprites](const float w, const float h) -> void
 	{
 		sprites.clear();
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 500; ++i)
 		{
 			math::transform t;
-			t.scale = math::vec3(math::random(0.1f, 0.25f));
-			t.position = math::vec3(math::random(-.8f, .8f), math::random(-.8f, .8f), 0.0f);
+			t.scale = math::vec3(math::random(0.7f, 1.4f), math::random(0.7f, 1.4f), 1.f);
+			t.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
 			t.rotation.z = math::random(0.f, 360.f);
 			t.update();
 
 			sprites.push_back(std::make_pair(t, math::random(4, 10)));
 		}
 	};
-	const float generateTime = 10.0f;
+	const float generateTime = .2f;
 	float timer = generateTime;
 
 	while (m_canvas.isOpen())
@@ -82,6 +82,12 @@ int Application::run()
 		m_time.tick();
 		update();
 		context.viewport(m_canvas.width(), m_canvas.height());
+		// pixel perfect
+		const float w = m_canvas.width() / 2 / 32;
+		const float h = m_canvas.height() / 2 / 32;
+		{			
+			context.camera = math::mat4::orthographic(-w, w, -h, h, -30, 1000);
+		}
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -100,8 +106,8 @@ int Application::run()
 		sceneTree.render();
 		rendererInspector.render(renderer);
 
-		renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
-		renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
+		// renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
+		// renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
 
 		const float size = 1.0f / 11;
 		for (int i = 0; i < sprites.size(); ++i)
@@ -113,7 +119,7 @@ int Application::run()
 		timer -= m_time.getDeltaTime();
 		if (timer <= 0.0f)
 		{
-			generateSprites();
+			generateSprites(w, h);
 			timer = generateTime;
 		}
 

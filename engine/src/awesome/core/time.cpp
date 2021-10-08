@@ -1,4 +1,5 @@
 #include "time.h"
+#include <iostream>
 
 Time::Time()
 	: m_clock1()
@@ -15,5 +16,5 @@ void Time::tick()
 	m_clock2 = std::chrono::high_resolution_clock::now();
 
 	// m_time to be calculated
-	m_deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(m_clock2 - m_clock1).count();
+	m_deltaTime = std::chrono::duration<double>(m_clock2 - m_clock1).count();
 }
