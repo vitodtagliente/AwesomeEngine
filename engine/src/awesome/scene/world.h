@@ -8,6 +8,7 @@
 #include <vdtmath/vector3.h>
 
 class Entity;
+class Renderer;
 
 class World : public Singleton<World>
 {
@@ -17,7 +18,7 @@ public:
 	~World() = default;
 
 	void update(double deltaTime);
-	void render();
+	void render(Renderer& renderer);
 
 	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
 

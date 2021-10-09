@@ -25,7 +25,7 @@ public:
 	void prepareToDestroy();
 	void setParent(Entity* const entity);
 	void update(World& world, double deltaTime);
-	void render();
+	void render(Renderer& renderer);
 
 	template <typename T = Component>
 	std::vector<T*> getComponents() const
@@ -44,7 +44,7 @@ public:
 	{
 		T* const component = new T();
 		m_components.push_back(component);
-		// component->init();
+		component->attach(this);
 		return component;
 	}
 

@@ -1,5 +1,7 @@
 #include "component.h"
 
+#include <awesome/graphics/renderer.h>
+
 #include "entity.h"
 #include "world.h"
 

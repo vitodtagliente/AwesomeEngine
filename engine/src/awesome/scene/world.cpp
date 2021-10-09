@@ -1,5 +1,7 @@
 #include "world.h"
 
+#include <awesome/graphics/renderer.h>
+
 #include "entity.h"
 
 World::World()
@@ -16,12 +18,12 @@ void World::update(double deltaTime)
 	}
 }
 
-void World::render()
+void World::render(Renderer& renderer)
 {
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
 		Entity* const entity = *it;
-		entity->render();
+		entity->render(renderer);
 	}
 }
 

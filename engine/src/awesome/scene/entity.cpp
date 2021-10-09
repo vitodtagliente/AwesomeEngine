@@ -1,6 +1,8 @@
 #include "entity.h"
 #include "world.h"
 
+#include <awesome/graphics/renderer.h>
+
 void Entity::prepareToSpawn(World& world)
 {
 }
@@ -34,14 +36,14 @@ void Entity::update(World& world, double deltaTime)
 	transform.update();
 }
 
-void Entity::render()
+void Entity::render(Renderer& renderer)
 {
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
 		Component* const component = *it;
 		if (!component->enabled) continue;
 
-		component->render();
+		component->render(renderer);
 	}
 }
 
@@ -51,7 +53,7 @@ void Entity::removeComponent(Component* const component)
 	{
 		if (*it == component)
 		{
-			// component->uninit();
+			component->detach();
 			m_components.erase(it);
 			delete component;
 			return;

@@ -2,6 +2,7 @@
 #pragma once
 
 class Entity;
+class Renderer;
 class World;
 
 class Component
@@ -22,7 +23,7 @@ public:
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(World& world, double deltaTime) {}
-	virtual void render() {}
+	virtual void render(Renderer& renderer) {}
 
 private:
 

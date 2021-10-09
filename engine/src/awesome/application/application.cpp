@@ -20,6 +20,9 @@
 
 #include <vdtmath/math.h>
 #include <awesome/scene/entity.h>
+#include <awesome/scene/world.h>
+
+#include <awesome/components/sprite_renderer.h>
 
 Application::Application()
 {
@@ -58,21 +61,31 @@ int Application::run()
 	library.add("sheet", "../assets/spritesheet.png");
 	context.testTexture = library.get("sheet");
 
-	std::vector<std::pair<math::transform, int>> sprites;
-	const auto& generateSprites = [&sprites](const float w, const float h) -> void
+	const auto& randomizeSprites = [](World& world, const float w, const float h) -> void
 	{
-		sprites.clear();
-		for (int i = 0; i < 500; ++i)
+		for (auto it = world.getEntities().begin(); it != world.getEntities().end(); ++it)
 		{
-			math::transform t;
-			t.scale = math::vec3(math::random(0.7f, 1.4f), math::random(0.7f, 1.4f), 1.f);
-			t.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
-			t.rotation.z = math::random(0.f, 360.f);
-			t.update();
-
-			sprites.push_back(std::make_pair(t, math::random(4, 10)));
+			Entity* const entity = *it;
+			entity->transform.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
+			entity->transform.rotation.z = math::random(0.f, 360.f);
+			entity->transform.scale = math::vec3(math::random(0.7f, 1.4f), math::random(0.7f, 1.4f), 1.f);
 		}
 	};
+
+	for (int i = 0; i < 500; ++i)
+	{
+		const float spriteSize = 1.0f / 11;
+		{
+			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion());
+			entity->name = std::string("entity") + std::to_string(i + 1);
+			if (SpriteRenderer* spriteRenderer = entity->addComponent<SpriteRenderer>())
+			{
+				spriteRenderer->texture = library.get("sheet");
+				spriteRenderer->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
+			}
+		}
+	}
+
 	const float generateTime = .2f;
 	float timer = generateTime;
 
@@ -106,20 +119,10 @@ int Application::run()
 		sceneTree.render();
 		rendererInspector.render(renderer);
 
-		// renderer.getGizmos().rect(math::vec3::zero, 0.5f, 0.5f, Color::Red);
-		// renderer.getGizmos().circle(math::vec3::zero, 1.0f, Color::Yellow);
-
-		const float size = 1.0f / 11;
-		for (int i = 0; i < sprites.size(); ++i)
-		{
-			const auto& pair = sprites[i];
-			renderer.drawSprite(library.get("sheet"), pair.first.matrix(), TextureRect(size * 9, size * pair.second, size, size));
-		}
-
 		timer -= m_time.getDeltaTime();
 		if (timer <= 0.0f)
 		{
-			generateSprites(w, h);
+			randomizeSprites(m_world, w, h);
 			timer = generateTime;
 		}
 
@@ -131,6 +134,8 @@ int Application::run()
 			entity->name = "entity-" + std::to_string(++id);
 		}
 		m_input.update();
+		m_world.update(m_time.getDeltaTime());
+		m_world.render(renderer);
 
 		renderer.flush();
 
