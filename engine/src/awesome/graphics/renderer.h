@@ -17,6 +17,13 @@ class Renderer : public Singleton<Renderer>
 {
 public:
 
+	struct Stats
+	{
+		Stats();
+
+		int drawCalls;
+	};
+
 	Renderer(Context& context);
 
 	void begin();
@@ -28,6 +35,7 @@ public:
 	Color backgroundColor;
 
 	inline Gizmos& getGizmos() { return m_gizmos; }
+	inline const Stats& getStats() const { return m_stats; }
 
 private:
 
@@ -35,5 +43,6 @@ private:
 	Gizmos m_gizmos;
 	SpriteBatch m_spriteBatch;
 	std::vector<Command*> m_commands;
+	Stats m_stats;
 
 };

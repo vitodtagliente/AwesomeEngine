@@ -67,6 +67,8 @@ int Application::run()
 		for (auto it = world.getEntities().begin(); it != world.getEntities().end(); ++it)
 		{
 			Entity* const entity = *it;
+			if (entity->transform.isStatic) continue;
+
 			entity->transform.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
 			entity->transform.rotation.z = math::random(0.f, 360.f);
 			entity->transform.scale = math::vec3(math::random(0.7f, 1.4f), math::random(0.7f, 1.4f), 1.f);
@@ -122,7 +124,6 @@ int Application::run()
 
 		inspector.render(sceneTree.getSelectedEntity());
 		sceneTree.render();
-		rendererInspector.render(renderer);
 
 		timer -= m_time.getDeltaTime();
 		if (timer <= 0.0f)
@@ -143,6 +144,8 @@ int Application::run()
 		m_world.render(renderer);
 
 		renderer.flush();
+
+		rendererInspector.render(renderer);
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

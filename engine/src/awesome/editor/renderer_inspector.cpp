@@ -10,6 +10,7 @@ RendererInspector::RendererInspector()
 void RendererInspector::render(Renderer& renderer)
 {
 	ImGui::Begin("Renderer Inspector");
+	ImGui::Text("Draw Calls: %d", renderer.getStats().drawCalls);
 	ImGui::ColorEdit4("background", renderer.backgroundColor.data);
 	ImGui::End();
 }

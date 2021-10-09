@@ -10,6 +10,7 @@ Renderer::Renderer(Context& context)
 	, m_gizmos()
 	, m_spriteBatch()
 	, m_commands()
+	, m_stats()
 {
 	
 }
@@ -19,6 +20,7 @@ void Renderer::begin()
 	m_context.clear(backgroundColor);
 	m_spriteBatch.clear();
 	m_gizmos.clear();
+	m_stats = {};
 }
 
 void Renderer::flush()
@@ -27,6 +29,8 @@ void Renderer::flush()
 	{
 		Command* const command = *it;
 		command->execute(m_context);
+
+		++m_stats.drawCalls;
 	}
 
 	std::vector<Command*> spritebatchCommands = m_spriteBatch.commands();
@@ -34,6 +38,8 @@ void Renderer::flush()
 	{
 		Command* const command = *it;
 		command->execute(m_context);
+
+		++m_stats.drawCalls;
 	}
 
 	std::vector<Command*> gizmosCommands = m_gizmos.commands();
@@ -41,15 +47,23 @@ void Renderer::flush()
 	{
 		Command* const command = *it;
 		command->execute(m_context);
+
+		++m_stats.drawCalls;
 	}
 }
 
 void Renderer::clear()
 {
 	m_commands.clear();
+	m_stats = {};
 }
 
 void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
 {
 	m_spriteBatch.batch(texture, matrix, rect);
+}
+
+Renderer::Stats::Stats()
+	: drawCalls(0)
+{
 }
