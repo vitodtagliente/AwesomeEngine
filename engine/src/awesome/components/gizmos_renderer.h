@@ -21,4 +21,5 @@ public:
 	Color color;
 
 	void render(class Renderer& renderer) override;
+	void inspect() override;
 };

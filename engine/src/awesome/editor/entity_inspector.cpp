@@ -26,19 +26,8 @@ void EntityInspector::render(Entity* const entity)
 		const auto& components = entity->getComponents();
 		for (auto it = components.begin(); it != components.end(); ++it)
 		{
-			Component* const component = *it;
-			if (SpriteRenderer* const renderer = dynamic_cast<SpriteRenderer*>(component))
-			{
-				ImGui::Separator();
-				ImGui::Text("SpriteRenderer");
-				ImGui::InputFloat4("rect", renderer->rect.data);
-			}
-			if (GizmosRenderer* const renderer = dynamic_cast<GizmosRenderer*>(component))
-			{
-				ImGui::Separator();
-				ImGui::Text("GizmosRenderer");
-				ImGui::ColorEdit4("background", renderer->color.data);
-			}
+			Component* const component = *it; 
+			component->inspect();
 		}
 	}
 	ImGui::End();

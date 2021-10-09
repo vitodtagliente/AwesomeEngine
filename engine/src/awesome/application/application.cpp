@@ -93,7 +93,7 @@ int Application::run()
 		}
 	}
 
-	const float generateTime = .2f;
+	const float generateTime = 1.f;
 	float timer = generateTime;
 
 	while (m_canvas.isOpen())

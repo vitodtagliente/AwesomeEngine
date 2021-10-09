@@ -24,6 +24,7 @@ public:
 	virtual void uninit() {}
 	virtual void update(World& world, double deltaTime) {}
 	virtual void render(Renderer& renderer) {}
+	virtual void inspect() {}
 
 private:
 

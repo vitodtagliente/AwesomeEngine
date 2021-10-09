@@ -2,6 +2,7 @@
 
 #include <awesome/scene/entity.h>
 #include <awesome/graphics/renderer.h>
+#include <imgui.h>
 
 SpriteRenderer::SpriteRenderer()
 	: Component()
@@ -16,5 +17,13 @@ void SpriteRenderer::render(Renderer& renderer)
 	if (texture != nullptr)
 	{
 		renderer.drawSprite(texture, getOwner()->transform.matrix(), rect);
+	}
+}
+
+void SpriteRenderer::inspect()
+{
+	if (ImGui::CollapsingHeader("SpriteRenderer"))
+	{
+		ImGui::InputFloat4("rect", rect.data);
 	}
 }

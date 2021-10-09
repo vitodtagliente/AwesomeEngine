@@ -13,4 +13,5 @@ public:
 	TextureRect rect;
 
 	void render(class Renderer& renderer) override;
+	void inspect() override;
 };
