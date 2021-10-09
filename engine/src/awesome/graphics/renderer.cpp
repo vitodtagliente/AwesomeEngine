@@ -58,9 +58,9 @@ void Renderer::clear()
 	m_stats = {};
 }
 
-void Renderer::setCamera(const math::mat4& camera)
+void Renderer::pushCamera(const math::mat4& camera)
 {
-	m_context.camera = camera;
+	m_context.camera = m_context.camera * camera;
 }
 
 void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)

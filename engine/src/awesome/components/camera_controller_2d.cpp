@@ -9,7 +9,7 @@
 #include <vdtmath/vector3.h>
 
 CameraController2d::CameraController2d()
-	: speed(.1f)
+	: speed(.001f)
 	, m_dragPosition(false)
 {
 }
@@ -41,7 +41,7 @@ void CameraController2d::update(World& world, double deltaTime)
 
 void CameraController2d::render(Renderer& renderer)
 {
-	// renderer.setCamera(getOwner()->transform.matrix());
+	renderer.pushCamera(getOwner()->transform.matrix());
 }
 
 void CameraController2d::inspect()

@@ -30,7 +30,7 @@ public:
 	void flush();
 	void clear();
 
-	void setCamera(const math::mat4& camera);
+	void pushCamera(const math::mat4& camera);
 	void drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect = {});
 
 	Color backgroundColor;

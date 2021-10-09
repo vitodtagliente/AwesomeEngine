@@ -69,6 +69,7 @@ int Application::run()
 		{
 			Entity* const entity = *it;
 			if (entity->transform.isStatic) continue;
+			if (entity->tag != "sprite") continue;
 
 			entity->transform.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
 			entity->transform.rotation.z = math::random(0.f, 360.f);
@@ -81,6 +82,7 @@ int Application::run()
 	{
 		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
 		entity->name = std::string("camera");
+		entity->tag = "camera";
 		entity->addComponent<CameraController2d>();
 	}
 
@@ -91,6 +93,7 @@ int Application::run()
 		{
 			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
 			entity->name = std::string("entity") + std::to_string(i + 1);
+			entity->tag = "sprite";
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
 				component->texture = library.get("sheet");
