@@ -22,6 +22,7 @@
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
 
+#include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
 
@@ -75,11 +76,20 @@ int Application::run()
 		}
 	};
 
+
+	// camera setup
+	{
+		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
+		entity->name = std::string("camera");
+		entity->addComponent<CameraController2d>();
+	}
+
+	// sprites setup
 	for (int i = 0; i < 500; ++i)
 	{
 		const float spriteSize = 1.0f / 11;
 		{
-			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion());
+			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
 			entity->name = std::string("entity") + std::to_string(i + 1);
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
