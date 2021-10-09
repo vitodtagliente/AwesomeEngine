@@ -24,6 +24,7 @@ void SpriteRenderer::inspect()
 {
 	if (ImGui::CollapsingHeader("SpriteRenderer"))
 	{
+		ImGui::Checkbox("enabled", &enabled);
 		ImGui::InputFloat4("rect", rect.data);
 	}
 }

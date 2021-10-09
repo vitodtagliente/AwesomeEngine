@@ -26,6 +26,7 @@ void GizmosRenderer::inspect()
 {
 	if (ImGui::CollapsingHeader("GizmosRenderer"))
 	{
+		ImGui::Checkbox("enabled", &enabled);
 		ImGui::ColorEdit4("color", color.data);
 	}
 }
