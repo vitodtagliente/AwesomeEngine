@@ -18,6 +18,7 @@ void EntityInspector::render(Entity* const entity)
 		ImGui::InputFloat3("position", entity->transform.position.data);
 		ImGui::InputFloat3("rotation", entity->transform.rotation.data);
 		ImGui::InputFloat3("scale", entity->transform.scale.data);
+		ImGui::Checkbox("isStatic", &entity->transform.isStatic);
 	}
 	ImGui::End();
 }
