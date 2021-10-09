@@ -22,6 +22,7 @@
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
 
+#include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
 
 Application::Application()
@@ -78,10 +79,14 @@ int Application::run()
 		{
 			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion());
 			entity->name = std::string("entity") + std::to_string(i + 1);
-			if (SpriteRenderer* spriteRenderer = entity->addComponent<SpriteRenderer>())
+			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
-				spriteRenderer->texture = library.get("sheet");
-				spriteRenderer->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
+				component->texture = library.get("sheet");
+				component->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
+			}
+			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
+			{
+				component->type = GizmosRenderer::Type::Rect;
 			}
 		}
 	}
