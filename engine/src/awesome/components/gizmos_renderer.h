@@ -18,7 +18,6 @@ public:
 	};
 
 	Type type;
-	float size;
 	Color color;
 
 	void render(class Renderer& renderer) override;

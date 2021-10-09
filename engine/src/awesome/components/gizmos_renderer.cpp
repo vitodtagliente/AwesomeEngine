@@ -6,7 +6,6 @@
 GizmosRenderer::GizmosRenderer()
 	: Component()
 	, type(Type::None)
-	, size(1.0f)
 	, color(Color::White)
 {
 
@@ -16,8 +15,8 @@ void GizmosRenderer::render(Renderer& renderer)
 {
 	switch (type)
 	{
-	case Type::Rect: renderer.getGizmos().rect(getOwner()->transform.position, size, size, color); break;
-	case Type::Circle: renderer.getGizmos().circle(getOwner()->transform.position, size, color); break;
+	case Type::Rect: renderer.getGizmos().rect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
+	case Type::Circle: renderer.getGizmos().circle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
 	default: break;
 	}
 }
