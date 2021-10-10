@@ -18,10 +18,7 @@ namespace graphics
 class Entity
 {
 public:
-
-	std::string name;
-	std::string tag;
-	math::transform transform;
+	Entity() = default;
 
 	inline Entity* const getParent()const { return m_parent; }
 	inline const std::vector<Entity*>& getChildren() const { return m_children; }
@@ -54,6 +51,10 @@ public:
 	}
 
 	void removeComponent(Component* const component);
+
+	std::string name;
+	std::string tag;
+	math::transform transform;
 
 private:
 
