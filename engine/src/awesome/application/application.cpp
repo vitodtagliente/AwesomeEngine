@@ -32,7 +32,7 @@ Application::Application(const std::initializer_list<Module*> modules)
 	for (auto it = modules.begin(); it != modules.end(); ++it)
 	{
 		m_modules.push_back(*it);
-		(*it)->init();
+		(*it)->startup();
 	}
 }
 
@@ -44,7 +44,6 @@ int Application::run()
 {
 	static int id = 0;
 
-	m_canvas.init();
 	m_canvas.open();
 
 	gladLoadGL();
@@ -121,10 +120,10 @@ int Application::run()
 		m_canvas.update();
 		m_time.tick();
 		update();
-		context.viewport(m_canvas.width(), m_canvas.height());
+		context.viewport(m_canvas.getWidth(), m_canvas.getHeight());
 		// pixel perfect
-		const float w = m_canvas.width() / 2 / 32;
-		const float h = m_canvas.height() / 2 / 32;
+		const float w = m_canvas.getWidth() / 2 / 32;
+		const float h = m_canvas.getHeight() / 2 / 32;
 		{			
 			context.camera = math::mat4::orthographic(-w, w, -h, h, -30, 1000);
 		}

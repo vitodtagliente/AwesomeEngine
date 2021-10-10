@@ -20,11 +20,11 @@ public:
 	class Module
 	{
 	public:
-		virtual void init() {}
-		virtual void uninit() {}
-		virtual void update(double deltaTime) {}
+		virtual void startup() {}
+		virtual void shutdown() {}
+		virtual void update(double /*deltaTime*/) {}
 		virtual void preRendering() {}
-		virtual void render(Renderer& renderer) {}
+		virtual void render(Renderer& /*renderer*/) {}
 		virtual void postRendering() {}
 	};
 
@@ -59,7 +59,7 @@ public:
 	{
 		T* const module = new T();
 		m_modules.push_back(module);
-		module->init();
+		module->startup();
 		return module;
 	}
 

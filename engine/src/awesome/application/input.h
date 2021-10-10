@@ -3,10 +3,10 @@
 
 #include <map>
 #include <vector>
-#include <GLFW/glfw3.h>
-#include <vdtmath/vector2.h>
 
 #include <awesome/core/singleton.h>
+#include <vdtmath/vector2.h>
+
 #include "keycode.h"
 
 class Input : public Singleton<Input>

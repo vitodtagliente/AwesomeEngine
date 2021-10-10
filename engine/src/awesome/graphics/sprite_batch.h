@@ -43,7 +43,7 @@ private:
 	public:
 		Batch(int size = DEFAULT_SPRITE_BATCH_SIZE);
 
-		inline int size() const { return m_data.size(); }
+		inline size_t size() const { return m_data.size(); }
 		inline int capacity() const { return m_size; }
 		inline bool empty() const { return m_data.empty(); }
 		inline const std::vector<std::pair<math::mat4, TextureRect>>& data() const { return m_data; }
