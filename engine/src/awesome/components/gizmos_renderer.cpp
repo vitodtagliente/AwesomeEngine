@@ -1,8 +1,8 @@
 #include "gizmos_renderer.h"
 
-#include <imgui.h>
-#include <awesome/scene/entity.h>
+#include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/scene/entity.h>
 
 GizmosRenderer::GizmosRenderer()
 	: Component()
@@ -22,11 +22,11 @@ void GizmosRenderer::render(graphics::Renderer& renderer)
 	}
 }
 
-void GizmosRenderer::inspect()
+void GizmosRenderer::inspect(editor::Context& context)
 {
-	if (ImGui::CollapsingHeader("GizmosRenderer"))
+	if (context.collapsingHeader("GizmosRenderer"))
 	{
-		ImGui::Checkbox("enabled", &enabled);
-		ImGui::ColorEdit4("color", color.data);
+		context.input("enabled", &enabled);
+		context.input("color", &color);
 	}
 }

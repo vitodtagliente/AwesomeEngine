@@ -1,7 +1,7 @@
 #include "camera_controller_2d.h"
 
-#include <imgui.h>
 #include <awesome/application/input.h>
+#include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
@@ -44,10 +44,10 @@ void CameraController2d::render(graphics::Renderer& renderer)
 	renderer.pushCamera(getOwner()->transform.matrix());
 }
 
-void CameraController2d::inspect()
+void CameraController2d::inspect(editor::Context& context)
 {
-	if (ImGui::CollapsingHeader("CameraController2d"))
+	if (context.collapsingHeader("CameraController2d"))
 	{
-		ImGui::InputFloat("speed", &speed);
+		context.input("speed", &speed);
 	}
 }

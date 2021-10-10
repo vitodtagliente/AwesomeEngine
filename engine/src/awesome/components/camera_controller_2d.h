@@ -2,8 +2,14 @@
 #pragma once
 
 #include <optional>
-#include <awesome/scene/component.h>
 #include <vdtmath/vector2.h>
+
+#include <awesome/scene/component.h>
+
+namespace editor
+{
+	class Context;
+}
 
 namespace graphics
 {
@@ -17,7 +23,7 @@ public:
 
 	void update(class World& world, double deltaTime) override;
 	void render(graphics::Renderer& renderer) override;
-	void inspect() override;
+	void inspect(editor::Context& context) override;
 
 	float speed;
 

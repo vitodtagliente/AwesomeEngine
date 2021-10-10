@@ -4,6 +4,11 @@
 #include <awesome/scene/component.h>
 #include <awesome/graphics/texture_rect.h>
 
+namespace editor
+{
+	class Context;
+}
+
 namespace graphics
 {
 	class Renderer;
@@ -19,5 +24,5 @@ public:
 	graphics::TextureRect rect;
 
 	void render(graphics::Renderer& renderer) override;
-	void inspect() override;
+	void inspect(editor::Context& context) override;
 };

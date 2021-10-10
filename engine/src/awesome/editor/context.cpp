@@ -9,6 +9,11 @@ namespace editor
 
 	}
 
+	bool Context::collapsingHeader(const std::string& name)
+	{
+		return ImGui::CollapsingHeader(name.c_str());
+	}
+
 	void Context::input(const std::string& name, int* value)
 	{
 		ImGui::InputInt(name.c_str(), value);

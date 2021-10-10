@@ -1,6 +1,6 @@
 #include "renderer_inspector.h"
 
-#include <imgui.h>
+#include <sstream>
 #include <awesome/graphics/renderer.h>
 
 #include "../context.h"
@@ -21,7 +21,9 @@ namespace editor
 	{
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
-			// ImGui::Text("Draw Calls: %d", renderer.getStats().drawCalls);
+			std::ostringstream s;
+			s << "Draw Calls: " << renderer->getStats().drawCalls;
+			context.text(s.str());
 			context.input("background", &renderer->backgroundColor);
 		}
 	}

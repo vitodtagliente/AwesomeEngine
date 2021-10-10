@@ -37,7 +37,7 @@ namespace editor
 				for (auto it = components.begin(); it != components.end(); ++it)
 				{
 					Component* const component = *it;
-					component->inspect();
+					component->inspect(context);
 				}
 			}
 		}

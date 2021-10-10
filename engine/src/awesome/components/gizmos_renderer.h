@@ -1,9 +1,14 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/scene/component.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_rect.h>
+#include <awesome/scene/component.h>
+
+namespace editor
+{
+	class Context;
+}
 
 namespace graphics
 {
@@ -26,5 +31,5 @@ public:
 	graphics::Color color;
 
 	void render(graphics::Renderer& renderer) override;
-	void inspect() override;
+	void inspect(editor::Context& context) override;
 };

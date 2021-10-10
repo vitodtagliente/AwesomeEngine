@@ -1,9 +1,9 @@
 #include "sprite_renderer.h"
 
-#include <awesome/scene/entity.h>
+#include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
-#include <imgui.h>
+#include <awesome/scene/entity.h>
 
 SpriteRenderer::SpriteRenderer()
 	: Component()
@@ -21,11 +21,11 @@ void SpriteRenderer::render(graphics::Renderer& renderer)
 	}
 }
 
-void SpriteRenderer::inspect()
+void SpriteRenderer::inspect(editor::Context& context)
 {
-	if (ImGui::CollapsingHeader("SpriteRenderer"))
+	if (context.collapsingHeader("SpriteRenderer"))
 	{
-		ImGui::Checkbox("enabled", &enabled);
-		ImGui::InputFloat4("rect", rect.data);
+		context.input("enabled", &enabled);
+		context.input("rect", &rect);
 	}
 }

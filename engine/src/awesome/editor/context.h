@@ -16,6 +16,7 @@ namespace editor
 	public:
 		Context();
 
+		bool collapsingHeader(const std::string& name);
 		void input(const std::string& name, int* value);
 		void input(const std::string& name, bool* value);
 		void input(const std::string& name, float* value);
