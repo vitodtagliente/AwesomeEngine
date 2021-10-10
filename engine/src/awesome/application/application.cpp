@@ -26,8 +26,14 @@
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
 
-Application::Application()
+Application::Application(const std::initializer_list<Module*> modules)
+	: m_modules()
 {
+	for (auto it = modules.begin(); it != modules.end(); ++it)
+	{
+		m_modules.push_back(*it);
+		(*it)->init();
+	}
 }
 
 Application::~Application()
@@ -56,6 +62,7 @@ int Application::run()
 	EntityInspector inspector;
 	SceneTreeViewer sceneTree;
 	RendererInspector rendererInspector;
+	World m_world;
 
 	Renderer renderer(context);
 

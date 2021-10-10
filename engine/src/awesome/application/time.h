@@ -3,12 +3,12 @@
 #pragma once
 
 #include <chrono>
-#include "singleton.h"
+
+#include <awesome/core/singleton.h>
 
 class Time : public Singleton<Time>
 {
 public:
-
 	Time();
 
 	// retrieve the time data
@@ -19,7 +19,6 @@ public:
 	void tick();
 
 private:
-
 	// high resolution clocks
 	std::chrono::high_resolution_clock::time_point m_clock1;
 	std::chrono::high_resolution_clock::time_point m_clock2;

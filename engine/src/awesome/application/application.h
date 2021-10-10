@@ -1,18 +1,34 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <initializer_list>
 #include <memory>
+
+#include <awesome/core/singleton.h>
 
 #include "canvas.h"
 #include "input.h"
-#include <awesome/scene/world.h>
-#include <awesome/core/time.h>
+#include "time.h"
 
-class Application
+class Renderer;
+class World;
+
+class Application : public Singleton<Application>
 {
 public:
 
-	Application();
+	class Module
+	{
+	public:
+		virtual void init() {}
+		virtual void uninit() {}
+		virtual void update(double deltaTime) {}
+		virtual void preRendering() {}
+		virtual void render(Renderer& renderer) {}
+		virtual void postRendering() {}
+	};
+
+	Application(const std::initializer_list<Module*> modules = {});
 	virtual ~Application();
 
 	int run();
@@ -21,16 +37,38 @@ public:
 	inline Canvas& getCanvas() { return m_canvas; }
 	inline const Input& getInput() const { return m_input; }
 	inline Input& getInput() { return m_input; }
-	inline const World& getWorld() const { return m_world; }
-	inline World& getWorld() { return m_world; }
+	inline const Time& getTime() const { return m_time; }
+	inline Time& getTime() { return m_time; }
+
+	template <typename T = Module>
+	std::vector<T*> getModules() const
+	{
+		std::vector<T*> found_modules;
+		for (Module* const module : m_modules)
+		{
+			if (T* const found_module = dynamic_cast<T*>(module))
+			{
+				found_modules.push_back(found_module);
+			}
+		}
+		return found_modules;
+	}
+
+	template <typename T = Module>
+	T* const addModule()
+	{
+		T* const module = new T();
+		m_modules.push_back(module);
+		module->init();
+		return module;
+	}
 
 private:
-
 	void update();
 	void render();
 
+	std::vector<Module*> m_modules;
 	Canvas m_canvas;
 	Input m_input;
 	Time m_time;
-	World m_world;
 };

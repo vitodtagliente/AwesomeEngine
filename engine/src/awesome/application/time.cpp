@@ -1,5 +1,4 @@
 #include "time.h"
-#include <iostream>
 
 Time::Time()
 	: m_clock1()
