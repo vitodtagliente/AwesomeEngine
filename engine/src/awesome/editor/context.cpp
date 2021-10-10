@@ -24,6 +24,11 @@ namespace editor
 		ImGui::InputFloat(name.c_str(), value);
 	}
 
+	void Context::input(const std::string& name, std::string* value, const size_t size)
+	{
+		ImGui::InputText(name.c_str(), const_cast<char*>(value->c_str()), size);
+	}
+
 	void Context::input(const std::string& name, math::vec2* value)
 	{
 		ImGui::InputFloat2(name.c_str(), value->data);
@@ -52,5 +57,10 @@ namespace editor
 	bool Context::selectable(const std::string& name, const bool selected)
 	{
 		return ImGui::Selectable(name.c_str(), selected);
+	}
+
+	void Context::text(const std::string& str)
+	{
+		ImGui::Text(str.c_str());
 	}
 }

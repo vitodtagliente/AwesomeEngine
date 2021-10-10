@@ -1,24 +1,24 @@
-#include "scene_tree_window.h"
+#include "scene_inspector.h"
 
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
 
-#include "context.h"
+#include "../context.h"
 
 namespace editor
 {
-	SceneTreeWindow::SceneTreeWindow()
+	SceneInspector::SceneInspector()
 		: Window()
 		, m_selectedEntity()
 	{
 	}
 
-	std::string SceneTreeWindow::getTitle() const
+	std::string SceneInspector::getTitle() const
 	{
-		return "SceneTree";
+		return "Scene";
 	}
 
-	void SceneTreeWindow::render(Context& context)
+	void SceneInspector::render(Context& context)
 	{
 		World* const world = World::instance();
 		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)

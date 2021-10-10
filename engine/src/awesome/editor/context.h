@@ -19,11 +19,13 @@ namespace editor
 		void input(const std::string& name, int* value);
 		void input(const std::string& name, bool* value);
 		void input(const std::string& name, float* value);
+		void input(const std::string& name, std::string* value, size_t size);
 		void input(const std::string& name, math::vec2* value);
 		void input(const std::string& name, math::vec3* value);
 		void input(const std::string& name, graphics::Color* value);
 		void input(const std::string& name, graphics::TextureCoords* value);
 		void input(const std::string& name, graphics::TextureRect* value);
 		bool selectable(const std::string& name, bool selected);
+		void text(const std::string& str);
 	};
 }

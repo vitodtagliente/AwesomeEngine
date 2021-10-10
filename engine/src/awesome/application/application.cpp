@@ -14,10 +14,6 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
-#include <awesome/editor/entity_inspector.h>
-#include <awesome/editor/renderer_inspector.h>
-#include <awesome/editor/scene_tree_viewer.h>
-
 #include <vdtmath/math.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
@@ -25,6 +21,8 @@
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
+
+#include <awesome/editor/editor.h>
 
 using namespace graphics;
 
@@ -60,9 +58,6 @@ int Application::run()
 	ImGui_ImplGlfw_InitForOpenGL(m_canvas.getHandler(), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
-	EntityInspector inspector;
-	SceneTreeViewer sceneTree;
-	RendererInspector rendererInspector;
 	World m_world;
 
 	graphics::Renderer renderer(context);
@@ -117,6 +112,8 @@ int Application::run()
 	const float generateTime = 1.f;
 	float timer = generateTime;
 
+	init();
+
 	while (m_canvas.isOpen())
 	{
 		m_canvas.update();
@@ -130,21 +127,13 @@ int Application::run()
 			context.camera = math::mat4::orthographic(-w, w, -h, h, -30, 1000);
 		}
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		render();
-		renderer.begin();
-
-		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-
-		ImGui::Begin("Performance Viewer");
-		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
-
-		inspector.render(sceneTree.getSelectedEntity());
-		sceneTree.render();
+		if (m_input.isKeyPressed(KeyCode::A))
+		{
+			Entity* const entity = m_world.spawn(math::vec3::zero, {});
+			entity->name = "entity-" + std::to_string(++id);
+		}
+		m_input.update();
+		m_world.update(m_time.getDeltaTime());
 
 		timer -= m_time.getDeltaTime();
 		if (timer <= 0.0f)
@@ -153,23 +142,27 @@ int Application::run()
 			timer = generateTime;
 		}
 
-		context.test();
-
-		if (m_input.isKeyPressed(KeyCode::A))
+		renderer.begin();
+		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 		{
-			Entity* const entity = m_world.spawn(math::vec3::zero, {});
-			entity->name = "entity-" + std::to_string(++id);
+			Module* const module = *it;
+			module->preRendering();
 		}
-		m_input.update();
-		m_world.update(m_time.getDeltaTime());
+		
+		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+		{
+			Module* const module = *it;
+			module->render(renderer);
+		}
 		m_world.render(renderer);
 
 		renderer.flush();
 
-		rendererInspector.render(renderer);
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+		{
+			Module* const module = *it;
+			module->postRendering();
+		}
 	}
 
 	ImGui_ImplOpenGL3_Shutdown();
@@ -177,6 +170,11 @@ int Application::run()
 	ImGui::DestroyContext();
 
 	return 0;
+}
+
+void Application::init()
+{
+	addModule<editor::Editor>();
 }
 
 void Application::update()

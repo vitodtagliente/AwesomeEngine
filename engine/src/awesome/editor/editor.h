@@ -27,6 +27,14 @@ namespace editor
 		void render(graphics::Renderer& renderer) override;
 		void postRendering() override;
 
+		template <typename T = Window>
+		T* const addWindow()
+		{
+			T* const window = new T();
+			m_windows.push_back(window);
+			return window;
+		}
+
 	private:
 		Context m_context;
 		std::vector<Window*> m_windows;

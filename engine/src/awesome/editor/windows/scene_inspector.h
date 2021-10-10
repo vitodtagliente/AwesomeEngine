@@ -1,7 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "window.h"
+#include <awesome/core/singleton.h>
+
+#include "../window.h"
 
 class Entity;
 
@@ -9,10 +11,10 @@ namespace editor
 {
 	class Context;
 
-	class SceneTreeWindow : public Window
+	class SceneInspector : public Window, public Singleton<SceneInspector>
 	{
 	public:
-		SceneTreeWindow();
+		SceneInspector();
 
 		std::string getTitle() const override;
 		void render(Context& context) override;

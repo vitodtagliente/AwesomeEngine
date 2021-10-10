@@ -7,6 +7,11 @@
 
 #include "window.h"
 
+#include "windows/entity_inspector.h"
+#include "windows/performance.h"
+#include "windows/renderer_inspector.h"
+#include "windows/scene_inspector.h"
+
 namespace editor
 {
 	Editor::Editor()
@@ -17,6 +22,10 @@ namespace editor
 
 	void Editor::startup()
 	{
+		addWindow<EntityInspector>();
+		addWindow<Performance>();
+		addWindow<RendererInspector>();
+		addWindow<SceneInspector>();
 	}
 
 	void Editor::shutdown()
@@ -32,10 +41,13 @@ namespace editor
 
 	void Editor::render(graphics::Renderer& renderer)
 	{
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 		{
 			Window* const window = *it;
+			ImGui::Begin(window->getTitle().c_str());
 			window->render(m_context);
+			ImGui::End();
 		}
 	}
 

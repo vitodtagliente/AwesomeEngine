@@ -64,6 +64,7 @@ public:
 	}
 
 private:
+	void init();
 	void update();
 	void render();
 
