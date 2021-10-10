@@ -2,6 +2,7 @@
 
 #include <awesome/scene/entity.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/graphics/texture.h>
 #include <imgui.h>
 
 SpriteRenderer::SpriteRenderer()
@@ -12,7 +13,7 @@ SpriteRenderer::SpriteRenderer()
 
 }
 
-void SpriteRenderer::render(Renderer& renderer)
+void SpriteRenderer::render(graphics::Renderer& renderer)
 {
 	if (texture != nullptr)
 	{

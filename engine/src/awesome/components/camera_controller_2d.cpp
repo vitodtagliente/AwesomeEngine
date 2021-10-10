@@ -39,7 +39,7 @@ void CameraController2d::update(World& world, double deltaTime)
 	}
 }
 
-void CameraController2d::render(Renderer& renderer)
+void CameraController2d::render(graphics::Renderer& renderer)
 {
 	renderer.pushCamera(getOwner()->transform.matrix());
 }

@@ -1,11 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class Context;
-
-class Command
+namespace graphics
 {
-public:
+	class Context;
 
-	virtual void execute(Context& context) = 0;
-};
+	class Command
+	{
+	public:
+		virtual void execute(Context& context) = 0;
+	};
+}

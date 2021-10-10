@@ -36,7 +36,7 @@ void Entity::update(World& world, double deltaTime)
 	transform.update();
 }
 
-void Entity::render(Renderer& renderer)
+void Entity::render(graphics::Renderer& renderer)
 {
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{

@@ -2,8 +2,12 @@
 #pragma once
 
 class Entity;
-class Renderer;
 class World;
+
+namespace graphics
+{
+	class Renderer;
+}
 
 class Component
 {
@@ -23,7 +27,7 @@ public:
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(World& /*world*/, double /*deltaTime*/) {}
-	virtual void render(Renderer& /*renderer*/) {}
+	virtual void render(graphics::Renderer& /*renderer*/) {}
 	virtual void inspect() {}
 
 private:

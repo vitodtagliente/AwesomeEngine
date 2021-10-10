@@ -3,13 +3,16 @@
 
 #include "panel.h"
 
-class Renderer;
+namespace graphics
+{
+	class Renderer;
+}
 
 class RendererInspector
 {
 public:
 	RendererInspector();
 
-	void render(Renderer& renderer);
+	void render(graphics::Renderer& renderer);
 
 };

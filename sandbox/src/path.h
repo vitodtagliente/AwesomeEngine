@@ -6,13 +6,18 @@
 #include <awesome/scene/component.h>
 #include <vdtmath/vector3.h>
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class Path : public Component
 {
 public:
 	Path();
 
-	void render(class Renderer& renderer) override;
+	void render(graphics::Renderer& renderer) override;
 
 	std::vector<math::vec3> steps;
-	Color color;
+	graphics::Color color;
 };

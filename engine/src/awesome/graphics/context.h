@@ -4,37 +4,42 @@
 #include <vector>
 #include <vdtmath/matrix4.h>
 #include <vdtmath/vector3.h>
+
 #include "color.h"
 #include "renderable.h"
 #include "shader_program.h"
 #include "shader_library.h"
-#include "texture.h"
 #include "texture_rect.h"
 
-class Context
+namespace graphics
 {
-public:
-	Context();
+	class Texture;
 
-	void clear(const Color& color);
-	void viewport(int width, int height);
-	void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
-	void drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
+	class Context
+	{
+	public:
+		Context();
 
-	void test();
+		void clear(const Color& color);
+		void viewport(int width, int height);
+		void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
+		void drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
 
-	math::mat4 camera;
-	Texture* testTexture;
+		void test();
 
-private:
+		math::mat4 camera;
+		Texture* testTexture;
 
-	ShaderProgram* const createProgram(const std::string& name);
+	private:
 
-	ShaderLibrary m_shaderLibrary;
-	Renderable m_gizmosRenderingData;
-	Renderable m_spritebatchRenderingData;
-	ShaderProgram* m_gizmosProgram;
-	ShaderProgram* m_colorProgram;
-	ShaderProgram* m_spritebatchProgram;
-	ShaderProgram* m_textureProgram;
-};
+		ShaderProgram* const createProgram(const std::string& name);
+
+		ShaderLibrary m_shaderLibrary;
+		Renderable m_gizmosRenderingData;
+		Renderable m_spritebatchRenderingData;
+		ShaderProgram* m_gizmosProgram;
+		ShaderProgram* m_colorProgram;
+		ShaderProgram* m_spritebatchProgram;
+		ShaderProgram* m_textureProgram;
+	};
+}

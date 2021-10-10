@@ -4,14 +4,20 @@
 #include <awesome/scene/component.h>
 #include <awesome/graphics/texture_rect.h>
 
+namespace graphics
+{
+	class Renderer;
+	class Texture;
+}
+
 class SpriteRenderer : public Component
 {
 public:
 	SpriteRenderer();
 
-	class Texture* texture;
-	TextureRect rect;
+	class graphics::Texture* texture;
+	graphics::TextureRect rect;
 
-	void render(class Renderer& renderer) override;
+	void render(graphics::Renderer& renderer) override;
 	void inspect() override;
 };

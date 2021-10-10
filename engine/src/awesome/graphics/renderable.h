@@ -4,38 +4,43 @@
 #include <map>
 #include <string>
 
-#include "index_buffer.h"
-#include "vertex_buffer.h"
+#include "buffer.h"
 
-class Renderable
+namespace graphics
 {
-public:
+	class IndexBuffer;
+	class VertexBuffer;
 
-	Renderable();
-	~Renderable();
-
-	void bind(bool forceBinding = false);
-	void unbind();
-	void free();
-
-	IndexBuffer* const findIndexBuffer(const std::string& name);
-	VertexBuffer* const findVertexBuffer(const std::string& name);
-
-	IndexBuffer* const addIndexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
-	VertexBuffer* const addVertexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
-
-	struct names
+	class Renderable
 	{
-		names() = delete;
+	public:
 
-		static const std::string MainBuffer;
+		Renderable();
+		~Renderable();
+
+		void bind(bool forceBinding = false);
+		void unbind();
+		void free();
+
+		IndexBuffer* const findIndexBuffer(const std::string& name);
+		VertexBuffer* const findVertexBuffer(const std::string& name);
+
+		IndexBuffer* const addIndexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
+		VertexBuffer* const addVertexBuffer(const std::string& name, size_t size, BufferUsageMode usageMode);
+
+		struct names
+		{
+			names() = delete;
+
+			static const std::string MainBuffer;
+		};
+
+	private:
+
+		// vertex array object
+		unsigned int m_id;
+		std::map<std::string, VertexBuffer*> m_vertexBuffers;
+		std::map<std::string, IndexBuffer*> m_indexBuffers;
+		bool m_binded;
 	};
-
-private:
-
-	// vertex array object
-	unsigned int m_id;
-	std::map<std::string, VertexBuffer*> m_vertexBuffers;
-	std::map<std::string, IndexBuffer*> m_indexBuffers;
-	bool m_binded;
-};
+}

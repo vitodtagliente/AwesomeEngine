@@ -5,12 +5,12 @@
 #include <memory>
 
 #include <awesome/core/singleton.h>
+#include <awesome/graphics/renderer.h>
 
 #include "canvas.h"
 #include "input.h"
 #include "time.h"
 
-class Renderer;
 class World;
 
 class Application : public Singleton<Application>
@@ -24,7 +24,7 @@ public:
 		virtual void shutdown() {}
 		virtual void update(double /*deltaTime*/) {}
 		virtual void preRendering() {}
-		virtual void render(Renderer& /*renderer*/) {}
+		virtual void render(graphics::Renderer& /*renderer*/) {}
 		virtual void postRendering() {}
 	};
 

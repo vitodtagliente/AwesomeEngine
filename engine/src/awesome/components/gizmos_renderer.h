@@ -5,6 +5,11 @@
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_rect.h>
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class GizmosRenderer : public Component
 {
 public:
@@ -18,8 +23,8 @@ public:
 	};
 
 	Type type;
-	Color color;
+	graphics::Color color;
 
-	void render(class Renderer& renderer) override;
+	void render(graphics::Renderer& renderer) override;
 	void inspect() override;
 };

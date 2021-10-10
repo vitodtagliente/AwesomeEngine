@@ -2,53 +2,58 @@
 
 #include <vdtmath/algorithm.h>
 
-const float CIRCLE_ACCURACY = 40.0f;
+#include "command.h"
 
-Gizmos::Gizmos()
-	: m_batch()
+namespace graphics
 {
-}
+	const float CIRCLE_ACCURACY = 40.0f;
 
-void Gizmos::line(const math::vec3& a, const math::vec3& b, const Color& color)
-{
-	m_batch.batch(a, color);
-	m_batch.batch(b, color);
-}
-
-void Gizmos::rect(const math::vec3& position, const float width, const float height, const Color& color)
-{
-	m_batch.batch(position + math::vec3(width, height, 0), color);
-	m_batch.batch(position + math::vec3(-width, height, 0), color);
-	m_batch.batch(position + math::vec3(-width, height, 0), color);
-	m_batch.batch(position + math::vec3(-width, -height, 0), color);
-	m_batch.batch(position + math::vec3(-width, -height, 0), color);
-	m_batch.batch(position + math::vec3(width, -height, 0), color);
-	m_batch.batch(position + math::vec3(width, -height, 0), color);
-	m_batch.batch(position + math::vec3(width, height, 0), color);
-}
-
-void Gizmos::circle(const math::vec3& position, const float radius, const Color& color)
-{
-	const float accuracy = CIRCLE_ACCURACY * radius;
-	const float step = (2 * math::pi) / accuracy;
-	float angle = 0.0f;
-	for (int i = 0; i < accuracy; ++i)
+	Gizmos::Gizmos()
+		: m_batch()
 	{
-		line(
-			position + math::vec3(radius * std::sin(angle), radius * std::cos(angle), 0),
-			position + math::vec3(radius * std::sin(angle + step), radius * std::cos(angle + step), 0),
-			color
-		);
-		angle += step;
 	}
-}
 
-void Gizmos::clear()
-{
-	m_batch.clear();
-}
+	void Gizmos::line(const math::vec3& a, const math::vec3& b, const Color& color)
+	{
+		m_batch.batch(a, color);
+		m_batch.batch(b, color);
+	}
 
-std::vector<Command*> Gizmos::commands() const
-{
-	return m_batch.commands();
+	void Gizmos::rect(const math::vec3& position, const float width, const float height, const Color& color)
+	{
+		m_batch.batch(position + math::vec3(width, height, 0), color);
+		m_batch.batch(position + math::vec3(-width, height, 0), color);
+		m_batch.batch(position + math::vec3(-width, height, 0), color);
+		m_batch.batch(position + math::vec3(-width, -height, 0), color);
+		m_batch.batch(position + math::vec3(-width, -height, 0), color);
+		m_batch.batch(position + math::vec3(width, -height, 0), color);
+		m_batch.batch(position + math::vec3(width, -height, 0), color);
+		m_batch.batch(position + math::vec3(width, height, 0), color);
+	}
+
+	void Gizmos::circle(const math::vec3& position, const float radius, const Color& color)
+	{
+		const float accuracy = CIRCLE_ACCURACY * radius;
+		const float step = (2 * math::pi) / accuracy;
+		float angle = 0.0f;
+		for (int i = 0; i < accuracy; ++i)
+		{
+			line(
+				position + math::vec3(radius * std::sin(angle), radius * std::cos(angle), 0),
+				position + math::vec3(radius * std::sin(angle + step), radius * std::cos(angle + step), 0),
+				color
+			);
+			angle += step;
+		}
+	}
+
+	void Gizmos::clear()
+	{
+		m_batch.clear();
+	}
+
+	std::vector<Command*> Gizmos::commands() const
+	{
+		return m_batch.commands();
+	}
 }

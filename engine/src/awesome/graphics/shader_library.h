@@ -4,23 +4,26 @@
 #include <map>
 #include <string>
 
-class ShaderLibrary
+namespace graphics
 {
-public:
-	ShaderLibrary();
-
-	const std::map<std::string, std::string>& getShaders() const { return m_shaders; }
-
-	struct names
+	class ShaderLibrary
 	{
-		names() = delete;
+	public:
+		ShaderLibrary();
 
-		static const std::string ColorShader;
-		static const std::string GizmosShader;
-		static const std::string SpriteBatchShader;
-		static const std::string TextureShader;
+		const std::map<std::string, std::string>& getShaders() const { return m_shaders; }
+
+		struct names
+		{
+			names() = delete;
+
+			static const std::string ColorShader;
+			static const std::string GizmosShader;
+			static const std::string SpriteBatchShader;
+			static const std::string TextureShader;
+		};
+
+	private:
+		std::map<std::string, std::string> m_shaders;
 	};
-
-private:
-	std::map<std::string, std::string> m_shaders;
-};
+}

@@ -5,11 +5,11 @@
 
 Path::Path()
 	: steps()
-	, color(Color::Red)
+	, color(graphics::Color::Red)
 {
 }
 
-void Path::render(Renderer& renderer)
+void Path::render(graphics::Renderer& renderer)
 {
 	for (size_t i = 0; i < steps.size() - 1; ++i)
 	{

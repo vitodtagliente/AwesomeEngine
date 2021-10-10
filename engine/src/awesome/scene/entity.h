@@ -10,6 +10,11 @@
 
 class World;
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class Entity
 {
 public:
@@ -25,7 +30,7 @@ public:
 	void prepareToDestroy();
 	void setParent(Entity* const entity);
 	void update(World& world, double deltaTime);
-	void render(Renderer& renderer);
+	void render(graphics::Renderer& renderer);
 
 	template <typename T = Component>
 	std::vector<T*> getComponents() const

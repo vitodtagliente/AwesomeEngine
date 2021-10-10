@@ -26,6 +26,8 @@
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
 
+using namespace graphics;
+
 Application::Application(const std::initializer_list<Module*> modules)
 	: m_modules()
 {
@@ -63,7 +65,7 @@ int Application::run()
 	RendererInspector rendererInspector;
 	World m_world;
 
-	Renderer renderer(context);
+	graphics::Renderer renderer(context);
 
 	TextureLibrary library;
 	library.add("sheet", "../assets/spritesheet.png");

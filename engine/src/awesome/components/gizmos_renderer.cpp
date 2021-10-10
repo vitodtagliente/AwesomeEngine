@@ -7,12 +7,12 @@
 GizmosRenderer::GizmosRenderer()
 	: Component()
 	, type(Type::None)
-	, color(Color::White)
+	, color(graphics::Color::White)
 {
 
 }
 
-void GizmosRenderer::render(Renderer& renderer)
+void GizmosRenderer::render(graphics::Renderer& renderer)
 {
 	switch (type)
 	{

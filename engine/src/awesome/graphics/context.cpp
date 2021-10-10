@@ -2,282 +2,290 @@
 
 #include <map>
 #include <string>
-#include <glad/glad.h>
-#include "shader.h"
 #include <vdtmath/matrix4.h>
 
-Context::Context()
-	: camera(math::mat4::identity)
-	, m_shaderLibrary()
-	, m_gizmosRenderingData()
-	, m_spritebatchRenderingData()
-	, m_gizmosProgram()
-	, m_colorProgram()
-	, m_spritebatchProgram()
+#include <glad/glad.h>
+
+#include "index_buffer.h"
+#include "vertex_buffer.h"
+#include "shader.h"
+#include "texture.h"
+
+namespace graphics
 {
-	// color
+	Context::Context()
+		: camera(math::mat4::identity)
+		, m_shaderLibrary()
+		, m_gizmosRenderingData()
+		, m_spritebatchRenderingData()
+		, m_gizmosProgram()
+		, m_colorProgram()
+		, m_spritebatchProgram()
 	{
-		// shaders
-		m_colorProgram = createProgram(ShaderLibrary::names::ColorShader);
+		// color
+		{
+			// shaders
+			m_colorProgram = createProgram(ShaderLibrary::names::ColorShader);
+		}
+		// gizmos
+		{
+			// shaders
+			m_gizmosProgram = createProgram(ShaderLibrary::names::GizmosShader);
+
+			// render data
+			VertexBuffer& vb = *m_gizmosRenderingData.addVertexBuffer(Renderable::names::MainBuffer, 7 * 2000 * sizeof(float), BufferUsageMode::Static);
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+		}
+		// spritebatch
+		{
+			// shaders
+			m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
+
+			float vertices[] = {
+				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+				-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
+			};
+
+			unsigned int indices[] = {
+				0, 1, 3, 1, 2, 3
+			};
+
+			VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+			vb.fillData(vertices, sizeof(vertices));
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
+			IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+			ib.fillData(indices, sizeof(indices));
+
+			VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer("cropsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Stream);
+			cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
+			cropBuffer.layout.startingIndex = 2;
+
+			VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer("transformsBuffer", 16 * 2000 * sizeof(float), BufferUsageMode::Stream);
+			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
+			transformBuffer.layout.startingIndex = 3;
+
+			m_spritebatchRenderingData.bind();
+		}
+		// texture
+		{
+			// shaders
+			m_textureProgram = createProgram(ShaderLibrary::names::TextureShader);
+		}
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	// gizmos
-	{
-		// shaders
-		m_gizmosProgram = createProgram(ShaderLibrary::names::GizmosShader);
 
-		// render data
-		VertexBuffer& vb = *m_gizmosRenderingData.addVertexBuffer(Renderable::names::MainBuffer, 7 * 2000 * sizeof(float), BufferUsageMode::Static);
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+	void Context::clear(const Color& color)
+	{
+		glClearColor(color.red, color.green, color.blue, color.alpha);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
-	// spritebatch
+
+	void Context::viewport(int width, int height)
 	{
-		// shaders
-		m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
+		glViewport(0, 0, width, height);
+	}
 
-		float vertices[] = {
-			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
-		};
+	void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
+	{
+		if (points.empty()) return;
 
-		unsigned int indices[] = {
-			0, 1, 3, 1, 2, 3
-		};
+		m_gizmosRenderingData.bind();
 
-		VertexBuffer& vb = *m_spritebatchRenderingData.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
-		IndexBuffer& ib = *m_spritebatchRenderingData.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
-		ib.fillData(indices, sizeof(indices));
+		// fill geometry data
+		std::vector<float> vertices;
+		for (auto it = points.begin(); it != points.end(); ++it)
+		{
+			vertices.push_back(it->first.x);
+			vertices.push_back(it->first.y);
+			vertices.push_back(it->first.z);
+			vertices.push_back(it->second.red);
+			vertices.push_back(it->second.green);
+			vertices.push_back(it->second.blue);
+			vertices.push_back(it->second.alpha);
+		}
 
-		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.addVertexBuffer("cropsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Stream);
-		cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
-		cropBuffer.layout.startingIndex = 2;
+		VertexBuffer* vertexBuffer = m_gizmosRenderingData.findVertexBuffer(Renderable::names::MainBuffer);
+		vertexBuffer->bind();
+		vertexBuffer->fillData(&vertices[0], vertices.size() * sizeof(float));
 
-		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer("transformsBuffer", 16 * 2000 * sizeof(float), BufferUsageMode::Stream);
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-		transformBuffer.layout.startingIndex = 3;
+		m_gizmosProgram->bind();
+		m_gizmosProgram->set("u_matrix", camera);
+
+		const int primitiveType = GL_LINES;
+		const int offset = 0;
+		const int count = points.size();
+		glDrawArrays(primitiveType, offset, count);
+	}
+
+	void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
+	{
+		if (sprites.empty()) return;
 
 		m_spritebatchRenderingData.bind();
-	}
-	// texture
-	{
-		// shaders
-		m_textureProgram = createProgram(ShaderLibrary::names::TextureShader);
-	}
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
+		// fill geometry data
+		std::vector<float> crops;
+		std::vector<float> transforms;
+		for (auto it = sprites.begin(); it != sprites.end(); ++it)
+		{
+			crops.push_back(it->second.x);
+			crops.push_back(it->second.y);
+			crops.push_back(it->second.width);
+			crops.push_back(it->second.height);
 
-void Context::clear(const Color& color)
-{
-	glClearColor(color.red, color.green, color.blue, color.alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
+			transforms.insert(transforms.end(), it->first.data, it->first.data + it->first.length);
+		}
 
-void Context::viewport(int width, int height)
-{
-	glViewport(0, 0, width, height);
-}
+		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.findVertexBuffer("cropsBuffer");
+		cropBuffer.bind();
+		cropBuffer.fillData(&crops[0], crops.size() * sizeof(float));
 
-void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
-{
-	if (points.empty()) return;
+		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffer");
+		transformBuffer.bind();
+		transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
 
-	m_gizmosRenderingData.bind();
-
-	// fill geometry data
-	std::vector<float> vertices;
-	for (auto it = points.begin(); it != points.end(); ++it)
-	{
-		vertices.push_back(it->first.x);
-		vertices.push_back(it->first.y);
-		vertices.push_back(it->first.z);
-		vertices.push_back(it->second.red);
-		vertices.push_back(it->second.green);
-		vertices.push_back(it->second.blue);
-		vertices.push_back(it->second.alpha);
-	}
-
-	VertexBuffer* vertexBuffer = m_gizmosRenderingData.findVertexBuffer(Renderable::names::MainBuffer);
-	vertexBuffer->bind();
-	vertexBuffer->fillData(&vertices[0], vertices.size() * sizeof(float));
-
-	m_gizmosProgram->bind();
-	m_gizmosProgram->set("u_matrix", camera);
-
-	const int primitiveType = GL_LINES;
-	const int offset = 0;
-	const int count = points.size();
-	glDrawArrays(primitiveType, offset, count);
-}
-
-void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
-{
-	if (sprites.empty()) return;
-
-	m_spritebatchRenderingData.bind();
-
-	// fill geometry data
-	std::vector<float> crops;
-	std::vector<float> transforms;
-	for (auto it = sprites.begin(); it != sprites.end(); ++it)
-	{
-		crops.push_back(it->second.x);
-		crops.push_back(it->second.y);
-		crops.push_back(it->second.width);
-		crops.push_back(it->second.height);
-
-		transforms.insert(transforms.end(), it->first.data, it->first.data + it->first.length);
-	}
-
-	VertexBuffer& cropBuffer = *m_spritebatchRenderingData.findVertexBuffer("cropsBuffer");
-	cropBuffer.bind();
-	cropBuffer.fillData(&crops[0], crops.size() * sizeof(float));
-
-	VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffer");
-	transformBuffer.bind();
-	transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
-
-	m_spritebatchProgram->bind();
-	texture->bind(0);
-	m_spritebatchProgram->set("u_texture", 0);
-	m_spritebatchProgram->set("u_matrix", camera);
-
-	const int primitiveType = GL_TRIANGLES;
-	const int offset = 0;
-	const int count = 6;
-	const int numInstances = sprites.size();
-	const int indexType = GL_UNSIGNED_INT;
-	glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
-}
-
-void Context::test()
-{
-	// hello triangle
-	if (false)
-	{
-		float vertices[] = {
-		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
-		};
-
-		Renderable renderable;
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
-		renderable.bind();
-
-		m_colorProgram->bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-	}
-
-	// hello line
-	if (false)
-	{
-		float vertices[] = {
-		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
-		};
-
-		Renderable renderable;
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
-		renderable.bind();
-
-		m_colorProgram->bind();
-
-		glDrawArrays(GL_LINES, 0, 2);
-	}
-
-	// hello quad
-	if (false)
-	{
-		float vertices[] = {
-			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			-1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 3, 1, 2, 3
-		};
-
-		Renderable renderable;
-		renderable.bind();
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
-		vb.activateLayout();
-		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
-		ib.fillData(indices, sizeof(indices));
-
-		m_colorProgram->bind();
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	}
-
-	// hello texture
-	if (false)
-	{
-		float vertices[] = {
-			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 3, 1, 2, 3
-		};
-
-		Renderable renderable;
-		VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-		vb.fillData(vertices, sizeof(vertices));
-		VertexBufferLayout& layout = vb.layout;
-		layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-		layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
-		IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
-		ib.fillData(indices, sizeof(indices));
-		renderable.bind();
-
-		m_textureProgram->bind();
-		testTexture->bind(0);
+		m_spritebatchProgram->bind();
+		texture->bind(0);
 		m_spritebatchProgram->set("u_texture", 0);
+		m_spritebatchProgram->set("u_matrix", camera);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		const int primitiveType = GL_TRIANGLES;
+		const int offset = 0;
+		const int count = 6;
+		const int numInstances = sprites.size();
+		const int indexType = GL_UNSIGNED_INT;
+		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 	}
-}
 
-ShaderProgram* const Context::createProgram(const std::string& name)
-{
-	std::map<Shader::Type, std::string> sources;
-	auto it = m_shaderLibrary.getShaders().find(name);
-	if (it != m_shaderLibrary.getShaders().end()
-		&& Shader::Reader::parse(it->second, sources));
+	void Context::test()
 	{
-		Shader vs(Shader::Type::Vertex, sources.find(Shader::Type::Vertex)->second);
-		Shader fs(Shader::Type::Fragment, sources.find(Shader::Type::Fragment)->second);
-		return new ShaderProgram({ &vs, &fs });
+		// hello triangle
+		if (false)
+		{
+			float vertices[] = {
+			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
+			};
+
+			Renderable renderable;
+			VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+			vb.fillData(vertices, sizeof(vertices));
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+			renderable.bind();
+
+			m_colorProgram->bind();
+
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		}
+
+		// hello line
+		if (false)
+		{
+			float vertices[] = {
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+			};
+
+			Renderable renderable;
+			VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+			vb.fillData(vertices, sizeof(vertices));
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+			renderable.bind();
+
+			m_colorProgram->bind();
+
+			glDrawArrays(GL_LINES, 0, 2);
+		}
+
+		// hello quad
+		if (false)
+		{
+			float vertices[] = {
+				 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+				 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+				-1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f
+			};
+
+			unsigned int indices[] = {
+				0, 1, 3, 1, 2, 3
+			};
+
+			Renderable renderable;
+			renderable.bind();
+			VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+			vb.fillData(vertices, sizeof(vertices));
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4));
+			vb.activateLayout();
+			IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+			ib.fillData(indices, sizeof(indices));
+
+			m_colorProgram->bind();
+
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		}
+
+		// hello texture
+		if (false)
+		{
+			float vertices[] = {
+				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+				-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
+			};
+
+			unsigned int indices[] = {
+				0, 1, 3, 1, 2, 3
+			};
+
+			Renderable renderable;
+			VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
+			vb.fillData(vertices, sizeof(vertices));
+			VertexBufferLayout& layout = vb.layout;
+			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
+			layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
+			IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
+			ib.fillData(indices, sizeof(indices));
+			renderable.bind();
+
+			m_textureProgram->bind();
+			testTexture->bind(0);
+			m_spritebatchProgram->set("u_texture", 0);
+
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		}
 	}
-	return nullptr;
+
+	ShaderProgram* const Context::createProgram(const std::string& name)
+	{
+		std::map<Shader::Type, std::string> sources;
+		auto it = m_shaderLibrary.getShaders().find(name);
+		if (it != m_shaderLibrary.getShaders().end()
+			&& Shader::Reader::parse(it->second, sources));
+		{
+			Shader vs(Shader::Type::Vertex, sources.find(Shader::Type::Vertex)->second);
+			Shader fs(Shader::Type::Fragment, sources.find(Shader::Type::Fragment)->second);
+			return new ShaderProgram({ &vs, &fs });
+		}
+		return nullptr;
+	}
 }

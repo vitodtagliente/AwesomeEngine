@@ -1,39 +1,34 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class TextureCoords
+namespace graphics
 {
-public:
-	static const TextureCoords zero;
-	static const TextureCoords ones;
-
-	union
+	class TextureCoords
 	{
-		struct
+	public:
+		static const TextureCoords zero;
+		static const TextureCoords ones;
+
+		union
 		{
-			float u, v;
+			struct
+			{
+				float u, v;
+			};
+
+			float data[2];
 		};
 
-		float data[2];
+		TextureCoords();
+		TextureCoords(float u, float v);
+		TextureCoords(const TextureCoords& coords);
+		~TextureCoords() = default;
+
+		TextureCoords(TextureCoords&& coords) = default;
+		TextureCoords& operator= (const TextureCoords& coords) = default;
+		TextureCoords& operator=(TextureCoords&& coords) = default;
+
+		bool operator== (const TextureCoords& coords) const;
+		bool operator!= (const TextureCoords& coords) const;
 	};
-
-	TextureCoords()
-		: u(0.0f)
-		, v(0.0f)
-	{
-
-	}
-
-	TextureCoords(const float u, const float v)
-		: u(u)
-		, v(v)
-	{
-
-	}
-
-	TextureCoords(const TextureCoords& coords)
-		: u(coords.u)
-		, v(coords.v)
-	{
-	}
-};
+}

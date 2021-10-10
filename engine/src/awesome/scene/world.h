@@ -10,6 +10,11 @@
 class Entity;
 class Renderer;
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class World : public Singleton<World>
 {
 public:
@@ -18,7 +23,7 @@ public:
 	~World() = default;
 
 	void update(double deltaTime);
-	void render(Renderer& renderer);
+	void render(graphics::Renderer& renderer);
 
 	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
 

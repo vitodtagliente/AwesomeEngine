@@ -7,7 +7,7 @@ RendererInspector::RendererInspector()
 {
 }
 
-void RendererInspector::render(Renderer& renderer)
+void RendererInspector::render(graphics::Renderer& renderer)
 {
 	ImGui::Begin("Renderer Inspector");
 	ImGui::Text("Draw Calls: %d", renderer.getStats().drawCalls);

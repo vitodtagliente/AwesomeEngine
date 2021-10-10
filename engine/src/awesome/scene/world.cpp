@@ -18,7 +18,7 @@ void World::update(double deltaTime)
 	}
 }
 
-void World::render(Renderer& renderer)
+void World::render(graphics::Renderer& renderer)
 {
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{

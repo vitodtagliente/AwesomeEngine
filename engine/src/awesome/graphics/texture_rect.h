@@ -1,43 +1,32 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class TextureRect
+namespace graphics
 {
-public:
-
-	union
+	class TextureRect
 	{
-		struct
+	public:
+
+		union
 		{
-			float x, y, width, height;
+			struct
+			{
+				float x, y, width, height;
+			};
+
+			float data[4];
 		};
 
-		float data[4];
+		TextureRect();
+		TextureRect(float x, float y, float width, float height);
+		TextureRect(const TextureRect& rect);
+		~TextureRect() = default;
+
+		TextureRect(TextureRect&& rect) = default;
+		TextureRect& operator= (const TextureRect& rect) = default;
+		TextureRect& operator=(TextureRect&& rect) = default;
+
+		bool operator== (const TextureRect& rect) const;
+		bool operator!= (const TextureRect& rect) const;
 	};
-
-	TextureRect()
-		: x(0.0f)
-		, y(0.0f)
-		, width(1.0f)
-		, height(1.0f)
-	{
-
-	}
-
-	TextureRect(const float x, const float y, const float width, const float height)
-		: x(x)
-		, y(y)
-		, width(width)
-		, height(height)
-	{
-
-	}
-
-	TextureRect(const TextureRect& rect)
-		: x(rect.x)
-		, y(rect.y)
-		, width(rect.width)
-		, height(rect.height)
-	{
-	}
-};
+}

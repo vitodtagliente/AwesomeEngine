@@ -1,9 +1,11 @@
 #include "shader_library.h"
 
-ShaderLibrary::ShaderLibrary()
-	: m_shaders()
+namespace graphics
 {
-	m_shaders.insert(std::make_pair(names::ColorShader, R"(
+	ShaderLibrary::ShaderLibrary()
+		: m_shaders()
+	{
+		m_shaders.insert(std::make_pair(names::ColorShader, R"(
 			#shader vertex
 
 			#version 330 core
@@ -40,8 +42,8 @@ ShaderLibrary::ShaderLibrary()
 				outColor = v_color;
 			}		
 		)"
-	));
-	m_shaders.insert(std::make_pair(names::GizmosShader, R"(
+		));
+		m_shaders.insert(std::make_pair(names::GizmosShader, R"(
 			#shader vertex
 
 			#version 330 core
@@ -80,8 +82,8 @@ ShaderLibrary::ShaderLibrary()
 				outColor = v_color;
 			}		
 		)"
-	));
-	m_shaders.insert(std::make_pair(names::SpriteBatchShader, R"(
+		));
+		m_shaders.insert(std::make_pair(names::SpriteBatchShader, R"(
 			#shader vertex
 
 			#version 330 core
@@ -127,8 +129,8 @@ ShaderLibrary::ShaderLibrary()
 				// outColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 			}
 		)"
-	));
-	m_shaders.insert(std::make_pair(names::TextureShader, R"(
+		));
+		m_shaders.insert(std::make_pair(names::TextureShader, R"(
 			#shader vertex
 
 			#version 330 core
@@ -169,10 +171,11 @@ ShaderLibrary::ShaderLibrary()
 				outColor = texture(u_texture, v_texcoord);
 			}
 		)"
-	));
-}
+		));
+	}
 
-const std::string ShaderLibrary::names::ColorShader = "Color";
-const std::string ShaderLibrary::names::GizmosShader = "Gizmos";
-const std::string ShaderLibrary::names::SpriteBatchShader = "SpriteBatch";
-const std::string ShaderLibrary::names::TextureShader = "Texture";
+	const std::string ShaderLibrary::names::ColorShader = "Color";
+	const std::string ShaderLibrary::names::GizmosShader = "Gizmos";
+	const std::string ShaderLibrary::names::SpriteBatchShader = "SpriteBatch";
+	const std::string ShaderLibrary::names::TextureShader = "Texture";
+}

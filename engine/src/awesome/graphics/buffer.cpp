@@ -1,7 +1,10 @@
 #include "buffer.h"
 
-Buffer::Buffer(size_t size, BufferUsageMode mode)
-	: m_size(size)
-	, m_mode(mode)
+namespace graphics
 {
+	Buffer::Buffer(const size_t size, const BufferUsageMode mode)
+		: m_size(size)
+		, m_mode(mode)
+	{
+	}
 }
