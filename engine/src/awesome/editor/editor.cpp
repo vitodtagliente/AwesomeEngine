@@ -1,5 +1,7 @@
 #include "editor.h"
 
+#include <typeinfo>
+
 #include <imgui.h>
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD 
 #include <backends/imgui_impl_glfw.h>
@@ -46,6 +48,7 @@ namespace editor
 		{
 			Window* const window = *it;
 			ImGui::Begin(window->getTitle().c_str());
+			// ImGui::Begin(typeid(*window).name());
 			window->render(m_context);
 			ImGui::End();
 		}
