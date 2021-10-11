@@ -5,11 +5,13 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/singleton.h>
+
 namespace graphics
 {
 	class Texture;
 
-	class TextureLibrary
+	class TextureLibrary : public Singleton<TextureLibrary>
 	{
 	public:
 		TextureLibrary();

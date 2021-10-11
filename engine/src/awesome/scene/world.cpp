@@ -54,5 +54,11 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 
 void World::destroy(Entity* const entity)
 {
-	// TODO
+	// auto it = std::find(m_entities.begin(), m_entities.end(), entity);
+	// if (it != m_entities.end())
+	// {
+	// 	entity->prepareToDestroy();
+	// 	m_entities.erase(it);
+	// 	delete entity;
+	// }
 }
