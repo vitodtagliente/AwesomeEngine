@@ -6,6 +6,7 @@
 
 World::World()
 	: m_entities()
+	, m_pendingDestroyEntities()
 {
 }
 
@@ -16,6 +17,19 @@ void World::update(double deltaTime)
 		Entity* const entity = *it;
 		entity->update(*this, deltaTime);
 	}
+
+	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
+	{
+		auto destroyIt = std::find(m_entities.begin(), m_entities.end(), *it);
+		if (destroyIt != m_entities.end())
+		{
+			Entity* const entity = *destroyIt;
+			entity->prepareToDestroy();
+			m_entities.erase(destroyIt);
+			delete entity;
+		}
+	}
+	m_pendingDestroyEntities.clear();
 }
 
 void World::render(graphics::Renderer& renderer)
@@ -54,11 +68,5 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 
 void World::destroy(Entity* const entity)
 {
-	// auto it = std::find(m_entities.begin(), m_entities.end(), entity);
-	// if (it != m_entities.end())
-	// {
-	// 	entity->prepareToDestroy();
-	// 	m_entities.erase(it);
-	// 	delete entity;
-	// }
+	m_pendingDestroyEntities.push_back(entity);
 }
