@@ -5,8 +5,13 @@
 
 #include <awesome/awesome.h>
 
+#include "game.h"
+
 int main()
 {
-	Application app;
-	return app.run();
+	Game* const game = new Game();
+	Application app({ game });
+	const int result = app.run();
+	delete game;
+	return result;
 }

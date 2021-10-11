@@ -6,6 +6,11 @@
 #include <awesome/scene/component.h>
 #include <vdtmath/vector3.h>
 
+namespace editor
+{
+	class Context;
+}
+
 namespace graphics
 {
 	class Renderer;
@@ -17,6 +22,7 @@ public:
 	Path();
 
 	void render(graphics::Renderer& renderer) override;
+	void inspect(editor::Context& context) override;
 
 	std::vector<math::vec3> steps;
 	graphics::Color color;

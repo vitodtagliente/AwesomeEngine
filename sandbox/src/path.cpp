@@ -1,5 +1,6 @@
 #include "path.h"
 
+#include <awesome/editor/context.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
 
@@ -15,4 +16,9 @@ void Path::render(graphics::Renderer& renderer)
 	{
 		renderer.getGizmos().line(steps[i], steps[i + 1], color);
 	}
+}
+
+void Path::inspect(editor::Context& context)
+{
+	context.input("color", &color);
 }

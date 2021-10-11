@@ -59,7 +59,6 @@ public:
 	{
 		T* const module = new T();
 		m_modules.push_back(module);
-		module->startup();
 		return module;
 	}
 

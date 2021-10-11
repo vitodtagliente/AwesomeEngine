@@ -32,8 +32,8 @@ Application::Application(const std::initializer_list<Module*> modules)
 {
 	for (auto it = modules.begin(); it != modules.end(); ++it)
 	{
-		m_modules.push_back(*it);
-		(*it)->startup();
+		Module* const module = *it;
+		m_modules.push_back(module);
 	}
 }
 
@@ -172,6 +172,12 @@ int Application::run()
 void Application::init()
 {
 	addModule<editor::Editor>();
+
+	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+	{
+		Module* const module = *it;
+		module->startup();
+	}
 }
 
 void Application::update()
