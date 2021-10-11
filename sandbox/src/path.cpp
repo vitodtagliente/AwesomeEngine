@@ -1,13 +1,22 @@
 #include "path.h"
 
+#include <vdtmath/algorithm.h>
+
 #include <awesome/editor/context.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/scene/entity.h>
+#include <awesome/scene/world.h>
 
 Path::Path()
 	: steps()
 	, color(graphics::Color::Red)
 {
+}
+
+void Path::init()
+{
+	getOwner()->tag = "path";
 }
 
 void Path::render(graphics::Renderer& renderer)
@@ -21,4 +30,35 @@ void Path::render(graphics::Renderer& renderer)
 void Path::inspect(editor::Context& context)
 {
 	context.input("color", &color);
+}
+
+Path* const Path::findOrRandom(World& world, const std::string& name)
+{
+	std::vector<Path*> paths;
+	std::vector<Entity*> entities = world.getEntitiesByTag("path");
+	for (auto it = entities.begin(); it != entities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		Path* const path = entity->getComponent<Path>();
+		if (path == nullptr)
+		{
+			continue;
+		}
+
+		if (entity->name == name)
+		{
+			return path;
+		}
+		else
+		{
+			paths.push_back(path);
+		}
+	}
+	
+	if (paths.empty())
+	{
+		return nullptr;
+	}
+
+	return paths.at(math::random(0, paths.size() - 1));
 }

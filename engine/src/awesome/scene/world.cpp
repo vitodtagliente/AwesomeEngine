@@ -27,6 +27,20 @@ void World::render(graphics::Renderer& renderer)
 	}
 }
 
+std::vector<Entity*> World::getEntitiesByTag(const std::string& tag)
+{
+	std::vector<Entity*> entities;
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		if (entity->tag == tag)
+		{
+			entities.push_back(entity);
+		}
+	}
+	return entities;
+}
+
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
 	Entity* const entity = new Entity;

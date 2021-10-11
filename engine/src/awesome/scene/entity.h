@@ -36,9 +36,24 @@ public:
 		for (Component* const component : m_components)
 		{
 			if (T* const found_component = dynamic_cast<T*>(component))
+			{
 				found_components.push_back(found_component);
+			}
 		}
-		return std::move(found_components);
+		return found_components;
+	}
+
+	template <typename T = Component>
+	T* const getComponent() const
+	{
+		for (Component* const component : m_components)
+		{
+			if (T* const found_component = dynamic_cast<T*>(component))
+			{
+				return found_component;
+			}
+		}
+		return nullptr;
 	}
 
 	template <typename T = Component>
