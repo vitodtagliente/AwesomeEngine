@@ -10,7 +10,7 @@
 
 Path::Path()
 	: steps()
-	, color(graphics::Color::Red)
+	, color(graphics::Color::Green)
 {
 }
 

@@ -10,6 +10,7 @@
 
 #include "minion.h"
 #include "path.h"
+#include "tower.h"
 
 void Game::startup()
 {
@@ -45,6 +46,18 @@ void Game::startup()
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
 			{
 				component->type = GizmosRenderer::Type::Rect;
+			}
+		}
+		// towers setup
+		{
+			Entity* const entity = world->spawn(math::vec3(8.f, 1.f, 0.f), math::quaternion::identity);
+			entity->name = std::string("tower");
+			entity->tag = "tower";
+			entity->addComponent<Tower>();
+			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
+			{
+				component->type = GizmosRenderer::Type::Rect;
+				component->color = graphics::Color::Blue;
 			}
 		}
 	}
