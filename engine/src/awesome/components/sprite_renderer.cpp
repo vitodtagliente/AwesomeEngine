@@ -23,9 +23,6 @@ void SpriteRenderer::render(graphics::Renderer& renderer)
 
 void SpriteRenderer::inspect(editor::Context& context)
 {
-	if (context.collapsingHeader("SpriteRenderer"))
-	{
-		context.input("enabled", &enabled);
-		context.input("rect", &rect);
-	}
+	Component::inspect(context);
+	context.input("rect", &rect);
 }

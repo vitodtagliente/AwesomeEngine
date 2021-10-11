@@ -5,6 +5,9 @@
 #include <awesome/scene/entity.h>
 
 #include "../context.h"
+
+#include <typeinfo>
+
 #include "scene_inspector.h"
 
 namespace editor
@@ -37,7 +40,10 @@ namespace editor
 				for (auto it = components.begin(); it != components.end(); ++it)
 				{
 					Component* const component = *it;
-					component->inspect(context);
+					if (context.collapsingHeader(typeid(*component).name()))
+					{
+						component->inspect(context);
+					}
 				}
 			}
 		}

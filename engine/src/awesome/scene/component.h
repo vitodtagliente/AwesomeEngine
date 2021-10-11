@@ -33,7 +33,7 @@ public:
 	virtual void uninit() {}
 	virtual void update(World& /*world*/, double /*deltaTime*/) {}
 	virtual void render(graphics::Renderer& /*renderer*/) {}
-	virtual void inspect(editor::Context& /*context*/) {}
+	virtual void inspect(editor::Context& context);
 
 private:
 

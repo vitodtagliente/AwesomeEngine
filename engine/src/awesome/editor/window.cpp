@@ -1,5 +1,7 @@
 #include "window.h"
 
+#include <typeinfo>
+
 namespace editor
 {
 	Window::Window()
@@ -8,6 +10,6 @@ namespace editor
 	
 	std::string Window::getTitle() const
 	{
-		return std::string();
+		return typeid(*this).name();
 	}
 }

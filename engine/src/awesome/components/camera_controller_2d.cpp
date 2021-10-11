@@ -49,8 +49,6 @@ void CameraController2d::render(graphics::Renderer& renderer)
 
 void CameraController2d::inspect(editor::Context& context)
 {
-	if (context.collapsingHeader("CameraController2d"))
-	{
-		context.input("speed", &speed);
-	}
+	Component::inspect(context);
+	context.input("speed", &speed);
 }

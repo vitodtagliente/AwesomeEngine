@@ -24,9 +24,6 @@ void GizmosRenderer::render(graphics::Renderer& renderer)
 
 void GizmosRenderer::inspect(editor::Context& context)
 {
-	if (context.collapsingHeader("GizmosRenderer"))
-	{
-		context.input("enabled", &enabled);
-		context.input("color", &color);
-	}
+	Component::inspect(context);
+	context.input("color", &color);
 }
