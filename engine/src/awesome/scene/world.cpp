@@ -6,6 +6,7 @@
 
 World::World()
 	: m_entities()
+	, m_pendingSpawnEntities()
 	, m_pendingDestroyEntities()
 {
 }
@@ -17,6 +18,12 @@ void World::update(double deltaTime)
 		Entity* const entity = *it;
 		entity->update(*this, deltaTime);
 	}
+
+	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
+	{
+		m_entities.push_back(*it);
+	}
+	m_pendingSpawnEntities.clear();
 
 	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
 	{
@@ -61,7 +68,7 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z;
 	entity->prepareToSpawn(*this);
-	m_entities.push_back(entity);
+	m_pendingSpawnEntities.push_back(entity);
 
 	return entity;
 }

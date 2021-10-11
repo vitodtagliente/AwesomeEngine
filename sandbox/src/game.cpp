@@ -11,6 +11,7 @@
 #include "minion.h"
 #include "path.h"
 #include "tower.h"
+#include "wave_manager.h"
 
 void Game::startup()
 {
@@ -58,6 +59,25 @@ void Game::startup()
 			{
 				component->type = GizmosRenderer::Type::Rect;
 				component->color = graphics::Color::Blue;
+			}
+		}
+		// wave manager
+		{
+			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
+			entity->name = std::string("wave manager");
+			entity->tag = "wave manager";
+			if (WaveManager* const component = entity->addComponent<WaveManager>())
+			{
+				Wave wave;
+				wave.duration = 10.f;
+				wave.numOfMinions = 4;
+				wave.perMinionSpawnDelay = 1.f;
+
+				component->push(wave);
+				component->push(wave);
+				component->push(wave);
+
+				component->start();
 			}
 		}
 	}
