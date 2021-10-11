@@ -1,5 +1,6 @@
 #include "camera_controller_2d.h"
 
+#include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
@@ -9,7 +10,7 @@
 #include <vdtmath/vector3.h>
 
 CameraController2d::CameraController2d()
-	: speed(.001f)
+	: speed(4.f)
 	, m_dragPosition(false)
 {
 }
@@ -19,18 +20,20 @@ void CameraController2d::update(World& world, double deltaTime)
 	Input* const input = Input::instance();
 	if (!m_dragPosition.has_value())
 	{
-		if (input->isKeyDown(KeyCode::MouseLeftButton))
+		if (input->isKeyDown(KeyCode::MouseRightButton))
 		{
 			m_dragPosition = input->getMousePosition();
 		}
 	}
 	else
 	{
-		if (input->isKeyDown(KeyCode::MouseLeftButton))
+		if (input->isKeyDown(KeyCode::MouseRightButton))
 		{
+			Canvas* const canvas = Canvas::instance();
 			math::vec2 direction = input->getMousePosition() - m_dragPosition.value();
-			const math::vec2 amount = direction.normalize() * static_cast<float>(deltaTime);
+			const math::vec2 amount = direction * speed * static_cast<float>(deltaTime);
 			getOwner()->transform.position += math::vec3(amount.x, -amount.y, 0.0f);
+			m_dragPosition = input->getMousePosition();
 		}
 		else
 		{
