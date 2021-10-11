@@ -48,7 +48,6 @@ namespace editor
 		{
 			Window* const window = *it;
 			ImGui::Begin(window->getTitle().c_str());
-			// ImGui::Begin(typeid(*window).name());
 			window->render(m_context);
 			ImGui::End();
 		}
