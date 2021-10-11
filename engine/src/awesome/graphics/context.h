@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include <awesome/core/singleton.h>
 #include <vdtmath/matrix4.h>
 #include <vdtmath/vector3.h>
 
@@ -15,7 +16,7 @@ namespace graphics
 {
 	class Texture;
 
-	class Context
+	class Context : public Singleton<Context>
 	{
 	public:
 		Context();

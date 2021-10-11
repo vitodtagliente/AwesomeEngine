@@ -20,6 +20,7 @@
 
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
+#include <awesome/components/orthographic_camera.h>
 #include <awesome/components/sprite_renderer.h>
 
 #include <awesome/editor/editor.h>
@@ -86,6 +87,7 @@ int Application::run()
 		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
 		entity->name = std::string("camera");
 		entity->tag = "camera";
+		entity->addComponent<OrthographicCamera>();
 		entity->addComponent<CameraController2d>();
 	}
 
@@ -119,13 +121,8 @@ int Application::run()
 		m_canvas.update();
 		m_time.tick();
 		update();
-		context.viewport(m_canvas.getWidth(), m_canvas.getHeight());
-		// pixel perfect
 		const float w = m_canvas.getWidth() / 2 / 32;
 		const float h = m_canvas.getHeight() / 2 / 32;
-		{			
-			context.camera = math::mat4::orthographic(-w, w, -h, h, -30, 1000);
-		}
 
 		if (m_input.isKeyPressed(KeyCode::A))
 		{
