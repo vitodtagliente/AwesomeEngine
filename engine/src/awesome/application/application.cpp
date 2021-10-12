@@ -15,6 +15,7 @@
 #include <awesome/graphics/texture_library.h>
 
 #include <vdtmath/math.h>
+#include <awesome/core/timer.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
 
@@ -92,35 +93,40 @@ int Application::run()
 	}
 
 	// sprites setup
-	for (int i = 0; i < 0; ++i)
-	{
-		const float spriteSize = 1.0f / 11;
-		{
-			Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
-			entity->name = std::string("entity") + std::to_string(i + 1);
-			entity->tag = "sprite";
-			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
-			{
-				component->texture = library.get("sheet");
-				component->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
-			}
-			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
-			{
-				component->type = GizmosRenderer::Type::Rect;
-			}
-		}
-	}
-
-	const float generateTime = 1.f;
-	float timer = generateTime;
+	// for (int i = 0; i < 100; ++i)
+	// {
+	// 	const float spriteSize = 1.0f / 11;
+	// 	{
+	// 		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
+	// 		entity->name = std::string("entity") + std::to_string(i + 1);
+	// 		entity->tag = "sprite";
+	// 		if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
+	// 		{
+	// 			component->texture = library.get("sheet");
+	// 			component->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
+	// 		}
+	// 		if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
+	// 		{
+	// 			component->type = GizmosRenderer::Type::Rect;
+	// 		}
+	// 	}
+	// }
 
 	init();
 
+	Timer generateTimer(1.0);
+	Timer fpsTimer(1.f / 60);
+	double deltatime = 0.0;
+
 	while (m_canvas.isOpen())
 	{
-		m_canvas.update();
 		m_time.tick();
-		update();
+		fpsTimer.tick(m_time.getDeltaTime());
+		deltatime += m_time.getDeltaTime();
+		if (!fpsTimer.isExpired()) continue;
+
+		fpsTimer.reset();
+		m_canvas.update();
 		const float w = m_canvas.getWidth() / 2 / 32;
 		const float h = m_canvas.getHeight() / 2 / 32;
 
@@ -130,13 +136,13 @@ int Application::run()
 			entity->name = "entity-" + std::to_string(++id);
 		}
 		m_input.update();
-		m_world.update(m_time.getDeltaTime());
+		m_world.update(deltatime);
 
-		timer -= m_time.getDeltaTime();
-		if (timer <= 0.0f)
+		generateTimer.tick(deltatime);
+		if (generateTimer.isExpired())
 		{
 			randomizeSprites(m_world, w, h);
-			timer = generateTime;
+			generateTimer.reset();
 		}
 
 		renderer.begin();
@@ -160,6 +166,8 @@ int Application::run()
 			Module* const module = *it;
 			module->postRendering();
 		}
+
+		deltatime = 0.0;
 	}
 
 	ImGui_ImplOpenGL3_Shutdown();

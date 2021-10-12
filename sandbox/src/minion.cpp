@@ -9,7 +9,7 @@
 Minion::Minion()
 	: Component()
 	, m_navigator()
-	, m_speed(5.f)
+	, m_speed(4.f)
 {
 }
 
