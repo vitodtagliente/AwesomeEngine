@@ -57,7 +57,7 @@ int Application::run()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-	ImGui_ImplGlfw_InitForOpenGL(m_canvas.getHandler(), true);
+	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(m_canvas.getHandler()), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
 
 	World m_world;

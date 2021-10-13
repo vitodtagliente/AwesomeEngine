@@ -27,7 +27,7 @@ public:
 	void update();
 	void close();
 
-	inline GLFWwindow* getHandler() const { return m_handler; }
+	inline void* getHandler() const { return m_handler; }
 	unsigned int getWidth() const { return m_width; }
 	unsigned int getHeight() const { return m_height; }
 	inline bool isOpen() const { return m_isOpen; }
@@ -35,7 +35,7 @@ public:
 private:
 	static void handleResize(GLFWwindow*, const int width, const int height);
 
-	GLFWwindow* m_handler;
+	void* m_handler;
 	unsigned int m_width;
 	unsigned int m_height;
 	bool m_isOpen;

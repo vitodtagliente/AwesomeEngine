@@ -22,7 +22,7 @@ bool Canvas::open(Settings settings)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	m_handler = glfwCreateWindow(
+	GLFWwindow* const handler = glfwCreateWindow(
 		settings.width,
 		settings.height,
 		settings.title.c_str(),
@@ -30,21 +30,21 @@ bool Canvas::open(Settings settings)
 		false
 	);
 
-	if (m_handler == nullptr)
+	if (handler == nullptr)
 	{
 		return false;
 	}
 
-	glfwMakeContextCurrent(m_handler);
+	glfwMakeContextCurrent(handler);
 	m_width = settings.width;
 	m_height = settings.height;
 	m_isOpen = true;
 
 	// resize callback
-	glfwSetFramebufferSizeCallback(m_handler, Canvas::handleResize);
+	glfwSetFramebufferSizeCallback(handler, Canvas::handleResize);
 
 	glfwSetKeyCallback(
-		m_handler,
+		handler,
 		[](GLFWwindow*, const int key, const int, const int action, const int)
 		{
 			auto key_state = KeyState::Down;
@@ -65,7 +65,7 @@ bool Canvas::open(Settings settings)
 	);
 
 	glfwSetMouseButtonCallback(
-		m_handler,
+		handler,
 		[](GLFWwindow*, const int button, const int action, int)
 		{
 			auto key_state = KeyState::Down;
@@ -86,7 +86,7 @@ bool Canvas::open(Settings settings)
 	);
 
 	glfwSetCursorPosCallback(
-		m_handler,
+		handler,
 		[](GLFWwindow*, const double x, const double y)
 		{
 			if (Input* const input = Input::instance())
@@ -97,7 +97,7 @@ bool Canvas::open(Settings settings)
 	);
 
 	glfwSetCursorEnterCallback(
-		m_handler,
+		handler,
 		[](GLFWwindow*, const int entered)
 		{
 			if (Input* const input = Input::instance())
@@ -107,6 +107,7 @@ bool Canvas::open(Settings settings)
 		}
 	);
 
+	m_handler = reinterpret_cast<void*>(handler);
 	return true;
 }
 
@@ -115,16 +116,18 @@ void Canvas::update()
 	glfwPollEvents();
 
 	// check for closing window
-	if (glfwWindowShouldClose(m_handler))
+	GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler);
+	if (glfwWindowShouldClose(handler))
 	{
 		m_isOpen = false;
 	}
-	glfwSwapBuffers(m_handler);
+	glfwSwapBuffers(handler);
 }
 
 void Canvas::close()
 {
-	glfwSetWindowShouldClose(m_handler, true);
+	GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler);
+	glfwSetWindowShouldClose(handler, true);
 }
 
 void Canvas::handleResize(GLFWwindow*, const int width, const int height)
