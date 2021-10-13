@@ -1,9 +1,9 @@
 #include "pojectile.h"
 
 #include <awesome/editor/context.h>
+#include <awesome/math/vector3.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
-#include <vdtmath/vector3.h>
 
 Projectile::Projectile()
 	: m_target()
