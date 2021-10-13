@@ -46,7 +46,7 @@ void TargetFinder::check(World& world, const math::vec3& position)
 
 Entity* const TargetFinder::findTheClosest(World& world, const math::vec3& position)
 {
-	std::vector<Entity*> minions = world.getEntitiesByTag("minion");
+	std::vector<Entity*> minions = world.findEntitiesByTag("minion");
 	if (minions.empty()) return nullptr;
 
 	Entity* closestTarget = nullptr;

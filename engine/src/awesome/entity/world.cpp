@@ -2,8 +2,6 @@
 
 #include <awesome/graphics/renderer.h>
 
-#include "entity.h"
-
 World::World()
 	: m_entities()
 	, m_pendingSpawnEntities()
@@ -11,7 +9,7 @@ World::World()
 {
 }
 
-void World::update(double deltaTime)
+void World::update(const double deltaTime)
 {
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
@@ -48,7 +46,7 @@ void World::render(graphics::Renderer& renderer)
 	}
 }
 
-std::vector<Entity*> World::getEntitiesByTag(const std::string& tag)
+std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
 {
 	std::vector<Entity*> entities;
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
@@ -62,11 +60,33 @@ std::vector<Entity*> World::getEntitiesByTag(const std::string& tag)
 	return entities;
 }
 
+Entity* const World::findEntityByName(const std::string& name) const
+{
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		if (entity->name == name)
+		{
+			return entity;
+		}
+	}
+}
+
+Entity* const World::spawn()
+{
+	return spawn(vec3::zero, quaternion::identity);
+}
+
+Entity* const World::spawn(const vec3& position)
+{
+	return spawn(position, quaternion::identity);
+}
+
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
 	Entity* const entity = new Entity;
 	entity->transform.position = position;
-	entity->transform.rotation.z = quaternion.z;
+	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn(*this);
 	m_pendingSpawnEntities.push_back(entity);
 

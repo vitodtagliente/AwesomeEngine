@@ -35,7 +35,7 @@ void Path::inspect(editor::Context& context)
 Path* const Path::findOrRandom(World& world, const std::string& name)
 {
 	std::vector<Path*> paths;
-	std::vector<Entity*> entities = world.getEntitiesByTag("path");
+	std::vector<Entity*> entities = world.findEntitiesByTag("path");
 	for (auto it = entities.begin(); it != entities.end(); ++it)
 	{
 		Entity* const entity = *it;

@@ -27,8 +27,11 @@ public:
 	void render(graphics::Renderer& renderer);
 
 	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
-	std::vector<Entity*> getEntitiesByTag(const std::string& tag);
+	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
+	Entity* const findEntityByName(const std::string& name) const;
 
+	Entity* const spawn();
+	Entity* const spawn(const vec3& position);
 	Entity* const spawn(const vec3& position, const quaternion& quaternion);
 	void destroy(Entity* const entity);
 
