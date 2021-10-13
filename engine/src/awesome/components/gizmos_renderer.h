@@ -3,7 +3,7 @@
 
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_rect.h>
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 
 namespace editor
 {

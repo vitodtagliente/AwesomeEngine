@@ -4,7 +4,7 @@
 #include <awesome/editor/context.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/world.h>
 #include <vdtmath/matrix4.h>
 
 OrthographicCamera::OrthographicCamera()

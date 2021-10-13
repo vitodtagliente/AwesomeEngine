@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include <awesome/scene/entity.h>
+#include <awesome/entity/entity.h>
 
 #include "../context.h"
 

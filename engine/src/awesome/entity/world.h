@@ -4,10 +4,11 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
-#include <vdtmath/quaternion.h>
-#include <vdtmath/vector3.h>
+#include <awesome/math/quaternion.h>
+#include <awesome/math/vector3.h>
 
-class Entity;
+#include "entity.h"
+
 class Renderer;
 
 namespace graphics
@@ -28,7 +29,7 @@ public:
 	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
 	std::vector<Entity*> getEntitiesByTag(const std::string& tag);
 
-	Entity* const spawn(const math::vec3& position, const math::quaternion& quaternion);
+	Entity* const spawn(const vec3& position, const quaternion& quaternion);
 	void destroy(Entity* const entity);
 
 private:

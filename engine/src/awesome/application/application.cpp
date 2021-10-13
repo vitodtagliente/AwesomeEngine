@@ -16,8 +16,8 @@
 
 #include <vdtmath/math.h>
 #include <awesome/core/timer.h>
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>

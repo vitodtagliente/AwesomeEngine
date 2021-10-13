@@ -2,7 +2,7 @@
 
 #include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/scene/entity.h>
+#include <awesome/entity/entity.h>
 
 GizmosRenderer::GizmosRenderer()
 	: Component()

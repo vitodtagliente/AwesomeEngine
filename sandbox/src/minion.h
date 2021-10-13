@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 
 #include "path_navigator.h"
 

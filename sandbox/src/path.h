@@ -6,7 +6,7 @@
 #include <vdtmath/vector3.h>
 
 #include <awesome/graphics/color.h>
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 
 namespace editor
 {

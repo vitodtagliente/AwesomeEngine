@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
 
 namespace editor

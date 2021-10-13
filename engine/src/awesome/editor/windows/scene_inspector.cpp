@@ -1,7 +1,7 @@
 #include "scene_inspector.h"
 
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 
 #include "../context.h"
 

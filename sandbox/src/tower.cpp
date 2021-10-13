@@ -5,8 +5,8 @@
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 #include <vdtmath/vector3.h>
 
 #include "pojectile.h"

@@ -4,7 +4,7 @@
 #include <optional>
 #include <vdtmath/vector2.h>
 
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 
 namespace editor
 {

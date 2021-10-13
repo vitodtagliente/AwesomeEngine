@@ -1,8 +1,8 @@
 #include "target_finder.h"
 
 #include <vector>
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 
 TargetFinder::TargetFinder(const float radius, const Mode mode)
 	: m_mode(mode)

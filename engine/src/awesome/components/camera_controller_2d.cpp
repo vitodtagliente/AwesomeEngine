@@ -4,8 +4,8 @@
 #include <awesome/application/input.h>
 #include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 #include <vdtmath/vector2.h>
 #include <vdtmath/vector3.h>
 

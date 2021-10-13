@@ -3,7 +3,7 @@
 #include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
-#include <awesome/scene/entity.h>
+#include <awesome/entity/entity.h>
 
 SpriteRenderer::SpriteRenderer()
 	: Component()

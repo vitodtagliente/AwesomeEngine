@@ -5,7 +5,7 @@
 #include <vector>
 
 #include <awesome/core/timer.h>
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 #include <vdtmath/vector3.h>
 
 namespace editor

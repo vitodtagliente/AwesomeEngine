@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/scene/component.h>
+#include <awesome/entity/component.h>
 
 namespace editor
 {

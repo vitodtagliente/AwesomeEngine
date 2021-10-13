@@ -8,8 +8,8 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 #include <awesome/graphics/texture_rect.h>
-#include <awesome/scene/entity.h>
-#include <awesome/scene/world.h>
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 #include <vdtmath/algorithm.h>
 
 #include "minion.h"
