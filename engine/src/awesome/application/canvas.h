@@ -4,8 +4,6 @@
 #include <cstddef>
 #include <string>
 
-#include <GLFW/glfw3.h>
-
 #include <awesome/core/singleton.h>
 
 class Canvas : public Singleton<Canvas>
@@ -28,15 +26,17 @@ public:
 	void close();
 
 	inline void* getHandler() const { return m_handler; }
-	unsigned int getWidth() const { return m_width; }
-	unsigned int getHeight() const { return m_height; }
+	inline unsigned int getHeight() const { return static_cast<unsigned int>(m_height); }
+	inline unsigned int getWidth() const { return static_cast<unsigned int>(m_width); }
 	inline bool isOpen() const { return m_isOpen; }
 
-private:
-	static void handleResize(GLFWwindow*, const int width, const int height);
+	void maximize();
+	void resize(unsigned int width, unsigned int height);
+	void setTitle(const std::string& title);
 
+private:
 	void* m_handler;
-	unsigned int m_width;
-	unsigned int m_height;
+	int m_width;
+	int m_height;
 	bool m_isOpen;
 };

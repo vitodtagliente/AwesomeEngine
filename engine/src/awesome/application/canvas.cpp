@@ -1,5 +1,7 @@
 #include "canvas.h"
 
+#include <GLFW/glfw3.h>
+
 #include "input.h"
 #include "keycode.h"
 
@@ -39,9 +41,6 @@ bool Canvas::open(Settings settings)
 	m_width = settings.width;
 	m_height = settings.height;
 	m_isOpen = true;
-
-	// resize callback
-	glfwSetFramebufferSizeCallback(handler, Canvas::handleResize);
 
 	glfwSetKeyCallback(
 		handler,
@@ -113,28 +112,50 @@ bool Canvas::open(Settings settings)
 
 void Canvas::update()
 {
-	glfwPollEvents();
-
-	// check for closing window
-	GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler);
-	if (glfwWindowShouldClose(handler))
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		m_isOpen = false;
+		glfwPollEvents();
+
+		// get the size of the window
+		glfwGetWindowSize(handler, &m_width, &m_height);
+
+		// check for closing window
+		if (glfwWindowShouldClose(handler))
+		{
+			m_isOpen = false;
+		}
+		glfwSwapBuffers(handler);
 	}
-	glfwSwapBuffers(handler);
 }
 
 void Canvas::close()
 {
-	GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler);
-	glfwSetWindowShouldClose(handler, true);
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
+	{
+		glfwSetWindowShouldClose(handler, true);
+	}
 }
 
-void Canvas::handleResize(GLFWwindow*, const int width, const int height)
+void Canvas::maximize()
 {
-	if (Canvas* const canvas = Canvas::instance())
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		canvas->m_width = width;
-		canvas->m_height = height;
+		glfwMaximizeWindow(handler);
+	}
+}
+
+void Canvas::resize(unsigned int width, unsigned int height)
+{
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
+	{
+		glfwSetWindowSize(handler, static_cast<int>(width), static_cast<int>(height));
+	}
+}
+
+void Canvas::setTitle(const std::string& title)
+{
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
+	{
+		glfwSetWindowTitle(handler, title.c_str());
 	}
 }
