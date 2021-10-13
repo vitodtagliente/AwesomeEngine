@@ -10,7 +10,7 @@
 #include <vdtmath/vector3.h>
 
 CameraController2d::CameraController2d()
-	: speed(4.f)
+	: speed(1.f)
 	, m_dragPosition(false)
 {
 }

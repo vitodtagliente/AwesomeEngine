@@ -1,5 +1,6 @@
 #include "tower.h"
 
+#include <awesome/components/gizmos_renderer.h>
 #include <awesome/editor/context.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/gizmos.h>
@@ -7,6 +8,8 @@
 #include <awesome/scene/entity.h>
 #include <awesome/scene/world.h>
 #include <vdtmath/vector3.h>
+
+#include "pojectile.h"
 
 Tower::Tower()
 	: Component()
@@ -26,7 +29,21 @@ void Tower::update(World& world, double deltaTime)
 
 	if (m_timer.isExpired() && m_finder.hasTarget())
 	{
-		// shoot
+		{
+			Entity* const entity = world.spawn(getOwner()->transform.position, math::quaternion::identity);
+			entity->name = std::string("projectile");
+			entity->tag = "projectile";
+			entity->transform.scale = math::vec3(0.2f, 0.2f, 1.f);
+			if (Projectile* const projectile = entity->addComponent<Projectile>())
+			{
+				projectile->follow(m_finder.getTarget());
+			}
+			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
+			{
+				component->color = graphics::Color::Red;
+				component->type = GizmosRenderer::Type::Circle;
+			}
+		}
 		m_timer.reset();
 	}
 }
