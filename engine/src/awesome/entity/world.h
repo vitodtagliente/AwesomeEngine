@@ -21,7 +21,7 @@ class World : public Singleton<World>
 public:
 
 	World();
-	~World() = default;
+	~World();
 
 	void update(double deltaTime);
 	void render(graphics::Renderer& renderer);

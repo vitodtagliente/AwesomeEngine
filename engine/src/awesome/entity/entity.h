@@ -18,7 +18,8 @@ namespace graphics
 class Entity
 {
 public:
-	Entity() = default;
+	Entity();
+	~Entity();
 
 	inline Entity* const getParent()const { return m_parent; }
 	inline const std::vector<Entity*>& getChildren() const { return m_children; }

@@ -3,6 +3,16 @@
 
 #include <awesome/graphics/renderer.h>
 
+Entity::Entity()
+{
+
+}
+
+Entity::~Entity()
+{
+
+}
+
 void Entity::prepareToSpawn(World& world)
 {
 }

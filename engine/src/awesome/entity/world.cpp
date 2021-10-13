@@ -9,6 +9,30 @@ World::World()
 {
 }
 
+World::~World()
+{
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		delete entity;
+	}
+	m_entities.clear();
+
+	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		delete entity;
+	}
+	m_pendingSpawnEntities.clear();
+
+	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		delete entity;
+	}
+	m_pendingDestroyEntities.clear();
+}
+
 void World::update(const double deltaTime)
 {
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
@@ -84,7 +108,7 @@ Entity* const World::spawn(const vec3& position)
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = new Entity;
+	Entity* const entity = new Entity();
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn(*this);
