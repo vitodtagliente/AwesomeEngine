@@ -1,13 +1,13 @@
 #include "timer.h"
 
-Timer::Timer(double time)
+Timer::Timer(const double time)
 	: m_time(time)
 	, m_timer(time)
 	, m_canTick(true)
 {
 }
 
-void Timer::tick(double deltaTime)
+void Timer::tick(const double deltaTime)
 {
 	if (m_timer > 0 && m_canTick)
 	{
@@ -36,7 +36,7 @@ void Timer::stop()
 	m_canTick = false;
 }
 
-void Timer::configure(double time)
+void Timer::configure(const double time)
 {
 	m_timer = m_time = time;
 }

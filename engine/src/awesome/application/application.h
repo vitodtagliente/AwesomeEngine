@@ -17,6 +17,11 @@ class Application : public Singleton<Application>
 {
 public:
 
+	struct Settings
+	{
+
+	};
+
 	class Module
 	{
 	public:

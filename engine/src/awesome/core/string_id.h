@@ -23,19 +23,12 @@ public:
 
 	string_id();
 	string_id(const std::string& data);
-	~string_id();
+	~string_id() = default;
 
 	inline const std::string& data() const { return m_data; }
 
-	inline bool operator== (const string_id& other) const
-	{
-		return m_hash == other.m_hash;
-	}
-
-	inline bool operator!= (const string_id& other) const
-	{
-		return m_hash != other.m_hash;
-	}
+	bool operator== (const string_id& other) const;
+	bool operator!= (const string_id& other) const;
 
 	static string_id unique();
 
