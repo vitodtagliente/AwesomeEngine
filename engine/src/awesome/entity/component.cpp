@@ -12,6 +12,11 @@ Component::Component()
 {
 }
 
+World* const Component::getWorld() const
+{
+	return m_owner ? m_owner->getWorld() : nullptr;
+}
+
 void Component::attach(Entity* const entity)
 {
 	m_owner = entity;

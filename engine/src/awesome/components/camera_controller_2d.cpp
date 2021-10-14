@@ -15,7 +15,7 @@ CameraController2d::CameraController2d()
 {
 }
 
-void CameraController2d::update(World& world, double deltaTime)
+void CameraController2d::update(double deltaTime)
 {
 	Input* const input = Input::instance();
 	if (!m_dragPosition.has_value())

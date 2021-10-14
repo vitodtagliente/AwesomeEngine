@@ -18,17 +18,17 @@ void Minion::init()
 
 }
 
-void Minion::update(World& world, double deltaTime)
+void Minion::update(double deltaTime)
 {
 	if (m_navigator.isCompleted())
 	{
-		world.destroy(this->getOwner());
+		getWorld()->destroy(this->getOwner());
 		return;
 	}
 
 	if (!m_navigator.isValid())
 	{
-		Path* const path = Path::findOrRandom(world, "");
+		Path* const path = Path::findOrRandom(*getWorld(), "");
 		if (path == nullptr) return;
 		m_navigator.follow(path);
 	}

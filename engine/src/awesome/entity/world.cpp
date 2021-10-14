@@ -38,7 +38,7 @@ void World::update(const double deltaTime)
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
 		Entity* const entity = *it;
-		entity->update(*this, deltaTime);
+		entity->update(deltaTime);
 	}
 
 	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
@@ -108,10 +108,10 @@ Entity* const World::spawn(const vec3& position)
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = new Entity();
+	Entity* const entity = new Entity(this);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn(*this);
+	entity->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(entity);
 
 	return entity;

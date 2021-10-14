@@ -21,7 +21,7 @@ class CameraController2d : public Component
 public:
 	CameraController2d();
 
-	void update(class World& world, double deltaTime) override;
+	void update(double deltaTime) override;
 	void render(graphics::Renderer& renderer) override;
 	void inspect(editor::Context& context) override;
 

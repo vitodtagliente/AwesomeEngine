@@ -11,7 +11,7 @@ Projectile::Projectile()
 {
 }
 
-void Projectile::update(World& world, double deltaTime)
+void Projectile::update(double deltaTime)
 {
 	if (m_target == nullptr) return;
 
@@ -20,7 +20,7 @@ void Projectile::update(World& world, double deltaTime)
 
 	if (getOwner()->transform.position.distance(m_target->transform.position) < 0.2f)
 	{
-		world.destroy(getOwner());
+		getWorld()->destroy(getOwner());
 	}
 }
 

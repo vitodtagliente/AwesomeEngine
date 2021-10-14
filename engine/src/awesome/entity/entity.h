@@ -3,8 +3,9 @@
 
 #include <string>
 #include <vector>
+
 #include <awesome/core/string_id.h>
-#include <vdtmath/transform.h>
+#include <awesome/math/transform.h>
 
 #include "component.h"
 
@@ -18,16 +19,20 @@ namespace graphics
 class Entity
 {
 public:
-	Entity();
+	Entity(World* const world);
 	~Entity();
 
-	inline Entity* const getParent()const { return m_parent; }
+	inline const string_id& getId() const { return m_id; }
+	inline World* const getWorld() const { return m_world; }
+	inline Entity* const getParent() const { return m_parent; }
 	inline const std::vector<Entity*>& getChildren() const { return m_children; }
+	inline const std::vector<Component*>& getComponents() const { return m_components; }
+	inline std::vector<Component*>& getComponents() { return m_components; }
 
-	void prepareToSpawn(World& world);
+	void prepareToSpawn();
 	void prepareToDestroy();
 	void setParent(Entity* const entity);
-	void update(World& world, double deltaTime);
+	void update(double deltaTime);
 	void render(graphics::Renderer& renderer);
 
 	template <typename T = Component>
@@ -45,7 +50,7 @@ public:
 	}
 
 	template <typename T = Component>
-	T* const getComponent() const
+	T* const findComponent() const
 	{
 		for (Component* const component : m_components)
 		{
@@ -75,6 +80,7 @@ public:
 private:
 
 	string_id m_id;
+	World* const m_world;
 	Entity* m_parent;
 	std::vector<Entity*> m_children;
 	std::vector<Component*> m_components;

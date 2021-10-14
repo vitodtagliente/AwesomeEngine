@@ -23,7 +23,7 @@ WaveManager::WaveManager()
 {
 }
 
-void WaveManager::update(World& world, double deltatime)
+void WaveManager::update(double deltatime)
 {
 	if (m_active)
 	{
@@ -35,11 +35,11 @@ void WaveManager::update(World& world, double deltatime)
 			{
 				const Wave& nextWave = m_waves[m_waveIndex];
 				m_timer.configure(nextWave.duration);
-				std::async([&world, nextWave]() 
+				std::async([world = getWorld(), nextWave]() 
 					{
 						for (int i = 0; i < nextWave.numOfMinions; ++i)
 						{
-							Entity* const entity = world.spawn(math::vec3(math::random(-12.f, -2.f), 0.f, 0.f), math::quaternion::identity);
+							Entity* const entity = world->spawn(math::vec3(math::random(-12.f, -2.f), 0.f, 0.f), math::quaternion::identity);
 							entity->name = std::string("minion");
 							entity->tag = "minion";
 							entity->addComponent<Minion>();

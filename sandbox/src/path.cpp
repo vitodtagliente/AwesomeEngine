@@ -39,7 +39,7 @@ Path* const Path::findOrRandom(World& world, const std::string& name)
 	for (auto it = entities.begin(); it != entities.end(); ++it)
 	{
 		Entity* const entity = *it;
-		Path* const path = entity->getComponent<Path>();
+		Path* const path = entity->findComponent<Path>();
 		if (path == nullptr)
 		{
 			continue;

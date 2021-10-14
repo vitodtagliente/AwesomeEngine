@@ -19,7 +19,7 @@ public:
 	Minion();
 
 	void init() override;
-	void update(class World& world, double deltaTime) override;
+	void update(double deltaTime) override;
 	void inspect(editor::Context& context) override;
 
 private:

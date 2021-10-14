@@ -35,7 +35,7 @@ class WaveManager : public Component
 public:
 	WaveManager();
 
-	void update(World& world, double deltatime) override;
+	void update(double deltatime) override;
 	void inspect(editor::Context& context) override;
 
 	inline bool isActive() const { return m_active; }
@@ -47,8 +47,6 @@ public:
 	void start();
 
 private:
-	void spawnWave(World& world, const Wave& wave);
-
 	bool m_active;
 	std::vector<Wave> m_waves;
 	int m_waveIndex;

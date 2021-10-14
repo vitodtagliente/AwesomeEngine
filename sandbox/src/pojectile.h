@@ -16,7 +16,7 @@ class Projectile : public Component
 public:
 	Projectile();
 
-	void update(class World& world, double deltaTime) override;
+	void update(double deltaTime) override;
 	void inspect(editor::Context& context) override;
 
 	void follow(Entity* const target);

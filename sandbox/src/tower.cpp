@@ -22,15 +22,15 @@ void Tower::init()
 {
 }
 
-void Tower::update(World& world, double deltaTime)
+void Tower::update(double deltaTime)
 {
-	m_finder.check(world, getOwner()->transform.position);
+	m_finder.check(*getWorld(), getOwner()->transform.position);
 	m_timer.tick(deltaTime);
 
 	if (m_timer.isExpired() && m_finder.hasTarget())
 	{
 		{
-			Entity* const entity = world.spawn(getOwner()->transform.position, math::quaternion::identity);
+			Entity* const entity = getWorld()->spawn(getOwner()->transform.position, math::quaternion::identity);
 			entity->name = std::string("projectile");
 			entity->tag = "projectile";
 			entity->transform.scale = math::vec3(0.2f, 0.2f, 1.f);

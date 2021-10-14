@@ -24,6 +24,6 @@ public:
 	bool pixelPerfect;
 	int pixelsPerUnit;
 
-	void update(class World& world, double deltaTime) override;
+	void update(double deltaTime) override;
 	void inspect(editor::Context& context) override;
 };

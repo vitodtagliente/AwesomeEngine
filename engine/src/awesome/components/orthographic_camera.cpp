@@ -17,7 +17,7 @@ OrthographicCamera::OrthographicCamera()
 
 }
 
-void OrthographicCamera::update(World& world, const double deltaTime)
+void OrthographicCamera::update(const double deltaTime)
 {
 	Canvas* const canvas = Canvas::instance();
 	graphics::Context* const context = graphics::Context::instance();
