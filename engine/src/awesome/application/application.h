@@ -29,7 +29,7 @@ public:
 		virtual void shutdown() {}
 		virtual void update(double /*deltaTime*/) {}
 		virtual void preRendering() {}
-		virtual void render(graphics::Renderer& /*renderer*/) {}
+		virtual void render(graphics::Renderer* const /*renderer*/) {}
 		virtual void postRendering() {}
 	};
 
@@ -61,9 +61,7 @@ public:
 	}
 
 private:
-	void init();
-	void update();
-	void render();
+	void registerModules();
 
 	std::vector<Module*> m_modules;
 	Canvas m_canvas;

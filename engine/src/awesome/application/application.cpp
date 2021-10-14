@@ -49,19 +49,10 @@ int Application::run()
 	m_canvas.open();
 
 	gladLoadGL();
-
-	Context context;
-
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(m_canvas.getHandler()), true);
-	ImGui_ImplOpenGL3_Init("#version 330 core");
-
+	
 	World m_world;
 
+	Context context;
 	graphics::Renderer renderer(context);
 
 	TextureLibrary library;
@@ -77,7 +68,13 @@ int Application::run()
 		entity->addComponent<CameraController2d>();
 	}
 
-	init();
+	registerModules();
+
+	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+	{
+		Module* const module = *it;
+		module->startup();
+	}
 
 	Timer fpsTimer(1.f / 60);
 	double deltatime = 0.0;
@@ -106,7 +103,7 @@ int Application::run()
 		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 		{
 			Module* const module = *it;
-			module->render(renderer);
+			module->render(&renderer);
 		}
 
 		renderer.flush();
@@ -120,29 +117,16 @@ int Application::run()
 		deltatime = 0.0;
 	}
 
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+	{
+		Module* const module = *it;
+		module->shutdown();
+	}
 
 	return 0;
 }
 
-void Application::init()
+void Application::registerModules()
 {
 	addModule<editor::Editor>();
-
-	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
-	{
-		Module* const module = *it;
-		module->startup();
-	}
-}
-
-void Application::update()
-{
-
-}
-
-void Application::render()
-{
 }

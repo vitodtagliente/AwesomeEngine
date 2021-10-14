@@ -24,7 +24,7 @@ namespace editor
 		void startup() override;
 		void shutdown() override;
 		void preRendering() override;
-		void render(graphics::Renderer& renderer) override;
+		void render(graphics::Renderer* const renderer) override;
 		void postRendering() override;
 
 		template <typename T = Window>

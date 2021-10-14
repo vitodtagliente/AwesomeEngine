@@ -24,6 +24,14 @@ namespace editor
 
 	void Editor::startup()
 	{
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance()->getHandler()), true);
+		ImGui_ImplOpenGL3_Init("#version 330 core");
+
 		addWindow<EntityInspector>();
 		addWindow<Performance>();
 		addWindow<RendererInspector>();
@@ -32,6 +40,9 @@ namespace editor
 
 	void Editor::shutdown()
 	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	void Editor::preRendering()
@@ -41,7 +52,7 @@ namespace editor
 		ImGui::NewFrame();
 	}
 
-	void Editor::render(graphics::Renderer& renderer)
+	void Editor::render(graphics::Renderer* const renderer)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
