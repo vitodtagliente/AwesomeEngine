@@ -1,10 +1,10 @@
 #include <iostream>
-#include <glad/glad.h>
 #include "application.h"
 
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/gizmos.h>
+#include <awesome/graphics/graphics.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -26,6 +26,7 @@ using namespace graphics;
 Application::Application(const std::initializer_list<Module*> modules)
 	: m_modules()
 {
+	registerModules();
 	for (auto it = modules.begin(); it != modules.end(); ++it)
 	{
 		Module* const module = *it;
@@ -43,15 +44,8 @@ int Application::run()
 	{
 		return -1;
 	}
-
-	gladLoadGL();
 	
 	World m_world;
-
-	Context context;
-	graphics::Renderer renderer(context);
-
-	registerModules();
 
 	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 	{
@@ -74,28 +68,28 @@ int Application::run()
 		m_input.update();
 		m_world.update(deltatime);
 
-		renderer.begin();
-		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
-			Module* const module = *it;
-			module->preRendering();
-		}
+			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			{
+				Module* const module = *it;
+				module->preRendering();
+			}
 
-		m_world.render(&renderer);
+			m_world.render(renderer);
 
-		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
-		{
-			Module* const module = *it;
-			module->render(&renderer);
-		}
+			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			{
+				Module* const module = *it;
+				module->render(renderer);
+			}
 
-		renderer.flush();
-
-		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
-		{
-			Module* const module = *it;
-			module->postRendering();
-		}
+			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			{
+				Module* const module = *it;
+				module->postRendering();
+			}
+		}		
 
 		deltatime = 0.0;
 	}
@@ -111,5 +105,6 @@ int Application::run()
 
 void Application::registerModules()
 {
+	addModule<graphics::Graphics>();
 	addModule<editor::Editor>();
 }
