@@ -63,8 +63,6 @@ void World::update(const double deltaTime)
 
 void World::render(graphics::Renderer* const renderer)
 {
-	if (renderer == nullptr) return;
-
 	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
 		Entity* const entity = *it;

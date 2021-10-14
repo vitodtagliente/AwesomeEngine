@@ -38,13 +38,6 @@ public:
 
 	int run();
 
-	inline const Canvas& getCanvas() const { return m_canvas; }
-	inline Canvas& getCanvas() { return m_canvas; }
-	inline const Input& getInput() const { return m_input; }
-	inline Input& getInput() { return m_input; }
-	inline const Time& getTime() const { return m_time; }
-	inline Time& getTime() { return m_time; }
-
 	template <typename T = Module>
 	std::vector<T*> getModules() const
 	{
