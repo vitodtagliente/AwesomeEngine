@@ -33,7 +33,7 @@ public:
 	void prepareToDestroy();
 	void setParent(Entity* const entity);
 	void update(double deltaTime);
-	void render(graphics::Renderer& renderer);
+	void render(graphics::Renderer* const renderer);
 
 	template <typename T = Component>
 	std::vector<T*> getComponents() const

@@ -19,11 +19,11 @@ void Path::init()
 	getOwner()->tag = "path";
 }
 
-void Path::render(graphics::Renderer& renderer)
+void Path::render(graphics::Renderer* const renderer)
 {
 	for (size_t i = 0; i < steps.size() - 1; ++i)
 	{
-		renderer.getGizmos().line(steps[i], steps[i + 1], color);
+		renderer->getGizmos().line(steps[i], steps[i + 1], color);
 	}
 }
 

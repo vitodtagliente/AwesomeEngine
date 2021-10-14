@@ -33,7 +33,7 @@ public:
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
-	virtual void render(graphics::Renderer& /*renderer*/) {}
+	virtual void render(graphics::Renderer* const /*renderer*/) {}
 	virtual void inspect(editor::Context& context);
 
 private:

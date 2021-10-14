@@ -30,6 +30,6 @@ public:
 	Type type;
 	graphics::Color color;
 
-	void render(graphics::Renderer& renderer) override;
+	void render(graphics::Renderer* const renderer) override;
 	void inspect(editor::Context& context) override;
 };

@@ -24,7 +24,7 @@ public:
 	Path();
 
 	void init() override;
-	void render(graphics::Renderer& renderer) override;
+	void render(graphics::Renderer* const renderer) override;
 	void inspect(editor::Context& context) override;
 
 	static Path* const findOrRandom(class World& world, const std::string& name);

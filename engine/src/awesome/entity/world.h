@@ -24,7 +24,7 @@ public:
 	~World();
 
 	void update(double deltaTime);
-	void render(graphics::Renderer& renderer);
+	void render(graphics::Renderer* const renderer);
 
 	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;

@@ -23,6 +23,6 @@ public:
 	class graphics::Texture* texture;
 	graphics::TextureRect rect;
 
-	void render(graphics::Renderer& renderer) override;
+	void render(graphics::Renderer* const renderer) override;
 	void inspect(editor::Context& context) override;
 };

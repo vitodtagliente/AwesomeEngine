@@ -12,12 +12,12 @@ GizmosRenderer::GizmosRenderer()
 
 }
 
-void GizmosRenderer::render(graphics::Renderer& renderer)
+void GizmosRenderer::render(graphics::Renderer* const renderer)
 {
 	switch (type)
 	{
-	case Type::Rect: renderer.getGizmos().rect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
-	case Type::Circle: renderer.getGizmos().circle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
+	case Type::Rect: renderer->getGizmos().rect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
+	case Type::Circle: renderer->getGizmos().circle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
 	default: break;
 	}
 }

@@ -13,11 +13,11 @@ SpriteRenderer::SpriteRenderer()
 
 }
 
-void SpriteRenderer::render(graphics::Renderer& renderer)
+void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
 	if (texture != nullptr)
 	{
-		renderer.drawSprite(texture, getOwner()->transform.matrix(), rect);
+		renderer->drawSprite(texture, getOwner()->transform.matrix(), rect);
 	}
 }
 

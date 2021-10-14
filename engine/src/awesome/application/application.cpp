@@ -151,13 +151,13 @@ int Application::run()
 			Module* const module = *it;
 			module->preRendering();
 		}
-		
+
+		m_world.render(&renderer);
 		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 		{
 			Module* const module = *it;
 			module->render(renderer);
 		}
-		m_world.render(renderer);
 
 		renderer.flush();
 

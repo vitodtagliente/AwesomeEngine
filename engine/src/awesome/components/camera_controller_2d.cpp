@@ -42,9 +42,9 @@ void CameraController2d::update(double deltaTime)
 	}
 }
 
-void CameraController2d::render(graphics::Renderer& renderer)
+void CameraController2d::render(graphics::Renderer* const renderer)
 {
-	renderer.pushCamera(getOwner()->transform.matrix());
+	renderer->pushCamera(getOwner()->transform.matrix());
 }
 
 void CameraController2d::inspect(editor::Context& context)

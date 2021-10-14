@@ -48,13 +48,13 @@ void Tower::update(double deltaTime)
 	}
 }
 
-void Tower::render(graphics::Renderer& renderer)
+void Tower::render(graphics::Renderer* const renderer)
 {
 	const math::vec3& position = getOwner()->transform.position;
-	renderer.getGizmos().circle(position, m_finder.getRadius(), graphics::Color::Yellow);
+	renderer->getGizmos().circle(position, m_finder.getRadius(), graphics::Color::Yellow);
 	if (m_finder.hasTarget())
 	{
-		renderer.getGizmos().line(position, m_finder.getTarget()->transform.position, graphics::Color::Red);
+		renderer->getGizmos().line(position, m_finder.getTarget()->transform.position, graphics::Color::Red);
 	}
 }
 
