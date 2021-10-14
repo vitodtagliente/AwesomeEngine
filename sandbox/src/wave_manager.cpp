@@ -39,7 +39,7 @@ void WaveManager::update(double deltatime)
 						for (int i = 0; i < nextWave.numOfMinions; ++i)
 						{
 							Entity* const entity = world->spawn(math::vec3(math::random(-12.f, -2.f), 0.f, 0.f), math::quaternion::identity);
-							entity->name = std::string("minion");
+							entity->name = std::string("minion") + std::to_string(i);
 							entity->tag = "minion";
 							entity->addComponent<Minion>();
 							if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
