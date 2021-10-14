@@ -68,21 +68,6 @@ int Application::run()
 	library.add("sheet", "../assets/spritesheet.png");
 	context.testTexture = library.get("sheet");
 
-	const auto& randomizeSprites = [](World& world, const float w, const float h) -> void
-	{
-		for (auto it = world.getEntities().begin(); it != world.getEntities().end(); ++it)
-		{
-			Entity* const entity = *it;
-			if (entity->transform.isStatic) continue;
-			if (entity->tag != "sprite") continue;
-
-			entity->transform.position = math::vec3(math::random(-w, w), math::random(-h, h), 0.0f);
-			entity->transform.rotation.z = math::random(0.f, 360.f);
-			entity->transform.scale = math::vec3(math::random(0.7f, 1.4f), math::random(0.7f, 1.4f), 1.f);
-		}
-	};
-
-
 	// camera setup
 	{
 		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
@@ -92,29 +77,8 @@ int Application::run()
 		entity->addComponent<CameraController2d>();
 	}
 
-	// sprites setup
-	// for (int i = 0; i < 100; ++i)
-	// {
-	// 	const float spriteSize = 1.0f / 11;
-	// 	{
-	// 		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
-	// 		entity->name = std::string("entity") + std::to_string(i + 1);
-	// 		entity->tag = "sprite";
-	// 		if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
-	// 		{
-	// 			component->texture = library.get("sheet");
-	// 			component->rect = TextureRect(spriteSize * 9, spriteSize * math::random(4, 10), spriteSize, spriteSize);
-	// 		}
-	// 		if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
-	// 		{
-	// 			component->type = GizmosRenderer::Type::Rect;
-	// 		}
-	// 	}
-	// }
-
 	init();
 
-	Timer generateTimer(1.0);
 	Timer fpsTimer(1.f / 60);
 	double deltatime = 0.0;
 
@@ -127,23 +91,8 @@ int Application::run()
 
 		fpsTimer.reset();
 		m_canvas.update();
-		const float w = m_canvas.getWidth() / 2 / 32;
-		const float h = m_canvas.getHeight() / 2 / 32;
-
-		if (m_input.isKeyPressed(KeyCode::A))
-		{
-			Entity* const entity = m_world.spawn(math::vec3::zero, {});
-			entity->name = "entity-" + std::to_string(++id);
-		}
 		m_input.update();
 		m_world.update(deltatime);
-
-		generateTimer.tick(deltatime);
-		if (generateTimer.isExpired())
-		{
-			randomizeSprites(m_world, w, h);
-			generateTimer.reset();
-		}
 
 		renderer.begin();
 		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
@@ -153,6 +102,7 @@ int Application::run()
 		}
 
 		m_world.render(&renderer);
+
 		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 		{
 			Module* const module = *it;

@@ -2,9 +2,9 @@
 #pragma once
 
 #include <optional>
-#include <vdtmath/vector2.h>
 
 #include <awesome/entity/component.h>
+#include <awesome/math/vector2.h>
 
 namespace editor
 {
@@ -28,5 +28,5 @@ public:
 	float speed;
 
 private:
-	std::optional<math::vec2> m_dragPosition;
+	std::optional<vec2> m_dragPosition;
 };
