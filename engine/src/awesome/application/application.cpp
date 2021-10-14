@@ -44,9 +44,10 @@ Application::~Application()
 
 int Application::run()
 {
-	static int id = 0;
-
-	m_canvas.open();
+	if (!m_canvas.open())
+	{
+		return -1;
+	}
 
 	gladLoadGL();
 	
@@ -54,19 +55,6 @@ int Application::run()
 
 	Context context;
 	graphics::Renderer renderer(context);
-
-	TextureLibrary library;
-	library.add("sheet", "../assets/spritesheet.png");
-	context.testTexture = library.get("sheet");
-
-	// camera setup
-	{
-		Entity* const entity = m_world.spawn(math::vec3::zero, math::quaternion::identity);
-		entity->name = std::string("camera");
-		entity->tag = "camera";
-		entity->addComponent<OrthographicCamera>();
-		entity->addComponent<CameraController2d>();
-	}
 
 	registerModules();
 

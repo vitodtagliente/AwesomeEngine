@@ -16,6 +16,7 @@ namespace graphics
 	Context::Context()
 		: camera(math::mat4::identity)
 		, m_shaderLibrary()
+		, m_textureLibrary()
 		, m_gizmosRenderingData()
 		, m_spritebatchRenderingData()
 		, m_gizmosProgram()
@@ -239,37 +240,6 @@ namespace graphics
 			ib.fillData(indices, sizeof(indices));
 
 			m_colorProgram->bind();
-
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		}
-
-		// hello texture
-		if (false)
-		{
-			float vertices[] = {
-				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-				-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
-			};
-
-			unsigned int indices[] = {
-				0, 1, 3, 1, 2, 3
-			};
-
-			Renderable renderable;
-			VertexBuffer& vb = *renderable.addVertexBuffer(Renderable::names::MainBuffer, sizeof(vertices), BufferUsageMode::Static);
-			vb.fillData(vertices, sizeof(vertices));
-			VertexBufferLayout& layout = vb.layout;
-			layout.push(VertexBufferElement("position", VertexBufferElement::Type::Float, 3));
-			layout.push(VertexBufferElement("coords", VertexBufferElement::Type::Float, 2));
-			IndexBuffer& ib = *renderable.addIndexBuffer(Renderable::names::MainBuffer, sizeof(indices), BufferUsageMode::Static);
-			ib.fillData(indices, sizeof(indices));
-			renderable.bind();
-
-			m_textureProgram->bind();
-			testTexture->bind(0);
-			m_spritebatchProgram->set("u_texture", 0);
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}

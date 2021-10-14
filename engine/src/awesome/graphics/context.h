@@ -10,6 +10,7 @@
 #include "renderable.h"
 #include "shader_program.h"
 #include "shader_library.h"
+#include "texture_library.h".h"
 #include "texture_rect.h"
 
 namespace graphics
@@ -29,18 +30,19 @@ namespace graphics
 		void test();
 
 		math::mat4 camera;
-		Texture* testTexture;
 
 	private:
 
 		ShaderProgram* const createProgram(const std::string& name);
 
 		ShaderLibrary m_shaderLibrary;
+		TextureLibrary m_textureLibrary;
 		Renderable m_gizmosRenderingData;
 		Renderable m_spritebatchRenderingData;
 		ShaderProgram* m_gizmosProgram;
 		ShaderProgram* m_colorProgram;
 		ShaderProgram* m_spritebatchProgram;
 		ShaderProgram* m_textureProgram;
+
 	};
 }

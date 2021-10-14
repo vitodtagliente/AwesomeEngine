@@ -1,6 +1,8 @@
 #include "game.h"
 
+#include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
+#include <awesome/components/orthographic_camera.h>
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -15,8 +17,18 @@
 
 void Game::startup()
 {
+	graphics::TextureLibrary::instance()->add("sheet", "../assets/spritesheet.png");
+
 	if (World* const world = World::instance())
 	{
+		// camera setup
+		{
+			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
+			entity->name = std::string("camera");
+			entity->tag = "camera";
+			entity->addComponent<OrthographicCamera>();
+			entity->addComponent<CameraController2d>();
+		}
 		// path setup
 		{
 			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
