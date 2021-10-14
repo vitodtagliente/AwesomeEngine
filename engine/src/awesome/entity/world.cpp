@@ -64,10 +64,10 @@ void World::flush()
 		auto destroyIt = std::find(m_entities.begin(), m_entities.end(), *it);
 		if (destroyIt != m_entities.end())
 		{
-			Entity* const entity = *destroyIt;
-			entity->prepareToDestroy();
+			(*destroyIt)->prepareToDestroy();
+			delete *destroyIt;
+			*destroyIt = nullptr;
 			m_entities.erase(destroyIt);
-			delete entity;
 		}
 	}
 	m_pendingDestroyEntities.clear();

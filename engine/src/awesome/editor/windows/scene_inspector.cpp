@@ -20,13 +20,15 @@ namespace editor
 
 	void SceneInspector::render(Context& context)
 	{
-		World* const world = World::instance();
-		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
+		if (World* const world = World::instance())
 		{
-			Entity* const entity = *it;
-			if (context.selectable(entity->name, entity == m_selectedEntity))
+			for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
 			{
-				m_selectedEntity = entity;
+				Entity* const entity = *it;
+				if (context.selectable(entity->name, entity == m_selectedEntity))
+				{
+					m_selectedEntity = entity;
+				}
 			}
 		}
 	}
