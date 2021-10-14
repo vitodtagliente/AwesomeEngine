@@ -2,11 +2,6 @@
 #include <glad/glad.h>
 #include "application.h"
 
-#include <imgui.h>
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD 
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
-
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/gizmos.h>

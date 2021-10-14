@@ -42,7 +42,7 @@ namespace editor
 					Component* const component = *it;
 					if (context.collapsingHeader(typeid(*component).name()))
 					{
-						component->inspect(context);
+						context.input("enabled", &component->enabled);
 					}
 				}
 			}

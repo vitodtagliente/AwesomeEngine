@@ -2,7 +2,6 @@
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
-#include <awesome/editor/context.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
@@ -45,10 +44,4 @@ void CameraController2d::update(double deltaTime)
 void CameraController2d::render(graphics::Renderer* const renderer)
 {
 	renderer->pushCamera(getOwner()->transform.matrix());
-}
-
-void CameraController2d::inspect(editor::Context& context)
-{
-	Component::inspect(context);
-	context.input("speed", &speed);
 }

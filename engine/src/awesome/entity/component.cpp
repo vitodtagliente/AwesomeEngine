@@ -28,8 +28,3 @@ void Component::detach()
 	uninit();
 	m_owner = nullptr;
 }
-
-void Component::inspect(editor::Context& context)
-{
-	context.input("enabled", &enabled);
-}

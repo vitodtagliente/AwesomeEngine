@@ -4,11 +4,6 @@
 class Entity;
 class World;
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -34,7 +29,6 @@ public:
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 	virtual void render(graphics::Renderer* const /*renderer*/) {}
-	virtual void inspect(editor::Context& context);
 
 private:
 	Entity* m_owner;

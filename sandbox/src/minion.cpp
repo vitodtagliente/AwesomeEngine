@@ -1,6 +1,5 @@
 #include "minion.h"
 
-#include <awesome/editor/context.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
@@ -39,10 +38,4 @@ void Minion::update(double deltaTime)
 		const math::vec3 direction = (step - getOwner()->transform.position).normalize();
 		getOwner()->transform.position += direction * m_speed * deltaTime;
 	}
-}
-
-void Minion::inspect(editor::Context& context)
-{
-	Component::inspect(context);
-	context.input("speed", &m_speed);
 }

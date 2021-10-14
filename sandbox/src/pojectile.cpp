@@ -1,6 +1,5 @@
 #include "pojectile.h"
 
-#include <awesome/editor/context.h>
 #include <awesome/math/vector3.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
@@ -22,11 +21,6 @@ void Projectile::update(double deltaTime)
 	{
 		getWorld()->destroy(getOwner());
 	}
-}
-
-void Projectile::inspect(editor::Context& context)
-{
-	context.input("speed", &m_speed);
 }
 
 void Projectile::follow(Entity* const target)

@@ -34,12 +34,12 @@ namespace editor
 		ImGui::InputText(name.c_str(), const_cast<char*>(value->c_str()), size);
 	}
 
-	void Context::input(const std::string& name, math::vec2* value)
+	void Context::input(const std::string& name, vec2* value)
 	{
 		ImGui::InputFloat2(name.c_str(), value->data);
 	}
 
-	void Context::input(const std::string& name, math::vec3* value)
+	void Context::input(const std::string& name, vec3* value)
 	{
 		ImGui::InputFloat3(name.c_str(), value->data);
 	}

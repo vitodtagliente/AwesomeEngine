@@ -1,11 +1,10 @@
 #include "orthographic_camera.h"
 
 #include <awesome/application/canvas.h>
-#include <awesome/editor/context.h>
+#include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/entity/world.h>
-#include <vdtmath/matrix4.h>
+#include <awesome/math/matrix4.h>
 
 OrthographicCamera::OrthographicCamera()
 	: Component()
@@ -33,13 +32,4 @@ void OrthographicCamera::update(const double deltaTime)
 		const float h = pixelPerfect ? static_cast<float>(height) / 2 / pixelsPerUnit : static_cast<float>(height) / 2;
 		context->camera = math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
 	}
-}
-
-void OrthographicCamera::inspect(editor::Context& context)
-{
-	Component::inspect(context);
-	context.input("nearPlane", &nearPlane);
-	context.input("farPlane", &farPlane);
-	context.input("pixelPerfect", &pixelPerfect);
-	context.input("pixelsPerUnit", &pixelsPerUnit);
 }

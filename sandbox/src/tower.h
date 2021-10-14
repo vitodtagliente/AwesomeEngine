@@ -9,11 +9,6 @@
 
 #include "target_finder.h"
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -27,7 +22,6 @@ public:
 	void init() override;
 	void update(double deltaTime) override;
 	void render(graphics::Renderer* const renderer) override;
-	void inspect(editor::Context& context) override;
 
 private:
 	TargetFinder m_finder;

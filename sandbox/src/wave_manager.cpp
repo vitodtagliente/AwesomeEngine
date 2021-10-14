@@ -4,7 +4,6 @@
 
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/sprite_renderer.h>
-#include <awesome/editor/context.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 #include <awesome/graphics/texture_rect.h>
@@ -59,11 +58,6 @@ void WaveManager::update(double deltatime)
 			}
 		}
 	}
-}
-
-void WaveManager::inspect(editor::Context& context)
-{
-	Component::inspect(context);
 }
 
 void WaveManager::push(const Wave& wave)

@@ -6,11 +6,6 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -23,7 +18,6 @@ public:
 
 	void update(double deltaTime) override;
 	void render(graphics::Renderer* const renderer) override;
-	void inspect(editor::Context& context) override;
 
 	float speed;
 

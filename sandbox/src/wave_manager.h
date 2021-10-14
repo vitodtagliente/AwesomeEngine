@@ -8,11 +8,6 @@
 #include <awesome/entity/component.h>
 #include <vdtmath/vector3.h>
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -36,7 +31,6 @@ public:
 	WaveManager();
 
 	void update(double deltatime) override;
-	void inspect(editor::Context& context) override;
 
 	inline bool isActive() const { return m_active; }
 	inline const std::vector<Wave>& getWaves() const { return m_waves; }

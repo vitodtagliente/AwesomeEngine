@@ -3,11 +3,6 @@
 
 #include <awesome/entity/component.h>
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -25,5 +20,4 @@ public:
 	int pixelsPerUnit;
 
 	void update(double deltaTime) override;
-	void inspect(editor::Context& context) override;
 };

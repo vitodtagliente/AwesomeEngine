@@ -20,7 +20,6 @@ public:
 
 	void init() override;
 	void update(double deltaTime) override;
-	void inspect(editor::Context& context) override;
 
 private:
 	PathNavigator m_navigator;

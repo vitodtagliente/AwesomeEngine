@@ -2,7 +2,6 @@
 
 #include <vdtmath/algorithm.h>
 
-#include <awesome/editor/context.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
@@ -25,11 +24,6 @@ void Path::render(graphics::Renderer* const renderer)
 	{
 		renderer->getGizmos().line(steps[i], steps[i + 1], color);
 	}
-}
-
-void Path::inspect(editor::Context& context)
-{
-	context.input("color", &color);
 }
 
 Path* const Path::findOrRandom(World& world, const std::string& name)

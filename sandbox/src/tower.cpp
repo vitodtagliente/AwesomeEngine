@@ -1,7 +1,6 @@
 #include "tower.h"
 
 #include <awesome/components/gizmos_renderer.h>
-#include <awesome/editor/context.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/gizmos.h>
 #include <awesome/graphics/renderer.h>
@@ -56,10 +55,4 @@ void Tower::render(graphics::Renderer* const renderer)
 	{
 		renderer->getGizmos().line(position, m_finder.getTarget()->transform.position, graphics::Color::Red);
 	}
-}
-
-void Tower::inspect(editor::Context& context)
-{
-	Component::inspect(context);
-
 }

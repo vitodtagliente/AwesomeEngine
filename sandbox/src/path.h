@@ -8,11 +8,6 @@
 #include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
 
-namespace editor
-{
-	class Context;
-}
-
 namespace graphics
 {
 	class Renderer;
@@ -25,7 +20,6 @@ public:
 
 	void init() override;
 	void render(graphics::Renderer* const renderer) override;
-	void inspect(editor::Context& context) override;
 
 	static Path* const findOrRandom(class World& world, const std::string& name);
 

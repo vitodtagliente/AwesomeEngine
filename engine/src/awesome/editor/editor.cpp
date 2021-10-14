@@ -32,10 +32,7 @@ namespace editor
 		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance()->getHandler()), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
 
-		addWindow<EntityInspector>();
-		addWindow<Performance>();
-		addWindow<RendererInspector>();
-		addWindow<SceneInspector>();
+		registerWindows();
 	}
 
 	void Editor::shutdown()
@@ -68,5 +65,13 @@ namespace editor
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+	
+	void Editor::registerWindows()
+	{
+		addWindow<EntityInspector>();
+		addWindow<Performance>();
+		addWindow<RendererInspector>();
+		addWindow<SceneInspector>();
 	}
 }

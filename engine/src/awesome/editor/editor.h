@@ -36,6 +36,8 @@ namespace editor
 		}
 
 	private:
+		void registerWindows();
+
 		Context m_context;
 		std::vector<Window*> m_windows;
 	};

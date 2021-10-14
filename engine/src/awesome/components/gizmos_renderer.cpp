@@ -1,6 +1,5 @@
 #include "gizmos_renderer.h"
 
-#include <awesome/editor/context.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
@@ -20,10 +19,4 @@ void GizmosRenderer::render(graphics::Renderer* const renderer)
 	case Type::Circle: renderer->getGizmos().circle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
 	default: break;
 	}
-}
-
-void GizmosRenderer::inspect(editor::Context& context)
-{
-	Component::inspect(context);
-	context.input("color", &color);
 }
