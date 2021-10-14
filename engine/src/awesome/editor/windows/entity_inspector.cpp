@@ -1,13 +1,11 @@
 #include "entity_inspector.h"
 
 #include <imgui.h>
+#include <typeinfo>
 
 #include <awesome/entity/entity.h>
 
 #include "../context.h"
-
-#include <typeinfo>
-
 #include "scene_inspector.h"
 
 namespace editor
