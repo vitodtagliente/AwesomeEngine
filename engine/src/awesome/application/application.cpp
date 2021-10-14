@@ -45,7 +45,7 @@ int Application::run()
 		return -1;
 	}
 	
-	World m_world;
+	World world;
 
 	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 	{
@@ -66,7 +66,7 @@ int Application::run()
 		fpsTimer.reset();
 		m_canvas.update();
 		m_input.update();
-		m_world.update(deltatime);
+		world.update(deltatime);
 
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
@@ -76,7 +76,7 @@ int Application::run()
 				module->preRendering();
 			}
 
-			m_world.render(renderer);
+			world.render(renderer);
 
 			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
 			{
@@ -91,6 +91,7 @@ int Application::run()
 			}
 		}		
 
+		world.flush();
 		deltatime = 0.0;
 	}
 

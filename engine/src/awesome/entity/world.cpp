@@ -40,7 +40,19 @@ void World::update(const double deltaTime)
 		Entity* const entity = *it;
 		entity->update(deltaTime);
 	}
+}
 
+void World::render(graphics::Renderer* const renderer)
+{
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	{
+		Entity* const entity = *it;
+		entity->render(renderer);
+	}
+}
+
+void World::flush()
+{
 	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
 	{
 		m_entities.push_back(*it);
@@ -59,15 +71,6 @@ void World::update(const double deltaTime)
 		}
 	}
 	m_pendingDestroyEntities.clear();
-}
-
-void World::render(graphics::Renderer* const renderer)
-{
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		entity->render(renderer);
-	}
 }
 
 std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const

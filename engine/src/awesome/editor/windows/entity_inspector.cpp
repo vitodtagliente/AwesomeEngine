@@ -25,7 +25,7 @@ namespace editor
 		if (SceneInspector* const inspector = SceneInspector::instance())
 		{
 			Entity* const entity = inspector->getSelectedEntity();
-			if (entity)
+			if (entity != nullptr)
 			{
 				context.input("name", &entity->name, 100);
 				context.input("tag", &entity->tag, 100);
