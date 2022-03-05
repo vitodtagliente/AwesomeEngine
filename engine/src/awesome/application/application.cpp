@@ -1,25 +1,11 @@
 #include <iostream>
 #include "application.h"
 
-#include <awesome/graphics/color.h>
-#include <awesome/graphics/context.h>
-#include <awesome/graphics/gizmos.h>
+#include <awesome/core/timer.h>
+#include <awesome/editor/editor.h>
+#include <awesome/entity/world.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/graphics/renderer.h>
-#include <awesome/graphics/texture.h>
-#include <awesome/graphics/texture_library.h>
-
-#include <vdtmath/math.h>
-#include <awesome/core/timer.h>
-#include <awesome/entity/entity.h>
-#include <awesome/entity/world.h>
-
-#include <awesome/components/camera_controller_2d.h>
-#include <awesome/components/gizmos_renderer.h>
-#include <awesome/components/orthographic_camera.h>
-#include <awesome/components/sprite_renderer.h>
-
-#include <awesome/editor/editor.h>
 
 using namespace graphics;
 

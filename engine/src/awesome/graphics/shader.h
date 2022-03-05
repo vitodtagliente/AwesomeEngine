@@ -13,6 +13,7 @@ namespace graphics
 		enum class Type
 		{
 			Vertex,
+			Geometry,
 			Fragment
 		};
 

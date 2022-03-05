@@ -5,6 +5,13 @@
 
 namespace graphics
 {
+	enum class IndexFormat
+	{
+		UInt32,
+		UInt16,
+		UInt8
+	};
+
 	class IndexBuffer : public Buffer
 	{
 	public:
