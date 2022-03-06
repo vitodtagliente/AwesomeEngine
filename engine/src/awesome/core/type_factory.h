@@ -2,37 +2,46 @@
 
 #include <climits>
 #include <cstdint>
+#include <functional>
+#include <map>
+#include <string>
 #include <type_traits>
 
 #include "typename.h"
 
-template <typename T = std::uintmax_t>
-constexpr std::enable_if_t<std::is_integral<T>::value, T> TypeFactoryId(const char* const string) noexcept
-{
-    constexpr auto N = sizeof(T);
-    T n{};
-    std::size_t i{};
-    while (string[i] && i < N)
-        n = (n << CHAR_BIT) | string[i++];
-    return (n << (N - i) * CHAR_BIT);
-}
+typedef std::function<void* ()> factory_constructor_t;
 
-template <long unsigned int id>
 struct TypeFactoryImp
 {
-    static void* instantiate()
-    {
-        return nullptr;
-    }
-};
+	static std::map<const char*, factory_constructor_t>& data()
+	{
+		static std::map<const char*, factory_constructor_t> s_register;
+		return s_register;
+	}
 
-#define REGISTER_TYPE(T) template <> struct TypeFactoryImp<TypeFactoryId(TypeName<T>::get())> { static void* instantiate() { return new Foo; } };
+	static void hook(const char* name, factory_constructor_t handler)
+	{
+		data().insert(std::make_pair(name, handler));
+	}
+};
 
 struct TypeFactory
 {
-    static void* instantiate(char* const name)
-    {
-        // return TypeFactoryImp<TypeFactoryId(name)>::instantiate();
-        return nullptr;
-    }
+	static void* instantiate(const char* name)
+	{
+		const auto& it = TypeFactoryImp::data().find(name);
+		if (it != TypeFactoryImp::data().end())
+		{
+			return it->second();
+		}
+		return nullptr;
+	}
+
+	template <typename T>
+	static T* instantiate()
+	{
+		return reinterpret_cast<T*>(instantiate(TypeName<T>::get()));
+	}
 };
+
+#define REGISTER_TYPE(T) TypeFactoryImp::hook(TypeName<T>::get(), []() -> void* { return new T(); });
