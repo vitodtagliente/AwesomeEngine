@@ -1,4 +1,5 @@
 /// Copyright (c) Vito Domenico Tagliente
+#pragma once
 
 #include <climits>
 #include <cstdint>

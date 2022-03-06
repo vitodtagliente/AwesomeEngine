@@ -3,6 +3,7 @@
 
 #include <optional>
 
+#include <awesome/core/typename.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
@@ -24,3 +25,5 @@ public:
 private:
 	std::optional<vec2> m_dragPosition;
 };
+
+TYPENAME(CameraController2d)

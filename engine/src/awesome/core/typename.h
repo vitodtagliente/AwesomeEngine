@@ -1,4 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
+#pragma once
+
+#include <typeinfo>
 
 template <typename T>
 struct TypeName
