@@ -1,6 +1,6 @@
 #include "string_id.h"
 
-#include <chrono>
+const string_id string_id::Invalid = {};
 
 string_id::string_id()
 	: m_hash()
@@ -29,11 +29,3 @@ bool string_id::operator!=(const string_id& other) const
 {
 	return m_hash != other.m_hash;
 }
-
-string_id string_id::unique()
-{
-	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-	return string_id(std::to_string(now.time_since_epoch().count()));
-}
-
-const string_id string_id::Invalid = {};

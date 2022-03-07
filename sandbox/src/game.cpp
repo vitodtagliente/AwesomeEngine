@@ -1,9 +1,12 @@
 #include "game.h"
 
+#include <iostream>
+
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/orthographic_camera.h>
 #include <awesome/components/sprite_renderer.h>
+#include <awesome/data/archive.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 #include <awesome/graphics/texture_rect.h>
@@ -17,6 +20,17 @@
 
 void Game::startup()
 {
+	{
+		Archive ar("archive.txt", ArchiveMode::Write);
+		ar << 1 << "Hello" << true;
+	}
+
+	{
+		Archive ar("archive.txt", ArchiveMode::Read);
+		int one; std::string hello; bool value;
+		ar >> one >> hello >> value;
+	}
+
 	graphics::TextureLibrary::instance()->add("sheet", "../assets/spritesheet.png");
 
 	if (World* const world = World::instance())

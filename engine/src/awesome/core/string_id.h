@@ -30,8 +30,6 @@ public:
 	bool operator== (const string_id& other) const;
 	bool operator!= (const string_id& other) const;
 
-	static string_id unique();
-
 	static const string_id Invalid;
 
 private:
