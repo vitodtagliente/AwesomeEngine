@@ -83,14 +83,14 @@ void Entity::removeComponent(Component* const component)
 	}
 }
 
-// json::value Entity::serialize() const
-// {
-// 	json::value::object_t data;
-// 	data.insert(std::make_pair("name", name));
-// 	data.insert(std::make_pair("tag", tag));
-// 	return json::value(data);
-// }
-// 
-// void Entity::deserialize(const json::value& data)
-// {
-// }
+json::value Entity::toJson() const
+{
+	json::value data = json::object();
+	data.insert("name", name);
+	data.insert("tag", tag);
+	return data;
+}
+
+void Entity::fromJson(const json::value& data)
+{
+}

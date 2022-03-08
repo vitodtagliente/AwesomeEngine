@@ -124,3 +124,12 @@ void World::destroy(Entity* const entity)
 {
 	m_pendingDestroyEntities.push_back(entity);
 }
+
+json::value World::toJson() const
+{
+	return json::value();
+}
+
+void World::fromJson(const json::value& data)
+{
+}

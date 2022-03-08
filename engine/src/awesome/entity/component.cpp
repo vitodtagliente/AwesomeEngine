@@ -28,3 +28,12 @@ void Component::detach()
 	uninit();
 	m_owner = nullptr;
 }
+
+json::value Component::toJson() const
+{
+	return json::value();
+}
+
+void Component::fromJson(const json::value& data)
+{
+}

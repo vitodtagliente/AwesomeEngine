@@ -58,11 +58,6 @@ void Game::startup()
 					));
 				}
 			}
-
-			{
-				// std::string encoding = json::Serializer::to_string(entity->serialize());
-				// std::cout << encoding << std::endl;
-			}
 		}
 		// minion setup
 		{

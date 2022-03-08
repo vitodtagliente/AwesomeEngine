@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/encoding/json.h>
+
 class Entity;
 class World;
 
@@ -29,6 +31,9 @@ public:
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 	virtual void render(graphics::Renderer* const /*renderer*/) {}
+
+	virtual json::value toJson() const;
+	void fromJson(const json::value& data);
 
 private:
 	Entity* m_owner;

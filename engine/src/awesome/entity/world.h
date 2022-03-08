@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
+#include <awesome/encoding/json.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
 
@@ -35,6 +36,9 @@ public:
 	Entity* const spawn(const vec3& position);
 	Entity* const spawn(const vec3& position, const quaternion& quaternion);
 	void destroy(Entity* const entity);
+
+	json::value toJson() const;
+	void fromJson(const json::value& data);
 
 private:
 
