@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <awesome/core/string_id.h>
+// #include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
@@ -72,6 +73,9 @@ public:
 	}
 
 	void removeComponent(Component* const component);
+
+	// virtual json::value serialize() const;
+	// void deserialize(const json::value& data);
 
 	std::string name;
 	std::string tag;

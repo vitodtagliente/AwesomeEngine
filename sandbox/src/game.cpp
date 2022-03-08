@@ -7,6 +7,7 @@
 #include <awesome/components/orthographic_camera.h>
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
+#include <awesome/encoding/json.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 #include <awesome/graphics/texture_rect.h>
@@ -21,12 +22,12 @@
 void Game::startup()
 {
 	{
-		Archive ar("archive.txt", ArchiveMode::Write);
+		Archive ar("archive.txt", Archive::Mode::Write);
 		ar << 1 << "Hello" << true;
 	}
 
 	{
-		Archive ar("archive.txt", ArchiveMode::Read);
+		Archive ar("archive.txt", Archive::Mode::Read);
 		int one; std::string hello; bool value;
 		ar >> one >> hello >> value;
 	}
@@ -56,6 +57,11 @@ void Game::startup()
 						static_cast<float>(i) * 2.f, -2.f, 0.f
 					));
 				}
+			}
+
+			{
+				// std::string encoding = json::Serializer::to_string(entity->serialize());
+				// std::cout << encoding << std::endl;
 			}
 		}
 		// minion setup

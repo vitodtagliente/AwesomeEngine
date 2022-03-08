@@ -5,22 +5,23 @@
 #include <string>
 #include <variant>
 
-enum class ArchiveMode
-{
-	Read,
-	Write
-};
-
 class Archive
 {
 public:
-	Archive(const std::string& filename, ArchiveMode mode);
+
+	enum class Mode
+	{
+		Read,
+		Write
+	};
+
+	Archive(const std::string& filename, Mode mode);
 	~Archive();
 
 	template <typename T>
 	Archive& operator<< (const T value)
 	{
-		if (m_mode == ArchiveMode::Write && m_file.is_open())
+		if (m_mode == Mode::Write && m_file.is_open())
 		{
 			m_file << value;
 		}
@@ -30,7 +31,7 @@ public:
 	template <typename T>
 	Archive& operator>> (T& value)
 	{
-		if (m_mode == ArchiveMode::Read && m_file.is_open())
+		if (m_mode == Mode::Read && m_file.is_open())
 		{
 			m_file >> value;
 		}
@@ -41,6 +42,6 @@ public:
 
 private:
 	std::string m_filename;
-	ArchiveMode m_mode;
+	Mode m_mode;
 	std::fstream m_file;
 };

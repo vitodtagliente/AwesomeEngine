@@ -1,3 +1,4 @@
+/// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
 #include "core/event.h"
