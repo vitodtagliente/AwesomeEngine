@@ -28,7 +28,7 @@ namespace graphics
 		m_renderer->begin();
 	}
 
-	void Graphics::render(graphics::Renderer* const renderer)
+	void Graphics::render(graphics::Renderer* const)
 	{
 	}
 

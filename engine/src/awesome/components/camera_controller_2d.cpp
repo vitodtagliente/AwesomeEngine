@@ -28,7 +28,6 @@ void CameraController2d::update(double deltaTime)
 	{
 		if (input->isKeyDown(KeyCode::MouseRightButton))
 		{
-			Canvas* const canvas = Canvas::instance();
 			vec2 direction = input->getMousePosition() - m_dragPosition.value();
 			vec2 amount = direction * speed * static_cast<float>(deltaTime);
 			getOwner()->transform.position += vec3(amount.x, -amount.y, 0.0f);

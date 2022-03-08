@@ -5,6 +5,7 @@
 #include <vector>
 #include <vdtmath/vector3.h>
 
+#include <awesome/core/typename.h>
 #include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
 
@@ -23,6 +24,10 @@ public:
 
 	static Path* const findOrRandom(class World& world, const std::string& name);
 
+	virtual json::value toJson() const override;
+
 	std::vector<math::vec3> steps;
 	graphics::Color color;
 };
+
+TYPENAME(Path)

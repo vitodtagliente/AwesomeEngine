@@ -49,7 +49,7 @@ namespace editor
 		ImGui::NewFrame();
 	}
 
-	void Editor::render(graphics::Renderer* const renderer)
+	void Editor::render(graphics::Renderer* const)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)

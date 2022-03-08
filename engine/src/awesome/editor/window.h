@@ -13,6 +13,6 @@ namespace editor
 		Window();
 
 		virtual std::string getTitle() const;
-		virtual void render(Context& context) {}
+		virtual void render(Context&) {}
 	};
 }

@@ -1,5 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
+#pragma warning(disable : 4201)
 
 namespace graphics
 {

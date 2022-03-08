@@ -97,6 +97,7 @@ Entity* const World::findEntityByName(const std::string& name) const
 			return entity;
 		}
 	}
+	return nullptr;
 }
 
 Entity* const World::spawn()
@@ -130,6 +131,6 @@ json::value World::toJson() const
 	return json::value();
 }
 
-void World::fromJson(const json::value& data)
+void World::fromJson(const json::value&)
 {
 }

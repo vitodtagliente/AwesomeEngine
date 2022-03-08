@@ -105,25 +105,16 @@ json::value Entity::toJson() const
 		return data;
 	};
 
-	static const auto& transformToJson = [](const math::transform& t) -> json::value
-	{
-		return json::object({
-			{"position", json::object({ {"x", t.position.x}, {"y", t.position.y}, {"z", t.position.z} })},
-			{"rotation", json::object({ {"x", t.rotation.x}, {"y", t.rotation.y}, {"z", t.rotation.z} })},
-			{"scale", json::object({ {"x", t.scale.x}, {"y", t.scale.y}, {"z", t.scale.z} })},
-			});
-	};
-
 	return json::object({
 		{"id", m_id.toString()},
 		{"name", name},
 		{"tag", tag},
-		{"transform", transformToJson(transform)},
+		{"transform", json::transform(transform)},
 		{"children", entitiesToJson(m_children)},
 		{"components", componentsToJson(m_components)}
 		});
 }
 
-void Entity::fromJson(const json::value& data)
+void Entity::fromJson(const json::value&)
 {
 }

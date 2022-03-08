@@ -125,7 +125,7 @@ namespace graphics
 
 		const int primitiveType = GL_LINES;
 		const int offset = 0;
-		const int count = points.size();
+		const int count = static_cast<int>(points.size());
 		glDrawArrays(primitiveType, offset, count);
 	}
 
@@ -164,7 +164,7 @@ namespace graphics
 		const int primitiveType = GL_TRIANGLES;
 		const int offset = 0;
 		const int count = 6;
-		const int numInstances = sprites.size();
+		const int numInstances = static_cast<int>(sprites.size());
 		const int indexType = GL_UNSIGNED_INT;
 		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 	}
@@ -250,7 +250,7 @@ namespace graphics
 		std::map<Shader::Type, std::string> sources;
 		auto it = m_shaderLibrary.getShaders().find(name);
 		if (it != m_shaderLibrary.getShaders().end()
-			&& Shader::Reader::parse(it->second, sources));
+			&& Shader::Reader::parse(it->second, sources))
 		{
 			Shader vs(Shader::Type::Vertex, sources.find(Shader::Type::Vertex)->second);
 			Shader fs(Shader::Type::Fragment, sources.find(Shader::Type::Fragment)->second);

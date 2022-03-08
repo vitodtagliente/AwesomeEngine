@@ -32,9 +32,12 @@ void Component::detach()
 
 json::value Component::toJson() const
 {
-	return json::value();
+	return json::object({
+		{"id", m_id.toString()},
+		{"enabled", enabled}
+		});
 }
 
-void Component::fromJson(const json::value& data)
+void Component::fromJson(const json::value&)
 {
 }

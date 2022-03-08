@@ -56,3 +56,10 @@ Path* const Path::findOrRandom(World& world, const std::string& name)
 
 	return paths.at(math::random(0, paths.size() - 1));
 }
+
+json::value Path::toJson() const
+{
+	json::value data = Component::toJson();
+	data.insert("class", TypeName<Path>::get());
+	return data;
+}

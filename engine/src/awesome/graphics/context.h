@@ -10,7 +10,7 @@
 #include "renderable.h"
 #include "shader_program.h"
 #include "shader_library.h"
-#include "texture_library.h".h"
+#include "texture_library.h"
 #include "texture_rect.h"
 
 namespace graphics
