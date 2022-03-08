@@ -58,6 +58,10 @@ void Game::startup()
 					));
 				}
 			}
+
+			{
+				std::cout << json::Serializer::to_string(entity->toJson());
+			}
 		}
 		// minion setup
 		{

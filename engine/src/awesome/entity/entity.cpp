@@ -85,10 +85,43 @@ void Entity::removeComponent(Component* const component)
 
 json::value Entity::toJson() const
 {
-	json::value data = json::object();
-	data.insert("name", name);
-	data.insert("tag", tag);
-	return data;
+	static const auto& entitiesToJson = [](const std::vector<Entity*>& entities) -> json::value
+	{
+		json::value data = json::array();
+		for (const Entity* entity : entities)
+		{
+			data.push_back(entity->toJson());
+		}
+		return data;
+	};
+
+	static const auto& componentsToJson = [](const std::vector<Component*>& components) -> json::value
+	{
+		json::value data = json::array();
+		for (const Component* component : components)
+		{
+			data.push_back(component->toJson());
+		}
+		return data;
+	};
+
+	static const auto& transformToJson = [](const math::transform& t) -> json::value
+	{
+		return json::object({
+			{"position", json::object({ {"x", t.position.x}, {"y", t.position.y}, {"z", t.position.z} })},
+			{"rotation", json::object({ {"x", t.rotation.x}, {"y", t.rotation.y}, {"z", t.rotation.z} })},
+			{"scale", json::object({ {"x", t.scale.x}, {"y", t.scale.y}, {"z", t.scale.z} })},
+			});
+	};
+
+	return json::object({
+		{"id", m_id.toString()},
+		{"name", name},
+		{"tag", tag},
+		{"transform", transformToJson(transform)},
+		{"children", entitiesToJson(m_children)},
+		{"components", componentsToJson(m_components)}
+		});
 }
 
 void Entity::fromJson(const json::value& data)

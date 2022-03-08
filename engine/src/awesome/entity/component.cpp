@@ -8,6 +8,7 @@
 
 Component::Component()
 	: enabled(true)
+	, m_id()
 	, m_owner()
 {
 }

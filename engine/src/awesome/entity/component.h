@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 
 class Entity;
@@ -20,6 +21,7 @@ public:
 
 	bool enabled;
 
+	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
 	World* const getWorld() const;
 	inline bool isAttached() const { return m_owner != nullptr; }
@@ -36,5 +38,6 @@ public:
 	void fromJson(const json::value& data);
 
 private:
+	uuid m_id;
 	Entity* m_owner;
 };

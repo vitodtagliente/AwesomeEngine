@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <awesome/core/string_id.h>
+#include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
@@ -23,7 +23,7 @@ public:
 	Entity(World* const world);
 	~Entity();
 
-	inline const string_id& getId() const { return m_id; }
+	inline const uuid& getId() const { return m_id; }
 	inline World* const getWorld() const { return m_world; }
 	inline Entity* const getParent() const { return m_parent; }
 	inline const std::vector<Entity*>& getChildren() const { return m_children; }
@@ -83,7 +83,7 @@ public:
 
 private:
 
-	string_id m_id;
+	uuid m_id;
 	World* const m_world;
 	Entity* m_parent;
 	std::vector<Entity*> m_children;
