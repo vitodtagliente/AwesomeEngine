@@ -38,22 +38,26 @@ bool StringUtil::startsWith(const std::string& str, const std::string& match, co
 	}
 }
 
-bool StringUtil::endsWith(const std::string& str, const std::string& match, const CompareMode mode)
+bool StringUtil::endsWith(const std::string&, const std::string&, const CompareMode)
 {
 	return false;
 }
 
 std::string StringUtil::toLower(const std::string& str)
 {
-	std::string result = str;
-	std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+	std::string result;
+	std::transform(str.begin(), str.end(), std::back_inserter(result),
+		[](const char c) -> char { return static_cast<char>(std::tolower(c)); }
+	);
 	return result;
 }
 
 std::string StringUtil::toUpper(const std::string& str)
 {
-	std::string result = str;
-	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+	std::string result;
+	std::transform(str.begin(), str.end(), std::back_inserter(result),
+		[](const char c) -> char { return static_cast<char>(std::toupper(c)); }
+	);
 	return result;
 }
 
@@ -86,8 +90,8 @@ std::string StringUtil::ltrim(const std::string& str, const char ch)
 	auto it2 = std::find_if(
 		result.begin(),
 		result.end(),
-		[ch](char ch)
-		{ return ch != ch; }
+		[ch](char c)
+		{ return ch != c; }
 	);
 	result.erase(result.begin(), it2);
 	return result;
@@ -112,8 +116,8 @@ std::string StringUtil::rtrim(const std::string& str, const char ch)
 	auto it1 = std::find_if(
 		result.rbegin(),
 		result.rend(),
-		[ch](char ch)
-		{ return ch != ch; }
+		[ch](char c)
+		{ return ch != c; }
 	);
 	result.erase(it1.base(), result.end());
 	return result;

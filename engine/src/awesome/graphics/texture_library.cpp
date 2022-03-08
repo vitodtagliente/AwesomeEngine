@@ -22,7 +22,7 @@ namespace graphics
 
 	}
 
-	unsigned int TextureLibrary::load(const std::string& path)
+	unsigned int TextureLibrary::load(const std::string&)
 	{
 		// #todo retrieve all file in a folder
 		return 0;

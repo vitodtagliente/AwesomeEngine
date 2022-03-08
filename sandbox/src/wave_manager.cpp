@@ -36,7 +36,7 @@ void WaveManager::update(double deltatime)
 				m_timer.configure(nextWave.duration);
 				std::async([world = getWorld(), nextWave]() 
 					{
-						for (int i = 0; i < nextWave.numOfMinions; ++i)
+						for (unsigned int i = 0; i < nextWave.numOfMinions; ++i)
 						{
 							Entity* const entity = world->spawn(math::vec3(math::random(-12.f, -2.f), 0.f, 0.f), math::quaternion::identity);
 							entity->name = std::string("minion") + std::to_string(i);
