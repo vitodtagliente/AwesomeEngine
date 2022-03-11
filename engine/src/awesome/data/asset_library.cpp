@@ -1,15 +1,19 @@
 #include "asset_library.h"
 
-AssetLibrary::AssetLibrary()
+#include <list>
+
+AssetLibrary::AssetLibrary(const Settings& settings)
 	: redirectors()
 	, m_caches()
+	, m_settings(settings)
 {
+
 }
 
-Asset* const AssetLibrary::find(const Asset::Type type, const uuid& id)
+std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const uuid& id)
 {
 	AssetCache& cache = getCache(type);
-	Asset* asset = cache.find(id);
+	std::shared_ptr<Asset> asset = cache.find(id);
 	if (asset == nullptr)
 	{
 		std::string filename;
@@ -21,7 +25,7 @@ Asset* const AssetLibrary::find(const Asset::Type type, const uuid& id)
 	return asset;
 }
 
-Asset* const AssetLibrary::find(const Asset::Type type, const std::string& filename)
+std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const std::string& filename)
 {
 	uuid id;
 	if (getRedirector(filename, id))
@@ -45,7 +49,7 @@ AssetCache& AssetLibrary::getCache(const Asset::Type type)
 	return it->second;
 }
 
-Asset* const AssetLibrary::create(const Asset::Type type, const std::string& filename)
+std::shared_ptr<Asset> AssetLibrary::create(const Asset::Type type, const std::string& filename)
 {
 	return nullptr;
 }
@@ -80,12 +84,12 @@ AssetCache::AssetCache()
 {
 }
 
-void AssetCache::insert(Asset* const asset)
+void AssetCache::insert(const std::shared_ptr<Asset>& asset)
 {
 	m_assets.insert(std::make_pair(asset->getId(), Slot(asset)));
 }
 
-Asset* const AssetCache::find(const uuid& id) const
+std::shared_ptr<Asset> AssetCache::find(const uuid& id) const
 {
 	const auto& it = m_assets.find(id);
 	if (it != m_assets.end())
@@ -95,12 +99,20 @@ Asset* const AssetCache::find(const uuid& id) const
 	return nullptr;
 }
 
-void AssetCache::free(const uuid& id)
+void AssetCache::update()
 {
-	const auto& it = m_assets.find(id);
-	if (it != m_assets.end())
+	std::list<uuid> assetsToRelease;
+
+	for (const auto& pair : m_assets)
 	{
-		delete it->second.asset;
-		m_assets.erase(it);
+		if (pair.second.asset.unique())
+		{
+			assetsToRelease.push_back(pair.first);
+		}
+	}
+
+	for (const uuid& id : assetsToRelease) 
+	{
+		m_assets.erase(id);
 	}
 }

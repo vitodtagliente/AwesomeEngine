@@ -1,7 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <chrono>
 #include <map>
+#include <memory>
 #include <string>
 
 #include <awesome/core/singleton.h>
@@ -15,19 +17,19 @@ public:
 	AssetCache();
 	~AssetCache() = default;
 
-	void insert(Asset* const asset);
-	Asset* const find(const uuid& id) const;
-	void free(const uuid& id);
+	void insert(const std::shared_ptr<Asset>& asset);
+	std::shared_ptr<Asset> find(const uuid& id) const;
+	void update();
 
 private:
 
 	struct Slot
 	{
-		Slot(Asset* const asset)
+		Slot(const std::shared_ptr<Asset>& asset)
 			: asset(asset)
 		{}
 
-		Asset* const asset;
+		std::shared_ptr<Asset> asset;
 	};
 
 	std::map<uuid, Slot> m_assets;
@@ -36,19 +38,26 @@ private:
 class AssetLibrary : public Singleton<AssetLibrary>
 {
 public:
-	AssetLibrary();
+
+	struct Settings
+	{
+		double timeToLive = 1.0;
+	};
+
+	AssetLibrary(const Settings& settings = {});
 	~AssetLibrary() = default;
 
-	Asset* const find(Asset::Type type, const uuid& id);
-	Asset* const find(Asset::Type type, const std::string& filename);
+	std::shared_ptr<Asset> find(Asset::Type type, const uuid& id);
+	std::shared_ptr<Asset> find(Asset::Type type, const std::string& filename);
 
 	std::map<uuid, std::string> redirectors;
 
 private:
 	AssetCache& getCache(Asset::Type type);
-	Asset* const create(Asset::Type type, const std::string& filename);
+	std::shared_ptr<Asset> create(Asset::Type type, const std::string& filename);
 	bool getRedirector(const uuid& id, std::string& filename) const;
 	bool getRedirector(const std::string& filename, uuid& id) const;
 
 	std::map<Asset::Type, AssetCache> m_caches;
+	Settings m_settings;
 };
