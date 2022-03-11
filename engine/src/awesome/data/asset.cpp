@@ -1,6 +1,7 @@
 #include "asset.h"
 
-Asset::Asset(AssetType type)
-	: m_type(type)
+Asset::Asset(Type type)
+	: m_id()
+	, m_type(type)
 {
 }

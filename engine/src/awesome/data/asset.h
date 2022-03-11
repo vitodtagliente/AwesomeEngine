@@ -1,18 +1,35 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-enum class AssetType
-{
-
-};
+#include <awesome/core/uuid.h>
 
 class Asset
 {
 public:
-	Asset(AssetType type);
 
-	inline AssetType getType() const { return m_type; }
+	enum class Type
+	{
+		Image,
+		Prefab
+	};
+
+	Asset(Type type);
+
+	inline const uuid& getId() const { return m_id; }
+	inline Type getType() const { return m_type; }
 
 private:
-	AssetType m_type;
+	uuid m_id;
+	Type m_type;
+};
+
+template <typename T>
+class BaseAsset : public Asset
+{
+public:
+
+
+private:
+	
+
 };
