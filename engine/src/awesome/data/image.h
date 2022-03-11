@@ -1,16 +1,17 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
 #include <string>
 
 class Image final
 {
 public:
-
 	Image(const std::string& filename);
+	Image(const Image& image);
 	~Image();
 
-	unsigned char* data() const;
+	std::shared_ptr<unsigned char> data() const;
 	int getWidth() const;
 	int getHeight() const;
 	int getChannels() const;
@@ -18,7 +19,7 @@ public:
 private:
 
 	// image data
-	unsigned char* m_data;
+	std::shared_ptr<unsigned char> m_data;
 	// image width
 	int m_width;
 	// image height

@@ -9,15 +9,23 @@ Image::Image(const std::string& filename)
 	, m_channels()
 {
 	stbi_set_flip_vertically_on_load(1);
-	m_data = stbi_load(filename.c_str(), &m_width, &m_height, &m_channels, 4);
+	m_data = std::shared_ptr<unsigned char>(stbi_load(filename.c_str(), &m_width, &m_height, &m_channels, 4));
+}
+
+Image::Image(const Image& image)
+	: m_data()
+	, m_width(image.m_width)
+	, m_height(image.m_height)
+	, m_channels(image.m_channels)
+{
 }
 
 Image::~Image()
 {
-	stbi_image_free(m_data);
+	
 }
 
-unsigned char* Image::data() const
+std::shared_ptr<unsigned char> Image::data() const
 {
 	return m_data;
 }

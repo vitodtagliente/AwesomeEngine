@@ -13,6 +13,8 @@ AssetLibrary::AssetLibrary(const Settings& settings)
 std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const uuid& id)
 {
 	AssetCache& cache = getCache(type);
+	cache.update();
+
 	std::shared_ptr<Asset> asset = cache.find(id);
 	if (asset == nullptr)
 	{
@@ -20,6 +22,7 @@ std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const uuid& id
 		if (getRedirector(id, filename))
 		{
 			asset = create(type, filename);
+			cache.insert(asset);
 		}
 	}
 	return asset;
@@ -34,8 +37,16 @@ std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const std::str
 	}
 	else
 	{
-		redirectors.insert(std::make_pair(id, filename));
-		return create(type, filename);
+		AssetCache& cache = getCache(type);
+		cache.update();
+
+		std::shared_ptr<Asset> asset = create(type, filename);
+		if (asset != nullptr)
+		{
+			redirectors.insert(std::make_pair(id, filename));
+			cache.insert(asset);
+		}
+		return asset;
 	}
 }
 
@@ -51,7 +62,15 @@ AssetCache& AssetLibrary::getCache(const Asset::Type type)
 
 std::shared_ptr<Asset> AssetLibrary::create(const Asset::Type type, const std::string& filename)
 {
-	return nullptr;
+	switch (type)
+	{
+	case Asset::Type::Image:
+	{
+		Image image(filename);
+		return std::make_shared<ImageAsset>(image);
+	}
+	default: return nullptr;
+	}
 }
 
 bool AssetLibrary::getRedirector(const uuid& id, std::string& filename) const

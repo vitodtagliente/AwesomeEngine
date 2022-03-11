@@ -47,7 +47,7 @@ namespace graphics
 		{
 			Image img(filename);
 			Texture* texture = new Texture(
-				img.data(), img.getWidth(), img.getHeight(), img.getChannels()
+				img.data().get(), img.getWidth(), img.getHeight(), img.getChannels()
 			);
 			m_textures.insert({ name, texture });
 			return texture;
