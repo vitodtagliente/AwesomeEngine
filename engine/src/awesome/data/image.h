@@ -16,6 +16,10 @@ public:
 	int getHeight() const;
 	int getChannels() const;
 
+	Image& operator= (const Image& other);
+	bool operator== (const Image& other) const;
+	bool operator!= (const Image& other) const;
+
 private:
 
 	// image data

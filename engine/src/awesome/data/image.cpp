@@ -22,7 +22,7 @@ Image::Image(const Image& image)
 
 Image::~Image()
 {
-	
+
 }
 
 std::shared_ptr<unsigned char> Image::data() const
@@ -43,4 +43,29 @@ int Image::getHeight() const
 int Image::getChannels() const
 {
 	return m_channels;
+}
+
+Image& Image::operator=(const Image& other)
+{
+	m_data = other.m_data;
+	m_width = other.m_width;
+	m_height = other.m_height;
+	m_channels = other.m_channels;
+	return *this;
+}
+
+bool Image::operator==(const Image& other) const
+{
+	return m_data == other.m_data
+		&& m_width == other.m_width
+		&& m_height == other.m_height
+		&& m_channels == other.m_channels;
+}
+
+bool Image::operator!=(const Image& other) const
+{
+	return m_data != other.m_data
+		|| m_width != other.m_width
+		|| m_height != other.m_height
+		|| m_channels != other.m_channels;
 }

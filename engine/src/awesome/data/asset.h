@@ -35,12 +35,15 @@ class BaseAsset : public Asset
 public:
 	BaseAsset(const D& data)
 		: Asset(T)
-		, data(data)
+		, m_data(data)
 	{
 
 	}
 
-	D data;
+	inline const D& getData() const { return m_data; }
+
+private:
+	D m_data;
 };
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
