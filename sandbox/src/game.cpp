@@ -5,6 +5,7 @@
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
 #include <awesome/components/orthographic_camera.h>
+#include <awesome/components/sprite_animator.h>
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
 #include <awesome/encoding/json.h>
@@ -43,6 +44,33 @@ void Game::startup()
 			entity->tag = "camera";
 			entity->addComponent<OrthographicCamera>();
 			entity->addComponent<CameraController2d>();
+		}
+		// animated entity
+		{
+			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
+			entity->name = std::string("animated guy");
+			entity->tag = "animated guy";
+			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
+			{
+				const float spriteSize = 1.0f / 11;
+				component->texture = graphics::TextureLibrary::instance()->get("sheet");
+				component->rect = graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize);
+			}
+			if (SpriteAnimator* component = entity->addComponent<SpriteAnimator>())
+			{
+				const float spriteSize = 1.0f / 11;
+				SpriteAnimator::Animation idle;
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 3, spriteSize, spriteSize), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 5, spriteSize, spriteSize), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize), 1.0f));
+				component->animations.insert(std::make_pair("idle", idle));
+				component->autoplay = true;
+			}
+			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
+			{
+				component->type = GizmosRenderer::Type::Rect;
+			}
 		}
 		// path setup
 		{
