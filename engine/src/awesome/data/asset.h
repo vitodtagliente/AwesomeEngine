@@ -21,6 +21,13 @@ public:
 
 	}
 
+	Asset(const Type type, const uuid& id)
+		: m_id(id)
+		, m_type(type)
+	{
+
+	}
+
 	inline const uuid& getId() const { return m_id; }
 	inline Type getType() const { return m_type; }
 
@@ -35,6 +42,13 @@ class BaseAsset : public Asset
 public:
 	BaseAsset(const D& data)
 		: Asset(T)
+		, m_data(data)
+	{
+
+	}
+
+	BaseAsset(const uuid& id, const D& data)
+		: Asset(T, id)
 		, m_data(data)
 	{
 
