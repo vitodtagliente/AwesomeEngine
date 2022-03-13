@@ -60,6 +60,6 @@ Path* const Path::findOrRandom(World& world, const std::string& name)
 json::value Path::toJson() const
 {
 	json::value data = Component::toJson();
-	data.insert("class", TypeName<Path>::get());
+	data.insert("class", Typename<Path>::get());
 	return data;
 }

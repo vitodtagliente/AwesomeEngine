@@ -41,8 +41,8 @@ struct TypeFactory
 	template <typename T>
 	static T* instantiate()
 	{
-		return reinterpret_cast<T*>(instantiate(TypeName<T>::get()));
+		return reinterpret_cast<T*>(instantiate(Typename<T>::get()));
 	}
 };
 
-#define REGISTER_TYPE(T) TypeFactoryImp::hook(TypeName<T>::get(), []() -> void* { return new T(); });
+#define REGISTER_TYPE(T) TypeFactoryImp::hook(Typename<T>::get(), []() -> void* { return new T(); });
