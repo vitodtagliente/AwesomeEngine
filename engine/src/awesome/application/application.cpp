@@ -11,6 +11,10 @@ using namespace graphics;
 
 Application::Application(const std::initializer_list<Module*> modules)
 	: m_modules()
+	, m_canvas()
+	, m_input()
+	, m_time()
+	, m_assetLibrary()
 {
 	registerModules();
 	for (auto it = modules.begin(); it != modules.end(); ++it)

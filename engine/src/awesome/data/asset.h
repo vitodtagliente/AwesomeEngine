@@ -5,59 +5,66 @@
 
 #include "image.h"
 
-class Asset
+struct Asset
 {
-public:
 	enum class Type
 	{
+		None,
 		Image,
 		Prefab
 	};
 
+	Asset()
+		: id()
+		, type(Type::None)
+	{
+
+	}
+
 	Asset(const Type type)
-		: m_id()
-		, m_type(type)
+		: id()
+		, type(type)
 	{
 
 	}
 
 	Asset(const Type type, const uuid& id)
-		: m_id(id)
-		, m_type(type)
+		: id(id)
+		, type(type)
 	{
 
 	}
 
-	inline const uuid& getId() const { return m_id; }
-	inline Type getType() const { return m_type; }
-
-private:
-	uuid m_id;
-	Type m_type;
+	uuid id;
+	Type type;
 };
 
 template <Asset::Type T, typename D>
-class BaseAsset : public Asset
+struct BaseAsset : public Asset
 {
 public:
+
+	BaseAsset()
+		: Asset(T)
+		, data()
+	{
+
+	}
+
 	BaseAsset(const D& data)
 		: Asset(T)
-		, m_data(data)
+		, data(data)
 	{
 
 	}
 
 	BaseAsset(const uuid& id, const D& data)
 		: Asset(T, id)
-		, m_data(data)
+		, data(data)
 	{
 
 	}
-
-	inline const D& getData() const { return m_data; }
-
-private:
-	D m_data;
+	D data;
 };
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;

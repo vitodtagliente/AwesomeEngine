@@ -45,7 +45,7 @@ void WaveManager::update(double deltatime)
 							if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 							{
 								const float spriteSize = 1.0f / 11;
-								component->texture = graphics::TextureLibrary::instance()->get("sheet");
+								// component->texture = graphics::TextureLibrary::instance()->get("sheet");
 								component->rect = graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize);
 							}
 							if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())

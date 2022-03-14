@@ -2,42 +2,28 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
 #include <awesome/core/singleton.h>
+#include <awesome/core/uuid.h>
+
+#include "texture.h"
 
 namespace graphics
 {
-	class Texture;
-
 	class TextureLibrary : public Singleton<TextureLibrary>
 	{
 	public:
 		TextureLibrary();
-		~TextureLibrary();
+		~TextureLibrary() = default;
 
-		void clear();
-
-		// load textures form path
-		unsigned int load(const std::string& path);
-		// load texture given filenames
-		unsigned int load(const std::vector<std::string>& files);
-
-		// add a texture
-		Texture* const add(const std::string& name, const std::string& filename);
-		bool add(const std::string& name, Texture* const texture);
-		// remove a texture
-		bool remove(const std::string& name, bool free = false);
-
-		// retrieve a texture
-		Texture* const get(const std::string& name) const;
-
-		// retrieve all textures
-		const std::map<std::string, Texture*>& getTextures() const { return m_textures; }
+		std::shared_ptr<Texture> find(const uuid& id);
 
 	private:
-		// cached textures
-		std::map<std::string, Texture*> m_textures;
+		std::shared_ptr<Texture> create(const uuid& id);
+
+		std::map<uuid, std::shared_ptr<Texture>> m_textures;
 	};
 }

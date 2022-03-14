@@ -2,10 +2,9 @@
 
 #include <list>
 
-AssetLibrary::AssetLibrary(const Settings& settings)
+AssetLibrary::AssetLibrary()
 	: redirectors()
 	, m_caches()
-	, m_settings(settings)
 {
 
 }
@@ -66,8 +65,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Type type, const std::s
 	{
 	case Asset::Type::Image:
 	{
-		Image image(filename);
-		return std::make_shared<ImageAsset>(image);
+		return std::make_shared<ImageAsset>(Image::load(filename));
 	}
 	default: return nullptr;
 	}
@@ -105,7 +103,7 @@ AssetCache::AssetCache()
 
 void AssetCache::insert(const std::shared_ptr<Asset>& asset)
 {
-	m_assets.insert(std::make_pair(asset->getId(), Slot(asset)));
+	m_assets.insert(std::make_pair(asset->id, Slot(asset)));
 }
 
 std::shared_ptr<Asset> AssetCache::find(const uuid& id) const

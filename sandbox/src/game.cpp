@@ -8,6 +8,7 @@
 #include <awesome/components/sprite_animator.h>
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
+#include <awesome/data/asset_library.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -33,7 +34,7 @@ void Game::startup()
 		ar >> one >> hello >> value;
 	}
 
-	graphics::TextureLibrary::instance()->add("sheet", "../assets/spritesheet.png");
+	std::shared_ptr<Asset> image = AssetLibrary::instance()->find(Asset::Type::Image, "../assets/spritesheet.png");
 
 	if (World* const world = World::instance())
 	{
@@ -53,7 +54,7 @@ void Game::startup()
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
 				const float spriteSize = 1.0f / 11;
-				component->texture = graphics::TextureLibrary::instance()->get("sheet");
+				component->texture = graphics::TextureLibrary::instance()->find(image->id);
 				component->rect = graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize);
 			}
 			if (SpriteAnimator* component = entity->addComponent<SpriteAnimator>())
@@ -100,7 +101,7 @@ void Game::startup()
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
 				const float spriteSize = 1.0f / 11;
-				component->texture = graphics::TextureLibrary::instance()->get("sheet");
+				component->texture = graphics::TextureLibrary::instance()->find(image->id);
 				component->rect = graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize);
 			}
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())

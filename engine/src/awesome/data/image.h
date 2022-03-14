@@ -4,30 +4,22 @@
 #include <memory>
 #include <string>
 
-class Image final
+struct Image final
 {
 public:
-	Image(const std::string& filename);
-	Image(const Image& image);
+	Image();
+	Image(const std::shared_ptr<unsigned char>& data, int witdh, int height, int channels);
+	Image(const Image& other);
 	~Image();
 
-	std::shared_ptr<unsigned char> data() const;
-	int getWidth() const;
-	int getHeight() const;
-	int getChannels() const;
+	static Image load(const std::string& filename);
 
 	Image& operator= (const Image& other);
 	bool operator== (const Image& other) const;
 	bool operator!= (const Image& other) const;
 
-private:
-
-	// image data
-	std::shared_ptr<unsigned char> m_data;
-	// image width
-	int m_width;
-	// image height
-	int m_height;
-	// num of components
-	int m_channels;
+	std::shared_ptr<unsigned char> data;
+	int width;
+	int height;
+	int channels;
 };

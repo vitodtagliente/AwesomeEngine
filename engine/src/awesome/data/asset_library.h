@@ -38,13 +38,7 @@ private:
 class AssetLibrary : public Singleton<AssetLibrary>
 {
 public:
-
-	struct Settings
-	{
-		double timeToLive = 1.0;
-	};
-
-	AssetLibrary(const Settings& settings = {});
+	AssetLibrary();
 	~AssetLibrary() = default;
 
 	std::shared_ptr<Asset> find(Asset::Type type, const uuid& id);
@@ -59,5 +53,4 @@ private:
 	bool getRedirector(const std::string& filename, uuid& id) const;
 
 	std::map<Asset::Type, AssetCache> m_caches;
-	Settings m_settings;
 };

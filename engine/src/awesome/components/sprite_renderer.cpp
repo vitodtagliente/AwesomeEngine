@@ -16,6 +16,6 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
 	if (texture != nullptr)
 	{
-		renderer->drawSprite(texture, getOwner()->transform.matrix(), rect);
+		renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), rect);
 	}
 }

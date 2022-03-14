@@ -2,21 +2,27 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Image::Image(const std::string& filename)
-	: m_data()
-	, m_width()
-	, m_height()
-	, m_channels()
+Image::Image()
+	: data()
+	, width()
+	, height()
+	, channels()
 {
-	stbi_set_flip_vertically_on_load(1);
-	m_data = std::shared_ptr<unsigned char>(stbi_load(filename.c_str(), &m_width, &m_height, &m_channels, 4));
 }
 
-Image::Image(const Image& image)
-	: m_data()
-	, m_width(image.m_width)
-	, m_height(image.m_height)
-	, m_channels(image.m_channels)
+Image::Image(const std::shared_ptr<unsigned char>& data, const int width, const int height, const int channels)
+	: data(data)
+	, width(width)
+	, height(height)
+	, channels(channels)
+{
+}
+
+Image::Image(const Image& other)
+	: data(other.data)
+	, width(other.width)
+	, height(other.height)
+	, channels(other.channels)
 {
 }
 
@@ -25,47 +31,35 @@ Image::~Image()
 
 }
 
-std::shared_ptr<unsigned char> Image::data() const
+Image Image::load(const std::string& filename)
 {
-	return m_data;
-}
-
-int Image::getWidth() const
-{
-	return m_width;
-}
-
-int Image::getHeight() const
-{
-	return m_height;
-}
-
-int Image::getChannels() const
-{
-	return m_channels;
+	stbi_set_flip_vertically_on_load(1);
+	int width, height, channels;
+	std::shared_ptr<unsigned char> data(stbi_load(filename.c_str(), &width, &height, &channels, 4));
+	return Image(data, width, height, channels);
 }
 
 Image& Image::operator=(const Image& other)
 {
-	m_data = other.m_data;
-	m_width = other.m_width;
-	m_height = other.m_height;
-	m_channels = other.m_channels;
+	data = other.data;
+	width = other.width;
+	height = other.height;
+	channels = other.channels;
 	return *this;
 }
 
 bool Image::operator==(const Image& other) const
 {
-	return m_data == other.m_data
-		&& m_width == other.m_width
-		&& m_height == other.m_height
-		&& m_channels == other.m_channels;
+	return data == other.data
+		&& width == other.width
+		&& height == other.height
+		&& channels == other.channels;
 }
 
 bool Image::operator!=(const Image& other) const
 {
-	return m_data != other.m_data
-		|| m_width != other.m_width
-		|| m_height != other.m_height
-		|| m_channels != other.m_channels;
+	return data != other.data
+		|| width != other.width
+		|| height != other.height
+		|| channels != other.channels;
 }

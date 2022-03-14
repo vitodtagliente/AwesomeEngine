@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <awesome/core/singleton.h>
+#include <awesome/data/asset_library.h>
 #include <awesome/graphics/renderer.h>
 
 #include "canvas.h"
@@ -67,4 +68,5 @@ private:
 	Canvas m_canvas;
 	Input m_input;
 	Time m_time;
+	AssetLibrary m_assetLibrary;
 };
