@@ -35,6 +35,30 @@ struct Asset
 
 	}
 
+	Asset(const Asset& asset)
+		: id(asset.id)
+		, type(asset.type)
+	{
+
+	}
+
+	Asset& operator= (const Asset& other)
+	{
+		id = other.id;
+		type = other.type;
+		return *this;
+	}
+
+	bool operator== (const Asset& other) const
+	{
+		return id == other.id && type == other.type;
+	}
+
+	bool operator!= (const Asset& other) const
+	{
+		return id != other.id || type != other.type;
+	}
+
 	uuid id;
 	Type type;
 };
@@ -58,12 +82,38 @@ public:
 
 	}
 
-	BaseAsset(const uuid& id, const D& data)
+	BaseAsset(const D& data, const uuid& id)
 		: Asset(T, id)
 		, data(data)
 	{
 
 	}
+
+	BaseAsset(const BaseAsset& asset)
+		: Asset(asset)
+		, data(asset.data)
+	{
+
+	}
+
+	BaseAsset& operator= (const BaseAsset& other)
+	{
+		id = other.id;
+		type = other.type;
+		data = other.data;
+		return *this;
+	}
+
+	bool operator== (const BaseAsset& other) const
+	{
+		return id == other.id && type == other.type && data == other.data;
+	}
+
+	bool operator!= (const BaseAsset& other) const
+	{
+		return id != other.id || type != other.type || data != other.data;
+	}
+
 	D data;
 };
 

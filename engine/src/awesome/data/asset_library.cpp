@@ -21,7 +21,10 @@ std::shared_ptr<Asset> AssetLibrary::find(const Asset::Type type, const uuid& id
 		if (getRedirector(id, filename))
 		{
 			asset = create(type, filename);
-			cache.insert(asset);
+			if (asset)
+			{
+				cache.insert(asset);
+			}
 		}
 	}
 	return asset;
@@ -128,7 +131,7 @@ void AssetCache::update()
 		}
 	}
 
-	for (const uuid& id : assetsToRelease) 
+	for (const uuid& id : assetsToRelease)
 	{
 		m_assets.erase(id);
 	}
