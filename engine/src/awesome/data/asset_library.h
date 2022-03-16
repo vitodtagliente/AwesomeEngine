@@ -42,7 +42,17 @@ public:
 	~AssetLibrary() = default;
 
 	std::shared_ptr<Asset> find(Asset::Type type, const uuid& id);
+	template <typename T>
+	std::shared_ptr<T> find(Asset::Type type, const uuid& id)
+	{
+		return std::static_pointer_cast<T>(find(type, id));
+	}
 	std::shared_ptr<Asset> find(Asset::Type type, const std::string& filename);
+	template <typename T>
+	std::shared_ptr<T> find(Asset::Type type, const std::string& filename)
+	{
+		return std::static_pointer_cast<T>(find(type, filename));
+	}
 
 	std::map<uuid, std::string> redirectors;
 

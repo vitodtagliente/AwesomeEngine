@@ -2,11 +2,12 @@
 
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
+#include <awesome/graphics/texture_library.h>
 #include <awesome/entity/entity.h>
 
 SpriteRenderer::SpriteRenderer()
 	: Component()
-	, texture()
+	, image()
 	, rect()
 {
 
@@ -14,8 +15,12 @@ SpriteRenderer::SpriteRenderer()
 
 void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
-	if (texture != nullptr)
+	if (image != nullptr)
 	{
-		renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), rect);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
+		if (texture)
+		{
+			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), rect);
+		}
 	}
 }
