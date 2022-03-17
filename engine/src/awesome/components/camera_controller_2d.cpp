@@ -44,3 +44,5 @@ void CameraController2d::render(graphics::Renderer* const renderer)
 {
 	renderer->pushCamera(getOwner()->transform.matrix());
 }
+
+REFLECT_IMP(CameraController2d)
