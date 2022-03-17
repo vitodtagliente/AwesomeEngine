@@ -58,12 +58,11 @@ void Game::startup()
 
 			if (SpriteAnimator* component = entity->addComponent<SpriteAnimator>())
 			{
-				const float spriteSize = 1.0f / 11;
 				SpriteAnimator::Animation idle;
-				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 3, spriteSize, spriteSize), 1.0f));
-				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize), 1.0f));
-				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 5, spriteSize, spriteSize), 1.0f));
-				idle.frames.push_back(SpriteAnimator::Animation::Frame(graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 3, spriteSize, spriteSize)), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize)), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 5, spriteSize, spriteSize)), 1.0f));
+				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize)), 1.0f));
 				component->animations.insert(std::make_pair("idle", idle));
 				component->autoplay = true;
 			}

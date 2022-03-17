@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/data/sprite.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
 
@@ -17,16 +18,16 @@ public:
 		struct Frame
 		{
 			Frame()
-				: rect()
+				: sprite()
 				, duration(0)
 			{}
 
-			Frame(const graphics::TextureRect& rect,  const double duration)
-				: rect(rect)
+			Frame(const Sprite& sprite,  const double duration)
+				: sprite(sprite)
 				, duration(duration)
 			{}
 
-			graphics::TextureRect rect;
+			Sprite sprite;
 			double duration;
 		};
 
