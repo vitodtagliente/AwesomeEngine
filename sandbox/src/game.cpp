@@ -46,12 +46,16 @@ void Game::startup()
 			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
 			entity->name = std::string("animated guy");
 			entity->tag = "animated guy";
+
+			const float spriteSize = 1.0f / 11;
+			Sprite sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize));
+
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
 				const float spriteSize = 1.0f / 11;
-				component->image = image;
-				component->rect = graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize);
+				component->sprite = sprite;
 			}
+
 			if (SpriteAnimator* component = entity->addComponent<SpriteAnimator>())
 			{
 				const float spriteSize = 1.0f / 11;
@@ -63,6 +67,7 @@ void Game::startup()
 				component->animations.insert(std::make_pair("idle", idle));
 				component->autoplay = true;
 			}
+
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
 			{
 				component->type = GizmosRenderer::Type::Rect;

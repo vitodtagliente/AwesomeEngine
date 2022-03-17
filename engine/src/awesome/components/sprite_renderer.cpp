@@ -7,20 +7,20 @@
 
 SpriteRenderer::SpriteRenderer()
 	: Component()
-	, image()
-	, rect()
+	, sprite()
+	, color(graphics::Color::White)
 {
 
 }
 
 void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
-	if (image != nullptr)
+	if (sprite.image != nullptr)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(sprite.image->id);
 		if (texture)
 		{
-			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), rect);
+			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), sprite.rect);
 		}
 	}
 }

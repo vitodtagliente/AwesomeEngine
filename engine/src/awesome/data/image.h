@@ -6,7 +6,6 @@
 
 struct Image final
 {
-public:
 	Image();
 	Image(const std::shared_ptr<unsigned char>& data, int witdh, int height, int channels);
 	Image(const Image& other);

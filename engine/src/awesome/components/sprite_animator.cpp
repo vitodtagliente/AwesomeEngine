@@ -103,6 +103,6 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 
 	if (m_spriteRenderer)
 	{
-		m_spriteRenderer->rect = frame.rect;
+		m_spriteRenderer->sprite.rect = frame.rect;
 	}
 }

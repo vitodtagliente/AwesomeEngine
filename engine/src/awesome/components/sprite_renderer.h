@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include <awesome/data/asset.h>
+#include <awesome/data/sprite.h>
+#include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
-#include <awesome/graphics/texture_rect.h>
 
 namespace graphics
 {
@@ -17,8 +17,8 @@ class SpriteRenderer : public Component
 public:
 	SpriteRenderer();
 
-	std::shared_ptr<ImageAsset> image;
-	graphics::TextureRect rect;
+	Sprite sprite;
+	graphics::Color color;
 
 	void render(graphics::Renderer* const renderer) override;
 };
