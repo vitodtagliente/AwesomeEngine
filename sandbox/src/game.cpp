@@ -30,6 +30,7 @@ void Game::startup()
 	}
 
 	std::shared_ptr<ImageAsset> image = AssetLibrary::instance()->find<ImageAsset>(Asset::Type::Image, "../assets/spritesheet.png");
+	std::cout << json::Serializer::to_string(image->serialize()) << std::endl;
 
 	if (World* const world = World::instance())
 	{

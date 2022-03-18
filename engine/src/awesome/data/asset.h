@@ -1,13 +1,14 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 
 #include "image.h"
 
-struct Asset
+struct Asset : public ISerializable
 {
-	enum class Type
+	enum class Type : int
 	{
 		None,
 		Image,
@@ -57,6 +58,14 @@ struct Asset
 	bool operator!= (const Asset& other) const
 	{
 		return id != other.id || type != other.type;
+	}
+
+	virtual json::value serialize() const override
+	{
+		return json::object({
+			{"id", ::serialize(id)},
+			{"type", static_cast<int>(type)}
+			});
 	}
 
 	uuid id;

@@ -106,7 +106,7 @@ json::value Entity::serialize() const
 	};
 
 	return json::object({
-		{"id", m_id.toString()},
+		{"id", ::serialize(m_id)},
 		{"name", name},
 		{"tag", tag},
 		{"transform", ::serialize(transform)},

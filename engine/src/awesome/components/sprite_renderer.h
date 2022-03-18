@@ -21,4 +21,6 @@ public:
 	graphics::Color color;
 
 	void render(graphics::Renderer* const renderer) override;
+
+	virtual json::value serialize() const override;
 };

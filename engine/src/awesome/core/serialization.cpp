@@ -1,5 +1,11 @@
 #include "serialization.h"
 
+template<>
+json::value serialize(const uuid& id)
+{
+	return json::value(id.toString());
+}
+
 template <>
 json::value serialize(const graphics::Color& color)
 {

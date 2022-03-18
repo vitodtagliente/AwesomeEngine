@@ -33,7 +33,7 @@ void Component::detach()
 json::value Component::serialize() const
 {
 	return json::object({
-		{"id", m_id.toString()},
+		{"id", ::serialize(m_id)},
 		{"enabled", enabled}
 		});
 }

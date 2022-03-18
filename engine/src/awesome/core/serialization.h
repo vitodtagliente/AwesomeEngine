@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
@@ -18,12 +19,13 @@ struct ISerializable
 template <typename T>
 json::value serialize(const T& data)
 {
-	return json::value();
+	return T.serialize();
 }
 
 template <typename T>
 bool deserialize(const json::value& value, T& data) { return true; }
 
+template <> json::value serialize(const uuid& id);
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
 template <> json::value serialize(const graphics::TextureRect& rect);

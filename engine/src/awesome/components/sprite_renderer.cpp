@@ -24,3 +24,8 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 		}
 	}
 }
+
+json::value SpriteRenderer::serialize() const
+{
+	return json::value();
+}
