@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>

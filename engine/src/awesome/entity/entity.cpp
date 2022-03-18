@@ -109,7 +109,7 @@ json::value Entity::toJson() const
 		{"id", m_id.toString()},
 		{"name", name},
 		{"tag", tag},
-		{"transform", json::transform(transform)},
+		{"transform", serialize(transform)},
 		{"children", entitiesToJson(m_children)},
 		{"components", componentsToJson(m_components)}
 		});
