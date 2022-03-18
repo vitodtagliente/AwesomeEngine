@@ -71,7 +71,12 @@ void Game::startup()
 				component->type = GizmosRenderer::Type::Rect;
 			}
 
-			std::cout << std::endl << json::Serializer::to_string(entity->serialize()) << std::endl;
+			{
+				std::cout << std::endl << json::Serializer::to_string(entity->serialize()) << std::endl;
+				std::string text = json::Serializer::to_string(serialize(graphics::Color::Cyan));
+				graphics::Color testColor;
+				deserialize(json::Deserializer::parse(text), testColor);
+			}
 		}
 	}
 }

@@ -70,3 +70,16 @@ json::value serialize(const math::vec4& v)
 		{"w", v.w}
 		});
 }
+
+template<>
+bool deserialize(const json::value& value, graphics::Color& color)
+{
+	if (!value.is_object())
+		return false;
+
+	color.red = value["r"].as_number().as_float();
+	color.green = value["g"].as_number().as_float();
+	color.blue = value["b"].as_number().as_float();
+	color.alpha = value["a"].as_number().as_float();
+	return true;
+}
