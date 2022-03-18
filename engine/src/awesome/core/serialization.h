@@ -10,18 +10,20 @@
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
 
-template <typename T>
-json::value serialize(const T& data)
-{
-	return json::value;
-}
-
 struct ISerializable
 {
 	virtual json::value serialize() const = 0;
 };
 
-template <> json::value serialize(const ISerializable& data);
+template <typename T>
+json::value serialize(const T& data)
+{
+	return json::value();
+}
+
+template <typename T>
+bool deserialize(const json::value& value, T& data) { return true; }
+
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
 template <> json::value serialize(const graphics::TextureRect& rect);

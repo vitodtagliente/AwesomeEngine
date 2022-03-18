@@ -52,7 +52,6 @@ void Game::startup()
 
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
-				const float spriteSize = 1.0f / 11;
 				component->sprite = sprite;
 			}
 
@@ -71,6 +70,8 @@ void Game::startup()
 			{
 				component->type = GizmosRenderer::Type::Rect;
 			}
+
+			std::cout << std::endl << json::Serializer::to_string(entity->serialize()) << std::endl;
 		}
 	}
 }
