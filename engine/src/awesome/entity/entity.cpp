@@ -83,14 +83,14 @@ void Entity::removeComponent(Component* const component)
 	}
 }
 
-json::value Entity::toJson() const
+json::value Entity::serialize() const
 {
 	static const auto& entitiesToJson = [](const std::vector<Entity*>& entities) -> json::value
 	{
 		json::value data = json::array();
 		for (const Entity* entity : entities)
 		{
-			data.push_back(entity->toJson());
+			data.push_back(entity->serialize());
 		}
 		return data;
 	};
@@ -100,7 +100,7 @@ json::value Entity::toJson() const
 		json::value data = json::array();
 		for (const Component* component : components)
 		{
-			data.push_back(component->toJson());
+			data.push_back(component->serialize());
 		}
 		return data;
 	};
@@ -109,12 +109,8 @@ json::value Entity::toJson() const
 		{"id", m_id.toString()},
 		{"name", name},
 		{"tag", tag},
-		{"transform", serialize(transform)},
+		{"transform", ::serialize(transform)},
 		{"children", entitiesToJson(m_children)},
 		{"components", componentsToJson(m_components)}
 		});
-}
-
-void Entity::fromJson(const json::value&)
-{
 }

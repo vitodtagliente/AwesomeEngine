@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 
@@ -12,7 +13,7 @@ namespace graphics
 	class Renderer;
 }
 
-class Component
+class Component : public ISerializable
 {
 public:
 
@@ -34,8 +35,7 @@ public:
 	virtual void update(double /*deltaTime*/) {}
 	virtual void render(graphics::Renderer* const /*renderer*/) {}
 
-	virtual json::value toJson() const;
-	void fromJson(const json::value& data);
+	virtual json::value serialize() const override;
 
 private:
 	uuid m_id;

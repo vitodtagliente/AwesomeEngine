@@ -1,5 +1,11 @@
 #include "serialization.h"
 
+template<>
+json::value serialize(const ISerializable& data)
+{
+	return data.serialize();
+}
+
 template <>
 json::value serialize(const graphics::Color& color)
 {

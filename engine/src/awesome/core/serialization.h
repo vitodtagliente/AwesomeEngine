@@ -16,17 +16,16 @@ json::value serialize(const T& data)
 	return json::value;
 }
 
-template <>
-json::value serialize(const graphics::Color& color);
-template <>
-json::value serialize(const graphics::TextureCoords& coords);
-template <>
-json::value serialize(const graphics::TextureRect& rect);
-template <>
-json::value serialize(const math::transform& t);
-template <>
-json::value serialize(const math::vec2& v);
-template <>
-json::value serialize(const math::vec3& v);
-template <>
-json::value serialize(const math::vec4& v);
+struct ISerializable
+{
+	virtual json::value serialize() const = 0;
+};
+
+template <> json::value serialize(const ISerializable& data);
+template <> json::value serialize(const graphics::Color& color);
+template <> json::value serialize(const graphics::TextureCoords& coords);
+template <> json::value serialize(const graphics::TextureRect& rect);
+template <> json::value serialize(const math::transform& t);
+template <> json::value serialize(const math::vec2& v);
+template <> json::value serialize(const math::vec3& v);
+template <> json::value serialize(const math::vec4& v);

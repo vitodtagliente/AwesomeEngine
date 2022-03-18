@@ -18,7 +18,7 @@ namespace graphics
 	class Renderer;
 }
 
-class Entity
+class Entity : public ISerializable
 {
 public:
 	Entity(World* const world);
@@ -75,8 +75,7 @@ public:
 
 	void removeComponent(Component* const component);
 
-	json::value toJson() const;
-	void fromJson(const json::value& data);
+	virtual json::value serialize() const override;
 
 	std::string name;
 	std::string tag;

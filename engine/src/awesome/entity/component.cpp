@@ -30,14 +30,10 @@ void Component::detach()
 	m_owner = nullptr;
 }
 
-json::value Component::toJson() const
+json::value Component::serialize() const
 {
 	return json::object({
 		{"id", m_id.toString()},
 		{"enabled", enabled}
 		});
-}
-
-void Component::fromJson(const json::value&)
-{
 }
