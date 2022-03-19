@@ -94,6 +94,13 @@ void SpriteAnimator::stop()
 	m_state.frameIndex = 0;
 }
 
+json::value SpriteAnimator::serialize() const
+{
+	json::value data = Component::serialize();
+
+	return data;
+}
+
 void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 {
 	if (m_spriteRenderer == nullptr)
@@ -106,3 +113,5 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 		m_spriteRenderer->sprite = frame.sprite;
 	}
 }
+
+REFLECT_IMP(SpriteAnimator)

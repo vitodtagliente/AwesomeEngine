@@ -32,7 +32,7 @@ struct TypeDescriptor
 	template<typename T>
 	static const TypeDescriptor& get()
 	{
-		return T::typeDescriptor;
+		return T::s_typeDescriptor;
 	}
 
 	const char* name;
@@ -66,11 +66,12 @@ struct TypeFactory
 };
 
 #define REFLECT() \
-    static TypeDescriptor typeDescriptor; \
-    static void registerTypeDescriptor(TypeDescriptor*); 
+    static TypeDescriptor s_typeDescriptor; \
+    static void registerTypeDescriptor(TypeDescriptor*); \
+	virtual const TypeDescriptor& getType() const; 
 
 #define REFLECT_IMP(T) \
-    TypeDescriptor T::typeDescriptor{T::registerTypeDescriptor}; \
+    TypeDescriptor T::s_typeDescriptor{T::registerTypeDescriptor}; \
     \
     void T::registerTypeDescriptor(TypeDescriptor* descriptor) \
     { \
@@ -78,10 +79,15 @@ struct TypeFactory
         descriptor->size = sizeof(T); \
         \
         TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
-    } 
+    } \
+	\
+	const TypeDescriptor& T::getType() const \
+	{ \
+		return T::s_typeDescriptor; \
+	}
 
 #define REFLECT_IMP_ALIAS(T, N) \
-    TypeDescriptor T::typeDescriptor{T::registerTypeDescriptor}; \
+    TypeDescriptor T::s_typeDescriptor{T::registerTypeDescriptor}; \
     \
     void T::registerTypeDescriptor(TypeDescriptor* descriptor) \
     { \
@@ -89,4 +95,9 @@ struct TypeFactory
         descriptor->size = sizeof(T); \
         \
         TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
-    } 
+    } \
+	\
+	const TypeDescriptor& T::getType() const \
+	{ \
+		return T::s_typeDescriptor; \
+	}

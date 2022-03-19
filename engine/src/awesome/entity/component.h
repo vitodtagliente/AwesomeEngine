@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
@@ -36,6 +37,8 @@ public:
 	virtual void render(graphics::Renderer* const /*renderer*/) {}
 
 	virtual json::value serialize() const override;
+
+	REFLECT()
 
 private:
 	uuid m_id;

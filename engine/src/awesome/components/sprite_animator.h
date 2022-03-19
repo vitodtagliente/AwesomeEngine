@@ -56,6 +56,10 @@ public:
 	std::map<std::string, Animation> animations;
 	bool autoplay;
 
+	virtual json::value serialize() const override;
+
+	REFLECT()
+
 private:
 
 	struct PlayingState
