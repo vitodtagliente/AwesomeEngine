@@ -20,3 +20,13 @@ void GizmosRenderer::render(graphics::Renderer* const renderer)
 	default: break;
 	}
 }
+
+json::value GizmosRenderer::serialize() const
+{
+	json::value data = Component::serialize();
+	data.insert("type", static_cast<int>(type));
+	data.insert("color", ::serialize(color));
+	return data;
+}
+
+REFLECT_IMP(GizmosRenderer)

@@ -66,9 +66,12 @@ struct TypeFactory
 };
 
 #define REFLECT() \
+public: \
+	friend struct TypeDescriptor; \
+	virtual const TypeDescriptor& getTypeDescriptor() const; \
+private: \
     static TypeDescriptor s_typeDescriptor; \
-    static void registerTypeDescriptor(TypeDescriptor*); \
-	virtual const TypeDescriptor& getType() const; 
+    static void registerTypeDescriptor(TypeDescriptor*); 
 
 #define REFLECT_IMP(T) \
     TypeDescriptor T::s_typeDescriptor{T::registerTypeDescriptor}; \
@@ -81,7 +84,7 @@ struct TypeFactory
         TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
     } \
 	\
-	const TypeDescriptor& T::getType() const \
+	const TypeDescriptor& T::getTypeDescriptor() const \
 	{ \
 		return T::s_typeDescriptor; \
 	}
@@ -97,7 +100,7 @@ struct TypeFactory
         TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
     } \
 	\
-	const TypeDescriptor& T::getType() const \
+	const TypeDescriptor& T::getTypeDescriptor() const \
 	{ \
 		return T::s_typeDescriptor; \
 	}

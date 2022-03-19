@@ -15,7 +15,7 @@ class GizmosRenderer : public Component
 public:
 	GizmosRenderer();
 
-	enum class Type
+	enum class Type : int
 	{
 		None,
 		Rect,
@@ -26,4 +26,8 @@ public:
 	graphics::Color color;
 
 	void render(graphics::Renderer* const renderer) override;
+
+	virtual json::value serialize() const override;
+
+	REFLECT()
 };
