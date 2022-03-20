@@ -9,6 +9,11 @@ namespace editor
 
 	}
 
+	bool Context::button(const std::string& name)
+	{
+		return ImGui::Button(name.c_str());
+	}
+
 	bool Context::collapsingHeader(const std::string& name)
 	{
 		return ImGui::CollapsingHeader(name.c_str());

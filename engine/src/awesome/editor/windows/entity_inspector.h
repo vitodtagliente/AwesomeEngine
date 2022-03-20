@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <string>
+
 #include "../window.h"
 
 namespace editor
@@ -14,5 +16,8 @@ namespace editor
 
 		std::string getTitle() const override;
 		void render(Context& context) override;
+
+	private:
+		std::string m_prefabFilename;
 	};
 }

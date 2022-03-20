@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <awesome/data/archive.h>
+#include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>
 
 #include "../context.h"
@@ -40,6 +42,16 @@ namespace editor
 					if (context.collapsingHeader(component->getTypeDescriptor().name))
 					{
 						component->inspect(context);
+					}
+				}
+
+				if (context.collapsingHeader("Prefab options"))
+				{
+					context.input("Filename", &m_prefabFilename, 100);
+					if (context.button("Save"))
+					{
+						Archive archive(m_prefabFilename, Archive::Mode::Write);
+						archive << json::Serializer::to_string(entity->serialize());
 					}
 				}
 			}
