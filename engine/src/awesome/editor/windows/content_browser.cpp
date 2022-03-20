@@ -10,6 +10,7 @@
 #include <awesome/entity/entity.h>
 
 #include "../context.h"
+#include "../selection_system.h"
 
 namespace editor
 {
@@ -26,24 +27,29 @@ namespace editor
 
 	void ContentBrowser::render(Context& context)
 	{
-		if (context.button(".."))
+		if (context.selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
 			return;
 		}
 
+		SelectionSystem* selectionSystem = SelectionSystem::instance();
+		const auto& selection = selectionSystem->getSelection();
+
 		for (const File& file : m_dir.files)
 		{
-			if (context.button(file.name))
+			if (context.selectable(file.name, selection.has_value() &&
+				selection->type == SelectionSystem::Selection::Type::File && std::get<File>(selection->data) == file))
 			{
 				if (file.isDirectory)
 				{
 					m_dir = Dir(m_dir.path + "/" + file.name);
+					SelectionSystem::instance()->unselect();
 					return;
 				}
 				else
 				{
-					// TODO
+					SelectionSystem::instance()->select(file);
 				}
 			}
 		}
@@ -58,14 +64,7 @@ namespace editor
 		parent = currentPath.parent_path().string();
 		for (const auto& entry : std::filesystem::directory_iterator(currentPath))
 		{
-			const std::string filename = entry.path().filename().string();
-			files.push_back(File(filename, entry.is_directory()));
+			files.push_back(File(entry.path()));
 		}
-	}
-
-	ContentBrowser::File::File(const std::string& name, const bool isDirectory)
-		: name(name)
-		, isDirectory(isDirectory)
-	{
 	}
 }

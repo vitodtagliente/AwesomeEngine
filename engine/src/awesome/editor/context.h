@@ -30,5 +30,6 @@ namespace editor
 		void input(const std::string& name, graphics::TextureRect* value);
 		bool selectable(const std::string& name, bool selected);
 		void text(const std::string& str);
+		void textWrapped(const std::string& str);
 	};
 }

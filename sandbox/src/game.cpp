@@ -45,8 +45,8 @@ void Game::startup()
 		// animated entity
 		{
 			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
-			entity->name = std::string("animated guy");
-			entity->tag = "animated guy";
+			entity->name = std::string("Animated Guy");
+			entity->tag = "Player";
 
 			const float spriteSize = 1.0f / 11;
 			Sprite sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize));

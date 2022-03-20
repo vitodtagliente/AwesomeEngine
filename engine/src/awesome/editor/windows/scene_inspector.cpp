@@ -4,12 +4,12 @@
 #include <awesome/entity/world.h>
 
 #include "../context.h"
+#include "../selection_system.h"
 
 namespace editor
 {
 	SceneInspector::SceneInspector()
 		: Window()
-		, m_selectedEntity()
 	{
 	}
 
@@ -20,14 +20,19 @@ namespace editor
 
 	void SceneInspector::render(Context& context)
 	{
+		SelectionSystem* selectionSystem = SelectionSystem::instance();
+		const auto& selection = selectionSystem->getSelection();
+
 		if (World* const world = World::instance())
 		{
 			for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
 			{
 				Entity* const entity = *it;
-				if (context.selectable(entity->name, entity == m_selectedEntity))
+				if (context.selectable(entity->name, 
+					selection.has_value() && 
+					selection->type == SelectionSystem::Selection::Type::Entity && std::get<Entity*>(selection->data) == entity))
 				{
-					m_selectedEntity = entity;
+					selectionSystem->select(entity);
 				}
 			}
 		}

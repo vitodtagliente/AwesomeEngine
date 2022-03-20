@@ -10,7 +10,7 @@
 #include "window.h"
 
 #include "windows/content_browser.h"
-#include "windows/entity_inspector.h"
+#include "windows/inspector.h"
 #include "windows/performance.h"
 #include "windows/renderer_inspector.h"
 #include "windows/scene_inspector.h"
@@ -19,6 +19,7 @@ namespace editor
 {
 	Editor::Editor()
 		: m_context()
+		, m_selectionSystem()
 		, m_windows()
 	{
 	}
@@ -71,7 +72,7 @@ namespace editor
 	void Editor::registerWindows()
 	{
 		addWindow<ContentBrowser>();
-		addWindow<EntityInspector>();
+		addWindow<Inspector>();
 		addWindow<Performance>();
 		addWindow<RendererInspector>();
 		addWindow<SceneInspector>();

@@ -1,11 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include <awesome/application/application.h>
 
 #include "context.h"
+#include "selection_system.h"
 
 namespace graphics
 {
@@ -39,6 +41,7 @@ namespace editor
 		void registerWindows();
 
 		Context m_context;
+		SelectionSystem m_selectionSystem;
 		std::vector<Window*> m_windows;
 	};
 }

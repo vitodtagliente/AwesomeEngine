@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "../file.h"
 #include "../window.h"
 
 namespace editor
@@ -19,14 +20,6 @@ namespace editor
 		void render(Context& context) override;
 
 	private:
-
-		struct File
-		{
-			File(const std::string& name, bool isDirectory);
-
-			std::string name;
-			bool isDirectory;
-		};
 
 		struct Dir
 		{

@@ -78,4 +78,9 @@ namespace editor
 	{
 		ImGui::Text(str.c_str());
 	}
+
+	void Context::textWrapped(const std::string& str)
+	{
+		ImGui::TextWrapped(str.c_str());
+	}
 }
