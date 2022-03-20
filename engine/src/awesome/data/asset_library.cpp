@@ -1,10 +1,12 @@
 #include "asset_library.h"
 
+#include <filesystem>
 #include <list>
 
 AssetLibrary::AssetLibrary()
 	: redirectors()
 	, m_caches()
+	, m_directory(std::filesystem::current_path().string())
 {
 
 }

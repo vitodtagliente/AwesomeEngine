@@ -14,6 +14,11 @@ namespace editor
 		return ImGui::Button(name.c_str());
 	}
 
+	bool Context::button(const std::string& name, const int width, const int height)
+	{
+		return ImGui::Button(name.c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
+	}
+
 	bool Context::collapsingHeader(const std::string& name)
 	{
 		return ImGui::CollapsingHeader(name.c_str());

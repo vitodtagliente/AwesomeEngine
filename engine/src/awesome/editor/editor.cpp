@@ -9,6 +9,7 @@
 
 #include "window.h"
 
+#include "windows/content_browser.h"
 #include "windows/entity_inspector.h"
 #include "windows/performance.h"
 #include "windows/renderer_inspector.h"
@@ -69,6 +70,7 @@ namespace editor
 	
 	void Editor::registerWindows()
 	{
+		addWindow<ContentBrowser>();
 		addWindow<EntityInspector>();
 		addWindow<Performance>();
 		addWindow<RendererInspector>();

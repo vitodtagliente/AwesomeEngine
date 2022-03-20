@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <awesome/core/reflection.h>
+
 namespace editor
 {
 	class Context;
@@ -13,6 +15,8 @@ namespace editor
 		Window();
 
 		virtual std::string getTitle() const;
-		virtual void render(Context&) {}
+		virtual void render(Context&);
+
+		REFLECT()
 	};
 }

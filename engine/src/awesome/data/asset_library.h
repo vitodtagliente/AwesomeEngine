@@ -54,6 +54,8 @@ public:
 		return std::static_pointer_cast<T>(find(type, filename));
 	}
 
+	inline const std::string& getDirectory() const { return m_directory; }
+
 	std::map<uuid, std::string> redirectors;
 
 private:
@@ -63,4 +65,5 @@ private:
 	bool getRedirector(const std::string& filename, uuid& id) const;
 
 	std::map<Asset::Type, AssetCache> m_caches;
+	std::string m_directory;
 };

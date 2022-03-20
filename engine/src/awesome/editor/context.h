@@ -17,6 +17,7 @@ namespace editor
 		Context();
 
 		bool button(const std::string& name);
+		bool button(const std::string& name, int width, int height);
 		bool collapsingHeader(const std::string& name);
 		void input(const std::string& name, int* value);
 		void input(const std::string& name, bool* value);

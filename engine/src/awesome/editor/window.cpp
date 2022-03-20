@@ -1,15 +1,19 @@
 #include "window.h"
 
-#include <typeinfo>
-
 namespace editor
 {
 	Window::Window()
 	{
 	}
-	
+
 	std::string Window::getTitle() const
 	{
-		return typeid(*this).name();
+		return getTypeDescriptor().name;
 	}
+
+	void Window::render(Context&)
+	{
+	}
+
+	REFLECT_IMP(Window)
 }
