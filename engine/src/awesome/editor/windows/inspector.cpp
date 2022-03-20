@@ -63,7 +63,7 @@ namespace editor
 
 		if (context.collapsingHeader("Prefab options"))
 		{
-			context.input("Filename", &m_prefabFilename, 100);
+			context.input("Filename", &m_prefabFilename, 300);
 			if (context.button("Save"))
 			{
 				Archive archive(m_prefabFilename, Archive::Mode::Write);
@@ -74,22 +74,45 @@ namespace editor
 
 	void Inspector::inspect(Context& context, const File& file)
 	{
-		std::vector<std::string> exts = { ".txt", ".json", ".shader", ".prefab" };
-		for (const std::string& ext : exts)
 		{
-			if (file.extension == ext)
+			std::vector<std::string> exts = { ".txt", ".json", ".shader", ".prefab", ".md", ".bat", ".ini" };
+			for (const std::string& ext : exts)
 			{
-				static const auto read = [](const std::string& filename) -> std::string
+				if (file.extension == ext)
 				{
-					std::ostringstream buf;
-					std::ifstream input(filename.c_str());
-					buf << input.rdbuf();
-					return buf.str();
-				};
+					static const auto read = [](const std::string& filename) -> std::string
+					{
+						std::ostringstream buf;
+						std::ifstream input(filename.c_str());
+						buf << input.rdbuf();
+						return buf.str();
+					};
 
-				std::string content = read(file.path);
-				context.textWrapped(content);
-				return;
+					std::string content = read(file.path);
+					context.textWrapped(content);
+					return;
+				}
+			}
+		}
+
+		{
+			std::vector<std::string> exts = { ".png", ".jpg", ".jpeg", ".bmp" };
+			for (const std::string& ext : exts)
+			{
+				if (file.extension == ext)
+				{
+					static const auto read = [](const std::string& filename) -> std::string
+					{
+						std::ostringstream buf;
+						std::ifstream input(filename.c_str());
+						buf << input.rdbuf();
+						return buf.str();
+					};
+
+					std::string content = read(file.path);
+					context.textWrapped(content);
+					return;
+				}
 			}
 		}
 	}

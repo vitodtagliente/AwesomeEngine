@@ -37,8 +37,8 @@ void Game::startup()
 		// camera setup
 		{
 			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
-			entity->name = std::string("camera");
-			entity->tag = "camera";
+			entity->name = std::string("Camera");
+			entity->tag = "Main Camera";
 			entity->addComponent<OrthographicCamera>();
 			entity->addComponent<CameraController2d>();
 		}

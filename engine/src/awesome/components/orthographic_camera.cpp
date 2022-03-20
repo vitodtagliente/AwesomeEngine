@@ -34,4 +34,13 @@ void OrthographicCamera::update(const double)
 	}
 }
 
+void OrthographicCamera::inspect(editor::Context& context)
+{
+	Component::inspect(context);
+	context.input("Near Plane", &nearPlane);
+	context.input("Far Plane", &farPlane);
+	context.input("Pixel Perfect", &pixelPerfect);
+	context.input("Pixel per unit", &pixelsPerUnit);
+}
+
 REFLECT_IMP(OrthographicCamera)

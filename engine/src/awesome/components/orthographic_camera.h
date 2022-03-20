@@ -21,5 +21,7 @@ public:
 
 	void update(double deltaTime) override;
 
+	virtual void inspect(editor::Context& context) override;
+
 	REFLECT()
 };

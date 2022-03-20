@@ -9,7 +9,7 @@
 #include <awesome/math/vector3.h>
 
 CameraController2d::CameraController2d()
-	: speed(1.f)
+	: speed(.1f)
 	, m_dragPosition(false)
 {
 }
@@ -43,6 +43,12 @@ void CameraController2d::update(double deltaTime)
 void CameraController2d::render(graphics::Renderer* const renderer)
 {
 	renderer->pushCamera(getOwner()->transform.matrix());
+}
+
+void CameraController2d::inspect(editor::Context& context)
+{
+	Component::inspect(context);
+	context.input("Speed", &speed);
 }
 
 REFLECT_IMP(CameraController2d)
