@@ -29,4 +29,10 @@ json::value GizmosRenderer::serialize() const
 	return data;
 }
 
+void GizmosRenderer::inspect(editor::Context& context)
+{
+	Component::inspect(context);
+	context.input("Color", &color);
+}
+
 REFLECT_IMP(GizmosRenderer)

@@ -33,3 +33,5 @@ void OrthographicCamera::update(const double)
 		context->camera = math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
 	}
 }
+
+REFLECT_IMP(OrthographicCamera)

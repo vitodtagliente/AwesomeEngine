@@ -1,7 +1,6 @@
 #include "entity_inspector.h"
 
 #include <imgui.h>
-#include <typeinfo>
 
 #include <awesome/entity/entity.h>
 
@@ -38,9 +37,9 @@ namespace editor
 				for (auto it = components.begin(); it != components.end(); ++it)
 				{
 					Component* const component = *it;
-					if (context.collapsingHeader(typeid(*component).name()))
+					if (context.collapsingHeader(component->getTypeDescriptor().name))
 					{
-						context.input("enabled", &component->enabled);
+						component->inspect(context);
 					}
 				}
 			}

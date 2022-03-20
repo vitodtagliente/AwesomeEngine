@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 
@@ -70,6 +71,8 @@ struct Asset : public ISerializable
 
 	uuid id;
 	Type type;
+
+	REFLECT()
 };
 
 template <Asset::Type T, typename D>

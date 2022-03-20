@@ -39,4 +39,9 @@ json::value Component::serialize() const
 		});
 }
 
+void Component::inspect(editor::Context& context)
+{
+	context.input("Enabled", &enabled);
+}
+
 REFLECT_IMP(Component)

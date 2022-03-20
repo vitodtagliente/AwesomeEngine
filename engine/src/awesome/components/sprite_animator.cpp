@@ -101,6 +101,12 @@ json::value SpriteAnimator::serialize() const
 	return data;
 }
 
+void SpriteAnimator::inspect(editor::Context& context)
+{
+	Component::inspect(context);
+	context.input("Autoplay", &autoplay);
+}
+
 void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 {
 	if (m_spriteRenderer == nullptr)
@@ -115,3 +121,13 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 }
 
 REFLECT_IMP(SpriteAnimator)
+
+json::value SpriteAnimator::Animation::Frame::serialize() const
+{
+	return json::value();
+}
+
+json::value SpriteAnimator::Animation::serialize() const
+{
+	return json::value();
+}

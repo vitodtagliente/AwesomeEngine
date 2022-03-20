@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/serialization.h>
 #include <awesome/data/sprite.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
@@ -13,9 +14,9 @@ class SpriteAnimator : public Component
 {
 public:
 
-	struct Animation
+	struct Animation : public ISerializable
 	{
-		struct Frame
+		struct Frame : public ISerializable
 		{
 			Frame()
 				: sprite()
@@ -27,6 +28,8 @@ public:
 				, duration(duration)
 			{}
 
+			virtual json::value serialize() const override;
+
 			Sprite sprite;
 			double duration;
 		};
@@ -37,6 +40,8 @@ public:
 		{
 
 		}
+
+		virtual json::value serialize() const override;
 
 		unsigned int startingFrame;
 		std::vector<Frame> frames;
@@ -57,6 +62,7 @@ public:
 	bool autoplay;
 
 	virtual json::value serialize() const override;
+	virtual void inspect(editor::Context& context) override;
 
 	REFLECT()
 

@@ -32,4 +32,10 @@ json::value SpriteRenderer::serialize() const
 	return data;
 }
 
+void SpriteRenderer::inspect(editor::Context& context)
+{
+	Component::inspect(context);
+	context.input("Color", &color);
+}
+
 REFLECT_IMP(SpriteRenderer)

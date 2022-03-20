@@ -20,4 +20,6 @@ public:
 	int pixelsPerUnit;
 
 	void update(double deltaTime) override;
+
+	REFLECT()
 };

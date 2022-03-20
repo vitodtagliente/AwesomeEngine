@@ -4,6 +4,7 @@
 #include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
+#include <awesome/editor/context.h>
 #include <awesome/encoding/json.h>
 
 class Entity;
@@ -36,7 +37,10 @@ public:
 	virtual void update(double /*deltaTime*/) {}
 	virtual void render(graphics::Renderer* const /*renderer*/) {}
 
+	// serialization
 	virtual json::value serialize() const override;
+	// editor
+	virtual void inspect(editor::Context& context);
 
 	REFLECT()
 
