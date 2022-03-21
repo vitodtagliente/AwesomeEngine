@@ -1,4 +1,4 @@
-#include "loader.h"
+#include "asset_importer.h"
 
 #include <filesystem>
 #include <map>
@@ -13,16 +13,20 @@
 
 namespace editor
 {
-	Loader::Loader()
+	std::map<Asset::Type, std::set<std::string>> AssetImporter::s_filetypes{
+		{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"}},
+		{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini"}}
+	};
+
+	AssetImporter::AssetImporter()
 	{
-		load();
+
 	}
 
-	void Loader::load()
+	void AssetImporter::import(const std::string& directory, const bool recursive)
 	{
 		std::vector<File> files;
 
-		const std::string& directory = AssetLibrary::instance()->getDirectory();
 		const std::filesystem::path currentPath(directory);
 		for (const auto& entry : std::filesystem::directory_iterator(currentPath))
 		{
@@ -50,10 +54,27 @@ namespace editor
 				}
 				else
 				{
-					Archive archive(directory + "/" + file.name + ".asset", Archive::Mode::Write);
-
+					const Asset::Type type = getTypeByExtension(file.extension);
+					if (type != Asset::Type::None)
+					{
+						Archive archive(directory + "/" + file.name + ".asset", Archive::Mode::Write);
+						Asset asset(type);
+						archive << json::Serializer::to_string(asset.serialize());
+					}
 				}
 			}
 		}
+	}
+
+	Asset::Type AssetImporter::getTypeByExtension(const std::string& ext) const
+	{
+		for (const auto& pair : s_filetypes)
+		{
+			if (pair.second.find(ext) != pair.second.end())
+			{
+				return pair.first;
+			}
+		}
+		return Asset::Type::None;
 	}
 }

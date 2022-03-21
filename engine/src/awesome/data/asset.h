@@ -13,7 +13,8 @@ struct Asset : public ISerializable
 	{
 		None,
 		Image,
-		Prefab
+		Prefab,
+		Text
 	};
 
 	Asset()
@@ -130,3 +131,4 @@ public:
 };
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
+typedef BaseAsset<Asset::Type::Text, std::string> TextAsset;
