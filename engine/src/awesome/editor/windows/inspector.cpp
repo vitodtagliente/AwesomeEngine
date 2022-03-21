@@ -15,7 +15,9 @@ namespace editor
 {
 	Inspector::Inspector()
 		: Window()
+		, m_prefabFilename()
 	{
+		m_prefabFilename.reserve(100);
 	}
 
 	void Inspector::render(Context& context)

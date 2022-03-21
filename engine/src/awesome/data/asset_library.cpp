@@ -6,7 +6,7 @@
 AssetLibrary::AssetLibrary()
 	: redirectors()
 	, m_caches()
-	, m_directory(std::filesystem::current_path().string())
+	, m_directory(std::filesystem::current_path().string() + "/../assets")
 {
 
 }
