@@ -1,11 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <string>
 #include <vector>
 
-#include "../file.h"
-#include "../window.h"
+#include <awesome/editor/window.h>
 
 namespace editor
 {
@@ -24,11 +24,12 @@ namespace editor
 
 		struct Dir
 		{
-			Dir(const std::string& directory);
+			Dir(const std::string& path);
+			Dir(const std::filesystem::path& path);
 
-			std::string path;
-			std::string parent;
-			std::vector<File> files;
+			std::filesystem::path path;
+			std::filesystem::path parent;
+			std::vector<std::filesystem::path> files;
 		};
 
 		Dir m_dir;

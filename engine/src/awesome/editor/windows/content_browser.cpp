@@ -2,15 +2,12 @@
 
 #include <filesystem>
 
-#include <imgui.h>
-
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/editor/context.h>
+#include <awesome/editor/selection_system.h>
 #include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>
-
-#include "../context.h"
-#include "../selection_system.h"
 
 namespace editor
 {
@@ -36,14 +33,14 @@ namespace editor
 		SelectionSystem* selectionSystem = SelectionSystem::instance();
 		const auto& selection = selectionSystem->getSelection();
 
-		for (const File& file : m_dir.files)
+		for (const std::filesystem::path& file : m_dir.files)
 		{
-			if (context.selectable(file.name, selection.has_value() &&
-				selection->type == SelectionSystem::Selection::Type::File && std::get<File>(selection->data) == file))
+			if (context.selectable(file.filename().string(), selection.has_value() &&
+				selection->type == SelectionSystem::Selection::Type::File && std::get<std::filesystem::path>(selection->data) == file))
 			{
-				if (file.isDirectory)
+				if (!file.has_extension())
 				{
-					m_dir = Dir(m_dir.path + "/" + file.name);
+					m_dir = Dir(file);
 					SelectionSystem::instance()->unselect();
 					return;
 				}
@@ -56,18 +53,32 @@ namespace editor
 	}
 
 	ContentBrowser::Dir::Dir(const std::string& directory)
-		: path(directory)
+		: path(std::filesystem::path(directory))
 		, parent()
 		, files()
 	{
-		const std::filesystem::path currentPath(directory);
-		parent = currentPath.parent_path().string();
-		for (const auto& entry : std::filesystem::directory_iterator(currentPath))
+		parent = path.parent_path();
+		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{
 			const std::filesystem::path& file = entry.path();
 			if (file.extension().string() == s_assetExtension || entry.is_directory())
 			{
-				files.push_back(File(file));
+				files.push_back(file);
+			}
+		}
+	}
+
+	ContentBrowser::Dir::Dir(const std::filesystem::path& path)
+		: path(path)
+		, parent(path.parent_path())
+		, files()
+	{
+		for (const auto& entry : std::filesystem::directory_iterator(path))
+		{
+			const std::filesystem::path& file = entry.path();
+			if (file.extension().string() == s_assetExtension || entry.is_directory())
+			{
+				files.push_back(file);
 			}
 		}
 	}

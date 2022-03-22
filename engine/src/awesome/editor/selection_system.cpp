@@ -12,7 +12,7 @@ namespace editor
 		m_selection = Selection(entity);
 	}
 
-	void SelectionSystem::select(const File& file)
+	void SelectionSystem::select(const std::filesystem::path& file)
 	{
 		m_selection = Selection(file);
 	}
@@ -35,7 +35,7 @@ namespace editor
 
 	}
 
-	SelectionSystem::Selection::Selection(const File& file)
+	SelectionSystem::Selection::Selection(const std::filesystem::path& file)
 		: type(Type::File)
 		, data(file)
 	{

@@ -1,12 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <string>
 
+#include <awesome/editor/window.h>
 #include <awesome/entity/entity.h>
-
-#include "../file.h"
-#include "../window.h"
 
 namespace editor
 {
@@ -23,7 +22,7 @@ namespace editor
 
 	private:
 		void inspect(Context& context, Entity* const entity);
-		void inspect(Context& context, const File& file);
+		void inspect(Context& context, const std::filesystem::path& file);
 
 		std::string m_prefabFilename;
 	};

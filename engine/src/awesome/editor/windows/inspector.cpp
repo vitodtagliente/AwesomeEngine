@@ -3,13 +3,10 @@
 #include <fstream>
 #include <vector>
 
-#include <imgui.h>
-
 #include <awesome/data/archive.h>
+#include <awesome/editor/context.h>
+#include <awesome/editor/selection_system.h>
 #include <awesome/encoding/json.h>
-
-#include "../context.h"
-#include "../selection_system.h"
 
 namespace editor
 {
@@ -35,8 +32,8 @@ namespace editor
 			}
 			else if (selection->type == SelectionSystem::Selection::Type::File)
 			{
-				const File& file = std::get<File>(selection->data);
-				if (file.exists())
+				const std::filesystem::path& file = std::get<std::filesystem::path>(selection->data);
+				if (std::filesystem::exists(file))
 				{
 					inspect(context, file);
 				}
@@ -46,12 +43,12 @@ namespace editor
 
 	void Inspector::inspect(Context& context, Entity* const entity)
 	{
-		context.input("name", &entity->name, 100);
-		context.input("tag", &entity->tag, 100);
-		context.input("position", &entity->transform.position);
-		context.input("rotation", &entity->transform.rotation);
-		context.input("scale", &entity->transform.scale);
-		context.input("static", &entity->transform.isStatic);
+		context.input("Name", &entity->name, 100);
+		context.input("Tag", &entity->tag, 100);
+		context.input("Position", &entity->transform.position);
+		context.input("Rotation", &entity->transform.rotation);
+		context.input("Scale", &entity->transform.scale);
+		context.input("Static", &entity->transform.isStatic);
 
 		const auto& components = entity->getComponents();
 		for (auto it = components.begin(); it != components.end(); ++it)
@@ -74,13 +71,13 @@ namespace editor
 		}
 	}
 
-	void Inspector::inspect(Context& context, const File& file)
+	void Inspector::inspect(Context& context, const std::filesystem::path& file)
 	{
 		{
 			std::vector<std::string> exts = { ".txt", ".json", ".shader", ".prefab", ".md", ".bat", ".ini" };
 			for (const std::string& ext : exts)
 			{
-				if (file.extension == ext)
+				if (file.extension().string() == ext)
 				{
 					static const auto read = [](const std::string& filename) -> std::string
 					{
@@ -90,7 +87,7 @@ namespace editor
 						return buf.str();
 					};
 
-					std::string content = read(file.path);
+					std::string content = read(file.string());
 					context.textWrapped(content);
 					return;
 				}
@@ -101,7 +98,7 @@ namespace editor
 			std::vector<std::string> exts = { ".png", ".jpg", ".jpeg", ".bmp" };
 			for (const std::string& ext : exts)
 			{
-				if (file.extension == ext)
+				if (file.extension().string() == ext)
 				{
 					static const auto read = [](const std::string& filename) -> std::string
 					{
@@ -111,7 +108,7 @@ namespace editor
 						return buf.str();
 					};
 
-					std::string content = read(file.path);
+					std::string content = read(file.string());
 					context.textWrapped(content);
 					return;
 				}
