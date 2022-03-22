@@ -79,6 +79,11 @@ namespace editor
 		{
 		case Asset::Type::Image:
 		{
+			std::shared_ptr<ImageAsset> image = std::static_pointer_cast<ImageAsset>(asset);
+			if (image)
+			{
+				context.image(image);
+			}
 			break;
 		}
 		case Asset::Type::Text:

@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <awesome/graphics/texture_library.h>
+
 namespace editor
 {
 	Context::Context()
@@ -22,6 +24,18 @@ namespace editor
 	bool Context::collapsingHeader(const std::string& name)
 	{
 		return ImGui::CollapsingHeader(name.c_str());
+	}
+
+	void Context::image(std::shared_ptr<ImageAsset> image)
+	{
+		if (image != nullptr)
+		{
+			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
+			if (texture)
+			{
+				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256));
+			}
+		}
 	}
 
 	void Context::input(const std::string& name, int* value)
@@ -68,7 +82,7 @@ namespace editor
 	{
 		ImGui::InputFloat4(name.c_str(), value->data);
 	}
-	
+
 	bool Context::selectable(const std::string& name, const bool selected)
 	{
 		return ImGui::Selectable(name.c_str(), selected);
