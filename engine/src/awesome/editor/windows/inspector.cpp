@@ -1,9 +1,11 @@
 #include "inspector.h"
 
 #include <fstream>
+#include <memory>
 #include <vector>
 
 #include <awesome/data/archive.h>
+#include <awesome/data/asset.h>
 #include <awesome/editor/context.h>
 #include <awesome/editor/selection_system.h>
 #include <awesome/encoding/json.h>
@@ -32,10 +34,10 @@ namespace editor
 			}
 			else if (selection->type == SelectionSystem::Selection::Type::File)
 			{
-				const std::filesystem::path& file = std::get<std::filesystem::path>(selection->data);
-				if (std::filesystem::exists(file))
+				std::shared_ptr<Asset> asset = std::get<std::shared_ptr<Asset>>(selection->data);
+				if (asset)
 				{
-					inspect(context, file);
+					inspect(context, asset);
 				}
 			}
 		}
@@ -71,48 +73,24 @@ namespace editor
 		}
 	}
 
-	void Inspector::inspect(Context& context, const std::filesystem::path& file)
+	void Inspector::inspect(Context& context, std::shared_ptr<Asset> asset)
 	{
+		switch (asset->type)
 		{
-			std::vector<std::string> exts = { ".txt", ".json", ".shader", ".prefab", ".md", ".bat", ".ini" };
-			for (const std::string& ext : exts)
-			{
-				if (file.extension().string() == ext)
-				{
-					static const auto read = [](const std::string& filename) -> std::string
-					{
-						std::ostringstream buf;
-						std::ifstream input(filename.c_str());
-						buf << input.rdbuf();
-						return buf.str();
-					};
-
-					std::string content = read(file.string());
-					context.textWrapped(content);
-					return;
-				}
-			}
+		case Asset::Type::Image:
+		{
+			break;
 		}
-
+		case Asset::Type::Text:
 		{
-			std::vector<std::string> exts = { ".png", ".jpg", ".jpeg", ".bmp" };
-			for (const std::string& ext : exts)
+			std::shared_ptr<TextAsset> text = std::static_pointer_cast<TextAsset>(asset);
+			if (text)
 			{
-				if (file.extension().string() == ext)
-				{
-					static const auto read = [](const std::string& filename) -> std::string
-					{
-						std::ostringstream buf;
-						std::ifstream input(filename.c_str());
-						buf << input.rdbuf();
-						return buf.str();
-					};
-
-					std::string content = read(file.string());
-					context.textWrapped(content);
-					return;
-				}
+				context.textWrapped(text->data);
 			}
+			break;
+		}
+		default: break;
 		}
 	}
 

@@ -1,6 +1,7 @@
 #include "asset_library.h"
 
 #include <filesystem>
+#include <fstream>
 #include <list>
 
 AssetLibrary::AssetLibrary()
@@ -40,6 +41,23 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& asset, const std::strin
 	case Asset::Type::Image:
 	{
 		return std::make_shared<ImageAsset>(Image::load(filename), asset.id);
+	}
+	case Asset::Type::Text:
+	{
+		static const auto read = [](const std::string& filename) -> std::string
+		{
+			std::ostringstream buf;
+			std::ifstream input(filename.c_str());
+			buf << input.rdbuf();
+			return buf.str();
+		};
+
+		const std::filesystem::path file(filename);
+		if (std::filesystem::exists(file))
+		{
+			return std::make_shared<TextAsset>(read(filename), asset.id);
+		}
+		return nullptr;
 	}
 	default: return nullptr;
 	}

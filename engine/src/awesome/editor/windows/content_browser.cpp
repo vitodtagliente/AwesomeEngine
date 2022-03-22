@@ -35,9 +35,12 @@ namespace editor
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
-			if (context.selectable(file.filename().string(), selection.has_value() &&
-				selection->type == SelectionSystem::Selection::Type::File && std::get<std::filesystem::path>(selection->data) == file))
+			if (context.selectable(file.filename().string(),
+				// selection.has_value() &&
+				// selection->type == SelectionSystem::Selection::Type::File && std::get<std::filesystem::path>(selection->data) == file))
+				false))
 			{
+				// is directory
 				if (!file.has_extension())
 				{
 					m_dir = Dir(file);
@@ -46,7 +49,16 @@ namespace editor
 				}
 				else
 				{
-					SelectionSystem::instance()->select(file);
+					Asset descriptor = Asset::load(file.string());
+					std::shared_ptr<Asset> asset = AssetLibrary::instance()->find(descriptor.id);
+					if (asset)
+					{
+						SelectionSystem::instance()->select(asset);
+					}
+					else
+					{
+						SelectionSystem::instance()->unselect();
+					}
 				}
 			}
 		}

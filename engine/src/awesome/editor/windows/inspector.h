@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <string>
 
+#include <awesome/data/asset.h>
 #include <awesome/editor/window.h>
 #include <awesome/entity/entity.h>
 
@@ -22,7 +23,7 @@ namespace editor
 
 	private:
 		void inspect(Context& context, Entity* const entity);
-		void inspect(Context& context, const std::filesystem::path& file);
+		void inspect(Context& context, std::shared_ptr<Asset> asset);
 
 		std::string m_prefabFilename;
 	};

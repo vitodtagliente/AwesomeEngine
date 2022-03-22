@@ -12,9 +12,9 @@ namespace editor
 		m_selection = Selection(entity);
 	}
 
-	void SelectionSystem::select(const std::filesystem::path& file)
+	void SelectionSystem::select(std::shared_ptr<Asset> asset)
 	{
-		m_selection = Selection(file);
+		m_selection = Selection(asset);
 	}
 
 	void SelectionSystem::unselect()
@@ -35,9 +35,9 @@ namespace editor
 
 	}
 
-	SelectionSystem::Selection::Selection(const std::filesystem::path& file)
+	SelectionSystem::Selection::Selection(std::shared_ptr<Asset> asset)
 		: type(Type::File)
-		, data(file)
+		, data(asset)
 	{
 	}
 

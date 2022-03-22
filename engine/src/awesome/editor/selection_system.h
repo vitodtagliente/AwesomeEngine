@@ -2,11 +2,13 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 #include <optional>
 #include <variant>
 #include <string>
 
 #include <awesome/core/singleton.h>
+#include <awesome/data/asset.h>
 #include <awesome/entity/entity.h>
 
 namespace editor
@@ -26,16 +28,16 @@ namespace editor
 
 			Selection();
 			Selection(Entity* entity);
-			Selection(const std::filesystem::path& file);
+			Selection(std::shared_ptr<Asset> asset);
 
 			Type type;
-			std::variant<Entity*, std::filesystem::path> data;
+			std::variant<Entity*, std::shared_ptr<Asset>> data;
 		};
 
 		SelectionSystem();
 
 		void select(Entity* entity);
-		void select(const std::filesystem::path& file);
+		void select(std::shared_ptr<Asset> asset);
 		void unselect();
 
 		const std::optional<Selection>& getSelection() const { return m_selection; }
