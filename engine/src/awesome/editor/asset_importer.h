@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <map>
+#include <filesystem>
 #include <set>
 #include <string>
 
@@ -15,10 +15,14 @@ namespace editor
 		AssetImporter();
 
 		void import(const std::string& directory, bool recursive);
+		void import(const std::filesystem::path& directory, bool recursive);
+		bool import(const std::string& filename);
+		bool import(const std::filesystem::path& filename);
 
 	private:
 		Asset::Type getTypeByExtension(const std::string& ext) const;
 
 		static std::map<Asset::Type, std::set<std::string>> s_filetypes;
+		static constexpr char* const s_assetExtension = ".asset";
 	};
 }
