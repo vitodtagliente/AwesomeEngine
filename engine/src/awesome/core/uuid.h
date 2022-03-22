@@ -7,6 +7,7 @@ class uuid final
 {
 public:
 	uuid();
+	uuid(const std::string& value);
 	uuid(const uuid& other);
 	~uuid() = default;
 
@@ -14,11 +15,10 @@ public:
 	bool operator!= (const uuid& other) const;
 	bool operator< (const uuid& other) const;
 
-	std::string toString() const;
+	operator std::string() const { return m_value; }
 
 	static const uuid Invalid;
 
 private:
-	// hashed data
-	long long m_value;
+	std::string m_value;
 };

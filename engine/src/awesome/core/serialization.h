@@ -25,7 +25,6 @@ json::value serialize(const T& data)
 template <typename T>
 bool deserialize(const json::value& value, T& data) { return true; }
 
-template <> json::value serialize(const uuid& id);
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
 template <> json::value serialize(const graphics::TextureRect& rect);

@@ -34,7 +34,7 @@ json::value Component::serialize() const
 {
 	return json::object({
 		{"componentclass", getTypeDescriptor().name},
-		{"id", ::serialize(m_id)},
+		{"id", static_cast<std::string>(m_id)},
 		{"enabled", enabled}
 		});
 }

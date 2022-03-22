@@ -8,7 +8,12 @@ uuid::uuid()
 	: m_value()
 {
 	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-	m_value = now.time_since_epoch().count();
+	m_value = std::to_string(now.time_since_epoch().count());
+}
+
+uuid::uuid(const std::string& value)
+	: m_value(value)
+{
 }
 
 uuid::uuid(const uuid& other)
@@ -29,9 +34,4 @@ bool uuid::operator!=(const uuid& other) const
 bool uuid::operator<(const uuid& other) const
 {
 	return m_value < other.m_value;
-}
-
-std::string uuid::toString() const
-{
-	return std::to_string(m_value);
 }

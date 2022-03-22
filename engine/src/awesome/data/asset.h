@@ -65,7 +65,7 @@ struct Asset : public ISerializable
 	virtual json::value serialize() const override
 	{
 		return json::object({
-			{"id", ::serialize(id)},
+			{"id", static_cast<std::string>(id)},
 			{"type", static_cast<int>(type)}
 			});
 	}

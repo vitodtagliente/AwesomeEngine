@@ -106,7 +106,7 @@ json::value Entity::serialize() const
 	};
 
 	return json::object({
-		{"id", ::serialize(m_id)},
+		{"id", static_cast<std::string>(m_id)},
 		{"name", name},
 		{"tag", tag},
 		{"transform", ::serialize(transform)},
