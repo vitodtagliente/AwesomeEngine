@@ -52,27 +52,13 @@ namespace editor
 
 		if (filename.extension().string() == s_assetExtension)
 		{
-			static const auto read = [](const std::string& filename) -> std::string
+			Asset asset = Asset::load(filename.string());
+			if (asset.type != Asset::Type::None)
 			{
-				std::ostringstream buf;
-				std::ifstream input(filename.c_str());
-				buf << input.rdbuf();
-				return buf.str();
-			};
-
-			std::string content = read(filename.string());
-			if (!content.empty())
-			{
-				json::value value = json::Deserializer::parse(content);
-				Asset asset;
-				asset.deserialize(value);
-
-				if (asset.type != Asset::Type::None)
-				{
-					AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, filename.string()));
-				}
+				AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, filename.string()));
+				return true;
 			}
-			return true;
+			return false;
 		}
 
 		const std::string assetFilename = filename.string() + s_assetExtension;

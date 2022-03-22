@@ -30,6 +30,8 @@ struct Asset : public ISerializable
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
+	static Asset load(const std::string& filename);
+
 	uuid id;
 	Type type;
 

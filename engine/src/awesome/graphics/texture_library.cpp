@@ -29,7 +29,7 @@ namespace graphics
 
 	std::shared_ptr<Texture> TextureLibrary::create(const uuid& id)
 	{
-		std::shared_ptr<ImageAsset> asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance()->find(Asset::Type::Image, id));
+		std::shared_ptr<ImageAsset> asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance()->find(id));
 		if (asset)
 		{
 			const Image& image = asset->data;

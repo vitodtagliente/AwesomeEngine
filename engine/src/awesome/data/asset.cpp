@@ -1,5 +1,7 @@
 #include "asset.h"
 
+#include <fstream>
+
 Asset::Asset()
 	: id()
 	, type(Type::None)
@@ -63,6 +65,26 @@ void Asset::deserialize(const json::value& value)
 	{
 		type = static_cast<Type>(value["type"].as_number().as_int());
 	}
+}
+
+Asset Asset::load(const std::string& filename)
+{
+	static const auto read = [](const std::string& filename) -> std::string
+	{
+		std::ostringstream buf;
+		std::ifstream input(filename.c_str());
+		buf << input.rdbuf();
+		return buf.str();
+	};
+
+	Asset asset;
+	std::string content = read(filename);
+	if (!content.empty())
+	{
+		json::value value = json::Deserializer::parse(content);
+		asset.deserialize(value);
+	}
+	return asset;
 }
 
 REFLECT_IMP(Asset)
