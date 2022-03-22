@@ -75,7 +75,9 @@ public:
 
 	void removeComponent(Component* const component);
 
+	// serialization
 	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 
 	std::string name;
 	std::string tag;

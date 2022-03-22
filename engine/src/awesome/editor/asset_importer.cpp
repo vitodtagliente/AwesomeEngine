@@ -1,5 +1,7 @@
 #include "asset_importer.h"
 
+#include <fstream>
+
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/encoding/json.h>
@@ -32,10 +34,7 @@ namespace editor
 			}
 
 			const std::filesystem::path& file = entry.path();
-			if (file.extension().string() != s_assetExtension)
-			{
-				import(file);
-			}
+			import(file);
 		}
 	}
 
@@ -53,6 +52,26 @@ namespace editor
 
 		if (filename.extension().string() == s_assetExtension)
 		{
+			static const auto read = [](const std::string& filename) -> std::string
+			{
+				std::ostringstream buf;
+				std::ifstream input(filename.c_str());
+				buf << input.rdbuf();
+				return buf.str();
+			};
+
+			std::string content = read(filename.string());
+			if (!content.empty())
+			{
+				json::value value = json::Deserializer::parse(content);
+				Asset asset;
+				asset.deserialize(value);
+
+				if (asset.type != Asset::Type::None)
+				{
+					AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, filename.string()));
+				}
+			}
 			return true;
 		}
 
@@ -68,6 +87,8 @@ namespace editor
 			Archive archive(assetFilename, Archive::Mode::Write);
 			Asset asset(type);
 			archive << json::Serializer::to_string(asset.serialize());
+
+			AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, assetFilename));
 		}
 
 		return true;

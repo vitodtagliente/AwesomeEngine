@@ -14,6 +14,7 @@
 struct ISerializable
 {
 	virtual json::value serialize() const = 0;
+	virtual void deserialize(const json::value& value) = 0;
 };
 
 template <typename T>

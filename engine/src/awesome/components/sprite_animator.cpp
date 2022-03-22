@@ -127,7 +127,15 @@ json::value SpriteAnimator::Animation::Frame::serialize() const
 	return json::value();
 }
 
+void SpriteAnimator::Animation::Frame::deserialize(const json::value& value)
+{
+}
+
 json::value SpriteAnimator::Animation::serialize() const
 {
 	return json::value();
+}
+
+void SpriteAnimator::Animation::deserialize(const json::value& value)
+{
 }

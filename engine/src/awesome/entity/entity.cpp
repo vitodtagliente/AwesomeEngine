@@ -114,3 +114,7 @@ json::value Entity::serialize() const
 		{"components", componentsToJson(m_components)}
 		});
 }
+
+void Entity::deserialize(const json::value& value)
+{
+}

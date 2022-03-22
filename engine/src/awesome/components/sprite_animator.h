@@ -29,6 +29,7 @@ public:
 			{}
 
 			virtual json::value serialize() const override;
+			virtual void deserialize(const json::value& value) override;
 
 			Sprite sprite;
 			double duration;
@@ -42,6 +43,7 @@ public:
 		}
 
 		virtual json::value serialize() const override;
+		virtual void deserialize(const json::value& value) override;
 
 		unsigned int startingFrame;
 		std::vector<Frame> frames;

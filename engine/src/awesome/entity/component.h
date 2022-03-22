@@ -39,6 +39,7 @@ public:
 
 	// serialization
 	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 	// editor
 	virtual void inspect(editor::Context& context);
 

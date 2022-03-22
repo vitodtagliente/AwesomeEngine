@@ -17,58 +17,18 @@ struct Asset : public ISerializable
 		Text
 	};
 
-	Asset()
-		: id()
-		, type(Type::None)
-	{
+	Asset();
+	Asset(Type type);
+	Asset(Type type, const uuid& id);
+	Asset(const Asset& asset);
 
-	}
+	Asset& operator= (const Asset& other);
+	bool operator== (const Asset& other) const;
+	bool operator!= (const Asset& other) const;
 
-	Asset(const Type type)
-		: id()
-		, type(type)
-	{
-
-	}
-
-	Asset(const Type type, const uuid& id)
-		: id(id)
-		, type(type)
-	{
-
-	}
-
-	Asset(const Asset& asset)
-		: id(asset.id)
-		, type(asset.type)
-	{
-
-	}
-
-	Asset& operator= (const Asset& other)
-	{
-		id = other.id;
-		type = other.type;
-		return *this;
-	}
-
-	bool operator== (const Asset& other) const
-	{
-		return id == other.id && type == other.type;
-	}
-
-	bool operator!= (const Asset& other) const
-	{
-		return id != other.id || type != other.type;
-	}
-
-	virtual json::value serialize() const override
-	{
-		return json::object({
-			{"id", static_cast<std::string>(id)},
-			{"type", static_cast<int>(type)}
-			});
-	}
+	// serialization
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 
 	uuid id;
 	Type type;
