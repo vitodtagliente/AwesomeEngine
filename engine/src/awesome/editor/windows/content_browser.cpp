@@ -64,7 +64,11 @@ namespace editor
 		parent = currentPath.parent_path().string();
 		for (const auto& entry : std::filesystem::directory_iterator(currentPath))
 		{
-			files.push_back(File(entry.path()));
+			const std::filesystem::path& file = entry.path();
+			if (file.extension().string() == s_assetExtension || entry.is_directory())
+			{
+				files.push_back(File(file));
+			}
 		}
 	}
 }

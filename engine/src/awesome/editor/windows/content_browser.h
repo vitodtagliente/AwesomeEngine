@@ -20,6 +20,7 @@ namespace editor
 		void render(Context& context) override;
 
 	private:
+		static constexpr char* const s_assetExtension = ".asset";
 
 		struct Dir
 		{
