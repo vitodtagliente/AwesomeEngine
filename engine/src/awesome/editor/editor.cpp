@@ -8,6 +8,7 @@
 #include <awesome/data/asset_library.h>
 
 #include "asset_importer.h"
+#include "editor_color_scheme.h"
 #include "window.h"
 
 #include "windows/content_browser.h"
@@ -34,6 +35,10 @@ namespace editor
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance()->getHandler()), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
+
+		// https://coolors.co/252131-f4f1de-da115e-792359-c7ef00
+		EditorColorScheme scheme(0x252131FF /* Background */, 0xC7EF00FF /* Text */, 0xF4F1DEFF /* MainColor */, 0xDA115EFF /* MainAccent */, 0x792359FF /* Highlight */);
+		scheme.apply();
 
 		AssetImporter importer;
 		importer.import(AssetLibrary::instance()->getDirectory(), true);

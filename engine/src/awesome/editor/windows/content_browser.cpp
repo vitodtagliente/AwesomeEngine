@@ -35,7 +35,7 @@ namespace editor
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
-			if (context.selectable(file.filename().string(),
+			if (context.selectable(file.stem().string(),
 				// selection.has_value() &&
 				// selection->type == SelectionSystem::Selection::Type::File && std::get<std::filesystem::path>(selection->data) == file))
 				false))
