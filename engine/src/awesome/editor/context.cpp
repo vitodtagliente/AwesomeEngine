@@ -11,6 +11,11 @@ namespace editor
 
 	}
 
+	bool Context::beginCombo(const std::string& name)
+	{
+		return ImGui::BeginCombo(name.c_str(), "");
+	}
+
 	bool Context::button(const std::string& name)
 	{
 		return ImGui::Button(name.c_str());
@@ -24,6 +29,11 @@ namespace editor
 	bool Context::collapsingHeader(const std::string& name)
 	{
 		return ImGui::CollapsingHeader(name.c_str());
+	}
+
+	void Context::endCombo()
+	{
+		ImGui::EndCombo();
 	}
 
 	void Context::image(const std::shared_ptr<ImageAsset>& image)

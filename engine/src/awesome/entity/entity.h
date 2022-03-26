@@ -73,6 +73,13 @@ public:
 		return component;
 	}
 
+	Component* const addComponent(Component* const component)
+	{
+		m_components.push_back(component);
+		component->attach(this);
+		return component;
+	}
+
 	void removeComponent(Component* const component);
 
 	// serialization

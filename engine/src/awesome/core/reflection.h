@@ -59,6 +59,12 @@ struct TypeFactory
 	}
 
 	template <typename T>
+	static T* instantiate(const std::string& name)
+	{
+		return reinterpret_cast<T*>(instantiate(name.c_str()));
+	}
+
+	template <typename T>
 	static T* instantiate(const char* name)
 	{
 		return reinterpret_cast<T*>(instantiate(name));

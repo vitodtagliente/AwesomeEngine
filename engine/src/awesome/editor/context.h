@@ -19,9 +19,11 @@ namespace editor
 	public:
 		Context();
 
+		bool beginCombo(const std::string& name);
 		bool button(const std::string& name);
 		bool button(const std::string& name, int width, int height);
 		bool collapsingHeader(const std::string& name);
+		void endCombo();
 		void image(const std::shared_ptr<ImageAsset>& image);
 		void input(const std::string& name, int* value);
 		void input(const std::string& name, bool* value);

@@ -28,7 +28,7 @@ namespace editor
 
 		World* const world = World::instance();
 
-		if (context.button("+", 24, 20))
+		if (context.button("+"))
 		{
 			Entity* const newEntity = world->spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
@@ -37,7 +37,7 @@ namespace editor
 		
 		context.sameLine();
 
-		if (context.button("X", 24, 20) && selectedEntity != nullptr)
+		if (context.button("X") && selectedEntity != nullptr)
 		{
 			world->destroy(selectedEntity);
 			selectionSystem->unselect();

@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset.h>
 #include <awesome/editor/context.h>
@@ -59,7 +60,31 @@ namespace editor
 			if (context.collapsingHeader(component->getTypeDescriptor().name))
 			{
 				component->inspect(context);
+				if (context.button("Remove"))
+				{
+					entity->removeComponent(component);
+					return; // force the refresh of the inspector
+				}
 			}
+		}
+
+		if (context.beginCombo("Add component"))
+		{
+			static std::vector<std::string> types = { "SpriteRenderer", "SpriteAnimator", "Foo"};
+			for (const std::string& type : types)
+			{
+				if (context.selectable(type.c_str(), false))
+				{
+					Component* const component = TypeFactory::instantiate<Component>(type);
+					if (component)
+					{
+						entity->addComponent(component);
+						return; // force the refresh of the inspector
+					}
+				}
+
+			}
+			context.endCombo();
 		}
 
 		if (context.collapsingHeader("Prefab options"))
