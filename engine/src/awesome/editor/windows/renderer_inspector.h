@@ -2,6 +2,7 @@
 #pragma once
 
 #include <awesome/editor/window.h>
+#include <awesome/graphics/renderer.h>
 
 namespace editor
 {
@@ -11,8 +12,12 @@ namespace editor
 		RendererInspector();
 
 		std::string getTitle() const override;
-		void render() override;
+		virtual void render() override;
+		virtual void update(double deltaTime) override;
 
 		REFLECT()
+
+	private:
+		graphics::Renderer::Stats m_stats;
 	};
 }
