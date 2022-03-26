@@ -37,6 +37,7 @@ namespace editor
 		void newLine();
 		void sameLine();
 		bool selectable(const std::string& name, bool selected);
+		void separator();
 		void text(const std::string& str);
 		void textWrapped(const std::string& str);
 	};

@@ -41,12 +41,15 @@ namespace editor
 
 		void select(Entity* entity);
 		void select(const std::shared_ptr<Asset>& asset);
+		void select(const std::filesystem::path& path);
 		void unselect();
 
 		const std::optional<Selection>& getSelection() const { return m_selection; }
 		inline bool hasSelection() const { return m_selection.has_value(); }
+		inline const std::filesystem::path& getPath() const { return m_path; }
 
 	private:
+		std::filesystem::path m_path;
 		std::optional<Selection> m_selection;
 	};
 }

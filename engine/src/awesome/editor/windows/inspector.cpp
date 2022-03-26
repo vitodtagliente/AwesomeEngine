@@ -8,6 +8,7 @@
 #include <awesome/core/reflection.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset.h>
+#include <awesome/editor/asset_importer.h>
 #include <awesome/editor/context.h>
 #include <awesome/editor/selection_system.h>
 #include <awesome/encoding/json.h>
@@ -54,20 +55,7 @@ namespace editor
 		context.input("Scale", &entity->transform.scale);
 		context.input("Static", &entity->transform.isStatic);
 
-		const auto& components = entity->getComponents();
-		for (auto it = components.begin(); it != components.end(); ++it)
-		{
-			Component* const component = *it;
-			if (context.collapsingHeader(component->getTypeDescriptor().name))
-			{
-				component->inspect(context);
-				if (context.button("Remove"))
-				{
-					entity->removeComponent(component);
-					return; // force the refresh of the inspector
-				}
-			}
-		}
+		context.separator();
 
 		if (context.beginCombo("Add component"))
 		{
@@ -89,14 +77,37 @@ namespace editor
 			context.endCombo();
 		}
 
-		if (context.collapsingHeader("Prefab options"))
+		const auto& components = entity->getComponents();
+		for (auto it = components.begin(); it != components.end(); ++it)
 		{
-			context.input("Filename", &m_prefabFilename, 300);
-			if (context.button("Save"))
+			Component* const component = *it;
+			if (context.collapsingHeader(component->getTypeDescriptor().name))
 			{
-				Archive archive(m_prefabFilename, Archive::Mode::Write);
-				archive << json::Serializer::to_string(entity->serialize());
+				component->inspect(context);
+				if (context.button("Remove"))
+				{
+					entity->removeComponent(component);
+					return; // force the refresh of the inspector
+				}
 			}
+		}
+
+		context.separator();
+
+		context.input("Filename", &m_prefabFilename, 300);
+		if (context.button("Save Prefab"))
+		{
+			const std::string name = m_prefabFilename.c_str();
+			if (!name.empty())
+			{
+				const std::string filename = (SelectionSystem::instance()->getPath() / name).string() + ".prefab";
+				Archive archive(filename, Archive::Mode::Write);
+				archive << json::Serializer::to_string(entity->serialize());
+				
+				AssetImporter importer;
+				importer.import(filename);
+			}
+			m_prefabFilename.clear();
 		}
 	}
 
@@ -110,6 +121,15 @@ namespace editor
 			if (image)
 			{
 				context.image(image);
+			}
+			break;
+		}
+		case Asset::Type::Prefab:
+		{
+			std::shared_ptr<PrefabAsset> prefab = std::static_pointer_cast<PrefabAsset>(asset);
+			if (prefab)
+			{
+				context.textWrapped(prefab->data);
 			}
 			break;
 		}

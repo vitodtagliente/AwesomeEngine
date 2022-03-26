@@ -109,4 +109,5 @@ public:
 };
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
+typedef BaseAsset<Asset::Type::Prefab, std::string> PrefabAsset;
 typedef BaseAsset<Asset::Type::Text, std::string> TextAsset;

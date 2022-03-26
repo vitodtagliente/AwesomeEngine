@@ -36,22 +36,32 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 
 std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::string& filename)
 {
+	static const auto read = [](const std::string& filename) -> std::string
+	{
+		std::ostringstream buf;
+		std::ifstream input(filename.c_str());
+		buf << input.rdbuf();
+		return buf.str();
+	};
+
 	switch (descriptor.type)
 	{
 	case Asset::Type::Image:
 	{
 		return std::make_shared<ImageAsset>(Image::load(filename), descriptor);
 	}
-	case Asset::Type::Text:
+	case Asset::Type::Prefab:
 	{
-		static const auto read = [](const std::string& filename) -> std::string
+		const std::filesystem::path file(filename);
+		if (std::filesystem::exists(file))
 		{
-			std::ostringstream buf;
-			std::ifstream input(filename.c_str());
-			buf << input.rdbuf();
-			return buf.str();
-		};
-
+			return std::make_shared<PrefabAsset>(read(filename), descriptor);
+		}
+		return nullptr;
+		break;
+	}
+	case Asset::Type::Text:
+	{	
 		const std::filesystem::path file(filename);
 		if (std::filesystem::exists(file))
 		{

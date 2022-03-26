@@ -14,6 +14,7 @@ namespace editor
 		, m_contentPath(AssetLibrary::instance()->getDirectory())
 		, m_dir(m_contentPath)
 	{
+		SelectionSystem::instance()->select(m_contentPath);
 	}
 
 	std::string ContentBrowser::getTitle() const
@@ -23,14 +24,15 @@ namespace editor
 
 	void ContentBrowser::render(Context& context)
 	{
+		SelectionSystem* selectionSystem = SelectionSystem::instance();
+		const auto& selection = selectionSystem->getSelection();
+
 		if (m_contentPath != m_dir.path	&& context.selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
+			selectionSystem->select(m_dir.parent);
 			return;
 		}
-
-		SelectionSystem* selectionSystem = SelectionSystem::instance();
-		const auto& selection = selectionSystem->getSelection();
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
@@ -42,8 +44,8 @@ namespace editor
 				// is directory
 				if (!file.has_extension())
 				{
-					m_dir = Dir(file);
-					SelectionSystem::instance()->unselect();
+					m_dir = Dir(file); 
+					selectionSystem->select(m_dir.path);
 					return;
 				}
 				else

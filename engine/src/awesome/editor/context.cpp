@@ -108,6 +108,11 @@ namespace editor
 		return ImGui::Selectable(name.c_str(), selected);
 	}
 
+	void Context::separator()
+	{
+		ImGui::Separator();
+	}
+
 	void Context::text(const std::string& str)
 	{
 		ImGui::Text(str.c_str());

@@ -3,7 +3,8 @@
 namespace editor 
 {
 	SelectionSystem::SelectionSystem()
-		: m_selection()
+		: m_path()
+		, m_selection()
 	{
 	}
 
@@ -15,6 +16,12 @@ namespace editor
 	void SelectionSystem::select(const std::shared_ptr<Asset>& asset)
 	{
 		m_selection = Selection(asset);
+	}
+
+	void SelectionSystem::select(const std::filesystem::path& path)
+	{
+		m_path = path;
+		unselect();
 	}
 
 	void SelectionSystem::unselect()
