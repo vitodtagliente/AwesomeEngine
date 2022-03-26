@@ -72,6 +72,13 @@ public:
 
 	}
 
+	BaseAsset(const D& data, const Asset& descriptor)
+		: Asset(descriptor)
+		, data(data)
+	{
+
+	}
+
 	BaseAsset(const BaseAsset& asset)
 		: Asset(asset)
 		, data(asset.data)
@@ -84,17 +91,18 @@ public:
 		id = other.id;
 		type = other.type;
 		data = other.data;
+		filename = other.filename;
 		return *this;
 	}
 
 	bool operator== (const BaseAsset& other) const
 	{
-		return id == other.id && type == other.type && data == other.data;
+		return id == other.id;
 	}
 
 	bool operator!= (const BaseAsset& other) const
 	{
-		return id != other.id || type != other.type || data != other.data;
+		return id != other.id;
 	}
 
 	D data;

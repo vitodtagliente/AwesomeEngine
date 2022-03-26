@@ -27,7 +27,6 @@ public:
 	inline const std::string& getDirectory() const { return m_directory; }
 
 	std::map<uuid, std::string> redirectors;
-	static constexpr char* const s_assetExtension = ".asset";
 
 private:
 

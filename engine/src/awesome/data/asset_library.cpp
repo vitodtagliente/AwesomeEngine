@@ -24,7 +24,7 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 		}
 
 		Asset descriptor = Asset::load(filename);
-		std::shared_ptr<Asset> asset = create(descriptor, filename.substr(0, filename.length() - std::string(s_assetExtension).length()));
+		std::shared_ptr<Asset> asset = create(descriptor, filename.substr(0, filename.length() - std::string(Asset::Extension).length()));
 		m_assets.insert(std::make_pair(asset->id, Slot(asset)));
 		return asset;
 	}
@@ -34,13 +34,13 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	}
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const Asset& asset, const std::string& filename)
+std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::string& filename)
 {
-	switch (asset.type)
+	switch (descriptor.type)
 	{
 	case Asset::Type::Image:
 	{
-		return std::make_shared<ImageAsset>(Image::load(filename), asset.id);
+		return std::make_shared<ImageAsset>(Image::load(filename), descriptor);
 	}
 	case Asset::Type::Text:
 	{
@@ -55,7 +55,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& asset, const std::strin
 		const std::filesystem::path file(filename);
 		if (std::filesystem::exists(file))
 		{
-			return std::make_shared<TextAsset>(read(filename), asset.id);
+			return std::make_shared<TextAsset>(read(filename), descriptor);
 		}
 		return nullptr;
 	}
