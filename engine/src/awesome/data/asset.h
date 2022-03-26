@@ -1,6 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
+#include <string>
+
 #include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
@@ -25,15 +28,20 @@ struct Asset : public ISerializable
 	Asset& operator= (const Asset& other);
 	bool operator== (const Asset& other) const;
 	bool operator!= (const Asset& other) const;
+	inline operator bool() const { return type != Type::None; };
 
 	// serialization
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
 	static Asset load(const std::string& filename);
+	static bool isAsset(const std::string& filename);
+	static bool isAsset(const std::filesystem::path& filename);
+	static constexpr char* const Extension = ".asset";
 
 	uuid id;
 	Type type;
+	std::string filename;
 
 	REFLECT()
 };

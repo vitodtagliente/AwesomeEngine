@@ -22,13 +22,16 @@ namespace editor
 			enum class Type
 			{
 				None,
-				Entity,
-				File
+				Asset,
+				Entity
 			};
 
 			Selection();
 			Selection(Entity* entity);
 			Selection(std::shared_ptr<Asset> asset);
+
+			inline Entity* asEntity() const { return std::get<Entity*>(data); }
+			inline std::shared_ptr<Asset> asAsset() const { return std::get<std::shared_ptr<Asset>>(data); }
 
 			Type type;
 			std::variant<Entity*, std::shared_ptr<Asset>> data;

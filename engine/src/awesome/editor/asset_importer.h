@@ -23,6 +23,5 @@ namespace editor
 		Asset::Type getTypeByExtension(const std::string& ext) const;
 
 		static std::map<Asset::Type, std::set<std::string>> s_filetypes;
-		static constexpr char* const s_assetExtension = ".asset";
 	};
 }

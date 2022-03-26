@@ -26,15 +26,15 @@ namespace editor
 		{
 			if (selection->type == SelectionSystem::Selection::Type::Entity)
 			{
-				Entity* const entity = std::get<Entity*>(selection->data);
+				Entity* const entity = selection->asEntity();
 				if (entity != nullptr)
 				{
 					inspect(context, entity);
 				}
 			}
-			else if (selection->type == SelectionSystem::Selection::Type::File)
+			else if (selection->type == SelectionSystem::Selection::Type::Asset)
 			{
-				std::shared_ptr<Asset> asset = std::get<std::shared_ptr<Asset>>(selection->data);
+				std::shared_ptr<Asset> asset = selection->asAsset();
 				if (asset)
 				{
 					inspect(context, asset);

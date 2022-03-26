@@ -5,6 +5,7 @@
 Asset::Asset()
 	: id()
 	, type(Type::None)
+	, filename()
 {
 
 }
@@ -12,6 +13,7 @@ Asset::Asset()
 Asset::Asset(const Type type)
 	: id()
 	, type(type)
+	, filename()
 {
 
 }
@@ -19,6 +21,7 @@ Asset::Asset(const Type type)
 Asset::Asset(const Type type, const uuid& id)
 	: id(id)
 	, type(type)
+	, filename()
 {
 
 }
@@ -26,6 +29,7 @@ Asset::Asset(const Type type, const uuid& id)
 Asset::Asset(const Asset& asset)
 	: id(asset.id)
 	, type(asset.type)
+	, filename(asset.filename)
 {
 
 }
@@ -34,17 +38,18 @@ Asset& Asset::operator= (const Asset& other)
 {
 	id = other.id;
 	type = other.type;
+	filename = other.filename;
 	return *this;
 }
 
 bool Asset::operator== (const Asset& other) const
 {
-	return id == other.id && type == other.type;
+	return id == other.id;
 }
 
 bool Asset::operator!= (const Asset& other) const
 {
-	return id != other.id || type != other.type;
+	return id != other.id;
 }
 
 json::value Asset::serialize() const
@@ -78,13 +83,21 @@ Asset Asset::load(const std::string& filename)
 	};
 
 	Asset asset;
+	asset.filename = filename;
 	std::string content = read(filename);
-	if (!content.empty())
-	{
-		json::value value = json::Deserializer::parse(content);
-		asset.deserialize(value);
-	}
+	json::value value = json::Deserializer::parse(content);
+	asset.deserialize(value);
 	return asset;
+}
+
+bool Asset::isAsset(const std::string& filename)
+{
+	return isAsset(std::filesystem::path(filename));
+}
+
+bool Asset::isAsset(const std::filesystem::path& filename)
+{
+	return filename.extension().string() == Extension;
 }
 
 REFLECT_IMP(Asset)

@@ -1,7 +1,5 @@
 #include "content_browser.h"
 
-#include <filesystem>
-
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/context.h>
@@ -13,7 +11,8 @@ namespace editor
 {
 	ContentBrowser::ContentBrowser()
 		: Window()
-		, m_dir(AssetLibrary::instance()->getDirectory())
+		, m_contentPath(AssetLibrary::instance()->getDirectory())
+		, m_dir(m_contentPath)
 	{
 	}
 
@@ -24,7 +23,7 @@ namespace editor
 
 	void ContentBrowser::render(Context& context)
 	{
-		if (context.selectable("..", false))
+		if (m_contentPath != m_dir.path	&& context.selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
 			return;
@@ -36,9 +35,9 @@ namespace editor
 		for (const std::filesystem::path& file : m_dir.files)
 		{
 			if (context.selectable(file.stem().string(),
-				// selection.has_value() &&
-				// selection->type == SelectionSystem::Selection::Type::File && std::get<std::filesystem::path>(selection->data) == file))
-				false))
+				selection.has_value()
+				&& selection->type == SelectionSystem::Selection::Type::Asset
+				&& selection->asAsset()->filename == file.string()))
 			{
 				// is directory
 				if (!file.has_extension())
@@ -73,7 +72,7 @@ namespace editor
 		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{
 			const std::filesystem::path& file = entry.path();
-			if (file.extension().string() == s_assetExtension || entry.is_directory())
+			if (Asset::isAsset(file) || entry.is_directory())
 			{
 				files.push_back(file);
 			}
@@ -88,7 +87,7 @@ namespace editor
 		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{
 			const std::filesystem::path& file = entry.path();
-			if (file.extension().string() == s_assetExtension || entry.is_directory())
+			if (Asset::isAsset(file) || entry.is_directory())
 			{
 				files.push_back(file);
 			}

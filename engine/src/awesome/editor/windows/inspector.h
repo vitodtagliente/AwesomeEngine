@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
 #include <string>
 
 #include <awesome/data/asset.h>

@@ -1,7 +1,5 @@
 #include "asset_importer.h"
 
-#include <fstream>
-
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/encoding/json.h>
@@ -45,23 +43,23 @@ namespace editor
 
 	bool AssetImporter::import(const std::filesystem::path& filename)
 	{
-		if (std::filesystem::is_directory(filename) || !std::filesystem::exists(filename))
+		if (!std::filesystem::exists(filename) || std::filesystem::is_directory(filename))
 		{
 			return false;
 		}
 
-		if (filename.extension().string() == s_assetExtension)
+		if (Asset::isAsset(filename))
 		{
-			Asset asset = Asset::load(filename.string());
-			if (asset.type != Asset::Type::None)
+			Asset descriptor = Asset::load(filename.string());
+			if (descriptor)
 			{
-				AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, filename.string()));
+				AssetLibrary::instance()->redirectors.insert(std::make_pair(descriptor.id, filename.string()));
 				return true;
 			}
 			return false;
 		}
 
-		const std::string assetFilename = filename.string() + s_assetExtension;
+		const std::string assetFilename = filename.string() + Asset::Extension;
 		if (std::filesystem::exists(assetFilename))
 		{
 			return true;

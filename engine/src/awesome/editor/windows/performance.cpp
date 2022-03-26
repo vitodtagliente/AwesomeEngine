@@ -21,7 +21,7 @@ namespace editor
 	void Performance::render(Context& context)
 	{
 		std::ostringstream s;
-		s << 1000.0f / ImGui::GetIO().Framerate << " ms/frame (" << ImGui::GetIO().Framerate << " FPS)";
+		s << std::round(1000.0f / ImGui::GetIO().Framerate) << " ms/frame (" << std::round(ImGui::GetIO().Framerate) << " FPS)";
 		context.text(s.str());
 	}
 }

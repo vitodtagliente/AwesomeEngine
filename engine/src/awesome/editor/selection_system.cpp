@@ -36,7 +36,7 @@ namespace editor
 	}
 
 	SelectionSystem::Selection::Selection(std::shared_ptr<Asset> asset)
-		: type(Type::File)
+		: type(Type::Asset)
 		, data(asset)
 	{
 	}

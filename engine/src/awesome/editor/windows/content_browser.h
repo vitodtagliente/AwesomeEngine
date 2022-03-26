@@ -20,7 +20,6 @@ namespace editor
 		void render(Context& context) override;
 
 	private:
-		static constexpr char* const s_assetExtension = ".asset";
 
 		struct Dir
 		{
@@ -32,6 +31,7 @@ namespace editor
 			std::vector<std::filesystem::path> files;
 		};
 
+		std::filesystem::path m_contentPath;
 		Dir m_dir;
 	};
 }
