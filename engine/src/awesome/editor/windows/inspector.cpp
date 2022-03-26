@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <memory>
+#include <set>
 #include <vector>
 
 #include <awesome/core/reflection.h>
@@ -70,7 +71,7 @@ namespace editor
 
 		if (context.beginCombo("Add component"))
 		{
-			static std::vector<std::string> types = { "CameraController2d", "GizmosRenderer,", "OrthographicCamera", "SpriteAnimator", "SpriteRenderer"};
+			static std::set<std::string> types = TypeFactory::listByCategory("Component");
 			for (const std::string& type : types)
 			{
 				if (context.selectable(type.c_str(), false))

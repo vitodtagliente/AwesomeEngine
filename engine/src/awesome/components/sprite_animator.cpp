@@ -120,8 +120,6 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 	}
 }
 
-REFLECT_IMP(SpriteAnimator)
-
 json::value SpriteAnimator::Animation::Frame::serialize() const
 {
 	return json::value();
@@ -139,3 +137,5 @@ json::value SpriteAnimator::Animation::serialize() const
 void SpriteAnimator::Animation::deserialize(const json::value& value)
 {
 }
+
+REFLECT_COMPONENT(SpriteAnimator)

@@ -38,4 +38,4 @@ void SpriteRenderer::inspect(editor::Context& context)
 	context.input("Color", &color);
 }
 
-REFLECT_IMP(SpriteRenderer)
+REFLECT_COMPONENT(SpriteRenderer)

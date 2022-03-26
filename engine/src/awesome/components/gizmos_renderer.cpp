@@ -35,4 +35,4 @@ void GizmosRenderer::inspect(editor::Context& context)
 	context.input("Color", &color);
 }
 
-REFLECT_IMP(GizmosRenderer)
+REFLECT_COMPONENT(GizmosRenderer)

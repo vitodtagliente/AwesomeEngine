@@ -51,4 +51,4 @@ void CameraController2d::inspect(editor::Context& context)
 	context.input("Speed", &speed);
 }
 
-REFLECT_IMP(CameraController2d)
+REFLECT_COMPONENT(CameraController2d)

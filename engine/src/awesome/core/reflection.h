@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <map>
+#include <set>
 
 typedef std::function<void* ()> factory_constructor_t;
 
@@ -14,9 +15,25 @@ struct TypeFactoryImp
 		return s_register;
 	}
 
-	static void hook(const std::string& name, factory_constructor_t handler)
+	static std::map<std::string, std::set<std::string>>& categories()
+	{
+		static std::map<std::string, std::set<std::string>> s_categories;
+		return s_categories;
+	}
+
+	static void hook(const std::string& name, const std::string& category, factory_constructor_t handler)
 	{
 		data().insert(std::make_pair(name, handler));
+
+		const auto& it = categories().find(category);
+		if (it != categories().end())
+		{
+			it->second.insert(name);
+		}
+		else
+		{
+			categories().insert(std::make_pair(category, std::set<std::string>{ name }));
+		}
 	}
 };
 
@@ -63,6 +80,17 @@ struct TypeFactory
 	{
 		return reinterpret_cast<T*>(instantiate(name));
 	}
+
+	static std::set<std::string> listByCategory(const std::string& category)
+	{
+		const std::map<std::string, std::set<std::string>>& categories = TypeFactoryImp::categories();
+		const auto& it = categories.find(category);
+		if (it != categories.end())
+		{
+			return it->second;
+		}
+		return {};
+	}
 };
 
 #define REFLECT() \
@@ -73,7 +101,7 @@ private: \
     static TypeDescriptor s_typeDescriptor; \
     static void registerTypeDescriptor(TypeDescriptor*); 
 
-#define REFLECT_IMP(T) \
+#define REFLECT_IMP_CATEGORY(T, C) \
     TypeDescriptor T::s_typeDescriptor{T::registerTypeDescriptor}; \
     \
     void T::registerTypeDescriptor(TypeDescriptor* descriptor) \
@@ -81,7 +109,7 @@ private: \
         descriptor->name = #T; \
         descriptor->size = sizeof(T); \
         \
-        TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
+        TypeFactoryImp::hook(#T, #C, []() -> void* { return new T(); }); \
     } \
 	\
 	const TypeDescriptor& T::getTypeDescriptor() const \
@@ -89,7 +117,9 @@ private: \
 		return T::s_typeDescriptor; \
 	}
 
-#define REFLECT_IMP_ALIAS(T, N) \
+#define REFLECT_IMP(T) REFLECT_IMP_CATEGORY(T, Default)
+
+#define REFLECT_IMP_CATEGORY_ALIAS(T, C, N) \
     TypeDescriptor T::s_typeDescriptor{T::registerTypeDescriptor}; \
     \
     void T::registerTypeDescriptor(TypeDescriptor* descriptor) \
@@ -97,10 +127,14 @@ private: \
         descriptor->name = N; \
         descriptor->size = sizeof(T); \
         \
-        TypeFactoryImp::hook(#T, []() -> void* { return new T(); }); \
+        TypeFactoryImp::hook(#T, #C, []() -> void* { return new T(); }); \
     } \
 	\
 	const TypeDescriptor& T::getTypeDescriptor() const \
 	{ \
 		return T::s_typeDescriptor; \
 	}
+
+#define REFLECT_IMP_ALIAS(T, C, N) REFLECT_IMP_CATEGORY_ALIAS(T, Default, N)
+
+#define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)

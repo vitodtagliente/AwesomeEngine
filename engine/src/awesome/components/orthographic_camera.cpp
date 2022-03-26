@@ -43,4 +43,4 @@ void OrthographicCamera::inspect(editor::Context& context)
 	context.input("Pixel per unit", &pixelsPerUnit);
 }
 
-REFLECT_IMP(OrthographicCamera)
+REFLECT_COMPONENT(OrthographicCamera)
