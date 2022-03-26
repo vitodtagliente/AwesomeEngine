@@ -8,13 +8,13 @@ typedef std::function<void* ()> factory_constructor_t;
 
 struct TypeFactoryImp
 {
-	static std::map<const char*, factory_constructor_t>& data()
+	static std::map<std::string, factory_constructor_t>& data()
 	{
-		static std::map<const char*, factory_constructor_t> s_register;
+		static std::map<std::string, factory_constructor_t> s_register;
 		return s_register;
 	}
 
-	static void hook(const char* name, factory_constructor_t handler)
+	static void hook(const std::string& name, factory_constructor_t handler)
 	{
 		data().insert(std::make_pair(name, handler));
 	}
@@ -35,15 +35,15 @@ struct TypeDescriptor
 		return T::s_typeDescriptor;
 	}
 
-	const char* name;
+	std::string name;
 	size_t size;
 };
 
 struct TypeFactory
 {
-	static void* instantiate(const char* name)
+	static void* instantiate(const std::string& name)
 	{
-		const std::map<const char*, factory_constructor_t>& constructors = TypeFactoryImp::data();
+		const std::map<std::string, factory_constructor_t>& constructors = TypeFactoryImp::data();
 		const auto& it = constructors.find(name);
 		if (it != constructors.end())
 		{
@@ -60,12 +60,6 @@ struct TypeFactory
 
 	template <typename T>
 	static T* instantiate(const std::string& name)
-	{
-		return reinterpret_cast<T*>(instantiate(name.c_str()));
-	}
-
-	template <typename T>
-	static T* instantiate(const char* name)
 	{
 		return reinterpret_cast<T*>(instantiate(name));
 	}

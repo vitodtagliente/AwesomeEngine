@@ -70,7 +70,7 @@ namespace editor
 
 		if (context.beginCombo("Add component"))
 		{
-			static std::vector<std::string> types = { "SpriteRenderer", "SpriteAnimator", "Foo"};
+			static std::vector<std::string> types = { "CameraController2d", "GizmosRenderer,", "OrthographicCamera", "SpriteAnimator", "SpriteRenderer"};
 			for (const std::string& type : types)
 			{
 				if (context.selectable(type.c_str(), false))
@@ -79,6 +79,7 @@ namespace editor
 					if (component)
 					{
 						entity->addComponent(component);
+						context.endCombo();
 						return; // force the refresh of the inspector
 					}
 				}
