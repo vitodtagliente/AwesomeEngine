@@ -29,6 +29,13 @@ namespace editor
 		virtual void postRendering() override;
 		virtual void update(double deltaTime) override;
 
+		template <typename T = Window>
+		void const registerWindow()
+		{
+			T* const window = new T();
+			m_windows.push_back(std::unique_ptr<Window>(window));
+		}
+
 	private:
 		void registerWindows();
 

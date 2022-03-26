@@ -36,6 +36,9 @@ SET(CMAKE_DEFAULT_STARTUP_PROJECT Sandbox)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
 
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+    LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:WINDOWS")
+
 target_link_libraries(
     ${PROJECT_NAME} 
     AwesomeEngine

@@ -13,24 +13,40 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 #include <awesome/graphics/texture_rect.h>
+#include <awesome/entity/component.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
+class SpriteRotator : public Component
+{
+public:
+	SpriteRotator()
+		: speed(math::random(0.2f, 0.5f))
+	{
+
+	}
+
+	void update(double deltaTime) override
+	{
+		math::transform& transform = getOwner()->transform;
+		transform.rotation.z = getOwner()->transform.rotation.z;
+		transform.rotation.z += speed * deltaTime;
+		if (transform.rotation.z >= math::pi * 2)
+		{
+			transform.rotation.z = 0;
+		}
+	}
+
+	float speed;
+
+	REFLECT()
+};
+
+REFLECT_COMPONENT(SpriteRotator)
+
 void Game::startup()
 {
-	{
-		Archive ar("archive.txt", Archive::Mode::Write);
-		ar << 1 << "Hello" << true;
-	}
-
-	{
-		Archive ar("archive.txt", Archive::Mode::Read);
-		int one; std::string hello; bool value;
-		ar >> one >> hello >> value;
-	}
-
 	std::shared_ptr<ImageAsset> image = AssetLibrary::instance()->find<ImageAsset>(uuid("222601788947200"));
-	std::cout << json::Serializer::to_string(image->serialize()) << std::endl;
 
 	if (World* const world = World::instance())
 	{
@@ -42,10 +58,15 @@ void Game::startup()
 			entity->addComponent<OrthographicCamera>();
 			entity->addComponent<CameraController2d>();
 		}
+
 		// animated entity
+		for (int i = 0; i < 1000; ++i)
 		{
-			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
-			entity->name = std::string("Animated Guy");
+			static float magic = 25.f;
+			Entity* const entity = world->spawn(math::vec3(math::random(-magic, magic), math::random(-magic, magic), 0.0f), math::quaternion::identity);
+			entity->transform.rotation.z = math::random(0.0f, 360.0f);
+			entity->transform.scale.x = entity->transform.scale.y = math::random(0.6f, 2.4f);
+			entity->name = std::string("Animated Guy") + std::to_string(i + 1);
 			entity->tag = "Player";
 
 			const float spriteSize = 1.0f / 11;
@@ -63,6 +84,7 @@ void Game::startup()
 				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize)), 1.0f));
 				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 5, spriteSize, spriteSize)), 1.0f));
 				idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize)), 1.0f));
+				idle.startingFrame = math::random(0, idle.frames.size());
 				component->animations.insert(std::make_pair("idle", idle));
 				component->autoplay = true;
 			}
@@ -70,13 +92,12 @@ void Game::startup()
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())
 			{
 				component->type = GizmosRenderer::Type::Rect;
+				component->enabled = math::random(0.0f, 1.0f) >= 0.7f;
 			}
 
+			if (SpriteRotator* component = entity->addComponent<SpriteRotator>())
 			{
-				std::cout << std::endl << json::Serializer::to_string(entity->serialize()) << std::endl;
-				std::string text = json::Serializer::to_string(serialize(graphics::Color::Cyan));
-				graphics::Color testColor;
-				deserialize(json::Deserializer::parse(text), testColor);
+				component->enabled = math::random(0.0f, 1.0f) >= 0.6f;
 			}
 		}
 	}
