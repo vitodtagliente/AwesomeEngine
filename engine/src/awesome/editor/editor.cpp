@@ -5,18 +5,13 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <awesome/core/reflection.h>
 #include <awesome/data/asset_library.h>
 
 #include "asset_importer.h"
 #include "color_scheme.h"
 #include "layout.h"
 #include "window.h"
-
-#include "windows/content_browser.h"
-#include "windows/inspector.h"
-#include "windows/performance.h"
-#include "windows/renderer_inspector.h"
-#include "windows/scene_inspector.h"
 
 namespace editor
 {
@@ -43,6 +38,12 @@ namespace editor
 		importer.import(AssetLibrary::instance()->getDirectory(), true);
 
 		registerWindows();
+
+		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		{
+			const std::unique_ptr<Window>& window = *it;
+			window->init();
+		}
 	}
 
 	void Editor::shutdown()
@@ -64,7 +65,7 @@ namespace editor
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 		{
-			Window* const window = *it;
+			const std::unique_ptr<Window>&  window = *it;
 			Layout::begin(window->getTitle());
 			window->render();
 			Layout::end();
@@ -81,17 +82,22 @@ namespace editor
 	{
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 		{
-			Window* const window = *it;
+			const std::unique_ptr<Window>& window = *it;
 			window->update(deltaTime);
 		}
 	}
 	
 	void Editor::registerWindows()
 	{
-		addWindow<ContentBrowser>();
-		addWindow<Inspector>();
-		addWindow<Performance>();
-		addWindow<RendererInspector>();
-		addWindow<SceneInspector>();
+		static std::set<std::string> types = TypeFactory::listByCategory("Editor");
+		for (const std::string& type : types)
+		{
+			Window* const window = TypeFactory::instantiate<Window>(type);
+			if (window)
+			{
+				m_windows.push_back(std::unique_ptr<Window>(window));
+			}
+
+		}
 	}
 }

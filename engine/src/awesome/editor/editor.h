@@ -29,18 +29,10 @@ namespace editor
 		virtual void postRendering() override;
 		virtual void update(double deltaTime) override;
 
-		template <typename T = Window>
-		T* const addWindow()
-		{
-			T* const window = new T();
-			m_windows.push_back(window);
-			return window;
-		}
-
 	private:
 		void registerWindows();
 
 		State m_state;
-		std::vector<Window*> m_windows;
+		std::vector<std::unique_ptr<Window>> m_windows;
 	};
 }
