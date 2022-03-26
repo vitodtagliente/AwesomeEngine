@@ -1,20 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "../window.h"
-
-class Entity;
+#include <awesome/editor/window.h>
 
 namespace editor
 {
-	class Context;
-
 	class SceneInspector : public Window
 	{
 	public:
 		SceneInspector();
 
 		std::string getTitle() const override;
-		void render(Context& context) override;
+		void render() override;
+
+		REFLECT()
 	};
 }

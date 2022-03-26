@@ -64,7 +64,7 @@ public:
 	bool autoplay;
 
 	virtual json::value serialize() const override;
-	virtual void inspect(editor::Context& context) override;
+	virtual void inspect() override;
 
 	REFLECT()
 

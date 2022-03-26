@@ -1,4 +1,4 @@
-#include "context.h"
+#include "layout.h"
 
 #include <imgui.h>
 
@@ -6,37 +6,42 @@
 
 namespace editor
 {
-	Context::Context()
+	void Layout::begin(const std::string& name)
 	{
-
+		ImGui::Begin(name.c_str());
 	}
 
-	bool Context::beginCombo(const std::string& name)
+	bool Layout::beginCombo(const std::string& name)
 	{
 		return ImGui::BeginCombo(name.c_str(), "");
 	}
 
-	bool Context::button(const std::string& name)
+	bool Layout::button(const std::string& name)
 	{
 		return ImGui::Button(name.c_str());
 	}
 
-	bool Context::button(const std::string& name, const int width, const int height)
+	bool Layout::button(const std::string& name, const int width, const int height)
 	{
 		return ImGui::Button(name.c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
 	}
 
-	bool Context::collapsingHeader(const std::string& name)
+	bool Layout::collapsingHeader(const std::string& name)
 	{
 		return ImGui::CollapsingHeader(name.c_str());
 	}
 
-	void Context::endCombo()
+	void Layout::end()
+	{
+		ImGui::End();
+	}
+
+	void Layout::endCombo()
 	{
 		ImGui::EndCombo();
 	}
 
-	void Context::image(const std::shared_ptr<ImageAsset>& image)
+	void Layout::image(const std::shared_ptr<ImageAsset>& image)
 	{
 		if (image != nullptr)
 		{
@@ -48,77 +53,77 @@ namespace editor
 		}
 	}
 
-	void Context::input(const std::string& name, int* value)
+	void Layout::input(const std::string& name, int* value)
 	{
 		ImGui::InputInt(name.c_str(), value);
 	}
 
-	void Context::input(const std::string& name, bool* value)
+	void Layout::input(const std::string& name, bool* value)
 	{
 		ImGui::Checkbox(name.c_str(), value);
 	}
 
-	void Context::input(const std::string& name, float* value)
+	void Layout::input(const std::string& name, float* value)
 	{
 		ImGui::InputFloat(name.c_str(), value);
 	}
 
-	void Context::input(const std::string& name, std::string* value, const size_t size)
+	void Layout::input(const std::string& name, std::string* value, const size_t size)
 	{
 		ImGui::InputText(name.c_str(), const_cast<char*>(value->c_str()), size);
 	}
 
-	void Context::input(const std::string& name, vec2* value)
+	void Layout::input(const std::string& name, vec2* value)
 	{
 		ImGui::InputFloat2(name.c_str(), value->data);
 	}
 
-	void Context::input(const std::string& name, vec3* value)
+	void Layout::input(const std::string& name, vec3* value)
 	{
 		ImGui::InputFloat3(name.c_str(), value->data);
 	}
 
-	void Context::input(const std::string& name, graphics::Color* value)
+	void Layout::input(const std::string& name, graphics::Color* value)
 	{
 		ImGui::ColorEdit4(name.c_str(), value->data);
 	}
 
-	void Context::input(const std::string& name, graphics::TextureCoords* value)
+	void Layout::input(const std::string& name, graphics::TextureCoords* value)
 	{
 		ImGui::InputFloat2(name.c_str(), value->data);
 	}
 
-	void Context::input(const std::string& name, graphics::TextureRect* value)
+	void Layout::input(const std::string& name, graphics::TextureRect* value)
 	{
 		ImGui::InputFloat4(name.c_str(), value->data);
 	}
 
-	void Context::newLine()
+	void Layout::newLine()
 	{
 		ImGui::NewLine();
 	}
 
-	void Context::sameLine()
+	void Layout::sameLine()
 	{
 		ImGui::SameLine();
 	}
 
-	bool Context::selectable(const std::string& name, const bool selected)
+	bool Layout::selectable(const std::string& name, const bool selected)
 	{
 		return ImGui::Selectable(name.c_str(), selected);
 	}
 
-	void Context::separator()
+	void Layout::separator()
 	{
 		ImGui::Separator();
 	}
 
-	void Context::text(const std::string& str)
+	void Layout::text(const std::string& str)
 	{
 		ImGui::Text(str.c_str());
 	}
 
-	void Context::textWrapped(const std::string& str)
+	void Layout::textWrapped(const std::string& str)
 	{
 		ImGui::TextWrapped(str.c_str());
 	}

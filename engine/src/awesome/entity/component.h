@@ -4,7 +4,6 @@
 #include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
-#include <awesome/editor/context.h>
 #include <awesome/encoding/json.h>
 
 class Entity;
@@ -41,7 +40,7 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 	// editor
-	virtual void inspect(editor::Context& context);
+	virtual void inspect();
 
 	REFLECT()
 

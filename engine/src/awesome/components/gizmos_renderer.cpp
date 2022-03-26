@@ -1,5 +1,6 @@
 #include "gizmos_renderer.h"
 
+#include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
@@ -29,10 +30,10 @@ json::value GizmosRenderer::serialize() const
 	return data;
 }
 
-void GizmosRenderer::inspect(editor::Context& context)
+void GizmosRenderer::inspect()
 {
-	Component::inspect(context);
-	context.input("Color", &color);
+	Component::inspect();
+	editor::Layout::input("Color", &color);
 }
 
 REFLECT_COMPONENT(GizmosRenderer)

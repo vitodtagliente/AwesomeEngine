@@ -9,20 +9,18 @@
 
 namespace editor
 {
-	class Context;
-
 	class Inspector : public Window
 	{
 	public:
 		Inspector();
 
-		void render(Context& context) override;
+		void render() override;
 
 		REFLECT()
 
 	private:
-		void inspect(Context& context, Entity* const entity);
-		void inspect(Context& context, std::shared_ptr<Asset> asset);
+		void inspect(Entity* const entity);
+		void inspect(std::shared_ptr<Asset> asset);
 
 		std::string m_prefabFilename;
 	};

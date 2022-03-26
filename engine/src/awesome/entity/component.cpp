@@ -1,6 +1,6 @@
 #include "component.h"
 
-#include <awesome/editor/context.h>
+#include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 
 #include "entity.h"
@@ -43,9 +43,9 @@ void Component::deserialize(const json::value& value)
 {
 }
 
-void Component::inspect(editor::Context& context)
+void Component::inspect()
 {
-	context.input("Enabled", &enabled);
+	editor::Layout::input("Enabled", &enabled);
 }
 
 REFLECT_IMP(Component)

@@ -6,8 +6,7 @@
 
 #include <awesome/application/application.h>
 
-#include "context.h"
-#include "selection_system.h"
+#include "state.h"
 
 namespace graphics
 {
@@ -41,8 +40,7 @@ namespace editor
 	private:
 		void registerWindows();
 
-		Context m_context;
-		SelectionSystem m_selectionSystem;
+		State m_state;
 		std::vector<Window*> m_windows;
 	};
 }

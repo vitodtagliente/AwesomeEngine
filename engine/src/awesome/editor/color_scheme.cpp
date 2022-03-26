@@ -1,17 +1,17 @@
-#include "editor_color_scheme.h"
+#include "color_scheme.h"
 
 namespace editor
 {
-	EditorColorScheme::EditorColorScheme(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor)
+	ColorScheme::ColorScheme(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor)
 		: m_backGroundColor(backGroundColor)
 		, m_textColor(textColor)
 		, m_mainColor(mainColor)
-		, m_mainAccentColor(mainColor)
+		, m_mainAccentColor(mainAccentColor)
 		, m_highlightColor(highlightColor)
 	{
 	}
 
-	void EditorColorScheme::setColors(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor)
+	void ColorScheme::setColors(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor)
 	{
 		backGroundColor = backGroundColor;
 		m_textColor = textColor;
@@ -20,9 +20,11 @@ namespace editor
 		m_highlightColor = highlightColor;
 	}
 
-	void EditorColorScheme::apply()
+	void ColorScheme::apply()
 	{
-		/*
+		test();
+		if (true) return;
+
 		ImGuiStyle& style = ImGui::GetStyle();
 		style.WindowRounding = 0.0f;
 		style.FrameRounding = 0.0f;
@@ -82,8 +84,10 @@ namespace editor
 		colors[ImGuiCol_ModalWindowDimBg] = getColor(Black, Alpha60);
 
 		ImGui::GetStyle().WindowMenuButtonPosition = ImGuiDir_Right;
-		*/
+	}
 
+	void ColorScheme::test()
+	{
 		ImGuiStyle& style = ImGui::GetStyle();
 		style.FrameRounding = 0.0f;
 		style.GrabRounding = 0.0f;

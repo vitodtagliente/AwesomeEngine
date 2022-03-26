@@ -1,6 +1,7 @@
 #include "orthographic_camera.h"
 
 #include <awesome/application/canvas.h>
+#include <awesome/editor/layout.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/renderer.h>
@@ -34,13 +35,13 @@ void OrthographicCamera::update(const double)
 	}
 }
 
-void OrthographicCamera::inspect(editor::Context& context)
+void OrthographicCamera::inspect()
 {
-	Component::inspect(context);
-	context.input("Near Plane", &nearPlane);
-	context.input("Far Plane", &farPlane);
-	context.input("Pixel Perfect", &pixelPerfect);
-	context.input("Pixel per unit", &pixelsPerUnit);
+	Component::inspect();
+	editor::Layout::input("Near Plane", &nearPlane);
+	editor::Layout::input("Far Plane", &farPlane);
+	editor::Layout::input("Pixel Perfect", &pixelPerfect);
+	editor::Layout::input("Pixel per unit", &pixelsPerUnit);
 }
 
 REFLECT_COMPONENT(OrthographicCamera)

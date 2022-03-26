@@ -2,19 +2,17 @@
 
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
-#include <awesome/editor/context.h>
-#include <awesome/editor/selection_system.h>
-#include <awesome/encoding/json.h>
+#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
 namespace editor
 {
 	ContentBrowser::ContentBrowser()
 		: Window()
-		, m_contentPath(AssetLibrary::instance()->getDirectory())
+		, m_contentPath(getState()->workPath)
 		, m_dir(m_contentPath)
 	{
-		SelectionSystem::instance()->select(m_contentPath);
+
 	}
 
 	std::string ContentBrowser::getTitle() const
@@ -22,30 +20,29 @@ namespace editor
 		return "Content Browser";
 	}
 
-	void ContentBrowser::render(Context& context)
+	void ContentBrowser::render()
 	{
-		SelectionSystem* selectionSystem = SelectionSystem::instance();
-		const auto& selection = selectionSystem->getSelection();
+		const auto& selection = getState()->selection;
 
-		if (m_contentPath != m_dir.path	&& context.selectable("..", false))
+		if (m_contentPath != m_dir.path && Layout::selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
-			selectionSystem->select(m_dir.parent);
+			getState()->workPath = m_dir.parent;
 			return;
 		}
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
-			if (context.selectable(file.stem().string(),
+			if (Layout::selectable(file.stem().string(),
 				selection.has_value()
-				&& selection->type == SelectionSystem::Selection::Type::Asset
+				&& selection->type == State::Selection::Type::Asset
 				&& selection->asAsset()->filename == file.string()))
 			{
 				// is directory
 				if (!file.has_extension())
 				{
-					m_dir = Dir(file); 
-					selectionSystem->select(m_dir.path);
+					m_dir = Dir(file);
+					getState()->workPath = m_dir.path;
 					return;
 				}
 				else
@@ -54,11 +51,11 @@ namespace editor
 					std::shared_ptr<Asset> asset = AssetLibrary::instance()->find(descriptor.id);
 					if (asset)
 					{
-						SelectionSystem::instance()->select(asset);
+						getState()->select(asset);
 					}
 					else
 					{
-						SelectionSystem::instance()->unselect();
+						getState()->select();
 					}
 				}
 			}
@@ -106,4 +103,6 @@ namespace editor
 			}
 		}
 	}
+
+	REFLECT_EDITOR(ContentBrowser);
 }

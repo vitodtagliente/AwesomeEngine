@@ -1,5 +1,6 @@
 #include "sprite_animator.h"
 
+#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
 #include "sprite_renderer.h"
@@ -101,10 +102,10 @@ json::value SpriteAnimator::serialize() const
 	return data;
 }
 
-void SpriteAnimator::inspect(editor::Context& context)
+void SpriteAnimator::inspect()
 {
-	Component::inspect(context);
-	context.input("Autoplay", &autoplay);
+	Component::inspect();
+	editor::Layout::input("Autoplay", &autoplay);
 }
 
 void SpriteAnimator::updateFrame(const Animation::Frame& frame)

@@ -8,7 +8,8 @@
 #include <awesome/data/asset_library.h>
 
 #include "asset_importer.h"
-#include "editor_color_scheme.h"
+#include "color_scheme.h"
+#include "layout.h"
 #include "window.h"
 
 #include "windows/content_browser.h"
@@ -20,9 +21,7 @@
 namespace editor
 {
 	Editor::Editor()
-		: m_context()
-		, m_selectionSystem()
-		, m_windows()
+		: m_windows()
 	{
 	}
 
@@ -37,7 +36,7 @@ namespace editor
 		ImGui_ImplOpenGL3_Init("#version 330 core");
 
 		// https://coolors.co/252131-f4f1de-da115e-792359-c7ef00
-		EditorColorScheme scheme(0x252131FF /* Background */, 0xC7EF00FF /* Text */, 0xF4F1DEFF /* MainColor */, 0xDA115EFF /* MainAccent */, 0x792359FF /* Highlight */);
+		ColorScheme scheme(0x252131FF /* Background */, 0xC7EF00FF /* Text */, 0xF4F1DEFF /* MainColor */, 0xDA115EFF /* MainAccent */, 0x792359FF /* Highlight */);
 		scheme.apply();
 
 		AssetImporter importer;
@@ -66,9 +65,9 @@ namespace editor
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 		{
 			Window* const window = *it;
-			ImGui::Begin(window->getTitle().c_str());
-			window->render(m_context);
-			ImGui::End();
+			Layout::begin(window->getTitle());
+			window->render();
+			Layout::end();
 		}
 	}
 

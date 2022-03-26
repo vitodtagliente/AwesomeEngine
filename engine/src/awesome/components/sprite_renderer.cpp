@@ -1,5 +1,6 @@
 #include "sprite_renderer.h"
 
+#include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -32,10 +33,10 @@ json::value SpriteRenderer::serialize() const
 	return data;
 }
 
-void SpriteRenderer::inspect(editor::Context& context)
+void SpriteRenderer::inspect()
 {
-	Component::inspect(context);
-	context.input("Color", &color);
+	Component::inspect();
+	editor::Layout::input("Color", &color);
 }
 
 REFLECT_COMPONENT(SpriteRenderer)

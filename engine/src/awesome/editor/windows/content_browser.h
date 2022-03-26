@@ -5,21 +5,22 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/timer.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class Context;
-
 	class ContentBrowser : public Window
 	{
 	public:
 		ContentBrowser();
 
 		std::string getTitle() const override;
-		virtual void render(Context& context) override;
+		virtual void render() override;
 		virtual void update(double deltaTime) override;
+
+		REFLECT()
 
 	private:
 

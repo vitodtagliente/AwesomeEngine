@@ -4,7 +4,7 @@
 #include <sstream>
 #include <imgui.h>
 
-#include "../context.h"
+#include <awesome/editor/layout.h>
 
 namespace editor
 {
@@ -13,15 +13,12 @@ namespace editor
 	{
 	}
 
-	std::string Performance::getTitle() const
-	{
-		return "Performance";
-	}
-
-	void Performance::render(Context& context)
+	void Performance::render()
 	{
 		std::ostringstream s;
 		s << std::round(1000.0f / ImGui::GetIO().Framerate) << " ms/frame (" << std::round(ImGui::GetIO().Framerate) << " FPS)";
-		context.text(s.str());
+		Layout::text(s.str());
 	}
+
+	REFLECT_EDITOR(Performance)
 }

@@ -2,6 +2,7 @@
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
+#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
@@ -45,10 +46,10 @@ void CameraController2d::render(graphics::Renderer* const renderer)
 	renderer->pushCamera(getOwner()->transform.matrix());
 }
 
-void CameraController2d::inspect(editor::Context& context)
+void CameraController2d::inspect()
 {
-	Component::inspect(context);
-	context.input("Speed", &speed);
+	Component::inspect();
+	editor::Layout::input("Speed", &speed);
 }
 
 REFLECT_COMPONENT(CameraController2d)

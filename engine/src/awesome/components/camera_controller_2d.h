@@ -20,7 +20,7 @@ public:
 	void update(double deltaTime) override;
 	void render(graphics::Renderer* const renderer) override;
 
-	virtual void inspect(editor::Context& context) override;
+	virtual void inspect() override;
 
 	float speed;
 

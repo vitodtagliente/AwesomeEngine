@@ -1,9 +1,9 @@
 #include "renderer_inspector.h"
 
 #include <sstream>
-#include <awesome/graphics/renderer.h>
 
-#include "../context.h"
+#include <awesome/editor/layout.h>
+#include <awesome/graphics/renderer.h>
 
 namespace editor
 {
@@ -17,14 +17,16 @@ namespace editor
 		return "Renderer";
 	}
 
-	void RendererInspector::render(Context& context)
+	void RendererInspector::render()
 	{
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
 			std::ostringstream s;
 			s << "Draw Calls: " << renderer->getStats().drawCalls;
-			context.text(s.str());
-			context.input("background", &renderer->backgroundColor);
+			Layout::text(s.str());
+			Layout::input("background", &renderer->backgroundColor);
 		}
 	}
+
+	REFLECT_EDITOR(RendererInspector)
 }

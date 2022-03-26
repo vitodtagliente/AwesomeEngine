@@ -7,10 +7,10 @@
 
 namespace editor
 {
-	class EditorColorScheme
+	class ColorScheme
 	{
 	public:
-		EditorColorScheme(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor);
+		ColorScheme(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor);
 		void setColors(int backGroundColor, int textColor, int mainColor, int mainAccentColor, int highlightColor);
 		void apply();
 
@@ -48,5 +48,7 @@ namespace editor
 		static ImVec4 hovered(ImVec4 c) { return lighten(c, 0.2f); }
 		static ImVec4 active(ImVec4 c) { return lighten(ImVec4(c.x, c.y, c.z, 1.0f), 0.1f); }
 		static ImVec4 collapsed(ImVec4 c) { return darken(c, 0.2f); }
+
+		void test();
 	}; 
 }

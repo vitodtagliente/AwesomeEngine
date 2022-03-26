@@ -3,6 +3,7 @@
 namespace editor
 {
 	Window::Window()
+		: m_state()
 	{
 	}
 
@@ -11,11 +12,15 @@ namespace editor
 		return getTypeDescriptor().name;
 	}
 
+	void Window::init()
+	{
+	}
+
 	void Window::update(const double /*deltaTime*/)
 	{
 	}
 
-	void Window::render(Context&)
+	void Window::render()
 	{
 	}
 

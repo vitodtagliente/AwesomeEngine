@@ -2,10 +2,9 @@
 #pragma once
 
 #include <filesystem>
-#include <memory>
 #include <optional>
-#include <variant>
 #include <string>
+#include <variant>
 
 #include <awesome/core/singleton.h>
 #include <awesome/data/asset.h>
@@ -13,10 +12,8 @@
 
 namespace editor
 {
-	class SelectionSystem : public Singleton<SelectionSystem>
+	struct State : public Singleton<State>
 	{
-	public:
-
 		struct Selection
 		{
 			enum class Type
@@ -27,7 +24,7 @@ namespace editor
 			};
 
 			Selection();
-			Selection(Entity* entity);
+			Selection(Entity* const entity);
 			Selection(const std::shared_ptr<Asset>& asset);
 
 			inline Entity* asEntity() const { return std::get<Entity*>(data); }
@@ -37,19 +34,13 @@ namespace editor
 			std::variant<Entity*, std::shared_ptr<Asset>> data;
 		};
 
-		SelectionSystem();
+		State();
 
-		void select(Entity* entity);
+		void select();
+		void select(Entity* const entity);
 		void select(const std::shared_ptr<Asset>& asset);
-		void select(const std::filesystem::path& path);
-		void unselect();
 
-		const std::optional<Selection>& getSelection() const { return m_selection; }
-		inline bool hasSelection() const { return m_selection.has_value(); }
-		inline const std::filesystem::path& getPath() const { return m_path; }
-
-	private:
-		std::filesystem::path m_path;
-		std::optional<Selection> m_selection;
+		std::optional<Selection> selection;
+		std::filesystem::path workPath;
 	};
 }
