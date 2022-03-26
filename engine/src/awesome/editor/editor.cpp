@@ -77,6 +77,15 @@ namespace editor
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
+
+	void Editor::update(const double deltaTime)
+	{
+		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		{
+			Window* const window = *it;
+			window->update(deltaTime);
+		}
+	}
 	
 	void Editor::registerWindows()
 	{

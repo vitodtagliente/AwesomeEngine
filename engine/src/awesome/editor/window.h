@@ -15,6 +15,7 @@ namespace editor
 		Window();
 
 		virtual std::string getTitle() const;
+		virtual void update(double deltaTime);
 		virtual void render(Context&);
 
 		REFLECT()

@@ -65,10 +65,20 @@ namespace editor
 		}
 	}
 
+	void ContentBrowser::update(const double deltaTime)
+	{
+		m_dir.refreshTimer.tick(deltaTime);
+		if (m_dir.refreshTimer.isExpired())
+		{
+			m_dir = Dir(m_dir.path);
+		}
+	}
+
 	ContentBrowser::Dir::Dir(const std::string& directory)
 		: path(std::filesystem::path(directory))
 		, parent()
 		, files()
+		, refreshTimer(10.0)
 	{
 		parent = path.parent_path();
 		for (const auto& entry : std::filesystem::directory_iterator(path))
@@ -85,6 +95,7 @@ namespace editor
 		: path(path)
 		, parent(path.parent_path())
 		, files()
+		, refreshTimer(10.0)
 	{
 		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{

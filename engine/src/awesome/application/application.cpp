@@ -55,6 +55,13 @@ int Application::run()
 
 		fpsTimer.reset();
 		m_canvas.update();
+		
+		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+		{
+			Module* const module = *it;
+			module->update(deltatime);
+		}
+		
 		m_input.update();
 		world.update(deltatime);
 

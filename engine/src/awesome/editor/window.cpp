@@ -11,6 +11,10 @@ namespace editor
 		return getTypeDescriptor().name;
 	}
 
+	void Window::update(const double /*deltaTime*/)
+	{
+	}
+
 	void Window::render(Context&)
 	{
 	}

@@ -49,12 +49,17 @@ namespace editor
 			return false;
 		}
 
+		AssetLibrary* const library = AssetLibrary::instance();
+
 		if (Asset::isAsset(filename))
 		{
 			Asset descriptor = Asset::load(filename.string());
 			if (descriptor)
 			{
-				AssetLibrary::instance()->redirectors.insert(std::make_pair(descriptor.id, filename.string()));
+				// The asset is already loaded
+				if (library->find(descriptor.id)) return true;
+
+				library->redirectors.insert(std::make_pair(descriptor.id, filename.string()));
 				return true;
 			}
 			return false;
@@ -73,7 +78,7 @@ namespace editor
 			Asset asset(type);
 			archive << json::Serializer::to_string(asset.serialize());
 
-			AssetLibrary::instance()->redirectors.insert(std::make_pair(asset.id, assetFilename));
+			library->redirectors.insert(std::make_pair(asset.id, assetFilename));
 		}
 
 		return true;

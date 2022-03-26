@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/timer.h>
 #include <awesome/editor/window.h>
 
 namespace editor
@@ -17,7 +18,8 @@ namespace editor
 		ContentBrowser();
 
 		std::string getTitle() const override;
-		void render(Context& context) override;
+		virtual void render(Context& context) override;
+		virtual void update(double deltaTime) override;
 
 	private:
 
@@ -29,6 +31,7 @@ namespace editor
 			std::filesystem::path path;
 			std::filesystem::path parent;
 			std::vector<std::filesystem::path> files;
+			Timer refreshTimer;
 		};
 
 		std::filesystem::path m_contentPath;
