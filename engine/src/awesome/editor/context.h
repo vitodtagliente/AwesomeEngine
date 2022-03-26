@@ -22,7 +22,7 @@ namespace editor
 		bool button(const std::string& name);
 		bool button(const std::string& name, int width, int height);
 		bool collapsingHeader(const std::string& name);
-		void image(std::shared_ptr<ImageAsset> image);
+		void image(const std::shared_ptr<ImageAsset>& image);
 		void input(const std::string& name, int* value);
 		void input(const std::string& name, bool* value);
 		void input(const std::string& name, float* value);
@@ -32,6 +32,8 @@ namespace editor
 		void input(const std::string& name, graphics::Color* value);
 		void input(const std::string& name, graphics::TextureCoords* value);
 		void input(const std::string& name, graphics::TextureRect* value);
+		void newLine();
+		void sameLine();
 		bool selectable(const std::string& name, bool selected);
 		void text(const std::string& str);
 		void textWrapped(const std::string& str);

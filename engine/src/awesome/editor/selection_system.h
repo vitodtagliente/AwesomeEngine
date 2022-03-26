@@ -28,7 +28,7 @@ namespace editor
 
 			Selection();
 			Selection(Entity* entity);
-			Selection(std::shared_ptr<Asset> asset);
+			Selection(const std::shared_ptr<Asset>& asset);
 
 			inline Entity* asEntity() const { return std::get<Entity*>(data); }
 			inline std::shared_ptr<Asset> asAsset() const { return std::get<std::shared_ptr<Asset>>(data); }
@@ -40,7 +40,7 @@ namespace editor
 		SelectionSystem();
 
 		void select(Entity* entity);
-		void select(std::shared_ptr<Asset> asset);
+		void select(const std::shared_ptr<Asset>& asset);
 		void unselect();
 
 		const std::optional<Selection>& getSelection() const { return m_selection; }

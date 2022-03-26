@@ -26,7 +26,7 @@ namespace editor
 		return ImGui::CollapsingHeader(name.c_str());
 	}
 
-	void Context::image(std::shared_ptr<ImageAsset> image)
+	void Context::image(const std::shared_ptr<ImageAsset>& image)
 	{
 		if (image != nullptr)
 		{
@@ -81,6 +81,16 @@ namespace editor
 	void Context::input(const std::string& name, graphics::TextureRect* value)
 	{
 		ImGui::InputFloat4(name.c_str(), value->data);
+	}
+
+	void Context::newLine()
+	{
+		ImGui::NewLine();
+	}
+
+	void Context::sameLine()
+	{
+		ImGui::SameLine();
 	}
 
 	bool Context::selectable(const std::string& name, const bool selected)

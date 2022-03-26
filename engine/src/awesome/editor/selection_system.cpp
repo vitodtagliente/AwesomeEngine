@@ -12,7 +12,7 @@ namespace editor
 		m_selection = Selection(entity);
 	}
 
-	void SelectionSystem::select(std::shared_ptr<Asset> asset)
+	void SelectionSystem::select(const std::shared_ptr<Asset>& asset)
 	{
 		m_selection = Selection(asset);
 	}
@@ -35,7 +35,7 @@ namespace editor
 
 	}
 
-	SelectionSystem::Selection::Selection(std::shared_ptr<Asset> asset)
+	SelectionSystem::Selection::Selection(const std::shared_ptr<Asset>& asset)
 		: type(Type::Asset)
 		, data(asset)
 	{

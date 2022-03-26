@@ -22,18 +22,33 @@ namespace editor
 	{
 		SelectionSystem* selectionSystem = SelectionSystem::instance();
 		const auto& selection = selectionSystem->getSelection();
+		Entity* const selectedEntity = selection.has_value() && selection->type == SelectionSystem::Selection::Type::Entity
+			? selection->asEntity() 
+			: nullptr;
 
-		if (World* const world = World::instance())
+		World* const world = World::instance();
+
+		if (context.button("+", 24, 20))
 		{
-			for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
+			Entity* const newEntity = world->spawn();
+			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
+			selectionSystem->select(newEntity);
+		}
+		
+		context.sameLine();
+
+		if (context.button("X", 24, 20) && selectedEntity != nullptr)
+		{
+			world->destroy(selectedEntity);
+			selectionSystem->unselect();
+		}
+
+		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
+		{
+			Entity* const entity = *it;
+			if (context.selectable(entity->name, selectedEntity != nullptr && entity == selectedEntity))
 			{
-				Entity* const entity = *it;
-				if (context.selectable(entity->name, 
-					selection.has_value() && 
-					selection->type == SelectionSystem::Selection::Type::Entity && std::get<Entity*>(selection->data) == entity))
-				{
-					selectionSystem->select(entity);
-				}
+				selectionSystem->select(entity);
 			}
 		}
 	}
