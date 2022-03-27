@@ -23,7 +23,7 @@ namespace editor
 			std::ostringstream s;
 			s << "Draw Calls: " << m_stats.drawCalls;
 			Layout::text(s.str());
-			Layout::input("background", &renderer->backgroundColor);
+			Layout::input("background", renderer->backgroundColor);
 		}
 	}
 

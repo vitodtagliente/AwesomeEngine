@@ -38,10 +38,10 @@ void OrthographicCamera::update(const double)
 void OrthographicCamera::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Near Plane", &nearPlane);
-	editor::Layout::input("Far Plane", &farPlane);
-	editor::Layout::input("Pixel Perfect", &pixelPerfect);
-	editor::Layout::input("Pixel per unit", &pixelsPerUnit);
+	editor::Layout::input("Near Plane", nearPlane);
+	editor::Layout::input("Far Plane", farPlane);
+	editor::Layout::input("Pixel Perfect", pixelPerfect);
+	editor::Layout::input("Pixel per unit", pixelsPerUnit);
 }
 
 REFLECT_COMPONENT(OrthographicCamera)

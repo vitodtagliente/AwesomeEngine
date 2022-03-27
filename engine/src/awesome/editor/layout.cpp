@@ -1,5 +1,6 @@
 #include "layout.h"
 
+#include <filesystem>
 #include <imgui.h>
 
 #include <awesome/graphics/texture_library.h>
@@ -11,9 +12,9 @@ namespace editor
 		ImGui::Begin(name.c_str());
 	}
 
-	bool Layout::beginCombo(const std::string& name)
+	bool Layout::beginCombo(const std::string& name, const std::string& value)
 	{
-		return ImGui::BeginCombo(name.c_str(), "");
+		return ImGui::BeginCombo(name.c_str(), value.c_str());
 	}
 
 	bool Layout::button(const std::string& name)
@@ -53,19 +54,19 @@ namespace editor
 		}
 	}
 
-	void Layout::input(const std::string& name, int* value)
+	void Layout::input(const std::string& name, int& value)
 	{
-		ImGui::InputInt(name.c_str(), value);
+		ImGui::InputInt(name.c_str(), &value);
 	}
 
-	void Layout::input(const std::string& name, bool* value)
+	void Layout::input(const std::string& name, bool& value)
 	{
-		ImGui::Checkbox(name.c_str(), value);
+		ImGui::Checkbox(name.c_str(), &value);
 	}
 
-	void Layout::input(const std::string& name, float* value)
+	void Layout::input(const std::string& name, float& value)
 	{
-		ImGui::InputFloat(name.c_str(), value);
+		ImGui::InputFloat(name.c_str(), &value);
 	}
 
 	void Layout::input(const std::string& name, std::string* value, const size_t size)
@@ -73,29 +74,49 @@ namespace editor
 		ImGui::InputText(name.c_str(), const_cast<char*>(value->c_str()), size);
 	}
 
-	void Layout::input(const std::string& name, vec2* value)
+	void Layout::input(const std::string& name, vec2& value)
 	{
-		ImGui::InputFloat2(name.c_str(), value->data);
+		ImGui::InputFloat2(name.c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, vec3* value)
+	void Layout::input(const std::string& name, vec3& value)
 	{
-		ImGui::InputFloat3(name.c_str(), value->data);
+		ImGui::InputFloat3(name.c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, graphics::Color* value)
+	void Layout::input(const std::string& name, graphics::Color& value)
 	{
-		ImGui::ColorEdit4(name.c_str(), value->data);
+		ImGui::ColorEdit4(name.c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, graphics::TextureCoords* value)
+	void Layout::input(const std::string& name, graphics::TextureCoords& value)
 	{
-		ImGui::InputFloat2(name.c_str(), value->data);
+		ImGui::InputFloat2(name.c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, graphics::TextureRect* value)
+	void Layout::input(const std::string& name, graphics::TextureRect& value)
 	{
-		ImGui::InputFloat4(name.c_str(), value->data);
+		ImGui::InputFloat4(name.c_str(), value.data);
+	}
+
+	void Layout::input(const std::string& name, std::shared_ptr<ImageAsset>& value)
+	{
+		if (Layout::beginCombo(name.c_str(), std::filesystem::path(value->filename).stem().string()))
+		{
+			const Asset::Type type = value->type;
+			static std::set<std::string> images = { "Test", "Img1" };
+			for (const std::string& image : images)
+			{
+				if (Layout::selectable(image.c_str(), value->filename == image))
+				{
+
+					Layout::endCombo();
+					return;
+				}
+
+			}
+			Layout::endCombo();
+		}
 	}
 
 	void Layout::newLine()

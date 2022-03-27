@@ -33,7 +33,7 @@ json::value GizmosRenderer::serialize() const
 void GizmosRenderer::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Color", &color);
+	editor::Layout::input("Color", color);
 }
 
 REFLECT_COMPONENT(GizmosRenderer)

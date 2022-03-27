@@ -105,7 +105,7 @@ json::value SpriteAnimator::serialize() const
 void SpriteAnimator::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Autoplay", &autoplay);
+	editor::Layout::input("Autoplay", autoplay);
 }
 
 void SpriteAnimator::updateFrame(const Animation::Frame& frame)

@@ -22,22 +22,23 @@ namespace editor
 	public:
 
 		static void begin(const std::string& name);
-		static bool beginCombo(const std::string& name);
+		static bool beginCombo(const std::string& name, const std::string& value);
 		static bool button(const std::string& name);
 		static bool button(const std::string& name, int width, int height);
 		static bool collapsingHeader(const std::string& name);
 		static void end();
 		static void endCombo();
 		static void image(const std::shared_ptr<ImageAsset>& image);
-		static void input(const std::string& name, int* value);
-		static void input(const std::string& name, bool* value);
-		static void input(const std::string& name, float* value);
+		static void input(const std::string& name, int& value);
+		static void input(const std::string& name, bool& value);
+		static void input(const std::string& name, float& value);
 		static void input(const std::string& name, std::string* value, size_t size);
-		static void input(const std::string& name, vec2* value);
-		static void input(const std::string& name, vec3* value);
-		static void input(const std::string& name, graphics::Color* value);
-		static void input(const std::string& name, graphics::TextureCoords* value);
-		static void input(const std::string& name, graphics::TextureRect* value);
+		static void input(const std::string& name, vec2& value);
+		static void input(const std::string& name, vec3& value);
+		static void input(const std::string& name, graphics::Color& value);
+		static void input(const std::string& name, graphics::TextureCoords& value);
+		static void input(const std::string& name, graphics::TextureRect& value);
+		static void input(const std::string& name, std::shared_ptr<ImageAsset>& value);
 		static void newLine();
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);

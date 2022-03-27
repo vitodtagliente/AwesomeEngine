@@ -41,7 +41,7 @@ public:
 	void inspect() override
 	{
 		Component::inspect();
-		editor::Layout::input("Speed", &speed);
+		editor::Layout::input("Speed", speed);
 	}
 
 	float speed;

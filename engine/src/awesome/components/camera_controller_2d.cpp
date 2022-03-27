@@ -57,8 +57,8 @@ void CameraController2d::render(graphics::Renderer* const renderer)
 void CameraController2d::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Speed", &speed);
-	editor::Layout::input("Zoom speed", &zoomSpeed);
+	editor::Layout::input("Speed", speed);
+	editor::Layout::input("Zoom speed", zoomSpeed);
 }
 
 REFLECT_COMPONENT(CameraController2d)

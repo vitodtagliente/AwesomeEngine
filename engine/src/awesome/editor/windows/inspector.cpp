@@ -49,13 +49,13 @@ namespace editor
 	{
 		Layout::input("Name", &entity->name, 100);
 		Layout::input("Tag", &entity->tag, 100);
-		Layout::input("Position", &entity->transform.position);
-		Layout::input("Rotation", &entity->transform.rotation);
-		Layout::input("Scale", &entity->transform.scale);
-		Layout::input("Static", &entity->transform.isStatic);
+		Layout::input("Position", entity->transform.position);
+		Layout::input("Rotation", entity->transform.rotation);
+		Layout::input("Scale", entity->transform.scale);
+		Layout::input("Static", entity->transform.isStatic);
 		Layout::separator();
 
-		if (Layout::beginCombo("Add component"))
+		if (Layout::beginCombo("Add component", ""))
 		{
 			static std::set<std::string> types = TypeFactory::listByCategory("Component");
 			for (const std::string& type : types)

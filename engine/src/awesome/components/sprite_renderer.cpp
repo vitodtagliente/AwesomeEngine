@@ -36,7 +36,9 @@ json::value SpriteRenderer::serialize() const
 void SpriteRenderer::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Color", &color);
+	editor::Layout::input("Image", sprite.image);
+	editor::Layout::input("Rect", sprite.rect);
+	editor::Layout::input("Color", color);
 }
 
 REFLECT_COMPONENT(SpriteRenderer)

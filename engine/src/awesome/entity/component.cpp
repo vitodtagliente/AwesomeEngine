@@ -45,7 +45,7 @@ void Component::deserialize(const json::value& value)
 
 void Component::inspect()
 {
-	editor::Layout::input("Enabled", &enabled);
+	editor::Layout::input("Enabled", enabled);
 }
 
 REFLECT_IMP(Component)
