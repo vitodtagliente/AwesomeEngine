@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <imgui.h>
 
+#include <awesome/data/asset_library.h>
 #include <awesome/graphics/texture_library.h>
 
 namespace editor
@@ -101,15 +102,14 @@ namespace editor
 
 	void Layout::input(const std::string& name, std::shared_ptr<ImageAsset>& value)
 	{
-		if (Layout::beginCombo(name.c_str(), value->filename.stem().string()))
+		if (Layout::beginCombo(name.c_str(), value ? value->filename.stem().string() : ""))
 		{
-			const Asset::Type type = value->type;
-			static std::set<std::string> images = { "Test", "Img1" };
-			for (const std::string& image : images)
+			const auto images = AssetLibrary::instance()->list(Asset::Type::Image);
+			for (const Asset& image : images)
 			{
-				if (Layout::selectable(image.c_str(), value->filename == image))
+				if (Layout::selectable(image.filename.stem().string(), value ? value->id == image.id : false))
 				{
-
+					value = AssetLibrary::instance()->find<ImageAsset>(image.id);
 					Layout::endCombo();
 					return;
 				}

@@ -6,7 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <tuple>
+#include <vector>
 
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
@@ -28,7 +28,11 @@ public:
 
 	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
-	void registerAsset(const Asset& descriptor);
+	void registerDescriptor(const Asset& descriptor);
+
+	std::vector<Asset> list() const;
+	std::vector<Asset> list(Asset::Type type) const;
+
 
 private:
 
@@ -45,6 +49,6 @@ private:
 	bool getRedirector(const uuid& id, std::filesystem::path& filename) const;
 
 	std::map<uuid, Slot> m_cachedAssets;
-	std::map<uuid, std::tuple<Asset::Type, std::filesystem::path>> m_assetRegister;
+	std::map<uuid, Asset> m_assetDescriptors;
 	std::filesystem::path m_directory;
 };

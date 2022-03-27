@@ -6,15 +6,38 @@
 
 AssetLibrary::AssetLibrary()
 	: m_cachedAssets()
-	, m_assetRegister()
+	, m_assetDescriptors()
 	, m_directory(std::filesystem::current_path().string() + "/../assets")
 {
 
 }
 
-void AssetLibrary::registerAsset(const Asset& descriptor)
+void AssetLibrary::registerDescriptor(const Asset& descriptor)
 {
-	m_assetRegister.insert(std::make_pair(descriptor.id, std::make_tuple(descriptor.type, descriptor.filename)));
+	m_assetDescriptors.insert(std::make_pair(descriptor.id, descriptor));
+}
+
+std::vector<Asset> AssetLibrary::list() const
+{
+	std::vector<Asset> result;
+	for (const auto& pair : m_assetDescriptors)
+	{
+		result.push_back(pair.second);
+	}
+	return result;
+}
+
+std::vector<Asset> AssetLibrary::list(const Asset::Type type) const
+{
+	std::vector<Asset> result;
+	for (const auto& pair : m_assetDescriptors)
+	{
+		if (pair.second.type == type)
+		{
+			result.push_back(pair.second);
+		}
+	}
+	return result;
 }
 
 std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
@@ -83,11 +106,10 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::
 
 bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename) const
 {
-	const auto& it = m_assetRegister.find(id);
-	if (it != m_assetRegister.end())
-	{
-		auto [type, name] = it->second;
-		return filename = name, true;
+	const auto& it = m_assetDescriptors.find(id);
+	if (it != m_assetDescriptors.end())
+	{		
+		return filename = it->second.filename, true;
 	}
 	return false;
 }
