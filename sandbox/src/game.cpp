@@ -9,6 +9,7 @@
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/editor/layout.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -17,11 +18,11 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
-class SpriteRotator : public Component
+class Rotator : public Component
 {
 public:
-	SpriteRotator()
-		: speed(math::random(0.2f, 0.5f))
+	Rotator()
+		: speed(math::random(5.0f, 40.0f))
 	{
 
 	}
@@ -31,10 +32,16 @@ public:
 		math::transform& transform = getOwner()->transform;
 		transform.rotation.z = getOwner()->transform.rotation.z;
 		transform.rotation.z += speed * deltaTime;
-		if (transform.rotation.z >= math::pi * 2)
+		if (transform.rotation.z >= 360.f)
 		{
 			transform.rotation.z = 0;
 		}
+	}
+
+	void inspect() override
+	{
+		Component::inspect();
+		editor::Layout::input("Speed", &speed);
 	}
 
 	float speed;
@@ -42,7 +49,7 @@ public:
 	REFLECT()
 };
 
-REFLECT_COMPONENT(SpriteRotator)
+REFLECT_COMPONENT(Rotator)
 
 void Game::startup()
 {
@@ -60,13 +67,13 @@ void Game::startup()
 		}
 
 		// animated entity
-		for (int i = 0; i < 1000; ++i)
+		for (int i = 0; i < 2000; ++i)
 		{
-			static float magic = 25.f;
+			static float magic = 35.f;
 			Entity* const entity = world->spawn(math::vec3(math::random(-magic, magic), math::random(-magic, magic), 0.0f), math::quaternion::identity);
 			entity->transform.rotation.z = math::random(0.0f, 360.0f);
 			entity->transform.scale.x = entity->transform.scale.y = math::random(0.6f, 2.4f);
-			entity->name = std::string("Animated Guy") + std::to_string(i + 1);
+			entity->name = std::string("Animated Guy-") + std::to_string(i + 1);
 			entity->tag = "Player";
 
 			const float spriteSize = 1.0f / 11;
@@ -95,7 +102,7 @@ void Game::startup()
 				component->enabled = math::random(0.0f, 1.0f) >= 0.7f;
 			}
 
-			if (SpriteRotator* component = entity->addComponent<SpriteRotator>())
+			if (Rotator* component = entity->addComponent<Rotator>())
 			{
 				component->enabled = math::random(0.0f, 1.0f) >= 0.6f;
 			}

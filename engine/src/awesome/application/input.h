@@ -25,10 +25,14 @@ public:
 	void setKeyState(const keycode_t key, const KeyState state);
 	void setMousePosition(const float x, const float y);
 	void setMousePosition(const math::vec2& position);
+	void setMouseWheelPosition(const float x, const float y);
+	void setMouseWheelPosition(const math::vec2& position);
 	void setMousePositionValid(const bool valid);
 
 	const math::vec2& getMousePosition() const;
 	const math::vec2& getDeltaMousePosition() const;
+	const math::vec2& getMouseWheelPosition() const;
+	const math::vec2& getDeltaMouseWheelPosition() const;
 	bool isMousePositionValid() const;
 
 	// reset the input state
@@ -46,6 +50,12 @@ private:
 	math::vec2 m_mousePosition;
 	// delta mouse position
 	math::vec2 m_deltaMousePosition;
+	// last mouse wheel position
+	math::vec2 m_lastMouseWheelPosition;
+	// mouse wheel position
+	math::vec2 m_mouseWheelPosition;
+	// delta mouse wheel position
+	math::vec2 m_deltaMouseWheelPosition;
 	// is mouse over window?
 	bool m_isMousePositionValid;
 };

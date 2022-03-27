@@ -10,7 +10,8 @@
 #include <awesome/math/vector3.h>
 
 CameraController2d::CameraController2d()
-	: speed(.1f)
+	: speed(.05f)
+	, zoomSpeed(1.f)
 	, m_dragPosition(false)
 {
 }
@@ -39,6 +40,13 @@ void CameraController2d::update(double deltaTime)
 			m_dragPosition.reset();
 		}
 	}
+
+	const math::vec2& wheelPosition = input->getDeltaMouseWheelPosition();
+	if (wheelPosition.y != 0.f)
+	{
+		math::vec3& scale = getOwner()->transform.scale;
+		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * -wheelPosition.y, 0.1f, 3.0f);
+	}
 }
 
 void CameraController2d::render(graphics::Renderer* const renderer)
@@ -50,6 +58,7 @@ void CameraController2d::inspect()
 {
 	Component::inspect();
 	editor::Layout::input("Speed", &speed);
+	editor::Layout::input("Zoom speed", &zoomSpeed);
 }
 
 REFLECT_COMPONENT(CameraController2d)

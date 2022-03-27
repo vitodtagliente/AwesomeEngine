@@ -23,6 +23,7 @@ public:
 	virtual void inspect() override;
 
 	float speed;
+	float zoomSpeed;
 
 	REFLECT()
 

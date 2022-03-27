@@ -106,6 +106,19 @@ bool Canvas::open(Settings settings)
 		}
 	);
 
+	// mouse wheel
+	glfwSetScrollCallback(
+		handler,
+		[](GLFWwindow*, const double xoffset, const double yoffset)
+		{
+			if (Input* const input = Input::instance())
+			{
+				input->setMouseWheelPosition(static_cast<float>(xoffset), static_cast<float>(yoffset));
+			}
+		}
+	);
+
+
 	m_handler = reinterpret_cast<void*>(handler);
 	return true;
 }
