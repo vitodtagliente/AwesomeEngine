@@ -5,27 +5,37 @@
 #include <list>
 
 AssetLibrary::AssetLibrary()
-	: redirectors()
-	, m_assets()
+	: m_cachedAssets()
+	, m_assetRegister()
 	, m_directory(std::filesystem::current_path().string() + "/../assets")
 {
 
 }
 
+void AssetLibrary::registerAsset(const Asset& descriptor)
+{
+	m_assetRegister.insert(std::make_pair(descriptor.id, std::make_tuple(descriptor.type, descriptor.filename)));
+}
+
 std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 {
-	const auto& it = m_assets.find(id);
-	if (it == m_assets.end())
+	static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
 	{
-		std::string filename;
+		return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
+	};
+
+	const auto& it = m_cachedAssets.find(id);
+	if (it == m_cachedAssets.end())
+	{
+		std::filesystem::path filename;
 		if (getRedirector(id, filename) == false)
 		{
 			return nullptr;
 		}
 
 		Asset descriptor = Asset::load(filename);
-		std::shared_ptr<Asset> asset = create(descriptor, filename.substr(0, filename.length() - std::string(Asset::Extension).length()));
-		m_assets.insert(std::make_pair(asset->id, Slot(asset)));
+		std::shared_ptr<Asset> asset = create(descriptor, getAssetFilename(filename));
+		m_cachedAssets.insert(std::make_pair(asset->id, Slot(asset)));
 		return asset;
 	}
 	else
@@ -34,9 +44,9 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	}
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::string& filename)
+std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::filesystem::path& filename)
 {
-	static const auto read = [](const std::string& filename) -> std::string
+	static const auto read = [](const std::filesystem::path& filename) -> std::string
 	{
 		std::ostringstream buf;
 		std::ifstream input(filename.c_str());
@@ -52,8 +62,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::
 	}
 	case Asset::Type::Prefab:
 	{
-		const std::filesystem::path file(filename);
-		if (std::filesystem::exists(file))
+		if (std::filesystem::exists(filename))
 		{
 			return std::make_shared<PrefabAsset>(read(filename), descriptor);
 		}
@@ -61,9 +70,8 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::
 		break;
 	}
 	case Asset::Type::Text:
-	{	
-		const std::filesystem::path file(filename);
-		if (std::filesystem::exists(file))
+	{
+		if (std::filesystem::exists(filename))
 		{
 			return std::make_shared<TextAsset>(read(filename), descriptor);
 		}
@@ -73,12 +81,13 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::
 	}
 }
 
-bool AssetLibrary::getRedirector(const uuid& id, std::string& filename) const
+bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename) const
 {
-	const auto& it = redirectors.find(id);
-	if (it != redirectors.end())
+	const auto& it = m_assetRegister.find(id);
+	if (it != m_assetRegister.end())
 	{
-		return filename = it->second, true;
+		auto [type, name] = it->second;
+		return filename = name, true;
 	}
 	return false;
 }

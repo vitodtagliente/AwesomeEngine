@@ -71,23 +71,6 @@ namespace editor
 		}
 	}
 
-	ContentBrowser::Dir::Dir(const std::string& directory)
-		: path(std::filesystem::path(directory))
-		, parent()
-		, files()
-		, refreshTimer(10.0)
-	{
-		parent = path.parent_path();
-		for (const auto& entry : std::filesystem::directory_iterator(path))
-		{
-			const std::filesystem::path& file = entry.path();
-			if (Asset::isAsset(file) || entry.is_directory())
-			{
-				files.push_back(file);
-			}
-		}
-	}
-
 	ContentBrowser::Dir::Dir(const std::filesystem::path& path)
 		: path(path)
 		, parent(path.parent_path())

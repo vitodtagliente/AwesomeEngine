@@ -26,7 +26,6 @@ namespace editor
 
 		struct Dir
 		{
-			Dir(const std::string& path);
 			Dir(const std::filesystem::path& path);
 
 			std::filesystem::path path;

@@ -101,7 +101,7 @@ namespace editor
 
 	void Layout::input(const std::string& name, std::shared_ptr<ImageAsset>& value)
 	{
-		if (Layout::beginCombo(name.c_str(), std::filesystem::path(value->filename).stem().string()))
+		if (Layout::beginCombo(name.c_str(), value->filename.stem().string()))
 		{
 			const Asset::Type type = value->type;
 			static std::set<std::string> images = { "Test", "Img1" };

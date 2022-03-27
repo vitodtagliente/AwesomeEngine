@@ -2,9 +2,11 @@
 #pragma once
 
 #include <chrono>
+#include <filesystem>
 #include <map>
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
@@ -24,9 +26,9 @@ public:
 		return std::static_pointer_cast<T>(find(id));
 	}
 
-	inline const std::string& getDirectory() const { return m_directory; }
+	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
-	std::map<uuid, std::string> redirectors;
+	void registerAsset(const Asset& descriptor);
 
 private:
 
@@ -39,9 +41,10 @@ private:
 		std::shared_ptr<Asset> asset;
 	};
 
-	std::shared_ptr<Asset> create(const Asset& asset, const std::string& filename);
-	bool getRedirector(const uuid& id, std::string& filename) const;
+	std::shared_ptr<Asset> create(const Asset& asset, const std::filesystem::path& filename);
+	bool getRedirector(const uuid& id, std::filesystem::path& filename) const;
 
-	std::map<uuid, Slot> m_assets;
-	std::string m_directory;
+	std::map<uuid, Slot> m_cachedAssets;
+	std::map<uuid, std::tuple<Asset::Type, std::filesystem::path>> m_assetRegister;
+	std::filesystem::path m_directory;
 };

@@ -14,9 +14,7 @@ namespace editor
 	public:
 		AssetImporter();
 
-		void import(const std::string& directory, bool recursive);
 		void import(const std::filesystem::path& directory, bool recursive);
-		bool import(const std::string& filename);
 		bool import(const std::filesystem::path& filename);
 
 	private:

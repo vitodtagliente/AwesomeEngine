@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <string>
 
@@ -11,7 +12,7 @@ struct Image final
 	Image(const Image& other);
 	~Image();
 
-	static Image load(const std::string& filename);
+	static Image load(const std::filesystem::path& filename);
 
 	Image& operator= (const Image& other);
 	bool operator== (const Image& other) const;

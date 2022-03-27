@@ -17,11 +17,6 @@ namespace editor
 
 	}
 
-	void AssetImporter::import(const std::string& directory, const bool recursive)
-	{
-		import(std::filesystem::path(directory), recursive);
-	}
-
 	void AssetImporter::import(const std::filesystem::path& directory, bool recursive)
 	{
 		for (const auto& entry : std::filesystem::directory_iterator(directory))
@@ -37,11 +32,6 @@ namespace editor
 		}
 	}
 
-	bool AssetImporter::import(const std::string& filename)
-	{
-		return import(std::filesystem::path(filename));
-	}
-
 	bool AssetImporter::import(const std::filesystem::path& filename)
 	{
 		if (!std::filesystem::exists(filename) || std::filesystem::is_directory(filename))
@@ -53,13 +43,13 @@ namespace editor
 
 		if (Asset::isAsset(filename))
 		{
-			Asset descriptor = Asset::load(filename.string());
+			Asset descriptor = Asset::load(filename);
 			if (descriptor)
 			{
 				// The asset is already loaded
 				if (library->find(descriptor.id)) return true;
 
-				library->redirectors.insert(std::make_pair(descriptor.id, filename.string()));
+				library->registerAsset(descriptor);
 				return true;
 			}
 			return false;
@@ -76,9 +66,10 @@ namespace editor
 		{
 			Archive archive(assetFilename, Archive::Mode::Write);
 			Asset asset(type);
+			asset.filename = assetFilename;
 			archive << json::Serializer::to_string(asset.serialize());
 
-			library->redirectors.insert(std::make_pair(asset.id, assetFilename));
+			library->registerAsset(asset);
 		}
 
 		return true;

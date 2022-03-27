@@ -34,14 +34,13 @@ struct Asset : public ISerializable
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	static Asset load(const std::string& filename);
-	static bool isAsset(const std::string& filename);
+	static Asset load(const std::filesystem::path& filename);
 	static bool isAsset(const std::filesystem::path& filename);
 	static constexpr char* const Extension = ".asset";
 
 	uuid id;
 	Type type;
-	std::string filename;
+	std::filesystem::path filename;
 
 	REFLECT()
 };

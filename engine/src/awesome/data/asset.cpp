@@ -72,9 +72,9 @@ void Asset::deserialize(const json::value& value)
 	}
 }
 
-Asset Asset::load(const std::string& filename)
+Asset Asset::load(const std::filesystem::path& filename)
 {
-	static const auto read = [](const std::string& filename) -> std::string
+	static const auto read = [](const std::filesystem::path& filename) -> std::string
 	{
 		std::ostringstream buf;
 		std::ifstream input(filename.c_str());
@@ -88,11 +88,6 @@ Asset Asset::load(const std::string& filename)
 	json::value value = json::Deserializer::parse(content);
 	asset.deserialize(value);
 	return asset;
-}
-
-bool Asset::isAsset(const std::string& filename)
-{
-	return isAsset(std::filesystem::path(filename));
 }
 
 bool Asset::isAsset(const std::filesystem::path& filename)
