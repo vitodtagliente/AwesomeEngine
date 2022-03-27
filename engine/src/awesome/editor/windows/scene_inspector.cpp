@@ -30,6 +30,7 @@ namespace editor
 			Entity* const newEntity = world->spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
 			getState()->select(newEntity);
+			Layout::scrollToBottom();
 		}
 
 		if (selectedEntity != nullptr)

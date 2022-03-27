@@ -42,6 +42,8 @@ namespace editor
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);
 		static void separator();
+		static void scroll(float position);
+		static void scrollToBottom();
 		static void text(const std::string& str);
 		static void textWrapped(const std::string& str);
 	};

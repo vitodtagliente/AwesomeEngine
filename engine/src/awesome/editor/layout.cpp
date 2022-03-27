@@ -118,6 +118,16 @@ namespace editor
 		ImGui::Separator();
 	}
 
+	void Layout::scroll(float position)
+	{
+		ImGui::SetScrollHereY(position);
+	}
+
+	void Layout::scrollToBottom()
+	{
+		scroll(1.f);
+	}
+
 	void Layout::text(const std::string& str)
 	{
 		ImGui::Text(str.c_str());

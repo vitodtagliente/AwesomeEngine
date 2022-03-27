@@ -67,7 +67,7 @@ void Game::startup()
 		}
 
 		// animated entity
-		for (int i = 0; i < 2000; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			static float magic = 35.f;
 			Entity* const entity = world->spawn(math::vec3(math::random(-magic, magic), math::random(-magic, magic), 0.0f), math::quaternion::identity);

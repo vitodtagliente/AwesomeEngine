@@ -127,6 +127,10 @@ namespace editor
 			std::shared_ptr<PrefabAsset> prefab = std::static_pointer_cast<PrefabAsset>(asset);
 			if (prefab)
 			{
+				if (Layout::button("Import"))
+				{
+
+				}
 				Layout::textWrapped(prefab->data);
 			}
 			break;
