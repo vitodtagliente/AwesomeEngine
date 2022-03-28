@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
+
 namespace graphics
 {
 	class Texture
@@ -43,4 +45,6 @@ namespace graphics
 		// format of the texture object
 		unsigned int m_format;
 	};
+
+	typedef std::shared_ptr<Texture> TexturePtr;
 }

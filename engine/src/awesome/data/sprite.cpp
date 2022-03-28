@@ -6,13 +6,13 @@ Sprite::Sprite()
 {
 }
 
-Sprite::Sprite(const std::shared_ptr<ImageAsset>& image)
+Sprite::Sprite(const ImageAssetPtr& image)
 	: image(image)
 	, rect()
 {
 }
 
-Sprite::Sprite(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect)
+Sprite::Sprite(const ImageAssetPtr& image, const graphics::TextureRect& rect)
 	: image(image)
 	, rect(rect)
 {

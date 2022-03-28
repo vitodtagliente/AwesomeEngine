@@ -2,6 +2,7 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 #include <string>
 
 #include <awesome/core/reflection.h>
@@ -17,6 +18,8 @@ struct Asset : public ISerializable
 		None,
 		Image,
 		Prefab,
+		Sprite,
+		SpriteAnimation,
 		Text
 	};
 
@@ -45,68 +48,24 @@ struct Asset : public ISerializable
 	REFLECT()
 };
 
-template <Asset::Type T, typename D>
-struct BaseAsset : public Asset
+typedef Asset AssetDescriptor;
+typedef std::shared_ptr<Asset> AssetPtr;
+
+template <typename>
+struct AssetType final
 {
-public:
-
-	BaseAsset()
-		: Asset(T)
-		, data()
+	static Asset::Type get()
 	{
-
+		return Asset::Type::None;
 	}
-
-	BaseAsset(const D& data)
-		: Asset(T)
-		, data(data)
-	{
-
-	}
-
-	BaseAsset(const D& data, const uuid& id)
-		: Asset(T, id)
-		, data(data)
-	{
-
-	}
-
-	BaseAsset(const D& data, const Asset& descriptor)
-		: Asset(descriptor)
-		, data(data)
-	{
-
-	}
-
-	BaseAsset(const BaseAsset& asset)
-		: Asset(asset)
-		, data(asset.data)
-	{
-
-	}
-
-	BaseAsset& operator= (const BaseAsset& other)
-	{
-		id = other.id;
-		type = other.type;
-		data = other.data;
-		filename = other.filename;
-		return *this;
-	}
-
-	bool operator== (const BaseAsset& other) const
-	{
-		return id == other.id;
-	}
-
-	bool operator!= (const BaseAsset& other) const
-	{
-		return id != other.id;
-	}
-
-	D data;
 };
 
-typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
-typedef BaseAsset<Asset::Type::Prefab, std::string> PrefabAsset;
-typedef BaseAsset<Asset::Type::Text, std::string> TextAsset;
+#define ASSETTYPE(A, T) \
+	template <> \
+	struct AssetType<A> final \
+	{ \
+		static Asset::Type get() \
+		{ \
+			return T; \
+		}\
+	};

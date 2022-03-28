@@ -49,7 +49,7 @@ namespace editor
 				// The asset is already loaded
 				if (library->find(descriptor.id)) return true;
 
-				library->registerDescriptor(descriptor);
+				library->insert(descriptor);
 				return true;
 			}
 			return false;
@@ -69,7 +69,7 @@ namespace editor
 			asset.filename = assetFilename;
 			archive << json::Serializer::to_string(asset.serialize());
 
-			library->registerDescriptor(asset);
+			library->insert(asset);
 		}
 
 		return true;

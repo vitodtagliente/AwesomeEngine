@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include <awesome/data/asset.h>
+#include <awesome/data/image_asset.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
@@ -28,7 +28,7 @@ namespace editor
 		static bool collapsingHeader(const std::string& name);
 		static void end();
 		static void endCombo();
-		static void image(const std::shared_ptr<ImageAsset>& image);
+		static void image(const ImageAssetPtr& image);
 		static void input(const std::string& name, int& value);
 		static void input(const std::string& name, bool& value);
 		static void input(const std::string& name, float& value);
@@ -38,7 +38,7 @@ namespace editor
 		static void input(const std::string& name, graphics::Color& value);
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);
-		static void input(const std::string& name, std::shared_ptr<ImageAsset>& value);
+		static void input(const std::string& name, ImageAssetPtr& value);
 		static void newLine();
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);

@@ -20,7 +20,7 @@ namespace editor
 
 	private:
 		void inspect(Entity* const entity);
-		void inspect(std::shared_ptr<Asset> asset);
+		void inspect(AssetPtr asset);
 
 		std::string m_prefabFilename;
 	};

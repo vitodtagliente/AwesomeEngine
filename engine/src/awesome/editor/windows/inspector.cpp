@@ -7,7 +7,9 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/data/archive.h>
-#include <awesome/data/asset.h>
+#include <awesome/data/image_asset.h>
+#include <awesome/data/prefab_asset.h>
+#include <awesome/data/text_asset.h>
 #include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
 #include <awesome/encoding/json.h>
@@ -109,13 +111,13 @@ namespace editor
 		}
 	}
 
-	void Inspector::inspect(std::shared_ptr<Asset> asset)
+	void Inspector::inspect(AssetPtr asset)
 	{
 		switch (asset->type)
 		{
 		case Asset::Type::Image:
 		{
-			std::shared_ptr<ImageAsset> image = std::static_pointer_cast<ImageAsset>(asset);
+			ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(asset);
 			if (image)
 			{
 				Layout::image(image);
@@ -124,7 +126,7 @@ namespace editor
 		}
 		case Asset::Type::Prefab:
 		{
-			std::shared_ptr<PrefabAsset> prefab = std::static_pointer_cast<PrefabAsset>(asset);
+			PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(asset);
 			if (prefab)
 			{
 				if (Layout::button("Import"))
@@ -137,7 +139,7 @@ namespace editor
 		}
 		case Asset::Type::Text:
 		{
-			std::shared_ptr<TextAsset> text = std::static_pointer_cast<TextAsset>(asset);
+			TextAssetPtr text = std::static_pointer_cast<TextAsset>(asset);
 			if (text)
 			{
 				Layout::textWrapped(text->data);

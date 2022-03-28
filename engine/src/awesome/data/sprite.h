@@ -5,13 +5,13 @@
 
 #include <awesome/graphics/texture_rect.h>
 
-#include "asset.h"
+#include "image_asset.h"
 
 struct Sprite final
 {
 	Sprite();
-	Sprite(const std::shared_ptr<ImageAsset>& image);
-	Sprite(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect);
+	Sprite(const ImageAssetPtr& image);
+	Sprite(const ImageAssetPtr& image, const graphics::TextureRect& rect);
 	Sprite(const Sprite& other);
 	~Sprite();
 
@@ -19,6 +19,6 @@ struct Sprite final
 	bool operator== (const Sprite& other) const;
 	bool operator!= (const Sprite& other) const;
 
-	std::shared_ptr<ImageAsset> image;
+	ImageAssetPtr image;
 	graphics::TextureRect rect;
 };

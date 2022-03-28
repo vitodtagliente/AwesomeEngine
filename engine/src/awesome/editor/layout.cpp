@@ -43,7 +43,7 @@ namespace editor
 		ImGui::EndCombo();
 	}
 
-	void Layout::image(const std::shared_ptr<ImageAsset>& image)
+	void Layout::image(const ImageAssetPtr& image)
 	{
 		if (image != nullptr)
 		{
@@ -100,7 +100,7 @@ namespace editor
 		ImGui::InputFloat4(name.c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, std::shared_ptr<ImageAsset>& value)
+	void Layout::input(const std::string& name, ImageAssetPtr& value)
 	{
 		if (Layout::beginCombo(name.c_str(), value ? value->filename.stem().string() : ""))
 		{

@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <chrono>
 #include <filesystem>
 #include <map>
 #include <memory>
@@ -19,7 +18,7 @@ public:
 	AssetLibrary();
 	~AssetLibrary() = default;
 
-	std::shared_ptr<Asset> find(const uuid& id);
+	AssetPtr find(const uuid& id);
 	template <typename T>
 	std::shared_ptr<T> find(const uuid& id)
 	{
@@ -28,10 +27,10 @@ public:
 
 	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
-	void registerDescriptor(const Asset& descriptor);
+	void insert(const AssetDescriptor& descriptor);
 
-	std::vector<Asset> list() const;
-	std::vector<Asset> list(Asset::Type type) const;
+	std::vector<AssetDescriptor> list() const;
+	std::vector<AssetDescriptor> list(Asset::Type type) const;
 
 
 private:
@@ -42,13 +41,13 @@ private:
 			: asset(asset)
 		{}
 
-		std::shared_ptr<Asset> asset;
+		AssetPtr asset;
 	};
 
-	std::shared_ptr<Asset> create(const Asset& asset, const std::filesystem::path& filename);
+	std::shared_ptr<Asset> create(const AssetDescriptor& descriptor, const std::filesystem::path& filename);
 	bool getRedirector(const uuid& id, std::filesystem::path& filename) const;
 
-	std::map<uuid, Slot> m_cachedAssets;
-	std::map<uuid, Asset> m_assetDescriptors;
+	std::map<uuid, Slot> m_cache;
+	std::map<uuid, AssetDescriptor> m_register;
 	std::filesystem::path m_directory;
 };

@@ -1,26 +1,28 @@
 #include "asset_library.h"
 
-#include <filesystem>
 #include <fstream>
-#include <list>
+
+#include "image_asset.h"
+#include "prefab_asset.h"
+#include "text_asset.h"
 
 AssetLibrary::AssetLibrary()
-	: m_cachedAssets()
-	, m_assetDescriptors()
+	: m_cache()
+	, m_register()
 	, m_directory(std::filesystem::current_path().string() + "/../assets")
 {
 
 }
 
-void AssetLibrary::registerDescriptor(const Asset& descriptor)
+void AssetLibrary::insert(const AssetDescriptor& descriptor)
 {
-	m_assetDescriptors.insert(std::make_pair(descriptor.id, descriptor));
+	m_register.insert(std::make_pair(descriptor.id, descriptor));
 }
 
 std::vector<Asset> AssetLibrary::list() const
 {
 	std::vector<Asset> result;
-	for (const auto& pair : m_assetDescriptors)
+	for (const auto& pair : m_register)
 	{
 		result.push_back(pair.second);
 	}
@@ -30,7 +32,7 @@ std::vector<Asset> AssetLibrary::list() const
 std::vector<Asset> AssetLibrary::list(const Asset::Type type) const
 {
 	std::vector<Asset> result;
-	for (const auto& pair : m_assetDescriptors)
+	for (const auto& pair : m_register)
 	{
 		if (pair.second.type == type)
 		{
@@ -47,8 +49,8 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 		return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
 	};
 
-	const auto& it = m_cachedAssets.find(id);
-	if (it == m_cachedAssets.end())
+	const auto& it = m_cache.find(id);
+	if (it == m_cache.end())
 	{
 		std::filesystem::path filename;
 		if (getRedirector(id, filename) == false)
@@ -58,7 +60,7 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 
 		Asset descriptor = Asset::load(filename);
 		std::shared_ptr<Asset> asset = create(descriptor, getAssetFilename(filename));
-		m_cachedAssets.insert(std::make_pair(asset->id, Slot(asset)));
+		m_cache.insert(std::make_pair(asset->id, Slot(asset)));
 		return asset;
 	}
 	else
@@ -67,7 +69,7 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	}
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::filesystem::path& filename)
+std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, const std::filesystem::path& filename)
 {
 	static const auto read = [](const std::filesystem::path& filename) -> std::string
 	{
@@ -106,8 +108,8 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset& descriptor, const std::
 
 bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename) const
 {
-	const auto& it = m_assetDescriptors.find(id);
-	if (it != m_assetDescriptors.end())
+	const auto& it = m_register.find(id);
+	if (it != m_register.end())
 	{		
 		return filename = it->second.filename, true;
 	}

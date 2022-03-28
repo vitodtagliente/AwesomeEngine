@@ -19,11 +19,11 @@ namespace graphics
 		TextureLibrary();
 		~TextureLibrary() = default;
 
-		std::shared_ptr<Texture> find(const uuid& id);
+		TexturePtr find(const uuid& id);
 
 	private:
-		std::shared_ptr<Texture> create(const uuid& id);
+		TexturePtr create(const uuid& id);
 
-		std::map<uuid, std::shared_ptr<Texture>> m_textures;
+		std::map<uuid, TexturePtr> m_textures;
 	};
 }

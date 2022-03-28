@@ -1,6 +1,7 @@
 #include "texture_library.h"
 
 #include <awesome/data/asset_library.h>
+#include <awesome/data/image_asset.h>
 
 namespace graphics
 {
@@ -9,7 +10,7 @@ namespace graphics
 	{
 	}
 
-	std::shared_ptr<Texture> TextureLibrary::find(const uuid& id)
+	TexturePtr TextureLibrary::find(const uuid& id)
 	{
 		const auto& it = m_textures.find(id);
 		if (it != m_textures.end())
@@ -18,7 +19,7 @@ namespace graphics
 		}
 		else
 		{
-			std::shared_ptr<Texture> texture = create(id);
+			TexturePtr texture = create(id);
 			if (texture)
 			{
 				m_textures.insert(std::make_pair(id, texture));
@@ -27,9 +28,9 @@ namespace graphics
 		}
 	}
 
-	std::shared_ptr<Texture> TextureLibrary::create(const uuid& id)
+	TexturePtr TextureLibrary::create(const uuid& id)
 	{
-		std::shared_ptr<ImageAsset> asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance()->find(id));
+		ImageAssetPtr asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance()->find(id));
 		if (asset)
 		{
 			const Image& image = asset->data;
