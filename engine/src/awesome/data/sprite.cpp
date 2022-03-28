@@ -28,6 +28,12 @@ Sprite::~Sprite()
 {
 }
 
+Sprite Sprite::load(const std::filesystem::path& filename)
+{
+	// TODO
+	return Sprite();
+}
+
 Sprite& Sprite::operator=(const Sprite& other)
 {
 	image = other.image;
