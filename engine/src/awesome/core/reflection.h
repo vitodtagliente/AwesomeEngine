@@ -4,6 +4,7 @@
 #include <functional>
 #include <map>
 #include <set>
+#include <typeinfo>
 
 typedef std::function<void* ()> factory_constructor_t;
 
@@ -90,6 +91,12 @@ struct TypeFactory
 			return it->second;
 		}
 		return {};
+	}
+
+	template <typename T>
+	static void load()
+	{
+		TypeDescriptor::get<T>();
 	}
 };
 

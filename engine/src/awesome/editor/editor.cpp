@@ -95,7 +95,12 @@ namespace editor
 	
 	void Editor::registerWindows()
 	{
-		/*
+		TypeFactory::load<ContentBrowser>();
+		TypeFactory::load<Inspector>();
+		TypeFactory::load<Performance>();
+		TypeFactory::load<RendererInspector>();
+		TypeFactory::load<SceneInspector>();
+
 		static std::set<std::string> types = TypeFactory::listByCategory("Editor");
 		for (const std::string& type : types)
 		{
@@ -106,12 +111,5 @@ namespace editor
 			}
 
 		}
-		*/
-
-		registerWindow<ContentBrowser>();
-		registerWindow<Inspector>();
-		registerWindow<Performance>();
-		registerWindow<RendererInspector>();
-		registerWindow<SceneInspector>();
 	}
 }
