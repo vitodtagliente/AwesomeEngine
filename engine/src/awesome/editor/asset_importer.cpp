@@ -9,7 +9,8 @@ namespace editor
 	std::map<Asset::Type, std::set<std::string>> AssetImporter::s_filetypes{
 		{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
 		{ Asset::Type::Prefab, {".prefab"} },
-		{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} },
+		{ Asset::Type::Sprite, {".sprite"} },
+		{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} }
 	};
 
 	AssetImporter::AssetImporter()

@@ -9,6 +9,7 @@
 #include <awesome/data/archive.h>
 #include <awesome/data/image_asset.h>
 #include <awesome/data/prefab_asset.h>
+#include <awesome/data/sprite_asset.h>
 #include <awesome/data/text_asset.h>
 #include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
@@ -134,6 +135,16 @@ namespace editor
 
 				}
 				Layout::textWrapped(prefab->data);
+			}
+			break;
+		}
+		case Asset::Type::Sprite:
+		{
+			SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(asset);
+			if (sprite)
+			{
+				Layout::image(sprite->data.image);
+				Layout::input("Rect", sprite->data.rect);
 			}
 			break;
 		}

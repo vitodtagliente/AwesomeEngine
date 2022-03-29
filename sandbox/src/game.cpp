@@ -9,6 +9,7 @@
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/data/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/texture.h>

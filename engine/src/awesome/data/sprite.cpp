@@ -1,5 +1,12 @@
 #include "sprite.h"
 
+#include <fstream>
+
+#include <awesome/data/archive.h>
+#include <awesome/data/asset_library.h>
+#include <awesome/data/image_asset.h>
+#include <awesome/encoding/json.h>
+
 Sprite::Sprite()
 	: image()
 	, rect()
@@ -30,8 +37,37 @@ Sprite::~Sprite()
 
 Sprite Sprite::load(const std::filesystem::path& filename)
 {
-	// TODO
-	return Sprite();
+	static const auto read = [](const std::filesystem::path& filename) -> std::string
+	{
+		std::ostringstream buf;
+		std::ifstream input(filename.c_str());
+		buf << input.rdbuf();
+		return buf.str();
+	};
+
+	Sprite sprite;
+	json::value data = json::Deserializer::parse(read(filename));
+	if (data.contains("image"))
+	{
+		const uuid imageId(data["image"].as_string());
+		sprite.image = AssetLibrary::instance()->find<ImageAsset>(imageId);
+	}
+	if (data.contains("rect"))
+	{
+		deserialize(data["rect"], sprite.rect);
+	}
+	return sprite;
+}
+
+void Sprite::save(const std::filesystem::path& filename)
+{
+	json::value data = json::object({
+		{"image", image ? static_cast<std::string>(image->id) : ""},
+		{"rect", ::serialize(rect)}
+		});
+
+	Archive ar(filename, Archive::Mode::Write);
+	ar << json::Serializer::to_string(data);
 }
 
 Sprite& Sprite::operator=(const Sprite& other)

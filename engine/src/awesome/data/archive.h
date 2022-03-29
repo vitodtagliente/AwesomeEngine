@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <fstream>
 #include <string>
 #include <variant>
@@ -15,7 +16,7 @@ public:
 		Write
 	};
 
-	Archive(const std::string& filename, Mode mode);
+	Archive(const std::filesystem::path& filename, Mode mode);
 	~Archive();
 
 	template <typename T>
@@ -41,7 +42,7 @@ public:
 	void close();
 
 private:
-	std::string m_filename;
+	std::filesystem::path m_filename;
 	Mode m_mode;
 	std::fstream m_file;
 };

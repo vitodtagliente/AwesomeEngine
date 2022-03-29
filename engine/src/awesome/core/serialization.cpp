@@ -83,3 +83,16 @@ bool deserialize(const json::value& value, graphics::Color& color)
 	color.alpha = value["a"].as_number().as_float();
 	return true;
 }
+
+template<>
+bool deserialize(const json::value& value, graphics::TextureRect& rect)
+{
+	if (!value.is_object())
+		return false;
+
+	rect.x = value["x"].as_number().as_float();
+	rect.y = value["y"].as_number().as_float();
+	rect.width = value["width"].as_number().as_float();
+	rect.height = value["height"].as_number().as_float();
+	return true;
+}
