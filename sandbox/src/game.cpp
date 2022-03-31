@@ -55,6 +55,7 @@ REFLECT_COMPONENT(Rotator)
 void Game::startup()
 {
 	SpriteAssetPtr sprite = AssetLibrary::instance()->find<SpriteAsset>(uuid("357240685689300"));
+	SpriteAnimationAssetPtr animation = AssetLibrary::instance()->find<SpriteAnimationAsset>(uuid("546811582152200"));
 
 	if (World* const world = World::instance())
 	{
@@ -86,14 +87,8 @@ void Game::startup()
 
 			if (SpriteAnimator* component = entity->addComponent<SpriteAnimator>())
 			{
-				// SpriteAnimator::Animation idle;
-				// idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 3, spriteSize, spriteSize)), 1.0f));
-				// idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 4, spriteSize, spriteSize)), 1.0f));
-				// idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 5, spriteSize, spriteSize)), 1.0f));
-				// idle.frames.push_back(SpriteAnimator::Animation::Frame(Sprite(image, graphics::TextureRect(spriteSize * 9, spriteSize * 6, spriteSize, spriteSize)), 1.0f));
-				// idle.startingFrame = math::random(0, idle.frames.size());
-				// component->animations.insert(std::make_pair("idle", idle));
-				// component->autoplay = true;
+				component->animations.insert(std::make_pair("idle", animation));
+				component->autoplay = true;
 			}
 
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())

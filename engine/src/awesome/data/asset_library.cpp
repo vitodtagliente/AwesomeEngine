@@ -5,6 +5,7 @@
 #include "image_asset.h"
 #include "prefab_asset.h"
 #include "sprite_asset.h"
+#include "sprite_animation_asset.h"
 #include "text_asset.h"
 
 AssetLibrary::AssetLibrary()
@@ -97,6 +98,10 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	case Asset::Type::Sprite:
 	{
 		return std::make_shared<SpriteAsset>(Sprite::load(filename), descriptor);
+	}
+	case Asset::Type::SpriteAnimation:
+	{
+		return std::make_shared<SpriteAnimationAsset>(SpriteAnimation::load(filename), descriptor);
 	}
 	case Asset::Type::Text:
 	{
