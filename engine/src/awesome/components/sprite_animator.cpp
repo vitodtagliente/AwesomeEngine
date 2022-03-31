@@ -23,7 +23,7 @@ void SpriteAnimator::update(const double deltaTime)
 		if (m_state.timeLeft <= 0)
 		{
 			++m_state.frameIndex;
-			if (m_state.frameIndex >= m_state.animation.frames.size())
+			if (m_state.frameIndex >= m_state.animation->data.frames.size())
 			{
 				if (m_state.loop)
 				{
@@ -36,9 +36,9 @@ void SpriteAnimator::update(const double deltaTime)
 				}
 			}
 
-			if (m_state.frameIndex < m_state.animation.frames.size())
+			if (m_state.frameIndex < m_state.animation->data.frames.size())
 			{
-				const Animation::Frame& frame = m_state.animation.frames[m_state.frameIndex];
+				const SpriteAnimation::Frame& frame = m_state.animation->data.frames[m_state.frameIndex];
 				m_state.timeLeft = frame.duration;
 				updateFrame(frame);
 			}
@@ -66,12 +66,12 @@ void SpriteAnimator::play(const std::string& name, const bool loop)
 
 	m_state.name = name;
 	m_state.animation = it->second;
-	m_state.frameIndex = m_state.animation.startingFrame;
+	m_state.frameIndex = m_state.animation->data.startingFrame;
 	m_state.loop = loop;
 
-	if (m_state.frameIndex < m_state.animation.frames.size())
+	if (m_state.frameIndex < m_state.animation->data.frames.size())
 	{
-		const Animation::Frame& frame = m_state.animation.frames[m_state.frameIndex];
+		const SpriteAnimation::Frame& frame = m_state.animation->data.frames[m_state.frameIndex];
 		m_state.timeLeft = frame.duration;
 		updateFrame(frame);
 	}
@@ -108,7 +108,7 @@ void SpriteAnimator::inspect()
 	editor::Layout::input("Autoplay", autoplay);
 }
 
-void SpriteAnimator::updateFrame(const Animation::Frame& frame)
+void SpriteAnimator::updateFrame(const SpriteAnimation::Frame& frame)
 {
 	if (m_spriteRenderer == nullptr)
 	{
@@ -117,26 +117,8 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 
 	if (m_spriteRenderer)
 	{
-		// m_spriteRenderer->sprite = frame.sprite;
+		m_spriteRenderer->sprite = frame.sprite;
 	}
-}
-
-json::value SpriteAnimator::Animation::Frame::serialize() const
-{
-	return json::value();
-}
-
-void SpriteAnimator::Animation::Frame::deserialize(const json::value& value)
-{
-}
-
-json::value SpriteAnimator::Animation::serialize() const
-{
-	return json::value();
-}
-
-void SpriteAnimator::Animation::deserialize(const json::value& value)
-{
 }
 
 REFLECT_COMPONENT(SpriteAnimator)

@@ -10,6 +10,7 @@ namespace editor
 		{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
 		{ Asset::Type::Prefab, {".prefab"} },
 		{ Asset::Type::Sprite, {".sprite"} },
+		{ Asset::Type::SpriteAnimation, {".spriteanim"} },
 		{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} }
 	};
 
