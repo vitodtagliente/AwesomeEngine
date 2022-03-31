@@ -49,8 +49,8 @@ Sprite Sprite::load(const std::filesystem::path& filename)
 	json::value data = json::Deserializer::parse(read(filename));
 	if (data.contains("image"))
 	{
-		const uuid imageId(data["image"].as_string());
-		sprite.image = AssetLibrary::instance()->find<ImageAsset>(imageId);
+		const uuid id(data["image"].as_string());
+		sprite.image = AssetLibrary::instance()->find<ImageAsset>(id);
 	}
 	if (data.contains("rect"))
 	{
