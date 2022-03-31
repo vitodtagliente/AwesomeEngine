@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include <awesome/data/sprite.h>
+#include <awesome/data/sprite_asset.h>
 #include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
 
@@ -17,7 +17,7 @@ class SpriteRenderer : public Component
 public:
 	SpriteRenderer();
 
-	Sprite sprite;
+	SpriteAssetPtr sprite;
 	graphics::Color color;
 
 	void render(graphics::Renderer* const renderer) override;

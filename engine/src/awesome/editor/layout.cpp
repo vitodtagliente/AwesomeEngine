@@ -45,12 +45,17 @@ namespace editor
 
 	void Layout::image(const ImageAssetPtr& image)
 	{
+		Layout::image(image, graphics::TextureRect());
+	}
+
+	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect)
+	{
 		if (image != nullptr)
 		{
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
 			if (texture)
 			{
-				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256));
+				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256), ImVec2(rect.x, rect.width), ImVec2(rect.height, rect.y));
 			}
 		}
 	}
@@ -98,25 +103,6 @@ namespace editor
 	void Layout::input(const std::string& name, graphics::TextureRect& value)
 	{
 		ImGui::InputFloat4(name.c_str(), value.data);
-	}
-
-	void Layout::input(const std::string& name, ImageAssetPtr& value)
-	{
-		if (Layout::beginCombo(name.c_str(), value ? value->filename.stem().string() : ""))
-		{
-			const auto images = AssetLibrary::instance()->list(Asset::Type::Image);
-			for (const Asset& image : images)
-			{
-				if (Layout::selectable(image.filename.stem().string(), value ? value->id == image.id : false))
-				{
-					value = AssetLibrary::instance()->find<ImageAsset>(image.id);
-					Layout::endCombo();
-					return;
-				}
-
-			}
-			Layout::endCombo();
-		}
 	}
 
 	void Layout::newLine()

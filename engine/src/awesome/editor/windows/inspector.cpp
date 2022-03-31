@@ -19,9 +19,10 @@ namespace editor
 {
 	Inspector::Inspector()
 		: Window()
-		, m_prefabFilename()
+		, m_filename()
+		, m_rect()
 	{
-		m_prefabFilename.reserve(100);
+		m_filename.reserve(100);
 	}
 
 	void Inspector::render()
@@ -95,10 +96,10 @@ namespace editor
 
 		Layout::separator();
 
-		Layout::input("Filename", &m_prefabFilename, 300);
+		Layout::input("Filename", &m_filename, 300);
 		if (Layout::button("Save Prefab"))
 		{
-			const std::string name = m_prefabFilename.c_str();
+			const std::string name = m_filename.c_str();
 			if (!name.empty())
 			{
 				const std::string filename = (getState()->workPath / name).string() + ".prefab";
@@ -108,7 +109,7 @@ namespace editor
 				AssetImporter importer;
 				importer.import(filename);
 			}
-			m_prefabFilename.clear();
+			m_filename.clear();
 		}
 	}
 
@@ -122,6 +123,26 @@ namespace editor
 			if (image)
 			{
 				Layout::image(image);
+				if (Layout::collapsingHeader("Sprite Editor"))
+				{
+					Layout::input("Filename", &m_filename, 300);
+					Layout::input("Rect", m_rect);
+					if (Layout::button("Save Sprite"))
+					{
+						const std::string name = m_filename.c_str();
+						if (!name.empty())
+						{
+							const std::string filename = (getState()->workPath / name).string() + ".sprite";
+							Sprite sprite(image, m_rect);
+							sprite.save(filename);
+
+							AssetImporter importer;
+							importer.import(filename);
+						}
+						m_filename.clear();
+						m_rect = graphics::TextureRect();
+					}
+				}
 			}
 			break;
 		}
@@ -143,7 +164,7 @@ namespace editor
 			SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(asset);
 			if (sprite)
 			{
-				Layout::image(sprite->data.image);
+				Layout::image(sprite->data.image, sprite->data.rect);
 				Layout::input("Rect", sprite->data.rect);
 			}
 			break;

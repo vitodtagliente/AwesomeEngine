@@ -117,7 +117,7 @@ void SpriteAnimator::updateFrame(const Animation::Frame& frame)
 
 	if (m_spriteRenderer)
 	{
-		m_spriteRenderer->sprite = frame.sprite;
+		// m_spriteRenderer->sprite = frame.sprite;
 	}
 }
 

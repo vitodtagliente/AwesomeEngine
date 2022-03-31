@@ -16,12 +16,12 @@ SpriteRenderer::SpriteRenderer()
 
 void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
-	if (sprite.image != nullptr)
+	if (sprite && sprite->data.image)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(sprite.image->id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(sprite->data.image->id);
 		if (texture)
 		{
-			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), sprite.rect);
+			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), sprite->data.rect);
 		}
 	}
 }
@@ -36,8 +36,7 @@ json::value SpriteRenderer::serialize() const
 void SpriteRenderer::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Image", sprite.image);
-	editor::Layout::input("Rect", sprite.rect);
+	editor::Layout::input("Sprite", sprite);
 	editor::Layout::input("Color", color);
 }
 

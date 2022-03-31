@@ -1,10 +1,16 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <string>
 
+#include <awesome/data/asset.h>
+#include <awesome/data/asset_library.h>
+#include <awesome/data/base_asset.h>
 #include <awesome/data/image_asset.h>
+#include <awesome/data/sprite_asset.h>
+#include <awesome/editor/layout.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
@@ -29,6 +35,7 @@ namespace editor
 		static void end();
 		static void endCombo();
 		static void image(const ImageAssetPtr& image);
+		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);
 		static void input(const std::string& name, int& value);
 		static void input(const std::string& name, bool& value);
 		static void input(const std::string& name, float& value);
@@ -38,7 +45,25 @@ namespace editor
 		static void input(const std::string& name, graphics::Color& value);
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);
-		static void input(const std::string& name, ImageAssetPtr& value);
+		template <Asset::Type T, typename D>
+		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
+		{
+			if (Layout::beginCombo(name.c_str(), value ? value->filename.stem().string() : ""))
+			{
+				const auto assets = AssetLibrary::instance()->list(T);
+				for (const Asset& asset : assets)
+				{
+					if (Layout::selectable(asset.filename.stem().string(), value ? value->id == asset.id : false))
+					{
+						value = AssetLibrary::instance()->find<BaseAsset<T, D>>(asset.id);
+						Layout::endCombo();
+						return;
+					}
+
+				}
+				Layout::endCombo();
+			}
+		}
 		static void newLine();
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);
