@@ -10,6 +10,7 @@
 #include <awesome/data/image_asset.h>
 #include <awesome/data/prefab_asset.h>
 #include <awesome/data/sprite_asset.h>
+#include <awesome/data/sprite_animation_asset.h>
 #include <awesome/data/text_asset.h>
 #include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
@@ -141,6 +142,24 @@ namespace editor
 						}
 						m_filename.clear();
 						m_rect = graphics::TextureRect();
+					}
+				}
+				if (Layout::collapsingHeader("Sprite Animation"))
+				{
+					Layout::input("Filename", &m_filename, 300);
+					if (Layout::button("Save Animation"))
+					{
+						const std::string name = m_filename.c_str();
+						if (!name.empty())
+						{
+							const std::string filename = (getState()->workPath / name).string() + ".spriteanim";
+							SpriteAnimation animation;
+							animation.save(filename);
+
+							AssetImporter importer;
+							importer.import(filename);
+						}
+						m_filename.clear();
 					}
 				}
 			}
