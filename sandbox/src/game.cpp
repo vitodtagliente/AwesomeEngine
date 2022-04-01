@@ -89,6 +89,7 @@ void Game::startup()
 			{
 				component->animations.insert(std::make_pair("idle", animation));
 				component->autoplay = true;
+				component->enabled = math::random(0.0f, 1.0f) >= 0.4f;
 			}
 
 			if (GizmosRenderer* component = entity->addComponent<GizmosRenderer>())

@@ -47,7 +47,7 @@ SpriteAnimation SpriteAnimation::load(const std::filesystem::path& filename)
 			Frame frame;
 			if (jframe.contains("sprite"))
 			{
-				const uuid id(data["sprite"].as_string());
+				const uuid id(jframe["sprite"].as_string());
 				frame.sprite = AssetLibrary::instance()->find<SpriteAsset>(id);
 			}
 			if (jframe.contains("duration"))
