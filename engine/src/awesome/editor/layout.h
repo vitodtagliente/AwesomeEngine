@@ -29,11 +29,13 @@ namespace editor
 
 		static void begin(const std::string& name);
 		static bool beginCombo(const std::string& name, const std::string& value);
+		static void beginContext(const std::string context);
 		static bool button(const std::string& name);
 		static bool button(const std::string& name, int width, int height);
 		static bool collapsingHeader(const std::string& name);
 		static void end();
 		static void endCombo();
+		static void endContext();
 		static void image(const ImageAssetPtr& image);
 		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);
 		static void input(const std::string& name, int& value);
@@ -72,5 +74,11 @@ namespace editor
 		static void scrollToBottom();
 		static void text(const std::string& str);
 		static void textWrapped(const std::string& str);
+
+	private:
+
+		static std::string id(const std::string& label);
+
+		static std::string s_context;
 	};
 }

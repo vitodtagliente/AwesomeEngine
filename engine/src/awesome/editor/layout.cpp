@@ -8,29 +8,36 @@
 
 namespace editor
 {
+	std::string Layout::s_context{};
+
 	void Layout::begin(const std::string& name)
 	{
-		ImGui::Begin(name.c_str());
+		ImGui::Begin(id(name).c_str());
 	}
 
 	bool Layout::beginCombo(const std::string& name, const std::string& value)
 	{
-		return ImGui::BeginCombo(name.c_str(), value.c_str());
+		return ImGui::BeginCombo(id(name).c_str(), value.c_str());
+	}
+
+	void Layout::beginContext(const std::string context)
+	{
+		s_context = context;
 	}
 
 	bool Layout::button(const std::string& name)
 	{
-		return ImGui::Button(name.c_str());
+		return ImGui::Button(id(name).c_str());
 	}
 
 	bool Layout::button(const std::string& name, const int width, const int height)
 	{
-		return ImGui::Button(name.c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
+		return ImGui::Button(id(name).c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
 	}
 
 	bool Layout::collapsingHeader(const std::string& name)
 	{
-		return ImGui::CollapsingHeader(name.c_str());
+		return ImGui::CollapsingHeader(id(name).c_str());
 	}
 
 	void Layout::end()
@@ -41,6 +48,11 @@ namespace editor
 	void Layout::endCombo()
 	{
 		ImGui::EndCombo();
+	}
+
+	void Layout::endContext()
+	{
+		s_context.clear();
 	}
 
 	void Layout::image(const ImageAssetPtr& image)
@@ -62,47 +74,47 @@ namespace editor
 
 	void Layout::input(const std::string& name, int& value)
 	{
-		ImGui::InputInt(name.c_str(), &value);
+		ImGui::InputInt(id(name).c_str(), &value);
 	}
 
 	void Layout::input(const std::string& name, bool& value)
 	{
-		ImGui::Checkbox(name.c_str(), &value);
+		ImGui::Checkbox(id(name).c_str(), &value);
 	}
 
 	void Layout::input(const std::string& name, float& value)
 	{
-		ImGui::InputFloat(name.c_str(), &value);
+		ImGui::InputFloat(id(name).c_str(), &value);
 	}
 
 	void Layout::input(const std::string& name, std::string* value, const size_t size)
 	{
-		ImGui::InputText(name.c_str(), const_cast<char*>(value->c_str()), size);
+		ImGui::InputText(id(name).c_str(), const_cast<char*>(value->c_str()), size);
 	}
 
 	void Layout::input(const std::string& name, vec2& value)
 	{
-		ImGui::InputFloat2(name.c_str(), value.data);
+		ImGui::InputFloat2(id(name).c_str(), value.data);
 	}
 
 	void Layout::input(const std::string& name, vec3& value)
 	{
-		ImGui::InputFloat3(name.c_str(), value.data);
+		ImGui::InputFloat3(id(name).c_str(), value.data);
 	}
 
 	void Layout::input(const std::string& name, graphics::Color& value)
 	{
-		ImGui::ColorEdit4(name.c_str(), value.data);
+		ImGui::ColorEdit4(id(name).c_str(), value.data);
 	}
 
 	void Layout::input(const std::string& name, graphics::TextureCoords& value)
 	{
-		ImGui::InputFloat2(name.c_str(), value.data);
+		ImGui::InputFloat2(id(name).c_str(), value.data);
 	}
 
 	void Layout::input(const std::string& name, graphics::TextureRect& value)
 	{
-		ImGui::InputFloat4(name.c_str(), value.data);
+		ImGui::InputFloat4(id(name).c_str(), value.data);
 	}
 
 	void Layout::newLine()
@@ -117,7 +129,7 @@ namespace editor
 
 	bool Layout::selectable(const std::string& name, const bool selected)
 	{
-		return ImGui::Selectable(name.c_str(), selected);
+		return ImGui::Selectable(id(name).c_str(), selected);
 	}
 
 	void Layout::separator()
@@ -143,5 +155,14 @@ namespace editor
 	void Layout::textWrapped(const std::string& str)
 	{
 		ImGui::TextWrapped(str.c_str());
+	}
+
+	std::string Layout::id(const std::string& label)
+	{
+		if (s_context.empty())
+		{
+			return label;
+		}
+		return std::string(label) + "###" + s_context + "_" + label;
 	}
 }

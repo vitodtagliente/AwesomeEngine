@@ -27,7 +27,7 @@ namespace editor
 		}
 	}
 
-	void RendererInspector::update(const double deltaTime)
+	void RendererInspector::update(const double)
 	{
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{

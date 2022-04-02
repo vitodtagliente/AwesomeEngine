@@ -26,6 +26,7 @@ public:
 	~string_id() = default;
 
 	inline const std::string& data() const { return m_data; }
+	inline unsigned int value() const { return m_hash; }
 
 	bool operator== (const string_id& other) const;
 	bool operator!= (const string_id& other) const;

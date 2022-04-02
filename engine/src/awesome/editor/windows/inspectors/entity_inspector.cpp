@@ -32,12 +32,15 @@ namespace editor
 			return;
 		}
 
+		Layout::beginContext("entity");
 		Layout::input("Name", &entity->name, 100);
 		Layout::input("Tag", &entity->tag, 100);
 		Layout::input("Position", entity->transform.position);
 		Layout::input("Rotation", entity->transform.rotation);
 		Layout::input("Scale", entity->transform.scale);
 		Layout::input("Static", entity->transform.isStatic);
+		Layout::endContext();
+
 		Layout::separator();
 
 		if (Layout::beginCombo("Add component", ""))
@@ -55,7 +58,6 @@ namespace editor
 						return; // force the refresh of the inspector
 					}
 				}
-
 			}
 			Layout::endCombo();
 		}
@@ -64,7 +66,9 @@ namespace editor
 		for (auto it = components.begin(); it != components.end(); ++it)
 		{
 			Component* const component = *it;
-			if (Layout::collapsingHeader(component->getTypeDescriptor().name))
+			const std::string& componentName = component->getTypeDescriptor().name;
+			Layout::beginContext(componentName);
+			if (Layout::collapsingHeader(componentName))
 			{
 				component->inspect();
 				if (Layout::button("Remove"))
@@ -73,6 +77,7 @@ namespace editor
 					return; // force the refresh of the inspector
 				}
 			}
+			Layout::endContext();
 		}
 
 		Layout::separator();
