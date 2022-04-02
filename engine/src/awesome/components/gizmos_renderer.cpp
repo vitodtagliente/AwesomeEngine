@@ -33,6 +33,7 @@ json::value GizmosRenderer::serialize() const
 void GizmosRenderer::inspect()
 {
 	Component::inspect();
+	editor::Layout::input("Type", type, { {"None", Type::None}, {"Rect", Type::Rect}, {"Circle", Type::Circle} });
 	editor::Layout::input("Color", color);
 }
 

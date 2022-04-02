@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -52,6 +53,29 @@ namespace editor
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);
 		static void input(const std::string& name, SpriteAnimation::Frame& value);
+		// usable for displaying enums
+		template <typename T>
+		static void input(const std::string& name, T& value, const std::map<std::string, T>& values)
+		{
+			const auto& it = std::find_if(values.begin(), values.end(), [&value](const auto& pair) {
+					return pair.second == value;
+				});
+
+			if (Layout::beginCombo(name.c_str(), it != values.end() ? it->first.c_str() : ""))
+			{
+				for (const auto& pair : values)
+				{
+					if (Layout::selectable(pair.first.c_str(), value == pair.second))
+					{
+						value = pair.second;
+						Layout::endCombo();
+						return;
+					}
+
+				}
+				Layout::endCombo();
+			}
+		}
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 		{
