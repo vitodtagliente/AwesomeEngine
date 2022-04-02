@@ -14,7 +14,7 @@
 #include "window.h"
 
 #include <awesome/editor/windows/content_browser.h>
-#include <awesome/editor/windows/inspector.h>
+#include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/windows/performance.h>
 #include <awesome/editor/windows/renderer_inspector.h>
 #include <awesome/editor/windows/scene_inspector.h>
@@ -96,7 +96,7 @@ namespace editor
 	void Editor::registerWindows()
 	{
 		TypeFactory::load<ContentBrowser>();
-		TypeFactory::load<Inspector>();
+		TypeFactory::load<InspectorWindow>();
 		TypeFactory::load<Performance>();
 		TypeFactory::load<RendererInspector>();
 		TypeFactory::load<SceneInspector>();
