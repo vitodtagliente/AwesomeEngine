@@ -45,10 +45,17 @@ namespace graphics
 			m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
 
 			float vertices[] = {
+				/* 
+				 First pixel from memory is bottom-left for OpenGL. 
 				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
 				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
 				-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
+				*/
+				 1.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+				 1.0f,  1.0f, 0.0f, 1.0f, 0.0f,
+				-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 1.0f
 			};
 
 			unsigned int indices[] = {
