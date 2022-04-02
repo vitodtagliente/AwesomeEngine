@@ -19,9 +19,6 @@ namespace editor
 			return;
 		}
 
-		Layout::input<SpriteAnimation::Frame>("Frames", animation->data.frames, [](SpriteAnimation::Frame& frame) -> void {
-			Layout::input("Sprite", frame.sprite);
-			Layout::input("Duration", frame.duration);
-			});
+		Layout::input("Frames", animation->data.frames);
 	}
 }

@@ -92,9 +92,13 @@ namespace editor
 		ImGui::InputDouble(id(name).c_str(), &value);
 	}
 
-	void Layout::input(const std::string& name, std::string* value, const size_t size)
+	void Layout::input(const std::string& name, std::string& value, const size_t size)
 	{
-		ImGui::InputText(id(name).c_str(), const_cast<char*>(value->c_str()), size);
+		if (value.capacity() < size)
+		{
+			value.reserve(size);
+		}
+		ImGui::InputText(name.c_str(), const_cast<char*>(value.c_str()), size);
 	}
 
 	void Layout::input(const std::string& name, vec2& value)
@@ -120,6 +124,12 @@ namespace editor
 	void Layout::input(const std::string& name, graphics::TextureRect& value)
 	{
 		ImGui::InputFloat4(id(name).c_str(), value.data);
+	}
+
+	void Layout::input(const std::string& name, SpriteAnimation::Frame& value)
+	{
+		input("Sprite", value.sprite);
+		input("Duration", value.duration);
 	}
 
 	void Layout::newLine()

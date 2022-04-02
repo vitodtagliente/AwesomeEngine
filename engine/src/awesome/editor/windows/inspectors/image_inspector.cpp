@@ -11,7 +11,7 @@ namespace editor
 		, m_filename()
 		, m_rect()
 	{
-		m_filename.reserve(300);
+
 	}
 
 	bool ImageInspector::canInspect(const State::Selection& selection)
@@ -41,7 +41,7 @@ namespace editor
 		Layout::image(image);
 		if (Layout::collapsingHeader("Sprite Editor"))
 		{
-			Layout::input("Filename", &m_filename, 300);
+			Layout::input("Filename", m_filename, 300);
 			Layout::input("Rect", m_rect);
 			Layout::image(image, m_rect);
 			if (Layout::button("Save Sprite"))

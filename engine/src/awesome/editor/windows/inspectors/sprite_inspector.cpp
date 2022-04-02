@@ -10,7 +10,7 @@ namespace editor
 		: m_previousSelectedAsset()
 		, m_filename()
 	{
-		m_filename.reserve(300);
+
 	}
 
 	bool SpriteInspector::canInspect(const State::Selection& selection)
@@ -41,7 +41,7 @@ namespace editor
 
 		if (Layout::collapsingHeader("Sprite Animation"))
 		{
-			Layout::input("Filename", &m_filename, 300);
+			Layout::input("Filename", m_filename, 300);
 			if (Layout::button("Save Animation"))
 			{
 				const std::string name = m_filename.c_str();

@@ -11,6 +11,7 @@
 #include <awesome/data/asset_library.h>
 #include <awesome/data/base_asset.h>
 #include <awesome/data/image_asset.h>
+#include <awesome/data/sprite_animation_asset.h>
 #include <awesome/data/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/graphics/color.h>
@@ -44,12 +45,13 @@ namespace editor
 		static void input(const std::string& name, bool& value);
 		static void input(const std::string& name, float& value);
 		static void input(const std::string& name, double& value);
-		static void input(const std::string& name, std::string* value, size_t size);
+		static void input(const std::string& name, std::string& value, size_t size);
 		static void input(const std::string& name, vec2& value);
 		static void input(const std::string& name, vec3& value);
 		static void input(const std::string& name, graphics::Color& value);
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);
+		static void input(const std::string& name, SpriteAnimation::Frame& value);
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 		{
@@ -99,6 +101,13 @@ namespace editor
 					list.clear();
 				}
 			}
+		}
+		template <typename T>
+		static void input(const std::string& name, std::vector<T>& list)
+		{
+			input<T>(name, list, [](T& element) -> void {
+				input("Value", element);
+				});
 		}
 		static void newLine();
 		static void sameLine();
