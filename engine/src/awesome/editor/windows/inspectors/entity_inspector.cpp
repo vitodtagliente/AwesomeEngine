@@ -87,6 +87,7 @@ namespace editor
 			m_filename = entity->name;
 		}
 
+		Layout::beginContext("prefab");
 		Layout::input("Filename", &m_filename, 300);
 		if (Layout::button("Save Prefab"))
 		{
@@ -102,5 +103,6 @@ namespace editor
 			}
 			m_filename.clear();
 		}
+		Layout::endContext();
 	}
 }

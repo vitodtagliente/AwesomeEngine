@@ -1,7 +1,6 @@
 #include "image_inspector.h"
 
 #include <awesome/data/image_asset.h>
-#include <awesome/data/sprite_animation.h>
 #include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
 
@@ -36,6 +35,7 @@ namespace editor
 		if (hasChanged)
 		{
 			m_filename.clear();
+			m_rect = graphics::TextureRect();
 		}
 
 		Layout::image(image);
@@ -43,6 +43,7 @@ namespace editor
 		{
 			Layout::input("Filename", &m_filename, 300);
 			Layout::input("Rect", m_rect);
+			Layout::image(image, m_rect);
 			if (Layout::button("Save Sprite"))
 			{
 				const std::string name = m_filename.c_str();
@@ -57,24 +58,6 @@ namespace editor
 				}
 				m_filename.clear();
 				m_rect = graphics::TextureRect();
-			}
-		}
-		if (Layout::collapsingHeader("Sprite Animation"))
-		{
-			Layout::input("Filename", &m_filename, 300);
-			if (Layout::button("Save Animation"))
-			{
-				const std::string name = m_filename.c_str();
-				if (!name.empty())
-				{
-					const std::string filename = (path / name).string() + ".spriteanim";
-					SpriteAnimation animation;
-					animation.save(filename);
-		
-					AssetImporter importer;
-					importer.import(filename);
-				}
-				m_filename.clear();
 			}
 		}
 	}
