@@ -5,6 +5,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <awesome/application/input.h>
 #include <awesome/core/reflection.h>
 #include <awesome/data/asset_library.h>
 
@@ -86,6 +87,8 @@ namespace editor
 
 	void Editor::update(const double deltaTime)
 	{
+		Input::instance()->preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
+
 		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
 		{
 			const std::unique_ptr<Window>& window = *it;

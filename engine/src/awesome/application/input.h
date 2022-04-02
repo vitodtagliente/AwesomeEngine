@@ -38,6 +38,8 @@ public:
 	// reset the input state
 	void clear();
 
+	bool preventMouseEvents;
+
 private:
 
 	// last keys states

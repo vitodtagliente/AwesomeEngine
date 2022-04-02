@@ -1,7 +1,8 @@
 #include "input.h"
 
 Input::Input()
-	: m_lastKeysState()
+	: preventMouseEvents()
+	, m_lastKeysState()
 	, m_keysState()
 	, m_lastMousePosition()
 	, m_mousePosition()
@@ -84,35 +85,47 @@ void Input::setKeyState(const keycode_t key, const KeyState state)
 
 void Input::setMousePosition(const float x, const float y)
 {
-	m_lastMousePosition = m_mousePosition;
-	m_mousePosition = { x, y };
-	m_deltaMousePosition = m_mousePosition - m_lastMousePosition;
+	if (!preventMouseEvents)
+	{
+		m_lastMousePosition = m_mousePosition;
+		m_mousePosition = { x, y };
+		m_deltaMousePosition = m_mousePosition - m_lastMousePosition;
+	}
 }
 
 void Input::setMousePosition(const math::vec2& position)
 {
-	m_lastMousePosition = m_mousePosition;
-	m_mousePosition = { position.x, position.y };
-	m_deltaMousePosition = m_mousePosition - m_lastMousePosition;
+	if (!preventMouseEvents)
+	{
+		m_lastMousePosition = m_mousePosition;
+		m_mousePosition = { position.x, position.y };
+		m_deltaMousePosition = m_mousePosition - m_lastMousePosition;
+	}
 }
 
 void Input::setMouseWheelPosition(const float x, const float y)
 {
-	m_lastMouseWheelPosition = m_mouseWheelPosition;
-	m_mouseWheelPosition = { x, y };
-	m_deltaMouseWheelPosition = m_mouseWheelPosition - m_lastMouseWheelPosition;
+	if (!preventMouseEvents)
+	{
+		m_lastMouseWheelPosition = m_mouseWheelPosition;
+		m_mouseWheelPosition = { x, y };
+		m_deltaMouseWheelPosition = m_mouseWheelPosition - m_lastMouseWheelPosition;
+	}
 }
 
 void Input::setMouseWheelPosition(const math::vec2& position)
 {
-	m_lastMouseWheelPosition = m_mouseWheelPosition;
-	m_mouseWheelPosition = { position.x, position.y };
-	m_deltaMouseWheelPosition = m_mouseWheelPosition - m_lastMouseWheelPosition;
+	if (!preventMouseEvents)
+	{
+		m_lastMouseWheelPosition = m_mouseWheelPosition;
+		m_mouseWheelPosition = { position.x, position.y };
+		m_deltaMouseWheelPosition = m_mouseWheelPosition - m_lastMouseWheelPosition;
+	}
 }
 
 void Input::setMousePositionValid(const bool valid)
 {
-	m_isMousePositionValid = valid;
+	m_isMousePositionValid = preventMouseEvents ? false : valid;
 }
 
 const math::vec2& Input::getMousePosition() const
