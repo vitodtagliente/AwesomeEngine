@@ -67,7 +67,7 @@ namespace editor
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
 			if (texture)
 			{
-				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256), ImVec2(rect.x, rect.x + rect.width), ImVec2(rect.y + rect.height, rect.y));
+				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
 			}
 		}
 	}
@@ -122,7 +122,7 @@ namespace editor
 		ImGui::InputFloat4(id(name).c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, SpriteAnimation::Frame& value)
+	void Layout::input(const std::string&, SpriteAnimation::Frame& value)
 	{
 		input("Sprite", value.sprite);
 		input("Duration", value.duration);

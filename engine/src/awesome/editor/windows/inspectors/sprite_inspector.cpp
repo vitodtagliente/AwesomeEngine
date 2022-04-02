@@ -34,6 +34,12 @@ namespace editor
 		Layout::image(sprite->data.image, sprite->data.rect);
 		Layout::input("Rect", sprite->data.rect);
 
+		Layout::separator();
+		if (Layout::button("Save"))
+		{
+
+		}
+
 		if (hasChanged)
 		{
 			m_filename.clear();
