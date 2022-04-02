@@ -35,6 +35,7 @@ namespace editor
 		Layout::beginContext("entity");
 		Layout::input("Name", &entity->name, 100);
 		Layout::input("Tag", &entity->tag, 100);
+		Layout::separator();
 		Layout::input("Position", entity->transform.position);
 		Layout::input("Rotation", entity->transform.rotation);
 		Layout::input("Scale", entity->transform.scale);

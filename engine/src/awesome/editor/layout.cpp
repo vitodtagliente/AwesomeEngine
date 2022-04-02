@@ -162,6 +162,11 @@ namespace editor
 		ImGui::TextWrapped(str.c_str());
 	}
 
+	void Layout::title(const std::string& title)
+	{
+		ImGui::Text(title.c_str());
+	}
+
 	std::string Layout::id(const std::string& label)
 	{
 		if (s_context.empty())

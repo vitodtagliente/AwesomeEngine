@@ -2,8 +2,10 @@
 #pragma once
 
 #include <filesystem>
+#include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include <awesome/data/asset.h>
 #include <awesome/data/asset_library.h>
@@ -67,6 +69,37 @@ namespace editor
 				Layout::endCombo();
 			}
 		}
+		template <typename T>
+		static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler)
+		{
+			for (size_t i = 0; i < list.size(); ++i)
+			{
+				const std::string context = name + "[" + std::to_string(i) + "]";
+				beginContext(context);
+				if (collapsingHeader(context))
+				{
+					handler(list.at(i));
+					if (button("-"))
+					{
+						list.erase(list.begin() + i);
+						return;
+					}
+				}
+				endContext();
+			}
+			separator();
+			{
+				if (button("+"))
+				{
+					list.push_back(T());
+				}
+				sameLine();
+				if (button("X"))
+				{
+					list.clear();
+				}
+			}
+		}
 		static void newLine();
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);
@@ -75,6 +108,7 @@ namespace editor
 		static void scrollToBottom();
 		static void text(const std::string& str);
 		static void textWrapped(const std::string& str);
+		static void title(const std::string& title);
 
 	private:
 
