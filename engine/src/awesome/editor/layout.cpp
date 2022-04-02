@@ -2,7 +2,7 @@
 
 #include <filesystem>
 #include <imgui.h>
-
+#include <imgui_stdlib.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/graphics/texture_library.h>
 
@@ -92,13 +92,9 @@ namespace editor
 		ImGui::InputDouble(id(name).c_str(), &value);
 	}
 
-	void Layout::input(const std::string& name, std::string& value, const size_t size)
+	void Layout::input(const std::string& name, std::string& value)
 	{
-		if (value.capacity() < size)
-		{
-			value.reserve(size);
-		}
-		ImGui::InputText(name.c_str(), const_cast<char*>(value.c_str()), size);
+		ImGui::InputText(name.c_str(), &value);
 	}
 
 	void Layout::input(const std::string& name, vec2& value)

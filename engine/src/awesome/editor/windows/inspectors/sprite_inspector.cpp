@@ -41,7 +41,7 @@ namespace editor
 
 		if (Layout::collapsingHeader("Sprite Animation"))
 		{
-			Layout::input("Filename", m_filename, 300);
+			Layout::input("Filename", m_filename);
 			if (Layout::button("Save Animation"))
 			{
 				const std::string name = m_filename.c_str();

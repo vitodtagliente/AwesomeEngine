@@ -33,8 +33,8 @@ namespace editor
 		}
 
 		Layout::beginContext("entity");
-		Layout::input("Name", entity->name, 100);
-		Layout::input("Tag", entity->tag, 100);
+		Layout::input("Name", entity->name);
+		Layout::input("Tag", entity->tag);
 		Layout::separator();
 		Layout::input("Position", entity->transform.position);
 		Layout::input("Rotation", entity->transform.rotation);
@@ -89,7 +89,7 @@ namespace editor
 		}
 
 		Layout::beginContext("prefab");
-		Layout::input("Filename", m_filename, 300);
+		Layout::input("Filename", m_filename);
 		if (Layout::button("Save Prefab"))
 		{
 			const std::string name = m_filename.c_str();

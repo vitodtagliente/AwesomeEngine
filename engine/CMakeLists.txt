@@ -13,6 +13,7 @@ include_directories(
 	vendor/glfw/include/
 	vendor/stb/
 	vendor/imgui/
+	vendor/imgui/misc/cpp
 )
 
 # GLFW options
@@ -27,6 +28,7 @@ file(GLOB VENDORS_SOURCES
 	vendor/imgui/imgui_draw.cpp
 	vendor/imgui/imgui_tables.cpp
 	vendor/imgui/imgui_widgets.cpp
+	vendor/imgui/misc/cpp/imgui_stdlib.cpp
 	vendor/imgui/backends/imgui_impl_glfw.cpp
 	vendor/imgui/backends/imgui_impl_opengl3.cpp
 ) 	
