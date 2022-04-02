@@ -34,7 +34,7 @@ namespace editor
 			{
 				if (inspector->canInspect(*selection))
 				{
-					inspector->inspect(*selection);
+					inspector->inspect(*selection, getState()->workPath);
 					break;
 				}
 			}

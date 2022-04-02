@@ -11,7 +11,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Text;
 	}
 
-	void TextInspector::inspect(const State::Selection& selection)
+	void TextInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
 	{
 		TextAssetPtr asset = std::static_pointer_cast<TextAsset>(selection.asAsset());
 		if (asset == nullptr)

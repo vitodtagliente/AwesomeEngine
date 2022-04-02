@@ -12,9 +12,13 @@ namespace editor
 	class EntityInspector : public InspectorWindow::Inspector
 	{
 	public:
-		EntityInspector() = default;
+		EntityInspector();
 
 		virtual bool canInspect(const State::Selection& selection) override;
-		virtual void inspect(const State::Selection& selection) override;
+		virtual void inspect(const State::Selection& selection, const std::filesystem::path& path) override;
+
+	private:
+		class Entity* m_previousSelecytedEntity;
+		std::string m_filename;
 	};
 }

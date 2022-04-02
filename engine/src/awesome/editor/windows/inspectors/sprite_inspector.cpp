@@ -11,7 +11,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Sprite;
 	}
 
-	void SpriteInspector::inspect(const State::Selection& selection)
+	void SpriteInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
 	{
 		SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(selection.asAsset());
 		if (sprite == nullptr)

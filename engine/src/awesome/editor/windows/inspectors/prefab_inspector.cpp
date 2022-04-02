@@ -11,7 +11,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Prefab;
 	}
 
-	void PrefabInspector::inspect(const State::Selection& selection)
+	void PrefabInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
 	{
 		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(selection.asAsset());
 		if (prefab == nullptr)
