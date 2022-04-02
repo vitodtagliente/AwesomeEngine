@@ -87,6 +87,11 @@ namespace editor
 		ImGui::InputFloat(id(name).c_str(), &value);
 	}
 
+	void Layout::input(const std::string& name, double& value)
+	{
+		ImGui::InputDouble(id(name).c_str(), &value);
+	}
+
 	void Layout::input(const std::string& name, std::string* value, const size_t size)
 	{
 		ImGui::InputText(id(name).c_str(), const_cast<char*>(value->c_str()), size);
