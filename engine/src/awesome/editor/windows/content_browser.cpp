@@ -11,6 +11,7 @@ namespace editor
 		: Window()
 		, m_contentPath(getState()->workPath)
 		, m_dir(m_contentPath)
+		, m_newFolderName()
 	{
 
 	}
@@ -23,6 +24,25 @@ namespace editor
 	void ContentBrowser::render()
 	{
 		const auto& selection = getState()->selection;
+
+		Layout::input("Folder", m_newFolderName);
+		Layout::sameLine();
+		if (Layout::button("New Folder") && !m_newFolderName.empty())
+		{
+			std::filesystem::create_directory(m_dir.path / m_newFolderName);
+			m_newFolderName.clear();
+		}
+
+		if (selection.has_value())
+		{
+			Layout::sameLine();
+			if (Layout::button("Delete"))
+			{
+
+			}
+		}
+
+		Layout::separator();
 
 		if (m_contentPath != m_dir.path && Layout::selectable("..", false))
 		{

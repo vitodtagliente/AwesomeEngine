@@ -36,5 +36,6 @@ namespace editor
 
 		std::filesystem::path m_contentPath;
 		Dir m_dir;
+		std::string m_newFolderName;
 	};
 }

@@ -25,7 +25,7 @@ namespace editor
 
 		World* const world = World::instance();
 
-		if (Layout::button("+"))
+		if (Layout::button("Add"))
 		{
 			Entity* const newEntity = world->spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
@@ -36,12 +36,14 @@ namespace editor
 		if (selectedEntity != nullptr)
 		{
 			Layout::sameLine();
-			if (Layout::button("X"))
+			if (Layout::button("Delete"))
 			{
 				world->destroy(selectedEntity);
 				getState()->select();
 			}
 		}
+
+		Layout::separator();
 
 		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
 		{
