@@ -138,7 +138,7 @@ namespace editor
 		}
 		// std::map<K,T> support
 		template <typename K, typename T>
-		static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
+		static void input(const std::string& name, std::map<K, T>& map, K& newKey, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
 		{
 			text(name);
 			for (auto& pair : map)
@@ -156,9 +156,11 @@ namespace editor
 				}
 				endContext();
 			}
+			input("Key", newKey);
+			sameLine();
 			if (button("+"))
 			{
-				// list.push_back(T());
+				map.insert(std::make_pair(newKey, T()));
 			}
 			if (!map.empty())
 			{
@@ -170,21 +172,21 @@ namespace editor
 			}
 		}
 		template <typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<void(T&)>& handler)
+		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey, const std::function<void(T&)>& handler)
 		{
-			input<std::string, T>(name, map, [](const std::string& key) -> std::string { return key; }, handler);
+			input<std::string, T>(name, map, newKey, [](const std::string& key) -> std::string { return key; }, handler);
 		}
 		template <typename K, typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<std::string(const K&)>& toKey)
+		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey, const std::function<std::string(const K&)>& toKey)
 		{
-			input<T>(name, map, toKey, [](T& value) -> void {
+			input<T>(name, map, newKey, toKey, [](T& value) -> void {
 				input("Value", value);
 				});
 		}
 		template <typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map)
+		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey)
 		{
-			input<T>(name, map, [](T& value) -> void {
+			input<T>(name, map, newKey, [](T& value) -> void {
 				input("Value", value);
 				});
 		}

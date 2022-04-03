@@ -12,6 +12,7 @@ SpriteAnimator::SpriteAnimator()
 	, m_state()
 	, m_isPlaying()
 	, m_spriteRenderer()
+	, m_animationToAdd()
 {
 }
 
@@ -105,7 +106,7 @@ json::value SpriteAnimator::serialize() const
 void SpriteAnimator::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Animations", animations);
+	editor::Layout::input("Animations", animations, m_animationToAdd);
 	editor::Layout::input("Autoplay", autoplay);
 }
 
