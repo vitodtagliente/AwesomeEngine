@@ -2,6 +2,8 @@
 
 #include <awesome/data/asset_library.h>
 
+#include "layout.h"
+
 namespace editor
 {
 	State::State()
@@ -29,17 +31,20 @@ namespace editor
 		: type(Type::None)
 		, data()
 	{
+		Layout::clear();
 	}
 
 	State::Selection::Selection(Entity* const entity)
 		: type(Type::Entity)
 		, data(entity)
 	{
+		Layout::clear();
 	}
 
 	State::Selection::Selection(const std::shared_ptr<Asset>& asset)
 		: type(Type::Asset)
 		, data(asset)
 	{
+		Layout::clear();
 	}
 }

@@ -220,6 +220,8 @@ namespace editor
 		static void textWrapped(const std::string& str);
 		static void title(const std::string& title);
 
+		static void clear();
+
 	private:
 
 		static std::string id(const std::string& label);

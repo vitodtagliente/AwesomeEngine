@@ -174,6 +174,15 @@ namespace editor
 		ImGui::Text(title.c_str());
 	}
 
+	void Layout::clear()
+	{
+		for (const auto& pair : s_keyCache)
+		{
+			delete pair.second;
+		}
+		s_keyCache.clear();
+	}
+
 	std::string Layout::id(const std::string& label)
 	{
 		if (s_context.empty())
