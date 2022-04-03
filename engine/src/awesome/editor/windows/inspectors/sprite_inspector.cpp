@@ -37,7 +37,7 @@ namespace editor
 		Layout::separator();
 		if (Layout::button("Save"))
 		{
-
+			sprite->data.save(sprite->filename.parent_path() / sprite->filename.stem());
 		}
 
 		if (hasChanged)

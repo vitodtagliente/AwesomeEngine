@@ -20,5 +20,10 @@ namespace editor
 		}
 
 		Layout::input("Frames", animation->data.frames);
+
+		if (Layout::button("Save"))
+		{
+			animation->data.save(animation->filename.parent_path() / animation->filename.stem());
+		}
 	}
 }
