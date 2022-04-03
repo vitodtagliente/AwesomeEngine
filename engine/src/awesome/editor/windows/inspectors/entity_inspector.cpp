@@ -72,7 +72,8 @@ namespace editor
 			if (Layout::collapsingHeader(componentName))
 			{
 				component->inspect();
-				if (Layout::button("Remove"))
+				Layout::separator();
+				if (Layout::button("Remove Component"))
 				{
 					entity->removeComponent(component);
 					return; // force the refresh of the inspector

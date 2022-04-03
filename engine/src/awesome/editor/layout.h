@@ -58,7 +58,7 @@ namespace editor
 		static void input(const std::string& name, T& value, const std::map<std::string, T>& values)
 		{
 			const auto& it = std::find_if(values.begin(), values.end(), [&value](const auto& pair) {
-					return pair.second == value;
+				return pair.second == value;
 				});
 
 			if (Layout::beginCombo(name.c_str(), it != values.end() ? it->first.c_str() : ""))
@@ -76,6 +76,7 @@ namespace editor
 				Layout::endCombo();
 			}
 		}
+		// assets support
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 		{
@@ -95,6 +96,7 @@ namespace editor
 				Layout::endCombo();
 			}
 		}
+		// std::vector<T> support
 		template <typename T>
 		static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler)
 		{
@@ -113,24 +115,71 @@ namespace editor
 				}
 				endContext();
 			}
-			separator();
+			if (button("+"))
 			{
-				if (button("+"))
-				{
-					list.push_back(T());
-				}
-				sameLine();
-				if (button("X"))
-				{
-					list.clear();
-				}
+				list.push_back(T());
 			}
+			sameLine();
+			if (button("X"))
+			{
+				list.clear();
+			}
+			separator();
 		}
 		template <typename T>
 		static void input(const std::string& name, std::vector<T>& list)
 		{
 			input<T>(name, list, [](T& element) -> void {
 				input("Value", element);
+				});
+		}
+		// std::map<K,T> support
+		template <typename K, typename T>
+		static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
+		{
+			for (auto& pair : map)
+			{
+				const std::string context = name + "[" + toKey(pair.first) + "]";
+				beginContext(context);
+				if (collapsingHeader(context))
+				{
+					handler(pair.second);
+					if (button("-"))
+					{
+						map.erase(pair.first);
+						return;
+					}
+				}
+				endContext();
+			}
+			if (button("+"))
+			{
+				// list.push_back(T());
+			}
+			sameLine();
+			if (button("X"))
+			{
+				map.clear();
+			}
+			separator();
+		}
+		template <typename T>
+		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<void(T&)>& handler)
+		{
+			input<std::string, T>(name, map, [](const std::string& key) -> std::string { return key; }, handler);
+		}
+		template <typename K, typename T>
+		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<std::string(const K&)>& toKey)
+		{
+			input<T>(name, map, toKey, [](T& value) -> void {
+				input("Value", value);
+				});
+		}
+		template <typename T>
+		static void input(const std::string& name, std::map<std::string, T>& map)
+		{
+			input<T>(name, map, [](T& value) -> void {
+				input("Value", value);
 				});
 		}
 		static void newLine();
