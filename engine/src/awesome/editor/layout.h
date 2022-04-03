@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <typeinfo>
 #include <vector>
 
 #include <awesome/data/asset.h>
@@ -138,7 +139,7 @@ namespace editor
 		}
 		// std::map<K,T> support
 		template <typename K, typename T>
-		static void input(const std::string& name, std::map<K, T>& map, K& newKey, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
+		static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
 		{
 			text(name);
 			for (auto& pair : map)
@@ -156,11 +157,30 @@ namespace editor
 				}
 				endContext();
 			}
-			input("Key", newKey);
+			
+			K* newKey = nullptr;
+			{
+				const auto& it = s_keyCache.find(name);
+				if (it == s_keyCache.end())
+				{
+					newKey = new K();
+					s_keyCache.insert(std::make_pair(name, newKey));
+				}
+				else
+				{
+					newKey = reinterpret_cast<K*>(it->second);
+				}
+			}
+
+			input("Key", *newKey);
 			sameLine();
 			if (button("+"))
 			{
-				map.insert(std::make_pair(newKey, T()));
+				map.insert(std::make_pair(*newKey, T()));
+				if (typeid(K) == typeid(std::string))
+				{
+					reinterpret_cast<std::string*>(newKey)->clear();
+				}
 			}
 			if (!map.empty())
 			{
@@ -172,21 +192,21 @@ namespace editor
 			}
 		}
 		template <typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey, const std::function<void(T&)>& handler)
+		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<void(T&)>& handler)
 		{
-			input<std::string, T>(name, map, newKey, [](const std::string& key) -> std::string { return key; }, handler);
+			input<std::string, T>(name, map, [](const std::string& key) -> std::string { return key; }, handler);
 		}
 		template <typename K, typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey, const std::function<std::string(const K&)>& toKey)
+		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<std::string(const K&)>& toKey)
 		{
-			input<T>(name, map, newKey, toKey, [](T& value) -> void {
+			input<T>(name, map, toKey, [](T& value) -> void {
 				input("Value", value);
 				});
 		}
 		template <typename T>
-		static void input(const std::string& name, std::map<std::string, T>& map, std::string& newKey)
+		static void input(const std::string& name, std::map<std::string, T>& map)
 		{
-			input<T>(name, map, newKey, [](T& value) -> void {
+			input<T>(name, map, [](T& value) -> void {
 				input("Value", value);
 				});
 		}
@@ -205,5 +225,6 @@ namespace editor
 		static std::string id(const std::string& label);
 
 		static std::string s_context;
+		static std::map<std::string, void*> s_keyCache;
 	};
 }

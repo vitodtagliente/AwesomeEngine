@@ -32,7 +32,7 @@ public:
 	{
 		math::transform& transform = getOwner()->transform;
 		transform.rotation.z = getOwner()->transform.rotation.z;
-		transform.rotation.z += speed * deltaTime;
+		transform.rotation.z += speed * static_cast<float>(deltaTime);
 		if (transform.rotation.z >= 360.f)
 		{
 			transform.rotation.z = 0;

@@ -9,6 +9,7 @@
 namespace editor
 {
 	std::string Layout::s_context{};
+	std::map<std::string, void*> Layout::s_keyCache{};
 
 	void Layout::begin(const std::string& name)
 	{

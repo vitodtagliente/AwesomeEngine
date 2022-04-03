@@ -49,5 +49,4 @@ private:
 	PlayingState m_state;
 	bool m_isPlaying;
 	class SpriteRenderer* m_spriteRenderer;
-	std::string m_animationToAdd;
 };
