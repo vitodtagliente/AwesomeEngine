@@ -100,6 +100,7 @@ namespace editor
 		template <typename T>
 		static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler)
 		{
+			text(name);
 			for (size_t i = 0; i < list.size(); ++i)
 			{
 				const std::string context = name + "[" + std::to_string(i) + "]";
@@ -119,12 +120,14 @@ namespace editor
 			{
 				list.push_back(T());
 			}
-			sameLine();
-			if (button("X"))
+			if (!list.empty())
 			{
-				list.clear();
+				sameLine();
+				if (button("X"))
+				{
+					list.clear();
+				}
 			}
-			separator();
 		}
 		template <typename T>
 		static void input(const std::string& name, std::vector<T>& list)
@@ -137,6 +140,7 @@ namespace editor
 		template <typename K, typename T>
 		static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
 		{
+			text(name);
 			for (auto& pair : map)
 			{
 				const std::string context = name + "[" + toKey(pair.first) + "]";
@@ -156,12 +160,14 @@ namespace editor
 			{
 				// list.push_back(T());
 			}
-			sameLine();
-			if (button("X"))
+			if (!map.empty())
 			{
-				map.clear();
+				sameLine();
+				if (button("X"))
+				{
+					map.clear();
+				}
 			}
-			separator();
 		}
 		template <typename T>
 		static void input(const std::string& name, std::map<std::string, T>& map, const std::function<void(T&)>& handler)
