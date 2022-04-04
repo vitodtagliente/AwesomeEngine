@@ -22,6 +22,5 @@ namespace editor
 	private:
 		ImageAsset* m_previousSelectedAsset;
 		std::string m_filename;
-		graphics::TextureRect m_rect;
 	};
 }

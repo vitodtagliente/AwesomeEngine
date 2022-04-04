@@ -32,23 +32,28 @@ namespace editor
 		}
 
 		Layout::image(sprite->data.image, sprite->data.rect);
-		Layout::input("Rect", sprite->data.rect);
-
-		Layout::separator();
-		if (Layout::button("Save"))
-		{
-			sprite->data.save(sprite->filename.parent_path() / sprite->filename.stem());
-		}
 
 		if (hasChanged)
 		{
 			m_filename.clear();
 		}
 
-		if (Layout::collapsingHeader("Sprite Animation"))
+		Layout::input("Rect", sprite->data.rect);
+		if (Layout::collapsingHeader("Reference"))
+		{
+			Layout::image(sprite->data.image);
+		}
+		Layout::separator();
+		if (Layout::button("Save"))
+		{
+			sprite->data.save(sprite->filename.parent_path() / sprite->filename.stem());
+		}
+
+		if (Layout::collapsingHeader("Animation"))
 		{
 			Layout::input("Filename", m_filename);
-			if (Layout::button("Save Animation"))
+			Layout::separator();
+			if (Layout::button("Save"))
 			{
 				const std::string name = m_filename.c_str();
 				if (!name.empty())

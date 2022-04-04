@@ -58,17 +58,29 @@ namespace editor
 
 	void Layout::image(const ImageAssetPtr& image)
 	{
-		Layout::image(image, graphics::TextureRect());
+		static const int size = 256;
+		Layout::image(image, graphics::TextureRect(), size, size);
+	}
+
+	void Layout::image(const ImageAssetPtr& image, int width, int height)
+	{
+		Layout::image(image, graphics::TextureRect(), width, height);
 	}
 
 	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect)
+	{
+		static const int size = 256;
+		Layout::image(image, rect, size, size);
+	}
+
+	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect, int width, int height)
 	{
 		if (image != nullptr)
 		{
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
 			if (texture)
 			{
-				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(256, 256), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
+				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(static_cast<float>(width), static_cast<float>(height)), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
 			}
 		}
 	}

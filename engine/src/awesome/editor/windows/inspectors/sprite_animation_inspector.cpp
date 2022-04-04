@@ -21,6 +21,7 @@ namespace editor
 
 		Layout::input("Frames", animation->data.frames);
 
+		Layout::separator();
 		if (Layout::button("Save"))
 		{
 			animation->data.save(animation->filename.parent_path() / animation->filename.stem());

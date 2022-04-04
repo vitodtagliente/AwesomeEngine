@@ -9,7 +9,6 @@ namespace editor
 	ImageInspector::ImageInspector()
 		: m_previousSelectedAsset()
 		, m_filename()
-		, m_rect()
 	{
 
 	}
@@ -35,29 +34,26 @@ namespace editor
 		if (hasChanged)
 		{
 			m_filename.clear();
-			m_rect = graphics::TextureRect();
 		}
 
 		Layout::image(image);
-		if (Layout::collapsingHeader("Sprite Editor"))
+		if (Layout::collapsingHeader("Sprite"))
 		{
 			Layout::input("Filename", m_filename);
-			Layout::input("Rect", m_rect);
-			Layout::image(image, m_rect);
-			if (Layout::button("Save Sprite"))
+			Layout::separator();
+			if (Layout::button("Save"))
 			{
 				const std::string name = m_filename.c_str();
 				if (!name.empty())
 				{
 					const std::string filename = (path / name).string() + ".sprite";
-					Sprite sprite(image, m_rect);
+					Sprite sprite(image, graphics::TextureRect());
 					sprite.save(filename);
 		
 					AssetImporter importer;
 					importer.import(filename);
 				}
 				m_filename.clear();
-				m_rect = graphics::TextureRect();
 			}
 		}
 	}
