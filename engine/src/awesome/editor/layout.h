@@ -42,9 +42,9 @@ namespace editor
 		static void endCombo();
 		static void endContext();
 		static void image(const ImageAssetPtr& image);
-		static void image(const ImageAssetPtr& image, int width, int height);
+		static void image(const ImageAssetPtr& image, float width, float height);
 		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);
-		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect, int width, int height);
+		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect, float width, float height);
 		static void input(const std::string& name, int& value);
 		static void input(const std::string& name, bool& value);
 		static void input(const std::string& name, float& value);
@@ -218,6 +218,8 @@ namespace editor
 		static void separator();
 		static void scroll(float position);
 		static void scrollToBottom();
+		static void slider(const std::string& name, int min, int max, int& value);
+		static void slider(const std::string& name, float min, float max, float& value);
 		static void text(const std::string& str);
 		static void textWrapped(const std::string& str);
 		static void title(const std::string& title);

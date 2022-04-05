@@ -19,6 +19,7 @@ namespace editor
 			Inspector() = default;
 			virtual ~Inspector() = default;
 			virtual bool canInspect(const State::Selection&) { return false; }
+			virtual void update(const State::Selection& , double) {}
 			virtual void inspect(const State::Selection&, const std::filesystem::path&) = 0;
 		};
 
@@ -26,6 +27,7 @@ namespace editor
 
 		std::string getTitle() const override { return "Inspector"; }
 		void init() override;
+		void update(double deltaTime) override;
 		void render() override;
 
 		REFLECT()

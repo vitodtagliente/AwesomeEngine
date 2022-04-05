@@ -1,5 +1,6 @@
 #include "entity_inspector.h"
 
+#include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>
 #include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
@@ -106,5 +107,11 @@ namespace editor
 			m_filename.clear();
 		}
 		Layout::endContext();
+
+		if (SpriteRenderer* const component = entity->findComponent<SpriteRenderer>())
+		{
+			Layout::separator();
+			Layout::image(component->sprite->data.image, component->sprite->data.rect);
+		}
 	}
 }

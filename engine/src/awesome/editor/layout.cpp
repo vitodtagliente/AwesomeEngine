@@ -58,29 +58,29 @@ namespace editor
 
 	void Layout::image(const ImageAssetPtr& image)
 	{
-		static const int size = 256;
+		const float size = ImGui::GetContentRegionAvailWidth();
 		Layout::image(image, graphics::TextureRect(), size, size);
 	}
 
-	void Layout::image(const ImageAssetPtr& image, int width, int height)
+	void Layout::image(const ImageAssetPtr& image, const float width, const float height)
 	{
 		Layout::image(image, graphics::TextureRect(), width, height);
 	}
 
 	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect)
 	{
-		static const int size = 256;
+		const float size = ImGui::GetContentRegionAvailWidth();
 		Layout::image(image, rect, size, size);
 	}
 
-	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect, int width, int height)
+	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect, const float width, const float height)
 	{
 		if (image != nullptr)
 		{
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
 			if (texture)
 			{
-				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(static_cast<float>(width), static_cast<float>(height)), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
+				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
 			}
 		}
 	}
@@ -169,6 +169,16 @@ namespace editor
 	void Layout::scrollToBottom()
 	{
 		scroll(1.f);
+	}
+
+	void Layout::slider(const std::string& name, const int min, const int max, int& value)
+	{
+		ImGui::SliderInt(name.c_str(), &value, min, max);
+	}
+
+	void Layout::slider(const std::string& name, const float min, const float max, float& value)
+	{
+		ImGui::SliderFloat(name.c_str(), &value, min, max);
 	}
 
 	void Layout::text(const std::string& str)

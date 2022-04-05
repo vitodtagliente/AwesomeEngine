@@ -25,6 +25,22 @@ namespace editor
 		m_inspectors.push_back(std::make_unique<TextInspector>());
 	}
 
+	void InspectorWindow::update(const double deltaTime)
+	{
+		const auto& selection = getState()->selection;
+		if (selection.has_value())
+		{
+			for (const auto& inspector : m_inspectors)
+			{
+				if (inspector->canInspect(*selection))
+				{
+					inspector->update(*selection, deltaTime);
+					break;
+				}
+			}
+		}
+	}
+
 	void InspectorWindow::render()
 	{
 		const auto& selection = getState()->selection;
