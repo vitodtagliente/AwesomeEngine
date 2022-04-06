@@ -220,6 +220,8 @@ namespace editor
 		static void scrollToBottom();
 		static void slider(const std::string& name, int min, int max, int& value);
 		static void slider(const std::string& name, float min, float max, float& value);
+		static void sprite(const SpriteAssetPtr& sprite);
+		static void sprite(const SpriteAssetPtr& sprite, float width, float height);
 		static void text(const std::string& str);
 		static void textWrapped(const std::string& str);
 		static void title(const std::string& title);

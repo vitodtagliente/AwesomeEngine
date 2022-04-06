@@ -181,6 +181,22 @@ namespace editor
 		ImGui::SliderFloat(name.c_str(), &value, min, max);
 	}
 
+	void Layout::sprite(const SpriteAssetPtr& sprite)
+	{
+		if(sprite)
+		{
+			image(sprite->data.image, sprite->data.rect);
+		}
+	}
+
+	void Layout::sprite(const SpriteAssetPtr& sprite, const float width, const float height)
+	{
+		if (sprite)
+		{
+			image(sprite->data.image, sprite->data.rect, width, height);
+		}
+	}
+
 	void Layout::text(const std::string& str)
 	{
 		ImGui::Text(str.c_str());
