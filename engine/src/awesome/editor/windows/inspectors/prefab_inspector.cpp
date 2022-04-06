@@ -24,6 +24,18 @@ namespace editor
 
 		}
 
+		Entity* const entity = &prefab->data.entity;
 
+		Layout::beginContext("entity");
+		Layout::input("Name", entity->name);
+		Layout::input("Tag", entity->tag);
+		Layout::separator();
+		Layout::input("Position", entity->transform.position);
+		Layout::input("Rotation", entity->transform.rotation);
+		Layout::input("Scale", entity->transform.scale);
+		Layout::input("Static", entity->transform.isStatic);
+		Layout::endContext();
+
+		Layout::separator();
 	}
 }

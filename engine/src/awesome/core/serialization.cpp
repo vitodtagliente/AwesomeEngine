@@ -37,7 +37,8 @@ json::value serialize(const math::transform& t)
 	return json::object({
 		{"position", serialize(t.position)},
 		{"rotation", serialize(t.rotation)},
-		{"scale", serialize(t.scale)}
+		{"scale", serialize(t.scale)},
+		{"isStatic", t.isStatic}
 		});
 }
 
@@ -114,9 +115,10 @@ bool deserialize(const json::value& value, math::transform& t)
 	if (!value.is_object())
 		return false;
 
-	deserialize(value["position"].as_object(), t.position);
-	deserialize(value["rotation"].as_object(), t.rotation);
-	deserialize(value["scale"].as_object(), t.scale);
+	deserialize(value["position"], t.position);
+	deserialize(value["rotation"], t.rotation);
+	deserialize(value["scale"], t.scale);
+	t.isStatic = value["isStatic"].as_bool();
 	return true;
 }
 

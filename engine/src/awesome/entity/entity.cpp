@@ -117,4 +117,10 @@ json::value Entity::serialize() const
 
 void Entity::deserialize(const json::value& value)
 {
+	if (!value.is_object())
+		return;
+
+	name = value["name"].as_string();
+	tag = value["tag"].as_string();
+	::deserialize(value["transform"], transform);
 }
