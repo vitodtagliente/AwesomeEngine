@@ -3,6 +3,8 @@
 #include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
 
+#include "entity_layout.h"
+
 namespace editor
 {
 	bool PrefabInspector::canInspect(const State::Selection& selection)
@@ -24,18 +26,7 @@ namespace editor
 
 		}
 
-		Entity* const entity = &prefab->data.entity;
-
-		Layout::beginContext("entity");
-		Layout::input("Name", entity->name);
-		Layout::input("Tag", entity->tag);
-		Layout::separator();
-		Layout::input("Position", entity->transform.position);
-		Layout::input("Rotation", entity->transform.rotation);
-		Layout::input("Scale", entity->transform.scale);
-		Layout::input("Static", entity->transform.isStatic);
-		Layout::endContext();
-
-		Layout::separator();
+		Entity& entity = prefab->data.entity;
+		EntityLayout::input(entity);		
 	}
 }
