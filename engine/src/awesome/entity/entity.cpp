@@ -123,4 +123,12 @@ void Entity::deserialize(const json::value& value)
 	name = value["name"].as_string();
 	tag = value["tag"].as_string();
 	::deserialize(value["transform"], transform);
+
+	const json::value::array_t& components = value["components"].as_array();
+	for (const json::value& data : components)
+	{
+		const std::string& type = data["componentclass"].as_string();
+		Component* const component = addComponent(TypeFactory::instantiate<Component>(type));
+		component->deserialize(data);
+	}
 }

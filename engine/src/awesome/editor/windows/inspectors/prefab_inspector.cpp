@@ -21,12 +21,21 @@ namespace editor
 			return;
 		}
 
-		if (Layout::button("Import"))
+		if (Layout::button("Import Prefab"))
 		{
 
 		}
 
+		Layout::separator();
+
 		Entity& entity = prefab->data.entity;
-		EntityLayout::input(entity);		
+		EntityLayout::input(entity);
+
+		Layout::separator();
+
+		if (Layout::button("Save"))
+		{
+			prefab->data.save(prefab->filename.parent_path() / prefab->filename.stem());
+		}
 	}
 }

@@ -60,10 +60,13 @@ namespace editor
 
 		Layout::separator();
 
-		if (SpriteRenderer* const component = entity.findComponent<SpriteRenderer>())
 		{
-			Layout::separator();
-			Layout::image(component->sprite->data.image, component->sprite->data.rect);
+			SpriteRenderer* const component = entity.findComponent<SpriteRenderer>();
+			if (component && component->sprite)
+			{
+				Layout::separator();
+				Layout::image(component->sprite->data.image, component->sprite->data.rect);
+			}
 		}
 	}
 }

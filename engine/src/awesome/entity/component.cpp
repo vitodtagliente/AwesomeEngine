@@ -39,8 +39,9 @@ json::value Component::serialize() const
 		});
 }
 
-void Component::deserialize(const json::value&)
+void Component::deserialize(const json::value& value)
 {
+
 }
 
 void Component::inspect()

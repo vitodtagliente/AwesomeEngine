@@ -1,5 +1,7 @@
 #include "sprite_renderer.h"
 
+#include <awesome/data/asset_library.h>
+#include <awesome/data/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
@@ -29,8 +31,17 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 json::value SpriteRenderer::serialize() const
 {
 	json::value data = Component::serialize();
+	data.insert("sprite", sprite ? static_cast<std::string>(sprite->id) : "");
 	data.insert("color", ::serialize(color));
 	return data;
+}
+
+void SpriteRenderer::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
+
+	sprite = AssetLibrary::instance()->find<SpriteAsset>(value["sprite"].as_string());
+	::deserialize(value["color"], color);
 }
 
 void SpriteRenderer::inspect()
