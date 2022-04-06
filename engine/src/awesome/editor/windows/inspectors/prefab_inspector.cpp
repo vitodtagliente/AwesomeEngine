@@ -23,6 +23,7 @@ namespace editor
 		{
 
 		}
-		Layout::textWrapped(prefab->data);
+
+
 	}
 }

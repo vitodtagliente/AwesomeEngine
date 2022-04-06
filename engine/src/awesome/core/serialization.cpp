@@ -85,6 +85,17 @@ bool deserialize(const json::value& value, graphics::Color& color)
 }
 
 template<>
+bool deserialize(const json::value& value, graphics::TextureCoords& coords)
+{
+	if (!value.is_object())
+		return false;
+
+	coords.u = value["u"].as_number().as_float();
+	coords.v = value["v"].as_number().as_float();
+	return true;
+}
+
+template<>
 bool deserialize(const json::value& value, graphics::TextureRect& rect)
 {
 	if (!value.is_object())
@@ -94,5 +105,53 @@ bool deserialize(const json::value& value, graphics::TextureRect& rect)
 	rect.y = value["y"].as_number().as_float();
 	rect.width = value["width"].as_number().as_float();
 	rect.height = value["height"].as_number().as_float();
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, math::transform& t)
+{
+	if (!value.is_object())
+		return false;
+
+	deserialize(value["position"].as_object(), t.position);
+	deserialize(value["rotation"].as_object(), t.rotation);
+	deserialize(value["scale"].as_object(), t.scale);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, math::vec2& v)
+{
+	if (!value.is_object())
+		return false;
+
+	v.x = value["x"].as_number().as_float();
+	v.y = value["y"].as_number().as_float();
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, math::vec3& v)
+{
+	if (!value.is_object())
+		return false;
+
+	v.x = value["x"].as_number().as_float();
+	v.y = value["y"].as_number().as_float();
+	v.z = value["z"].as_number().as_float();
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, math::vec4& v)
+{
+	if (!value.is_object())
+		return false;
+
+	v.x = value["x"].as_number().as_float();
+	v.y = value["y"].as_number().as_float();
+	v.z = value["z"].as_number().as_float();
+	v.w = value["w"].as_number().as_float();
 	return true;
 }

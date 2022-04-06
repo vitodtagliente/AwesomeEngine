@@ -4,6 +4,7 @@
 
 #include "image_asset.h"
 #include "prefab_asset.h"
+#include "scene_asset.h"
 #include "sprite_asset.h"
 #include "sprite_animation_asset.h"
 #include "text_asset.h"
@@ -89,9 +90,13 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Prefab:
 	{
+		return std::make_shared<PrefabAsset>(Prefab::load(filename), descriptor);
+	}
+	case Asset::Type::Scene:
+	{
 		if (std::filesystem::exists(filename))
 		{
-			return std::make_shared<PrefabAsset>(read(filename), descriptor);
+			return std::make_shared<SceneAsset>(read(filename), descriptor);
 		}
 		return nullptr;
 	}

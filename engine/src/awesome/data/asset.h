@@ -20,7 +20,8 @@ struct Asset : public ISerializable
 		Prefab,
 		Sprite,
 		SpriteAnimation,
-		Text
+		Text,
+		Scene
 	};
 
 	Asset();

@@ -35,4 +35,9 @@ template <> json::value serialize(const math::vec3& v);
 template <> json::value serialize(const math::vec4& v);
 
 template <> bool deserialize(const json::value& value, graphics::Color& color);
+template <> bool deserialize(const json::value& value, graphics::TextureCoords& coords);
 template <> bool deserialize(const json::value& value, graphics::TextureRect& rect);
+template <> bool deserialize(const json::value& value, math::transform& t);
+template <> bool deserialize(const json::value& value, math::vec2& v);
+template <> bool deserialize(const json::value& value, math::vec3& v);
+template <> bool deserialize(const json::value& value, math::vec4& v);
