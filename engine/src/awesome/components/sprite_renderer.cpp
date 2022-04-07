@@ -31,7 +31,7 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 json::value SpriteRenderer::serialize() const
 {
 	json::value data = Component::serialize();
-	data.insert("sprite", sprite ? static_cast<std::string>(sprite->id) : "");
+	data.insert("sprite", sprite ? ::serialize(sprite->id) : "");
 	data.insert("color", ::serialize(color));
 	return data;
 }
@@ -40,7 +40,9 @@ void SpriteRenderer::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 
-	sprite = AssetLibrary::instance()->find<SpriteAsset>(value["sprite"].as_string());
+	uuid spriteId = uuid::Invalid;
+	::deserialize(value["sprite"], spriteId);
+	sprite = AssetLibrary::instance()->find<SpriteAsset>(spriteId);
 	::deserialize(value["color"], color);
 }
 

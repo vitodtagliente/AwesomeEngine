@@ -1,5 +1,11 @@
 #include "serialization.h"
 
+template<>
+json::value serialize(const uuid& id)
+{
+	return json::value(static_cast<std::string>(id));
+}
+
 template <>
 json::value serialize(const graphics::Color& color)
 {
@@ -70,6 +76,13 @@ json::value serialize(const math::vec4& v)
 		{"z", v.z},
 		{"w", v.w}
 		});
+}
+
+template<>
+bool deserialize(const json::value& value, uuid& id)
+{
+	id = uuid(value.as_string(static_cast<std::string>(uuid::Invalid)));
+	return true;
 }
 
 template<>

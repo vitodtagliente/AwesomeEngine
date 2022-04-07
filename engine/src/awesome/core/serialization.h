@@ -26,6 +26,7 @@ json::value serialize(const T& data)
 template <typename T>
 bool deserialize(const json::value& value, T& data) { return true; }
 
+template <> json::value serialize(const uuid& id);
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
 template <> json::value serialize(const graphics::TextureRect& rect);
@@ -34,6 +35,7 @@ template <> json::value serialize(const math::vec2& v);
 template <> json::value serialize(const math::vec3& v);
 template <> json::value serialize(const math::vec4& v);
 
+template <> bool deserialize(const json::value& value, uuid& id);
 template <> bool deserialize(const json::value& value, graphics::Color& color);
 template <> bool deserialize(const json::value& value, graphics::TextureCoords& coords);
 template <> bool deserialize(const json::value& value, graphics::TextureRect& rect);
