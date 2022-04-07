@@ -78,10 +78,10 @@ bool deserialize(const json::value& value, graphics::Color& color)
 	if (!value.is_object())
 		return false;
 
-	color.red = value["r"].as_number().as_float();
-	color.green = value["g"].as_number().as_float();
-	color.blue = value["b"].as_number().as_float();
-	color.alpha = value["a"].as_number().as_float();
+	color.red = value["r"].as_number(0.0f).as_float();
+	color.green = value["g"].as_number(0.0f).as_float();
+	color.blue = value["b"].as_number(0.0f).as_float();
+	color.alpha = value["a"].as_number(0.0f).as_float();
 	return true;
 }
 
@@ -91,8 +91,8 @@ bool deserialize(const json::value& value, graphics::TextureCoords& coords)
 	if (!value.is_object())
 		return false;
 
-	coords.u = value["u"].as_number().as_float();
-	coords.v = value["v"].as_number().as_float();
+	coords.u = value["u"].as_number(0.0f).as_float();
+	coords.v = value["v"].as_number(0.0f).as_float();
 	return true;
 }
 
@@ -102,10 +102,10 @@ bool deserialize(const json::value& value, graphics::TextureRect& rect)
 	if (!value.is_object())
 		return false;
 
-	rect.x = value["x"].as_number().as_float();
-	rect.y = value["y"].as_number().as_float();
-	rect.width = value["width"].as_number().as_float();
-	rect.height = value["height"].as_number().as_float();
+	rect.x = value["x"].as_number(0.0f).as_float();
+	rect.y = value["y"].as_number(0.0f).as_float();
+	rect.width = value["width"].as_number(0.0f).as_float();
+	rect.height = value["height"].as_number(0.0f).as_float();
 	return true;
 }
 
@@ -118,7 +118,7 @@ bool deserialize(const json::value& value, math::transform& t)
 	deserialize(value["position"], t.position);
 	deserialize(value["rotation"], t.rotation);
 	deserialize(value["scale"], t.scale);
-	t.isStatic = value["isStatic"].as_bool();
+	t.isStatic = value["isStatic"].as_bool(false);
 	return true;
 }
 
@@ -128,8 +128,8 @@ bool deserialize(const json::value& value, math::vec2& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number().as_float();
-	v.y = value["y"].as_number().as_float();
+	v.x = value["x"].as_number(0.0f).as_float();
+	v.y = value["y"].as_number(0.0f).as_float();
 	return true;
 }
 
@@ -139,9 +139,9 @@ bool deserialize(const json::value& value, math::vec3& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number().as_float();
-	v.y = value["y"].as_number().as_float();
-	v.z = value["z"].as_number().as_float();
+	v.x = value["x"].as_number(0.0f).as_float();
+	v.y = value["y"].as_number(0.0f).as_float();
+	v.z = value["z"].as_number(0.0f).as_float();
 	return true;
 }
 
@@ -151,9 +151,9 @@ bool deserialize(const json::value& value, math::vec4& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number().as_float();
-	v.y = value["y"].as_number().as_float();
-	v.z = value["z"].as_number().as_float();
-	v.w = value["w"].as_number().as_float();
+	v.x = value["x"].as_number(0.0f).as_float();
+	v.y = value["y"].as_number(0.0f).as_float();
+	v.z = value["z"].as_number(0.0f).as_float();
+	v.w = value["w"].as_number(0.0f).as_float();
 	return true;
 }
