@@ -57,21 +57,15 @@ bool Asset::operator!= (const Asset& other) const
 json::value Asset::serialize() const
 {
 	return json::object({
-		{"id", static_cast<std::string>(id)},
+		{"id", ::serialize(id)},
 		{"type", static_cast<int>(type)}
 		});
 }
 
 void Asset::deserialize(const json::value& value)
 {
-	if (value.contains("id"))
-	{
-		id = uuid(value["id"].as_string());
-	}
-	if (value.contains("type"))
-	{
-		type = static_cast<Type>(value["type"].as_number().as_int());
-	}
+	::deserialize(value["id"], id); 
+	type = static_cast<Type>(value["type"].as_number(0).as_int());
 }
 
 Asset Asset::load(const std::filesystem::path& filename)
