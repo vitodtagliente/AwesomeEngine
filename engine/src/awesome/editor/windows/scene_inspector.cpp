@@ -49,6 +49,7 @@ namespace editor
 			if (Layout::button("Clear"))
 			{
 				world->clear();
+				getState()->select();
 			}
 		}
 
