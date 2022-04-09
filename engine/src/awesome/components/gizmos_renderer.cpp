@@ -25,9 +25,16 @@ void GizmosRenderer::render(graphics::Renderer* const renderer)
 json::value GizmosRenderer::serialize() const
 {
 	json::value data = Component::serialize();
-	data.insert("type", static_cast<int>(type));
-	data.insert("color", ::serialize(color));
+	data["type"] = static_cast<int>(type);
+	data["color"] = ::serialize(color);
 	return data;
+}
+
+void GizmosRenderer::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
+	type = static_cast<Type>(value["type"].as_number(static_cast<int>(Type::None)).as_int());
+	::deserialize(value["color"], color);
 }
 
 void GizmosRenderer::inspect()

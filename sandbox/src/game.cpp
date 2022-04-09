@@ -78,8 +78,6 @@ void Game::startup()
 			entity->name = std::string("Animated Guy-") + std::to_string(i + 1);
 			entity->tag = "Player";
 
-			const float spriteSize = 1.0f / 11;
-
 			if (SpriteRenderer* component = entity->addComponent<SpriteRenderer>())
 			{
 				component->sprite = sprite;

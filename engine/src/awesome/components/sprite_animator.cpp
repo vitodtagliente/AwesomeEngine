@@ -1,5 +1,6 @@
 #include "sprite_animator.h"
 
+#include <awesome/data/asset_library.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
@@ -99,7 +100,28 @@ json::value SpriteAnimator::serialize() const
 {
 	json::value data = Component::serialize();
 
+	json::value anims = json::object();
+	for (const auto& pair : animations)
+	{
+		anims[pair.first] = ::serialize(pair.second->id);
+	}
+
+	data["autoplay"] = autoplay;
+	data["animations"] = anims;
 	return data;
+}
+
+void SpriteAnimator::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
+	autoplay = value["autoplay"].as_bool(false);
+	const auto& anims = value["animations"].as_object({});
+	for (const auto& pair : anims)
+	{
+		uuid animationId = uuid::Invalid;
+		::deserialize(pair.second, animationId);
+		animations.insert(std::make_pair(pair.first, AssetLibrary::instance()->find<SpriteAnimationAsset>(animationId)));
+	}
 }
 
 void SpriteAnimator::inspect()

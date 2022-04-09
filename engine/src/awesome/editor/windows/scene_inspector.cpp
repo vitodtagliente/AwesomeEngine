@@ -43,6 +43,15 @@ namespace editor
 			}
 		}
 
+		if (!world->getEntities().empty())
+		{
+			Layout::sameLine();
+			if (Layout::button("Clear"))
+			{
+				world->clear();
+			}
+		}
+
 		Layout::separator();
 
 		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)

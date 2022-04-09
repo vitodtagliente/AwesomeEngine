@@ -37,6 +37,8 @@ public:
 	Entity* const spawn(const vec3& position, const quaternion& quaternion);
 	void destroy(Entity* const entity);
 
+	void clear();
+
 	json::value toJson() const;
 	void fromJson(const json::value& data);
 

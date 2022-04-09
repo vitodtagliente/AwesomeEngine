@@ -28,6 +28,7 @@ public:
 	void render(graphics::Renderer* const renderer) override;
 
 	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 	virtual void inspect() override;
 
 	REFLECT()

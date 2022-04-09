@@ -126,6 +126,14 @@ void World::destroy(Entity* const entity)
 	m_pendingDestroyEntities.push_back(entity);
 }
 
+void World::clear()
+{
+	for (Entity* const entity : m_entities)
+	{
+		destroy(entity);
+	}
+}
+
 json::value World::toJson() const
 {
 	return json::value();

@@ -54,6 +54,21 @@ void CameraController2d::render(graphics::Renderer* const renderer)
 	renderer->pushCamera(getOwner()->transform.matrix());
 }
 
+json::value CameraController2d::serialize() const
+{
+	json::value data = Component::serialize();
+	data["speed"] = speed;
+	data["zoomSpeed"] = zoomSpeed;
+	return data;
+}
+
+void CameraController2d::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
+	speed = value["speed"].as_number(0.0f).as_float();
+	speed = value["zoomSpeed"].as_number(0.0f).as_float();
+}
+
 void CameraController2d::inspect()
 {
 	Component::inspect();

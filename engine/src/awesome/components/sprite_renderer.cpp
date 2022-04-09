@@ -31,8 +31,8 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 json::value SpriteRenderer::serialize() const
 {
 	json::value data = Component::serialize();
-	data.insert("sprite", sprite ? ::serialize(sprite->id) : "");
-	data.insert("color", ::serialize(color));
+	data["sprite"] = sprite ? ::serialize(sprite->id) : "";
+	data["color"] = ::serialize(color);
 	return data;
 }
 

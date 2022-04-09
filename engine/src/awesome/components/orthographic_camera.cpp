@@ -35,6 +35,25 @@ void OrthographicCamera::update(const double)
 	}
 }
 
+json::value OrthographicCamera::serialize() const
+{
+	json::value data = Component::serialize();
+	data["nearPlane"] = nearPlane;
+	data["farPlane"] = farPlane;
+	data["pixelPerfect"] = pixelPerfect;
+	data["pixelsPerUnit"] = pixelsPerUnit;
+	return data;
+}
+
+void OrthographicCamera::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
+	nearPlane = value["nearPlane"].as_number(-30.f).as_float();
+	farPlane = value["farPlane"].as_number(1000.f).as_float();
+	pixelPerfect = value["pixelPerfect"].as_bool(true);
+	pixelsPerUnit = value["pixelsPerUnit"].as_number(32).as_int();
+}
+
 void OrthographicCamera::inspect()
 {
 	Component::inspect();
