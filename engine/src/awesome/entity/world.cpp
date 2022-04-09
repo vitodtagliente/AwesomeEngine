@@ -121,6 +121,23 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	return entity;
 }
 
+Entity* const World::spawn(const Entity& prefab)
+{
+	return spawn(prefab, vec3::zero, quaternion::identity);
+}
+
+Entity* const World::spawn(const Entity& prefab, const vec3& position)
+{
+	return spawn(prefab, position, quaternion::identity);
+}
+
+Entity* const World::spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion)
+{
+	Entity* const entity = spawn(position, quaternion);
+	entity->deserialize(prefab.serialize());
+	return entity;
+}
+
 void World::destroy(Entity* const entity)
 {
 	m_pendingDestroyEntities.push_back(entity);
@@ -132,13 +149,4 @@ void World::clear()
 	{
 		destroy(entity);
 	}
-}
-
-json::value World::toJson() const
-{
-	return json::value();
-}
-
-void World::fromJson(const json::value&)
-{
 }

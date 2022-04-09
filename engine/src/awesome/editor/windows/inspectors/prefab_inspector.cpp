@@ -2,6 +2,7 @@
 
 #include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/entity/world.h>
 
 #include "entity_layout.h"
 
@@ -23,7 +24,7 @@ namespace editor
 
 		if (Layout::button("Import Prefab"))
 		{
-
+			World::instance()->spawn(prefab->data.entity);
 		}
 
 		Layout::separator();
