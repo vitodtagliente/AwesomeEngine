@@ -4,12 +4,12 @@
 
 #include "world.h"
 
-Entity::Entity(World* const world)
+Entity::Entity()
 	: name()
 	, tag()
 	, transform()
 	, m_id()
-	, m_world(world)
+	, m_world(nullptr)
 	, m_parent(nullptr)
 	, m_children()
 	, m_components()
@@ -22,8 +22,9 @@ Entity::~Entity()
 
 }
 
-void Entity::prepareToSpawn()
+void Entity::prepareToSpawn(World* const world)
 {
+	m_world = world;
 }
 
 void Entity::prepareToDestroy()

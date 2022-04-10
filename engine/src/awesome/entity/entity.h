@@ -21,7 +21,7 @@ namespace graphics
 class Entity : public ISerializable
 {
 public:
-	Entity(World* const world);
+	Entity();
 	~Entity();
 
 	inline const uuid& getId() const { return m_id; }
@@ -31,7 +31,7 @@ public:
 	inline const std::vector<Component*>& getComponents() const { return m_components; }
 	inline std::vector<Component*>& getComponents() { return m_components; }
 
-	void prepareToSpawn();
+	void prepareToSpawn(World* const world);
 	void prepareToDestroy();
 	void setParent(Entity* const entity);
 	void update(double deltaTime);
@@ -93,7 +93,7 @@ public:
 private:
 
 	uuid m_id;
-	World* const m_world;
+	World* m_world;
 	Entity* m_parent;
 	std::vector<Entity*> m_children;
 	std::vector<Component*> m_components;

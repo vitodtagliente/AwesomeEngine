@@ -112,10 +112,10 @@ Entity* const World::spawn(const vec3& position)
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = new Entity(this);
+	Entity* const entity = new Entity();
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn();
+	entity->prepareToSpawn(this);
 	m_pendingSpawnEntities.push_back(entity);
 
 	return entity;
