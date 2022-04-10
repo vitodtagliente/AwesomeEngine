@@ -27,9 +27,9 @@ namespace editor
 
 		if (Layout::button("Add"))
 		{
-			EntityPtr newEntity = world->spawn();
+			Entity* const newEntity = world->spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
-			getState()->select(newEntity.get());
+			getState()->select(newEntity);
 			Layout::scrollToBottom();
 		}
 
@@ -38,7 +38,7 @@ namespace editor
 			Layout::sameLine();
 			if (Layout::button("Delete"))
 			{
-				// world->destroy(selectedEntity);
+				world->destroy(selectedEntity);
 				getState()->select();
 			}
 		}
@@ -55,11 +55,12 @@ namespace editor
 
 		Layout::separator();
 
-		for (const auto& entity : world->getEntities())
+		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
 		{
-			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity.get() == selectedEntity))
+			Entity* const entity = *it;
+			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity == selectedEntity))
 			{
-				getState()->select(entity.get());
+				getState()->select(entity);
 			}
 		}
 	}

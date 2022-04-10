@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -99,5 +98,3 @@ private:
 	std::vector<Entity*> m_children;
 	std::vector<Component*> m_components;
 };
-
-typedef std::shared_ptr<Entity> EntityPtr;
