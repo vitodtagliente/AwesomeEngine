@@ -61,7 +61,7 @@ void Game::startup()
 	{
 		// camera setup
 		{
-			Entity* const entity = world->spawn(math::vec3::zero, math::quaternion::identity);
+			EntityPtr entity = world->spawn(math::vec3::zero, math::quaternion::identity);
 			entity->name = std::string("Camera");
 			entity->tag = "Main Camera";
 			entity->addComponent<OrthographicCamera>();
@@ -72,7 +72,7 @@ void Game::startup()
 		for (int i = 0; i < 1000; ++i)
 		{
 			static float magic = 35.f;
-			Entity* const entity = world->spawn(math::vec3(math::random(-magic, magic), math::random(-magic, magic), 0.0f), math::quaternion::identity);
+			EntityPtr entity = world->spawn(math::vec3(math::random(-magic, magic), math::random(-magic, magic), 0.0f), math::quaternion::identity);
 			entity->transform.rotation.z = math::random(0.0f, 360.0f);
 			entity->transform.scale.x = entity->transform.scale.y = math::random(0.6f, 2.4f);
 			entity->name = std::string("Animated Guy-") + std::to_string(i + 1);

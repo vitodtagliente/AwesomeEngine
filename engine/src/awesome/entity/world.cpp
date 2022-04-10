@@ -2,83 +2,47 @@
 
 #include <awesome/graphics/renderer.h>
 
-World::World()
-	: m_entities()
-	, m_pendingSpawnEntities()
-	, m_pendingDestroyEntities()
-{
-}
-
-World::~World()
-{
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_entities.clear();
-
-	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_pendingSpawnEntities.clear();
-
-	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_pendingDestroyEntities.clear();
-}
-
 void World::update(const double deltaTime)
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		entity->update(deltaTime);
 	}
 }
 
 void World::render(graphics::Renderer* const renderer)
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		entity->render(renderer);
 	}
 }
 
 void World::flush()
 {
-	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
+	for (const auto& entity : m_pendingSpawnEntities)
 	{
-		m_entities.push_back(*it);
+		m_entities.push_back(entity);
 	}
 	m_pendingSpawnEntities.clear();
 
-	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
+	for (const auto& entity : m_pendingDestroyEntities)
 	{
-		auto destroyIt = std::find(m_entities.begin(), m_entities.end(), *it);
+		auto destroyIt = std::find(m_entities.begin(), m_entities.end(), entity);
 		if (destroyIt != m_entities.end())
 		{
 			(*destroyIt)->prepareToDestroy();
-			delete *destroyIt;
-			*destroyIt = nullptr;
 			m_entities.erase(destroyIt);
 		}
 	}
 	m_pendingDestroyEntities.clear();
 }
 
-std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
+std::vector<EntityPtr> World::findEntitiesByTag(const std::string& tag) const
 {
-	std::vector<Entity*> entities;
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	std::vector<EntityPtr> entities;
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		if (entity->tag == tag)
 		{
 			entities.push_back(entity);
@@ -87,32 +51,49 @@ std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
 	return entities;
 }
 
-Entity* const World::findEntityByName(const std::string& name) const
+EntityPtr const World::findEntityById(const uuid& id) const
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		if (entity->name == name)
+	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&id](const EntityPtr& entity) -> bool 
 		{
-			return entity;
+			return entity->getId() == id;
 		}
+	);
+
+	if (it != m_entities.end())
+	{
+		return *it;
 	}
 	return nullptr;
 }
 
-Entity* const World::spawn()
+EntityPtr const World::findEntityByName(const std::string& name) const
+{
+	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&name](const EntityPtr& entity) -> bool
+		{
+			return entity->name == name;
+		}
+	);
+
+	if (it != m_entities.end())
+	{
+		return *it;
+	}
+	return nullptr;
+}
+
+EntityPtr const World::spawn()
 {
 	return spawn(vec3::zero, quaternion::identity);
 }
 
-Entity* const World::spawn(const vec3& position)
+EntityPtr const World::spawn(const vec3& position)
 {
 	return spawn(position, quaternion::identity);
 }
 
-Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
+EntityPtr const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = new Entity(this);
+	EntityPtr entity = std::make_shared<Entity>(this);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn();
@@ -121,31 +102,31 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	return entity;
 }
 
-Entity* const World::spawn(const Entity& prefab)
+EntityPtr const World::spawn(const Entity& prefab)
 {
 	return spawn(prefab, vec3::zero, quaternion::identity);
 }
 
-Entity* const World::spawn(const Entity& prefab, const vec3& position)
+EntityPtr const World::spawn(const Entity& prefab, const vec3& position)
 {
 	return spawn(prefab, position, quaternion::identity);
 }
 
-Entity* const World::spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion)
+EntityPtr const World::spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion)
 {
-	Entity* const entity = spawn(position, quaternion);
+	EntityPtr entity = spawn(position, quaternion);
 	entity->deserialize(prefab.serialize());
 	return entity;
 }
 
-void World::destroy(Entity* const entity)
+void World::destroy(const EntityPtr& entity)
 {
 	m_pendingDestroyEntities.push_back(entity);
 }
 
 void World::clear()
 {
-	for (Entity* const entity : m_entities)
+	for (const auto& entity : m_entities)
 	{
 		destroy(entity);
 	}
