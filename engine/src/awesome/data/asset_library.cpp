@@ -94,11 +94,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Scene:
 	{
-		if (std::filesystem::exists(filename))
-		{
-			return std::make_shared<SceneAsset>(read(filename), descriptor);
-		}
-		return nullptr;
+		return std::make_shared<SceneAsset>(Scene::load(filename), descriptor);
 	}
 	case Asset::Type::Sprite:
 	{

@@ -5,7 +5,8 @@
 #include <string>
 
 #include "base_asset.h"
+#include "scene.h"
 
-typedef BaseAsset<Asset::Type::Scene, std::string> SceneAsset;
+typedef BaseAsset<Asset::Type::Scene, Scene> SceneAsset;
 typedef std::shared_ptr<SceneAsset> SceneAssetPtr;
 ASSETTYPE(SceneAsset, Asset::Type::Scene)
