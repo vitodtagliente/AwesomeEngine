@@ -93,10 +93,10 @@ EntityPtr const World::spawn(const vec3& position)
 
 EntityPtr const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	EntityPtr entity = std::make_shared<Entity>();
+	EntityPtr entity = std::make_shared<Entity>(this);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn(this);
+	entity->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(entity);
 
 	return entity;

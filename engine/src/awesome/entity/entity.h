@@ -22,19 +22,19 @@ namespace graphics
 class Entity : public ISerializable
 {
 public:
-	Entity() = default;
-	~Entity() = default;
+	Entity(World* const world);
+	~Entity();
 
 	inline const uuid& getId() const { return m_id; }
 	inline World* const getWorld() const { return m_world; }
-	inline const std::shared_ptr<Entity>& getParent() const { return m_parent; }
-	inline const std::vector<std::shared_ptr<Entity>>& getChildren() const { return m_children; }
+	inline Entity* const getParent() const { return m_parent; }
+	inline const std::vector<Entity*>& getChildren() const { return m_children; }
 	inline const std::vector<Component*>& getComponents() const { return m_components; }
 	inline std::vector<Component*>& getComponents() { return m_components; }
 
-	void prepareToSpawn(World* const world);
+	void prepareToSpawn();
 	void prepareToDestroy();
-	void setParent(const std::shared_ptr<Entity>& entity);
+	void setParent(Entity* const entity);
 	void update(double deltaTime);
 	void render(graphics::Renderer* const renderer);
 
@@ -94,9 +94,9 @@ public:
 private:
 
 	uuid m_id;
-	World* m_world;
-	std::shared_ptr<Entity> m_parent;
-	std::vector<std::shared_ptr<Entity>> m_children;
+	World* const m_world;
+	Entity* m_parent;
+	std::vector<Entity*> m_children;
 	std::vector<Component*> m_components;
 };
 
