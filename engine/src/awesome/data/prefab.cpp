@@ -6,12 +6,12 @@
 #include <awesome/encoding/json.h>
 
 Prefab::Prefab()
-	: entity(nullptr)
+	: entity()
 {
 }
 
 Prefab::Prefab(const Entity* const entity)
-	: entity(nullptr)
+	: entity()
 {
 }
 

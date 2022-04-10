@@ -4,26 +4,9 @@
 
 #include "world.h"
 
-Entity::Entity(World* const world)
-	: name()
-	, tag()
-	, transform()
-	, m_id()
-	, m_world(world)
-	, m_parent(nullptr)
-	, m_children()
-	, m_components()
+void Entity::prepareToSpawn(World* const world)
 {
-
-}
-
-Entity::~Entity()
-{
-
-}
-
-void Entity::prepareToSpawn()
-{
+	m_world = world;
 }
 
 void Entity::prepareToDestroy()
@@ -40,7 +23,7 @@ void Entity::prepareToDestroy()
 	// TODO
 }
 
-void Entity::setParent(Entity* const entity)
+void Entity::setParent(const std::shared_ptr<Entity>& entity)
 {
 	m_parent = entity;
 }
@@ -85,10 +68,10 @@ void Entity::removeComponent(Component* const component)
 
 json::value Entity::serialize() const
 {
-	static const auto& entitiesToJson = [](const std::vector<Entity*>& entities) -> json::value
+	static const auto& entitiesToJson = [](const std::vector<std::shared_ptr<Entity>>& entities) -> json::value
 	{
 		json::value data = json::array();
-		for (const Entity* entity : entities)
+		for (const auto& entity : entities)
 		{
 			data.push_back(entity->serialize());
 		}
