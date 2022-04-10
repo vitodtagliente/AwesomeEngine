@@ -22,6 +22,8 @@ class Entity : public ISerializable
 {
 public:
 	Entity();
+	Entity(const Entity& other);
+	Entity(const Entity& other, const uuid& id);
 	~Entity();
 
 	inline const uuid& getId() const { return m_id; }

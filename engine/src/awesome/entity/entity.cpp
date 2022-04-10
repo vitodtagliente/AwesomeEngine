@@ -17,6 +17,33 @@ Entity::Entity()
 
 }
 
+Entity::Entity(const Entity& other)
+	: name()
+	, tag()
+	, transform()
+	, m_id()
+	, m_world(nullptr)
+	, m_parent(nullptr)
+	, m_children()
+	, m_components()
+{
+	deserialize(other.serialize());
+}
+
+Entity::Entity(const Entity& other, const uuid& id)
+	: name()
+	, tag()
+	, transform()
+	, m_id()
+	, m_world(nullptr)
+	, m_parent(nullptr)
+	, m_children()
+	, m_components()
+{
+	deserialize(other.serialize());
+	m_id = id;
+}
+
 Entity::~Entity()
 {
 
