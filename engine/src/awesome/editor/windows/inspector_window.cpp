@@ -3,6 +3,7 @@
 #include "inspectors/entity_inspector.h"
 #include "inspectors/image_inspector.h"
 #include "inspectors/prefab_inspector.h"
+#include "inspectors/scene_inspector.h"
 #include "inspectors/sprite_animation_inspector.h"
 #include "inspectors/sprite_inspector.h"
 #include "inspectors/text_inspector.h"
@@ -20,6 +21,7 @@ namespace editor
 		m_inspectors.push_back(std::make_unique<EntityInspector>());
 		m_inspectors.push_back(std::make_unique<ImageInspector>());
 		m_inspectors.push_back(std::make_unique<PrefabInspector>());
+		m_inspectors.push_back(std::make_unique<SceneInspector>());
 		m_inspectors.push_back(std::make_unique<SpriteAnimationInspector>());
 		m_inspectors.push_back(std::make_unique<SpriteInspector>());
 		m_inspectors.push_back(std::make_unique<TextInspector>());

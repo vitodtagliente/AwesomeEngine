@@ -1,22 +1,20 @@
-#include "scene_inspector.h"
+#include "scene_window.h"
 
+#include <awesome/data/archive.h>
+#include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
+#include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
 namespace editor
 {
-	SceneInspector::SceneInspector()
-		: Window()
-	{
-	}
-
-	std::string SceneInspector::getTitle() const
+	std::string SceneWindow::getTitle() const
 	{
 		return "Scene";
 	}
 
-	void SceneInspector::render()
+	void SceneWindow::render()
 	{
 		const auto& selection = getState()->selection;
 		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
@@ -53,17 +51,39 @@ namespace editor
 			}
 		}
 
-		Layout::separator();
-
-		for (auto it = world->getEntities().begin(); it != world->getEntities().end(); ++it)
+		if (!world->getEntities().empty())
 		{
-			Entity* const entity = *it;
+			Layout::separator();
+		}
+
+		for (const auto& entity : world->getEntities())
+		{
 			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity == selectedEntity))
 			{
 				getState()->select(entity);
 			}
 		}
+
+		Layout::separator();
+
+		Layout::beginContext("scene");
+		Layout::input("Filename", m_filename);
+		if (Layout::button("Save Scene"))
+		{
+			const std::string name = m_filename.c_str();
+			if (!name.empty())
+			{
+				const std::string filename = (getState()->workPath / name).string() + ".scene";
+				Archive archive(filename, Archive::Mode::Write);
+				archive << json::Serializer::to_string(world->serialize());
+
+				AssetImporter importer;
+				importer.import(filename);
+			}
+			m_filename.clear();
+		}
+		Layout::endContext();
 	}
 
-	REFLECT_EDITOR(SceneInspector)
+	REFLECT_EDITOR(SceneWindow)
 }

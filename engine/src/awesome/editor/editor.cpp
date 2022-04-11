@@ -18,7 +18,7 @@
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/windows/performance.h>
 #include <awesome/editor/windows/renderer_inspector.h>
-#include <awesome/editor/windows/scene_inspector.h>
+#include <awesome/editor/windows/scene_window.h>
 
 namespace editor
 {
@@ -102,7 +102,7 @@ namespace editor
 		TypeFactory::load<InspectorWindow>();
 		TypeFactory::load<Performance>();
 		TypeFactory::load<RendererInspector>();
-		TypeFactory::load<SceneInspector>();
+		TypeFactory::load<SceneWindow>();
 
 		static std::set<std::string> types = TypeFactory::listByCategory("Editor");
 		for (const std::string& type : types)
