@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
@@ -16,7 +17,7 @@ namespace graphics
 	class Renderer;
 }
 
-class World : public Singleton<World>
+class World : public Singleton<World>, ISerializable
 {
 public:
 
@@ -40,6 +41,10 @@ public:
 	void destroy(Entity* const entity);
 
 	void clear();
+
+	// serialization
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 
 private:
 

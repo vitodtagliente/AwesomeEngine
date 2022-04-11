@@ -149,8 +149,37 @@ void World::destroy(Entity* const entity)
 
 void World::clear()
 {
+	m_pendingSpawnEntities.clear();
+	m_pendingDestroyEntities.clear();
 	for (Entity* const entity : m_entities)
 	{
 		destroy(entity);
+	}
+	m_entities.clear();
+}
+
+json::value World::serialize() const
+{
+	json::value data = json::object();
+	{
+		json::value entities = json::array();
+		for (const auto& entity : m_entities)
+		{
+			entities.push_back(entity->serialize());
+		}
+		data["entities"] = entities;
+	}
+	return data;
+}
+
+void World::deserialize(const json::value& value)
+{
+	clear();
+
+	const auto& entities = value["entities"].as_array({});
+	for (const auto& data : entities)
+	{
+		Entity* const entity = spawn();
+		entity->deserialize(data);
 	}
 }

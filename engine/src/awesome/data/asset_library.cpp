@@ -74,13 +74,18 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 
 std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, const std::filesystem::path& filename)
 {
-	static const auto read = [](const std::filesystem::path& filename) -> std::string
+	static const auto load = [](const std::filesystem::path& filename) -> std::string
 	{
 		std::ostringstream buf;
 		std::ifstream input(filename.c_str());
 		buf << input.rdbuf();
 		return buf.str();
 	};
+
+	if (!std::filesystem::exists(filename))
+	{
+		return nullptr;
+	}
 
 	switch (descriptor.type)
 	{
@@ -94,7 +99,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Scene:
 	{
-		return std::make_shared<SceneAsset>(Scene::load(filename), descriptor);
+		return std::make_shared<SceneAsset>(load(filename), descriptor);
 	}
 	case Asset::Type::Sprite:
 	{
@@ -106,11 +111,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Text:
 	{
-		if (std::filesystem::exists(filename))
-		{
-			return std::make_shared<TextAsset>(read(filename), descriptor);
-		}
-		return nullptr;
+		return std::make_shared<TextAsset>(load(filename), descriptor);
 	}
 	default: return nullptr;
 	}
