@@ -1,7 +1,7 @@
 #include "image_inspector.h"
 
+#include <awesome/data/asset_importer.h>
 #include <awesome/data/image_asset.h>
-#include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
 
 namespace editor

@@ -7,6 +7,7 @@
 #include <awesome/application/application.h>
 
 #include "state.h"
+#include "window.h"
 
 namespace graphics
 {
@@ -15,12 +16,10 @@ namespace graphics
 
 namespace editor
 {
-	class Window;
-
 	class Editor : public Application::Module
 	{
 	public:
-		Editor();
+		Editor() = default;
 
 		virtual void startup() override;
 		virtual void shutdown() override;
@@ -30,10 +29,9 @@ namespace editor
 		virtual void update(double deltaTime) override;
 
 		template <typename T = Window>
-		void const registerWindow()
+		void registerWindow()
 		{
-			T* const window = new T();
-			m_windows.push_back(std::unique_ptr<Window>(window));
+			m_windows.push_back(std::make_unique<T>());
 		}
 
 	private:

@@ -1,7 +1,7 @@
 #include "scene_window.h"
 
 #include <awesome/data/archive.h>
-#include <awesome/editor/asset_importer.h>
+#include <awesome/data/asset_importer.h>
 #include <awesome/editor/layout.h>
 #include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>

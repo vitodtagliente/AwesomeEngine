@@ -9,11 +9,11 @@
 #include <awesome/core/reflection.h>
 #include <awesome/data/asset_library.h>
 
-#include "asset_importer.h"
 #include "color_scheme.h"
 #include "layout.h"
 #include "window.h"
 
+#include <awesome/data/asset_importer.h>
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/windows/performance_window.h>
@@ -22,11 +22,6 @@
 
 namespace editor
 {
-	Editor::Editor()
-		: m_windows()
-	{
-	}
-
 	void Editor::startup()
 	{
 		ImGui::CreateContext();

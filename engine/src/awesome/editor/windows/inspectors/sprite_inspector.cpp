@@ -1,7 +1,7 @@
 #include "sprite_inspector.h"
 
+#include <awesome/data/asset_importer.h>
 #include <awesome/data/sprite_animation.h>
-#include <awesome/editor/asset_importer.h>
 #include <awesome/editor/layout.h>
 
 namespace editor
