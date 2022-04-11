@@ -41,6 +41,6 @@ namespace editor
 		void select(const std::shared_ptr<Asset>& asset);
 
 		std::optional<Selection> selection;
-		std::filesystem::path workPath;
+		std::filesystem::path path;
 	};
 }

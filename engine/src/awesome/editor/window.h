@@ -11,21 +11,19 @@ namespace editor
 	class Window
 	{
 	public:
-		Window();
+		Window() = default;
+		virtual ~Window() = default;
 
 		virtual std::string getTitle() const;
 
-		virtual void init();
-		virtual void update(double deltaTime);
-		virtual void render();
+		virtual void init() {}
+		virtual void update(double /*deltatime*/) {}
+		virtual void render() {}
 
 		REFLECT()
 
 	protected:
 
 		State* const getState() const { return State::instance(); }
-
-	private:
-		State* m_state;
 	};
 }

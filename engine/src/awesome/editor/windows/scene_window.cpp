@@ -68,7 +68,7 @@ namespace editor
 			const std::string name = m_filename.c_str();
 			if (!name.empty())
 			{
-				const std::string filename = (getState()->workPath / name).string() + ".scene";
+				const std::string filename = (getState()->path / name).string() + ".scene";
 				Archive archive(filename, Archive::Mode::Write);
 				archive << json::Serializer::to_string(world->serialize());
 

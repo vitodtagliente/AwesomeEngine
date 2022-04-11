@@ -52,7 +52,7 @@ namespace editor
 			{
 				if (inspector->canInspect(*selection))
 				{
-					inspector->inspect(*selection, getState()->workPath);
+					inspector->inspect(*selection, getState()->path);
 					break;
 				}
 			}

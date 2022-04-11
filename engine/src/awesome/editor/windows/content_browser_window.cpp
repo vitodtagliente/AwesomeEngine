@@ -9,7 +9,7 @@ namespace editor
 {
 	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
-		, m_contentPath(getState()->workPath)
+		, m_contentPath(getState()->path)
 		, m_dir(m_contentPath)
 		, m_newFolderName()
 	{
@@ -42,7 +42,7 @@ namespace editor
 		if (m_contentPath != m_dir.path && Layout::selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
-			getState()->workPath = m_dir.parent;
+			getState()->path = m_dir.parent;
 			return;
 		}
 
@@ -57,7 +57,7 @@ namespace editor
 				if (!file.has_extension())
 				{
 					m_dir = Dir(file);
-					getState()->workPath = m_dir.path;
+					getState()->path = m_dir.path;
 					return;
 				}
 				else

@@ -7,13 +7,10 @@
 
 #include <awesome/application/input.h>
 #include <awesome/core/reflection.h>
-#include <awesome/data/asset_library.h>
-
-#include "color_scheme.h"
-#include "layout.h"
-#include "window.h"
-
 #include <awesome/data/asset_importer.h>
+#include <awesome/data/asset_library.h>
+#include <awesome/editor/color_scheme.h>
+#include <awesome/editor/layout.h>
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/windows/performance_window.h>
@@ -32,8 +29,7 @@ namespace editor
 		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance()->getHandler()), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
 
-		// https://coolors.co/252131-f4f1de-da115e-792359-c7ef00
-		ColorScheme scheme(0x252131FF /* Background */, 0xC7EF00FF /* Text */, 0xF4F1DEFF /* MainColor */, 0xDA115EFF /* MainAccent */, 0x792359FF /* Highlight */);
+		ColorScheme scheme;
 		scheme.apply();
 
 		AssetImporter importer;
@@ -65,9 +61,8 @@ namespace editor
 	void Editor::render(graphics::Renderer* const)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		for (const auto& window : m_windows)
 		{
-			const std::unique_ptr<Window>&  window = *it;
 			Layout::begin(window->getTitle());
 			window->render();
 			Layout::end();
@@ -84,13 +79,12 @@ namespace editor
 	{
 		Input::instance()->preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
 
-		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		for (const auto& window : m_windows)
 		{
-			const std::unique_ptr<Window>& window = *it;
 			window->update(deltaTime);
 		}
 	}
-	
+
 	void Editor::registerWindows()
 	{
 		TypeFactory::load<ContentBrowserWindow>();
