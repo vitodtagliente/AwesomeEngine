@@ -1,5 +1,7 @@
 #include "color_scheme.h"
 
+#include <imgui.h>
+
 namespace editor
 {
 	void ColorScheme::apply()
