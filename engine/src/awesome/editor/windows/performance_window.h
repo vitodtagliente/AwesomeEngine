@@ -5,11 +5,12 @@
 
 namespace editor
 {
-	class Performance : public Window
+	class PerformanceWindow : public Window
 	{
 	public:
-		Performance();
+		PerformanceWindow() = default;
 
+		std::string getTitle() const override { return "Performance"; }
 		void render() override;
 
 		REFLECT()

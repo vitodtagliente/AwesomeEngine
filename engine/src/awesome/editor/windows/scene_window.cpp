@@ -9,11 +9,6 @@
 
 namespace editor
 {
-	std::string SceneWindow::getTitle() const
-	{
-		return "Scene";
-	}
-
 	void SceneWindow::render()
 	{
 		const auto& selection = getState()->selection;

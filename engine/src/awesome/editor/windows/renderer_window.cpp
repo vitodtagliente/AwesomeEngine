@@ -1,4 +1,4 @@
-#include "renderer_inspector.h"
+#include "renderer_window.h"
 
 #include <sstream>
 
@@ -6,17 +6,7 @@
 
 namespace editor
 {
-	RendererInspector::RendererInspector()
-		: Window()
-	{
-	}
-
-	std::string RendererInspector::getTitle() const
-	{
-		return "Renderer";
-	}
-
-	void RendererInspector::render()
+	void RendererWindow::render()
 	{
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
@@ -27,7 +17,7 @@ namespace editor
 		}
 	}
 
-	void RendererInspector::update(const double)
+	void RendererWindow::update(const double)
 	{
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
@@ -35,5 +25,5 @@ namespace editor
 		}
 	}
 
-	REFLECT_EDITOR(RendererInspector)
+	REFLECT_EDITOR(RendererWindow)
 }

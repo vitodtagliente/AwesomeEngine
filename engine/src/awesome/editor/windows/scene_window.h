@@ -12,7 +12,7 @@ namespace editor
 	public:
 		SceneWindow() = default;
 
-		std::string getTitle() const override;
+		std::string getTitle() const override { return "Scene"; }
 		void render() override;
 
 		REFLECT()

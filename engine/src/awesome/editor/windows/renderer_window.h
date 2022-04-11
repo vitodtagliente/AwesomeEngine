@@ -6,12 +6,12 @@
 
 namespace editor
 {
-	class RendererInspector : public Window
+	class RendererWindow : public Window
 	{
 	public:
-		RendererInspector();
+		RendererWindow() = default;
 
-		std::string getTitle() const override;
+		std::string getTitle() const override { return "Renderer"; }
 		virtual void render() override;
 		virtual void update(double deltaTime) override;
 

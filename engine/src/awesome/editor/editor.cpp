@@ -14,10 +14,10 @@
 #include "layout.h"
 #include "window.h"
 
-#include <awesome/editor/windows/content_browser.h>
+#include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/inspector_window.h>
-#include <awesome/editor/windows/performance.h>
-#include <awesome/editor/windows/renderer_inspector.h>
+#include <awesome/editor/windows/performance_window.h>
+#include <awesome/editor/windows/renderer_window.h>
 #include <awesome/editor/windows/scene_window.h>
 
 namespace editor
@@ -98,10 +98,10 @@ namespace editor
 	
 	void Editor::registerWindows()
 	{
-		TypeFactory::load<ContentBrowser>();
+		TypeFactory::load<ContentBrowserWindow>();
 		TypeFactory::load<InspectorWindow>();
-		TypeFactory::load<Performance>();
-		TypeFactory::load<RendererInspector>();
+		TypeFactory::load<PerformanceWindow>();
+		TypeFactory::load<RendererWindow>();
 		TypeFactory::load<SceneWindow>();
 
 		static std::set<std::string> types = TypeFactory::listByCategory("Editor");

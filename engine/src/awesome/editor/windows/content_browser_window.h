@@ -11,12 +11,12 @@
 
 namespace editor
 {
-	class ContentBrowser : public Window
+	class ContentBrowserWindow : public Window
 	{
 	public:
-		ContentBrowser();
+		ContentBrowserWindow();
 
-		std::string getTitle() const override;
+		std::string getTitle() const override { return "Content Browser"; }
 		virtual void render() override;
 		virtual void update(double deltaTime) override;
 

@@ -1,4 +1,4 @@
-#include "content_browser.h"
+#include "content_browser_window.h"
 
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
@@ -7,7 +7,7 @@
 
 namespace editor
 {
-	ContentBrowser::ContentBrowser()
+	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
 		, m_contentPath(getState()->workPath)
 		, m_dir(m_contentPath)
@@ -16,12 +16,7 @@ namespace editor
 
 	}
 
-	std::string ContentBrowser::getTitle() const
-	{
-		return "Content Browser";
-	}
-
-	void ContentBrowser::render()
+	void ContentBrowserWindow::render()
 	{
 		const auto& selection = getState()->selection;
 
@@ -82,7 +77,7 @@ namespace editor
 		}
 	}
 
-	void ContentBrowser::update(const double deltaTime)
+	void ContentBrowserWindow::update(const double deltaTime)
 	{
 		m_dir.refreshTimer.tick(deltaTime);
 		if (m_dir.refreshTimer.isExpired())
@@ -91,7 +86,7 @@ namespace editor
 		}
 	}
 
-	ContentBrowser::Dir::Dir(const std::filesystem::path& path)
+	ContentBrowserWindow::Dir::Dir(const std::filesystem::path& path)
 		: path(path)
 		, parent(path.parent_path())
 		, files()
@@ -107,5 +102,5 @@ namespace editor
 		}
 	}
 
-	REFLECT_EDITOR(ContentBrowser);
+	REFLECT_EDITOR(ContentBrowserWindow);
 }
