@@ -59,5 +59,5 @@ namespace editor
 		}
 	}
 
-	REFLECT_EDITOR(InspectorWindow)
+	REFLECT_WINDOW(InspectorWindow)
 }

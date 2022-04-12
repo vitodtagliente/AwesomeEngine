@@ -25,5 +25,5 @@ namespace editor
 		}
 	}
 
-	REFLECT_EDITOR(RendererWindow)
+	REFLECT_WINDOW(RendererWindow)
 }

@@ -15,5 +15,5 @@ namespace editor
 		Layout::text(s.str());
 	}
 
-	REFLECT_EDITOR(PerformanceWindow)
+	REFLECT_WINDOW(PerformanceWindow)
 }

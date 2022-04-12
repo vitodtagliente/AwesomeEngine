@@ -102,5 +102,5 @@ namespace editor
 		}
 	}
 
-	REFLECT_EDITOR(ContentBrowserWindow);
+	REFLECT_WINDOW(ContentBrowserWindow);
 }

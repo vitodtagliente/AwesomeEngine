@@ -93,7 +93,7 @@ namespace editor
 		TypeFactory::load<RendererWindow>();
 		TypeFactory::load<SceneWindow>();
 
-		static std::set<std::string> types = TypeFactory::list("Editor");
+		static std::set<std::string> types = TypeFactory::list("Window");
 		for (const std::string& type : types)
 		{
 			Window* const window = TypeFactory::instantiate<Window>(type);

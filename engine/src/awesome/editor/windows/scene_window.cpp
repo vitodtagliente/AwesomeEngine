@@ -80,5 +80,5 @@ namespace editor
 		Layout::endContext();
 	}
 
-	REFLECT_EDITOR(SceneWindow)
+	REFLECT_WINDOW(SceneWindow)
 }

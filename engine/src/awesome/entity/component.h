@@ -48,3 +48,5 @@ private:
 	uuid m_id;
 	Entity* m_owner;
 };
+
+#define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)
