@@ -58,6 +58,9 @@ endif()
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
 endif()
+if(NOT TARGET vdtreflect)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtreflect)
+endif()
 
 target_link_libraries(
     ${PROJECT_NAME} 
@@ -66,4 +69,5 @@ target_link_libraries(
 	${GLFW_LIBRARIES}
 	vdtjson
 	vdtmath
+	vdtreflect
 )

@@ -22,7 +22,7 @@ namespace editor
 
 		if (Layout::beginCombo("Add component", ""))
 		{
-			static std::set<std::string> types = TypeFactory::listByCategory("Component");
+			static std::set<std::string> types = TypeFactory::list("Component");
 			for (const std::string& type : types)
 			{
 				if (Layout::selectable(type.c_str(), false))
