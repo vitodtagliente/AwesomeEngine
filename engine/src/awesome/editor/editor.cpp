@@ -37,9 +37,8 @@ namespace editor
 
 		registerWindows();
 
-		for (auto it = m_windows.begin(); it != m_windows.end(); ++it)
+		for (const auto& window : m_windows)
 		{
-			const std::unique_ptr<Window>& window = *it;
 			window->init();
 		}
 	}
