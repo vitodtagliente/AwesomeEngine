@@ -1,0 +1,1 @@
+git submodule add <remote_url> <destination_folder>

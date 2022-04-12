@@ -7,3 +7,6 @@
 [submodule "engine/vendor/vdtecs"]
 	path = engine/vendor/vdtecs
 	url = https://github.com/vitodtagliente/vdtecs
+[submodule "engine/vendor/vdtreflect"]
+	path = engine/vendor/vdtreflect
+	url = https://github.com/vitodtagliente/vdtreflect
