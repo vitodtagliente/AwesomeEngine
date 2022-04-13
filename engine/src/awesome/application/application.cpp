@@ -30,7 +30,6 @@ int Application::run()
 {
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
-	Time& time = Time::instance();
 	World& world = World::instance();
 
 	if (!canvas.open())
@@ -48,9 +47,9 @@ int Application::run()
 
 	while (canvas.isOpen())
 	{
-		time.tick();
-		fpsTimer.tick(time.getDeltaTime());
-		deltatime += time.getDeltaTime();
+		m_time.tick();
+		fpsTimer.tick(m_time.getDeltaTime());
+		deltatime += m_time.getDeltaTime();
 		if (!fpsTimer.isExpired()) continue;
 
 		fpsTimer.reset();

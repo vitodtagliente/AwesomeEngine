@@ -215,6 +215,7 @@ namespace editor
 		static void newLine();
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);
+		static bool selectable(const std::string& name, bool selected, const std::function<void()>& handler);
 		static void separator();
 		static void scroll(float position);
 		static void scrollToBottom();

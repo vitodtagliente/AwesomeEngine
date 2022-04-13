@@ -8,6 +8,8 @@
 #include <awesome/core/singleton.h>
 #include <awesome/graphics/renderer.h>
 
+#include "time.h"
+
 class Application : public Singleton<Application>
 {
 public:
@@ -47,4 +49,5 @@ private:
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
+	Time m_time;
 };

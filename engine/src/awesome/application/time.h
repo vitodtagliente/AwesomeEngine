@@ -4,9 +4,7 @@
 
 #include <chrono>
 
-#include <awesome/core/singleton.h>
-
-class Time : public Singleton<Time>
+class Time
 {
 public:
 	Time();

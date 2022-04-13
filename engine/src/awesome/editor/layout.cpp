@@ -156,6 +156,19 @@ namespace editor
 		return ImGui::Selectable(id(name).c_str(), selected);
 	}
 
+	bool Layout::selectable(const std::string& name, bool selected, const std::function<void()>& handler)
+	{
+		if (ImGui::Selectable(id(name).c_str(), selected))
+		{
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+			{
+				handler();
+			}
+			return true;
+		}
+		return false;
+	}
+
 	void Layout::separator()
 	{
 		ImGui::Separator();
@@ -183,7 +196,7 @@ namespace editor
 
 	void Layout::sprite(const SpriteAssetPtr& sprite)
 	{
-		if(sprite)
+		if (sprite)
 		{
 			image(sprite->data.image, sprite->data.rect);
 		}
