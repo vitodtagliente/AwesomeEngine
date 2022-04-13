@@ -43,6 +43,7 @@ const keycode_t KeyCode::F12 = GLFW_KEY_F12;
 const keycode_t KeyCode::Enter = GLFW_KEY_ENTER;
 const keycode_t KeyCode::Space = GLFW_KEY_SPACE;
 const keycode_t KeyCode::Escape = GLFW_KEY_ESCAPE;
+const keycode_t KeyCode::Delete = GLFW_KEY_DELETE;
 const keycode_t KeyCode::UpArrow = GLFW_KEY_UP;
 const keycode_t KeyCode::DownArrow = GLFW_KEY_DOWN;
 const keycode_t KeyCode::RightArrow = GLFW_KEY_RIGHT;

@@ -16,10 +16,12 @@ namespace editor
 		void update(double deltaTime) override;
 		void render() override;
 
+		void onFocusChange(bool focus) override;
+
 		REFLECT()
 
 	private:
 		std::string m_filename;
-		bool m_renaming;
+		bool m_isRenaming;
 	};
 }

@@ -61,6 +61,7 @@ struct KeyCode
 	static const keycode_t Enter;
 	static const keycode_t Space;
 	static const keycode_t Escape;
+	static const keycode_t Delete;
 	static const keycode_t UpArrow;
 	static const keycode_t DownArrow;
 	static const keycode_t RightArrow;

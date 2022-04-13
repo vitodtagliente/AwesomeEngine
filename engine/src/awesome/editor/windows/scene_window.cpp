@@ -11,22 +11,52 @@
 
 namespace editor
 {
-	void SceneWindow::update(const double deltaTime)
+	void SceneWindow::update(const double /*deltaTime*/)
 	{
 		Input& input = Input::instance();
-		if (input.isKeyPressed(KeyCode::F2))
+
+		if (m_isRenaming)
 		{
-			m_renaming = true;
+			if (input.isKeyPressed(KeyCode::Enter))
+			{
+				m_isRenaming = false;
+			}
 		}
-		else if (m_renaming && input.isKeyPressed(KeyCode::Enter))
+		else
 		{
-			m_renaming = false;
+			if (input.isKeyPressed(KeyCode::F2))
+			{
+				m_isRenaming = true;
+			}
+			else if (input.isKeyPressed(KeyCode::Delete))
+			{
+				State& state = State::instance();
+				const auto& selection = state.selection;
+				Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
+					? selection->asEntity()
+					: nullptr;
+
+				if (selectedEntity)
+				{
+					World& world = World::instance();
+					world.destroy(selectedEntity);
+					if (!world.getEntities().empty())
+					{
+						state.select(world.getEntities().at(0).get());
+					}
+					else
+					{
+						state.select();
+					}
+				}
+			}
 		}
 	}
 
 	void SceneWindow::render()
 	{
-		const auto& selection = State::instance().selection;
+		State& state = State::instance();
+		const auto& selection = state.selection;
 		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
 			? selection->asEntity()
 			: nullptr;
@@ -37,18 +67,8 @@ namespace editor
 		{
 			Entity* const newEntity = world.spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
-			State::instance().select(newEntity);
+			state.select(newEntity);
 			Layout::scrollToBottom();
-		}
-
-		if (selectedEntity != nullptr)
-		{
-			Layout::sameLine();
-			if (Layout::button("Delete"))
-			{
-				world.destroy(selectedEntity);
-				State::instance().select();
-			}
 		}
 
 		if (!world.getEntities().empty())
@@ -57,7 +77,7 @@ namespace editor
 			if (Layout::button("Clear"))
 			{
 				world.clear();
-				State::instance().select();
+				state.select();
 			}
 		}
 
@@ -69,7 +89,7 @@ namespace editor
 		for (const auto& entity : world.getEntities())
 		{
 			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
-			if (isSelected && m_renaming)
+			if (isSelected && m_isRenaming)
 			{
 				Layout::rename(entity->name);
 			}
@@ -77,7 +97,7 @@ namespace editor
 			{
 				if (Layout::selectable(entity->name, isSelected))
 				{
-					State::instance().select(entity.get());
+					state.select(entity.get());
 				}
 			}
 		}
@@ -91,7 +111,7 @@ namespace editor
 			const std::string name = m_filename.c_str();
 			if (!name.empty())
 			{
-				const std::string filename = (State::instance().path / name).string() + ".scene";
+				const std::string filename = (state.path / name).string() + ".scene";
 				Archive archive(filename, Archive::Mode::Write);
 				archive << json::Serializer::to_string(world.serialize());
 
@@ -101,6 +121,14 @@ namespace editor
 			m_filename.clear();
 		}
 		Layout::endContext();
+	}
+
+	void SceneWindow::onFocusChange(const bool focus)
+	{
+		if (!focus)
+		{
+			m_isRenaming = false;
+		}
 	}
 
 	REFLECT_WINDOW(SceneWindow)
