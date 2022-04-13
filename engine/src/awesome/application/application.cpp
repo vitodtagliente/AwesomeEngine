@@ -9,18 +9,17 @@
 
 using namespace graphics;
 
-Application::Application(const std::initializer_list<Module*> modules)
+Application::Application(const std::initializer_list<Module*>& modules)
 	: m_modules()
 	, m_canvas()
 	, m_input()
 	, m_time()
 	, m_assetLibrary()
 {
-	registerModules();
-	for (auto it = modules.begin(); it != modules.end(); ++it)
+	registerDefaultModules();
+	for (Module* const module : modules)
 	{
-		Module* const module = *it;
-		m_modules.push_back(module);
+		m_modules.push_back(std::unique_ptr<Module>(module));
 	}
 }
 
@@ -37,9 +36,8 @@ int Application::run()
 	
 	World world;
 
-	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+	for (const auto& module : m_modules)
 	{
-		Module* const module = *it;
 		module->startup();
 	}
 
@@ -56,9 +54,8 @@ int Application::run()
 		fpsTimer.reset();
 		m_canvas.update();
 		
-		for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+		for (const auto& module : m_modules)
 		{
-			Module* const module = *it;
 			module->update(deltatime);
 		}
 		
@@ -67,23 +64,20 @@ int Application::run()
 
 		if (graphics::Renderer* const renderer = graphics::Renderer::instance())
 		{
-			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			for (const auto& module : m_modules)
 			{
-				Module* const module = *it;
 				module->preRendering();
 			}
 
 			world.render(renderer);
 
-			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			for (const auto& module : m_modules)
 			{
-				Module* const module = *it;
 				module->render(renderer);
 			}
 
-			for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+			for (const auto& module : m_modules)
 			{
-				Module* const module = *it;
 				module->postRendering();
 			}
 		}		
@@ -92,17 +86,16 @@ int Application::run()
 		deltatime = 0.0;
 	}
 
-	for (auto it = m_modules.begin(); it != m_modules.end(); ++it)
+	for (const auto& module : m_modules)
 	{
-		Module* const module = *it;
 		module->shutdown();
 	}
 
 	return 0;
 }
 
-void Application::registerModules()
+void Application::registerDefaultModules()
 {
-	addModule<graphics::Graphics>();
-	addModule<editor::Editor>();
+	registerModule<graphics::Graphics>();
+	registerModule<editor::Editor>();
 }

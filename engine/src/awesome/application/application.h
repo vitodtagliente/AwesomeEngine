@@ -3,6 +3,7 @@
 
 #include <initializer_list>
 #include <memory>
+#include <vector>
 
 #include <awesome/core/singleton.h>
 #include <awesome/data/asset_library.h>
@@ -11,8 +12,6 @@
 #include "canvas.h"
 #include "input.h"
 #include "time.h"
-
-class World;
 
 class Application : public Singleton<Application>
 {
@@ -26,6 +25,8 @@ public:
 	class Module
 	{
 	public:
+		Module() = default;
+		virtual ~Module() = default;
 		virtual void startup() {}
 		virtual void shutdown() {}
 		virtual void update(double /*deltaTime*/) {}
@@ -34,37 +35,23 @@ public:
 		virtual void postRendering() {}
 	};
 
-	Application(const std::initializer_list<Module*> modules = {});
+	Application(const std::initializer_list<Module*>& modules = {});
 	virtual ~Application();
 
 	int run();
 
 	template <typename T = Module>
-	std::vector<T*> getModules() const
-	{
-		std::vector<T*> found_modules;
-		for (Module* const module : m_modules)
-		{
-			if (T* const found_module = dynamic_cast<T*>(module))
-			{
-				found_modules.push_back(found_module);
-			}
-		}
-		return found_modules;
-	}
-
-	template <typename T = Module>
-	T* const addModule()
+	T* const registerModule()
 	{
 		T* const module = new T();
-		m_modules.push_back(module);
+		m_modules.push_back(std::unique_ptr<Module>(module));
 		return module;
 	}
 
 private:
-	void registerModules();
+	void registerDefaultModules();
 
-	std::vector<Module*> m_modules;
+	std::vector<std::unique_ptr<Module>> m_modules;
 	Canvas m_canvas;
 	Input m_input;
 	Time m_time;

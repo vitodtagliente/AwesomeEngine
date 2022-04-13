@@ -9,9 +9,7 @@
 
 int main()
 {
-	Game* const game = new Game();
-	Application app({ game });
+	Application app({ new Game() });
 	const int result = app.run();
-	delete game;
 	return result;
 }
