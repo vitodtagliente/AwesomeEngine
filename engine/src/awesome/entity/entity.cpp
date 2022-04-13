@@ -1,21 +1,7 @@
 #include "entity.h"
 
 #include <awesome/graphics/renderer.h>
-
-#include "world.h"
-
-Entity::Entity()
-	: name()
-	, tag()
-	, transform()
-	, m_id()
-	, m_world(nullptr)
-	, m_parent(nullptr)
-	, m_children()
-	, m_components()
-{
-
-}
+#include <awesome/entity/world.h>
 
 Entity::Entity(const Entity& other)
 	: name()
@@ -44,11 +30,6 @@ Entity::Entity(const Entity& other, const uuid& id)
 	m_id = id;
 }
 
-Entity::~Entity()
-{
-
-}
-
 void Entity::prepareToSpawn(World* const world)
 {
 	m_world = world;
@@ -56,11 +37,9 @@ void Entity::prepareToSpawn(World* const world)
 
 void Entity::prepareToDestroy()
 {
-	for (auto it = m_components.begin(); it != m_components.end(); ++it)
+	for (const auto& component : m_components)
 	{
-		Component* const component = *it;
 		component->uninit();
-		delete component;
 	}
 	m_components.clear();
 
@@ -75,58 +54,63 @@ void Entity::setParent(Entity* const entity)
 
 void Entity::update(const double deltaTime)
 {
-	for (auto it = m_components.begin(); it != m_components.end(); ++it)
+	for (const auto& component : m_components)
 	{
-		Component* const component = *it;
-		if (!component->enabled) continue;
-
-		component->update(deltaTime);
+		if (component->enabled)
+		{
+			component->update(deltaTime);
+		}
 	}
-
 	transform.update();
 }
 
 void Entity::render(graphics::Renderer* const renderer)
 {
-	for (auto it = m_components.begin(); it != m_components.end(); ++it)
+	for (const auto& component : m_components)
 	{
-		Component* const component = *it;
-		if (!component->enabled) continue;
-
-		component->render(renderer);
+		if (component->enabled)
+		{
+			component->render(renderer);
+		}
 	}
 }
 
 void Entity::removeComponent(Component* const component)
 {
-	for (auto it = m_components.begin(); it != m_components.end(); ++it)
-	{
-		if (*it == component)
+	removeComponent(component->getId());
+}
+
+void Entity::removeComponent(const uuid& id)
+{
+	const auto& it = std::find_if(m_components.begin(), m_components.end(), [&id](const std::unique_ptr<Component>& component) -> bool
 		{
-			component->detach();
-			m_components.erase(it);
-			delete component;
-			return;
+			return component->getId() == id;
 		}
+	);
+
+	if (it != m_components.end())
+	{
+		(*it)->detach();
+		m_components.erase(it);
 	}
 }
 
 json::value Entity::serialize() const
 {
-	static const auto& entitiesToJson = [](const std::vector<Entity*>& entities) -> json::value
+	static const auto& entitiesToJson = [](const std::vector<std::unique_ptr<Entity>>& entities) -> json::value
 	{
 		json::value data = json::array();
-		for (const Entity* entity : entities)
+		for (const auto& entity : entities)
 		{
 			data.push_back(entity->serialize());
 		}
 		return data;
 	};
 
-	static const auto& componentsToJson = [](const std::vector<Component*>& components) -> json::value
+	static const auto& componentsToJson = [](const std::vector<std::unique_ptr<Component>>& components) -> json::value
 	{
 		json::value data = json::array();
-		for (const Component* component : components)
+		for (const auto& component : components)
 		{
 			data.push_back(component->serialize());
 		}

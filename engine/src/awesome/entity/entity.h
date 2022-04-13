@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -21,17 +22,16 @@ namespace graphics
 class Entity : public ISerializable
 {
 public:
-	Entity();
+	Entity() = default;
 	Entity(const Entity& other);
 	Entity(const Entity& other, const uuid& id);
-	~Entity();
+	~Entity() = default;
 
 	inline const uuid& getId() const { return m_id; }
 	inline World* const getWorld() const { return m_world; }
 	inline Entity* const getParent() const { return m_parent; }
-	inline const std::vector<Entity*>& getChildren() const { return m_children; }
-	inline const std::vector<Component*>& getComponents() const { return m_components; }
-	inline std::vector<Component*>& getComponents() { return m_components; }
+	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
+	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
 
 	void prepareToSpawn(World* const world);
 	void prepareToDestroy();
@@ -43,9 +43,9 @@ public:
 	std::vector<T*> getComponents() const
 	{
 		std::vector<T*> found_components;
-		for (Component* const component : m_components)
+		for (const auto& component : m_components)
 		{
-			if (T* const found_component = dynamic_cast<T*>(component))
+			if (T* const found_component = dynamic_cast<T*>(component.get()))
 			{
 				found_components.push_back(found_component);
 			}
@@ -56,9 +56,9 @@ public:
 	template <typename T = Component>
 	T* const findComponent() const
 	{
-		for (Component* const component : m_components)
+		for (const auto& component : m_components)
 		{
-			if (T* const found_component = dynamic_cast<T*>(component))
+			if (T* const found_component = dynamic_cast<T*>(component.get()))
 			{
 				return found_component;
 			}
@@ -70,19 +70,20 @@ public:
 	T* const addComponent()
 	{
 		T* const component = new T();
-		m_components.push_back(component);
+		m_components.push_back(std::unique_ptr<Component>(component));
 		component->attach(this);
 		return component;
 	}
 
 	Component* const addComponent(Component* const component)
 	{
-		m_components.push_back(component);
+		m_components.push_back(std::unique_ptr<Component>(component));
 		component->attach(this);
 		return component;
 	}
 
 	void removeComponent(Component* const component);
+	void removeComponent(const uuid& id);
 
 	// serialization
 	virtual json::value serialize() const override;
@@ -97,6 +98,6 @@ private:
 	uuid m_id;
 	World* m_world;
 	Entity* m_parent;
-	std::vector<Entity*> m_children;
-	std::vector<Component*> m_components;
+	std::vector<std::unique_ptr<Entity>> m_children;
+	std::vector<std::unique_ptr<Component>> m_components;
 };

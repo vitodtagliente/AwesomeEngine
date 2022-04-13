@@ -39,10 +39,8 @@ namespace editor
 			Layout::endCombo();
 		}
 
-		const auto& components = entity.getComponents();
-		for (auto it = components.begin(); it != components.end(); ++it)
+		for (const auto& component : entity.getComponents())
 		{
-			Component* const component = *it;
 			const std::string& componentName = component->getTypeDescriptor().name;
 			Layout::beginContext(componentName);
 			if (Layout::collapsingHeader(componentName))
@@ -51,7 +49,7 @@ namespace editor
 				Layout::separator();
 				if (Layout::button("Remove Component"))
 				{
-					entity.removeComponent(component);
+					entity.removeComponent(component->getId());
 					return; // force the refresh of the inspector
 				}
 			}
