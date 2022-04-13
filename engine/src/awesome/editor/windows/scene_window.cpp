@@ -53,9 +53,9 @@ namespace editor
 
 		for (const auto& entity : world->getEntities())
 		{
-			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity == selectedEntity))
+			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity.get() == selectedEntity))
 			{
-				getState()->select(entity);
+				getState()->select(entity.get());
 			}
 		}
 

@@ -2,100 +2,86 @@
 
 #include <awesome/graphics/renderer.h>
 
-World::World()
-	: m_entities()
-	, m_pendingSpawnEntities()
-	, m_pendingDestroyEntities()
-{
-}
-
-World::~World()
-{
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_entities.clear();
-
-	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_pendingSpawnEntities.clear();
-
-	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		delete entity;
-	}
-	m_pendingDestroyEntities.clear();
-}
-
 void World::update(const double deltaTime)
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		entity->update(deltaTime);
 	}
 }
 
 void World::render(graphics::Renderer* const renderer)
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		entity->render(renderer);
 	}
 }
 
 void World::flush()
 {
-	for (auto it = m_pendingSpawnEntities.begin(); it != m_pendingSpawnEntities.end(); ++it)
+	for (const uuid& entityToDestroy : m_pendingDestroyEntities)
 	{
-		m_entities.push_back(*it);
-	}
-	m_pendingSpawnEntities.clear();
+		const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [entityToDestroy](const std::unique_ptr<Entity>& entity) -> bool
+			{
+				return entity->getId() == entityToDestroy;
+			}
+		);
 
-	for (auto it = m_pendingDestroyEntities.begin(); it != m_pendingDestroyEntities.end(); ++it)
-	{
-		auto destroyIt = std::find(m_entities.begin(), m_entities.end(), *it);
-		if (destroyIt != m_entities.end())
+		if (it != m_entities.end())
 		{
-			(*destroyIt)->prepareToDestroy();
-			delete *destroyIt;
-			*destroyIt = nullptr;
-			m_entities.erase(destroyIt);
+			(*it)->prepareToDestroy();
+			m_entities.erase(it);
 		}
 	}
 	m_pendingDestroyEntities.clear();
+
+	for (auto& entityToSpawn : m_pendingSpawnEntities)
+	{
+		m_entities.push_back(std::move(entityToSpawn));
+	}
+	m_pendingSpawnEntities.clear();
 }
 
 std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
 {
 	std::vector<Entity*> entities;
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (const auto& entity : m_entities)
 	{
-		Entity* const entity = *it;
 		if (entity->tag == tag)
 		{
-			entities.push_back(entity);
+			entities.push_back(entity.get());
 		}
 	}
 	return entities;
 }
 
+Entity* const World::findEntityById(const uuid& id) const
+{
+	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&id](const std::unique_ptr<Entity>& entity) -> bool
+		{
+			return entity->getId() == id;
+		}
+	);
+
+	if (it != m_entities.end())
+	{
+		return it->get();
+	}
+	return nullptr;
+}
+
 Entity* const World::findEntityByName(const std::string& name) const
 {
-	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
-	{
-		Entity* const entity = *it;
-		if (entity->name == name)
+	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&name](const std::unique_ptr<Entity>& entity) -> bool
 		{
-			return entity;
+			return entity->name == name;
 		}
+	);
+
+	if (it != m_entities.end())
+	{
+		return it->get();
 	}
 	return nullptr;
 }
@@ -116,7 +102,7 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn(this);
-	m_pendingSpawnEntities.push_back(entity);
+	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
 	return entity;
 }
@@ -137,24 +123,25 @@ Entity* const World::spawn(const Entity& prefab, const vec3& position, const qua
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn(this);
-	m_pendingSpawnEntities.push_back(entity);
+	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
 	return entity;
 }
 
 void World::destroy(Entity* const entity)
 {
-	m_pendingDestroyEntities.push_back(entity);
+	m_pendingDestroyEntities.push_back(entity->getId());
+}
+
+void World::destroy(const uuid& id)
+{
+	m_pendingDestroyEntities.push_back(id);
 }
 
 void World::clear()
 {
 	m_pendingSpawnEntities.clear();
 	m_pendingDestroyEntities.clear();
-	for (Entity* const entity : m_entities)
-	{
-		destroy(entity);
-	}
 	m_entities.clear();
 }
 

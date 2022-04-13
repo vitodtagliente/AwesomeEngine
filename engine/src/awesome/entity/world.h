@@ -1,10 +1,12 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
+#include <awesome/core/uuid.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
 
@@ -17,19 +19,19 @@ namespace graphics
 	class Renderer;
 }
 
-class World : public Singleton<World>, ISerializable
+class World final : public Singleton<World>, ISerializable
 {
 public:
-
-	World();
-	~World();
+	World() = default;
+	~World() = default;
 
 	void update(double deltaTime);
 	void render(graphics::Renderer* const renderer);
 	void flush();
 
-	inline const std::vector<Entity*>& getEntities() const { return m_entities; }
+	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
+	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;
 
 	Entity* const spawn();
@@ -38,7 +40,9 @@ public:
 	Entity* const spawn(const Entity& prefab);
 	Entity* const spawn(const Entity& prefab, const vec3& position);
 	Entity* const spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion);
+
 	void destroy(Entity* const entity);
+	void destroy(const uuid& id);
 
 	void clear();
 
@@ -48,8 +52,8 @@ public:
 
 private:
 
-	std::vector<Entity*> m_entities;
-	std::vector<Entity*> m_pendingSpawnEntities;
-	std::vector<Entity*> m_pendingDestroyEntities;
+	std::vector<std::unique_ptr<Entity>> m_entities;
+	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
+	std::vector<uuid> m_pendingDestroyEntities;
 
 };
