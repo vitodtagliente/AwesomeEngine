@@ -8,7 +8,7 @@ namespace editor
 {
 	State::State()
 		: selection()
-		, path(AssetLibrary::instance()->getDirectory())
+		, path(AssetLibrary::instance().getDirectory())
 	{
 	}
 

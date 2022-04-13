@@ -9,7 +9,6 @@
 class Canvas : public Singleton<Canvas>
 {
 public:
-
 	struct Settings
 	{
 		unsigned int width = 1080;

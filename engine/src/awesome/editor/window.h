@@ -24,7 +24,7 @@ namespace editor
 
 	protected:
 
-		State* const getState() const { return State::instance(); }
+		State* const getState() const { return &State::instance(); }
 	};
 
 #define REFLECT_WINDOW(T) REFLECT_IMP_CATEGORY(T, Window)

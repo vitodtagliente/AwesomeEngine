@@ -63,7 +63,7 @@ namespace editor
 				else
 				{
 					Asset descriptor = Asset::load(file.string());
-					std::shared_ptr<Asset> asset = AssetLibrary::instance()->find(descriptor.id);
+					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 					if (asset)
 					{
 						getState()->select(asset);

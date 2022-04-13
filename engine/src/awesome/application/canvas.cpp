@@ -56,10 +56,7 @@ bool Canvas::open(Settings settings)
 				key_state = KeyState::Released;
 			}
 
-			if (Input* const input = Input::instance())
-			{
-				input->setKeyState(key, key_state);
-			}
+			Input::instance().setKeyState(key, key_state);
 		}
 	);
 
@@ -77,10 +74,7 @@ bool Canvas::open(Settings settings)
 				key_state = KeyState::Released;
 			}
 
-			if (Input* const input = Input::instance())
-			{
-				input->setKeyState(button, key_state);
-			}
+			Input::instance().setKeyState(button, key_state);
 		}
 	);
 
@@ -88,10 +82,7 @@ bool Canvas::open(Settings settings)
 		handler,
 		[](GLFWwindow*, const double x, const double y)
 		{
-			if (Input* const input = Input::instance())
-			{
-				input->setMousePosition(static_cast<float>(x), static_cast<float>(y));
-			}
+			Input::instance().setMousePosition(static_cast<float>(x), static_cast<float>(y));
 		}
 	);
 
@@ -99,10 +90,7 @@ bool Canvas::open(Settings settings)
 		handler,
 		[](GLFWwindow*, const int entered)
 		{
-			if (Input* const input = Input::instance())
-			{
-				input->setMousePositionValid(entered);
-			}
+			Input::instance().setMousePositionValid(entered);
 		}
 	);
 
@@ -111,10 +99,7 @@ bool Canvas::open(Settings settings)
 		handler,
 		[](GLFWwindow*, const double xoffset, const double yoffset)
 		{
-			if (Input* const input = Input::instance())
-			{
-				input->setMouseWheelPosition(static_cast<float>(xoffset), static_cast<float>(yoffset));
-			}
+			Input::instance().setMouseWheelPosition(static_cast<float>(xoffset), static_cast<float>(yoffset));
 		}
 	);
 

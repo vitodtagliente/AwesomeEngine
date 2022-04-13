@@ -6,12 +6,7 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
-#include <awesome/data/asset_library.h>
 #include <awesome/graphics/renderer.h>
-
-#include "canvas.h"
-#include "input.h"
-#include "time.h"
 
 class Application : public Singleton<Application>
 {
@@ -52,8 +47,4 @@ private:
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
-	Canvas m_canvas;
-	Input m_input;
-	Time m_time;
-	AssetLibrary m_assetLibrary;
 };

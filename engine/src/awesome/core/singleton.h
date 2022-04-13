@@ -1,24 +1,12 @@
 /// Copyright (c) Vito Domenico Tagliente
-
 #pragma once
-
-#include <cassert>
 
 template<typename T>
 class Singleton
 {
 public:
-
-	Singleton()
-	{
-		assert(m_instance == nullptr);
-		m_instance = static_cast<T*>(this);
-	}
-
-	virtual ~Singleton()
-	{
-		m_instance = nullptr;
-	}
+	Singleton() = default;
+	virtual ~Singleton() = default;
 
 	// cannot move or copy
 	Singleton& operator=(Singleton&&) = delete;
@@ -26,14 +14,10 @@ public:
 	Singleton(Singleton&&) = delete;
 	Singleton& operator= (const Singleton&) = delete;
 
-	// get the singleton instance 
-	static T* instance() { return m_instance; }
-
-private:
-
-	// singleton instance 
-	static T* m_instance;
+	// get the singleton instance, thread safe
+	static T& instance()
+	{
+		static T s_instance;
+		return s_instance;
+	}
 };
-
-template<typename T>
-T* Singleton<T>::m_instance(nullptr);

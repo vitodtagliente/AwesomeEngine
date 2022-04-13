@@ -28,7 +28,7 @@ namespace graphics
 			int drawCalls;
 		};
 
-		Renderer(Context& context);
+		Renderer();
 
 		void begin();
 		void flush();

@@ -85,12 +85,12 @@ namespace editor
 		{
 			if (Layout::beginCombo(name.c_str(), value ? value->filename.stem().string() : ""))
 			{
-				const auto assets = AssetLibrary::instance()->list(T);
+				const auto assets = AssetLibrary::instance().list(T);
 				for (const Asset& asset : assets)
 				{
 					if (Layout::selectable(asset.filename.stem().string(), value ? value->id == asset.id : false))
 					{
-						value = AssetLibrary::instance()->find<BaseAsset<T, D>>(asset.id);
+						value = AssetLibrary::instance().find<BaseAsset<T, D>>(asset.id);
 						Layout::endCombo();
 						return;
 					}

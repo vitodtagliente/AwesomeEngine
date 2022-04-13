@@ -13,16 +13,12 @@ namespace graphics
 	class Graphics : public Application::Module
 	{
 	public:
-		Graphics();
+		Graphics() = default;
 
 		void startup() override;
 		void shutdown() override;
 		void preRendering() override;
 		void render(graphics::Renderer* const renderer) override;
 		void postRendering() override;
-
-	private:
-		Context* m_context;
-		Renderer* m_renderer;
 	};
 }

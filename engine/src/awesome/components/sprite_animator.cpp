@@ -120,7 +120,7 @@ void SpriteAnimator::deserialize(const json::value& value)
 	{
 		uuid animationId = uuid::Invalid;
 		::deserialize(pair.second, animationId);
-		animations.insert(std::make_pair(pair.first, AssetLibrary::instance()->find<SpriteAnimationAsset>(animationId)));
+		animations.insert(std::make_pair(pair.first, AssetLibrary::instance().find<SpriteAnimationAsset>(animationId)));
 	}
 }
 

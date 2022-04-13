@@ -30,7 +30,7 @@ namespace graphics
 
 	TexturePtr TextureLibrary::create(const uuid& id)
 	{
-		ImageAssetPtr asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance()->find(id));
+		ImageAssetPtr asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance().find(id));
 		if (asset)
 		{
 			const Image& image = asset->data;

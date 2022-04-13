@@ -50,7 +50,7 @@ Sprite Sprite::load(const std::filesystem::path& filename)
 	if (data.contains("image"))
 	{
 		const uuid id(data["image"].as_string());
-		sprite.image = AssetLibrary::instance()->find<ImageAsset>(id);
+		sprite.image = AssetLibrary::instance().find<ImageAsset>(id);
 	}
 	if (data.contains("rect"))
 	{

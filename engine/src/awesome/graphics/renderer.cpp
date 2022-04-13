@@ -6,9 +6,9 @@
 
 namespace graphics
 {
-	Renderer::Renderer(Context& context)
+	Renderer::Renderer()
 		: backgroundColor(Color::Black)
-		, m_context(context)
+		, m_context(Context::instance())
 		, m_gizmos()
 		, m_spriteBatch()
 		, m_commands()

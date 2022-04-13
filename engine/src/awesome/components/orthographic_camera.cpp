@@ -19,12 +19,12 @@ OrthographicCamera::OrthographicCamera()
 
 void OrthographicCamera::update(const double)
 {
-	Canvas* const canvas = Canvas::instance();
-	graphics::Context* const context = graphics::Context::instance();
-	if (canvas && context)
+	Canvas& canvas = Canvas::instance();
+	graphics::Context* const context = &graphics::Context::instance();
+	if (context)
 	{
-		const unsigned int width = canvas->getWidth();
-		const unsigned int height = canvas->getHeight();
+		const unsigned int width = canvas.getWidth();
+		const unsigned int height = canvas.getHeight();
 
 		context->viewport(width, height);
 

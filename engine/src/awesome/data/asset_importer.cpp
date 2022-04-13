@@ -35,7 +35,7 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 		return false;
 	}
 
-	AssetLibrary* const library = AssetLibrary::instance();
+	AssetLibrary& library = AssetLibrary::instance();
 
 	if (Asset::isAsset(filename))
 	{
@@ -43,9 +43,9 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 		if (descriptor)
 		{
 			// The asset is already loaded
-			if (library->find(descriptor.id)) return true;
+			if (library.find(descriptor.id)) return true;
 
-			library->insert(descriptor);
+			library.insert(descriptor);
 			return true;
 		}
 		return false;
@@ -65,7 +65,7 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 		asset.filename = assetFilename;
 		archive << json::Serializer::to_string(asset.serialize());
 
-		library->insert(asset);
+		library.insert(asset);
 	}
 
 	return true;

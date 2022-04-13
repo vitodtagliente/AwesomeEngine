@@ -77,7 +77,7 @@ namespace editor
 	{
 		if (image != nullptr)
 		{
-			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(image->id);
+			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
 			if (texture)
 			{
 				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));

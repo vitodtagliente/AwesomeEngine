@@ -5,6 +5,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/core/reflection.h>
 #include <awesome/data/asset_importer.h>
@@ -26,14 +27,14 @@ namespace editor
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance()->getHandler()), true);
+		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance().getHandler()), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
 
 		ColorScheme scheme;
 		scheme.apply();
 
 		AssetImporter importer;
-		importer.import(AssetLibrary::instance()->getDirectory(), true);
+		importer.import(AssetLibrary::instance().getDirectory(), true);
 
 		registerWindows();
 
@@ -76,7 +77,7 @@ namespace editor
 
 	void Editor::update(const double deltaTime)
 	{
-		Input::instance()->preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
+		Input::instance().preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
 
 		for (const auto& window : m_windows)
 		{

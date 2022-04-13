@@ -24,7 +24,7 @@ namespace editor
 
 		if (Layout::button("Import Prefab"))
 		{
-			World::instance()->spawn(prefab->data.entity);
+			World::instance().spawn(prefab->data.entity);
 		}
 
 		Layout::separator();

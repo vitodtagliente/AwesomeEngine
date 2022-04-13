@@ -4,28 +4,19 @@
 
 namespace graphics
 {
-	Graphics::Graphics()
-		: m_context(nullptr)
-		, m_renderer(nullptr)
-	{
-	}
-
 	void Graphics::startup()
 	{
 		gladLoadGL();
-		m_context = new Context();
-		m_renderer = new Renderer(*m_context);
+		Renderer::instance();
 	}
 
 	void Graphics::shutdown()
 	{
-		delete m_renderer;
-		delete m_context;
 	}
 
 	void Graphics::preRendering()
 	{
-		m_renderer->begin();
+		Renderer::instance().begin();
 	}
 
 	void Graphics::render(graphics::Renderer* const)
@@ -34,6 +25,6 @@ namespace graphics
 
 	void Graphics::postRendering()
 	{
-		m_renderer->flush();
+		Renderer::instance().flush();
 	}
 }

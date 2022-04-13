@@ -16,12 +16,12 @@ namespace editor
 			? selection->asEntity()
 			: nullptr;
 
-		World* const world = World::instance();
+		World& world = World::instance();
 
 		if (Layout::button("Add"))
 		{
-			Entity* const newEntity = world->spawn();
-			newEntity->name = std::string("Entity-") + std::to_string(world->getEntities().size() + 1);
+			Entity* const newEntity = world.spawn();
+			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
 			getState()->select(newEntity);
 			Layout::scrollToBottom();
 		}
@@ -31,27 +31,27 @@ namespace editor
 			Layout::sameLine();
 			if (Layout::button("Delete"))
 			{
-				world->destroy(selectedEntity);
+				world.destroy(selectedEntity);
 				getState()->select();
 			}
 		}
 
-		if (!world->getEntities().empty())
+		if (!world.getEntities().empty())
 		{
 			Layout::sameLine();
 			if (Layout::button("Clear"))
 			{
-				world->clear();
+				world.clear();
 				getState()->select();
 			}
 		}
 
-		if (!world->getEntities().empty())
+		if (!world.getEntities().empty())
 		{
 			Layout::separator();
 		}
 
-		for (const auto& entity : world->getEntities())
+		for (const auto& entity : world.getEntities())
 		{
 			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity.get() == selectedEntity))
 			{
@@ -70,7 +70,7 @@ namespace editor
 			{
 				const std::string filename = (getState()->path / name).string() + ".scene";
 				Archive archive(filename, Archive::Mode::Write);
-				archive << json::Serializer::to_string(world->serialize());
+				archive << json::Serializer::to_string(world.serialize());
 
 				AssetImporter importer;
 				importer.import(filename);

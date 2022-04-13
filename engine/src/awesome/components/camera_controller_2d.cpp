@@ -18,22 +18,22 @@ CameraController2d::CameraController2d()
 
 void CameraController2d::update(double deltaTime)
 {
-	Input* const input = Input::instance();
+	Input& input = Input::instance();
 	if (!m_dragPosition.has_value())
 	{
-		if (input->isKeyDown(KeyCode::MouseRightButton))
+		if (input.isKeyDown(KeyCode::MouseRightButton))
 		{
-			m_dragPosition = input->getMousePosition();
+			m_dragPosition = input.getMousePosition();
 		}
 	}
 	else
 	{
-		if (input->isKeyDown(KeyCode::MouseRightButton))
+		if (input.isKeyDown(KeyCode::MouseRightButton))
 		{
-			vec2 direction = input->getMousePosition() - m_dragPosition.value();
+			vec2 direction = input.getMousePosition() - m_dragPosition.value();
 			vec2 amount = direction * speed * static_cast<float>(deltaTime);
 			getOwner()->transform.position += vec3(amount.x, -amount.y, 0.0f);
-			m_dragPosition = input->getMousePosition();
+			m_dragPosition = input.getMousePosition();
 		}
 		else
 		{
@@ -41,7 +41,7 @@ void CameraController2d::update(double deltaTime)
 		}
 	}
 
-	const math::vec2& wheelPosition = input->getDeltaMouseWheelPosition();
+	const math::vec2& wheelPosition = input.getDeltaMouseWheelPosition();
 	if (wheelPosition.y != 0.f)
 	{
 		math::vec3& scale = getOwner()->transform.scale;

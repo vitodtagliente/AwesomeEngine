@@ -20,7 +20,7 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
 	if (sprite && sprite->data.image)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance()->find(sprite->data.image->id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(sprite->data.image->id);
 		if (texture)
 		{
 			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), sprite->data.rect);
@@ -42,7 +42,7 @@ void SpriteRenderer::deserialize(const json::value& value)
 
 	uuid spriteId = uuid::Invalid;
 	::deserialize(value["sprite"], spriteId);
-	sprite = AssetLibrary::instance()->find<SpriteAsset>(spriteId);
+	sprite = AssetLibrary::instance().find<SpriteAsset>(spriteId);
 	::deserialize(value["color"], color);
 }
 

@@ -9,7 +9,7 @@
 
 #include "keycode.h"
 
-class Input : public Singleton<Input>
+class Input final : public Singleton<Input>
 {
 public:
 	Input();
