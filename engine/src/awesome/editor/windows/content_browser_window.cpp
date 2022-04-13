@@ -3,13 +3,14 @@
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 #include <awesome/entity/entity.h>
 
 namespace editor
 {
 	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
-		, m_contentPath(getState()->path)
+		, m_contentPath(State::instance().path)
 		, m_dir(m_contentPath)
 		, m_newFolderName()
 	{
@@ -18,7 +19,7 @@ namespace editor
 
 	void ContentBrowserWindow::render()
 	{
-		const auto& selection = getState()->selection;
+		const auto& selection = State::instance().selection;
 
 		Layout::input("Folder", m_newFolderName);
 		Layout::sameLine();
@@ -42,7 +43,7 @@ namespace editor
 		if (m_contentPath != m_dir.path && Layout::selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
-			getState()->path = m_dir.parent;
+			State::instance().path = m_dir.parent;
 			return;
 		}
 
@@ -57,7 +58,7 @@ namespace editor
 				if (!file.has_extension())
 				{
 					m_dir = Dir(file);
-					getState()->path = m_dir.path;
+					State::instance().path = m_dir.path;
 					return;
 				}
 				else
@@ -66,11 +67,11 @@ namespace editor
 					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 					if (asset)
 					{
-						getState()->select(asset);
+						State::instance().select(asset);
 					}
 					else
 					{
-						getState()->select();
+						State::instance().select();
 					}
 				}
 			}

@@ -13,11 +13,13 @@ namespace editor
 		SceneWindow() = default;
 
 		std::string getTitle() const override { return "Scene"; }
+		void update(double deltaTime) override;
 		void render() override;
 
 		REFLECT()
 
 	private:
 		std::string m_filename;
+		bool m_renaming;
 	};
 }

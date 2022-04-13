@@ -141,9 +141,27 @@ namespace editor
 		input("Duration", value.duration);
 	}
 
+	bool Layout::isWindowFocused()
+	{
+		return ImGui::IsWindowFocused();
+	}
+
+	bool Layout::isWindowHovered()
+	{
+		return ImGui::IsWindowHovered();
+	}
+
 	void Layout::newLine()
 	{
 		ImGui::NewLine();
+	}
+
+	void Layout::rename(std::string& value)
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0);
+		ImGui::InputText("##rename", &value, ImGuiInputTextFlags_EnterReturnsTrue);
+		setKeyboardFocusHere();
+		ImGui::PopStyleVar();
 	}
 
 	void Layout::sameLine()
@@ -192,6 +210,11 @@ namespace editor
 	void Layout::slider(const std::string& name, const float min, const float max, float& value)
 	{
 		ImGui::SliderFloat(name.c_str(), &value, min, max);
+	}
+
+	void Layout::setKeyboardFocusHere()
+	{
+		ImGui::SetKeyboardFocusHere();
 	}
 
 	void Layout::sprite(const SpriteAssetPtr& sprite)

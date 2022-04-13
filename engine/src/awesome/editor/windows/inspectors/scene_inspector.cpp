@@ -2,6 +2,7 @@
 
 #include <awesome/data/scene_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 #include <awesome/encoding/json.h>
 #include <awesome/entity/world.h>
 

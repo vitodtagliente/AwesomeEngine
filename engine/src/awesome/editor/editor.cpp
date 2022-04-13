@@ -64,6 +64,7 @@ namespace editor
 		for (const auto& window : m_windows)
 		{
 			Layout::begin(window->getTitle());
+			window->setFocus(Layout::isWindowFocused());
 			window->render();
 			Layout::end();
 		}

@@ -1,17 +1,32 @@
 #include "scene_window.h"
 
+#include <awesome/application/input.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 #include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
 namespace editor
 {
+	void SceneWindow::update(const double deltaTime)
+	{
+		Input& input = Input::instance();
+		if (input.isKeyPressed(KeyCode::F2))
+		{
+			m_renaming = true;
+		}
+		else if (m_renaming && input.isKeyPressed(KeyCode::Enter))
+		{
+			m_renaming = false;
+		}
+	}
+
 	void SceneWindow::render()
 	{
-		const auto& selection = getState()->selection;
+		const auto& selection = State::instance().selection;
 		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
 			? selection->asEntity()
 			: nullptr;
@@ -22,7 +37,7 @@ namespace editor
 		{
 			Entity* const newEntity = world.spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
-			getState()->select(newEntity);
+			State::instance().select(newEntity);
 			Layout::scrollToBottom();
 		}
 
@@ -32,7 +47,7 @@ namespace editor
 			if (Layout::button("Delete"))
 			{
 				world.destroy(selectedEntity);
-				getState()->select();
+				State::instance().select();
 			}
 		}
 
@@ -42,7 +57,7 @@ namespace editor
 			if (Layout::button("Clear"))
 			{
 				world.clear();
-				getState()->select();
+				State::instance().select();
 			}
 		}
 
@@ -53,9 +68,17 @@ namespace editor
 
 		for (const auto& entity : world.getEntities())
 		{
-			if (Layout::selectable(entity->name, selectedEntity != nullptr && entity.get() == selectedEntity))
+			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
+			if (isSelected && m_renaming)
 			{
-				getState()->select(entity.get());
+				Layout::rename(entity->name);
+			}
+			else
+			{
+				if (Layout::selectable(entity->name, isSelected))
+				{
+					State::instance().select(entity.get());
+				}
 			}
 		}
 
@@ -68,7 +91,7 @@ namespace editor
 			const std::string name = m_filename.c_str();
 			if (!name.empty())
 			{
-				const std::string filename = (getState()->path / name).string() + ".scene";
+				const std::string filename = (State::instance().path / name).string() + ".scene";
 				Archive archive(filename, Archive::Mode::Write);
 				archive << json::Serializer::to_string(world.serialize());
 

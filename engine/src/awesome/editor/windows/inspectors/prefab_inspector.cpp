@@ -2,6 +2,7 @@
 
 #include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 #include <awesome/entity/world.h>
 
 #include "entity_layout.h"

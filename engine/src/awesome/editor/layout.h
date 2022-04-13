@@ -212,7 +212,10 @@ namespace editor
 				input("Value", value);
 				});
 		}
+		static bool isWindowFocused();
+		static bool isWindowHovered();
 		static void newLine();
+		static void rename(std::string& value);
 		static void sameLine();
 		static bool selectable(const std::string& name, bool selected);
 		static bool selectable(const std::string& name, bool selected, const std::function<void()>& handler);
@@ -221,6 +224,7 @@ namespace editor
 		static void scrollToBottom();
 		static void slider(const std::string& name, int min, int max, int& value);
 		static void slider(const std::string& name, float min, float max, float& value);
+		static void setKeyboardFocusHere();
 		static void sprite(const SpriteAssetPtr& sprite);
 		static void sprite(const SpriteAssetPtr& sprite, float width, float height);
 		static void text(const std::string& str);

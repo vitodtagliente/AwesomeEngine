@@ -3,6 +3,7 @@
 #include <awesome/data/asset_importer.h>
 #include <awesome/data/image_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 
 namespace editor
 {

@@ -2,6 +2,7 @@
 
 #include <awesome/data/sprite_animation_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 
 namespace editor
 {

@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/editor/state.h>
 #include <awesome/editor/window.h>
 
 namespace editor

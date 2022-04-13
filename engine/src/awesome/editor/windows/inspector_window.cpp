@@ -1,12 +1,13 @@
 #include "inspector_window.h"
 
-#include "inspectors/entity_inspector.h"
-#include "inspectors/image_inspector.h"
-#include "inspectors/prefab_inspector.h"
-#include "inspectors/scene_inspector.h"
-#include "inspectors/sprite_animation_inspector.h"
-#include "inspectors/sprite_inspector.h"
-#include "inspectors/text_inspector.h"
+#include <awesome/editor/state.h>
+#include <awesome/editor/windows/inspectors/entity_inspector.h>
+#include <awesome/editor/windows/inspectors/image_inspector.h>
+#include <awesome/editor/windows/inspectors/prefab_inspector.h>
+#include <awesome/editor/windows/inspectors/scene_inspector.h>
+#include <awesome/editor/windows/inspectors/sprite_animation_inspector.h>
+#include <awesome/editor/windows/inspectors/sprite_inspector.h>
+#include <awesome/editor/windows/inspectors/text_inspector.h>
 
 namespace editor
 {
@@ -29,7 +30,7 @@ namespace editor
 
 	void InspectorWindow::update(const double deltaTime)
 	{
-		const auto& selection = getState()->selection;
+		const auto& selection = State::instance().selection;
 		if (selection.has_value())
 		{
 			for (const auto& inspector : m_inspectors)
@@ -45,14 +46,14 @@ namespace editor
 
 	void InspectorWindow::render()
 	{
-		const auto& selection = getState()->selection;
+		const auto& selection = State::instance().selection;
 		if (selection.has_value())
 		{
 			for (const auto& inspector : m_inspectors)
 			{
 				if (inspector->canInspect(*selection))
 				{
-					inspector->inspect(*selection, getState()->path);
+					inspector->inspect(*selection, State::instance().path);
 					break;
 				}
 			}
