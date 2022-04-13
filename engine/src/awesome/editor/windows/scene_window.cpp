@@ -40,9 +40,24 @@ namespace editor
 				{
 					World& world = World::instance();
 					world.destroy(selectedEntity);
-					if (!world.getEntities().empty())
+					const auto& entities = world.getEntities();
+					if (!entities.empty())
 					{
-						state.select(world.getEntities().at(0).get());
+						if (entities[0]->getId() == selectedEntity->getId())
+						{
+							if (entities.size() > 1)
+							{
+								state.select(entities[1].get());
+							}
+							else
+							{
+								state.select();
+							}
+						}
+						else
+						{
+							state.select(entities[0].get());
+						}
 					}
 					else
 					{
