@@ -11,6 +11,7 @@ include_directories(
     src/
     vendor/glad/include/
 	vendor/glfw/include/
+	vendor/IconFontCppHeaders/
 	vendor/stb/
 	vendor/imgui/
 	vendor/imgui/misc/cpp

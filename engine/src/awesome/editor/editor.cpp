@@ -11,6 +11,7 @@
 #include <awesome/data/asset_importer.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/color_scheme.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/inspector_window.h>
@@ -29,6 +30,17 @@ namespace editor
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance().getHandler()), true);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
+
+		// icons setup
+		{
+			io.Fonts->AddFontDefault();
+
+			// merge in icons from Font Awesome
+			static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+			ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+			io.Fonts->AddFontFromFileTTF((std::string("../fonts/") + FONT_ICON_FILE_NAME_FAS).c_str(), 12.0f, &icons_config, icons_ranges);
+			// use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
+		}
 
 		ColorScheme scheme;
 		scheme.apply();

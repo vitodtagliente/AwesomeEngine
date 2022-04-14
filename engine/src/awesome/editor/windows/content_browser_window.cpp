@@ -3,6 +3,7 @@
 #include <awesome/core/string_util.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/entity/entity.h>
@@ -22,7 +23,7 @@ namespace editor
 	{
 		State& state = State::instance();
 
-		if (Layout::button("+"))
+		if (Layout::button(ICON_FA_PLUS))
 		{
 			static const std::string DefaultName{ "New Folder" };
 			int i = 0;
@@ -43,7 +44,7 @@ namespace editor
 
 		Layout::sameLine();
 		const std::string previousFilter = m_filter;
-		Layout::input("Filter", m_filter);
+		Layout::input(ICON_FA_SEARCH, m_filter);
 		if (previousFilter != m_filter)
 		{
 			state.select();

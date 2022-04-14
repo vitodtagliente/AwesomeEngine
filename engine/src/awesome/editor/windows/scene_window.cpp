@@ -4,6 +4,7 @@
 #include <awesome/core/string_util.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/encoding/json.h>
@@ -84,7 +85,7 @@ namespace editor
 
 		World& world = World::instance();
 
-		if (Layout::button("+"))
+		if (Layout::button(ICON_FA_PLUS))
 		{
 			Entity* const newEntity = world.spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
@@ -95,7 +96,7 @@ namespace editor
 		Layout::sameLine();
 
 		const std::string previousFilter = m_filter;
-		Layout::input("Filter", m_filter);
+		Layout::input(ICON_FA_SEARCH, m_filter);
 		if (previousFilter != m_filter)
 		{
 			state.select();
