@@ -35,7 +35,7 @@ namespace editor
 		};
 
 		std::filesystem::path m_contentPath;
+		std::string m_filter;
 		Dir m_dir;
-		std::string m_newFolderName;
 	};
 }

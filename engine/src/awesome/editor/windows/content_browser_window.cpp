@@ -1,5 +1,6 @@
 #include "content_browser_window.h"
 
+#include <awesome/core/string_util.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/layout.h>
@@ -11,31 +12,41 @@ namespace editor
 	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
 		, m_contentPath(State::instance().path)
+		, m_filter()
 		, m_dir(m_contentPath)
-		, m_newFolderName()
 	{
 
 	}
 
 	void ContentBrowserWindow::render()
 	{
-		const auto& selection = State::instance().selection;
+		State& state = State::instance();
 
-		Layout::input("Folder", m_newFolderName);
-		Layout::sameLine();
-		if (Layout::button("New Folder") && !m_newFolderName.empty())
+		if (Layout::button("+"))
 		{
-			std::filesystem::create_directory(m_dir.path / m_newFolderName);
-			m_newFolderName.clear();
+			static const std::string DefaultName{ "New Folder" };
+			int i = 0;
+			while (true)
+			{
+				std::filesystem::path path = m_dir.path / (DefaultName + ((i == 0) ? "" : std::string(" ") + std::to_string(i)));
+				if (!std::filesystem::exists(path))
+				{
+					std::filesystem::create_directory(path);
+					break;
+				}
+				else
+				{
+					++i;
+				}
+			}
 		}
 
-		if (selection.has_value())
+		Layout::sameLine();
+		const std::string previousFilter = m_filter;
+		Layout::input("Filter", m_filter);
+		if (previousFilter != m_filter)
 		{
-			Layout::sameLine();
-			if (Layout::button("Delete"))
-			{
-
-			}
+			state.select();
 		}
 
 		Layout::separator();
@@ -49,10 +60,15 @@ namespace editor
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
+			if (!StringUtil::contains(file.string(), m_filter, StringUtil::CompareMode::IgnoreCase))
+			{
+				continue;
+			}
+
 			if (Layout::selectable(file.stem().string(),
-				selection.has_value()
-				&& selection->type == State::Selection::Type::Asset
-				&& selection->asAsset()->filename == file.string()))
+				state.selection.has_value()
+				&& state.selection->type == State::Selection::Type::Asset
+				&& state.selection->asAsset()->filename == file.string()))
 			{
 				// is directory
 				if (!file.has_extension())
