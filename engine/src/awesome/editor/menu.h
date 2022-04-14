@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
+#include "file_dialog.h"
 
 namespace editor
 {
@@ -11,5 +11,8 @@ namespace editor
 		Menu() = default;
 
 		void render();
+
+	private:
+		FileDialog m_fileDialog;
 	};
 }

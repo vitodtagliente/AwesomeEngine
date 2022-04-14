@@ -1,5 +1,7 @@
 #include "menu.h"
 
+#include <filesystem>
+
 #include <imgui.h>
 
 #include <awesome/application/application.h>
@@ -8,7 +10,12 @@
 namespace editor
 {
 	void Menu::render()
-	{
+	{                
+        static const auto& saveScene = [](const std::filesystem::path& filename) -> void
+        {
+
+        };
+
         if (ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))
@@ -22,12 +29,12 @@ namespace editor
 
                 if (ImGui::MenuItem("Save Scene"))
                 {
-
+                    m_fileDialog.open(saveScene);
                 }
 
                 if (ImGui::MenuItem("Save Scene as..."))
                 {
-
+                    m_fileDialog.open(saveScene);
                 }
 
                 ImGui::Separator();
@@ -41,5 +48,7 @@ namespace editor
             }
             ImGui::EndMainMenuBar();
         }
+
+        m_fileDialog.render();
 	}
 }
