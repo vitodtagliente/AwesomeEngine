@@ -23,7 +23,7 @@ namespace editor
 
 		if (m_isRenaming)
 		{
-			if (input.isKeyPressed(KeyCode::Enter))
+			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
 			{
 				m_isRenaming = false;
 			}
@@ -99,6 +99,7 @@ namespace editor
 		if (previousFilter != m_filter)
 		{
 			state.select();
+			m_isRenaming = false;
 		}
 
 		const auto& entities = world.getEntities();
@@ -109,22 +110,23 @@ namespace editor
 
 		for (const auto& entity : entities)
 		{
-			if (!m_filter.empty())
-			{
-				if (!StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
-				{
-					continue;
-				}
-			}
-
 			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
 			if (isSelected && m_isRenaming)
 			{
 				Layout::rename(entity->name);
 			}
-			else if (Layout::selectable(entity->name, isSelected))
+			else
 			{
-				state.select(entity.get());
+				if (!m_filter.empty() && !StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
+				{
+					continue;
+				}
+
+				if (Layout::selectable(entity->name, isSelected))
+				{
+					state.select(entity.get());
+					m_isRenaming = false;
+				}
 			}
 		}
 

@@ -159,8 +159,8 @@ namespace editor
 	void Layout::rename(std::string& value)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0);
+		ImGui::SetKeyboardFocusHere(0);
 		ImGui::InputText("##rename", &value, ImGuiInputTextFlags_EnterReturnsTrue);
-		setKeyboardFocusHere();
 		ImGui::PopStyleVar();
 	}
 
