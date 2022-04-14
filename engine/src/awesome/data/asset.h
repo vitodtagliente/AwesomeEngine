@@ -9,8 +9,6 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 
-#include "image.h"
-
 struct Asset : public ISerializable
 {
 	enum class Type : int

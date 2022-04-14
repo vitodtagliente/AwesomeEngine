@@ -2,8 +2,6 @@
 
 #include <fstream>
 
-#include <awesome/data/asset_library.h>
-
 Asset::Asset()
 	: id()
 	, type(Type::None)

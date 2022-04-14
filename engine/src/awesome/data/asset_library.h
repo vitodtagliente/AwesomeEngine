@@ -37,11 +37,11 @@ private:
 
 	struct Slot
 	{
-		Slot(const std::shared_ptr<Asset>& asset)
+		Slot(const std::weak_ptr<Asset>& asset)
 			: asset(asset)
 		{}
 
-		AssetPtr asset;
+		std::weak_ptr<Asset> asset;
 	};
 
 	std::shared_ptr<Asset> create(const AssetDescriptor& descriptor, const std::filesystem::path& filename);

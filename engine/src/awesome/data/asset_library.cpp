@@ -53,23 +53,25 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	};
 
 	const auto& it = m_cache.find(id);
-	if (it == m_cache.end())
+	if (it != m_cache.end())
 	{
-		std::filesystem::path filename;
-		if (getRedirector(id, filename) == false)
+		auto asset = it->second.asset.lock();
+		if (asset != nullptr)
 		{
-			return nullptr;
+			return asset;
 		}
+	}
 
-		Asset descriptor = Asset::load(filename);
-		std::shared_ptr<Asset> asset = create(descriptor, getAssetFilename(filename));
-		m_cache.insert(std::make_pair(asset->id, Slot(asset)));
-		return asset;
-	}
-	else
+	std::filesystem::path filename;
+	if (getRedirector(id, filename) == false)
 	{
-		return it->second.asset;
+		return nullptr;
 	}
+
+	Asset descriptor = Asset::load(filename);
+	std::shared_ptr<Asset> asset = create(descriptor, getAssetFilename(filename));
+	m_cache.insert(std::make_pair(asset->id, Slot(asset)));
+	return asset;
 }
 
 std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, const std::filesystem::path& filename)
@@ -121,7 +123,7 @@ bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename
 {
 	const auto& it = m_register.find(id);
 	if (it != m_register.end())
-	{		
+	{
 		return filename = it->second.filename, true;
 	}
 	return false;
