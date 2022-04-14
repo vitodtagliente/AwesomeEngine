@@ -13,6 +13,11 @@ namespace editor
 {
 	void SceneWindow::update(const double /*deltaTime*/)
 	{
+		if (hasFocus() == false)
+		{
+			return;
+		}
+
 		Input& input = Input::instance();
 
 		if (m_isRenaming)

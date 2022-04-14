@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include <awesome/application/application.h>
+#include <awesome/editor/file_dialog.h>
 
 namespace editor
 {
@@ -13,6 +14,18 @@ namespace editor
             if (ImGui::BeginMenu("File"))
             {
                 if (ImGui::MenuItem("New"))
+                {
+
+                }
+
+                ImGui::Separator();
+
+                if (ImGui::MenuItem("Save Scene"))
+                {
+
+                }
+
+                if (ImGui::MenuItem("Save Scene as..."))
                 {
 
                 }
