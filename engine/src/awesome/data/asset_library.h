@@ -41,6 +41,8 @@ private:
 			: asset(asset)
 		{}
 
+		inline bool isExpired() const { return asset.expired(); }
+
 		std::weak_ptr<Asset> asset;
 	};
 

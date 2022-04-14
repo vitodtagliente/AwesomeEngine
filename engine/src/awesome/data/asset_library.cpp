@@ -53,13 +53,9 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	};
 
 	const auto& it = m_cache.find(id);
-	if (it != m_cache.end())
+	if (it != m_cache.end() && !it->second.isExpired())
 	{
-		auto asset = it->second.asset.lock();
-		if (asset != nullptr)
-		{
-			return asset;
-		}
+		return it->second.asset.lock();
 	}
 
 	std::filesystem::path filename;
