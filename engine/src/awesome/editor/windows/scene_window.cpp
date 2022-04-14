@@ -20,6 +20,11 @@ namespace editor
 			return;
 		}
 
+		State& state = State::instance();
+		const auto& selection = state.selection;
+		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
+			? selection->asEntity()
+			: nullptr;
 		Input& input = Input::instance();
 
 		if (m_isRenaming)
@@ -29,7 +34,7 @@ namespace editor
 				m_isRenaming = false;
 			}
 		}
-		else
+		else if (selectedEntity)
 		{
 			if (input.isKeyPressed(KeyCode::F2))
 			{
@@ -37,39 +42,30 @@ namespace editor
 			}
 			else if (input.isKeyPressed(KeyCode::Delete))
 			{
-				State& state = State::instance();
-				const auto& selection = state.selection;
-				Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
-					? selection->asEntity()
-					: nullptr;
-
-				if (selectedEntity)
+				World& world = World::instance();
+				world.destroy(selectedEntity);
+				const auto& entities = world.getEntities();
+				if (!entities.empty())
 				{
-					World& world = World::instance();
-					world.destroy(selectedEntity);
-					const auto& entities = world.getEntities();
-					if (!entities.empty())
+					if (entities[0]->getId() == selectedEntity->getId())
 					{
-						if (entities[0]->getId() == selectedEntity->getId())
+						if (entities.size() > 1)
 						{
-							if (entities.size() > 1)
-							{
-								state.select(entities[1].get());
-							}
-							else
-							{
-								state.select();
-							}
+							state.select(entities[1].get());
 						}
 						else
 						{
-							state.select(entities[0].get());
+							state.select();
 						}
 					}
 					else
 					{
-						state.select();
+						state.select(entities[0].get());
 					}
+				}
+				else
+				{
+					state.select();
 				}
 			}
 		}
@@ -88,7 +84,7 @@ namespace editor
 		if (Layout::button(ICON_FA_PLUS))
 		{
 			Entity* const newEntity = world.spawn();
-			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
+			newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
 			state.select(newEntity);
 			Layout::scrollToBottom();
 		}

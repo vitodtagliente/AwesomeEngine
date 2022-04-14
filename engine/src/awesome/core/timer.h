@@ -12,8 +12,9 @@ public:
 
 	void tick(double deltaTime);
 	
-	void reset();
+	void expire();
 	void pause();
+	void reset();
 	void resume();
 	void stop();
 

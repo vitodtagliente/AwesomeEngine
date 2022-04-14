@@ -20,6 +20,11 @@ void Timer::reset()
 	m_timer = m_time;
 }
 
+void Timer::expire()
+{
+	m_timer = 0;
+}
+
 void Timer::pause()
 {
 	m_canTick = false;

@@ -32,10 +32,14 @@ namespace editor
 			std::filesystem::path parent;
 			std::vector<std::filesystem::path> files;
 			Timer refreshTimer;
+
+			void refresh();
 		};
 
-		std::filesystem::path m_contentPath;
+		std::filesystem::path m_root;
 		std::string m_filter;
 		Dir m_dir;
+		bool m_isRenaming;
+		std::string m_rename;
 	};
 }

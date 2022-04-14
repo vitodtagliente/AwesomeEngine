@@ -1,5 +1,6 @@
 #include "content_browser_window.h"
 
+#include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
@@ -12,9 +13,11 @@ namespace editor
 {
 	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
-		, m_contentPath(State::instance().path)
+		, m_root(State::instance().path)
 		, m_filter()
-		, m_dir(m_contentPath)
+		, m_dir(m_root)
+		, m_isRenaming()
+		, m_rename()
 	{
 
 	}
@@ -52,7 +55,7 @@ namespace editor
 
 		Layout::separator();
 
-		if (m_contentPath != m_dir.path && Layout::selectable("..", false))
+		if (m_root != m_dir.path && Layout::selectable("..", false))
 		{
 			m_dir = Dir(m_dir.parent);
 			State::instance().path = m_dir.parent;
@@ -61,34 +64,44 @@ namespace editor
 
 		for (const std::filesystem::path& file : m_dir.files)
 		{
-			if (!StringUtil::contains(file.string(), m_filter, StringUtil::CompareMode::IgnoreCase))
-			{
-				continue;
-			}
-
-			if (Layout::selectable(file.stem().string(),
-				state.selection.has_value()
+			const bool isSelected = state.selection.has_value()
 				&& state.selection->type == State::Selection::Type::Asset
-				&& state.selection->asAsset()->filename == file.string()))
+				&& state.selection->asAsset()->filename == file.string();
+
+			if (isSelected && m_isRenaming)
 			{
-				// is directory
-				if (!file.has_extension())
+				Layout::rename(m_rename);
+			}
+			else
+			{
+				if (!m_filter.empty() && !StringUtil::contains(file.string(), m_filter, StringUtil::CompareMode::IgnoreCase))
 				{
-					m_dir = Dir(file);
-					State::instance().path = m_dir.path;
-					return;
+					continue;
 				}
-				else
+
+				if (Layout::selectable(file.stem().string(), isSelected))
 				{
-					Asset descriptor = Asset::load(file.string());
-					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
-					if (asset)
+					m_isRenaming = false;
+
+					// is directory
+					if (!file.has_extension())
 					{
-						State::instance().select(asset);
+						m_dir = Dir(file);
+						state.path = m_dir.path;
+						return;
 					}
 					else
 					{
-						State::instance().select();
+						Asset descriptor = Asset::load(file.string());
+						std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+						if (asset)
+						{
+							state.select(asset);
+						}
+						else
+						{
+							state.select();
+						}
 					}
 				}
 			}
@@ -101,6 +114,43 @@ namespace editor
 		if (m_dir.refreshTimer.isExpired())
 		{
 			m_dir = Dir(m_dir.path);
+		}
+
+		if (!hasFocus())
+		{
+			return;
+		}
+
+		State& state = State::instance();
+		const bool hasSelectedAsset = state.selection.has_value()
+			&& state.selection->type == State::Selection::Type::Asset;
+		Input& input = Input::instance();
+
+		if (m_isRenaming)
+		{
+			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
+			{
+				m_isRenaming = false;
+				const std::string extension = state.selection->asAsset()->filename.stem().extension().string();
+				std::filesystem::rename(state.selection->asAsset()->filename, state.selection->asAsset()->filename.parent_path() / (m_rename + extension + Asset::Extension));
+				std::filesystem::rename(state.selection->asAsset()->filename.parent_path() / state.selection->asAsset()->filename.stem(), state.selection->asAsset()->filename.parent_path() / (m_rename + extension));
+				m_rename.clear();
+				m_dir.refresh();
+			}
+		}
+		else if (hasSelectedAsset)
+		{
+			if (input.isKeyPressed(KeyCode::F2))
+			{
+				m_isRenaming = true;
+				m_rename = state.selection->asAsset()->filename.stem().stem().string();
+			}
+			else if (input.isKeyPressed(KeyCode::Delete))
+			{
+				std::filesystem::remove(state.selection->asAsset()->filename);
+				std::filesystem::remove(state.selection->asAsset()->filename.parent_path() / state.selection->asAsset()->filename.stem());
+				m_dir.refresh();
+			}
 		}
 	}
 
@@ -118,6 +168,11 @@ namespace editor
 				files.push_back(file);
 			}
 		}
+	}
+
+	void ContentBrowserWindow::Dir::refresh()
+	{
+		refreshTimer.expire();
 	}
 
 	REFLECT_WINDOW(ContentBrowserWindow);
