@@ -61,6 +61,7 @@ namespace editor
 	void Editor::render(graphics::Renderer* const)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+		m_menu.render();
 		for (const auto& window : m_windows)
 		{
 			Layout::begin(window->getTitle());

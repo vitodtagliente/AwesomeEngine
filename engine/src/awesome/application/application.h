@@ -36,6 +36,7 @@ public:
 	virtual ~Application();
 
 	int run();
+	void exit();
 
 	template <typename T = Module>
 	T* const registerModule()

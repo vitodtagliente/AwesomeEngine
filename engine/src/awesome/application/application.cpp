@@ -96,6 +96,11 @@ int Application::run()
 	return 0;
 }
 
+void Application::exit()
+{
+	Canvas::instance().close();
+}
+
 void Application::registerDefaultModules()
 {
 	registerModule<graphics::Graphics>();

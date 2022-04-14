@@ -6,6 +6,7 @@
 
 #include <awesome/application/application.h>
 
+#include "menu.h"
 #include "state.h"
 #include "window.h"
 
@@ -39,5 +40,6 @@ namespace editor
 
 		State m_state;
 		std::vector<std::unique_ptr<Window>> m_windows;
+		Menu m_menu;
 	};
 }
