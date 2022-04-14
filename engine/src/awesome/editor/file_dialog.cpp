@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include <awesome/editor/layout.h>
+#include <awesome/editor/state.h>
 
 namespace editor
 {
@@ -32,7 +33,7 @@ namespace editor
 
 			if (Layout::button("Save"))
 			{
-				m_handler(m_filename);
+				m_handler(State::instance().path / (m_filename + ".scene"));
 				m_filename.clear();
 				m_open = false;
 				ImGui::CloseCurrentPopup();

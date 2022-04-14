@@ -130,26 +130,6 @@ namespace editor
 				}
 			}
 		}
-
-		Layout::separator();
-
-		Layout::beginContext("scene");
-		Layout::input("Filename", m_filename);
-		if (Layout::button("Save Scene"))
-		{
-			const std::string name = m_filename.c_str();
-			if (!name.empty())
-			{
-				const std::string filename = (state.path / name).string() + ".scene";
-				Archive archive(filename, Archive::Mode::Write);
-				archive << json::Serializer::to_string(world.serialize());
-
-				AssetImporter importer;
-				importer.import(filename);
-			}
-			m_filename.clear();
-		}
-		Layout::endContext();
 	}
 
 	void SceneWindow::onFocusChange(const bool focus)
