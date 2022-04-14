@@ -103,13 +103,9 @@ namespace editor
 			m_isRenaming = false;
 		}
 
-		const auto& entities = world.getEntities();
-		if (!entities.empty())
-		{
-			Layout::separator();
-		}
+		Layout::separator();
 
-		for (const auto& entity : entities)
+		for (const auto& entity : world.getEntities())
 		{
 			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
 			if (isSelected && m_isRenaming)
