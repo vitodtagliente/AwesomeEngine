@@ -1,5 +1,4 @@
 /// Copyright (c) Vito Domenico Tagliente
-
 #pragma once
 
 #include <string>

@@ -1,6 +1,7 @@
 #include "scene_window.h"
 
 #include <awesome/application/input.h>
+#include <awesome/core/string_util.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
 #include <awesome/editor/layout.h>
@@ -83,7 +84,7 @@ namespace editor
 
 		World& world = World::instance();
 
-		if (Layout::button("Add"))
+		if (Layout::button("+"))
 		{
 			Entity* const newEntity = world.spawn();
 			newEntity->name = std::string("Entity-") + std::to_string(world.getEntities().size() + 1);
@@ -91,34 +92,39 @@ namespace editor
 			Layout::scrollToBottom();
 		}
 
-		if (!world.getEntities().empty())
+		Layout::sameLine();
+
+		const std::string previousFilter = m_filter;
+		Layout::input("Filter", m_filter);
+		if (previousFilter != m_filter)
 		{
-			Layout::sameLine();
-			if (Layout::button("Clear"))
-			{
-				world.clear();
-				state.select();
-			}
+			state.select();
 		}
 
-		if (!world.getEntities().empty())
+		const auto& entities = world.getEntities();
+		if (!entities.empty())
 		{
 			Layout::separator();
 		}
 
-		for (const auto& entity : world.getEntities())
+		for (const auto& entity : entities)
 		{
+			if (!m_filter.empty())
+			{
+				if (!StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
+				{
+					continue;
+				}
+			}
+
 			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
 			if (isSelected && m_isRenaming)
 			{
 				Layout::rename(entity->name);
 			}
-			else
+			else if (Layout::selectable(entity->name, isSelected))
 			{
-				if (Layout::selectable(entity->name, isSelected))
-				{
-					state.select(entity.get());
-				}
+				state.select(entity.get());
 			}
 		}
 

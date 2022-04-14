@@ -16,13 +16,12 @@ std::vector<std::string> StringUtil::split(const std::string& str, const char de
 	return tokens;
 }
 
-bool StringUtil::contains(const std::string& str, const char match)
+bool StringUtil::contains(const std::string& str, const std::string& match, CompareMode mode)
 {
-	return str.find(match) != std::string::npos;
-}
-
-bool StringUtil::contains(const std::string& str, const std::string& match)
-{
+	if (mode == CompareMode::IgnoreCase)
+	{
+		return toLower(str).find(toLower(match)) != std::string::npos;
+	}
 	return str.find(match) != std::string::npos;
 }
 

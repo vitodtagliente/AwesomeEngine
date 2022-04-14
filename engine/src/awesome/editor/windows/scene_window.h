@@ -22,6 +22,7 @@ namespace editor
 
 	private:
 		std::string m_filename;
+		std::string m_filter;
 		bool m_isRenaming;
 	};
 }

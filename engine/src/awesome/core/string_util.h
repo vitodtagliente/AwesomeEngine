@@ -1,3 +1,4 @@
+/// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
 #include <string>
@@ -17,8 +18,7 @@ public:
 
 	static std::vector<std::string> split(const std::string& str, char delimiter);
 
-	static bool contains(const std::string& str, char match);
-	static bool contains(const std::string& str, const std::string& match);
+	static bool contains(const std::string& str, const std::string& match, CompareMode mode = CompareMode::CaseSensitive);
 
 	static bool startsWith(const std::string& str, const std::string& match, CompareMode mode = CompareMode::CaseSensitive);
 	static bool endsWith(const std::string& str, const std::string& match, CompareMode mode = CompareMode::CaseSensitive);
