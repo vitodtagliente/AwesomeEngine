@@ -17,6 +17,7 @@ namespace editor
 		std::function<void()> onAddItem;
 		std::function<void(const std::string&)> onItemSelection;
 		std::function<void(const std::string&)> onRemoveItem;
+		std::function<void(const std::string&, const std::string&)> onRenameItem;
 
 	private:
 

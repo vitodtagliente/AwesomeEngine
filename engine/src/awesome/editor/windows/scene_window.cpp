@@ -13,62 +13,67 @@
 
 namespace editor
 {
-	void SceneWindow::update(const double /*deltaTime*/)
+	SceneWindow::SceneWindow()
+		: m_list()
 	{
-		if (hasFocus() == false)
+		m_list.onAddItem = []() -> void
 		{
-			return;
-		}
+			World& world = World::instance();
+			Entity* const newEntity = world.spawn();
+			newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
+			State::instance().select(newEntity);
+			Layout::scrollToBottom();
+		};
 
-		State& state = State::instance();
-		const auto& selection = state.selection;
-		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
-			? selection->asEntity()
-			: nullptr;
-		Input& input = Input::instance();
+		m_list.onItemSelection = [](const std::string& item) -> void
+		{
+			if (item.empty())
+			{
+				State::instance().select();
+			}
+			else
+			{
+				State::instance().select(World::instance().findEntityByName(item));
+			}
+		};
 
-		if (m_isRenaming)
+		m_list.onRemoveItem = [](const std::string& item) -> void
 		{
-			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
+			World& world = World::instance();
+			world.destroy(world.findEntityByName(item));
+			const auto& entities = world.getEntities();
+			if (!entities.empty())
 			{
-				m_isRenaming = false;
-			}
-		}
-		else if (selectedEntity)
-		{
-			if (input.isKeyPressed(KeyCode::F2))
-			{
-				m_isRenaming = true;
-			}
-			else if (input.isKeyPressed(KeyCode::Delete))
-			{
-				World& world = World::instance();
-				world.destroy(selectedEntity);
-				const auto& entities = world.getEntities();
-				if (!entities.empty())
+				if (entities[0]->name == item)
 				{
-					if (entities[0]->getId() == selectedEntity->getId())
+					if (entities.size() > 1)
 					{
-						if (entities.size() > 1)
-						{
-							state.select(entities[1].get());
-						}
-						else
-						{
-							state.select();
-						}
+						State::instance().select(entities[1].get());
 					}
 					else
 					{
-						state.select(entities[0].get());
+						State::instance().select();
 					}
 				}
 				else
 				{
-					state.select();
+					State::instance().select(entities[0].get());
 				}
 			}
-		}
+			else
+			{
+				State::instance().select();
+			}
+		};
+
+		m_list.onRenameItem = [](const std::string& item, const std::string& name) -> void
+		{
+			Entity* const entity = World::instance().findEntityByName(item);
+			if (entity)
+			{
+				entity->name = name;
+			}
+		};
 	}
 
 	void SceneWindow::render()
@@ -79,57 +84,14 @@ namespace editor
 			? selection->asEntity()
 			: nullptr;
 
-		World& world = World::instance();
-
-		if (Layout::button(ICON_FA_PLUS))
-		{
-			Entity* const newEntity = world.spawn();
-			newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
-			state.select(newEntity);
-			Layout::scrollToBottom();
-		}
-
-		Layout::sameLine();
-
-		const std::string previousFilter = m_filter;
-		Layout::input(ICON_FA_SEARCH, m_filter);
-		if (previousFilter != m_filter)
-		{
-			state.select();
-			m_isRenaming = false;
-		}
-
-		Layout::separator();
-
-		for (const auto& entity : world.getEntities())
-		{
-			const bool isSelected = selectedEntity != nullptr && entity.get() == selectedEntity;
-			if (isSelected && m_isRenaming)
+		std::vector<std::string> items;
+		const auto& entities = World::instance().getEntities();
+		std::transform(entities.begin(), entities.end(), std::back_inserter(items), [](const std::unique_ptr<Entity>& entity) -> std::string
 			{
-				Layout::rename(entity->name);
+				return entity->name;
 			}
-			else
-			{
-				if (!m_filter.empty() && !StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
-				{
-					continue;
-				}
-
-				if (Layout::selectable(entity->name, isSelected))
-				{
-					state.select(entity.get());
-					m_isRenaming = false;
-				}
-			}
-		}
-	}
-
-	void SceneWindow::onFocusChange(const bool focus)
-	{
-		if (!focus)
-		{
-			m_isRenaming = false;
-		}
+		);
+		m_list.render(items, selectedEntity ? selectedEntity->name : "");
 	}
 
 	REFLECT_WINDOW(SceneWindow)

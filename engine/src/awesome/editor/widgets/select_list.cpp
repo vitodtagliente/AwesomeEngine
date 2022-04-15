@@ -64,6 +64,7 @@ namespace editor
 			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
 			{
 				m_state = State::Navigating;
+				onRenameItem(selectedItem, m_tempRename);
 			}
 		}
 		else if (hasSelectedItem)
@@ -71,6 +72,7 @@ namespace editor
 			if (input.isKeyPressed(KeyCode::F2))
 			{
 				m_state = State::Renaming;
+				m_tempRename = selectedItem;
 			}
 			else if (input.isKeyPressed(KeyCode::Delete))
 			{
