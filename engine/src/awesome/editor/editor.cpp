@@ -25,7 +25,7 @@ namespace editor
 	{
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance().getHandler()), true);
