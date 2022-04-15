@@ -1,13 +1,7 @@
 #include "scene_window.h"
 
-#include <awesome/application/input.h>
-#include <awesome/core/string_util.h>
-#include <awesome/data/archive.h>
-#include <awesome/data/asset_importer.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
-#include <awesome/encoding/json.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
