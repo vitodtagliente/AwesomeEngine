@@ -10,7 +10,7 @@ namespace editor
 	class SelectList
 	{
 	public:
-		SelectList() = default;
+		SelectList();
 
 		void render(const std::vector<std::string>& items, const std::string& selectedItem);
 

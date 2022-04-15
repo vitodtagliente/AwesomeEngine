@@ -7,6 +7,13 @@
 
 namespace editor
 {
+	SelectList::SelectList()
+		: m_filter()
+		, m_state(State::Navigating)
+		, m_tempRename()
+	{
+	}
+	
 	void SelectList::render(const std::vector<std::string>& items, const std::string& selectedItem)
 	{
 		const bool hasActiveFocus = Layout::isWindowFocused();
