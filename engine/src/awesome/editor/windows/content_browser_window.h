@@ -7,6 +7,7 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/core/timer.h>
+#include <awesome/editor/widgets/select_list.h>
 #include <awesome/editor/window.h>
 
 namespace editor
@@ -28,18 +29,17 @@ namespace editor
 		{
 			Dir(const std::filesystem::path& path);
 
-			std::filesystem::path path;
-			std::filesystem::path parent;
 			std::vector<std::filesystem::path> files;
+			std::filesystem::path parent;
+			std::filesystem::path path;
 			Timer refreshTimer;
 
 			void refresh();
 		};
 
-		std::filesystem::path m_root;
-		std::string m_filter;
 		Dir m_dir;
-		bool m_isRenaming;
-		std::string m_rename;
+		SelectList m_list;
+		std::filesystem::path m_root;
+		std::string m_selectedItem;
 	};
 }

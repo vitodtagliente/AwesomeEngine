@@ -1,32 +1,20 @@
 #include "content_browser_window.h"
 
-#include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
-#include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
-#include <awesome/entity/entity.h>
 
 namespace editor
 {
 	ContentBrowserWindow::ContentBrowserWindow()
 		: Window()
-		, m_root(State::instance().path)
-		, m_filter()
-		, m_dir(m_root)
-		, m_isRenaming()
-		, m_rename()
+		, m_dir(AssetLibrary::instance().getDirectory())
+		, m_list()
+		, m_root(AssetLibrary::instance().getDirectory())
+		, m_selectedItem()
 	{
-
-	}
-
-	void ContentBrowserWindow::render()
-	{
-		State& state = State::instance();
-
-		if (Layout::button(ICON_FA_PLUS))
+		m_list.onAddItem = [this]() -> void
 		{
 			static const std::string DefaultName{ "New Folder" };
 			int i = 0;
@@ -38,74 +26,78 @@ namespace editor
 					std::filesystem::create_directory(path);
 					break;
 				}
-				else
-				{
-					++i;
-				}
+				++i;
 			}
-		}
+		};
 
-		Layout::sameLine();
-		const std::string previousFilter = m_filter;
-		Layout::input(ICON_FA_SEARCH, m_filter);
-		if (previousFilter != m_filter)
+		m_list.onItemSelection = [this](const std::string& item) -> void
 		{
-			state.select();
-		}
-
-		Layout::separator();
-
-		if (m_root != m_dir.path && Layout::selectable("..", false))
-		{
-			m_dir = Dir(m_dir.parent);
-			State::instance().path = m_dir.parent;
-			return;
-		}
-
-		for (const std::filesystem::path& file : m_dir.files)
-		{
-			const bool isSelected = state.selection.has_value()
-				&& state.selection->type == State::Selection::Type::Asset
-				&& state.selection->asAsset()->filename == file.string();
-
-			if (isSelected && m_isRenaming)
+			if (item.empty())
 			{
-				Layout::rename(m_rename);
+
+			}
+			else if (item == "..")
+			{
+				m_dir = Dir(m_dir.parent);
+				State::instance().path = m_dir.parent;
 			}
 			else
 			{
-				if (!m_filter.empty() && !StringUtil::contains(file.string(), m_filter, StringUtil::CompareMode::IgnoreCase))
+				m_selectedItem = item;
+				std::filesystem::path path = m_dir.path / (item + Asset::Extension);
+				if (std::filesystem::exists(path))
 				{
-					continue;
-				}
-
-				if (Layout::selectable(file.stem().string(), isSelected))
-				{
-					m_isRenaming = false;
-
-					// is directory
-					if (!file.has_extension())
+					Asset descriptor = Asset::load(path.string());
+					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+					if (asset)
 					{
-						m_dir = Dir(file);
-						state.path = m_dir.path;
-						return;
+						State::instance().select(asset);
 					}
 					else
 					{
-						Asset descriptor = Asset::load(file.string());
-						std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
-						if (asset)
-						{
-							state.select(asset);
-						}
-						else
-						{
-							state.select();
-						}
+						State::instance().select();
 					}
 				}
+				else // is directory
+				{
+					m_dir = Dir(m_dir.path / item);
+					State::instance().path = m_dir.path;
+					return;
+				}
 			}
+		};
+
+		m_list.onRemoveItem = [this](const std::string& item) -> void
+		{
+			std::filesystem::remove(m_dir.path / item);
+			std::filesystem::remove(m_dir.path / (item + Asset::Extension));
+			m_dir.refresh();
+		};
+
+		m_list.onRenameItem = [this](const std::string& item, const std::string& name) -> void
+		{
+			const auto& it = item.find_last_of(".");
+			const std::string extension = item.substr(it);
+			const std::string n_name = StringUtil::endsWith(name, extension) ? name : name + extension;
+			std::filesystem::rename(m_dir.path / item, m_dir.path / n_name);
+			std::filesystem::rename(m_dir.path / (item + Asset::Extension), m_dir.path / (n_name + Asset::Extension));
+			m_dir.refresh();
+		};
+	}
+
+	void ContentBrowserWindow::render()
+	{
+		std::vector<std::string> items;
+		if (m_root != m_dir.path)
+		{
+			items.push_back("..");
 		}
+		std::transform(m_dir.files.begin(), m_dir.files.end(), std::back_inserter(items), [](const std::filesystem::path& file) -> std::string
+			{
+				return file.stem().string();
+			}
+		);
+		m_list.render(items, m_selectedItem);
 	}
 
 	void ContentBrowserWindow::update(const double deltaTime)
@@ -115,49 +107,12 @@ namespace editor
 		{
 			m_dir = Dir(m_dir.path);
 		}
-
-		if (!hasFocus())
-		{
-			return;
-		}
-
-		State& state = State::instance();
-		const bool hasSelectedAsset = state.selection.has_value()
-			&& state.selection->type == State::Selection::Type::Asset;
-		Input& input = Input::instance();
-
-		if (m_isRenaming)
-		{
-			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
-			{
-				m_isRenaming = false;
-				const std::string extension = state.selection->asAsset()->filename.stem().extension().string();
-				std::filesystem::rename(state.selection->asAsset()->filename, state.selection->asAsset()->filename.parent_path() / (m_rename + extension + Asset::Extension));
-				std::filesystem::rename(state.selection->asAsset()->filename.parent_path() / state.selection->asAsset()->filename.stem(), state.selection->asAsset()->filename.parent_path() / (m_rename + extension));
-				m_rename.clear();
-				m_dir.refresh();
-			}
-		}
-		else if (hasSelectedAsset)
-		{
-			if (input.isKeyPressed(KeyCode::F2))
-			{
-				m_isRenaming = true;
-				m_rename = state.selection->asAsset()->filename.stem().stem().string();
-			}
-			else if (input.isKeyPressed(KeyCode::Delete))
-			{
-				std::filesystem::remove(state.selection->asAsset()->filename);
-				std::filesystem::remove(state.selection->asAsset()->filename.parent_path() / state.selection->asAsset()->filename.stem());
-				m_dir.refresh();
-			}
-		}
 	}
 
 	ContentBrowserWindow::Dir::Dir(const std::filesystem::path& path)
-		: path(path)
+		: files()
 		, parent(path.parent_path())
-		, files()
+		, path(path)
 		, refreshTimer(10.0)
 	{
 		for (const auto& entry : std::filesystem::directory_iterator(path))
