@@ -25,6 +25,8 @@ public:
 		return std::static_pointer_cast<T>(find(id));
 	}
 
+	void remove(const uuid& id);
+
 	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
 	void insert(const AssetDescriptor& descriptor);

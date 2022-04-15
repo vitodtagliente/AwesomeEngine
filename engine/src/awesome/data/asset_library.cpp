@@ -17,6 +17,11 @@ AssetLibrary::AssetLibrary()
 
 }
 
+void AssetLibrary::remove(const uuid& id)
+{
+	m_cache.erase(id);
+}
+
 void AssetLibrary::insert(const AssetDescriptor& descriptor)
 {
 	m_register.insert(std::make_pair(descriptor.id, descriptor));
