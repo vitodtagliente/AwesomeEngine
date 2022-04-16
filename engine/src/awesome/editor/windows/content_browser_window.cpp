@@ -30,24 +30,24 @@ namespace editor
 			}
 		};
 
-		m_list.onItemSelection = [this](const std::string& item) -> void
+		m_list.onItemSelection = [this](const std::filesystem::path& file) -> void
 		{
-			if (item.empty())
-			{
-
-			}
-			else if (item == "..")
+			if (file.string() == "..")
 			{
 				m_dir = Dir(m_dir.parent);
 				State::instance().path = m_dir.parent;
 			}
 			else
 			{
-				m_selectedItem = item;
-				std::filesystem::path path = m_dir.path / (item + Asset::Extension);
-				if (std::filesystem::exists(path))
+				m_selectedItem = file;
+				if (std::filesystem::is_directory(file))
 				{
-					Asset descriptor = Asset::load(path.string());
+					m_dir = Dir(file);
+					State::instance().path = m_dir.path;
+				}
+				else
+				{
+					Asset descriptor = Asset::load(file);
 					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 					if (asset)
 					{
@@ -58,46 +58,51 @@ namespace editor
 						State::instance().select();
 					}
 				}
-				else // is directory
-				{
-					m_dir = Dir(m_dir.path / item);
-					State::instance().path = m_dir.path;
-					return;
-				}
 			}
 		};
 
-		m_list.onRemoveItem = [this](const std::string& item) -> void
+		static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
 		{
-			std::filesystem::remove(m_dir.path / item);
-			std::filesystem::remove(m_dir.path / (item + Asset::Extension));
+			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
+		};
+
+		static const auto getAssetName = [](const std::filesystem::path& filename) -> std::string
+		{
+			return filename.stem().stem().string();
+		};
+
+		static const auto renameAsset = [](const std::filesystem::path& filename, const std::string& name) -> std::string
+		{
+			return "";
+		};
+
+		m_list.onRemoveItem = [this](const std::filesystem::path& file) -> void
+		{
+			std::filesystem::remove(file);
+			std::filesystem::remove(getAssetFilename(file));
 			m_dir.refresh();
 		};
 
-		m_list.onRenameItem = [this](const std::string& item, const std::string& name) -> void
+		m_list.onRenameItem = [this](const std::filesystem::path& file, const std::string& name) -> void
 		{
-			const auto& it = item.find_last_of(".");
-			const std::string extension = item.substr(it);
-			const std::string n_name = StringUtil::endsWith(name, extension) ? name : name + extension;
-			std::filesystem::rename(m_dir.path / item, m_dir.path / n_name);
-			std::filesystem::rename(m_dir.path / (item + Asset::Extension), m_dir.path / (n_name + Asset::Extension));
+			std::filesystem::rename(file, renameAsset(file, name));
+			std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
 			m_dir.refresh();
 		};
 	}
 
 	void ContentBrowserWindow::render()
 	{
-		std::vector<std::string> items;
+		std::map<std::filesystem::path, std::string> items;
 		if (m_root != m_dir.path)
 		{
-			items.push_back("..");
+			items.insert(std::make_pair(m_dir.parent, ".."));
 		}
-		std::transform(m_dir.files.begin(), m_dir.files.end(), std::back_inserter(items), [](const std::filesystem::path& file) -> std::string
-			{
-				return file.stem().string();
-			}
-		);
-		m_list.render(items, m_selectedItem);
+		for (const auto& file : m_dir.files)
+		{
+			items.insert(std::make_pair(file, file.stem().string()));
+		}
+		m_list.render(items, !m_selectedItem.empty() ? std::optional<std::filesystem::path>(m_selectedItem) : std::nullopt);
 	}
 
 	void ContentBrowserWindow::update(const double deltaTime)

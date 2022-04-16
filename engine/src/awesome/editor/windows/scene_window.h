@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include <awesome/core/uuid.h>
 #include <awesome/editor/widgets/select_list.h>
 #include <awesome/editor/window.h>
 
@@ -19,6 +20,6 @@ namespace editor
 		REFLECT()
 
 	private:
-		SelectList m_list;
+		SelectList<uuid> m_list;
 	};
 }

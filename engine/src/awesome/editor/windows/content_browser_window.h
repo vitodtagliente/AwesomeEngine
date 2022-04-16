@@ -38,8 +38,8 @@ namespace editor
 		};
 
 		Dir m_dir;
-		SelectList m_list;
+		SelectList<std::filesystem::path> m_list;
 		std::filesystem::path m_root;
-		std::string m_selectedItem;
+		std::filesystem::path m_selectedItem;
 	};
 }

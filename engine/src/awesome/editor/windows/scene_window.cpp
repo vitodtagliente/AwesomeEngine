@@ -19,26 +19,19 @@ namespace editor
 			Layout::scrollToBottom();
 		};
 
-		m_list.onItemSelection = [](const std::string& item) -> void
+		m_list.onItemSelection = [](const uuid& id) -> void
 		{
-			if (item.empty())
-			{
-				State::instance().select();
-			}
-			else
-			{
-				State::instance().select(World::instance().findEntityByName(item));
-			}
+			State::instance().select(World::instance().findEntityById(id));
 		};
 
-		m_list.onRemoveItem = [](const std::string& item) -> void
+		m_list.onRemoveItem = [](const uuid& id) -> void
 		{
 			World& world = World::instance();
-			world.destroy(world.findEntityByName(item));
+			world.destroy(world.findEntityById(id));
 			const auto& entities = world.getEntities();
 			if (!entities.empty())
 			{
-				if (entities[0]->name == item)
+				if (entities[0]->getId() == id)
 				{
 					if (entities.size() > 1)
 					{
@@ -60,9 +53,9 @@ namespace editor
 			}
 		};
 
-		m_list.onRenameItem = [](const std::string& item, const std::string& name) -> void
+		m_list.onRenameItem = [](const uuid& id, const std::string& name) -> void
 		{
-			Entity* const entity = World::instance().findEntityByName(item);
+			Entity* const entity = World::instance().findEntityById(id);
 			if (entity)
 			{
 				entity->name = name;
@@ -78,14 +71,12 @@ namespace editor
 			? selection->asEntity()
 			: nullptr;
 
-		std::vector<std::string> items;
-		const auto& entities = World::instance().getEntities();
-		std::transform(entities.begin(), entities.end(), std::back_inserter(items), [](const std::unique_ptr<Entity>& entity) -> std::string
-			{
-				return entity->name;
-			}
-		);
-		m_list.render(items, selectedEntity ? selectedEntity->name : "");
+		std::map<uuid, std::string> items;
+		for (const auto& entity : World::instance().getEntities())
+		{
+			items.insert(std::make_pair(entity->getId(), entity->name));
+		}
+		m_list.render(items, selectedEntity ? std::optional<uuid>(selectedEntity->getId()) : std::nullopt);
 	}
 
 	REFLECT_WINDOW(SceneWindow)
