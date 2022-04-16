@@ -2,7 +2,6 @@
 
 #include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/entity/world.h>
 
 #include "entity_layout.h"
@@ -15,7 +14,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Prefab;
 	}
 
-	void PrefabInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
+	void PrefabInspector::inspect(const State::Selection& selection)
 	{
 		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(selection.asAsset());
 		if (prefab == nullptr)

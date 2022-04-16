@@ -14,7 +14,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Scene;
 	}
 
-	void SceneInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
+	void SceneInspector::inspect(const State::Selection& selection)
 	{
 		SceneAssetPtr asset = std::static_pointer_cast<SceneAsset>(selection.asAsset());
 		if (asset == nullptr)

@@ -13,13 +13,9 @@ namespace editor
 	class SpriteInspector : public InspectorWindow::Inspector
 	{
 	public:
-		SpriteInspector();
+		SpriteInspector() = default;
 
 		virtual bool canInspect(const State::Selection& selection) override;
-		virtual void inspect(const State::Selection& selection, const std::filesystem::path&) override;
-
-	private:
-		SpriteAsset* m_previousSelectedAsset;
-		std::string m_filename;
+		virtual void inspect(const State::Selection& selection) override;
 	};
 }

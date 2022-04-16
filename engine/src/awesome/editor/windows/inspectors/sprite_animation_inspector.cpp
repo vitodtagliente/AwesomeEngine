@@ -2,7 +2,6 @@
 
 #include <awesome/data/sprite_animation_asset.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 
 namespace editor
 {
@@ -19,7 +18,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::SpriteAnimation;
 	}
 
-	void SpriteAnimationInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
+	void SpriteAnimationInspector::inspect(const State::Selection& selection)
 	{
 		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(selection.asAsset());
 		if (animation == nullptr)

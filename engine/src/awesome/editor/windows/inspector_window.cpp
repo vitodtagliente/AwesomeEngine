@@ -53,7 +53,7 @@ namespace editor
 			{
 				if (inspector->canInspect(*selection))
 				{
-					inspector->inspect(*selection, State::instance().path);
+					inspector->inspect(*selection);
 					break;
 				}
 			}

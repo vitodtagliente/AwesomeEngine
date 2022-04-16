@@ -15,6 +15,6 @@ namespace editor
 		SceneInspector() = default;
 
 		virtual bool canInspect(const State::Selection& selection) override;
-		virtual void inspect(const State::Selection& selection, const std::filesystem::path&) override;
+		virtual void inspect(const State::Selection& selection) override;
 	};
 }

@@ -15,7 +15,7 @@ namespace editor
 		EntityInspector();
 
 		virtual bool canInspect(const State::Selection& selection) override;
-		virtual void inspect(const State::Selection& selection, const std::filesystem::path& path) override;
+		virtual void inspect(const State::Selection& selection) override;
 
 	private:
 		class Entity* m_previousSelecytedEntity;

@@ -2,7 +2,6 @@
 
 #include <awesome/data/text_asset.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 
 namespace editor
 {
@@ -12,7 +11,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Text;
 	}
 
-	void TextInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
+	void TextInspector::inspect(const State::Selection& selection)
 	{
 		TextAssetPtr asset = std::static_pointer_cast<TextAsset>(selection.asAsset());
 		if (asset == nullptr)

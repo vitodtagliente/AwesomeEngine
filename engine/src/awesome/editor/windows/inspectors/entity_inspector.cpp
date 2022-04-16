@@ -22,7 +22,7 @@ namespace editor
 		return selection.type == State::Selection::Type::Entity;
 	}
 
-	void EntityInspector::inspect(const State::Selection& selection, const std::filesystem::path& path)
+	void EntityInspector::inspect(const State::Selection& selection)
 	{
 		Entity* const entity = selection.asEntity();
 		
@@ -47,17 +47,17 @@ namespace editor
 		Layout::input("Filename", m_filename);
 		if (Layout::button("Save Prefab"))
 		{
-			const std::string name = m_filename.c_str();
-			if (!name.empty())
-			{
-				const std::string filename = (path / name).string() + ".prefab";
-				Archive archive(filename, Archive::Mode::Write);
-				archive << json::Serializer::to_string(entity->serialize());
-		
-				AssetImporter importer;
-				importer.import(filename);
-			}
-			m_filename.clear();
+			// const std::string name = m_filename.c_str();
+			// if (!name.empty())
+			// {
+			// 	const std::string filename = (path / name).string() + ".prefab";
+			// 	Archive archive(filename, Archive::Mode::Write);
+			// 	archive << json::Serializer::to_string(entity->serialize());
+			// 
+			// 	AssetImporter importer;
+			// 	importer.import(filename);
+			// }
+			// m_filename.clear();
 		}
 		Layout::endContext();
 	}

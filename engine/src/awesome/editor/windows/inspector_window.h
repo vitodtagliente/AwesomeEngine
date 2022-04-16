@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
 #include <memory>
 #include <string>
 #include <vector>
@@ -21,7 +20,7 @@ namespace editor
 			virtual ~Inspector() = default;
 			virtual bool canInspect(const State::Selection&) { return false; }
 			virtual void update(const State::Selection& , double) {}
-			virtual void inspect(const State::Selection&, const std::filesystem::path&) = 0;
+			virtual void inspect(const State::Selection&) = 0;
 		};
 
 		InspectorWindow();

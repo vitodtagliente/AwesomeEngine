@@ -17,7 +17,7 @@ namespace editor
 			&& selection.asAsset()->type == Asset::Type::Image;
 	}
 
-	void ImageInspector::inspect(const State::Selection& selection, const std::filesystem::path&)
+	void ImageInspector::inspect(const State::Selection& selection)
 	{
 		ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(selection.asAsset());
 		if (image == nullptr)
