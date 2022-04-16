@@ -17,14 +17,19 @@ AssetLibrary::AssetLibrary()
 
 }
 
-void AssetLibrary::remove(const uuid& id)
+void AssetLibrary::unload(const uuid& id)
 {
 	m_cache.erase(id);
 }
 
 void AssetLibrary::insert(const AssetDescriptor& descriptor)
 {
-	m_register.insert(std::make_pair(descriptor.id, descriptor));
+	m_register[descriptor.id] = descriptor;
+}
+
+void AssetLibrary::remove(const uuid& id)
+{
+	m_register.erase(id);
 }
 
 std::vector<Asset> AssetLibrary::list() const

@@ -25,11 +25,12 @@ public:
 		return std::static_pointer_cast<T>(find(id));
 	}
 
-	void remove(const uuid& id);
+	void unload(const uuid& id);
 
 	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
 	void insert(const AssetDescriptor& descriptor);
+	void remove(const uuid& id);
 
 	std::vector<AssetDescriptor> list() const;
 	std::vector<AssetDescriptor> list(Asset::Type type) const;

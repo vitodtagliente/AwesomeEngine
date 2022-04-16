@@ -89,12 +89,14 @@ namespace editor
 			std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 			if (asset)
 			{
-				AssetLibrary::instance().remove(asset->id);
-			}
+				AssetLibrary& library = AssetLibrary::instance();
+				library.unload(asset->id);
+				library.remove(asset->id);
 
-			std::filesystem::remove(file);
-			std::filesystem::remove(getAssetFilename(file));
-			m_dir.refresh();
+				std::filesystem::remove(file);
+				std::filesystem::remove(getAssetFilename(file));
+				m_dir.refresh();
+			}			
 		};
 
 		m_list.onRenameItem = [this](const std::filesystem::path& file, const std::string& name) -> void
@@ -103,12 +105,16 @@ namespace editor
 			std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 			if (asset)
 			{
-				AssetLibrary::instance().remove(asset->id);
-			}
+				AssetLibrary& library = AssetLibrary::instance();
 
-			std::filesystem::rename(file, renameAsset(file, name));
-			std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
-			m_dir.refresh();
+				const std::filesystem::path newAssetFilename = renameAsset(file, name);
+				std::filesystem::rename(file, newAssetFilename);
+				std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
+				m_dir.refresh();
+
+				asset->filename = newAssetFilename;
+				library.insert(*asset);
+			}			
 		};
 	}
 
