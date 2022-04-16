@@ -26,6 +26,7 @@ namespace editor
 				if (!std::filesystem::exists(path))
 				{
 					std::filesystem::create_directory(path);
+					m_dir.refresh();
 					break;
 				}
 				++i;
@@ -34,31 +35,26 @@ namespace editor
 
 		m_list.onItemSelection = [this](const std::filesystem::path& file) -> void
 		{
-			if (file.string() == "..")
+			m_selectedItem = file;
+			if (std::filesystem::is_directory(file))
 			{
-				m_dir = Dir(m_dir.parent);
-				State::instance().path = m_dir.parent;
-			}
-			else
-			{
-				m_selectedItem = file;
-				if (std::filesystem::is_directory(file))
+				if (m_dir.parent == file)
 				{
 					m_dir = Dir(file);
 					State::instance().path = m_dir.path;
 				}
+			}
+			else
+			{
+				Asset descriptor = Asset::load(file);
+				std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+				if (asset)
+				{
+					State::instance().select(asset);
+				}
 				else
 				{
-					Asset descriptor = Asset::load(file);
-					std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
-					if (asset)
-					{
-						State::instance().select(asset);
-					}
-					else
-					{
-						State::instance().select();
-					}
+					State::instance().select();
 				}
 			}
 		};
@@ -108,22 +104,44 @@ namespace editor
 
 		m_list.onRenameItem = [this](const std::filesystem::path& file, const std::string& name) -> void
 		{
-			AssetLibrary& library = AssetLibrary::instance();
-			Asset descriptor = Asset::load(file);
-			std::shared_ptr<Asset> asset = library.find(descriptor.id);
-			if (asset)
+			if (std::filesystem::is_directory(file))
 			{
-				const std::filesystem::path newAssetFilename = renameAsset(file, name);
-				if (file != newAssetFilename)
+				std::filesystem::rename(file, file.parent_path() / name);
+				m_dir.refresh();
+			}
+			else
+			{
+				AssetLibrary& library = AssetLibrary::instance();
+				Asset descriptor = Asset::load(file);
+				std::shared_ptr<Asset> asset = library.find(descriptor.id);
+				if (asset)
 				{
-					std::filesystem::rename(file, newAssetFilename);
-					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
-					m_dir.refresh();
+					const std::filesystem::path newAssetFilename = renameAsset(file, name);
+					if (file != newAssetFilename)
+					{
+						std::filesystem::rename(file, newAssetFilename);
+						std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
+						m_dir.refresh();
 
-					asset->filename = newAssetFilename;
-					library.insert(*asset);
-				}				
-			}			
+						asset->filename = newAssetFilename;
+						library.insert(*asset);
+					}
+				}
+			}
+		};
+
+		m_list.onRenderItem = [this](const std::filesystem::path& file, const std::string& name, const bool isSelected) -> bool
+		{
+			if (std::filesystem::is_directory(file) && name != "..")
+			{
+				return Layout::selectable(name, isSelected, [this, file]() -> void
+					{
+						m_dir = Dir(file);
+						State::instance().path = m_dir.path;
+					}
+				);
+			}
+			return Layout::selectable(name, isSelected);
 		};
 	}
 

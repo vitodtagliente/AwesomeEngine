@@ -19,10 +19,19 @@ namespace editor
 	{
 	public:
 		SelectList()
-			: m_filter()
+			: onAddItem()
+			, onItemSelection()
+			, onRemoveItem()
+			, onRenameItem()
+			, onRenderItem()
+			, m_filter()
 			, m_state(State::Navigating)
 			, m_tempRename()
 		{
+			onRenderItem = [](const T&, const std::string& name, const bool isSelected) -> bool 
+			{
+				return Layout::selectable(name, isSelected); 
+			};
 		}
 
 		void render(const std::map<T, std::string>& items, const std::optional<T>& selectedItem)
@@ -63,7 +72,7 @@ namespace editor
 						continue;
 					}
 
-					if (Layout::selectable(item.second, isSelected))
+					if (onRenderItem(item.first, item.second, isSelected))
 					{
 						onItemSelection(item.first);
 						m_state = State::Navigating;
@@ -77,6 +86,7 @@ namespace editor
 		std::function<void(const T&)> onItemSelection;
 		std::function<void(const T&)> onRemoveItem;
 		std::function<void(const T&, const std::string&)> onRenameItem;
+		std::function<bool(const T&, const std::string&, bool)> onRenderItem;
 
 	private:
 

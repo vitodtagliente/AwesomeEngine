@@ -176,9 +176,9 @@ namespace editor
 
 	bool Layout::selectable(const std::string& name, bool selected, const std::function<void()>& handler)
 	{
-		if (ImGui::Selectable(id(name).c_str(), selected))
+		if (ImGui::Selectable(id(name).c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick))
 		{
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+			if (ImGui::IsMouseDoubleClicked(0))
 			{
 				handler();
 			}
