@@ -58,7 +58,7 @@ namespace editor
 				bool changeDirectory = false;
 				if (std::filesystem::is_directory(file) && name != "..")
 				{
-					if (Layout::selectable(name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
+					if (Layout::selectable(std::string(ICON_FA_FOLDER) + " " + name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
 					{
 						m_state = NavigationState::Navigating;
 						m_tempRename = name;
