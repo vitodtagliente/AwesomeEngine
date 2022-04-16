@@ -1,18 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "file_dialog.h"
+#include <awesome/editor/widgets/save_file_dialog.h>
 
 namespace editor
 {
 	class Menu
 	{
 	public:
-		Menu() = default;
+		Menu();
 
 		void render();
 
 	private:
-		FileDialog m_fileDialog;
+		SaveFileDialog m_fileDialog;
 	};
 }

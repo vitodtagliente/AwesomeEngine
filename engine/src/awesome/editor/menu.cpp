@@ -7,11 +7,15 @@
 #include <awesome/application/application.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
-#include <awesome/editor/file_dialog.h>
 #include <awesome/entity/world.h>
 
 namespace editor
 {
+	Menu::Menu()
+		: m_fileDialog(".scene")
+	{
+	}
+
 	void Menu::render()
 	{
 		static const auto& saveScene = [](const std::filesystem::path& filename) -> void
@@ -64,6 +68,6 @@ namespace editor
 			ImGui::EndMainMenuBar();
 		}
 
-		m_fileDialog.render();
+		m_fileDialog.render("Save Scene...");
 	}
 }

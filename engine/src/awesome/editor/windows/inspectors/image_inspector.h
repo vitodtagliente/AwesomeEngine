@@ -5,9 +5,8 @@
 #include <string>
 #include <vector>
 
-#include <awesome/data/image_asset.h>
+#include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/editor/windows/inspector_window.h>
-#include <awesome/graphics/texture_rect.h>
 
 namespace editor
 {
@@ -20,7 +19,6 @@ namespace editor
 		virtual void inspect(const State::Selection& selection, const std::filesystem::path& path) override;
 
 	private:
-		ImageAsset* m_previousSelectedAsset;
-		std::string m_filename;
+		SaveFileDialog m_fileDialog;
 	};
 }
