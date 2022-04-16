@@ -34,6 +34,12 @@ namespace editor
 
 		Layout::separator();
 
+		if (m_dir.path != m_root && Layout::selectable("..", false))
+		{
+			m_state = NavigationState::Navigating;
+			selectFile(m_dir.parent);
+		}
+
 		for (const auto& file : m_dir.files)
 		{
 			const bool isSelected = m_selectedItem == file;
@@ -49,26 +55,28 @@ namespace editor
 					continue;
 				}
 
-				bool select = false;
+				bool changeDirectory = false;
 				if (std::filesystem::is_directory(file) && name != "..")
 				{
-					select = (Layout::selectable(name, isSelected, []() -> void
-						{
-							// m_dir = Dir(file);
-							// State::instance().path = m_dir.path;
-						}
-					));
+					if (Layout::selectable(name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
+					{
+						m_state = NavigationState::Navigating;
+						m_tempRename = name;
+						selectFile(file);
+					}
 				}
-				else
-				{
-					select = Layout::selectable(name, isSelected);
-				}
-
-				if (select)
+				else if (Layout::selectable(name, isSelected))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = name;
 					selectFile(file);
+				}
+
+				if (changeDirectory)
+				{
+					m_dir = Dir(file);
+					State::instance().path = m_dir.path;
+					break;
 				}
 			}
 		}
