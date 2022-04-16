@@ -1,5 +1,7 @@
 #include "content_browser_window.h"
 
+#include <regex>
+
 #include <awesome/core/string_util.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/layout.h>
@@ -71,13 +73,25 @@ namespace editor
 			return filename.stem().stem().string();
 		};
 
-		static const auto renameAsset = [](const std::filesystem::path& filename, const std::string& name) -> std::string
+		static const auto renameAsset = [](const std::filesystem::path& filename, const std::string& renaming) -> std::string
 		{
-			return "";
+			std::filesystem::path name = filename.stem();
+			while (name.has_extension())
+			{
+				name = name.stem();
+			}
+			return std::regex_replace(filename.string(), std::regex(name.string()), renaming);
 		};
 
 		m_list.onRemoveItem = [this](const std::filesystem::path& file) -> void
 		{
+			Asset descriptor = Asset::load(file);
+			std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+			if (asset)
+			{
+				AssetLibrary::instance().remove(asset->id);
+			}
+
 			std::filesystem::remove(file);
 			std::filesystem::remove(getAssetFilename(file));
 			m_dir.refresh();
@@ -85,6 +99,13 @@ namespace editor
 
 		m_list.onRenameItem = [this](const std::filesystem::path& file, const std::string& name) -> void
 		{
+			Asset descriptor = Asset::load(file);
+			std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+			if (asset)
+			{
+				AssetLibrary::instance().remove(asset->id);
+			}
+
 			std::filesystem::rename(file, renameAsset(file, name));
 			std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
 			m_dir.refresh();
