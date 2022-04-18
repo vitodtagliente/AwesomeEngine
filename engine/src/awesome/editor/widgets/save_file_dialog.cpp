@@ -75,10 +75,14 @@ namespace editor
 
 			if (Layout::button("Save"))
 			{
-				m_handler(m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension));
-				m_filename.clear();
-				m_open = false;
-				ImGui::CloseCurrentPopup();
+				const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
+				if (!std::filesystem::exists(fileToSave))
+				{
+					m_handler(fileToSave);
+					m_filename.clear();
+					m_open = false;
+					ImGui::CloseCurrentPopup();
+				}
 			}
 			ImGui::EndPopup();
 		}
