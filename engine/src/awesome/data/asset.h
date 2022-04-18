@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <memory>
+#include <set>
 #include <string>
 
 #include <awesome/core/reflection.h>
@@ -40,9 +41,14 @@ struct Asset : public ISerializable
 	static bool isAsset(const std::filesystem::path& filename);
 	static constexpr char* const Extension = ".asset";
 
+	static const std::set<std::string>& getExtensions(Type type);
+	static Type getTypeByExtension(const std::string& extension);
+
 	uuid id;
 	Type type;
 	std::filesystem::path filename;
+
+	static std::map<Asset::Type, std::set<std::string>> s_filetypes;
 
 	REFLECT()
 };
@@ -50,7 +56,7 @@ struct Asset : public ISerializable
 typedef Asset AssetDescriptor;
 typedef std::shared_ptr<Asset> AssetPtr;
 
-template <typename>
+template <typename T>
 struct AssetType final
 {
 	static Asset::Type get()

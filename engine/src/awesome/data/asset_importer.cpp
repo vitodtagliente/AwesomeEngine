@@ -4,16 +4,7 @@
 #include <awesome/data/asset_library.h>
 #include <awesome/encoding/json.h>
 
-std::map<Asset::Type, std::set<std::string>> AssetImporter::s_filetypes{
-	{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
-	{ Asset::Type::Prefab, {".prefab"} },
-	{ Asset::Type::Scene, {".scene"} },
-	{ Asset::Type::Sprite, {".sprite"} },
-	{ Asset::Type::SpriteAnimation, {".spriteanim"} },
-	{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} }
-};
-
-void AssetImporter::import(const std::filesystem::path& directory, bool recursive)
+void AssetImporter::import(const std::filesystem::path& directory, const bool recursive)
 {
 	for (const auto& entry : std::filesystem::directory_iterator(directory))
 	{
@@ -57,7 +48,7 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 		return true;
 	}
 
-	const Asset::Type type = getTypeByExtension(filename.extension().string());
+	const Asset::Type type = Asset::getTypeByExtension(filename.extension().string());
 	if (type != Asset::Type::None)
 	{
 		Archive archive(assetFilename, Archive::Mode::Write);
@@ -69,16 +60,4 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 	}
 
 	return true;
-}
-
-Asset::Type AssetImporter::getTypeByExtension(const std::string& ext) const
-{
-	for (const auto& pair : s_filetypes)
-	{
-		if (pair.second.find(ext) != pair.second.end())
-		{
-			return pair.first;
-		}
-	}
-	return Asset::Type::None;
 }
