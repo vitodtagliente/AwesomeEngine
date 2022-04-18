@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <awesome/core/reflection.h>
+#include <awesome/core/timer.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/window.h>
 #include <awesome/editor/utils/dir.h>
@@ -19,6 +20,7 @@ namespace editor
 
 		std::string getTitle() const override { return "Content Browser"; }
 		virtual void render() override;
+		virtual void update(double deltaTime) override;
 
 		REFLECT()
 
@@ -43,5 +45,6 @@ namespace editor
 		std::filesystem::path m_selectedItem;
 		NavigationState m_state{ NavigationState::Navigating };
 		std::string m_tempRename;
+		Timer m_timer{ 10 }; // seconds
 	};
 }

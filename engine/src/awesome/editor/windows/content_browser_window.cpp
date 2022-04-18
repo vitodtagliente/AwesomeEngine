@@ -80,6 +80,15 @@ namespace editor
 		}
 	}
 
+	void ContentBrowserWindow::update(double deltaTime)
+	{
+		m_timer.tick(deltaTime);
+		if (m_timer.isExpired())
+		{
+			refreshDir();
+		}
+	}
+
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
@@ -223,6 +232,7 @@ namespace editor
 	void ContentBrowserWindow::refreshDir()
 	{
 		m_dir = Dir(m_dir.path);
+		m_timer.reset();
 	}
 
 	REFLECT_WINDOW(ContentBrowserWindow);

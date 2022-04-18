@@ -37,7 +37,7 @@ namespace editor
 		ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 		if (ImGui::BeginPopupModal(title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			if (m_dir.path != m_root && Layout::selectable("..", false))
+			if (m_dir.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 			{
 				m_dir = Dir(m_dir.parent);
 			}
@@ -48,11 +48,17 @@ namespace editor
 				bool changeDirectory = false;
 				if (std::filesystem::is_directory(file) && filename != "..")
 				{
-					Layout::selectable(std::string(ICON_FA_FOLDER) + " " + filename, false, [&changeDirectory]() -> void { changeDirectory = true; });
+					if (ImGui::Selectable((std::string(ICON_FA_FOLDER) + " " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
+					{
+						if (ImGui::IsMouseDoubleClicked(0))
+						{
+							changeDirectory = true;
+						}
+					}
 				}
-				else
+				else if(file.stem().extension() == m_extension)
 				{
-					Layout::selectable(filename, false);
+					ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups);
 				}
 
 				if (changeDirectory)
