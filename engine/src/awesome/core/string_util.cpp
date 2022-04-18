@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <regex>
 #include <sstream>
 
 std::vector<std::string> StringUtil::split(const std::string& str, const char delimiter)
@@ -23,6 +24,11 @@ bool StringUtil::contains(const std::string& str, const std::string& match, Comp
 		return toLower(str).find(toLower(match)) != std::string::npos;
 	}
 	return str.find(match) != std::string::npos;
+}
+
+std::string StringUtil::replace(const std::string& str, const std::string& pattern, const std::string& replacement)
+{
+	return std::regex_replace(str, std::regex(pattern), replacement);
 }
 
 bool StringUtil::startsWith(const std::string& str, const std::string& match, const CompareMode mode)

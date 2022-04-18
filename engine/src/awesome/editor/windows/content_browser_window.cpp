@@ -1,7 +1,5 @@
 #include "content_browser_window.h"
 
-#include <regex>
-
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/icons.h>
@@ -82,15 +80,6 @@ namespace editor
 		}
 	}
 
-	void ContentBrowserWindow::update(const double deltaTime)
-	{
-		m_dir.refreshTimer.tick(deltaTime);
-		if (m_dir.refreshTimer.isExpired())
-		{
-			m_dir = Dir(m_dir.path);
-		}
-	}
-
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
@@ -125,7 +114,7 @@ namespace editor
 			if (!std::filesystem::exists(path))
 			{
 				std::filesystem::create_directory(path);
-				m_dir.refresh();
+				refreshDir();
 				break;
 			}
 			++i;
@@ -149,7 +138,7 @@ namespace editor
 
 			std::filesystem::remove(file);
 			std::filesystem::remove(getAssetFilename(file));
-			m_dir.refresh();
+			refreshDir();
 		}
 	}
 
@@ -202,13 +191,13 @@ namespace editor
 				rename = rename.stem();
 			}
 
-			return std::regex_replace(filename.string(), std::regex(name.string()), rename.string());
+			return StringUtil::replace(filename.string(), name.string(), rename.string());
 		};
 
 		if (std::filesystem::is_directory(file))
 		{
 			std::filesystem::rename(file, file.parent_path() / name);
-			m_dir.refresh();
+			refreshDir();
 		}
 		else
 		{
@@ -222,7 +211,7 @@ namespace editor
 				{
 					std::filesystem::rename(file, newAssetFilename);
 					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
-					m_dir.refresh();
+					refreshDir();
 
 					asset->filename = newAssetFilename;
 					library.insert(*asset);
@@ -231,25 +220,9 @@ namespace editor
 		}
 	}
 
-	ContentBrowserWindow::Dir::Dir(const std::filesystem::path& path)
-		: files()
-		, parent(path.parent_path())
-		, path(path)
-		, refreshTimer(10.0)
+	void ContentBrowserWindow::refreshDir()
 	{
-		for (const auto& entry : std::filesystem::directory_iterator(path))
-		{
-			const std::filesystem::path& file = entry.path();
-			if (Asset::isAsset(file) || entry.is_directory())
-			{
-				files.push_back(file);
-			}
-		}
-	}
-
-	void ContentBrowserWindow::Dir::refresh()
-	{
-		refreshTimer.expire();
+		m_dir = Dir(m_dir.path);
 	}
 
 	REFLECT_WINDOW(ContentBrowserWindow);

@@ -6,9 +6,9 @@
 #include <vector>
 
 #include <awesome/core/reflection.h>
-#include <awesome/core/timer.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/window.h>
+#include <awesome/editor/utils/dir.h>
 
 namespace editor
 {
@@ -19,7 +19,6 @@ namespace editor
 
 		std::string getTitle() const override { return "Content Browser"; }
 		virtual void render() override;
-		virtual void update(double deltaTime) override;
 
 		REFLECT()
 
@@ -30,18 +29,7 @@ namespace editor
 		void deleteFile(const std::filesystem::path& file);
 		void selectFile(const std::filesystem::path& file);
 		void renameFile(const std::filesystem::path& file, const std::string& name);
-
-		struct Dir
-		{
-			Dir(const std::filesystem::path& file);
-
-			std::vector<std::filesystem::path> files;
-			std::filesystem::path parent;
-			std::filesystem::path path;
-			Timer refreshTimer;
-
-			void refresh();
-		};
+		void refreshDir();
 
 		enum class NavigationState
 		{
