@@ -3,7 +3,7 @@
 
 namespace editor
 {
-	class ContextMenu
+	class MenuLayout
 	{
 	public:
 
