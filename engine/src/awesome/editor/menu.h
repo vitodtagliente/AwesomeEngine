@@ -8,11 +8,15 @@ namespace editor
 	class Menu
 	{
 	public:
-		Menu();
+		Menu() = default;
 
 		void render();
 
 	private:
-		SaveFileDialog m_sceneSaveDialog;
+
+		void menuFile();
+		void menuAssets();
+
+		SaveFileDialog m_saveFileDialog;
 	};
 }

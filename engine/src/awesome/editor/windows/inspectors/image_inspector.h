@@ -13,12 +13,12 @@ namespace editor
 	class ImageInspector : public InspectorWindow::Inspector
 	{
 	public:
-		ImageInspector();
+		ImageInspector() = default;
 
 		virtual bool canInspect(const State::Selection& selection) override;
 		virtual void inspect(const State::Selection& selection) override;
 
 	private:
-		SaveFileDialog m_fileDialog;
+		SaveFileDialog m_saveFileDialog;
 	};
 }

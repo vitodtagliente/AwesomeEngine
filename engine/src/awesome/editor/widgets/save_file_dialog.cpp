@@ -10,32 +10,34 @@
 
 namespace editor
 {
-	SaveFileDialog::SaveFileDialog(const std::string& extension)
+	SaveFileDialog::SaveFileDialog()
 		: m_dir(AssetLibrary::instance().getDirectory())
-		, m_extension(extension)
+		, m_extension()
 		, m_filename()
 		, m_handler()
 		, m_open(false)
 		, m_root(AssetLibrary::instance().getDirectory())
+		, m_title("Save File Dialog")
 	{
 	}
 
-	void SaveFileDialog::open(const std::function<void(const std::filesystem::path&)>& handler)
+	void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 	{
-		m_open = true;
+		m_extension = extension;
 		m_handler = handler;
+		m_open = true;
+		m_title = title;
 	}
 
-	void SaveFileDialog::render(const std::string& name)
+	void SaveFileDialog::render()
 	{
-		const std::string title = !name.empty() ? name : "Save File Dialog";
-		if (m_open && !ImGui::IsPopupOpen(title.c_str()))
+		if (m_open && !ImGui::IsPopupOpen(m_title.c_str()))
 		{
-			ImGui::OpenPopup(title.c_str());
+			ImGui::OpenPopup(m_title.c_str());
 		}
 
 		ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-		if (ImGui::BeginPopupModal(title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			if (m_dir.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 			{
@@ -56,7 +58,7 @@ namespace editor
 						}
 					}
 				}
-				else if(file.stem().extension() == m_extension)
+				else if (file.stem().extension() == m_extension)
 				{
 					ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups);
 				}
@@ -79,7 +81,7 @@ namespace editor
 
 			Layout::sameLine();
 
-			if (Layout::button("Save"))
+			if (Layout::button(std::string(ICON_FA_SAVE) + " Save"))
 			{
 				const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 				if (!std::filesystem::exists(fileToSave))

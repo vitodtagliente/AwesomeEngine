@@ -6,11 +6,6 @@
 
 namespace editor
 {
-	ImageInspector::ImageInspector()
-		: m_fileDialog(Asset::getExtensionByType(Asset::Type::Sprite))
-	{
-	}
-
 	bool ImageInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Asset
@@ -31,7 +26,7 @@ namespace editor
 
 		if (Layout::button("Generate Sprite"))
 		{
-			m_fileDialog.open([&image](const std::filesystem::path& filename) -> void
+			m_saveFileDialog.open("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [&image](const std::filesystem::path& filename) -> void
 				{
 					if (!filename.string().empty())
 					{
@@ -45,6 +40,6 @@ namespace editor
 			);
 		}
 
-		m_fileDialog.render("Save Sprite...");
+		m_saveFileDialog.render();
 	}
 }

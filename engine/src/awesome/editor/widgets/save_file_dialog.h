@@ -12,12 +12,12 @@ namespace editor
 	class SaveFileDialog
 	{
 	public:
-		SaveFileDialog(const std::string& extension);
+		SaveFileDialog();
 
 		inline bool isOpen() const { return m_open; }
 
-		void open(const std::function<void(const std::filesystem::path&)>& handler);
-		void render(const std::string& name);
+		void open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler);
+		void render();
 
 	private:
 		Dir m_dir;
@@ -26,5 +26,6 @@ namespace editor
 		std::function<void(const std::filesystem::path&)> m_handler;
 		bool m_open;
 		std::filesystem::path m_root;
+		std::string m_title;
 	};
 }
