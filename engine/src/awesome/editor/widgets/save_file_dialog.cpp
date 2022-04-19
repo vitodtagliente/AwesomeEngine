@@ -11,7 +11,7 @@
 namespace editor
 {
 	SaveFileDialog::SaveFileDialog()
-		: m_dir(AssetLibrary::instance().getDirectory())
+		: m_dir(State::instance().path)
 		, m_extension()
 		, m_filename()
 		, m_handler()
@@ -23,6 +23,7 @@ namespace editor
 
 	void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 	{
+		m_dir = Dir(State::instance().path);
 		m_extension = extension;
 		m_handler = handler;
 		m_open = true;

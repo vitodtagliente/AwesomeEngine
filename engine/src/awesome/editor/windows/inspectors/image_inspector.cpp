@@ -1,6 +1,5 @@
 #include "image_inspector.h"
 
-#include <awesome/data/asset_importer.h>
 #include <awesome/data/image_asset.h>
 #include <awesome/editor/layout.h>
 
@@ -21,25 +20,5 @@ namespace editor
 		}
 
 		Layout::image(image);
-
-		Layout::separator();
-
-		if (Layout::button("Generate Sprite"))
-		{
-			m_saveFileDialog.open("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [&image](const std::filesystem::path& filename) -> void
-				{
-					if (!filename.string().empty())
-					{
-						Sprite sprite(image, graphics::TextureRect());
-						sprite.save(filename);
-
-						AssetImporter importer;
-						importer.import(filename);
-					}
-				}
-			);
-		}
-
-		m_saveFileDialog.render();
 	}
 }
