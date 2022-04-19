@@ -13,6 +13,6 @@ namespace editor
 		void render();
 
 	private:
-		SaveFileDialog m_fileDialog;
+		SaveFileDialog m_sceneSaveDialog;
 	};
 }

@@ -7,7 +7,7 @@
 namespace editor
 {
 	ImageInspector::ImageInspector()
-		: m_fileDialog(".sprite")
+		: m_fileDialog(Asset::getExtensionByType(Asset::Type::Sprite))
 	{
 	}
 
@@ -37,7 +37,7 @@ namespace editor
 					{
 						Sprite sprite(image, graphics::TextureRect());
 						sprite.save(filename);
-						
+
 						AssetImporter importer;
 						importer.import(filename);
 					}

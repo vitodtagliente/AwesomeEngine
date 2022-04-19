@@ -3,8 +3,8 @@
 
 #include <filesystem>
 #include <memory>
-#include <set>
 #include <string>
+#include <vector>
 
 #include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
@@ -41,14 +41,15 @@ struct Asset : public ISerializable
 	static bool isAsset(const std::filesystem::path& filename);
 	static constexpr char* const Extension = ".asset";
 
-	static const std::set<std::string>& getExtensions(Type type);
+	static const std::vector<std::string>& getExtensionsByType(Type type);
+	static const std::string& getExtensionByType(Type type);
 	static Type getTypeByExtension(const std::string& extension);
 
 	uuid id;
 	Type type;
 	std::filesystem::path filename;
 
-	static std::map<Asset::Type, std::set<std::string>> s_filetypes;
+	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 
 	REFLECT()
 };

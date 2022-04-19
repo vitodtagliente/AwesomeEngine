@@ -3,7 +3,7 @@
 #include <fstream>
 #include <map>
 
-std::map<Asset::Type, std::set<std::string>> Asset::s_filetypes{
+std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 	{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
 	{ Asset::Type::Prefab, {".prefab"} },
 	{ Asset::Type::Scene, {".scene"} },
@@ -99,16 +99,33 @@ bool Asset::isAsset(const std::filesystem::path& filename)
 	return filename.extension().string() == Extension;
 }
 
-const std::set<std::string>& Asset::getExtensions(const Type type)
+const std::vector<std::string>& Asset::getExtensionsByType(const Type type)
 {
-	return s_filetypes[type];
+	static const std::vector<std::string> s_notFound;
+
+	const auto& it = s_filetypes.find(type);
+	if (it != s_filetypes.end())
+	{
+		return it->second;
+	}
+	return s_notFound;
+}
+
+const std::string& Asset::getExtensionByType(const Type type)
+{
+	const auto& extensions = getExtensionsByType(type);
+	if (!extensions.empty())
+	{
+		return extensions.at(0);
+	}
+	return "";
 }
 
 Asset::Type Asset::getTypeByExtension(const std::string& extension)
 {
 	for (const auto& pair : s_filetypes)
 	{
-		if (pair.second.find(extension) != pair.second.end())
+		if (std::find(pair.second.begin(), pair.second.end(), extension) != pair.second.end())
 		{
 			return pair.first;
 		}

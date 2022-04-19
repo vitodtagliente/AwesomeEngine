@@ -12,7 +12,7 @@
 namespace editor
 {
 	Menu::Menu()
-		: m_fileDialog(".scene")
+		: m_sceneSaveDialog(Asset::getExtensionByType(Asset::Type::Scene))
 	{
 	}
 
@@ -48,12 +48,12 @@ namespace editor
 
 				if (ImGui::MenuItem("Save Scene"))
 				{
-					m_fileDialog.open(saveScene);
+					m_sceneSaveDialog.open(saveScene);
 				}
 
 				if (ImGui::MenuItem("Save Scene as..."))
 				{
-					m_fileDialog.open(saveScene);
+					m_sceneSaveDialog.open(saveScene);
 				}
 
 				ImGui::Separator();
@@ -68,6 +68,6 @@ namespace editor
 			ImGui::EndMainMenuBar();
 		}
 
-		m_fileDialog.render("Save Scene...");
+		m_sceneSaveDialog.render("Save Scene...");
 	}
 }
