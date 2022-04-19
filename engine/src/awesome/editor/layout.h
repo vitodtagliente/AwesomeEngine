@@ -177,7 +177,7 @@ namespace editor
 
 			input("Key", *newKey);
 			sameLine();
-			if (button(TextIcon::save(" Save")))
+			if (button(TextIcon::plus()))
 			{
 				map.insert(std::make_pair(*newKey, T()));
 				if (typeid(K) == typeid(std::string))
@@ -188,7 +188,7 @@ namespace editor
 			if (!map.empty())
 			{
 				sameLine();
-				if (button("X"))
+				if (button(TextIcon::eraser()))
 				{
 					map.clear();
 				}
