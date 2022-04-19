@@ -2,9 +2,9 @@
 
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
+#include <awesome/editor/text_icon.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
@@ -24,7 +24,7 @@ namespace editor
 			processInput(selectedEntity);
 		}
 
-		if (Layout::button(ICON_FA_PLUS))
+		if (Layout::button(TextIcon::plus()))
 		{
 			addEntity();
 		}
@@ -32,7 +32,7 @@ namespace editor
 		Layout::sameLine();
 
 		const std::string previousFilter = m_filter;
-		Layout::input(ICON_FA_SEARCH, m_filter);
+		Layout::input(TextIcon::search(), m_filter);
 		if (previousFilter != m_filter || !hasActiveFocus)
 		{
 			m_state = NavigationState::Navigating;

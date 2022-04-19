@@ -2,9 +2,9 @@
 
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
+#include <awesome/editor/text_icon.h>
 
 namespace editor
 {
@@ -16,7 +16,7 @@ namespace editor
 			processInput(m_selectedItem);
 		}
 
-		if (Layout::button(ICON_FA_PLUS))
+		if (Layout::button(TextIcon::plus()))
 		{
 			addFolder();
 		}
@@ -24,7 +24,7 @@ namespace editor
 		Layout::sameLine();
 
 		const std::string previousFilter = m_filter;
-		Layout::input(ICON_FA_SEARCH, m_filter);
+		Layout::input(TextIcon::search(), m_filter);
 		if (previousFilter != m_filter || !hasActiveFocus)
 		{
 			m_state = NavigationState::Navigating;
@@ -56,7 +56,7 @@ namespace editor
 				bool changeDirectory = false;
 				if (std::filesystem::is_directory(file) && name != "..")
 				{
-					if (Layout::selectable(std::string(ICON_FA_FOLDER) + " " + name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
+					if (Layout::selectable(std::string(TextIcon::folder()) + " " + name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
 					{
 						m_state = NavigationState::Navigating;
 						m_tempRename = name;

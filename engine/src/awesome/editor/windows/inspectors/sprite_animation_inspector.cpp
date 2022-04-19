@@ -1,8 +1,8 @@
 #include "sprite_animation_inspector.h"
 
 #include <awesome/data/sprite_animation_asset.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/text_icon.h>
 
 namespace editor
 {
@@ -35,7 +35,7 @@ namespace editor
 
 		Layout::separator();
 
-		if (Layout::button(std::string(ICON_FA_SAVE) + " Save"))
+		if (Layout::button(TextIcon::save(" Save")))
 		{
 			animation->data.save(animation->filename.parent_path() / animation->filename.stem());
 		}
