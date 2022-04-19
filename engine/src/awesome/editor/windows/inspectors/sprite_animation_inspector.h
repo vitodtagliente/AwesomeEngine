@@ -13,7 +13,7 @@ namespace editor
 	class SpriteAnimationInspector : public InspectorWindow::Inspector
 	{
 	public:
-		SpriteAnimationInspector();
+		SpriteAnimationInspector() = default;
 
 		virtual bool canInspect(const State::Selection& selection) override;
 		virtual void inspect(const State::Selection& selection) override;

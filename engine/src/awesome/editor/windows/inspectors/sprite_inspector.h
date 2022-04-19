@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-#include <awesome/data/sprite_asset.h>
 #include <awesome/editor/windows/inspector_window.h>
 
 namespace editor

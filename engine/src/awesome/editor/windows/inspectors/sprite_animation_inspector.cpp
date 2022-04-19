@@ -1,17 +1,11 @@
 #include "sprite_animation_inspector.h"
 
 #include <awesome/data/sprite_animation_asset.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 
 namespace editor
 {
-	SpriteAnimationInspector::SpriteAnimationInspector()
-		: m_previousSelectedAsset()
-		, m_timeLeft()
-		, m_frameIndex()
-	{
-	}
-
 	bool SpriteAnimationInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Asset
@@ -28,12 +22,6 @@ namespace editor
 
 		Layout::input("Frames", animation->data.frames);
 
-		Layout::separator();
-		if (Layout::button("Save"))
-		{
-			animation->data.save(animation->filename.parent_path() / animation->filename.stem());
-		}
-
 		const auto& frames = animation->data.frames;
 		if (!frames.empty() && m_frameIndex < frames.size())
 		{
@@ -43,6 +31,13 @@ namespace editor
 				Layout::image(sprite->data.image, sprite->data.rect);
 				Layout::slider("Playing", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
 			}
+		}
+
+		Layout::separator();
+
+		if (Layout::button(std::string(ICON_FA_SAVE) + " Save"))
+		{
+			animation->data.save(animation->filename.parent_path() / animation->filename.stem());
 		}
 	}
 

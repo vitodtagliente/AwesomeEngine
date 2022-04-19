@@ -12,7 +12,7 @@ struct SpriteAnimation final
 	{
 		Frame()
 			: sprite()
-			, duration(0)
+			, duration(1.0f)
 		{}
 
 		Frame(const SpriteAssetPtr sprite, const double duration)
