@@ -4,9 +4,9 @@
 
 #include <awesome/core/string_util.h>
 #include <awesome/data/asset_library.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
+#include <awesome/editor/text_icon.h>
 
 namespace editor
 {
@@ -51,7 +51,7 @@ namespace editor
 				bool changeDirectory = false;
 				if (std::filesystem::is_directory(file) && filename != "..")
 				{
-					if (ImGui::Selectable((std::string(ICON_FA_FOLDER) + " " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
+					if (ImGui::Selectable(TextIcon::folder(" " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 					{
 						if (ImGui::IsMouseDoubleClicked(0))
 						{
@@ -82,7 +82,7 @@ namespace editor
 
 			Layout::sameLine();
 
-			if (Layout::button(std::string(ICON_FA_SAVE) + " Save"))
+			if (Layout::button(TextIcon::save(" Save")))
 			{
 				const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 				if (!std::filesystem::exists(fileToSave))

@@ -9,6 +9,7 @@ namespace editor
 	{
 		TextIcon() = delete;
 		
+		static std::string eraser(const std::string& name = "");
 		static std::string folder(const std::string& name = "");
 		static std::string minus(const std::string& name = "");
 		static std::string plus(const std::string& name = "");

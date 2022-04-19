@@ -11,13 +11,14 @@
 #include <awesome/data/asset_importer.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/editor/color_scheme.h>
-#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/windows/performance_window.h>
 #include <awesome/editor/windows/renderer_window.h>
 #include <awesome/editor/windows/scene_window.h>
+
+#include <IconsFontAwesome5.h>
 
 namespace editor
 {

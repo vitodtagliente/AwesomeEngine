@@ -26,3 +26,8 @@ std::string editor::TextIcon::search(const std::string& name)
 {
     return std::string(ICON_FA_SEARCH) + name;
 }
+
+std::string editor::TextIcon::eraser(const std::string& name)
+{
+    return std::string(ICON_FA_ERASER) + name;
+}

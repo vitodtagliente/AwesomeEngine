@@ -16,6 +16,7 @@
 #include <awesome/data/sprite_animation_asset.h>
 #include <awesome/data/sprite_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/text_icon.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
@@ -111,7 +112,7 @@ namespace editor
 				if (collapsingHeader(context))
 				{
 					handler(list.at(i));
-					if (button("-"))
+					if (button(TextIcon::minus()))
 					{
 						list.erase(list.begin() + i);
 						return;
@@ -119,14 +120,14 @@ namespace editor
 				}
 				endContext();
 			}
-			if (button("+"))
+			if (button(TextIcon::plus()))
 			{
 				list.push_back(T());
 			}
 			if (!list.empty())
 			{
 				sameLine();
-				if (button("X"))
+				if (button(TextIcon::eraser()))
 				{
 					list.clear();
 				}
@@ -151,7 +152,7 @@ namespace editor
 				if (collapsingHeader(context))
 				{
 					handler(pair.second);
-					if (button("-"))
+					if (button(TextIcon::minus()))
 					{
 						map.erase(pair.first);
 						return;
@@ -176,7 +177,7 @@ namespace editor
 
 			input("Key", *newKey);
 			sameLine();
-			if (button("+"))
+			if (button(TextIcon::save(" Save")))
 			{
 				map.insert(std::make_pair(*newKey, T()));
 				if (typeid(K) == typeid(std::string))
