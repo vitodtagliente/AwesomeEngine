@@ -5,10 +5,9 @@
 #include <vector>
 
 #include <awesome/application/application.h>
-
-#include "menu.h"
-#include "state.h"
-#include "window.h"
+#include <awesome/editor/private/menu.h>
+#include <awesome/editor/state.h>
+#include <awesome/editor/window.h>
 
 namespace graphics
 {

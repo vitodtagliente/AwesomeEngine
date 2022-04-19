@@ -2,10 +2,9 @@
 
 #include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/private/entity_layout.h>
 #include <awesome/entity/world.h>
 #include <awesome/editor/text_icon.h>
-
-#include "entity_layout.h"
 
 namespace editor
 {

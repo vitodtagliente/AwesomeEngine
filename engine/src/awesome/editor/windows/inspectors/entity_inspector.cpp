@@ -3,11 +3,10 @@
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/encoding/json.h>
-
-#include "entity_layout.h"
 
 namespace editor
 {
