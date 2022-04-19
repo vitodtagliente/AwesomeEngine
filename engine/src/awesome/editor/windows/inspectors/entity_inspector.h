@@ -12,7 +12,7 @@ namespace editor
 	class EntityInspector : public InspectorWindow::Inspector
 	{
 	public:
-		EntityInspector();
+		EntityInspector() = default;
 
 		virtual bool canInspect(const State::Selection& selection) override;
 		virtual void inspect(const State::Selection& selection) override;

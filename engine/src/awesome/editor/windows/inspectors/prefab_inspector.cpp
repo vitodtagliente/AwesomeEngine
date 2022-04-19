@@ -1,6 +1,7 @@
 #include "prefab_inspector.h"
 
 #include <awesome/data/prefab_asset.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/world.h>
 
@@ -34,7 +35,7 @@ namespace editor
 
 		Layout::separator();
 
-		if (Layout::button("Save"))
+		if (Layout::button(std::string(ICON_FA_SAVE) + " Save"))
 		{
 			prefab->data.save(prefab->filename.parent_path() / prefab->filename.stem());
 		}

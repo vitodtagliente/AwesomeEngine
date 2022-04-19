@@ -2,6 +2,7 @@
 
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
+#include <awesome/editor/icons.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/encoding/json.h>
@@ -10,13 +11,6 @@
 
 namespace editor
 {
-	EntityInspector::EntityInspector()
-		: m_previousSelecytedEntity()
-		, m_filename()
-	{
-
-	}
-
 	bool EntityInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Entity;
