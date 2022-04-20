@@ -2,24 +2,23 @@
 
 #include <filesystem>
 
-#include <imgui.h>
-
 #include <awesome/application/application.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
 #include <awesome/data/sprite.h>
 #include <awesome/data/sprite_animation.h>
+#include <awesome/editor/private/menu_layout.h>
 #include <awesome/entity/world.h>
 
 namespace editor
 {
 	void Menu::render()
 	{
-		if (ImGui::BeginMainMenuBar())
+		if (MenuLayout::beginMainMenu())
 		{
 			menuFile();
 			menuAssets();
-			ImGui::EndMainMenuBar();
+			MenuLayout::endMainMenu();
 		}
 
 		m_saveFileDialog.render();
@@ -39,46 +38,46 @@ namespace editor
 			}
 		};
 
-		if (ImGui::BeginMenu("File"))
+		if (MenuLayout::beginMenu("File"))
 		{
-			if (ImGui::MenuItem("New"))
+			if (MenuLayout::item("New"))
 			{
 
 			}
 
-			ImGui::Separator();
+			MenuLayout::separator();
 
-			if (ImGui::MenuItem("New Scene"))
+			if (MenuLayout::item("New Scene"))
 			{
 				World::instance().clear();
 			}
 
-			if (ImGui::MenuItem("Save Scene"))
+			if (MenuLayout::item("Save Scene"))
 			{
 				m_saveFileDialog.open("Save Scene...", Asset::getExtensionByType(Asset::Type::Scene), saveScene);
 			}
 
-			if (ImGui::MenuItem("Save Scene as..."))
+			if (MenuLayout::item("Save Scene as..."))
 			{
 				m_saveFileDialog.open("Save Scene...", Asset::getExtensionByType(Asset::Type::Scene), saveScene);
 			}
 
-			ImGui::Separator();
+			MenuLayout::separator();
 
-			if (ImGui::MenuItem("Exit"))
+			if (MenuLayout::item("Exit"))
 			{
 				Application::instance().exit();
 			}
 
-			ImGui::EndMenu();
+			MenuLayout::endMenu();
 		}
 	}
 
 	void Menu::menuAssets()
 	{
-		if (ImGui::BeginMenu("Assets"))
+		if (MenuLayout::beginMenu("Assets"))
 		{
-			if (ImGui::MenuItem("Sprite"))
+			if (MenuLayout::item("Sprite"))
 			{
 				m_saveFileDialog.open("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [](const std::filesystem::path& filename) -> void
 					{
@@ -94,7 +93,7 @@ namespace editor
 				);
 			}
 
-			if (ImGui::MenuItem("Sprite Animation"))
+			if (MenuLayout::item("Sprite Animation"))
 			{
 				m_saveFileDialog.open("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
 					{
@@ -110,7 +109,7 @@ namespace editor
 				);
 			}
 
-			ImGui::EndMenu();
+			MenuLayout::endMenu();
 		}
 	}
 }
