@@ -88,6 +88,7 @@ namespace editor
 				if (!std::filesystem::exists(fileToSave))
 				{
 					m_handler(fileToSave);
+					State::instance().isContentChanged = true;
 					m_filename.clear();
 					m_open = false;
 					ImGui::CloseCurrentPopup();

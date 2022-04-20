@@ -7,8 +7,9 @@
 namespace editor
 {
 	State::State()
-		: selection()
+		: isContentChanged(false)
 		, path(AssetLibrary::instance().getDirectory())
+		, selection()
 	{
 	}
 
@@ -20,6 +21,12 @@ namespace editor
 	void State::select(const std::shared_ptr<Asset>& asset)
 	{
 		selection = Selection(asset);
+	}
+
+	bool State::hasPendingContentRefresh()
+	{
+		const bool result = isContentChanged;
+		return isContentChanged = false, result;
 	}
 
 	void State::select()

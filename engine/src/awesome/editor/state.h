@@ -40,7 +40,10 @@ namespace editor
 		void select(Entity* const entity);
 		void select(const std::shared_ptr<Asset>& asset);
 
-		std::optional<Selection> selection;
+		bool hasPendingContentRefresh();
+
+		bool isContentChanged;
 		std::filesystem::path path;
+		std::optional<Selection> selection;
 	};
 }

@@ -82,8 +82,7 @@ namespace editor
 
 	void ContentBrowserWindow::update(double deltaTime)
 	{
-		m_timer.tick(deltaTime);
-		if (m_timer.isExpired())
+		if (State::instance().hasPendingContentRefresh())
 		{
 			refreshDir();
 		}
@@ -248,7 +247,6 @@ namespace editor
 	void ContentBrowserWindow::refreshDir()
 	{
 		m_dir = Dir(m_dir.path);
-		m_timer.reset();
 	}
 
 	REFLECT_WINDOW(ContentBrowserWindow);
