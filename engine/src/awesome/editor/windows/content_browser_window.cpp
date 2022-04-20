@@ -137,17 +137,33 @@ namespace editor
 			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
 		};
 
-		AssetLibrary& library = AssetLibrary::instance();
-		Asset descriptor = Asset::load(file);
-		std::shared_ptr<Asset> asset = library.find(descriptor.id);
-		if (asset)
+		if (std::filesystem::is_directory(file))
 		{
-			library.unload(asset->id);
-			library.remove(asset->id);
-
 			std::filesystem::remove(file);
-			std::filesystem::remove(getAssetFilename(file));
+			
+			State::instance().select();
+			m_selectedItem.clear();
+			
 			refreshDir();
+		}
+		else
+		{
+			AssetLibrary& library = AssetLibrary::instance();
+			Asset descriptor = Asset::load(file);
+			std::shared_ptr<Asset> asset = library.find(descriptor.id);
+			if (asset)
+			{
+				library.unload(asset->id);
+				library.remove(asset->id);
+
+				std::filesystem::remove(file);
+				std::filesystem::remove(getAssetFilename(file));
+
+				m_selectedItem.clear();
+				State::instance().select();
+
+				refreshDir();
+			}
 		}
 	}
 
