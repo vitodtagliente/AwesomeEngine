@@ -3,6 +3,7 @@
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/core/reflection.h>
 #include <awesome/editor/layout.h>
+#include <awesome/editor/text_icon.h>
 
 namespace editor
 {
@@ -20,7 +21,7 @@ namespace editor
 
 		Layout::separator();
 
-		if (Layout::beginCombo("Add component", ""))
+		if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
 		{
 			static std::set<std::string> types = TypeFactory::list("Component");
 			for (const std::string& type : types)
@@ -47,7 +48,7 @@ namespace editor
 			{
 				component->inspect();
 				Layout::separator();
-				if (Layout::button("Remove Component"))
+				if (Layout::button(TextIcon::minus(" Remove Component")))
 				{
 					entity.removeComponent(component->getId());
 					return; // force the refresh of the inspector
@@ -56,8 +57,7 @@ namespace editor
 			Layout::endContext();
 		}
 
-		Layout::separator();
-
+		// preview the sprite
 		{
 			SpriteRenderer* const component = entity.findComponent<SpriteRenderer>();
 			if (component && component->sprite)

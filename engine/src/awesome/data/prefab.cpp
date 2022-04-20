@@ -13,11 +13,13 @@ Prefab::Prefab()
 Prefab::Prefab(const Entity* const entity)
 	: entity()
 {
+	this->entity.deserialize(entity->serialize());
 }
 
 Prefab::Prefab(const Prefab& other)
-	: entity(other.entity)
+	: entity()
 {
+	entity.deserialize(other.entity.serialize());
 }
 
 Prefab::~Prefab()

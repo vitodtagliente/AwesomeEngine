@@ -1,12 +1,11 @@
 #include "entity_inspector.h"
 
-#include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
+#include <awesome/data/prefab.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
-#include <awesome/encoding/json.h>
 
 namespace editor
 {
@@ -18,10 +17,6 @@ namespace editor
 	void EntityInspector::inspect(const State::Selection& selection)
 	{
 		Entity* const entity = selection.asEntity();
-		
-		const bool hasChanged = entity != m_previousSelecytedEntity;
-		m_previousSelecytedEntity = entity;
-
 		if (entity == nullptr)
 		{
 			return;
@@ -31,27 +26,22 @@ namespace editor
 
 		Layout::separator();
 
-		if (hasChanged)
+		if (Layout::button(TextIcon::save(" Save Prefab")))
 		{
-			m_filename = entity->name;
+			m_saveFileDialog.open("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& filename) -> void
+				{
+					if (!filename.string().empty())
+					{
+						Prefab prefab(entity);
+						prefab.save(filename);
+
+						AssetImporter importer;
+						importer.import(filename);
+					}
+				}
+			);
 		}
 
-		Layout::beginContext("prefab");
-		Layout::input("Filename", m_filename);
-		if (Layout::button("Save Prefab"))
-		{
-			// const std::string name = m_filename.c_str();
-			// if (!name.empty())
-			// {
-			// 	const std::string filename = (path / name).string() + ".prefab";
-			// 	Archive archive(filename, Archive::Mode::Write);
-			// 	archive << json::Serializer::to_string(entity->serialize());
-			// 
-			// 	AssetImporter importer;
-			// 	importer.import(filename);
-			// }
-			// m_filename.clear();
-		}
-		Layout::endContext();
+		m_saveFileDialog.render();
 	}
 }

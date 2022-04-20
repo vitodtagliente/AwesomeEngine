@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/editor/windows/inspector_window.h>
 
 namespace editor
@@ -18,7 +19,6 @@ namespace editor
 		virtual void inspect(const State::Selection& selection) override;
 
 	private:
-		class Entity* m_previousSelecytedEntity;
-		std::string m_filename;
+		SaveFileDialog m_saveFileDialog;
 	};
 }

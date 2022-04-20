@@ -11,6 +11,8 @@ namespace editor
 {
 	struct EntityLayout final
 	{
+		EntityLayout() = delete;
+
 		static void input(Entity& entity);
 	};
 }
