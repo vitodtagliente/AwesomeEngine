@@ -6,6 +6,8 @@
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
+#include <imgui.h>
+
 namespace editor
 {
 	void ContentBrowserWindow::render()
@@ -54,7 +56,9 @@ namespace editor
 				}
 
 				bool changeDirectory = false;
-				if (std::filesystem::is_directory(file) && name != "..")
+				bool refreshDirectory = false;
+				const bool isCurrentFileADirectory = std::filesystem::is_directory(file);
+				if (isCurrentFileADirectory && name != "..")
 				{
 					if (Layout::selectable(std::string(TextIcon::folder()) + " " + name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
 					{
@@ -68,6 +72,24 @@ namespace editor
 					m_state = NavigationState::Navigating;
 					m_tempRename = name;
 					selectFile(file);
+				}
+
+				Layout::beginDrag("FILE_MOVE", name, (void*)(&file), sizeof(std::filesystem::path));
+				if (isCurrentFileADirectory)
+				{
+					Layout::endDrag("FILE_MOVE", [this, file, &refreshDirectory](void* const data, const size_t size) -> void
+						{
+							const std::filesystem::path from = *(const std::filesystem::path*)data;
+							moveFile(from, file);
+							refreshDirectory = true;
+						}
+					);
+				}
+
+				if (refreshDirectory)
+				{
+					refreshDir();
+					break;
 				}
 
 				if (changeDirectory)
@@ -139,10 +161,10 @@ namespace editor
 		if (std::filesystem::is_directory(file))
 		{
 			std::filesystem::remove(file);
-			
+
 			State::instance().select();
 			m_selectedItem.clear();
-			
+
 			refreshDir();
 		}
 		else
@@ -163,6 +185,26 @@ namespace editor
 
 				refreshDir();
 			}
+		}
+	}
+
+	void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std::filesystem::path& to)
+	{
+		if (Asset::isAsset(from))
+		{
+
+		}
+		else
+		{
+			auto destination = to / from.filename();
+			int i = 1;
+			while (std::filesystem::exists(destination))
+			{
+				destination += " " + std::to_string(i);
+				++i;
+			}
+			std::filesystem::rename(from, destination);
+			refreshDir();
 		}
 	}
 

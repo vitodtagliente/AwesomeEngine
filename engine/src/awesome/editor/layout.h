@@ -36,12 +36,14 @@ namespace editor
 		static void begin(const std::string& name);
 		static bool beginCombo(const std::string& name, const std::string& value);
 		static void beginContext(const std::string context);
+		static void beginDrag(const std::string& name, const std::string& item, void* const data, size_t size);
 		static bool button(const std::string& name);
 		static bool button(const std::string& name, int width, int height);
 		static bool collapsingHeader(const std::string& name);
 		static void end();
 		static void endCombo();
 		static void endContext();
+		static void endDrag(const std::string& name, const std::function<void(void*, size_t)>& handler);
 		static void image(const ImageAssetPtr& image);
 		static void image(const ImageAssetPtr& image, float width, float height);
 		static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);
@@ -160,7 +162,7 @@ namespace editor
 				}
 				endContext();
 			}
-			
+
 			K* newKey = nullptr;
 			{
 				const auto& it = s_keyCache.find(name);

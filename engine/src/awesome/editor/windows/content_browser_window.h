@@ -28,6 +28,7 @@ namespace editor
 		void processInput(const std::filesystem::path& path);
 		void addFolder();
 		void deleteFile(const std::filesystem::path& file);
+		void moveFile(const std::filesystem::path& from, const std::filesystem::path& to);
 		void selectFile(const std::filesystem::path& file);
 		void renameFile(const std::filesystem::path& file, const std::string& name);
 		void refreshDir();
