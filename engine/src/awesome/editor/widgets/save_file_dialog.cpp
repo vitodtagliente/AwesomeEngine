@@ -21,6 +21,11 @@ namespace editor
 	{
 	}
 
+	void SaveFileDialog::close()
+	{
+		m_open = false;
+	}
+
 	void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 	{
 		m_dir = Dir(State::instance().path);

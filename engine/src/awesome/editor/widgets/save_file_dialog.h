@@ -16,6 +16,7 @@ namespace editor
 
 		inline bool isOpen() const { return m_open; }
 
+		void close();
 		void open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler);
 		void render();
 

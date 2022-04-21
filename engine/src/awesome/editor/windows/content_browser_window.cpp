@@ -6,17 +6,11 @@
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
-#include <imgui.h>
-
 namespace editor
 {
 	void ContentBrowserWindow::render()
 	{
-		const bool hasActiveFocus = Layout::isWindowFocused();
-		if (hasActiveFocus && !m_selectedItem.empty())
-		{
-			processInput(m_selectedItem);
-		}
+		processInput(m_selectedItem);
 
 		if (Layout::button(TextIcon::plus()))
 		{
@@ -27,7 +21,7 @@ namespace editor
 
 		const std::string previousFilter = m_filter;
 		Layout::input(TextIcon::search(), m_filter);
-		if (previousFilter != m_filter || !hasActiveFocus)
+		if (previousFilter != m_filter || !Layout::isWindowFocused())
 		{
 			m_state = NavigationState::Navigating;
 		}
@@ -43,11 +37,11 @@ namespace editor
 			}
 
 			Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t size) -> void
-				{
-					const std::filesystem::path from = *(const std::filesystem::path*)data;
-					moveFile(from, file);
-					refreshDir();
-				}
+			{
+				const std::filesystem::path from = *(const std::filesystem::path*)data;
+				moveFile(from, file);
+				refreshDir();
+			}
 			);
 		}
 
@@ -111,6 +105,8 @@ namespace editor
 				}
 			}
 		}
+
+		m_contextMenu.render();
 	}
 
 	void ContentBrowserWindow::update(double deltaTime)
@@ -124,6 +120,24 @@ namespace editor
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
+		if (Layout::isWindowHovered()
+			&& m_state == NavigationState::Navigating
+			&& !m_contextMenu.isOpen()
+			&& input.isKeyPressed(KeyCode::MouseRightButton))
+		{
+			m_state = NavigationState::ContextMenu;
+			m_contextMenu.open("Context Menu", { "Prova" }, [](const std::string& item)-> void
+				{
+
+				}
+			);
+		}
+
+		if (!Layout::isWindowFocused() || m_selectedItem.empty())
+		{
+			return;
+		}
+
 		if (m_state == NavigationState::Renaming)
 		{
 			if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
@@ -132,7 +146,7 @@ namespace editor
 				renameFile(file, m_tempRename);
 			}
 		}
-		else
+		else if (m_state == NavigationState::Navigating)
 		{
 			if (input.isKeyPressed(KeyCode::F2))
 			{

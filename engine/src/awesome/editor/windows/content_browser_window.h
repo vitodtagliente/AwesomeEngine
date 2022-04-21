@@ -7,6 +7,7 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/editor/widgets/context_menu.h>
 #include <awesome/editor/window.h>
 #include <awesome/editor/utils/dir.h>
 
@@ -35,10 +36,12 @@ namespace editor
 
 		enum class NavigationState
 		{
+			ContextMenu,
 			Navigating,
 			Renaming
 		};
 
+		ContextMenu m_contextMenu;
 		Dir m_dir{ AssetLibrary::instance().getDirectory() };
 		std::string m_filter;
 		std::filesystem::path m_root{ AssetLibrary::instance().getDirectory() };
