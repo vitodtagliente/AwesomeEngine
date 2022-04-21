@@ -34,10 +34,21 @@ namespace editor
 
 		Layout::separator();
 
-		if (m_dir.path != m_root && Layout::selectable("..", false))
+		if (m_dir.path != m_root)
 		{
-			m_state = NavigationState::Navigating;
-			selectFile(m_dir.parent);
+			if (Layout::selectable("..", false))
+			{
+				m_state = NavigationState::Navigating;
+				selectFile(m_dir.parent);
+			}
+
+			Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t size) -> void
+				{
+					const std::filesystem::path from = *(const std::filesystem::path*)data;
+					moveFile(from, file);
+					refreshDir();
+				}
+			);
 		}
 
 		for (const auto& file : m_dir.files)
