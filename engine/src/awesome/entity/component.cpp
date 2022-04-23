@@ -6,11 +6,27 @@
 #include "entity.h"
 #include "world.h"
 
-Component::Component()
-	: enabled(true)
+Component::Component(const Component& other)
+	: enabled(other.enabled)
 	, m_id()
 	, m_owner()
 {
+}
+
+Component& Component::operator=(const Component& other)
+{
+	enabled = other.enabled;
+	return *this;
+}
+
+bool Component::operator==(const Component& other) const
+{
+	return m_id == other.m_id;
+}
+
+bool Component::operator!=(const Component& other) const
+{
+	return m_id != other.m_id;
 }
 
 World* const Component::getWorld() const

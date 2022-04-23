@@ -75,6 +75,22 @@ void Entity::render(graphics::Renderer* const renderer)
 	}
 }
 
+Entity& Entity::operator=(const Entity& other)
+{
+
+	return *this;
+}
+
+bool Entity::operator==(const Entity& other) const
+{
+	return m_id == other.m_id;
+}
+
+bool Entity::operator!=(const Entity& other) const
+{
+	return m_id != other.m_id;
+}
+
 void Entity::removeComponent(Component* const component)
 {
 	removeComponent(component->getId());

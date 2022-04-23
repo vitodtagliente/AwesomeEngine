@@ -18,10 +18,13 @@ class Component : public ISerializable
 {
 public:
 
-	Component();
-	~Component() = default;
+	Component() = default;
+	Component(const Component& other);
+	virtual ~Component() = default;
 
-	bool enabled;
+	Component& operator= (const Component& other);
+	bool operator== (const Component& other) const;
+	bool operator!= (const Component& other) const;
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
@@ -42,11 +45,13 @@ public:
 	// editor
 	virtual void inspect();
 
+	bool enabled{ true };
+
 	REFLECT()
 
 private:
 	uuid m_id;
-	Entity* m_owner;
+	Entity* m_owner{ nullptr };
 };
 
 #define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)

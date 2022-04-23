@@ -39,6 +39,10 @@ public:
 	void update(double deltaTime);
 	void render(graphics::Renderer* const renderer);
 
+	Entity& operator= (const Entity& other);
+	bool operator== (const Entity& other) const;
+	bool operator!= (const Entity& other) const;
+
 	template <typename T = Component>
 	std::vector<T*> getComponents() const
 	{
