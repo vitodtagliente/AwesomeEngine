@@ -21,10 +21,6 @@ namespace editor
 
 		const std::string previousFilter = m_filter;
 		Layout::input(TextIcon::search(), m_filter);
-		if (previousFilter != m_filter || !Layout::isWindowFocused())
-		{
-			m_state = NavigationState::Navigating;
-		}
 
 		Layout::separator();
 
@@ -120,17 +116,32 @@ namespace editor
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
-		if (Layout::isWindowHovered()
-			&& m_state == NavigationState::Navigating
-			&& !m_contextMenu.isOpen()
-			&& input.isKeyPressed(KeyCode::MouseRightButton))
+		if (Layout::isWindowHovered())
 		{
-			m_state = NavigationState::ContextMenu;
-			m_contextMenu.open("Context Menu", { "Prova" }, [](const std::string& item)-> void
-				{
+			if (m_state == NavigationState::Navigating
+				&& !m_contextMenu.isOpen()
+				&& input.isKeyPressed(KeyCode::MouseRightButton))
+			{
+				m_state = NavigationState::ContextMenu;
+				m_contextMenu.open("Context Menu", { "Prova" }, [](const std::string& item)-> void
+					{
+						if (item.empty())
+						{
 
-				}
-			);
+						}
+					}
+				);
+			}
+		}
+		else
+		{
+			if (input.isKeyPressed(KeyCode::MouseLeftButton)
+				&& ((m_state == NavigationState::ContextMenu && m_contextMenu.isOpen()) || m_state == NavigationState::Renaming))
+			{
+				m_state = NavigationState::Navigating;
+				m_contextMenu.close();
+			}
+
 		}
 
 		if (!Layout::isWindowFocused() || m_selectedItem.empty())
