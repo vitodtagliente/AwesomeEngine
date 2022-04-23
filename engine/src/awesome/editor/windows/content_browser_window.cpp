@@ -10,8 +10,8 @@ namespace editor
 {
 	void ContentBrowserWindow::init()
 	{
-		m_menuItemNames.push_back("Import...");
-		m_menuItemNames.push_back(ContextMenu::Separator);
+		// m_menuItemNames.push_back("Import...");
+		// m_menuItemNames.push_back(ContextMenu::Separator);
 
 		std::set<std::string> types = TypeFactory::list("MenuItem");
 		for (const std::string& type : types)
@@ -256,9 +256,9 @@ namespace editor
 	{
 		if (name == "Import...")
 		{
-			m_openFileDialog.open("Import file...", {}, [](const std::filesystem::path& file) -> void
+			m_openFileDialog.open("Import file...", {}, [](const std::filesystem::path&) -> void
 				{
-
+					// TODO
 				}
 			);
 		}
@@ -279,7 +279,7 @@ namespace editor
 		}
 	}
 
-	void editor::ContentBrowserWindow::importFile(const std::filesystem::path& file)
+	void editor::ContentBrowserWindow::importFile(const std::filesystem::path&)
 	{
 	}
 
