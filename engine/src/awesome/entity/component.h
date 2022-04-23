@@ -19,10 +19,10 @@ class Component : public ISerializable
 public:
 
 	Component() = default;
-	Component(const Component& other);
+	Component(const Component& other) = delete;
 	virtual ~Component() = default;
 
-	Component& operator= (const Component& other);
+	Component& operator= (const Component& other) = delete;
 	bool operator== (const Component& other) const;
 	bool operator!= (const Component& other) const;
 
