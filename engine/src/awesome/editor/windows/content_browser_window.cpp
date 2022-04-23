@@ -285,9 +285,45 @@ namespace editor
 
 	void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std::filesystem::path& to)
 	{
+		static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
+		{
+			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
+		};
+
+		static const auto renameAsset = [](const std::filesystem::path& from, const std::filesystem::path& to) -> std::filesystem::path
+		{
+			std::filesystem::path file = to / from.filename();
+			int i = 1;
+			while (std::filesystem::exists(file))
+			{
+				file += (" " + std::to_string(i));
+			}
+			return file;
+		};
+
+		if (std::filesystem::is_directory(to) == false)
+		{
+			return;
+		}
+
 		if (Asset::isAsset(from))
 		{
+			AssetLibrary& library = AssetLibrary::instance();
+			Asset descriptor = Asset::load(from);
+			std::shared_ptr<Asset> asset = library.find(descriptor.id);
+			if (asset)
+			{
+				const std::filesystem::path newAssetFilename = renameAsset(from, to);
+				if (from != newAssetFilename)
+				{
+					std::filesystem::rename(from, newAssetFilename);
+					std::filesystem::rename(getAssetFilename(from), renameAsset(getAssetFilename(from), to));
+					refreshDirectory();
 
+					asset->filename = newAssetFilename;
+					library.insert(*asset);
+				}
+			}
 		}
 		else
 		{
