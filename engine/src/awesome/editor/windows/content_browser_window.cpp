@@ -133,6 +133,7 @@ namespace editor
 			item->render();
 		}
 		m_contextMenu.render();
+		m_openFileDialog.render();
 	}
 
 	void ContentBrowserWindow::update(const double)
@@ -255,7 +256,11 @@ namespace editor
 	{
 		if (name == "Import...")
 		{
+			m_openFileDialog.open("Import file...", {}, [](const std::filesystem::path& file) -> void
+				{
 
+				}
+			);
 		}
 		else if (name == "Refresh")
 		{
