@@ -32,12 +32,12 @@ namespace editor
 				selectFile(m_dir.parent);
 			}
 
-			Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t size) -> void
-			{
-				const std::filesystem::path from = *(const std::filesystem::path*)data;
-				moveFile(from, file);
-				refreshDir();
-			}
+			Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t) -> void
+				{
+					const std::filesystem::path from = *(const std::filesystem::path*)data;
+					moveFile(from, file);
+					refreshDirectory();
+				}
 			);
 		}
 
@@ -57,7 +57,7 @@ namespace editor
 				}
 
 				bool changeDirectory = false;
-				bool refreshDirectory = false;
+				bool shouldRefresh = false;
 				const bool isCurrentFileADirectory = std::filesystem::is_directory(file);
 				if (isCurrentFileADirectory && name != "..")
 				{
@@ -78,18 +78,18 @@ namespace editor
 				Layout::beginDrag("FILE_MOVE", name, (void*)(&file), sizeof(std::filesystem::path));
 				if (isCurrentFileADirectory)
 				{
-					Layout::endDrag("FILE_MOVE", [this, file, &refreshDirectory](void* const data, const size_t size) -> void
+					Layout::endDrag("FILE_MOVE", [this, file, &shouldRefresh](void* const data, const size_t) -> void
 						{
 							const std::filesystem::path from = *(const std::filesystem::path*)data;
 							moveFile(from, file);
-							refreshDirectory = true;
+							shouldRefresh = true;
 						}
 					);
 				}
 
-				if (refreshDirectory)
+				if (shouldRefresh)
 				{
-					refreshDir();
+					refreshDirectory();
 					break;
 				}
 
@@ -105,11 +105,11 @@ namespace editor
 		m_contextMenu.render();
 	}
 
-	void ContentBrowserWindow::update(double deltaTime)
+	void ContentBrowserWindow::update(const double)
 	{
 		if (State::instance().hasPendingContentRefresh())
 		{
-			refreshDir();
+			refreshDirectory();
 		}
 	}
 
@@ -123,19 +123,16 @@ namespace editor
 				&& input.isKeyPressed(KeyCode::MouseRightButton))
 			{
 				m_state = NavigationState::ContextMenu;
-				m_contextMenu.open("Context Menu", { "Prova" }, [](const std::string& item)-> void
+				m_contextMenu.open("Context Menu", { "Import...", ContextMenu::Separator, "Refresh" }, [this](const std::string& item)-> void
 					{
-						if (item.empty())
-						{
-
-						}
+						handleContextMenuInput(item);
 					}
 				);
 			}
 		}
 		else
 		{
-			if (input.isKeyPressed(KeyCode::MouseLeftButton)
+			if ((input.isKeyPressed(KeyCode::MouseLeftButton) || input.isKeyPressed(KeyCode::MouseRightButton))
 				&& ((m_state == NavigationState::ContextMenu && m_contextMenu.isOpen()) || m_state == NavigationState::Renaming))
 			{
 				m_state = NavigationState::Navigating;
@@ -180,7 +177,7 @@ namespace editor
 			if (!std::filesystem::exists(path))
 			{
 				std::filesystem::create_directory(path);
-				refreshDir();
+				refreshDirectory();
 				break;
 			}
 			++i;
@@ -201,7 +198,7 @@ namespace editor
 			State::instance().select();
 			m_selectedItem.clear();
 
-			refreshDir();
+			refreshDirectory();
 		}
 		else
 		{
@@ -219,9 +216,25 @@ namespace editor
 				m_selectedItem.clear();
 				State::instance().select();
 
-				refreshDir();
+				refreshDirectory();
 			}
 		}
+	}
+
+	void editor::ContentBrowserWindow::handleContextMenuInput(const std::string& item)
+	{
+		if (item == "Import...")
+		{
+
+		}
+		else if (item == "Refresh")
+		{
+			refreshDirectory();
+		}
+	}
+
+	void editor::ContentBrowserWindow::importFile(const std::filesystem::path& file)
+	{
 	}
 
 	void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std::filesystem::path& to)
@@ -240,7 +253,7 @@ namespace editor
 				++i;
 			}
 			std::filesystem::rename(from, destination);
-			refreshDir();
+			refreshDirectory();
 		}
 	}
 
@@ -299,7 +312,7 @@ namespace editor
 		if (std::filesystem::is_directory(file))
 		{
 			std::filesystem::rename(file, file.parent_path() / name);
-			refreshDir();
+			refreshDirectory();
 		}
 		else
 		{
@@ -313,7 +326,7 @@ namespace editor
 				{
 					std::filesystem::rename(file, newAssetFilename);
 					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
-					refreshDir();
+					refreshDirectory();
 
 					asset->filename = newAssetFilename;
 					library.insert(*asset);
@@ -322,7 +335,7 @@ namespace editor
 		}
 	}
 
-	void ContentBrowserWindow::refreshDir()
+	void ContentBrowserWindow::refreshDirectory()
 	{
 		m_dir = Dir(m_dir.path);
 	}

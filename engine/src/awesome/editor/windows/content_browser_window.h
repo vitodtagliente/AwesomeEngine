@@ -27,12 +27,15 @@ namespace editor
 	private:
 
 		void processInput(const std::filesystem::path& path);
+
 		void addFolder();
 		void deleteFile(const std::filesystem::path& file);
+		void handleContextMenuInput(const std::string& item);
+		void importFile(const std::filesystem::path& file);
 		void moveFile(const std::filesystem::path& from, const std::filesystem::path& to);
-		void selectFile(const std::filesystem::path& file);
+		void refreshDirectory();
 		void renameFile(const std::filesystem::path& file, const std::string& name);
-		void refreshDir();
+		void selectFile(const std::filesystem::path& file);
 
 		enum class NavigationState
 		{
