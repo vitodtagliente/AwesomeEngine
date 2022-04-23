@@ -49,8 +49,9 @@ namespace editor
 		AssetImporter importer;
 		importer.import(AssetLibrary::instance().getDirectory(), true);
 
-		registerWindows();
+		m_menu.init();
 
+		registerWindows();
 		for (const auto& window : m_windows)
 		{
 			window->init();

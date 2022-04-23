@@ -27,7 +27,7 @@ namespace editor
 		REFLECT()
 
 	private:
-		bool m_hasFocus;
+		bool m_hasFocus{ false };
 	};
 
 #define REFLECT_WINDOW(T) REFLECT_IMP_CATEGORY(T, Window)

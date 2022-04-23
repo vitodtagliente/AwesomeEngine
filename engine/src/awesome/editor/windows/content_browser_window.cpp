@@ -8,6 +8,32 @@
 
 namespace editor
 {
+	void ContentBrowserWindow::init()
+	{
+		m_menuItemNames.push_back("Import...");
+		m_menuItemNames.push_back(ContextMenu::Separator);
+
+		std::set<std::string> types = TypeFactory::list("MenuItem");
+		for (const std::string& type : types)
+		{
+			std::unique_ptr<MenuItem> item(TypeFactory::instantiate<MenuItem>(type));
+			if (item)
+			{
+				if (item->getCategory() == "Assets")
+				{
+					m_menuItemNames.push_back(item->getName());
+					m_menuItems.push_back(std::move(item));
+				}
+			}
+		}
+
+		if (!m_menuItems.empty())
+		{
+			m_menuItemNames.push_back(ContextMenu::Separator);
+		}
+		m_menuItemNames.push_back("Refresh");
+	}
+
 	void ContentBrowserWindow::render()
 	{
 		processInput(m_selectedItem);
@@ -102,6 +128,10 @@ namespace editor
 			}
 		}
 
+		for (const auto& item : m_menuItems)
+		{
+			item->render();
+		}
 		m_contextMenu.render();
 	}
 
@@ -123,7 +153,7 @@ namespace editor
 				&& input.isKeyPressed(KeyCode::MouseRightButton))
 			{
 				m_state = NavigationState::ContextMenu;
-				m_contextMenu.open("Context Menu", { "Import...", ContextMenu::Separator, "Refresh" }, [this](const std::string& item)-> void
+				m_contextMenu.open("Context Menu", m_menuItemNames, [this](const std::string& item)-> void
 					{
 						handleContextMenuInput(item);
 					}
@@ -221,15 +251,26 @@ namespace editor
 		}
 	}
 
-	void editor::ContentBrowserWindow::handleContextMenuInput(const std::string& item)
+	void editor::ContentBrowserWindow::handleContextMenuInput(const std::string& name)
 	{
-		if (item == "Import...")
+		if (name == "Import...")
 		{
 
 		}
-		else if (item == "Refresh")
+		else if (name == "Refresh")
 		{
 			refreshDirectory();
+		}
+		else
+		{
+			for (const auto& item : m_menuItems)
+			{
+				if (item->getName() == name)
+				{
+					item->execute();
+					break;
+				}
+			}
 		}
 	}
 

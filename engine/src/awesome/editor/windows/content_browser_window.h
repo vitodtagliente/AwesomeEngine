@@ -2,11 +2,13 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 #include <string>
 #include <vector>
 
 #include <awesome/core/reflection.h>
 #include <awesome/data/asset_library.h>
+#include <awesome/editor/menu_item.h>
 #include <awesome/editor/widgets/context_menu.h>
 #include <awesome/editor/window.h>
 #include <awesome/editor/utils/dir.h>
@@ -19,6 +21,7 @@ namespace editor
 		ContentBrowserWindow() = default;
 
 		std::string getTitle() const override { return "Content Browser"; }
+		virtual void init() override;
 		virtual void render() override;
 		virtual void update(double deltaTime) override;
 
@@ -30,7 +33,7 @@ namespace editor
 
 		void addFolder();
 		void deleteFile(const std::filesystem::path& file);
-		void handleContextMenuInput(const std::string& item);
+		void handleContextMenuInput(const std::string& name);
 		void importFile(const std::filesystem::path& file);
 		void moveFile(const std::filesystem::path& from, const std::filesystem::path& to);
 		void refreshDirectory();
@@ -47,6 +50,8 @@ namespace editor
 		ContextMenu m_contextMenu;
 		Dir m_dir{ AssetLibrary::instance().getDirectory() };
 		std::string m_filter;
+		std::vector<std::string> m_menuItemNames;
+		std::vector<std::unique_ptr<MenuItem>> m_menuItems;
 		std::filesystem::path m_root{ AssetLibrary::instance().getDirectory() };
 		std::filesystem::path m_selectedItem;
 		NavigationState m_state{ NavigationState::Navigating };

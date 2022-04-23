@@ -5,13 +5,30 @@
 #include <awesome/application/application.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_importer.h>
-#include <awesome/data/sprite.h>
-#include <awesome/data/sprite_animation.h>
 #include <awesome/editor/private/menu_layout.h>
 #include <awesome/entity/world.h>
 
+#include <awesome/editor/menu_items/sprite_animation_menu_item.h>
+#include <awesome/editor/menu_items/sprite_menu_item.h>
+
 namespace editor
 {
+	void Menu::init()
+	{
+		TypeFactory::load<SpriteAnimationMenuItem>();
+		TypeFactory::load<SpriteMenuItem>();
+
+		static std::set<std::string> types = TypeFactory::list("MenuItem");
+		for (const std::string& type : types)
+		{
+			MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);
+			if (item)
+			{
+				m_menuItems.push_back(std::unique_ptr<MenuItem>(item));
+			}
+		}
+	}
+
 	void Menu::render()
 	{
 		if (MenuLayout::beginMainMenu())
@@ -21,6 +38,10 @@ namespace editor
 			MenuLayout::endMainMenu();
 		}
 
+		for (const auto& item : m_menuItems)
+		{
+			item->render();
+		}
 		m_saveFileDialog.render();
 	}
 
@@ -77,38 +98,13 @@ namespace editor
 	{
 		if (MenuLayout::beginMenu("Assets"))
 		{
-			if (MenuLayout::item("Sprite"))
+			for (const auto& item : m_menuItems)
 			{
-				m_saveFileDialog.open("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [](const std::filesystem::path& filename) -> void
-					{
-						if (!filename.string().empty())
-						{
-							Sprite sprite(nullptr, graphics::TextureRect());
-							sprite.save(filename);
-
-							AssetImporter importer;
-							importer.import(filename);
-						}
-					}
-				);
+				if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
+				{
+					item->execute();
+				}
 			}
-
-			if (MenuLayout::item("Sprite Animation"))
-			{
-				m_saveFileDialog.open("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
-					{
-						if (!filename.string().empty())
-						{
-							SpriteAnimation animation;
-							animation.save(filename);
-
-							AssetImporter importer;
-							importer.import(filename);
-						}
-					}
-				);
-			}
-
 			MenuLayout::endMenu();
 		}
 	}
