@@ -26,6 +26,7 @@ namespace editor
 		static std::string search(const std::string& name = "");
 		static std::string stop(const std::string& name = "");
 		static std::string tree(const std::string& name = "");
+		static std::string upload(const std::string& name = "");
 		static std::string video(const std::string& name = "");
 	};
 }

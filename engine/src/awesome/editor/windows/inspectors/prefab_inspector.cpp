@@ -29,7 +29,7 @@ namespace editor
 			m_entity.deserialize(json::Deserializer::parse(prefab->data));
 		}
 
-		if (Layout::button("Import Prefab"))
+		if (Layout::button(TextIcon::upload(" Import Prefab")))
 		{
 			Entity* const entity = World::instance().spawn();
 			Entity::duplicate(prefab, *entity);

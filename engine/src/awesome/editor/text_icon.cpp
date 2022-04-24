@@ -87,6 +87,11 @@ std::string editor::TextIcon::tree(const std::string& name)
     return std::string(ICON_FA_TREE) + name;
 }
 
+std::string editor::TextIcon::upload(const std::string& name)
+{
+    return std::string(ICON_FA_UPLOAD) + name;
+}
+
 std::string editor::TextIcon::video(const std::string& name)
 {
     return std::string(ICON_FA_VIDEO) + name;
