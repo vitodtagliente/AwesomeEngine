@@ -59,11 +59,11 @@ namespace editor
 			}
 
 			Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t) -> void
-				{
-					const std::filesystem::path from = *(const std::filesystem::path*)data;
-					moveFile(from, file);
-					refreshDirectory();
-				}
+			{
+				const std::filesystem::path from = *(const std::filesystem::path*)data;
+				moveFile(from, file);
+				refreshDirectory();
+			}
 			);
 		}
 
@@ -94,7 +94,7 @@ namespace editor
 						selectFile(file);
 					}
 				}
-				else if (Layout::selectable(name, isSelected))
+				else if (Layout::selectable(decorateFile(name), isSelected))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = name;
@@ -212,6 +212,26 @@ namespace editor
 				break;
 			}
 			++i;
+		}
+	}
+
+	std::string editor::ContentBrowserWindow::decorateFile(const std::filesystem::path& file)
+	{
+		if (file.has_extension() == false)
+		{
+			return file.string();
+		}
+
+		const Asset::Type type = Asset::getTypeByExtension(file.extension().string());
+		switch (type)
+		{
+		case Asset::Type::Image: return TextIcon::image(" " + file.string());
+		case Asset::Type::Prefab: return TextIcon::cube(" " + file.string());
+		case Asset::Type::Scene: return TextIcon::tree(" " + file.string());
+		case Asset::Type::Sprite: return TextIcon::horse(" " + file.string());
+		case Asset::Type::SpriteAnimation: return TextIcon::video(" " + file.string());
+		case Asset::Type::Text: return TextIcon::file(" " + file.string());
+		default: return file.string();
 		}
 	}
 

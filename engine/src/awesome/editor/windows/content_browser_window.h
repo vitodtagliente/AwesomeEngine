@@ -33,6 +33,7 @@ namespace editor
 		void processInput(const std::filesystem::path& path);
 
 		void addFolder();
+		std::string decorateFile(const std::filesystem::path& file);
 		void deleteFile(const std::filesystem::path& file);
 		void handleContextMenuInput(const std::string& name);
 		void importFile(const std::filesystem::path& file);

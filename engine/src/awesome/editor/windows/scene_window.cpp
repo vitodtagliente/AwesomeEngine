@@ -54,7 +54,7 @@ namespace editor
 					continue;
 				}
 
-				if (Layout::selectable(entity->name, isSelected))
+				if (Layout::selectable(entity->getPrefab() != uuid::Invalid ? TextIcon::cube(" " + entity->name) : entity->name, isSelected))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = entity->name;
