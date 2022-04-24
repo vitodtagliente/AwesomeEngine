@@ -55,10 +55,10 @@ Prefab& Prefab::operator=(const Prefab& other)
 
 bool Prefab::operator==(const Prefab& other) const
 {
-	return false;
+	return entity.getId() == other.entity.getId();
 }
 
 bool Prefab::operator!=(const Prefab& other) const
 {
-	return false;
+	return entity.getId() != other.entity.getId();
 }

@@ -23,23 +23,25 @@ class Entity : public ISerializable
 {
 public:
 	Entity() = default;
-	Entity(const Entity& other);
-	Entity(const Entity& other, const uuid& id);
+	Entity(const Entity& other) = delete;
 	~Entity() = default;
 
-	inline const uuid& getId() const { return m_id; }
-	inline World* const getWorld() const { return m_world; }
-	inline Entity* const getParent() const { return m_parent; }
 	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
 	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
+	inline const uuid& getId() const { return m_id; }
+	inline Entity* const getParent() const { return m_parent; }
+	inline const uuid& getPrefab() const { return m_prefab; }
+	inline World* const getWorld() const { return m_world; }
 
-	void prepareToSpawn(World* const world);
 	void prepareToDestroy();
+	void prepareToSpawn(World* const world);
 	void setParent(Entity* const entity);
-	void update(double deltaTime);
 	void render(graphics::Renderer* const renderer);
+	void update(double deltaTime);
 
-	Entity& operator= (const Entity& other);
+	static void duplicate(const Entity& from, Entity& duplicate, bool isPrefab = false);
+
+	Entity& operator= (const Entity& other) = delete;
 	bool operator== (const Entity& other) const;
 	bool operator!= (const Entity& other) const;
 
@@ -99,9 +101,10 @@ public:
 
 private:
 
-	uuid m_id;
-	World* m_world;
-	Entity* m_parent;
 	std::vector<std::unique_ptr<Entity>> m_children;
 	std::vector<std::unique_ptr<Component>> m_components;
+	uuid m_id;
+	Entity* m_parent{ nullptr };
+	uuid m_prefab{ uuid::Invalid };
+	World* m_world{ nullptr };
 };

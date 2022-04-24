@@ -3,33 +3,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/world.h>
 
-Entity::Entity(const Entity& other)
-	: name()
-	, tag()
-	, transform()
-	, m_id()
-	, m_world(nullptr)
-	, m_parent(nullptr)
-	, m_children()
-	, m_components()
-{
-	deserialize(other.serialize());
-}
-
-Entity::Entity(const Entity& other, const uuid& id)
-	: name()
-	, tag()
-	, transform()
-	, m_id()
-	, m_world(nullptr)
-	, m_parent(nullptr)
-	, m_children()
-	, m_components()
-{
-	deserialize(other.serialize());
-	m_id = id;
-}
-
 void Entity::prepareToSpawn(World* const world)
 {
 	m_world = world;
@@ -43,8 +16,11 @@ void Entity::prepareToDestroy()
 	}
 	m_components.clear();
 
-	// destroy the children
-	// TODO
+	for (const auto& child : m_children)
+	{
+		child->prepareToDestroy();
+	}
+	m_children.clear();
 }
 
 void Entity::setParent(Entity* const entity)
@@ -64,6 +40,14 @@ void Entity::update(const double deltaTime)
 	transform.update();
 }
 
+void Entity::duplicate(const Entity& from, Entity& duplicate, bool isPrefab /*= false*/)
+{
+	const uuid id = duplicate.m_id;
+	duplicate.deserialize(from.serialize());
+	duplicate.m_id = id;
+	duplicate.m_prefab = isPrefab ? from.m_id : uuid::Invalid;
+}
+
 void Entity::render(graphics::Renderer* const renderer)
 {
 	for (const auto& component : m_components)
@@ -73,12 +57,6 @@ void Entity::render(graphics::Renderer* const renderer)
 			component->render(renderer);
 		}
 	}
-}
-
-Entity& Entity::operator=(const Entity& other)
-{
-
-	return *this;
 }
 
 bool Entity::operator==(const Entity& other) const
@@ -148,6 +126,7 @@ void Entity::deserialize(const json::value& value)
 	if (!value.is_object())
 		return;
 
+	::deserialize(value["id"], m_id);
 	name = value["name"].as_string();
 	tag = value["tag"].as_string();
 	::deserialize(value["transform"], transform);

@@ -119,7 +119,8 @@ Entity* const World::spawn(const Entity& prefab, const vec3& position)
 
 Entity* const World::spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion)
 {
-	Entity* const entity = new Entity(prefab, uuid());
+	Entity* const entity = new Entity();
+	Entity::duplicate(prefab, *entity, true);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
 	entity->prepareToSpawn(this);
