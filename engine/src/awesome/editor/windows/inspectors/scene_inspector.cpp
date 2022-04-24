@@ -24,7 +24,7 @@ namespace editor
 
 		if (Layout::button("Import"))
 		{
-			World::instance().deserialize(json::Deserializer::parse(asset->data));
+			World::instance().load(asset);
 		}
 	}
 }

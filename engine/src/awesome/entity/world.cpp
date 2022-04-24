@@ -146,6 +146,11 @@ void World::clear()
 	m_entities.clear();
 }
 
+void World::load(const SceneAssetPtr& scene)
+{
+	deserialize(json::Deserializer::parse(scene->data));
+}
+
 json::value World::serialize() const
 {
 	json::value data = json::object();

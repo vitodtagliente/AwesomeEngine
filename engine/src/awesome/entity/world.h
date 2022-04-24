@@ -7,6 +7,7 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
+#include <awesome/data/scene_asset.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
 
@@ -45,6 +46,8 @@ public:
 	void destroy(const uuid& id);
 
 	void clear();
+
+	void load(const SceneAssetPtr& scene);
 
 	// serialization
 	virtual json::value serialize() const override;
