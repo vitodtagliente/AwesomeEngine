@@ -103,7 +103,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Prefab:
 	{
-		return std::make_shared<PrefabAsset>(Prefab::load(filename), descriptor);
+		return std::make_shared<PrefabAsset>(load(filename), descriptor);
 	}
 	case Asset::Type::Scene:
 	{

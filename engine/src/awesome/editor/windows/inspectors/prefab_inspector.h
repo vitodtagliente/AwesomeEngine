@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 
+#include <awesome/data/prefab_asset.h>
 #include <awesome/editor/windows/inspector_window.h>
+#include <awesome/entity/entity.h>
 
 namespace editor
 {
@@ -16,5 +18,9 @@ namespace editor
 
 		virtual bool canInspect(const State::Selection& selection) override;
 		virtual void inspect(const State::Selection& selection) override;
+
+	private:
+		Entity m_entity;
+		PrefabAssetPtr m_previouslySelectedPrefab;
 	};
 }

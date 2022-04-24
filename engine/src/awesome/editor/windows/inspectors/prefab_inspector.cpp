@@ -5,6 +5,7 @@
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/entity/world.h>
 #include <awesome/editor/text_icon.h>
+#include <awesome/encoding/json.h>
 
 namespace editor
 {
@@ -21,22 +22,28 @@ namespace editor
 		{
 			return;
 		}
+		
+		if (prefab != m_previouslySelectedPrefab)
+		{
+			m_previouslySelectedPrefab = prefab;
+			m_entity.deserialize(json::Deserializer::parse(prefab->data));
+		}
 
 		if (Layout::button("Import Prefab"))
 		{
-			World::instance().spawn(prefab->data.entity);
+			Entity* const entity = World::instance().spawn();
+			Entity::duplicate(prefab, *entity);
 		}
 
 		Layout::separator();
 
-		Entity& entity = prefab->data.entity;
-		EntityLayout::input(entity);
+		EntityLayout::input(m_entity);
 
 		Layout::separator();
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			prefab->data.save(prefab->filename.parent_path() / prefab->filename.stem());
+			prefab->data = json::Serializer::to_string(m_entity.serialize());
 		}
 	}
 }

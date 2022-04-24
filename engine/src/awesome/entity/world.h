@@ -38,9 +38,6 @@ public:
 	Entity* const spawn();
 	Entity* const spawn(const vec3& position);
 	Entity* const spawn(const vec3& position, const quaternion& quaternion);
-	Entity* const spawn(const Entity& prefab);
-	Entity* const spawn(const Entity& prefab, const vec3& position);
-	Entity* const spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion);
 
 	void destroy(Entity* const entity);
 	void destroy(const uuid& id);

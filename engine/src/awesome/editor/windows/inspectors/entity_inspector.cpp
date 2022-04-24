@@ -1,7 +1,6 @@
 #include "entity_inspector.h"
 
 #include <awesome/data/asset_importer.h>
-#include <awesome/data/prefab.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
@@ -32,11 +31,11 @@ namespace editor
 				{
 					if (!filename.string().empty())
 					{
-						Prefab prefab(entity);
-						prefab.save(filename);
-
-						AssetImporter importer;
-						importer.import(filename);
+						// Prefab prefab(entity);
+						// prefab.save(filename);
+						// 
+						// AssetImporter importer;
+						// importer.import(filename);
 					}
 				}
 			);

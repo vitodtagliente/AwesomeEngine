@@ -40,12 +40,19 @@ void Entity::update(const double deltaTime)
 	transform.update();
 }
 
-void Entity::duplicate(const Entity& from, Entity& duplicate, bool isPrefab /*= false*/)
+void Entity::duplicate(const Entity& from, Entity& duplicate)
 {
 	const uuid id = duplicate.m_id;
 	duplicate.deserialize(from.serialize());
 	duplicate.m_id = id;
-	duplicate.m_prefab = isPrefab ? from.m_id : uuid::Invalid;
+}
+
+void Entity::duplicate(const PrefabAssetPtr& prefab, Entity& duplicate)
+{
+	const uuid id = duplicate.m_id;
+	duplicate.deserialize(json::Deserializer::parse(prefab->data));
+	duplicate.m_id = id;
+	duplicate.m_prefab = prefab->id;
 }
 
 void Entity::render(graphics::Renderer* const renderer)

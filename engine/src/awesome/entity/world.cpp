@@ -107,28 +107,6 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	return entity;
 }
 
-Entity* const World::spawn(const Entity& prefab)
-{
-	return spawn(prefab, vec3::zero, quaternion::identity);
-}
-
-Entity* const World::spawn(const Entity& prefab, const vec3& position)
-{
-	return spawn(prefab, position, quaternion::identity);
-}
-
-Entity* const World::spawn(const Entity& prefab, const vec3& position, const quaternion& quaternion)
-{
-	Entity* const entity = new Entity();
-	Entity::duplicate(prefab, *entity, true);
-	entity->transform.position = position;
-	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn(this);
-	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
-
-	return entity;
-}
-
 void World::destroy(Entity* const entity)
 {
 	m_pendingDestroyEntities.push_back(entity->getId());

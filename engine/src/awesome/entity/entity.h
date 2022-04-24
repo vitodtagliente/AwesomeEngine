@@ -7,6 +7,7 @@
 
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
+#include <awesome/data/prefab_asset.h>
 #include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
@@ -39,7 +40,8 @@ public:
 	void render(graphics::Renderer* const renderer);
 	void update(double deltaTime);
 
-	static void duplicate(const Entity& from, Entity& duplicate, bool isPrefab = false);
+	static void duplicate(const Entity& from, Entity& duplicate);
+	static void duplicate(const PrefabAssetPtr& prefab, Entity& duplicate);
 
 	Entity& operator= (const Entity& other) = delete;
 	bool operator== (const Entity& other) const;
