@@ -113,12 +113,14 @@ const std::vector<std::string>& Asset::getExtensionsByType(const Type type)
 
 const std::string& Asset::getExtensionByType(const Type type)
 {
+	static const std::string s_notFound;
+
 	const auto& extensions = getExtensionsByType(type);
 	if (!extensions.empty())
 	{
 		return extensions.at(0);
 	}
-	return "";
+	return s_notFound;
 }
 
 Asset::Type Asset::getTypeByExtension(const std::string& extension)
