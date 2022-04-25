@@ -3,11 +3,11 @@
 #include <filesystem>
 
 #include <awesome/application/application.h>
-#include <awesome/data/archive.h>
-#include <awesome/data/asset_importer.h>
 #include <awesome/editor/private/menu_layout.h>
-#include <awesome/entity/world.h>
 
+#include <awesome/editor/menu_items/new_scene_menu_item.h>
+#include <awesome/editor/menu_items/save_scene_as_menu_item.h>
+#include <awesome/editor/menu_items/save_scene_menu_item.h>
 #include <awesome/editor/menu_items/sprite_animation_menu_item.h>
 #include <awesome/editor/menu_items/sprite_menu_item.h>
 
@@ -15,6 +15,9 @@ namespace editor
 {
 	void Menu::init()
 	{
+		TypeFactory::load<NewSceneMenuItem>();
+		TypeFactory::load<SaveSceneMenuItem>();
+		TypeFactory::load<SaveSceneAsMenuItem>();
 		TypeFactory::load<SpriteAnimationMenuItem>();
 		TypeFactory::load<SpriteMenuItem>();
 
@@ -34,7 +37,9 @@ namespace editor
 		if (MenuLayout::beginMainMenu())
 		{
 			menuFile();
+			menuScene();
 			menuAssets();
+
 			MenuLayout::endMainMenu();
 		}
 
@@ -47,18 +52,6 @@ namespace editor
 
 	void Menu::menuFile()
 	{
-		static const auto& saveScene = [](const std::filesystem::path& filename) -> void
-		{
-			if (!filename.string().empty())
-			{
-				Archive archive(filename, Archive::Mode::Write);
-				archive << json::Serializer::to_string(World::instance().serialize());
-
-				AssetImporter importer;
-				importer.import(filename);
-			}
-		};
-
 		if (MenuLayout::beginMenu("File"))
 		{
 			if (MenuLayout::item("New"))
@@ -68,28 +61,26 @@ namespace editor
 
 			MenuLayout::separator();
 
-			if (MenuLayout::item("New Scene"))
-			{
-				World::instance().clear();
-			}
-
-			if (MenuLayout::item("Save Scene"))
-			{
-				m_saveFileDialog.open("Save Scene...", Asset::getExtensionByType(Asset::Type::Scene), saveScene);
-			}
-
-			if (MenuLayout::item("Save Scene as..."))
-			{
-				m_saveFileDialog.open("Save Scene...", Asset::getExtensionByType(Asset::Type::Scene), saveScene);
-			}
-
-			MenuLayout::separator();
-
 			if (MenuLayout::item("Exit"))
 			{
 				Application::instance().exit();
 			}
 
+			MenuLayout::endMenu();
+		}
+	}
+
+	void Menu::menuScene()
+	{
+		if (MenuLayout::beginMenu("Scene"))
+		{
+			for (const auto& item : m_menuItems)
+			{
+				if (item->getCategory() == "Scene" && MenuLayout::item(item->getName()))
+				{
+					item->execute();
+				}
+			}
 			MenuLayout::endMenu();
 		}
 	}

@@ -128,7 +128,10 @@ void World::clear()
 
 void World::load(const SceneAssetPtr& scene)
 {
+	m_sceneId = scene->id;
+	
 	clear();
+
 	m_sceneLoader.load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
 		{
 			for (auto& entity : entities)

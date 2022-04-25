@@ -19,8 +19,9 @@ namespace editor
 
 	private:
 
-		void menuFile();
 		void menuAssets();
+		void menuFile();
+		void menuScene();
 
 		std::vector<std::unique_ptr<MenuItem>> m_menuItems;
 		SaveFileDialog m_saveFileDialog;

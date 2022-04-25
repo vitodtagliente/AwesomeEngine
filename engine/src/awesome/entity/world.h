@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <vector>
 
@@ -35,6 +36,7 @@ public:
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
 	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;
+	inline const uuid& getSceneId() const { return m_sceneId; }
 
 	Entity* const spawn();
 	Entity* const spawn(const vec3& position);
@@ -57,5 +59,6 @@ private:
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
+	uuid m_sceneId{ uuid::Invalid };
 	SceneLoader m_sceneLoader;
 };

@@ -21,7 +21,7 @@ void SceneLoader::update(const double)
 	}
 
 	Time time;
-	const double timeBound = 1.0 / (60 + 20); // 60 fps per second + safety margin
+	const double timeBound = 1.0 / 30; // 60 fps per second + safety margin
 
 	const auto& entities = m_asset->data["entities"].as_array({});
 	while (time.getTime() < timeBound && m_progress < m_totalProgress)
