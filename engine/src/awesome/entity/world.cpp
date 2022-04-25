@@ -140,6 +140,15 @@ void World::load(const SceneAssetPtr& scene)
 	);
 }
 
+bool World::isLoading(size_t& progress) const
+{
+	if (m_sceneLoader.isLoading())
+	{
+		return progress = m_sceneLoader.getProgress(), true;
+	}
+	return progress = 0, false;
+}
+
 json::value World::serialize() const
 {
 	json::value data = json::object();

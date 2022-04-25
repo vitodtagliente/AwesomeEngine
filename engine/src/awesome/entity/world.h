@@ -46,6 +46,7 @@ public:
 	void clear();
 
 	void load(const SceneAssetPtr& scene);
+	bool isLoading(size_t& progress) const;
 
 	// serialization
 	virtual json::value serialize() const override;
