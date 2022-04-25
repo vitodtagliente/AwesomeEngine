@@ -27,7 +27,7 @@ namespace editor
 			size_t progress = 0;
 			if (world.isLoading(progress))
 			{
-				s << "loading... " << progress << "%";
+				s << "loading... " << progress << " %";
 			}
 			else
 			{

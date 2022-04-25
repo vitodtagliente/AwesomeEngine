@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include <awesome/encoding/json.h>
+
 #include "image_asset.h"
 #include "prefab_asset.h"
 #include "scene_asset.h"
@@ -107,7 +109,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	}
 	case Asset::Type::Scene:
 	{
-		return std::make_shared<SceneAsset>(load(filename), descriptor);
+		return std::make_shared<SceneAsset>(json::Deserializer::parse(load(filename)), descriptor);
 	}
 	case Asset::Type::Sprite:
 	{

@@ -2,16 +2,15 @@
 
 #include <awesome/application/time.h>
 #include <awesome/core/timer.h>
+#include <awesome/encoding/json.h>
 
-void SceneLoader::load(const SceneAssetPtr& scene, const std::function<void(std::vector<std::unique_ptr<Entity>>&)>& handler)
+void SceneLoader::load(const SceneAssetPtr& asset, const std::function<void(std::vector<std::unique_ptr<Entity>>&)>& handler)
 {
-	m_data = json::Deserializer::parse(scene->data);
-	const auto& entities = m_data["entities"].as_array({});
-
+	m_asset = asset;
 	m_handler = handler;
 	m_isLoading = true;
 	m_progress = 0;
-	m_totalProgress = entities.size();
+	m_totalProgress = asset->data["entities"].as_array({}).size();
 }
 
 void SceneLoader::update(const double)
@@ -22,9 +21,9 @@ void SceneLoader::update(const double)
 	}
 
 	Time time;
-	const double timeBound = 1.0 / (60 + 40); // 60 fps per second + safety margin
+	const double timeBound = 1.0 / (60 + 20); // 60 fps per second + safety margin
 
-	const auto& entities = m_data["entities"].as_array({});
+	const auto& entities = m_asset->data["entities"].as_array({});
 	while (time.getTime() < timeBound && m_progress < m_totalProgress)
 	{
 		const json::value& data = entities.at(m_progress);
