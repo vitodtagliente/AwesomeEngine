@@ -16,4 +16,5 @@ void Time::tick()
 
 	// m_time to be calculated
 	m_deltaTime = std::chrono::duration<double>(m_clock2 - m_clock1).count();
+	m_time = +m_deltaTime;
 }

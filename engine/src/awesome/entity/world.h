@@ -8,6 +8,7 @@
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 #include <awesome/data/scene_asset.h>
+#include <awesome/entity/private/scene_loader.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
 
@@ -48,12 +49,12 @@ public:
 
 	// serialization
 	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
+	virtual void deserialize(const json::value&) override {};
 
 private:
 
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
-
+	SceneLoader m_sceneLoader;
 };

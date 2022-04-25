@@ -8,6 +8,8 @@ void World::update(const double deltaTime)
 	{
 		entity->update(deltaTime);
 	}
+
+	m_sceneLoader.update(deltaTime);
 }
 
 void World::render(graphics::Renderer* const renderer)
@@ -126,7 +128,16 @@ void World::clear()
 
 void World::load(const SceneAssetPtr& scene)
 {
-	deserialize(json::Deserializer::parse(scene->data));
+	clear();
+	m_sceneLoader.load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
+		{
+			for (auto& entity : entities)
+			{
+				entity->prepareToSpawn(this);
+				m_pendingSpawnEntities.push_back(std::move(entity));
+			}
+		}
+	);
 }
 
 json::value World::serialize() const
@@ -141,16 +152,4 @@ json::value World::serialize() const
 		data["entities"] = entities;
 	}
 	return data;
-}
-
-void World::deserialize(const json::value& value)
-{
-	clear();
-
-	const auto& entities = value["entities"].as_array({});
-	for (const auto& data : entities)
-	{
-		Entity* const entity = spawn();
-		entity->deserialize(data);
-	}
 }
