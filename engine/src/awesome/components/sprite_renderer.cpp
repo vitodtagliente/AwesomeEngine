@@ -18,20 +18,25 @@ SpriteRenderer::SpriteRenderer()
 
 void SpriteRenderer::render(graphics::Renderer* const renderer)
 {
-	if (sprite && sprite->data.image)
+	if (sprite && sprite->data.has_value())
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(sprite->data.image->id);
-		if (texture)
+		const Sprite& data = sprite->data.value();
+		if (data.image)
 		{
-			renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), sprite->data.rect);
-		}
+			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
+			if (texture)
+			{
+				renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), data.rect);
+			}
+
+		}		
 	}
 }
 
 json::value SpriteRenderer::serialize() const
 {
 	json::value data = Component::serialize();
-	data["sprite"] = sprite ? ::serialize(sprite->id) : "";
+	data["sprite"] = sprite ? ::serialize(sprite->descriptor.id) : "";
 	data["color"] = ::serialize(color);
 	return data;
 }

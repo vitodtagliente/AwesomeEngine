@@ -254,12 +254,12 @@ namespace editor
 		else
 		{
 			AssetLibrary& library = AssetLibrary::instance();
-			Asset descriptor = Asset::load(file);
+			Asset::Descriptor descriptor = Asset::Descriptor::load(file);
 			std::shared_ptr<Asset> asset = library.find(descriptor.id);
 			if (asset)
 			{
-				library.unload(asset->id);
-				library.remove(asset->id);
+				library.unload(descriptor.id);
+				library.remove(descriptor.id);
 
 				std::filesystem::remove(file);
 				std::filesystem::remove(getAssetFilename(file));
@@ -329,7 +329,7 @@ namespace editor
 		if (Asset::isAsset(from))
 		{
 			AssetLibrary& library = AssetLibrary::instance();
-			Asset descriptor = Asset::load(from);
+			Asset::Descriptor descriptor = Asset::Descriptor::load(from);
 			std::shared_ptr<Asset> asset = library.find(descriptor.id);
 			if (asset)
 			{
@@ -340,8 +340,8 @@ namespace editor
 					std::filesystem::rename(getAssetFilename(from), renameAsset(getAssetFilename(from), to));
 					refreshDirectory();
 
-					asset->path = newAssetFilename;
-					library.insert(*asset);
+					asset->descriptor.path = newAssetFilename;
+					library.insert(descriptor);
 				}
 			}
 		}
@@ -373,7 +373,7 @@ namespace editor
 		}
 		else
 		{
-			Asset descriptor = Asset::load(file);
+			Asset::Descriptor descriptor = Asset::Descriptor::load(file);
 			std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 			if (asset)
 			{
@@ -419,7 +419,7 @@ namespace editor
 		else
 		{
 			AssetLibrary& library = AssetLibrary::instance();
-			Asset descriptor = Asset::load(file);
+			Asset::Descriptor descriptor = Asset::Descriptor::load(file);
 			std::shared_ptr<Asset> asset = library.find(descriptor.id);
 			if (asset)
 			{
@@ -430,8 +430,8 @@ namespace editor
 					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
 					refreshDirectory();
 
-					asset->path = newAssetFilename;
-					library.insert(*asset);
+					asset->descriptor.path = newAssetFilename;
+					library.insert(descriptor);
 				}
 			}
 		}

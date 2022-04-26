@@ -29,11 +29,11 @@ public:
 
 	inline const std::filesystem::path& getDirectory() const { return m_directory; }
 
-	void insert(const AssetDescriptor& descriptor);
+	void insert(const Asset::Descriptor& descriptor);
 	void remove(const uuid& id);
 
-	std::vector<AssetDescriptor> list() const;
-	std::vector<AssetDescriptor> list(Asset::Type type) const;
+	std::vector<Asset::Descriptor> list() const;
+	std::vector<Asset::Descriptor> list(Asset::Type type) const;
 
 
 private:
@@ -49,10 +49,9 @@ private:
 		std::weak_ptr<Asset> asset;
 	};
 
-	std::shared_ptr<Asset> create(const AssetDescriptor& descriptor, const std::filesystem::path& filename);
-	bool getRedirector(const uuid& id, std::filesystem::path& filename) const;
+	std::shared_ptr<Asset> create(const Asset::Descriptor& descriptor, const std::filesystem::path& path);
 
 	std::map<uuid, Slot> m_cache;
-	std::map<uuid, AssetDescriptor> m_register;
+	std::map<uuid, Asset::Descriptor> m_register;
 	std::filesystem::path m_directory;
 };

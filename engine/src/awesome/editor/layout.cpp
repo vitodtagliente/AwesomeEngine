@@ -107,7 +107,7 @@ namespace editor
 	{
 		if (image != nullptr)
 		{
-			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
+			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
 			if (texture)
 			{
 				ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
@@ -249,17 +249,19 @@ namespace editor
 
 	void Layout::sprite(const SpriteAssetPtr& sprite)
 	{
-		if (sprite)
+		if (sprite && sprite->data.has_value())
 		{
-			image(sprite->data.image, sprite->data.rect);
+			const Sprite& data = sprite->data.value();
+			image(data.image, data.rect);
 		}
 	}
 
 	void Layout::sprite(const SpriteAssetPtr& sprite, const float width, const float height)
 	{
-		if (sprite)
+		if (sprite && sprite->data.has_value())
 		{
-			image(sprite->data.image, sprite->data.rect, width, height);
+			const Sprite& data = sprite->data.value();
+			image(data.image, data.rect, width, height);
 		}
 	}
 

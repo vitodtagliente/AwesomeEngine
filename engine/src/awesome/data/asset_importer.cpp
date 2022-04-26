@@ -1,5 +1,6 @@
 #include "asset_importer.h"
 
+#include <awesome/data/asset.h>
 #include <awesome/data/asset_library.h>
 
 void AssetImporter::import(const std::filesystem::path& directory, const bool recursive)
@@ -28,7 +29,7 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 
 	if (Asset::isAsset(filename))
 	{
-		Asset descriptor = Asset::load(filename);
+		const Asset::Descriptor descriptor = Asset::Descriptor::load(filename);
 		if (descriptor)
 		{
 			// The asset is already loaded
@@ -40,8 +41,8 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 		return false;
 	}
 
-	const std::string assetFilename = filename.string() + Asset::Extension;
-	if (std::filesystem::exists(assetFilename))
+	const std::filesystem::path path = filename.string() + Asset::Extension;
+	if (std::filesystem::exists(path))
 	{
 		return true;
 	}
@@ -49,10 +50,10 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 	const Asset::Type type = Asset::getTypeByExtension(filename.extension().string());
 	if (type != Asset::Type::None)
 	{
-		Asset asset(type);
-		asset.save(assetFilename);
+		Asset::Descriptor descriptor(type);
+		descriptor.save(path);
 
-		library.insert(asset);
+		library.insert(descriptor);
 	}
 
 	return true;

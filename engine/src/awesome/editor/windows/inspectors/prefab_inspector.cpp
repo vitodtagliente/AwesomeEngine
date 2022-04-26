@@ -12,13 +12,13 @@ namespace editor
 	bool PrefabInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->type == Asset::Type::Prefab;
+			&& selection.asAsset()->descriptor.type == Asset::Type::Prefab;
 	}
 
 	void PrefabInspector::inspect(const State::Selection& selection)
 	{
 		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(selection.asAsset());
-		if (prefab == nullptr)
+		if (prefab == nullptr || !prefab->data.has_value())
 		{
 			return;
 		}
@@ -26,7 +26,7 @@ namespace editor
 		if (prefab != m_previouslySelectedPrefab)
 		{
 			m_previouslySelectedPrefab = prefab;
-			m_entity.deserialize(json::Deserializer::parse(prefab->data));
+			m_entity.deserialize(json::Deserializer::parse(prefab->data.value()));
 		}
 
 		if (Layout::button(TextIcon::upload(" Import Prefab")))
@@ -43,7 +43,7 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			prefab->data = json::Serializer::to_string(m_entity.serialize());
+			prefab->data.value() = json::Serializer::to_string(m_entity.serialize());
 		}
 	}
 }

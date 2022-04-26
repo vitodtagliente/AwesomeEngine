@@ -63,7 +63,7 @@ Sprite Sprite::load(const std::filesystem::path& filename)
 void Sprite::save(const std::filesystem::path& filename)
 {
 	json::value data = json::object({
-		{"image", image ? static_cast<std::string>(image->id) : ""},
+		{"image", image ? static_cast<std::string>(image->descriptor.id) : ""},
 		{"rect", serialize(rect)}
 		});
 

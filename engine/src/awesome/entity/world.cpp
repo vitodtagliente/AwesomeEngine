@@ -128,7 +128,7 @@ void World::clear()
 
 void World::load(const SceneAssetPtr& scene)
 {
-	m_sceneId = scene->id;
+	m_sceneId = scene->descriptor.id;
 	
 	clear();
 

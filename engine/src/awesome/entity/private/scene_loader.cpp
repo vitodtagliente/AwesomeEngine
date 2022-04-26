@@ -10,7 +10,7 @@ void SceneLoader::load(const SceneAssetPtr& asset, const std::function<void(std:
 	m_handler = handler;
 	m_isLoading = true;
 	m_progress = 0;
-	m_totalProgress = asset->data["entities"].as_array({}).size();
+	m_totalProgress = asset->data.value()["entities"].as_array({}).size();
 }
 
 void SceneLoader::update(const double)
@@ -23,7 +23,7 @@ void SceneLoader::update(const double)
 	Time time;
 	const double timeBound = 1.0 / 30; // 60 fps per second + safety margin
 
-	const auto& entities = m_asset->data["entities"].as_array({});
+	const auto& entities = m_asset->data.value()["entities"].as_array({});
 	while (time.getTime() < timeBound && m_progress < m_totalProgress)
 	{
 		const json::value& data = entities.at(m_progress);

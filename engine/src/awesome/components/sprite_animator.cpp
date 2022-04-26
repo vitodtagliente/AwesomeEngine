@@ -23,8 +23,9 @@ void SpriteAnimator::update(const double deltaTime)
 		m_state.timeLeft -= deltaTime;
 		if (m_state.timeLeft <= 0)
 		{
+			const SpriteAnimation& animation = m_state.animation->data.value();
 			++m_state.frameIndex;
-			if (m_state.frameIndex >= m_state.animation->data.frames.size())
+			if (m_state.frameIndex >= animation.frames.size())
 			{
 				if (m_state.loop)
 				{
@@ -37,9 +38,9 @@ void SpriteAnimator::update(const double deltaTime)
 				}
 			}
 
-			if (m_state.frameIndex < m_state.animation->data.frames.size())
+			if (m_state.frameIndex < animation.frames.size())
 			{
-				const SpriteAnimation::Frame& frame = m_state.animation->data.frames[m_state.frameIndex];
+				const SpriteAnimation::Frame& frame = animation.frames[m_state.frameIndex];
 				m_state.timeLeft = frame.duration;
 				updateFrame(frame);
 			}
@@ -64,15 +65,18 @@ void SpriteAnimator::play(const std::string& name, const bool loop)
 
 	const auto& it = animations.find(name);
 	if (it == animations.end()) return;
+	if (!it->second->data.has_value()) return;
+
+	const SpriteAnimation& animation = it->second->data.value();
 
 	m_state.name = name;
 	m_state.animation = it->second;
-	m_state.frameIndex = m_state.animation->data.startingFrame;
+	m_state.frameIndex = animation.startingFrame;
 	m_state.loop = loop;
 
-	if (m_state.frameIndex < m_state.animation->data.frames.size())
+	if (m_state.frameIndex < animation.frames.size())
 	{
-		const SpriteAnimation::Frame& frame = m_state.animation->data.frames[m_state.frameIndex];
+		const SpriteAnimation::Frame& frame = animation.frames[m_state.frameIndex];
 		m_state.timeLeft = frame.duration;
 		updateFrame(frame);
 	}
@@ -103,7 +107,7 @@ json::value SpriteAnimator::serialize() const
 	json::value anims = json::object();
 	for (const auto& pair : animations)
 	{
-		anims[pair.first] = ::serialize(pair.second->id);
+		anims[pair.first] = ::serialize(pair.second->descriptor.id);
 	}
 
 	data["autoplay"] = autoplay;

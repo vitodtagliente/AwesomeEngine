@@ -60,10 +60,10 @@ namespace editor
 		// preview the sprite
 		{
 			SpriteRenderer* const component = entity.findComponent<SpriteRenderer>();
-			if (component && component->sprite)
+			if (component && component->sprite && component->sprite->data.has_value())
 			{
 				Layout::separator();
-				Layout::image(component->sprite->data.image, component->sprite->data.rect);
+				Layout::image(component->sprite->data.value().image, component->sprite->data.value().rect);
 			}
 		}
 	}

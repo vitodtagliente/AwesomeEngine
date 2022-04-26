@@ -11,13 +11,13 @@ namespace editor
 	bool SceneInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->type == Asset::Type::Scene;
+			&& selection.asAsset()->descriptor.type == Asset::Type::Scene;
 	}
 
 	void SceneInspector::inspect(const State::Selection& selection)
 	{
 		SceneAssetPtr asset = std::static_pointer_cast<SceneAsset>(selection.asAsset());
-		if (asset == nullptr)
+		if (asset == nullptr || !asset->data.has_value())
 		{
 			return;
 		}

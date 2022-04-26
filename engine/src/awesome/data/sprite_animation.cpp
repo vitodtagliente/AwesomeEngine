@@ -66,7 +66,7 @@ void SpriteAnimation::save(const std::filesystem::path& filename)
 	for (const Frame& frame : frames)
 	{
 		list.push_back(json::object({
-			{"sprite", static_cast<std::string>(frame.sprite->id)},
+			{"sprite", static_cast<std::string>(frame.sprite->descriptor.id)},
 			{"duration", frame.duration}
 			}));
 	}

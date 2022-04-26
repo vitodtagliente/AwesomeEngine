@@ -3,7 +3,6 @@
 
 #include <filesystem>
 #include <string>
-#include <awesome/data/asset.h>
 
 class AssetImporter
 {

@@ -31,9 +31,9 @@ namespace graphics
 	TexturePtr TextureLibrary::create(const uuid& id)
 	{
 		ImageAssetPtr asset = std::static_pointer_cast<ImageAsset>(AssetLibrary::instance().find(id));
-		if (asset)
+		if (asset && asset->data.has_value())
 		{
-			const Image& image = asset->data;
+			const Image& image = asset->data.value();
 			return std::make_shared<Texture>(image.data.get(), image.width, image.height, image.channels);
 		}
 		return nullptr;

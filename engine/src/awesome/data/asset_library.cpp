@@ -1,6 +1,7 @@
 #include "asset_library.h"
 
 #include <fstream>
+#include <thread>
 
 #include <awesome/encoding/json.h>
 
@@ -24,7 +25,7 @@ void AssetLibrary::unload(const uuid& id)
 	m_cache.erase(id);
 }
 
-void AssetLibrary::insert(const AssetDescriptor& descriptor)
+void AssetLibrary::insert(const Asset::Descriptor& descriptor)
 {
 	m_register[descriptor.id] = descriptor;
 }
@@ -34,9 +35,9 @@ void AssetLibrary::remove(const uuid& id)
 	m_register.erase(id);
 }
 
-std::vector<Asset> AssetLibrary::list() const
+std::vector<Asset::Descriptor> AssetLibrary::list() const
 {
-	std::vector<Asset> result;
+	std::vector<Asset::Descriptor> result;
 	for (const auto& pair : m_register)
 	{
 		result.push_back(pair.second);
@@ -44,9 +45,9 @@ std::vector<Asset> AssetLibrary::list() const
 	return result;
 }
 
-std::vector<Asset> AssetLibrary::list(const Asset::Type type) const
+std::vector<Asset::Descriptor> AssetLibrary::list(const Asset::Type type) const
 {
-	std::vector<Asset> result;
+	std::vector<Asset::Descriptor> result;
 	for (const auto& pair : m_register)
 	{
 		if (pair.second.type == type)
@@ -59,30 +60,25 @@ std::vector<Asset> AssetLibrary::list(const Asset::Type type) const
 
 std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 {
-	static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
+	const auto& cacheIt = m_cache.find(id);
+	if (cacheIt != m_cache.end() && !cacheIt->second.isExpired())
 	{
-		return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
-	};
-
-	const auto& it = m_cache.find(id);
-	if (it != m_cache.end() && !it->second.isExpired())
-	{
-		return it->second.asset.lock();
+		return cacheIt->second.asset.lock();
 	}
 
-	std::filesystem::path filename;
-	if (getRedirector(id, filename) == false)
+	const auto& registerIt = m_register.find(id);
+	if (registerIt == m_register.end())
 	{
 		return nullptr;
 	}
 
-	Asset descriptor = Asset::load(filename);
-	std::shared_ptr<Asset> asset = create(descriptor, getAssetFilename(filename));
-	m_cache.insert(std::make_pair(asset->id, Slot(asset)));
+	Asset::Descriptor& descriptor = registerIt->second;
+	std::shared_ptr<Asset> asset = create(descriptor, descriptor.getDataPath());
+	m_cache.insert(std::make_pair(descriptor.id, Slot(asset)));
 	return asset;
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, const std::filesystem::path& filename)
+std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor, const std::filesystem::path& path)
 {
 	static const auto load = [](const std::filesystem::path& filename) -> std::string
 	{
@@ -92,7 +88,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 		return buf.str();
 	};
 
-	if (!std::filesystem::exists(filename))
+	if (!std::filesystem::exists(path))
 	{
 		return nullptr;
 	}
@@ -101,38 +97,64 @@ std::shared_ptr<Asset> AssetLibrary::create(const AssetDescriptor& descriptor, c
 	{
 	case Asset::Type::Image:
 	{
-		return std::make_shared<ImageAsset>(Image::load(filename), descriptor);
+		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]()
+			{
+				asset->data = Image::load(path);
+			}
+		);
+		return handler.detach(), asset;
 	}
 	case Asset::Type::Prefab:
 	{
-		return std::make_shared<PrefabAsset>(load(filename), descriptor);
+		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]()
+			{
+				asset->data = load(path);
+			}
+		);
+		return handler.detach(), asset;
 	}
 	case Asset::Type::Scene:
 	{
-		return std::make_shared<SceneAsset>(json::Deserializer::parse(load(filename)), descriptor);
+		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]() 
+			{ 
+				asset->data = json::Deserializer::parse(load(path)); 
+			}
+		);		
+		return handler.detach(), asset;
 	}
 	case Asset::Type::Sprite:
 	{
-		return std::make_shared<SpriteAsset>(Sprite::load(filename), descriptor);
+		SpriteAssetPtr asset = std::make_shared<SpriteAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]()
+			{
+				asset->data = Sprite::load(path);
+			}
+		);
+		return handler.detach(), asset;
 	}
 	case Asset::Type::SpriteAnimation:
 	{
-		return std::make_shared<SpriteAnimationAsset>(SpriteAnimation::load(filename), descriptor);
+		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]()
+			{
+				asset->data = SpriteAnimation::load(path);
+			}
+		);
+		return handler.detach(), asset;
 	}
 	case Asset::Type::Text:
 	{
-		return std::make_shared<TextAsset>(load(filename), descriptor);
+		TextAssetPtr asset = std::make_shared<TextAsset>(descriptor, std::nullopt);
+		std::thread handler([path, asset]()
+			{
+				asset->data = load(path);
+			}
+		);
+		return handler.detach(), asset;
 	}
 	default: return nullptr;
 	}
-}
-
-bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename) const
-{
-	const auto& it = m_register.find(id);
-	if (it != m_register.end())
-	{
-		return filename = it->second.path, true;
-	}
-	return false;
 }

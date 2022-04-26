@@ -86,14 +86,14 @@ namespace editor
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 		{
-			if (Layout::beginCombo(name.c_str(), value ? value->path.stem().string() : ""))
+			if (Layout::beginCombo(name.c_str(), value ? value->descriptor.path.stem().string() : ""))
 			{
-				const auto assets = AssetLibrary::instance().list(T);
-				for (const Asset& asset : assets)
+				const auto descriptors = AssetLibrary::instance().list(T);
+				for (const Asset::Descriptor& descriptor : descriptors)
 				{
-					if (Layout::selectable(asset.path.stem().string(), value ? value->id == asset.id : false))
+					if (Layout::selectable(descriptor.path.stem().string(), value ? value->descriptor == descriptor : false))
 					{
-						value = AssetLibrary::instance().find<BaseAsset<T, D>>(asset.id);
+						value = AssetLibrary::instance().find<BaseAsset<T, D>>(descriptor.id);
 						Layout::endCombo();
 						return;
 					}

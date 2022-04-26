@@ -9,31 +9,32 @@ namespace editor
 	bool SpriteInspector::canInspect(const State::Selection& selection)
 	{
 		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->type == Asset::Type::Sprite;
+			&& selection.asAsset()->descriptor.type == Asset::Type::Sprite;
 	}
 
 	void SpriteInspector::inspect(const State::Selection& selection)
 	{
 		SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(selection.asAsset());
-		if (sprite == nullptr)
+		if (sprite == nullptr || !sprite->data.has_value())
 		{
 			return;
 		}
 
-		Layout::input("Image", sprite->data.image);
-		Layout::input("Rect", sprite->data.rect);
-		Layout::image(sprite->data.image, sprite->data.rect);
+		auto& data = sprite->data.value();
+		Layout::input("Image", data.image);
+		Layout::input("Rect", data.rect);
+		Layout::image(data.image, data.rect);
 		
 		if (Layout::collapsingHeader("Reference"))
 		{
-			Layout::image(sprite->data.image);
+			Layout::image(data.image);
 		}
 
 		Layout::separator();
 		
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			sprite->data.save(sprite->path.parent_path() / sprite->path.stem());
+			data.save(sprite->descriptor.path.parent_path() / sprite->descriptor.path.stem());
 		}
 	}
 }
