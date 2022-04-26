@@ -37,7 +37,7 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			animation->data.save(animation->filename.parent_path() / animation->filename.stem());
+			animation->data.save(animation->path.parent_path() / animation->path.stem());
 		}
 	}
 

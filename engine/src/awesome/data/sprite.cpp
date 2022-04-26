@@ -2,6 +2,7 @@
 
 #include <fstream>
 
+#include <awesome/core/serialization.h>
 #include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
 #include <awesome/data/image_asset.h>
@@ -63,7 +64,7 @@ void Sprite::save(const std::filesystem::path& filename)
 {
 	json::value data = json::object({
 		{"image", image ? static_cast<std::string>(image->id) : ""},
-		{"rect", ::serialize(rect)}
+		{"rect", serialize(rect)}
 		});
 
 	Archive ar(filename, Archive::Mode::Write);

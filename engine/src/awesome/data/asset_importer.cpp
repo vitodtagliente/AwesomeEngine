@@ -1,8 +1,6 @@
 #include "asset_importer.h"
 
-#include <awesome/data/archive.h>
 #include <awesome/data/asset_library.h>
-#include <awesome/encoding/json.h>
 
 void AssetImporter::import(const std::filesystem::path& directory, const bool recursive)
 {
@@ -51,10 +49,8 @@ bool AssetImporter::import(const std::filesystem::path& filename)
 	const Asset::Type type = Asset::getTypeByExtension(filename.extension().string());
 	if (type != Asset::Type::None)
 	{
-		Archive archive(assetFilename, Archive::Mode::Write);
 		Asset asset(type);
-		asset.filename = assetFilename;
-		archive << json::Serializer::to_string(asset.serialize());
+		asset.save(assetFilename);
 
 		library.insert(asset);
 	}

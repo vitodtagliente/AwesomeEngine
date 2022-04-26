@@ -340,7 +340,7 @@ namespace editor
 					std::filesystem::rename(getAssetFilename(from), renameAsset(getAssetFilename(from), to));
 					refreshDirectory();
 
-					asset->filename = newAssetFilename;
+					asset->path = newAssetFilename;
 					library.insert(*asset);
 				}
 			}
@@ -430,7 +430,7 @@ namespace editor
 					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
 					refreshDirectory();
 
-					asset->filename = newAssetFilename;
+					asset->path = newAssetFilename;
 					library.insert(*asset);
 				}
 			}

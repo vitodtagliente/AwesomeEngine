@@ -3,6 +3,10 @@
 #include <fstream>
 #include <map>
 
+#include <awesome/core/serialization.h>
+#include <awesome/data/archive.h>
+#include <awesome/encoding/json.h>
+
 std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 	{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
 	{ Asset::Type::Prefab, {".prefab"} },
@@ -15,7 +19,7 @@ std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 Asset::Asset()
 	: id()
 	, type(Type::None)
-	, filename()
+	, path()
 {
 
 }
@@ -23,7 +27,7 @@ Asset::Asset()
 Asset::Asset(const Type type)
 	: id()
 	, type(type)
-	, filename()
+	, path()
 {
 
 }
@@ -31,7 +35,7 @@ Asset::Asset(const Type type)
 Asset::Asset(const Type type, const uuid& id)
 	: id(id)
 	, type(type)
-	, filename()
+	, path()
 {
 
 }
@@ -39,7 +43,7 @@ Asset::Asset(const Type type, const uuid& id)
 Asset::Asset(const Asset& asset)
 	: id(asset.id)
 	, type(asset.type)
-	, filename(asset.filename)
+	, path(asset.path)
 {
 
 }
@@ -48,7 +52,7 @@ Asset& Asset::operator= (const Asset& other)
 {
 	id = other.id;
 	type = other.type;
-	filename = other.filename;
+	path = other.path;
 	return *this;
 }
 
@@ -62,20 +66,6 @@ bool Asset::operator!= (const Asset& other) const
 	return id != other.id;
 }
 
-json::value Asset::serialize() const
-{
-	return json::object({
-		{"id", ::serialize(id)},
-		{"type", static_cast<int>(type)}
-		});
-}
-
-void Asset::deserialize(const json::value& value)
-{
-	::deserialize(value["id"], id);
-	type = static_cast<Type>(value["type"].as_number(0).as_int());
-}
-
 Asset Asset::load(const std::filesystem::path& filename)
 {
 	static const auto read = [](const std::filesystem::path& filename) -> std::string
@@ -87,11 +77,26 @@ Asset Asset::load(const std::filesystem::path& filename)
 	};
 
 	Asset asset;
-	asset.filename = filename;
+	asset.path = filename;
 	std::string content = read(filename);
 	json::value value = json::Deserializer::parse(content);
-	asset.deserialize(value);
+	{
+		deserialize(value["id"], asset.id);
+		asset.type = static_cast<Type>(value["type"].as_number(0).as_int());
+	}
 	return asset;
+}
+
+void Asset::save(const std::filesystem::path& filename)
+{
+	const json::value& data = json::object({
+		{"id", serialize(id)},
+		{"type", static_cast<int>(type)}
+		});
+
+	path = filename;
+	Archive archive(filename, Archive::Mode::Write);
+	archive << json::Serializer::to_string(data);
 }
 
 bool Asset::isAsset(const std::filesystem::path& filename)

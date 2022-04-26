@@ -132,7 +132,7 @@ bool AssetLibrary::getRedirector(const uuid& id, std::filesystem::path& filename
 	const auto& it = m_register.find(id);
 	if (it != m_register.end())
 	{
-		return filename = it->second.filename, true;
+		return filename = it->second.path, true;
 	}
 	return false;
 }

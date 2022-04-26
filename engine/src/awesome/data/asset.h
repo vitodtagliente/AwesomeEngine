@@ -7,10 +7,9 @@
 #include <vector>
 
 #include <awesome/core/reflection.h>
-#include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 
-struct Asset : public ISerializable
+struct Asset
 {
 	enum class Type : int
 	{
@@ -33,12 +32,10 @@ struct Asset : public ISerializable
 	bool operator!= (const Asset& other) const;
 	inline operator bool() const { return type != Type::None; };
 
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-
-	static Asset load(const std::filesystem::path& filename);
 	static bool isAsset(const std::filesystem::path& filename);
+	static Asset load(const std::filesystem::path& filename);
+	void save(const std::filesystem::path& filename);
+
 	static constexpr char* const Extension = ".asset";
 
 	static const std::vector<std::string>& getExtensionsByType(Type type);
@@ -47,7 +44,7 @@ struct Asset : public ISerializable
 
 	uuid id;
 	Type type;
-	std::filesystem::path filename;
+	std::filesystem::path path;
 
 	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 

@@ -33,7 +33,7 @@ namespace editor
 		
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			sprite->data.save(sprite->filename.parent_path() / sprite->filename.stem());
+			sprite->data.save(sprite->path.parent_path() / sprite->path.stem());
 		}
 	}
 }
