@@ -10,6 +10,13 @@ struct BaseAsset : public Asset
 {
 public:
 
+	BaseAsset(const Asset::Descriptor& descriptor)
+		: Asset(descriptor)
+		, data(std::nullopt)
+	{
+
+	}
+
 	BaseAsset(const Asset::Descriptor& descriptor, const std::optional<D> data)
 		: Asset(descriptor)
 		, data(data)

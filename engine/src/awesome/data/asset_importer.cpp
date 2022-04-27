@@ -1,60 +1,75 @@
 #include "asset_importer.h"
 
+#include <string>
+
 #include <awesome/data/asset.h>
 #include <awesome/data/asset_library.h>
 
-void AssetImporter::import(const std::filesystem::path& directory, const bool recursive)
+void AssetImporter::import(const std::filesystem::path& path, const bool recursive)
 {
-	for (const auto& entry : std::filesystem::directory_iterator(directory))
+	if (std::filesystem::exists(path))
 	{
-		if (entry.is_directory() && recursive)
+		if (std::filesystem::is_directory(path))
 		{
-			import(entry.path(), recursive);
-			continue;
+			importDirectory(path, recursive);
 		}
-
-		const std::filesystem::path& file = entry.path();
-		import(file);
+		else
+		{
+			importFile(path);
+		}
 	}
 }
 
-bool AssetImporter::import(const std::filesystem::path& filename)
+void AssetImporter::import(const std::filesystem::path& path)
 {
-	if (!std::filesystem::exists(filename) || std::filesystem::is_directory(filename))
-	{
-		return false;
-	}
+	import(path, false);
+}
 
+void AssetImporter::importDirectory(const std::filesystem::path& path, const bool recursive)
+{
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+	{
+		if (!entry.is_directory())
+		{
+			importFile(entry.path());
+		}
+		else if (entry.is_directory() && recursive)
+		{
+			importDirectory(entry.path(), recursive);
+		}
+	}
+}
+
+void AssetImporter::importFile(const std::filesystem::path& path)
+{
 	AssetLibrary& library = AssetLibrary::instance();
 
-	if (Asset::isAsset(filename))
+	if (Asset::isAsset(path))
 	{
-		const Asset::Descriptor descriptor = Asset::Descriptor::load(filename);
+		const Asset::Descriptor descriptor = Asset::Descriptor::load(path);
 		if (descriptor)
 		{
 			// The asset is already loaded
-			if (library.find(descriptor.id)) return true;
+			if (library.find(descriptor.id)) return;
 
 			library.insert(descriptor);
-			return true;
+			return;
 		}
-		return false;
+		return;
 	}
 
-	const std::filesystem::path path = filename.string() + Asset::Extension;
-	if (std::filesystem::exists(path))
+	const std::filesystem::path assetPath = path.string() + Asset::Extension;
+	if (std::filesystem::exists(assetPath))
 	{
-		return true;
+		return;
 	}
 
-	const Asset::Type type = Asset::getTypeByExtension(filename.extension().string());
+	const Asset::Type type = Asset::getTypeByExtension(path.extension().string());
 	if (type != Asset::Type::None)
 	{
 		Asset::Descriptor descriptor(type);
-		descriptor.save(path);
+		descriptor.save(assetPath);
 
 		library.insert(descriptor);
 	}
-
-	return true;
 }

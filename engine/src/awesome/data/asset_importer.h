@@ -2,13 +2,16 @@
 #pragma once
 
 #include <filesystem>
-#include <string>
 
 class AssetImporter
 {
 public:
 	AssetImporter() = default;
 
-	void import(const std::filesystem::path& directory, bool recursive);
-	bool import(const std::filesystem::path& filename);
+	void import(const std::filesystem::path& path, bool recursive);
+	void import(const std::filesystem::path& path);
+
+private:
+	void importDirectory(const std::filesystem::path& path, bool recursive);
+	void importFile(const std::filesystem::path& path);
 };

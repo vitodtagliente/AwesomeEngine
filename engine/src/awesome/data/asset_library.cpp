@@ -97,7 +97,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	{
 	case Asset::Type::Image:
 	{
-		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor, std::nullopt);
+		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
 				asset->data = Image::load(path);
@@ -107,7 +107,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	}
 	case Asset::Type::Prefab:
 	{
-		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor, std::nullopt);
+		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
 				asset->data = load(path);
@@ -117,7 +117,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	}
 	case Asset::Type::Scene:
 	{
-		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor, std::nullopt);
+		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor);
 		std::thread handler([path, asset]() 
 			{ 
 				asset->data = json::Deserializer::parse(load(path)); 
@@ -127,7 +127,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	}
 	case Asset::Type::Sprite:
 	{
-		SpriteAssetPtr asset = std::make_shared<SpriteAsset>(descriptor, std::nullopt);
+		SpriteAssetPtr asset = std::make_shared<SpriteAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
 				asset->data = Sprite::load(path);
@@ -137,7 +137,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	}
 	case Asset::Type::SpriteAnimation:
 	{
-		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor, std::nullopt);
+		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
 				asset->data = SpriteAnimation::load(path);
@@ -147,7 +147,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	}
 	case Asset::Type::Text:
 	{
-		TextAssetPtr asset = std::make_shared<TextAsset>(descriptor, std::nullopt);
+		TextAssetPtr asset = std::make_shared<TextAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
 				asset->data = load(path);
