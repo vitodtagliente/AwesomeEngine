@@ -26,7 +26,7 @@ namespace editor
 		if (prefab != m_previouslySelectedPrefab)
 		{
 			m_previouslySelectedPrefab = prefab;
-			m_entity.deserialize(json::Deserializer::parse(prefab->data.value()));
+			m_entity.deserialize(prefab->data.value());
 		}
 
 		if (Layout::button(TextIcon::upload(" Import Prefab")))

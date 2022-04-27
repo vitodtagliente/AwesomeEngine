@@ -110,7 +110,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor);
 		std::thread handler([path, asset]()
 			{
-				asset->data = load(path);
+				asset->data = json::Deserializer::parse(load(path));
 			}
 		);
 		return handler.detach(), asset;

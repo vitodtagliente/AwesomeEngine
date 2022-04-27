@@ -50,7 +50,7 @@ void Entity::duplicate(const Entity& from, Entity& duplicate)
 void Entity::duplicate(const PrefabAssetPtr& prefab, Entity& duplicate)
 {
 	const uuid id = duplicate.m_id;
-	duplicate.deserialize(json::Deserializer::parse(prefab->data.value()));
+	duplicate.deserialize(prefab->data.value());
 	duplicate.m_id = id;
 	duplicate.m_prefab = prefab->descriptor.id;
 }
