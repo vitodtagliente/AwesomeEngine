@@ -34,12 +34,12 @@ namespace editor
 
 		void addFolder();
 		std::string decorateFile(const std::filesystem::path& file);
-		void deleteFile(const std::filesystem::path& file);
+		void deleteFile(const std::filesystem::path& path);
 		void handleContextMenuInput(const std::string& name);
 		void importFile(const std::filesystem::path& file);
 		void moveFile(const std::filesystem::path& from, const std::filesystem::path& to);
 		void refreshDirectory();
-		void renameFile(const std::filesystem::path& file, const std::string& name);
+		void renameFile(const std::filesystem::path& path, const std::string& name);
 		void selectFile(const std::filesystem::path& file);
 
 		enum class NavigationState

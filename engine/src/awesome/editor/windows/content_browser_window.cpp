@@ -2,6 +2,7 @@
 
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
+#include <awesome/data/asset_filesystem.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
@@ -235,41 +236,22 @@ namespace editor
 		}
 	}
 
-	void ContentBrowserWindow::deleteFile(const std::filesystem::path& file)
+	void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 	{
-		static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
+		if (std::filesystem::is_directory(path))
 		{
-			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
-		};
-
-		if (std::filesystem::is_directory(file))
-		{
-			std::filesystem::remove(file);
-
-			State::instance().select();
-			m_selectedItem.clear();
-
-			refreshDirectory();
+			std::filesystem::remove(path);			
 		}
 		else
 		{
-			AssetLibrary& library = AssetLibrary::instance();
-			Asset::Descriptor descriptor = Asset::Descriptor::load(file);
-			std::shared_ptr<Asset> asset = library.find(descriptor.id);
-			if (asset)
-			{
-				library.unload(descriptor.id);
-				library.remove(descriptor.id);
-
-				std::filesystem::remove(file);
-				std::filesystem::remove(getAssetFilename(file));
-
-				m_selectedItem.clear();
-				State::instance().select();
-
-				refreshDirectory();
-			}
+			Asset::Descriptor descriptor = Asset::Descriptor::load(path);
+			AssetFilesystem::remove(descriptor);
 		}
+
+		State::instance().select();
+		m_selectedItem.clear();
+
+		refreshDirectory();
 	}
 
 	void editor::ContentBrowserWindow::handleContextMenuInput(const std::string& name)
@@ -305,22 +287,6 @@ namespace editor
 
 	void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std::filesystem::path& to)
 	{
-		static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
-		{
-			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
-		};
-
-		static const auto renameAsset = [](const std::filesystem::path& from, const std::filesystem::path& to) -> std::filesystem::path
-		{
-			std::filesystem::path file = to / from.filename();
-			int i = 1;
-			while (std::filesystem::exists(file))
-			{
-				file += (" " + std::to_string(i));
-			}
-			return file;
-		};
-
 		if (std::filesystem::is_directory(to) == false)
 		{
 			return;
@@ -328,22 +294,8 @@ namespace editor
 
 		if (Asset::isAsset(from))
 		{
-			AssetLibrary& library = AssetLibrary::instance();
 			Asset::Descriptor descriptor = Asset::Descriptor::load(from);
-			std::shared_ptr<Asset> asset = library.find(descriptor.id);
-			if (asset)
-			{
-				const std::filesystem::path newAssetFilename = renameAsset(from, to);
-				if (from != newAssetFilename)
-				{
-					std::filesystem::rename(from, newAssetFilename);
-					std::filesystem::rename(getAssetFilename(from), renameAsset(getAssetFilename(from), to));
-					refreshDirectory();
-
-					asset->descriptor.path = newAssetFilename;
-					library.insert(descriptor);
-				}
-			}
+			AssetFilesystem::move(descriptor, to);
 		}
 		else
 		{
@@ -355,8 +307,9 @@ namespace editor
 				++i;
 			}
 			std::filesystem::rename(from, destination);
-			refreshDirectory();
 		}
+
+		refreshDirectory();
 	}
 
 	void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
@@ -386,55 +339,18 @@ namespace editor
 		}
 	}
 
-	void ContentBrowserWindow::renameFile(const std::filesystem::path& file, const std::string& name)
+	void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const std::string& name)
 	{
-
-		static const auto getAssetFilename = [](const std::filesystem::path& filename) -> std::string
+		if (std::filesystem::is_directory(path))
 		{
-			return filename.string().substr(0, filename.string().length() - std::string(Asset::Extension).length());
-		};
-
-		static const auto renameAsset = [](const std::filesystem::path& filename, const std::string& renaming) -> std::string
-		{
-			std::filesystem::path name = filename.stem();
-			while (name.has_extension())
-			{
-				name = name.stem();
-			}
-
-			std::filesystem::path rename = renaming;
-			while (rename.has_extension())
-			{
-				rename = rename.stem();
-			}
-
-			return StringUtil::replace(filename.string(), name.string(), rename.string());
-		};
-
-		if (std::filesystem::is_directory(file))
-		{
-			std::filesystem::rename(file, file.parent_path() / name);
-			refreshDirectory();
+			std::filesystem::rename(path, path.parent_path() / name);
 		}
 		else
 		{
-			AssetLibrary& library = AssetLibrary::instance();
-			Asset::Descriptor descriptor = Asset::Descriptor::load(file);
-			std::shared_ptr<Asset> asset = library.find(descriptor.id);
-			if (asset)
-			{
-				const std::filesystem::path newAssetFilename = renameAsset(file, name);
-				if (file != newAssetFilename)
-				{
-					std::filesystem::rename(file, newAssetFilename);
-					std::filesystem::rename(getAssetFilename(file), renameAsset(getAssetFilename(file), name));
-					refreshDirectory();
-
-					asset->descriptor.path = newAssetFilename;
-					library.insert(descriptor);
-				}
-			}
+			Asset::Descriptor descriptor = Asset::Descriptor::load(path);
+			AssetFilesystem::rename(descriptor, name);
 		}
+		refreshDirectory();
 	}
 
 	void ContentBrowserWindow::refreshDirectory()

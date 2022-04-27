@@ -16,7 +16,8 @@ void AssetFilesystem::move(const Asset::Descriptor& descriptor, const std::files
 		return path;
 	};
 
-	if (!std::filesystem::exists(descriptor.path))
+	if (!std::filesystem::exists(descriptor.path)
+		|| !std::filesystem::is_directory(path))
 	{
 		return;
 	}
@@ -75,7 +76,8 @@ void AssetFilesystem::rename(const Asset::Descriptor& descriptor, const std::str
 		return StringUtil::replace(filename.string(), name.string(), rename.string());
 	};
 
-	if (!std::filesystem::exists(descriptor.path))
+	if (!std::filesystem::exists(descriptor.path)
+		|| name.empty())
 	{
 		return;
 	}
