@@ -15,14 +15,21 @@ void AssetImporter::import(const std::filesystem::path& path, const bool recursi
 		}
 		else
 		{
-			importFile(path);
+			uuid id{ uuid::Invalid };
+			importFile(path, id);
 		}
 	}
 }
 
-void AssetImporter::import(const std::filesystem::path& path)
+bool AssetImporter::import(const std::filesystem::path& path, uuid& id)
 {
-	import(path, false);
+	return importFile(path, id);
+}
+
+bool AssetImporter::import(const std::filesystem::path& path)
+{
+	uuid id{ uuid::Invalid };
+	return importFile(path, id);
 }
 
 void AssetImporter::importDirectory(const std::filesystem::path& path, const bool recursive)
@@ -31,7 +38,8 @@ void AssetImporter::importDirectory(const std::filesystem::path& path, const boo
 	{
 		if (!entry.is_directory())
 		{
-			importFile(entry.path());
+			uuid id{ uuid::Invalid };
+			importFile(entry.path(), id);
 		}
 		else if (entry.is_directory() && recursive)
 		{
@@ -40,8 +48,9 @@ void AssetImporter::importDirectory(const std::filesystem::path& path, const boo
 	}
 }
 
-void AssetImporter::importFile(const std::filesystem::path& path)
+bool AssetImporter::importFile(const std::filesystem::path& path, uuid& id)
 {
+	id = uuid::Invalid;
 	AssetLibrary& library = AssetLibrary::instance();
 
 	if (Asset::isAsset(path))
@@ -50,26 +59,31 @@ void AssetImporter::importFile(const std::filesystem::path& path)
 		if (descriptor)
 		{
 			// The asset is already loaded
-			if (library.find(descriptor.id)) return;
+			id = descriptor.id;
+			if (library.find(descriptor.id)) return true;
 
 			library.insert(descriptor);
-			return;
+			return true;
 		}
-		return;
+		return false;
 	}
 
 	const std::filesystem::path assetPath = path.string() + Asset::Extension;
 	if (std::filesystem::exists(assetPath))
 	{
-		return;
+		return false;
 	}
 
 	const Asset::Type type = Asset::getTypeByExtension(path.extension().string());
-	if (type != Asset::Type::None)
-	{
-		Asset::Descriptor descriptor(type);
-		descriptor.save(assetPath);
-
-		library.insert(descriptor);
+	if (type == Asset::Type::None)
+	{		
+		return false;
 	}
+
+	Asset::Descriptor descriptor(type);
+	descriptor.save(assetPath);
+
+	id = descriptor.id;
+	library.insert(descriptor);
+	return true;
 }

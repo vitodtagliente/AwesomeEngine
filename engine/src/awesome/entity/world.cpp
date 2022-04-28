@@ -1,5 +1,7 @@
 #include "world.h"
 
+#include <awesome/asset/asset_importer.h>
+#include <awesome/data/archive.h>
 #include <awesome/graphics/renderer.h>
 
 void World::update(const double deltaTime)
@@ -126,9 +128,18 @@ void World::clear()
 	m_entities.clear();
 }
 
+bool World::isLoading(size_t& progress) const
+{
+	if (m_sceneLoader.isLoading())
+	{
+		return progress = m_sceneLoader.getProgress(), true;
+	}
+	return progress = 0, false;
+}
+
 void World::load(const SceneAssetPtr& scene)
 {
-	m_sceneId = scene->descriptor.id;
+	m_loadedSceneId = scene->descriptor.id;
 	
 	clear();
 
@@ -143,13 +154,13 @@ void World::load(const SceneAssetPtr& scene)
 	);
 }
 
-bool World::isLoading(size_t& progress) const
+void World::save(const std::filesystem::path& path)
 {
-	if (m_sceneLoader.isLoading())
-	{
-		return progress = m_sceneLoader.getProgress(), true;
-	}
-	return progress = 0, false;
+	Archive archive(path, Archive::Mode::Write);
+	archive << json::Serializer::to_string(serialize());
+
+	AssetImporter importer;
+	importer.import(path, m_loadedSceneId);
 }
 
 json::value World::serialize() const

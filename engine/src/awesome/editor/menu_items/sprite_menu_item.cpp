@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include <awesome/asset/asset_importer.h>
-#include <awesome/asset/sprite.h>
+#include <awesome/asset/sprite_asset.h>
 
 namespace editor
 {
@@ -18,7 +18,7 @@ namespace editor
 			{
 				if (!filename.string().empty())
 				{
-					Sprite sprite(nullptr, graphics::TextureRect());
+					SpriteAsset::data_t sprite(nullptr, graphics::TextureRect());
 					sprite.save(filename);
 
 					AssetImporter importer;

@@ -10,7 +10,7 @@ struct BaseAsset : public Asset
 {
 public:
 
-	typedef D value_t;
+	typedef D data_t;
 
 	BaseAsset(const Asset::Descriptor& descriptor)
 		: Asset(descriptor)
@@ -19,7 +19,7 @@ public:
 
 	}
 
-	BaseAsset(const Asset::Descriptor& descriptor, const std::optional<value_t> data)
+	BaseAsset(const Asset::Descriptor& descriptor, const std::optional<data_t> data)
 		: Asset(descriptor)
 		, data(data)
 	{
@@ -40,5 +40,5 @@ public:
 		return descriptor.id != other.descriptor.id;
 	}
 
-	std::optional<value_t> data;
+	std::optional<data_t> data;
 };

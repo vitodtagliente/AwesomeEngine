@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include <awesome/asset/asset_importer.h>
-#include <awesome/asset/sprite_animation.h>
+#include <awesome/asset/sprite_animation_asset.h>
 
 namespace editor
 {
@@ -18,7 +18,7 @@ namespace editor
 			{
 				if (!filename.string().empty())
 				{
-					SpriteAnimation animation;
+					SpriteAnimationAsset::data_t animation;
 					animation.save(filename);
 
 					AssetImporter importer;

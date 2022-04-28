@@ -5,10 +5,10 @@
 #include <memory>
 #include <vector>
 
+#include <awesome/asset/scene_asset.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
-#include <awesome/asset/scene_asset.h>
 #include <awesome/entity/private/scene_loader.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
@@ -36,7 +36,7 @@ public:
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
 	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;
-	inline const uuid& getSceneId() const { return m_sceneId; }
+	inline const uuid& getLoadedSceneId() const { return m_loadedSceneId; }
 
 	Entity* const spawn();
 	Entity* const spawn(const vec3& position);
@@ -47,8 +47,9 @@ public:
 
 	void clear();
 
-	void load(const SceneAssetPtr& scene);
 	bool isLoading(size_t& progress) const;
+	void load(const SceneAssetPtr& scene);
+	void save(const std::filesystem::path& path);
 
 	// serialization
 	virtual json::value serialize() const override;
@@ -59,6 +60,6 @@ private:
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
-	uuid m_sceneId{ uuid::Invalid };
+	uuid m_loadedSceneId{ uuid::Invalid };
 	SceneLoader m_sceneLoader;
 };
