@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include <awesome/data/sprite_asset.h>
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
 

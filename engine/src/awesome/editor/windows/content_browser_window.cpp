@@ -1,8 +1,8 @@
 #include "content_browser_window.h"
 
 #include <awesome/application/input.h>
+#include <awesome/asset/asset_filesystem.h>
 #include <awesome/core/string_util.h>
-#include <awesome/data/asset_filesystem.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>

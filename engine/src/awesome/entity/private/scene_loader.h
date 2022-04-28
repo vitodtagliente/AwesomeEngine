@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/data/scene_asset.h>
+#include <awesome/asset/scene_asset.h>
 #include <awesome/entity/entity.h>
 
 class SceneLoader final

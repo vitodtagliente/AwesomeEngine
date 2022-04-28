@@ -1,6 +1,6 @@
 #include "sprite_animation_inspector.h"
 
-#include <awesome/data/sprite_animation_asset.h>
+#include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 

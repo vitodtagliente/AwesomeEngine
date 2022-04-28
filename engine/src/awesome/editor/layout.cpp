@@ -1,9 +1,11 @@
 #include "layout.h"
 
 #include <filesystem>
+
 #include <imgui.h>
 #include <imgui_stdlib.h>
-#include <awesome/data/asset_library.h>
+
+#include <awesome/asset/asset_library.h>
 #include <awesome/graphics/texture_library.h>
 
 namespace editor

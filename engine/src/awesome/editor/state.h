@@ -7,7 +7,7 @@
 #include <variant>
 
 #include <awesome/core/singleton.h>
-#include <awesome/data/asset.h>
+#include <awesome/asset/asset.h>
 #include <awesome/entity/entity.h>
 
 namespace editor

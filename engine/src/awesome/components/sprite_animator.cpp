@@ -1,6 +1,6 @@
 #include "sprite_animator.h"
 
-#include <awesome/data/asset_library.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 

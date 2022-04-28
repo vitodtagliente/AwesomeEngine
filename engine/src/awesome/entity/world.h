@@ -8,7 +8,7 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
-#include <awesome/data/scene_asset.h>
+#include <awesome/asset/scene_asset.h>
 #include <awesome/entity/private/scene_loader.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>

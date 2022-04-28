@@ -2,8 +2,8 @@
 
 #include <filesystem>
 
-#include <awesome/data/asset_importer.h>
-#include <awesome/data/sprite.h>
+#include <awesome/asset/asset_importer.h>
+#include <awesome/asset/sprite.h>
 
 namespace editor
 {

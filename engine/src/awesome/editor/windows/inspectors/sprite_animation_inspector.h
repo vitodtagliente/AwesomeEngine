@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <awesome/data/sprite_animation_asset.h>
+#include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/windows/inspector_window.h>
 
 namespace editor

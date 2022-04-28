@@ -1,6 +1,6 @@
 #include "scene_inspector.h"
 
-#include <awesome/data/scene_asset.h>
+#include <awesome/asset/scene_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/encoding/json.h>

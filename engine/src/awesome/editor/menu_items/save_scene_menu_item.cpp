@@ -1,8 +1,8 @@
 #include "save_scene_menu_item.h"
 
 #include <awesome/data/archive.h>
-#include <awesome/data/asset.h>
-#include <awesome/data/asset_importer.h>
+#include <awesome/asset/asset.h>
+#include <awesome/asset/asset_importer.h>
 #include <awesome/encoding/json.h>
 #include <awesome/entity/world.h>
 

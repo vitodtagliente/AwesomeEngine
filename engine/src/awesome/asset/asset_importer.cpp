@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include <awesome/data/asset.h>
-#include <awesome/data/asset_library.h>
+#include "asset.h"
+#include "asset_library.h"
 
 void AssetImporter::import(const std::filesystem::path& path, const bool recursive)
 {

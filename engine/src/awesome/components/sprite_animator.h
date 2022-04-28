@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
+#include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/core/serialization.h>
-#include <awesome/data/sprite_animation_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
 

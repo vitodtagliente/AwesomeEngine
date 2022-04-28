@@ -1,7 +1,7 @@
 #include "sprite_renderer.h"
 
-#include <awesome/data/asset_library.h>
-#include <awesome/data/sprite_asset.h>
+#include <awesome/asset/asset_library.h>
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>

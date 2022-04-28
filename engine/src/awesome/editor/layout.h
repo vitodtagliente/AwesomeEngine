@@ -9,12 +9,12 @@
 #include <typeinfo>
 #include <vector>
 
-#include <awesome/data/asset.h>
-#include <awesome/data/asset_library.h>
-#include <awesome/data/base_asset.h>
-#include <awesome/data/image_asset.h>
-#include <awesome/data/sprite_animation_asset.h>
-#include <awesome/data/sprite_asset.h>
+#include <awesome/asset/asset.h>
+#include <awesome/asset/asset_library.h>
+#include <awesome/asset/base_asset.h>
+#include <awesome/asset/image_asset.h>
+#include <awesome/asset/sprite_animation_asset.h>
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/graphics/color.h>

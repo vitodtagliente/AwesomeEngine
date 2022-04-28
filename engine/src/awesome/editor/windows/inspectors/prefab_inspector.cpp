@@ -1,6 +1,5 @@
 #include "prefab_inspector.h"
 
-#include <awesome/data/prefab_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/entity/world.h>

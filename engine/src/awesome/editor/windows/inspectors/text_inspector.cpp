@@ -1,6 +1,6 @@
 #include "text_inspector.h"
 
-#include <awesome/data/text_asset.h>
+#include <awesome/asset/text_asset.h>
 #include <awesome/editor/layout.h>
 
 namespace editor

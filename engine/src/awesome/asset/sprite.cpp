@@ -4,9 +4,10 @@
 
 #include <awesome/core/serialization.h>
 #include <awesome/data/archive.h>
-#include <awesome/data/asset_library.h>
-#include <awesome/data/image_asset.h>
 #include <awesome/encoding/json.h>
+
+#include "asset_library.h"
+#include "image_asset.h"
 
 Sprite::Sprite()
 	: image()

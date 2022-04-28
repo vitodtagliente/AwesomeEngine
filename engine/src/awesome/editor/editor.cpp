@@ -8,8 +8,8 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/core/reflection.h>
-#include <awesome/data/asset_importer.h>
-#include <awesome/data/asset_library.h>
+#include <awesome/asset/asset_importer.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/editor/color_scheme.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/windows/content_browser_window.h>

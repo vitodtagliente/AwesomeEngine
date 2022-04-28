@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
+#include <awesome/asset/asset_library.h>
 #include <awesome/core/reflection.h>
-#include <awesome/data/asset_library.h>
 #include <awesome/editor/menu_item.h>
 #include <awesome/editor/widgets/context_menu.h>
 #include <awesome/editor/widgets/open_file_dialog.h>

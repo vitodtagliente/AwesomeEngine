@@ -1,7 +1,7 @@
 #include "texture_library.h"
 
-#include <awesome/data/asset_library.h>
-#include <awesome/data/image_asset.h>
+#include <awesome/asset/asset_library.h>
+#include <awesome/asset/image_asset.h>
 
 namespace graphics
 {

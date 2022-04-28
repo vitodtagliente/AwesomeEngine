@@ -1,6 +1,6 @@
 #include "dir.h"
 
-#include <awesome/data/asset.h>
+#include <awesome/asset/asset.h>
 
 namespace editor
 {

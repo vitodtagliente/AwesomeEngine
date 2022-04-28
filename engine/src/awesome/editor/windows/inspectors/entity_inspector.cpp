@@ -1,6 +1,6 @@
 #include "entity_inspector.h"
 
-#include <awesome/data/asset_importer.h>
+#include <awesome/asset/asset_importer.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>

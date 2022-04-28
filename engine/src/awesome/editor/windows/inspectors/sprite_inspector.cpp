@@ -1,6 +1,6 @@
 #include "sprite_inspector.h"
 
-#include <awesome/data/sprite_asset.h>
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 

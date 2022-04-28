@@ -1,7 +1,8 @@
 #include "asset_filesystem.h"
 
 #include <awesome/core/string_util.h>
-#include <awesome/data/asset_library.h>
+
+#include "asset_library.h"
 
 void AssetFilesystem::move(const Asset::Descriptor& descriptor, const std::filesystem::path& path)
 {

@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include <awesome/core/string_util.h>
-#include <awesome/data/asset_library.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>

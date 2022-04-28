@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <awesome/data/prefab_asset.h>
+#include <awesome/asset/prefab_asset.h>
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/entity/entity.h>
 

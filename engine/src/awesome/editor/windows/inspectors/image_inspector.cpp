@@ -1,6 +1,6 @@
 #include "image_inspector.h"
 
-#include <awesome/data/image_asset.h>
+#include <awesome/asset/image_asset.h>
 #include <awesome/editor/layout.h>
 
 namespace editor

@@ -1,9 +1,9 @@
 #include "sprite_animation.h"
 
-#include "archive.h"
-
-#include <awesome/data/asset_library.h>
+#include <awesome/data/archive.h>
 #include <awesome/encoding/json.h>
+
+#include "asset_library.h"
 
 SpriteAnimation::SpriteAnimation()
 	: startingFrame()

@@ -8,8 +8,8 @@
 #include "image_asset.h"
 #include "prefab_asset.h"
 #include "scene_asset.h"
-#include "sprite_asset.h"
 #include "sprite_animation_asset.h"
+#include "sprite_asset.h"
 #include "text_asset.h"
 
 AssetLibrary::AssetLibrary()
