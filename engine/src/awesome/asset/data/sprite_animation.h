@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <vector>
 
-#include "sprite_asset.h"
+#include <awesome/asset/sprite_asset.h>
 
 struct SpriteAnimation final
 {

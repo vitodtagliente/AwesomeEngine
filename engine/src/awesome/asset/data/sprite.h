@@ -1,11 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
-
+#include <awesome/asset/image_asset.h>
 #include <awesome/graphics/texture_rect.h>
-
-#include "image_asset.h"
 
 struct Sprite final
 {

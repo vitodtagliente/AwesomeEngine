@@ -3,11 +3,9 @@
 #include <fstream>
 
 #include <awesome/core/serialization.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/data/archive.h>
 #include <awesome/encoding/json.h>
-
-#include "asset_library.h"
-#include "image_asset.h"
 
 Sprite::Sprite()
 	: image()

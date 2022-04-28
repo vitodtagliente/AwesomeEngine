@@ -5,7 +5,7 @@
 #include <string>
 
 #include "base_asset.h"
-#include "image.h"
+#include "data/image.h"
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
 typedef std::shared_ptr<ImageAsset> ImageAssetPtr;
