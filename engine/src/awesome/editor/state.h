@@ -5,6 +5,7 @@
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 #include <awesome/core/singleton.h>
 #include <awesome/asset/asset.h>
@@ -25,25 +26,26 @@ namespace editor
 
 			Selection();
 			Selection(Entity* const entity);
-			Selection(const std::shared_ptr<Asset>& asset);
+			Selection(const AssetPtr& asset);
 
 			inline Entity* asEntity() const { return std::get<Entity*>(data); }
-			inline std::shared_ptr<Asset> asAsset() const { return std::get<std::shared_ptr<Asset>>(data); }
+			inline AssetPtr asAsset() const { return std::get<AssetPtr>(data); }
 
 			Type type;
-			std::variant<Entity*, std::shared_ptr<Asset>> data;
+			std::variant<Entity*, AssetPtr> data;
 		};
 
 		State();
 
 		void select();
 		void select(Entity* const entity);
-		void select(const std::shared_ptr<Asset>& asset);
+		void select(const AssetPtr& asset);
 
 		bool hasPendingContentRefresh();
 
 		bool isContentChanged;
 		std::filesystem::path path;
 		std::optional<Selection> selection;
+		std::vector<AssetPtr> history;
 	};
 }

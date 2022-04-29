@@ -18,9 +18,17 @@ namespace editor
 		selection = Selection(entity);
 	}
 
-	void State::select(const std::shared_ptr<Asset>& asset)
+	void State::select(const AssetPtr& asset)
 	{
+		static const size_t s_maxHistory{ 10 };
+
 		selection = Selection(asset);
+
+		if (history.size() == s_maxHistory)
+		{
+			history.pop_back();
+		}
+		history.push_back(asset);
 	}
 
 	bool State::hasPendingContentRefresh()
@@ -48,7 +56,7 @@ namespace editor
 		Layout::clear();
 	}
 
-	State::Selection::Selection(const std::shared_ptr<Asset>& asset)
+	State::Selection::Selection(const AssetPtr& asset)
 		: type(Type::Asset)
 		, data(asset)
 	{
