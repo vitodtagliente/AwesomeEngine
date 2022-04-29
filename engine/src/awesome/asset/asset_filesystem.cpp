@@ -94,6 +94,6 @@ void AssetFilesystem::rename(const Asset::Descriptor& descriptor, const std::str
 		std::filesystem::rename(descriptor.getDataPath(), renameAsset(descriptor.getDataPath(), name));
 
 		asset->descriptor.path = newPath;
-		library.insert(descriptor);
+		library.insert(asset->descriptor);
 	}
 }
