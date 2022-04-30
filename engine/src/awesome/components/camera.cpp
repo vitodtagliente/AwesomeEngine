@@ -18,7 +18,7 @@ json::value Camera::serialize() const
 void Camera::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
-	::deserialize(value["color"], color);
+	::deserialize(value["color"].as_object({}), color);
 }
 
 void Camera::inspect()

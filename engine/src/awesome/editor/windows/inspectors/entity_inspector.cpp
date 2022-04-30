@@ -1,10 +1,13 @@
 #include "entity_inspector.h"
 
 #include <awesome/asset/asset_importer.h>
+#include <awesome/asset/prefab_asset.h>
+#include <awesome/data/archive.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
+#include <awesome/encoding/json.h>
 
 namespace editor
 {
@@ -27,15 +30,15 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save Prefab")))
 		{
-			m_saveFileDialog.open("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& filename) -> void
+			m_saveFileDialog.open("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
 				{
-					if (!filename.string().empty())
+					if (!path.string().empty())
 					{
-						// Prefab prefab(entity);
-						// prefab.save(filename);
-						// 
-						// AssetImporter importer;
-						// importer.import(filename);
+						Archive archive(path, Archive::Mode::Write);
+						archive << json::Serializer::to_string(entity->serialize());
+
+						AssetImporter importer;
+						importer.import(path);
 					}
 				}
 			);
