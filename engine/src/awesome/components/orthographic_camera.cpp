@@ -7,16 +7,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/math/matrix4.h>
 
-OrthographicCamera::OrthographicCamera()
-	: Component()
-	, nearPlane(-30.f)
-	, farPlane(1000.f)
-	, pixelPerfect(true)
-	, pixelsPerUnit(32)
-{
-
-}
-
 void OrthographicCamera::update(const double)
 {
 	Canvas& canvas = Canvas::instance();
@@ -37,7 +27,7 @@ void OrthographicCamera::update(const double)
 
 json::value OrthographicCamera::serialize() const
 {
-	json::value data = Component::serialize();
+	json::value data = Camera::serialize();
 	data["nearPlane"] = nearPlane;
 	data["farPlane"] = farPlane;
 	data["pixelPerfect"] = pixelPerfect;
@@ -47,7 +37,7 @@ json::value OrthographicCamera::serialize() const
 
 void OrthographicCamera::deserialize(const json::value& value)
 {
-	Component::deserialize(value);
+	Camera::deserialize(value);
 	nearPlane = value["nearPlane"].as_number(-30.f).as_float();
 	farPlane = value["farPlane"].as_number(1000.f).as_float();
 	pixelPerfect = value["pixelPerfect"].as_bool(true);
@@ -56,7 +46,7 @@ void OrthographicCamera::deserialize(const json::value& value)
 
 void OrthographicCamera::inspect()
 {
-	Component::inspect();
+	Camera::inspect();
 	editor::Layout::input("Near Plane", nearPlane);
 	editor::Layout::input("Far Plane", farPlane);
 	editor::Layout::input("Pixel Perfect", pixelPerfect);

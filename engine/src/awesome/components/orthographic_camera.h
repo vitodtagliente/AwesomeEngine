@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/entity/component.h>
+#include "camera.h"
 
 namespace graphics
 {
@@ -9,15 +9,11 @@ namespace graphics
 	class Texture;
 }
 
-class OrthographicCamera : public Component
+class OrthographicCamera : public Camera
 {
 public:
-	OrthographicCamera();
-
-	float nearPlane;
-	float farPlane;
-	bool pixelPerfect;
-	int pixelsPerUnit;
+	OrthographicCamera() = default;
+	virtual ~OrthographicCamera() = default;
 
 	void update(double deltaTime) override;
 
@@ -26,4 +22,9 @@ public:
 	virtual void inspect() override;
 
 	REFLECT()
+
+	float nearPlane{ -30.f };
+	float farPlane{ 1000.f };
+	bool pixelPerfect{ true };
+	int pixelsPerUnit{ 32 };
 };
