@@ -136,6 +136,9 @@ void Entity::deserialize(const json::value& value)
 	if (!value.is_object())
 		return;
 
+	m_children.clear();
+	m_components.clear();
+
 	::deserialize(value["id"], m_id);
 	name = value["name"].as_string();
 	tag = value["tag"].as_string();
