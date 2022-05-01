@@ -54,8 +54,8 @@ REFLECT_COMPONENT(Rotator)
 
 void Game::startup()
 {
-	SpriteAssetPtr sprite = AssetLibrary::instance().find<SpriteAsset>(uuid("357240685689300"));
-	SpriteAnimationAssetPtr animation = AssetLibrary::instance().find<SpriteAnimationAsset>(uuid("546811582152200"));
+	SpriteAssetPtr sprite = AssetLibrary::instance().find<SpriteAsset>(uuid("759315906162800"));
+	SpriteAnimationAssetPtr animation = AssetLibrary::instance().find<SpriteAnimationAsset>(uuid("759315909837800"));
 
 	World& world = World::instance();
 	// camera setup

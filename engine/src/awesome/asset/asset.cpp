@@ -135,7 +135,7 @@ Asset::Descriptor Asset::Descriptor::load(const std::filesystem::path& filename)
 	json::value value = json::Deserializer::parse(content);
 	{
 		deserialize(value["id"], descriptor.id);
-		// stringToEnum(value["type"].as_string(""), descriptor.type);
+		stringToEnum(value["type"].as_string(""), descriptor.type);
 	}
 	return descriptor;
 }
