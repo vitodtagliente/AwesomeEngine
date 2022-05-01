@@ -101,6 +101,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = Image::load(path);
+				if (asset->onLoad) asset->onLoad();
 			}
 		);
 		return handler.detach(), asset;
@@ -111,6 +112,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = json::Deserializer::parse(load(path));
+				if (asset->onLoad) asset->onLoad();
 			}
 		);
 		return handler.detach(), asset;
@@ -120,7 +122,8 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor);
 		std::thread handler([path, asset]() 
 			{ 
-				asset->data = json::Deserializer::parse(load(path)); 
+				asset->data = json::Deserializer::parse(load(path));
+				if (asset->onLoad) asset->onLoad();
 			}
 		);		
 		return handler.detach(), asset;
@@ -131,6 +134,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = Sprite::load(path);
+				if (asset->onLoad) asset->onLoad();
 			}
 		);
 		return handler.detach(), asset;
@@ -141,6 +145,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = SpriteAnimation::load(path);
+				if (asset->onLoad) asset->onLoad();
 			}
 		);
 		return handler.detach(), asset;
@@ -151,6 +156,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = load(path);
+				if (asset->onLoad) asset->onLoad();
 			}
 		);
 		return handler.detach(), asset;

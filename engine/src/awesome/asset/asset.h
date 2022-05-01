@@ -2,6 +2,7 @@
 #pragma once
 
 #include <filesystem>
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -59,6 +60,7 @@ struct Asset
 	static Type getTypeByExtension(const std::string& extension);
 
 	Descriptor descriptor;
+	std::function<void()> onLoad;
 
 	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 	static constexpr char* const Extension = ".asset";
