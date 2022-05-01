@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <typeinfo>
+#include <type_traits>
 #include <vector>
 
 #include <awesome/asset/asset.h>
@@ -15,6 +16,7 @@
 #include <awesome/asset/image_asset.h>
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/asset/sprite_asset.h>
+#include <awesome/core/reflection.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/graphics/color.h>
@@ -82,6 +84,24 @@ namespace editor
 				Layout::endCombo();
 			}
 		}
+		template <typename T, typename std::enable_if<std::is_enum<T>::value>::type* = nullptr>
+		static void input(const std::string& name, T& value)
+		{
+			const std::string strValue = enumToString(value);
+			if (Layout::beginCombo(name.c_str(), strValue))
+			{
+				for (const auto& pair : EnumReflect<T>::translate(EnumReflect<T>::describe()))
+				{
+					if (Layout::selectable(pair.first, strValue == pair.first))
+					{
+						value = static_cast<T>(pair.second);
+						endCombo();
+						return;
+					}
+				}
+				endCombo();
+			}
+		}
 		// assets support
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
@@ -94,12 +114,12 @@ namespace editor
 					if (Layout::selectable(descriptor.path.stem().string(), value ? value->descriptor == descriptor : false))
 					{
 						value = AssetLibrary::instance().find<BaseAsset<T, D>>(descriptor.id);
-						Layout::endCombo();
+						endCombo();
 						return;
 					}
 
 				}
-				Layout::endCombo();
+				endCombo();
 			}
 		}
 		// std::vector<T> support

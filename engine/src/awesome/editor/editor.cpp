@@ -17,6 +17,7 @@
 #include <awesome/editor/windows/performance_window.h>
 #include <awesome/editor/windows/renderer_window.h>
 #include <awesome/editor/windows/scene_window.h>
+#include <awesome/editor/windows/settings_window.h>
 
 #include <IconsFontAwesome5.h>
 
@@ -108,6 +109,7 @@ namespace editor
 		TypeFactory::load<PerformanceWindow>();
 		TypeFactory::load<RendererWindow>();
 		TypeFactory::load<SceneWindow>();
+		TypeFactory::load<SettingsWindow>();
 
 		static std::set<std::string> types = TypeFactory::list("Window");
 		for (const std::string& type : types)
