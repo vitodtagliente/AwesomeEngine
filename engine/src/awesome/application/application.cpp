@@ -143,13 +143,18 @@ Application::Settings Application::Settings::load(const std::filesystem::path& p
 	{
 		stringToEnum(data["mode"].as_string(""), settings.mode);
 	}
+	if (data.contains("workspacePath"))
+	{
+		settings.workspacePath = data["workspacePath"].as_string("");
+	}
 	return settings;
 }
 
 void Application::Settings::save(const std::filesystem::path& path)
 {
 	const json::value& data = json::object({
-		   {"mode", enumToString(mode)},
+			{"mode", enumToString(mode)},
+			{"workspacePath", workspacePath}
 		});
 
 	Archive archive(path, Archive::Mode::Write);
