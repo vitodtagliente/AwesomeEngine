@@ -66,7 +66,7 @@ void CameraController2d::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 	speed = value["speed"].as_number(0.0f).as_float();
-	speed = value["zoomSpeed"].as_number(0.0f).as_float();
+	zoomSpeed = value["zoomSpeed"].as_number(0.0f).as_float();
 }
 
 void CameraController2d::inspect()

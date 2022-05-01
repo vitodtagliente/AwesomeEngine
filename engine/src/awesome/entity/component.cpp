@@ -42,9 +42,10 @@ json::value Component::serialize() const
 		});
 }
 
-void Component::deserialize(const json::value& /*value*/)
+void Component::deserialize(const json::value& value)
 {
-
+	::deserialize(value["id"], m_id);
+	enabled = value["enabled"].as_bool(false);
 }
 
 void Component::inspect()
