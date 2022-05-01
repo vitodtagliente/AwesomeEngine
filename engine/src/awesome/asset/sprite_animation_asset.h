@@ -9,4 +9,4 @@
 
 typedef BaseAsset<Asset::Type::SpriteAnimation, SpriteAnimation> SpriteAnimationAsset;
 typedef std::shared_ptr<SpriteAnimationAsset> SpriteAnimationAssetPtr;
-ASSETTYPE(SpriteAnimationAsset, Asset::Type::SpriteAnimation)
+ASSETTYPEINFO(SpriteAnimationAsset, Asset::Type::SpriteAnimation)

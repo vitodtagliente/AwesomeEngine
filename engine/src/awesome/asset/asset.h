@@ -9,18 +9,19 @@
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
+REFLECT_ENUM(AssetType,
+	None,
+	Image,
+	Prefab,
+	Scene,
+	Sprite,
+	SpriteAnimation,
+	Text
+)
+
 struct Asset
 {
-	enum class Type : int
-	{
-		None,
-		Image,
-		Prefab,
-		Sprite,
-		SpriteAnimation,
-		Text,
-		Scene
-	};
+	typedef AssetType Type;
 
 	struct Descriptor
 	{
@@ -68,7 +69,7 @@ struct Asset
 typedef std::shared_ptr<Asset> AssetPtr;
 
 template <typename T>
-struct AssetType final
+struct AssetTypeInfo final
 {
 	static Asset::Type get()
 	{
@@ -76,9 +77,9 @@ struct AssetType final
 	}
 };
 
-#define ASSETTYPE(A, T) \
+#define ASSETTYPEINFO(A, T) \
 	template <> \
-	struct AssetType<A> final \
+	struct AssetTypeInfo<A> final \
 	{ \
 		static Asset::Type get() \
 		{ \

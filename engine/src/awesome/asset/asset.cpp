@@ -135,7 +135,7 @@ Asset::Descriptor Asset::Descriptor::load(const std::filesystem::path& filename)
 	json::value value = json::Deserializer::parse(content);
 	{
 		deserialize(value["id"], descriptor.id);
-		descriptor.type = static_cast<Type>(value["type"].as_number(0).as_int());
+		// stringToEnum(value["type"].as_string(""), descriptor.type);
 	}
 	return descriptor;
 }
@@ -144,7 +144,7 @@ void Asset::Descriptor::save(const std::filesystem::path& filename)
 {
 	const json::value& data = json::object({
 		   {"id", serialize(id)},
-		   {"type", static_cast<int>(type)}
+		   {"type", enumToString(type)}
 		});
 
 	path = filename;

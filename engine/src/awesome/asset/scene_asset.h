@@ -10,4 +10,4 @@
 
 typedef BaseAsset<Asset::Type::Scene, json::value> SceneAsset;
 typedef std::shared_ptr<SceneAsset> SceneAssetPtr;
-ASSETTYPE(SceneAsset, Asset::Type::Scene)
+ASSETTYPEINFO(SceneAsset, Asset::Type::Scene)
