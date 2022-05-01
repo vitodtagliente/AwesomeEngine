@@ -4,7 +4,10 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/application/time.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/core/timer.h>
+#include <awesome/data/archive.h>
+#include <awesome/encoding/json.h>
 #include <awesome/editor/editor.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/graphics.h>
@@ -13,9 +16,11 @@
 using namespace graphics;
 
 Application::Application(const std::initializer_list<Module*>& modules)
-	: m_modules()
+	: settings()
+	, m_mode(Mode::Editor)
+	, m_modules()
+	, m_time()
 {
-	registerDefaultModules();
 	for (Module* const module : modules)
 	{
 		m_modules.push_back(std::unique_ptr<Module>(module));
@@ -37,6 +42,15 @@ int Application::run()
 		return -1;
 	}
 
+	// settings setup
+	{
+		settings = Settings::load(std::filesystem::current_path() / "settings.json");
+		m_mode = settings.mode;
+		AssetLibrary::instance().m_directory = std::filesystem::current_path() / settings.workspacePath;
+	}
+
+	registerDefaultModules();
+
 	for (const auto& module : m_modules)
 	{
 		module->startup();
@@ -54,12 +68,12 @@ int Application::run()
 
 		fpsTimer.reset();
 		canvas.update();
-		
+
 		for (const auto& module : m_modules)
 		{
 			module->update(deltatime);
 		}
-		
+
 		input.update();
 		world.update(deltatime);
 
@@ -82,7 +96,7 @@ int Application::run()
 			{
 				module->postRendering();
 			}
-		}		
+		}
 
 		world.flush();
 		deltatime = 0.0;
@@ -103,6 +117,41 @@ void Application::exit()
 
 void Application::registerDefaultModules()
 {
-	registerModule<graphics::Graphics>();
-	registerModule<editor::Editor>();
+	if (m_mode != Mode::Server)
+	{
+		registerModule<graphics::Graphics>();
+	}
+	if (m_mode == Mode::Editor)
+	{
+		registerModule<editor::Editor>();
+	}
+}
+
+Application::Settings Application::Settings::load(const std::filesystem::path& path)
+{
+	static const auto read = [](const std::filesystem::path& filename) -> std::string
+	{
+		std::ostringstream buf;
+		std::ifstream input(filename.c_str());
+		buf << input.rdbuf();
+		return buf.str();
+	};
+
+	Settings settings;
+	json::value data = json::Deserializer::parse(read(path));
+	if (data.contains("mode"))
+	{
+		stringToEnum(data["mode"].as_string(""), settings.mode);
+	}
+	return settings;
+}
+
+void Application::Settings::save(const std::filesystem::path& path)
+{
+	const json::value& data = json::object({
+		   {"mode", enumToString(mode)},
+		});
+
+	Archive archive(path, Archive::Mode::Write);
+	archive << json::Serializer::to_string(data);
 }

@@ -54,6 +54,7 @@ REFLECT_COMPONENT(Rotator)
 
 void Game::startup()
 {
+	/*
 	SpriteAssetPtr sprite = AssetLibrary::instance().find<SpriteAsset>(uuid("759315906162800"));
 	SpriteAnimationAssetPtr animation = AssetLibrary::instance().find<SpriteAnimationAsset>(uuid("759315909837800"));
 
@@ -100,6 +101,7 @@ void Game::startup()
 			component->enabled = math::random(0.0f, 1.0f) >= 0.6f;
 		}
 	}
+	*/
 }
 
 void Game::shutdown()

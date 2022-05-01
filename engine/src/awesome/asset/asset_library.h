@@ -15,7 +15,10 @@
 class AssetLibrary : public Singleton<AssetLibrary>
 {
 public:
-	AssetLibrary();
+
+	friend class Application;
+
+	AssetLibrary() = default;
 	~AssetLibrary() = default;
 
 	AssetPtr find(const uuid& id);
@@ -53,5 +56,5 @@ private:
 
 	std::map<uuid, Slot> m_cache;
 	std::map<uuid, Asset::Descriptor> m_register;
-	std::filesystem::path m_directory;
+	std::filesystem::path m_directory{ std::filesystem::current_path() };
 };

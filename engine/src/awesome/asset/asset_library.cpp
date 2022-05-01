@@ -12,14 +12,6 @@
 #include "sprite_asset.h"
 #include "text_asset.h"
 
-AssetLibrary::AssetLibrary()
-	: m_cache()
-	, m_register()
-	, m_directory(std::filesystem::current_path().string() + "/../assets")
-{
-
-}
-
 void AssetLibrary::unload(const uuid& id)
 {
 	m_cache.erase(id);
