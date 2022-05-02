@@ -14,6 +14,8 @@
 #include <awesome/graphics/graphics.h>
 #include <awesome/graphics/renderer.h>
 
+#include "private/components_loader.h"
+
 using namespace graphics;
 
 Application::Application(const std::initializer_list<Module*>& modules)
@@ -51,6 +53,7 @@ int Application::run()
 	}
 
 	registerDefaultModules();
+	ComponentsLoader().load();
 
 	for (const auto& module : m_modules)
 	{
