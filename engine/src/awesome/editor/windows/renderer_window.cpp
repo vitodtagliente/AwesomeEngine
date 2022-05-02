@@ -11,7 +11,6 @@ namespace editor
 		std::ostringstream s;
 		s << "Draw Calls: " << m_stats.drawCalls;
 		Layout::text(s.str());
-		Layout::input("background", graphics::Renderer::instance().backgroundColor);
 	}
 
 	void RendererWindow::update(const double)
