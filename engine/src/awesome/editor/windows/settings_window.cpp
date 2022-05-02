@@ -15,11 +15,19 @@ namespace editor
 		Layout::input("FPS", m_settings.fps);
 		Layout::input("Mode", m_settings.mode);
 		std::string path = m_settings.workspacePath.string();
-		Layout::input("Path", path);
+		Layout::input("Workspace Path", path);
 		if (path != m_settings.workspacePath.string())
 		{
 			m_settings.workspacePath = path;
 		}
+
+		Layout::separator();
+
+		Layout::input("Editor Scene", m_settings.editorScene);
+		Layout::input("Server Scene", m_settings.serverScene);
+		Layout::input("Standalone Scene", m_settings.standaloneScene);
+
+		Layout::separator();
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{

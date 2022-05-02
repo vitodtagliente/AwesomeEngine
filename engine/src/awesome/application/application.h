@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include <awesome/asset/scene_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 #include <awesome/graphics/renderer.h>
@@ -39,7 +40,11 @@ public:
 
 		FpsMode fps{ FpsMode::Fps60 };
 		ApplicationMode mode{ ApplicationMode::Editor };
-		std::filesystem::path workspacePath{ std::filesystem::current_path() / "assets" };
+		std::filesystem::path workspacePath{ std::filesystem::current_path() / ".." / "assets" };
+
+		SceneAssetPtr editorScene;
+		SceneAssetPtr serverScene;
+		SceneAssetPtr standaloneScene;
 	};
 
 	class Module
@@ -60,7 +65,7 @@ public:
 
 	inline const Settings& getSettings() const { return m_settings; }
 
-	void init(const Settings& settings, const std::initializer_list<Module*>& modules = {});
+	void init(const std::initializer_list<Module*>& modules = {});
 	int run();
 	void exit();
 

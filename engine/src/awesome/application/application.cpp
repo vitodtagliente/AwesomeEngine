@@ -18,9 +18,8 @@
 
 using namespace graphics;
 
-void Application::init(const Settings& settings, const std::initializer_list<Module*>& modules)
+void Application::init(const std::initializer_list<Module*>& modules)
 {
-	m_settings = settings;
 	for (Module* const module : modules)
 	{
 		m_modules.push_back(std::unique_ptr<Module>(module));
@@ -38,6 +37,11 @@ int Application::run()
 		return -1;
 	}
 
+	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
+	if (std::filesystem::exists(settingsPath))
+	{
+		m_settings = Settings::load(settingsPath);
+	}
 	AssetLibrary::instance().m_directory = m_settings.workspacePath;
 
 	registerDefaultModules();
@@ -145,6 +149,23 @@ Application::Settings Application::Settings::load(const std::filesystem::path& p
 	{
 		settings.workspacePath = data["workspacePath"].as_string("");
 	}
+
+	if (data.contains("editorScene"))
+	{
+		const uuid id(data["editorScene"].as_string());
+		settings.editorScene = AssetLibrary::instance().find<SceneAsset>(id);
+	}
+	if (data.contains("serverScene"))
+	{
+		const uuid id(data["serverScene"].as_string());
+		settings.serverScene = AssetLibrary::instance().find<SceneAsset>(id);
+	}
+	if (data.contains("standaloneScene"))
+	{
+		const uuid id(data["standaloneScene"].as_string());
+		settings.standaloneScene = AssetLibrary::instance().find<SceneAsset>(id);
+	}
+
 	return settings;
 }
 
@@ -153,6 +174,9 @@ void Application::Settings::save(const std::filesystem::path& path)
 	const json::value& data = json::object({
 			{"fps", enumToString(fps)},
 			{"mode", enumToString(mode)},
+			{"editorScene", editorScene ? static_cast<std::string>(editorScene->descriptor.id) : ""},
+			{"serverScene", serverScene ? static_cast<std::string>(serverScene->descriptor.id) : ""},
+			{"standaloneScene", standaloneScene ? static_cast<std::string>(standaloneScene->descriptor.id) : ""},
 			{"workspacePath", workspacePath.string()}
 		});
 

@@ -55,6 +55,6 @@ private:
 	std::shared_ptr<Asset> create(const Asset::Descriptor& descriptor, const std::filesystem::path& path);
 
 	std::map<uuid, Slot> m_cache;
+	std::filesystem::path m_directory{ std::filesystem::current_path() / ".." / "assets" };
 	std::map<uuid, Asset::Descriptor> m_register;
-	std::filesystem::path m_directory{ std::filesystem::current_path() };
 };
