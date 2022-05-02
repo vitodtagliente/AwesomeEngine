@@ -4,6 +4,7 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/application/time.h>
+#include <awesome/audio/audio.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/timer.h>
 #include <awesome/data/archive.h>
@@ -119,8 +120,10 @@ void Application::registerDefaultModules()
 {
 	if (m_mode != Mode::Server)
 	{
+		registerModule<Audio>();
 		registerModule<graphics::Graphics>();
 	}
+
 	if (m_mode == Mode::Editor)
 	{
 		registerModule<editor::Editor>();

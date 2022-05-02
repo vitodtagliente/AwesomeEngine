@@ -12,9 +12,10 @@ include_directories(
     vendor/glad/include/
 	vendor/glfw/include/
 	vendor/IconFontCppHeaders/
-	vendor/stb/
 	vendor/imgui/
-	vendor/imgui/misc/cpp
+	vendor/imgui/misc/cpp/
+	vendor/miniaudio/
+	vendor/stb/
 )
 
 # GLFW options
