@@ -19,6 +19,13 @@ REFLECT_ENUM(ApplicationMode,
 	Standalone
 )
 
+REFLECT_ENUM(FpsMode,
+	Fps30 = 30,
+	Fps60 = 60,
+	Fps90 = 90,
+	Unlimited
+)
+
 class Application : public Singleton<Application>
 {
 public:
@@ -32,6 +39,7 @@ public:
 		static Settings load(const std::filesystem::path& path);
 		void save(const std::filesystem::path& path);
 
+		FpsMode fps{ FpsMode::Fps60 };
 		ApplicationMode mode{ ApplicationMode::Editor };
 		std::string workspacePath{ "../assets" };
 	};

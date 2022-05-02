@@ -8,6 +8,7 @@ namespace editor
 	void SettingsWindow::render()
 	{
 		auto& settings = Application::instance().settings;
+		Layout::input("FPS", settings.fps);
 		Layout::input("Mode", settings.mode);
 	}
 

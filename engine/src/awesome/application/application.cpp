@@ -60,7 +60,7 @@ int Application::run()
 		module->startup();
 	}
 
-	Timer fpsTimer(1.f / 60);
+	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
 	double deltatime = 0.0;
 
 	while (canvas.isOpen())
@@ -68,7 +68,7 @@ int Application::run()
 		m_time.tick();
 		fpsTimer.tick(m_time.getDeltaTime());
 		deltatime += m_time.getDeltaTime();
-		if (!fpsTimer.isExpired()) continue;
+		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();
 		canvas.update();
@@ -145,6 +145,10 @@ Application::Settings Application::Settings::load(const std::filesystem::path& p
 
 	Settings settings;
 	json::value data = json::Deserializer::parse(read(path));
+	if (data.contains("fps"))
+	{
+		stringToEnum(data["fps"].as_string(""), settings.fps);
+	}
 	if (data.contains("mode"))
 	{
 		stringToEnum(data["mode"].as_string(""), settings.mode);
@@ -159,6 +163,7 @@ Application::Settings Application::Settings::load(const std::filesystem::path& p
 void Application::Settings::save(const std::filesystem::path& path)
 {
 	const json::value& data = json::object({
+			{"fps", enumToString(fps)},
 			{"mode", enumToString(mode)},
 			{"workspacePath", workspacePath}
 		});
