@@ -5,6 +5,7 @@
 #include <awesome/application/input.h>
 #include <awesome/application/time.h>
 #include <awesome/audio/audio.h>
+#include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/timer.h>
 #include <awesome/data/archive.h>
@@ -37,12 +38,25 @@ int Application::run()
 		return -1;
 	}
 
-	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-	if (std::filesystem::exists(settingsPath))
+	// init
 	{
-		m_settings = Settings::load(settingsPath);
+		bool reload = false;
+		const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
+		if (std::filesystem::exists(settingsPath))
+		{
+			m_settings = Settings::load(settingsPath);
+			reload = true;
+		}
+
+		AssetImporter importer;
+		importer.import(m_settings.workspacePath, true);
+		AssetLibrary::instance().m_directory = m_settings.workspacePath;
+
+		if (reload)
+		{
+			m_settings = Settings::load(settingsPath);
+		}
 	}
-	AssetLibrary::instance().m_directory = m_settings.workspacePath;
 
 	registerDefaultModules();
 	ComponentsLoader().load();
