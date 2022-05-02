@@ -11,12 +11,6 @@ void Audio::startup()
     if (result != MA_SUCCESS) {
         return;
     }
-
-    static ma_sound sound;
-    if (AudioContext::instance().load("../assets/onemoretime.mp3", sound))
-    {
-        AudioContext::instance().play(sound);
-    }
 }
 
 void Audio::shutdown()
