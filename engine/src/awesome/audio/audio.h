@@ -13,5 +13,4 @@ public:
 
 	virtual void startup() override;
 	virtual void shutdown() override;
-	virtual void update(double deltaTime) override;
 };
