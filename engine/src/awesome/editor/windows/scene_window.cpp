@@ -40,6 +40,7 @@ namespace editor
 
 		Layout::separator();
 
+		int i = 0;
 		for (const auto& entity : World::instance().getEntities())
 		{
 			const bool isSelected = selectedEntity != nullptr && entity->getId() == selectedEntity->getId();
@@ -54,13 +55,14 @@ namespace editor
 					continue;
 				}
 
-				if (Layout::selectable(entity->getPrefab() != uuid::Invalid ? TextIcon::cube(" " + entity->name) : entity->name, isSelected))
+				if (Layout::selectable((entity->getPrefab() != uuid::Invalid ? TextIcon::cube(" " + entity->name) : entity->name) + "##entity" + std::to_string(i), isSelected))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = entity->name;
 					selectEntity(entity.get());
 				}
 			}
+			++i;
 		}
 	}
 

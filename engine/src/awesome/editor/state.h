@@ -46,6 +46,7 @@ namespace editor
 		bool isContentChanged;
 		std::filesystem::path path;
 		std::optional<Selection> selection;
+		bool showWindows{ true };
 		std::vector<AssetPtr> history;
 	};
 }

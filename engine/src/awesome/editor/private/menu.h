@@ -22,6 +22,7 @@ namespace editor
 		void menuAssets();
 		void menuFile();
 		void menuScene();
+		void menuView();
 
 		std::vector<std::unique_ptr<MenuItem>> m_menuItems;
 		SaveFileDialog m_saveFileDialog;

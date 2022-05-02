@@ -77,12 +77,15 @@ namespace editor
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		m_menu.render();
-		for (const auto& window : m_windows)
+		if (State::instance().showWindows)
 		{
-			Layout::begin(window->getTitle());
-			window->setFocus(Layout::isWindowFocused());
-			window->render();
-			Layout::end();
+			for (const auto& window : m_windows)
+			{
+				Layout::begin(window->getTitle());
+				window->setFocus(Layout::isWindowFocused());
+				window->render();
+				Layout::end();
+			}
 		}
 	}
 
@@ -96,9 +99,12 @@ namespace editor
 	{
 		Input::instance().preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
 
-		for (const auto& window : m_windows)
+		if (State::instance().showWindows)
 		{
-			window->update(deltaTime);
+			for (const auto& window : m_windows)
+			{
+				window->update(deltaTime);
+			}
 		}
 	}
 

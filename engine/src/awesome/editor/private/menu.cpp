@@ -8,6 +8,7 @@
 #include <awesome/editor/menu_items/new_scene_menu_item.h>
 #include <awesome/editor/menu_items/save_scene_as_menu_item.h>
 #include <awesome/editor/menu_items/save_scene_menu_item.h>
+#include <awesome/editor/menu_items/show_windows_menu_item.h>
 #include <awesome/editor/menu_items/sprite_animation_menu_item.h>
 #include <awesome/editor/menu_items/sprite_menu_item.h>
 
@@ -18,6 +19,7 @@ namespace editor
 		TypeFactory::load<NewSceneMenuItem>();
 		TypeFactory::load<SaveSceneMenuItem>();
 		TypeFactory::load<SaveSceneAsMenuItem>();
+		TypeFactory::load<ShowWindowsMenuItem>();
 		TypeFactory::load<SpriteAnimationMenuItem>();
 		TypeFactory::load<SpriteMenuItem>();
 
@@ -39,6 +41,7 @@ namespace editor
 			menuFile();
 			menuScene();
 			menuAssets();
+			menuView();
 
 			MenuLayout::endMainMenu();
 		}
@@ -50,17 +53,25 @@ namespace editor
 		m_saveFileDialog.render();
 	}
 
+	void Menu::menuAssets()
+	{
+		if (MenuLayout::beginMenu("Assets"))
+		{
+			for (const auto& item : m_menuItems)
+			{
+				if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
+				{
+					item->execute();
+				}
+			}
+			MenuLayout::endMenu();
+		}
+	}
+
 	void Menu::menuFile()
 	{
 		if (MenuLayout::beginMenu("File"))
 		{
-			if (MenuLayout::item("New"))
-			{
-
-			}
-
-			MenuLayout::separator();
-
 			if (MenuLayout::item("Exit"))
 			{
 				Application::instance().exit();
@@ -85,13 +96,13 @@ namespace editor
 		}
 	}
 
-	void Menu::menuAssets()
+	void Menu::menuView()
 	{
-		if (MenuLayout::beginMenu("Assets"))
+		if (MenuLayout::beginMenu("View"))
 		{
 			for (const auto& item : m_menuItems)
 			{
-				if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
+				if (item->getCategory() == "View" && MenuLayout::item(item->getName()))
 				{
 					item->execute();
 				}
