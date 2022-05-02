@@ -5,11 +5,26 @@
 
 namespace editor
 {
+	SettingsWindow::SettingsWindow()
+		: m_settings(Application::instance().getSettings())
+	{
+	}
+
 	void SettingsWindow::render()
 	{
-		auto& settings = Application::instance().settings;
-		Layout::input("FPS", settings.fps);
-		Layout::input("Mode", settings.mode);
+		Layout::input("FPS", m_settings.fps);
+		Layout::input("Mode", m_settings.mode);
+		std::string path = m_settings.workspacePath.string();
+		Layout::input("Path", path);
+		if (path != m_settings.workspacePath.string())
+		{
+			m_settings.workspacePath = path;
+		}
+
+		if (Layout::button(TextIcon::save(" Save")))
+		{
+			m_settings.save(std::filesystem::current_path() / "settings.json");
+		}
 	}
 
 	REFLECT_WINDOW(SettingsWindow)

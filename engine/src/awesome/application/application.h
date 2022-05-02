@@ -34,14 +34,12 @@ public:
 
 	struct Settings
 	{
-		Settings() = default;
-
 		static Settings load(const std::filesystem::path& path);
 		void save(const std::filesystem::path& path);
 
 		FpsMode fps{ FpsMode::Fps60 };
 		ApplicationMode mode{ ApplicationMode::Editor };
-		std::string workspacePath{ "../assets" };
+		std::filesystem::path workspacePath{ std::filesystem::current_path() / "assets" };
 	};
 
 	class Module
@@ -57,11 +55,12 @@ public:
 		virtual void postRendering() {}
 	};
 
-	Application(const std::initializer_list<Module*>& modules = {});
-	virtual ~Application();
+	Application() = default;
+	virtual ~Application() = default;
 
-	inline Mode getMode() const { return m_mode; }
+	inline const Settings& getSettings() const { return m_settings; }
 
+	void init(const Settings& settings, const std::initializer_list<Module*>& modules = {});
 	int run();
 	void exit();
 
@@ -73,12 +72,10 @@ public:
 		return module;
 	}
 
-	Settings settings;
-
 private:
 	void registerDefaultModules();
 
-	Mode m_mode;
 	std::vector<std::unique_ptr<Module>> m_modules;
+	Settings m_settings;
 	Time m_time;
 };

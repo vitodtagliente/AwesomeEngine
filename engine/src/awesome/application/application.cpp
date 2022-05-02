@@ -18,20 +18,13 @@
 
 using namespace graphics;
 
-Application::Application(const std::initializer_list<Module*>& modules)
-	: settings()
-	, m_mode(Mode::Editor)
-	, m_modules()
-	, m_time()
+void Application::init(const Settings& settings, const std::initializer_list<Module*>& modules)
 {
+	m_settings = settings;
 	for (Module* const module : modules)
 	{
 		m_modules.push_back(std::unique_ptr<Module>(module));
 	}
-}
-
-Application::~Application()
-{
 }
 
 int Application::run()
@@ -45,12 +38,7 @@ int Application::run()
 		return -1;
 	}
 
-	// settings setup
-	{
-		settings = Settings::load(std::filesystem::current_path() / "settings.json");
-		m_mode = settings.mode;
-		AssetLibrary::instance().m_directory = std::filesystem::current_path() / settings.workspacePath;
-	}
+	AssetLibrary::instance().m_directory = m_settings.workspacePath;
 
 	registerDefaultModules();
 	ComponentsLoader().load();
@@ -60,7 +48,7 @@ int Application::run()
 		module->startup();
 	}
 
-	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
+	Timer fpsTimer(1.f / static_cast<int>(m_settings.fps));
 	double deltatime = 0.0;
 
 	while (canvas.isOpen())
@@ -68,7 +56,7 @@ int Application::run()
 		m_time.tick();
 		fpsTimer.tick(m_time.getDeltaTime());
 		deltatime += m_time.getDeltaTime();
-		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
+		if (!fpsTimer.isExpired() && m_settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();
 		canvas.update();
@@ -121,13 +109,13 @@ void Application::exit()
 
 void Application::registerDefaultModules()
 {
-	if (m_mode != Mode::Server)
+	if (m_settings.mode != Mode::Server)
 	{
 		registerModule<Audio>();
 		registerModule<graphics::Graphics>();
 	}
 
-	if (m_mode == Mode::Editor)
+	if (m_settings.mode == Mode::Editor)
 	{
 		registerModule<editor::Editor>();
 	}
@@ -165,7 +153,7 @@ void Application::Settings::save(const std::filesystem::path& path)
 	const json::value& data = json::object({
 			{"fps", enumToString(fps)},
 			{"mode", enumToString(mode)},
-			{"workspacePath", workspacePath}
+			{"workspacePath", workspacePath.string()}
 		});
 
 	Archive archive(path, Archive::Mode::Write);
