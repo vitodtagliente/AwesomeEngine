@@ -38,26 +38,7 @@ int Application::run()
 		return -1;
 	}
 
-	// init
-	{
-		bool reload = false;
-		const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-		if (std::filesystem::exists(settingsPath))
-		{
-			m_settings = Settings::load(settingsPath);
-			reload = true;
-		}
-
-		AssetImporter importer;
-		importer.import(m_settings.workspacePath, true);
-		AssetLibrary::instance().m_directory = m_settings.workspacePath;
-
-		if (reload)
-		{
-			m_settings = Settings::load(settingsPath);
-		}
-	}
-
+	initSettings();
 	registerDefaultModules();
 	ComponentsLoader().load();
 
@@ -123,6 +104,49 @@ int Application::run()
 void Application::exit()
 {
 	Canvas::instance().close();
+}
+
+void Application::initSettings()
+{
+	bool reload = false;
+	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
+	if (std::filesystem::exists(settingsPath))
+	{
+		m_settings = Settings::load(settingsPath);
+		reload = true;
+	}
+
+	AssetImporter importer;
+	importer.import(m_settings.workspacePath, true);
+	AssetLibrary::instance().m_directory = m_settings.workspacePath;
+
+	if (reload)
+	{
+		m_settings = Settings::load(settingsPath);
+	}
+
+	SceneAssetPtr sceneToLoad;
+	switch (m_settings.mode)
+	{
+	case Mode::Editor: sceneToLoad = m_settings.editorScene; break;
+	case Mode::Server: sceneToLoad = m_settings.serverScene; break;
+	case Mode::Standalone: sceneToLoad = m_settings.standaloneScene; break;
+	}
+
+	if (sceneToLoad)
+	{
+		if (sceneToLoad->data.has_value())
+		{
+			World::instance().load(sceneToLoad);
+		}
+		else
+		{
+			sceneToLoad->onLoad = [sceneToLoad]() -> void
+			{
+				World::instance().load(sceneToLoad);
+			};
+		}
+	}
 }
 
 void Application::registerDefaultModules()

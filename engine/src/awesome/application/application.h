@@ -78,6 +78,7 @@ public:
 	}
 
 private:
+	void initSettings();
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
