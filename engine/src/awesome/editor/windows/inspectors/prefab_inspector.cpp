@@ -1,5 +1,6 @@
 #include "prefab_inspector.h"
 
+#include <awesome/data/archive.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/entity/world.h>
@@ -42,7 +43,10 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			prefab->data.value() = json::Serializer::to_string(m_entity.serialize());
+			const json::value& data = m_entity.serialize();
+			prefab->data = data;
+			Archive archive(prefab->descriptor.getDataPath(), Archive::Mode::Write);
+			archive << json::Serializer::to_string(data);
 		}
 	}
 }
