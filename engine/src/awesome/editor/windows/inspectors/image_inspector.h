@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <awesome/editor/windows/inspector_window.h>
+#include <awesome/editor/widgets/save_file_dialog.h>
 
 namespace editor
 {
@@ -16,5 +17,10 @@ namespace editor
 
 		virtual bool canInspect(const State::Selection& selection) override;
 		virtual void inspect(const State::Selection& selection) override;
+
+	private:
+		SaveFileDialog m_saveFileDialog;
+		int m_rows;
+		int m_columns;
 	};
 }

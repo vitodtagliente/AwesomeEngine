@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/components/sprite_animator.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 
@@ -14,6 +15,8 @@ public:
 
 	void move(const math::vec3& direction);
 
+	virtual void init() override;
+
 	void inspect() override;
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
@@ -24,4 +27,5 @@ public:
 
 private:
 	math::vec3 m_direction{ math::vec3::right };
+	SpriteAnimator* animator;
 };
