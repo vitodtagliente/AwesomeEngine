@@ -17,17 +17,19 @@ public:
 	// update the input state
 	void update();
 
-	bool isKeyDown(const keycode_t key) const;
-	bool isKeyPressed(const keycode_t key) const;
-	bool isKeyReleased(const keycode_t key) const;
-	bool hasKeyState(const keycode_t key, const KeyState state) const;
+	bool isKeyDown(keycode_t key) const;
+	bool isKeyPressed(keycode_t key) const;
+	bool isKeyReleased(keycode_t key) const;
+	bool hasKeyState(keycode_t key, const KeyState state) const;
 
-	void setKeyState(const keycode_t key, const KeyState state);
-	void setMousePosition(const float x, const float y);
+	float getAxis(keycode_t key1, keycode_t key2) const;
+
+	void setKeyState(keycode_t key, KeyState state);
+	void setMousePosition(float x, float y);
 	void setMousePosition(const math::vec2& position);
-	void setMouseWheelPosition(const float x, const float y);
+	void setMouseWheelPosition(float x, float y);
 	void setMouseWheelPosition(const math::vec2& position);
-	void setMousePositionValid(const bool valid);
+	void setMousePositionValid(bool valid);
 
 	const math::vec2& getMousePosition() const;
 	const math::vec2& getDeltaMousePosition() const;

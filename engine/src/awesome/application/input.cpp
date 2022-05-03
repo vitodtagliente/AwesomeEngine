@@ -70,6 +70,13 @@ bool Input::hasKeyState(const keycode_t key, const KeyState state) const
 	return false;
 }
 
+float Input::getAxis(const keycode_t key1, const keycode_t key2) const
+{
+	if (hasKeyState(key1, KeyState::Down) || hasKeyState(key1, KeyState::Pressed)) return -1.0f;
+	if (hasKeyState(key2, KeyState::Down) || hasKeyState(key2, KeyState::Pressed)) return 1.0f;
+	return 0.0f;
+}
+
 void Input::setKeyState(const keycode_t key, const KeyState state)
 {
 	const auto it = m_keysState.find(key);
