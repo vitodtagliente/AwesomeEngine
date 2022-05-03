@@ -5,7 +5,11 @@
 
 void Pawn::move(const math::vec3& direction)
 {
-	getOwner()->transform.position += (direction * speed);
+	const auto delta = direction * speed;
+	if (delta != math::vec3::zero)
+	{
+		getOwner()->transform.position += (direction * speed);
+	}
 	m_direction = direction;
 }
 

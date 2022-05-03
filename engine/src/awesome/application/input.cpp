@@ -23,25 +23,21 @@ void Input::update()
 	setMouseWheelPosition(0.f, 0.f);
 
 	// handle mouse buttons keystate
-	for (auto key_code : { KeyCode::MouseLeftButton, KeyCode::MouseRightButton, KeyCode::MouseWheelButton })
+	for (auto& pair : temp_lastKeysState)
 	{
-		auto key_code_it = temp_lastKeysState.find(key_code);
-		if (key_code_it != temp_lastKeysState.end())
+		if (pair.second == KeyState::Pressed || pair.second == KeyState::Down)
 		{
-			if (key_code_it->second == KeyState::Pressed || key_code_it->second == KeyState::Down)
+			auto it = m_lastKeysState.find(pair.first);
+			if (it != m_lastKeysState.end())
 			{
-				auto it = m_lastKeysState.find(key_code);
-				if (it != m_lastKeysState.end())
+				if (it->second != KeyState::Released)
 				{
-					if (it->second != KeyState::Released)
-					{
-						it->second = KeyState::Down;
-					}
+					it->second = KeyState::Down;
 				}
-				else
-				{
-					m_lastKeysState.insert({ key_code, KeyState::Down });
-				}
+			}
+			else
+			{
+				m_lastKeysState.insert({ pair.first, KeyState::Down });
 			}
 		}
 	}
