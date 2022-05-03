@@ -20,9 +20,9 @@ void Input::update()
 	auto temp_lastKeysState = std::move(m_lastKeysState);
 	m_lastKeysState = std::move(m_keysState);
 	m_keysState.clear();
+
 	setMouseWheelPosition(0.f, 0.f);
 
-	// handle mouse buttons keystate
 	for (auto& pair : temp_lastKeysState)
 	{
 		if (pair.second == KeyState::Pressed || pair.second == KeyState::Down)
