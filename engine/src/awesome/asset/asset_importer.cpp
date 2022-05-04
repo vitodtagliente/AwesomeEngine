@@ -71,7 +71,12 @@ bool AssetImporter::importFile(const std::filesystem::path& path, uuid& id)
 	const std::filesystem::path assetPath = path.string() + Asset::Extension;
 	if (std::filesystem::exists(assetPath))
 	{
-		return false;
+		const Asset::Descriptor descriptor = Asset::Descriptor::load(assetPath);
+		if (descriptor)
+		{
+			id = descriptor.id;
+		}
+		return true;
 	}
 
 	const Asset::Type type = Asset::getTypeByExtension(path.extension().string());

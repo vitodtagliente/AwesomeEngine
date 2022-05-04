@@ -35,6 +35,13 @@ namespace editor
 			Layout::input("Columns", m_columns);
 			Layout::input("Padding", m_padding);
 
+			Layout::image(image, graphics::TextureRect(
+				m_padding.x,
+				m_padding.y,
+				m_columns > 0 ? 1.0f / m_columns : 1.0f,
+				m_rows > 0 ? 1.0f / m_rows : 1.0f
+			));
+
 			Layout::separator();
 
 			if (Layout::button(TextIcon::save(" Save")) && m_rows > 0 && m_columns > 0)
