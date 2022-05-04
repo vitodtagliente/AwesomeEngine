@@ -5,8 +5,10 @@
 #include <string>
 #include <vector>
 
+#include <awesome/asset/image_asset.h>
 #include <awesome/editor/windows/inspector_window.h>
 #include <awesome/editor/widgets/save_file_dialog.h>
+#include <awesome/math/vector2.h>
 
 namespace editor
 {
@@ -19,8 +21,10 @@ namespace editor
 		virtual void inspect(const State::Selection& selection) override;
 
 	private:
-		SaveFileDialog m_saveFileDialog;
-		int m_rows;
 		int m_columns;
+		math::vec2 m_padding;
+		ImageAssetPtr m_previouslySelectedImage;
+		int m_rows;
+		SaveFileDialog m_saveFileDialog;
 	};
 }
