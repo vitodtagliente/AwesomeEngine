@@ -6,6 +6,14 @@
 void Entity::prepareToSpawn(World* const world)
 {
 	m_world = world;
+
+	for (const auto& component : m_components)
+	{
+		if (component->enabled)
+		{
+			component->init();
+		}
+	}
 }
 
 void Entity::prepareToDestroy()

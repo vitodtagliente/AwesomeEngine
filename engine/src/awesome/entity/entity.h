@@ -33,6 +33,7 @@ public:
 	inline Entity* const getParent() const { return m_parent; }
 	inline const uuid& getPrefab() const { return m_prefab; }
 	inline World* const getWorld() const { return m_world; }
+	inline bool isSpawned() const { return m_world != nullptr; }
 
 	void prepareToDestroy();
 	void prepareToSpawn(World* const world);
@@ -80,6 +81,10 @@ public:
 		T* const component = new T();
 		m_components.push_back(std::unique_ptr<Component>(component));
 		component->attach(this);
+		if (isSpawned())
+		{
+			component->init();
+		}
 		return component;
 	}
 
@@ -87,6 +92,10 @@ public:
 	{
 		m_components.push_back(std::unique_ptr<Component>(component));
 		component->attach(this);
+		if (isSpawned())
+		{
+			component->init();
+		}
 		return component;
 	}
 

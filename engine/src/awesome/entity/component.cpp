@@ -24,7 +24,6 @@ World* const Component::getWorld() const
 void Component::attach(Entity* const entity)
 {
 	m_owner = entity;
-	init();
 }
 
 void Component::detach()

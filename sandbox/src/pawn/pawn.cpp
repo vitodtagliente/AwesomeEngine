@@ -7,17 +7,7 @@ void Pawn::move(const math::vec3& direction)
 {
 	const auto delta = direction * speed;
 	getOwner()->transform.position += (direction * speed);
-
-	if (animator == nullptr)
-	{
-		animator = getOwner()->findComponent<SpriteAnimator>();
-	}
-
-	if (animator)
-	{
-		animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
-	}
-
+	animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
 	m_direction = direction;
 }
 
