@@ -322,7 +322,6 @@ namespace editor
 				m_dir = Dir(file);
 				State::instance().path = m_dir.path;
 			}
-			State::instance().select();
 		}
 		else
 		{
