@@ -5,7 +5,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
-void Collider2D::render(graphics::Renderer* const renderer)
+void Collider2d::render(graphics::Renderer* const renderer)
 {
 	switch (m_type)
 	{
@@ -15,11 +15,22 @@ void Collider2D::render(graphics::Renderer* const renderer)
 	}
 }
 
-bool Collider2D::collide(Collider2D& other) const
+bool Collider2d::collide(Collider2d& other) const
 {
 	if (m_type == other.m_type)
 	{
-		return true;
+		if (m_type == Type::Box)
+		{
+			/*
+			if( ( this.position.x + this.width ) > point2.x && this.position.x < point2.x ) 
+			if( ( this.position.y + this.height ) > point2.y && this.position.y < point2.y ) 
+				return true;
+			*/
+		}
+		else // circle
+		{
+			return getOwner()->transform.position.distance(other.getOwner()->transform.position) < m_circleSize;
+		}
 	}
 	else
 	{
@@ -27,7 +38,7 @@ bool Collider2D::collide(Collider2D& other) const
 	}
 }
 
-json::value Collider2D::serialize() const
+json::value Collider2d::serialize() const
 {
 	json::value data = Component::serialize();
 	data["type"] = enumToString(m_type);
@@ -36,7 +47,7 @@ json::value Collider2D::serialize() const
 	return data;
 }
 
-void Collider2D::deserialize(const json::value& value)
+void Collider2d::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 	stringToEnum(value["type"].as_string(), m_type);
@@ -44,7 +55,7 @@ void Collider2D::deserialize(const json::value& value)
 	m_circleSize = value["circleSize"].as_number().as_float();
 }
 
-void Collider2D::inspect()
+void Collider2d::inspect()
 {
 	Component::inspect();
 	editor::Layout::input("Type", m_type);
@@ -60,4 +71,4 @@ void Collider2D::inspect()
 	}
 }
 
-REFLECT_COMPONENT(Collider2D)
+REFLECT_COMPONENT(Collider2d)

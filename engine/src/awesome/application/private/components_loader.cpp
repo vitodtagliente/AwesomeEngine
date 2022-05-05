@@ -14,7 +14,7 @@ void ComponentsLoader::load()
 {
 	TypeFactory::load<Camera>();
 	TypeFactory::load<CameraController2d>();
-	TypeFactory::load<Collider2D>();
+	TypeFactory::load<Collider2d>();
 	TypeFactory::load<GizmosRenderer>();
 	TypeFactory::load<OrthographicCamera>();
 	TypeFactory::load<SpriteAnimator>();

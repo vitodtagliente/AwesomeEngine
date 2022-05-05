@@ -4,7 +4,7 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
-REFLECT_ENUM(Collider2DType,
+REFLECT_ENUM(Collider2dType,
 	Box,
 	Circle
 )
@@ -14,17 +14,17 @@ namespace graphics
 	class Renderer;
 }
 
-class Collider2D : public Component
+class Collider2d : public Component
 {
 public:
-	typedef Collider2DType Type;
+	typedef Collider2dType Type;
 
-	Collider2D() = default;
-	virtual ~Collider2D() = default;
+	Collider2d() = default;
+	virtual ~Collider2d() = default;
 
 	void render(graphics::Renderer* const renderer) override;
 
-	bool collide(Collider2D& other) const;
+	bool collide(Collider2d& other) const;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
