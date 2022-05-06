@@ -4,16 +4,18 @@
 
 namespace graphics
 {
+#define VERTICE_COMPONENTS 7
+
 	GizmosBatch::Batch::Batch(int size)
 		: m_size(size)
 		, m_data()
 	{
-		m_data.reserve(size);
+		m_data.reserve(size * VERTICE_COMPONENTS);
 	}
 
 	void GizmosBatch::Batch::batch(const math::vec3& position, const Color& color)
 	{
-		m_data.push_back(std::make_pair(position, color));
+		m_data.insert(m_data.end(), { position.x, position.y, position.z, color.red, color.green, color.blue, color.alpha });
 	}
 
 	void GizmosBatch::Batch::clear()
@@ -26,8 +28,10 @@ namespace graphics
 		, m_batchIndex()
 		, m_batches()
 	{
-		m_batches.reserve(10); // 10 batches per scene? can be enough?
-		m_batches.push_back(Batch(batchSize));
+		for (int i = 0; i < 10; ++i)
+		{
+			m_batches.push_back(Batch(batchSize));
+		}
 	}
 
 	void GizmosBatch::batch(const math::vec3& position, const Color& color)
@@ -35,24 +39,16 @@ namespace graphics
 		findNextBatch().batch(position, color);
 	}
 
-	void GizmosBatch::clear()
+	void GizmosBatch::flush(Context* const context)
 	{
-		m_batchIndex = 0;
-	}
-
-	std::vector<Command*> GizmosBatch::commands()
-	{
-		std::vector<Command*> commands;
 		for (auto it = m_batches.begin(); it != m_batches.end(); ++it)
 		{
 			if (it->data().empty()) continue;
 
-			GizmosCommand* command = new GizmosCommand();
-			command->data = std::move(it->data());
+			context->drawLines(it->data());
 			it->clear();
-			commands.push_back(command);
 		}
-		return commands;
+		m_batchIndex = 0;
 	}
 
 	GizmosBatch::Batch& GizmosBatch::findNextBatch()
@@ -63,10 +59,5 @@ namespace graphics
 			++m_batchIndex;
 		}
 		return m_batches[m_batchIndex];
-	}
-
-	void GizmosCommand::execute(Context& context)
-	{
-		context.drawLines(data);
 	}
 }

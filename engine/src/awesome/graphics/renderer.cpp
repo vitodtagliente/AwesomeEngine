@@ -21,7 +21,6 @@ namespace graphics
 	{
 		m_context.clear(backgroundColor);
 		m_spriteBatch.clear();
-		m_gizmos.clear();
 		m_stats = {};
 	}
 
@@ -44,14 +43,7 @@ namespace graphics
 			++m_stats.drawCalls;
 		}
 
-		std::vector<Command*> gizmosCommands = m_gizmos.commands();
-		for (auto it = gizmosCommands.begin(); it != gizmosCommands.end(); ++it)
-		{
-			Command* const command = *it;
-			command->execute(m_context);
-
-			++m_stats.drawCalls;
-		}
+		m_gizmos.getBatch().flush(&m_context);
 	}
 
 	void Renderer::clear()

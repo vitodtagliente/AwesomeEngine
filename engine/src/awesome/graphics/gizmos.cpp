@@ -49,14 +49,4 @@ namespace graphics
 			angle += step;
 		}
 	}
-
-	void Gizmos::clear()
-	{
-		m_batch.clear();
-	}
-
-	std::vector<Command*> Gizmos::commands()
-	{
-		return m_batch.commands();
-	}
 }

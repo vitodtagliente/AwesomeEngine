@@ -21,9 +21,8 @@ namespace graphics
 		void line(const math::vec3& a, const math::vec3& b, const Color& color);
 		void rect(const math::vec3& position, float width, float height, const Color& color);
 		void circle(const math::vec3& position, float radius, const Color& color);
-		void clear();
 
-		std::vector<Command*> commands();
+		inline GizmosBatch& getBatch() { return m_batch; }
 
 	private:
 		GizmosBatch m_batch;

@@ -106,10 +106,6 @@ namespace graphics
 
 	void Context::drawLines(const std::vector<std::pair<math::vec3, Color>>& points)
 	{
-		if (points.empty()) return;
-
-		m_gizmosRenderingData.bind();
-
 		// fill geometry data
 		std::vector<float> vertices;
 		for (auto it = points.begin(); it != points.end(); ++it)
@@ -123,16 +119,25 @@ namespace graphics
 			vertices.push_back(it->second.alpha);
 		}
 
+		drawLines(vertices);
+	}
+
+	void Context::drawLines(const std::vector<float>& vertices)
+	{
+		if (vertices.empty()) return;
+
+		m_gizmosRenderingData.bind();
+
 		VertexBuffer* vertexBuffer = m_gizmosRenderingData.findVertexBuffer(Renderable::names::MainBuffer);
 		vertexBuffer->bind();
-		vertexBuffer->fillData(&vertices[0], vertices.size() * sizeof(float));
+		vertexBuffer->fillData((void*)&vertices[0], vertices.size() * sizeof(float));
 
 		m_gizmosProgram->bind();
 		m_gizmosProgram->set("u_matrix", camera);
 
 		const int primitiveType = GL_LINES;
 		const int offset = 0;
-		const int count = static_cast<int>(points.size());
+		const int count = static_cast<int>(vertices.size() / 7);
 		glDrawArrays(primitiveType, offset, count);
 	}
 
