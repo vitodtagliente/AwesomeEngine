@@ -24,12 +24,17 @@ bool Collider2d::collide(Collider2d& other) const
 
 		if (m_type == Type::Rect)
 		{
-			return ((position.x + m_rectSize.x) > (otherPosition.x - other.m_rectSize.x) && position.x < (otherPosition.x + other.m_rectSize.x))
-				|| ((position.y + m_rectSize.y) > (otherPosition.y - other.m_rectSize.y) && position.y < (otherPosition.y + other.m_rectSize.y));
+			const auto size1 = m_rectSize / 2;
+			const auto size2 = other.m_rectSize / 2;
+
+			return position.x + size1.x >= otherPosition.x - size2.x
+				&& position.x - size1.x <= otherPosition.x + size2.x
+				&& position.y + size1.y >= otherPosition.y - size2.y
+				&& position.y - size1.y <= otherPosition.y + size2.y;
 		}
 		else // circle
 		{
-			return position.distance(otherPosition) < m_circleSize;
+			return position.distance(otherPosition) < m_circleSize + other.m_circleSize;
 		}
 	}
 	else
