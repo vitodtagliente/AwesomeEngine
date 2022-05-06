@@ -30,7 +30,7 @@ void Body2d::move(const math::vec3& amount)
 			Collider2d* const collider = entity->findComponent<Collider2d>();
 			if (collider && collider->collide(*m_collider))
 			{
-				position -= amount; // reste the position
+				position -= amount; // reset the position
 				return;
 			}
 		}
