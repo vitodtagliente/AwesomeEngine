@@ -34,26 +34,39 @@ bool Collider2d::collide(Collider2d& other) const
 		}
 		else // circle
 		{
-			return position.distance(otherPosition) < m_circleSize + other.m_circleSize;
+			return position.distance(otherPosition) <= m_circleSize + other.m_circleSize;
 		}
 	}
 	else
 	{
-		// const math::vec3 circlePosition = getOwner()->transform.position;
-		// const math::vec3 rectPosition = other.getOwner()->transform.position;
-		// 
-		// // Find the closest point to the circle within the rectangle
-		// float closestX = math::clamp(circlePosition.x, rectPosition.x - left, rectangle.Right);
-		// float closestY = math::clamp(circle.Y, rectangle.Top, rectangle.Bottom);
-		// 
-		// // Calculate the distance between the circle's center and this closest point
-		// float distanceX = circle.X - closestX;
-		// float distanceY = circle.Y - closestY;
-		// 
-		// // If the distance is less than the circle's radius, an intersection occurs
-		// float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-		// return distanceSquared < (circle.Radius* circle.Radius);
-		return false;
+		math::vec3 circlePosition, rectPosition;
+		math::vec2 rectSize;
+		float circleSize;
+		if (m_type == Type::Circle)
+		{
+			circlePosition = getOwner()->transform.position;
+			circleSize = m_circleSize;
+			rectPosition = other.getOwner()->transform.position;
+			rectSize = other.m_rectSize / 2;
+		}
+		else
+		{
+			circlePosition = other.getOwner()->transform.position;
+			circleSize = other.m_circleSize;
+			rectPosition = getOwner()->transform.position;
+			rectSize = m_rectSize / 2;
+		}
+
+		math::vec3 test = rectPosition;
+
+		if (circlePosition.x <= rectPosition.x - rectSize.x) test.x = rectPosition.x - rectSize.x;
+		else if (circlePosition.x >= rectPosition.x + rectSize.x) test.x = rectPosition.x + rectSize.x;
+
+		if (circlePosition.y >= rectPosition.y + rectSize.y) test.y = rectPosition.y + rectSize.y;
+		else if (circlePosition.y <= rectPosition.y - rectSize.y) test.y = rectPosition.y - rectSize.y;
+
+		const auto distance = circlePosition.distance(test);
+		return distance <= circleSize;
 	}
 }
 
