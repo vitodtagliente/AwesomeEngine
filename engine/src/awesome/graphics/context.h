@@ -27,6 +27,7 @@ namespace graphics
 		void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
 		void drawLines(const std::vector<float>& vertices);
 		void drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
+		void drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops);
 
 		void test();
 

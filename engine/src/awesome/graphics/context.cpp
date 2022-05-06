@@ -45,8 +45,8 @@ namespace graphics
 			m_spritebatchProgram = createProgram(ShaderLibrary::names::SpriteBatchShader);
 
 			float vertices[] = {
-				/* 
-				 First pixel from memory is bottom-left for OpenGL. 
+				/*
+				 First pixel from memory is bottom-left for OpenGL.
 				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
 				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -143,10 +143,6 @@ namespace graphics
 
 	void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
 	{
-		if (sprites.empty()) return;
-
-		m_spritebatchRenderingData.bind();
-
 		// fill geometry data
 		std::vector<float> crops;
 		std::vector<float> transforms;
@@ -160,13 +156,25 @@ namespace graphics
 			transforms.insert(transforms.end(), it->first.data, it->first.data + it->first.length);
 		}
 
+		drawSprites(texture, transforms, crops);
+	}
+
+	void Context::drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops)
+	{
+		if (transforms.empty() || crops.empty()) return;
+
+		const size_t instances = transforms.size() / 16;
+		if (instances != crops.size() / 4) return;
+
+		m_spritebatchRenderingData.bind();
+
 		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.findVertexBuffer("cropsBuffer");
 		cropBuffer.bind();
-		cropBuffer.fillData(&crops[0], crops.size() * sizeof(float));
+		cropBuffer.fillData((void*)&crops[0], crops.size() * sizeof(float));
 
 		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffer");
 		transformBuffer.bind();
-		transformBuffer.fillData(&transforms[0], transforms.size() * sizeof(float));
+		transformBuffer.fillData((void*)&transforms[0], transforms.size() * sizeof(float));
 
 		m_spritebatchProgram->bind();
 		texture->bind(0);
@@ -176,7 +184,7 @@ namespace graphics
 		const int primitiveType = GL_TRIANGLES;
 		const int offset = 0;
 		const int count = 6;
-		const int numInstances = static_cast<int>(sprites.size());
+		const int numInstances = static_cast<int>(instances);
 		const int indexType = GL_UNSIGNED_INT;
 		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
 	}

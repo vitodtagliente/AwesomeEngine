@@ -4,86 +4,95 @@
 
 namespace graphics
 {
-	SpriteBatch::Batch::Batch(const int size)
-		: m_size(size)
-		, m_data()
+#define TRANSFORM_COMPONENTS 16
+#define RECT_COMPONENTS 4
+
+	SpriteBatch::Batch::Data::Data(const size_t size)
+		: transforms()
+		, rects()
 	{
-		m_data.reserve(size);
+		transforms.reserve(size * TRANSFORM_COMPONENTS);
+		rects.reserve(size * RECT_COMPONENTS);
+	}
+
+	SpriteBatch::Batch::Batch(const size_t size)
+		: count(0)
+		, data(size)
+		, texture()
+		, size(size)
+	{
+
 	}
 
 	void SpriteBatch::Batch::batch(const math::mat4& matrix, const TextureRect& rect)
 	{
-		m_data.push_back(std::make_pair(matrix, rect));
+		data.transforms.insert(data.transforms.end(), matrix.data, matrix.data + matrix.length);
+		data.rects.insert(data.rects.end(), { rect.x, rect.y, rect.width, rect.height });
+		++count;
 	}
 
 	void SpriteBatch::Batch::clear()
 	{
-		m_data.clear();
+		count = 0;
+		texture = nullptr;
+		data.transforms.clear();
+		data.rects.clear();
 	}
 
-	SpriteBatch::SpriteBatch(const int batchSize)
+	SpriteBatch::SpriteBatch(const size_t batchSize)
 		: m_batchSize(batchSize)
 		, m_batches()
 	{
-		m_batches.reserve(20); // 20 textures?
+		// 20 texture slot by default
+		for (int i = 0; i < 20; ++i)
+		{
+			m_batches.push_back(Batch(batchSize));
+		}
 	}
 
 	void SpriteBatch::batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
 	{
-		findNextBatch(texture).batch(matrix, rect);
-	}
-
-	void SpriteBatch::clear()
-	{
-
-	}
-
-	std::vector<Command*> SpriteBatch::commands()
-	{
-		std::vector<Command*> commands;
-		for (auto& pair : m_batches)
+		Batch& batch = findNextBatch(texture);
+		if (!batch.full()) 
 		{
-			Texture* const texture = pair.first;
-			for (Batch& batch : pair.second)
-			{
-				SpriteCommand* command = new SpriteCommand();
-				command->texture = texture;
-				command->data = std::move(batch.data());
-				batch.clear();
-				commands.push_back(command);
-			}
+			batch.batch(matrix, rect);
 		}
-		return commands;
+	}
+
+	void SpriteBatch::flush(Context* context)
+	{
+		for (auto& batch : m_batches)
+		{
+			context->drawSprites(batch.texture, batch.data.transforms, batch.data.rects);
+			batch.clear();
+		}
 	}
 
 	SpriteBatch::Batch& SpriteBatch::findNextBatch(Texture* const texture)
 	{
-		const auto& it = m_batches.find(texture);
-		if (it == m_batches.end())
+		auto it = std::find_if(m_batches.begin(), m_batches.end(), [&texture](const Batch& batch) -> bool
+			{
+				return batch.texture == texture;
+			}
+		);
+
+		if (it != m_batches.end())
 		{
-			const auto& insertedPair = m_batches.insert(std::make_pair(texture, std::vector<Batch>{}));
-			std::vector<Batch>& batches = insertedPair.first->second;
-			return batches.emplace_back(Batch(m_batchSize));
+			return *it;
 		}
 
-		std::vector<Batch>& batches = it->second;
-		if (batches.front().full() == false)
+		it = std::find_if(m_batches.begin(), m_batches.end(), [](const Batch& batch) -> bool
+			{
+				return batch.texture == nullptr;
+			}
+		);
+
+		if (it != m_batches.end())
 		{
-			return batches.front();
+			it->texture = texture;
+			return *it;
 		}
 
-		return batches.emplace_back(Batch(m_batchSize));
-	}
-
-	SpriteCommand::SpriteCommand()
-		: Command()
-		, texture()
-		, data()
-	{
-	}
-
-	void SpriteCommand::execute(Context& context)
-	{
-		context.drawSprites(texture, data);
+		return m_batches.emplace_back(Batch(m_batchSize));
 	}
 }

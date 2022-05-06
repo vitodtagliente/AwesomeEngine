@@ -20,7 +20,6 @@ namespace graphics
 	void Renderer::begin()
 	{
 		m_context.clear(backgroundColor);
-		m_spriteBatch.clear();
 		m_stats = {};
 	}
 
@@ -34,15 +33,7 @@ namespace graphics
 			++m_stats.drawCalls;
 		}
 
-		std::vector<Command*> spritebatchCommands = m_spriteBatch.commands();
-		for (auto it = spritebatchCommands.begin(); it != spritebatchCommands.end(); ++it)
-		{
-			Command* const command = *it;
-			command->execute(m_context);
-
-			++m_stats.drawCalls;
-		}
-
+		m_spriteBatch.flush(&m_context);
 		m_gizmos.getBatch().flush(&m_context);
 	}
 
