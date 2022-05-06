@@ -24,8 +24,8 @@ bool Collider2d::collide(Collider2d& other) const
 
 		if (m_type == Type::Rect)
 		{
-			return ((position.x + m_rectSize.x) > otherPosition.x && position.x < (otherPosition.x - other.m_rectSize.x))
-				|| ((position.y + m_rectSize.y) > otherPosition.y && position.y < (otherPosition.y - other.m_rectSize.y));
+			return ((position.x + m_rectSize.x) > (otherPosition.x - other.m_rectSize.x) && position.x < (otherPosition.x + other.m_rectSize.x))
+				|| ((position.y + m_rectSize.y) > (otherPosition.y - other.m_rectSize.y) && position.y < (otherPosition.y + other.m_rectSize.y));
 		}
 		else // circle
 		{
@@ -48,6 +48,7 @@ bool Collider2d::collide(Collider2d& other) const
 		// // If the distance is less than the circle's radius, an intersection occurs
 		// float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
 		// return distanceSquared < (circle.Radius* circle.Radius);
+		return false;
 	}
 }
 

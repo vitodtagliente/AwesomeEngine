@@ -2,6 +2,7 @@
 
 #include <awesome/core/reflection.h>
 
+#include <awesome/components/body2d.h>
 #include <awesome/components/camera.h>
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/collider2d.h>
@@ -12,6 +13,7 @@
 
 void ComponentsLoader::load()
 {
+	TypeFactory::load<Body2d>();
 	TypeFactory::load<Camera>();
 	TypeFactory::load<CameraController2d>();
 	TypeFactory::load<Collider2d>();
