@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/components/body2d.h>
 #include <awesome/components/sprite_animator.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
@@ -26,6 +27,7 @@ public:
 	REFLECT()
 
 private:
+	SpriteAnimator* m_animator;
+	Body2d* m_body;
 	math::vec3 m_direction{ math::vec3::right };
-	SpriteAnimator* animator;
 };

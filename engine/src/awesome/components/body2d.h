@@ -3,12 +3,18 @@
 
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
+#include <awesome/math/vector3.h>
 
 class Body2d : public Component
 {
 public:
 	Body2d() = default;
 	virtual ~Body2d() = default;
+
+	virtual void init() override;
+
+	void move(const math::vec2& amount);
+	void move(const math::vec3& amount);
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
@@ -17,5 +23,5 @@ public:
 	REFLECT()
 
 private:
-
+	class Collider2d* m_collider;
 };

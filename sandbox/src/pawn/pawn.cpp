@@ -6,14 +6,18 @@
 void Pawn::move(const math::vec3& direction)
 {
 	const auto delta = direction * speed;
-	getOwner()->transform.position += (direction * speed);
-	animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
+	if (m_body)
+	{
+		m_body->move(direction * speed);
+	}
+	m_animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
 	m_direction = direction;
 }
 
 void Pawn::init()
 {
-	animator = getOwner()->findComponent<SpriteAnimator>();
+	m_body = getOwner()->findComponent<Body2d>();
+	m_animator = getOwner()->findComponent<SpriteAnimator>();
 }
 
 void Pawn::inspect()
