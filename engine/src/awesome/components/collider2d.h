@@ -5,8 +5,8 @@
 #include <awesome/math/vector2.h>
 
 REFLECT_ENUM(Collider2dType,
-	Box,
-	Circle
+	Circle,
+	Rect
 )
 
 namespace graphics
@@ -33,7 +33,7 @@ public:
 	REFLECT()
 
 private:
-	Type m_type{ Type::Box };
-	math::vec2 m_boxSize{ 1.0f, 1.0f };
+	Type m_type{ Type::Rect };
+	math::vec2 m_rectSize{ 1.0f, 1.0f };
 	float m_circleSize{ 1.0f };
 };

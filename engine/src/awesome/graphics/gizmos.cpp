@@ -21,14 +21,17 @@ namespace graphics
 
 	void Gizmos::rect(const math::vec3& position, const float width, const float height, const Color& color)
 	{
-		m_batch.batch(position + math::vec3(width, height, 0), color);
-		m_batch.batch(position + math::vec3(-width, height, 0), color);
-		m_batch.batch(position + math::vec3(-width, height, 0), color);
-		m_batch.batch(position + math::vec3(-width, -height, 0), color);
-		m_batch.batch(position + math::vec3(-width, -height, 0), color);
-		m_batch.batch(position + math::vec3(width, -height, 0), color);
-		m_batch.batch(position + math::vec3(width, -height, 0), color);
-		m_batch.batch(position + math::vec3(width, height, 0), color);
+		const float w = width / 2;
+		const float h = height / 2;
+
+		m_batch.batch(position + math::vec3(w, h, 0), color);
+		m_batch.batch(position + math::vec3(-w, h, 0), color);
+		m_batch.batch(position + math::vec3(-w, h, 0), color);
+		m_batch.batch(position + math::vec3(-w, -h, 0), color);
+		m_batch.batch(position + math::vec3(-w, -h, 0), color);
+		m_batch.batch(position + math::vec3(w, -h, 0), color);
+		m_batch.batch(position + math::vec3(w, -h, 0), color);
+		m_batch.batch(position + math::vec3(w, h, 0), color);
 	}
 
 	void Gizmos::circle(const math::vec3& position, const float radius, const Color& color)

@@ -9,8 +9,8 @@ void Collider2d::render(graphics::Renderer* const renderer)
 {
 	switch (m_type)
 	{
-	case Type::Box: renderer->getGizmos().rect(getOwner()->transform.position, m_boxSize.x, m_boxSize.y, graphics::Color::Green); break;
 	case Type::Circle: renderer->getGizmos().circle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
+	case Type::Rect: renderer->getGizmos().rect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
 	default: break;
 	}
 }
@@ -19,22 +19,35 @@ bool Collider2d::collide(Collider2d& other) const
 {
 	if (m_type == other.m_type)
 	{
-		if (m_type == Type::Box)
+		const math::vec3 position = getOwner()->transform.position;
+		const math::vec3 otherPosition = other.getOwner()->transform.position;
+
+		if (m_type == Type::Rect)
 		{
-			/*
-			if( ( this.position.x + this.width ) > point2.x && this.position.x < point2.x ) 
-			if( ( this.position.y + this.height ) > point2.y && this.position.y < point2.y ) 
-				return true;
-			*/
+			return ((position.x + m_rectSize.x) > otherPosition.x && position.x < (otherPosition.x - other.m_rectSize.x))
+				|| ((position.y + m_rectSize.y) > otherPosition.y && position.y < (otherPosition.y - other.m_rectSize.y));
 		}
 		else // circle
 		{
-			return getOwner()->transform.position.distance(other.getOwner()->transform.position) < m_circleSize;
+			return position.distance(otherPosition) < m_circleSize;
 		}
 	}
 	else
 	{
-		return false;
+		// const math::vec3 circlePosition = getOwner()->transform.position;
+		// const math::vec3 rectPosition = other.getOwner()->transform.position;
+		// 
+		// // Find the closest point to the circle within the rectangle
+		// float closestX = math::clamp(circlePosition.x, rectPosition.x - left, rectangle.Right);
+		// float closestY = math::clamp(circle.Y, rectangle.Top, rectangle.Bottom);
+		// 
+		// // Calculate the distance between the circle's center and this closest point
+		// float distanceX = circle.X - closestX;
+		// float distanceY = circle.Y - closestY;
+		// 
+		// // If the distance is less than the circle's radius, an intersection occurs
+		// float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+		// return distanceSquared < (circle.Radius* circle.Radius);
 	}
 }
 
@@ -42,7 +55,7 @@ json::value Collider2d::serialize() const
 {
 	json::value data = Component::serialize();
 	data["type"] = enumToString(m_type);
-	data["boxSize"] = ::serialize(m_boxSize);
+	data["rectSize"] = ::serialize(m_rectSize);
 	data["circleSize"] = m_circleSize;
 	return data;
 }
@@ -51,7 +64,7 @@ void Collider2d::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 	stringToEnum(value["type"].as_string(), m_type);
-	::deserialize(value["boxSize"], m_boxSize);
+	::deserialize(value["rectSize"], m_rectSize);
 	m_circleSize = value["circleSize"].as_number().as_float();
 }
 
@@ -61,8 +74,8 @@ void Collider2d::inspect()
 	editor::Layout::input("Type", m_type);
 	switch (m_type)
 	{
-	case Type::Box:
-		editor::Layout::input("Size", m_boxSize);
+	case Type::Rect:
+		editor::Layout::input("Size", m_rectSize);
 		break;
 	case Type::Circle:
 		editor::Layout::input("Size", m_circleSize);
