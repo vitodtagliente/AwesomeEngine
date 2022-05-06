@@ -23,7 +23,7 @@ namespace graphics
 		void circle(const math::vec3& position, float radius, const Color& color);
 		void clear();
 
-		std::vector<Command*> commands() const;
+		std::vector<Command*> commands();
 
 	private:
 		GizmosBatch m_batch;

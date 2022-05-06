@@ -8,6 +8,7 @@ namespace graphics
 		: m_size(size)
 		, m_data()
 	{
+		m_data.reserve(size);
 	}
 
 	void SpriteBatch::Batch::batch(const math::mat4& matrix, const TextureRect& rect)
@@ -24,6 +25,7 @@ namespace graphics
 		: m_batchSize(batchSize)
 		, m_batches()
 	{
+		m_batches.reserve(20); // 20 textures?
 	}
 
 	void SpriteBatch::batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
@@ -33,21 +35,21 @@ namespace graphics
 
 	void SpriteBatch::clear()
 	{
-		m_batches.clear();
+
 	}
 
-	std::vector<Command*> SpriteBatch::commands() const
+	std::vector<Command*> SpriteBatch::commands()
 	{
 		std::vector<Command*> commands;
-		for (const auto& pair : m_batches)
+		for (auto& pair : m_batches)
 		{
 			Texture* const texture = pair.first;
-			const std::vector<Batch>& batches = pair.second;
-			for (const Batch& batch : batches)
+			for (Batch& batch : pair.second)
 			{
 				SpriteCommand* command = new SpriteCommand();
 				command->texture = texture;
-				command->data = batch.data();
+				command->data = std::move(batch.data());
+				batch.clear();
 				commands.push_back(command);
 			}
 		}

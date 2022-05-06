@@ -29,7 +29,7 @@ namespace graphics
 		void batch(const math::vec3& position, const Color& color);
 		void clear();
 
-		std::vector<Command*> commands() const;
+		std::vector<Command*> commands();
 
 	private:
 
@@ -42,6 +42,7 @@ namespace graphics
 			inline int capacity() const { return m_size; }
 			inline bool empty() const { return m_data.empty(); }
 			inline const std::vector<std::pair<math::vec3, Color>>& data() const { return m_data; }
+			inline std::vector<std::pair<math::vec3, Color>>& data() { return m_data; }
 			inline bool full() const { return m_size <= m_data.size(); }
 
 			void batch(const math::vec3& position, const Color& color);

@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include <vdtmath/vector3.h>
@@ -37,7 +37,7 @@ namespace graphics
 		void batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect);
 		void clear();
 
-		std::vector<Command*> commands() const;
+		std::vector<Command*> commands();
 
 	private:
 
@@ -50,6 +50,7 @@ namespace graphics
 			inline int capacity() const { return m_size; }
 			inline bool empty() const { return m_data.empty(); }
 			inline const std::vector<std::pair<math::mat4, TextureRect>>& data() const { return m_data; }
+			inline std::vector<std::pair<math::mat4, TextureRect>>& data() { return m_data; }
 			inline bool full() const { return m_size <= m_data.size(); }
 
 			void batch(const math::mat4& matrix, const TextureRect& rect);
@@ -65,6 +66,6 @@ namespace graphics
 		Batch& findNextBatch(Texture* const texture);
 
 		int m_batchSize;
-		std::map<Texture*, std::vector<Batch>> m_batches;
+		std::unordered_map<Texture*, std::vector<Batch>> m_batches;
 	};
 }

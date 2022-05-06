@@ -55,7 +55,7 @@ namespace graphics
 		m_batch.clear();
 	}
 
-	std::vector<Command*> Gizmos::commands() const
+	std::vector<Command*> Gizmos::commands()
 	{
 		return m_batch.commands();
 	}
