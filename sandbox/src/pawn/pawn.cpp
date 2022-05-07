@@ -5,8 +5,6 @@
 
 void Pawn::move(const math::vec3& direction)
 {
-	if (direction == math::vec3::zero) return;
-
 	const auto delta = direction * speed;
 	if (m_body)
 	{
@@ -17,7 +15,10 @@ void Pawn::move(const math::vec3& direction)
 	{
 		m_renderer->flipX = direction.x < 0.f;
 	}
-	m_direction = direction;
+	if (direction != math::vec3::zero)
+	{
+		m_direction = direction;
+	}
 }
 
 void Pawn::init()
