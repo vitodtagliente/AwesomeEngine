@@ -15,12 +15,16 @@ namespace graphics
 class SpriteRenderer : public Component
 {
 public:
-	SpriteRenderer();
+	SpriteRenderer() = default;
+	virtual ~SpriteRenderer() = default;
 
 	SpriteAssetPtr sprite;
-	graphics::Color color;
+	graphics::Color color{ graphics::Color::White };
+	bool flipX{ false };
+	bool flipY{ false };
 
-	void render(graphics::Renderer* const renderer) override;
+	virtual void render(graphics::Renderer* const renderer) override;
+	virtual void update(double deltaTime) override;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;

@@ -125,7 +125,8 @@ namespace graphics
 			out vec4 outColor;
  
 			void main() {
-				outColor = texture(u_texture, clamp(v_texcoord * v_crop.zw + v_crop.xy, vec2(0, 0), vec2(1, 1)));
+				// outColor = texture(u_texture, clamp(v_texcoord * v_crop.zw + v_crop.xy, vec2(0, 0), vec2(1, 1)));
+				outColor = texture(u_texture, v_texcoord * v_crop.zw + v_crop.xy);
 				// outColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 			}
 		)"
