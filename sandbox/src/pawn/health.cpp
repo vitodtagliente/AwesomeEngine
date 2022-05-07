@@ -23,6 +23,7 @@ json::value Health::serialize() const
 	data["min"] = min;
 	data["max"] = max;
 	data["value"] = value;
+	data["destroyOnDeath"] = destroyOnDeath;
 	return data;
 }
 
@@ -32,6 +33,7 @@ void Health::deserialize(const json::value& data)
 	min = data["min"].as_number().as_int();
 	max = data["max"].as_number().as_int();
 	value = data["value"].as_number().as_int();
+	destroyOnDeath = data["destroyOnDeath"].as_bool();
 }
 
 void Health::set(int v)

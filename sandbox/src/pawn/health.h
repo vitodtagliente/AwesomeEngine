@@ -23,4 +23,5 @@ public:
 	int min{ 0 };
 	int max{ 100 };
 	int value{ 100 };
+	bool destroyOnDeath{ false };
 };
