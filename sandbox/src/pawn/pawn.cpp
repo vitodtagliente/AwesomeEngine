@@ -5,6 +5,8 @@
 
 void Pawn::move(const math::vec3& direction)
 {
+	if (direction == math::vec3::zero) return;
+
 	const auto delta = direction * speed;
 	if (m_body)
 	{
