@@ -55,8 +55,8 @@ void SpriteRenderer::deserialize(const json::value& value)
 	::deserialize(value["sprite"], spriteId);
 	sprite = AssetLibrary::instance().find<SpriteAsset>(spriteId);
 	::deserialize(value["color"], color);
-	flipX = value["flipX"].as_bool();
-	flipY = value["flipY"].as_bool();
+	flipX = value.safeAt("flipX").as_bool(false);
+	flipY = value.safeAt("flipY").as_bool(false);
 }
 
 void SpriteRenderer::inspect()

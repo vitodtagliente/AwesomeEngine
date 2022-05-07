@@ -15,13 +15,19 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
+	inline int get() const { return m_value; }
 	void set(int v);
-	inline bool isAlive() const { return value > 0; }
+	inline bool isAlive() const { return m_value > 0; }
+
+	Health& operator+= (int value);
+	Health& operator-= (int value);
 
 	REFLECT()
 
 	int min{ 0 };
 	int max{ 100 };
-	int value{ 100 };
-	bool destroyOnDeath{ false };
+
+private:
+	int m_value{ 100 };
+	bool m_destroyOnDeath{ false };
 };
