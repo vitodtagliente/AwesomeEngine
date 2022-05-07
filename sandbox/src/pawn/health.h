@@ -19,6 +19,8 @@ public:
 	void set(int v);
 	inline bool isAlive() const { return m_value > 0; }
 
+	int getPercentage() const;
+
 	Health& operator+= (int value);
 	Health& operator-= (int value);
 

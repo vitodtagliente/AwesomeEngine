@@ -48,7 +48,12 @@ void Health::set(int value)
 	}
 }
 
-Health& Health::operator+=(int value)
+int Health::getPercentage() const
+{
+	return 100 / max * m_value;
+}
+
+Health& Health::operator+=(const int value)
 {
 	set(m_value + value);
 	return *this;
