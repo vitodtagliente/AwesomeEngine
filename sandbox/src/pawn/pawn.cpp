@@ -11,13 +11,18 @@ void Pawn::move(const math::vec3& direction)
 		m_body->move(direction * speed);
 	}
 	m_animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
+	if (direction.x != 0.0f)
+	{
+		m_renderer->flipX = direction.x < 0.f;
+	}
 	m_direction = direction;
 }
 
 void Pawn::init()
 {
-	m_body = getOwner()->findComponent<Body2d>();
 	m_animator = getOwner()->findComponent<SpriteAnimator>();
+	m_body = getOwner()->findComponent<Body2d>();
+	m_renderer = getOwner()->findComponent<SpriteRenderer>();
 }
 
 void Pawn::inspect()
