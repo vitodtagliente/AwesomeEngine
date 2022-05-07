@@ -30,10 +30,10 @@ json::value Health::serialize() const
 void Health::deserialize(const json::value& data)
 {
 	Component::deserialize(data);
-	min = data["min"].as_number().as_int();
-	max = data["max"].as_number().as_int();
-	value = data["value"].as_number().as_int();
-	destroyOnDeath = data["destroyOnDeath"].as_bool();
+	min = data.safeAt("min").as_number(0).as_int();
+	max = data.safeAt("max").as_number(10).as_int();
+	value = data.safeAt("value").as_number(10).as_int();
+	destroyOnDeath = data.safeAt("destroyOnDeath").as_bool(false);
 }
 
 void Health::set(int v)
