@@ -11,7 +11,7 @@ public:
 
 	virtual void init() override;
 
-	void inspect() override;
+	virtual void inspect() override;
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 

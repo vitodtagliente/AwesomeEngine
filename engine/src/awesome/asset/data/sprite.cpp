@@ -35,7 +35,7 @@ Sprite::~Sprite()
 {
 }
 
-Sprite Sprite::load(const std::filesystem::path& filename)
+Sprite Sprite::load(const std::filesystem::path& path)
 {
 	static const auto read = [](const std::filesystem::path& filename) -> std::string
 	{
@@ -46,27 +46,22 @@ Sprite Sprite::load(const std::filesystem::path& filename)
 	};
 
 	Sprite sprite;
-	json::value data = json::Deserializer::parse(read(filename));
-	if (data.contains("image"))
-	{
-		const uuid id(data["image"].as_string());
-		sprite.image = AssetLibrary::instance().find<ImageAsset>(id);
-	}
-	if (data.contains("rect"))
-	{
-		deserialize(data["rect"], sprite.rect);
-	}
+	json::value data = json::Deserializer::parse(read(path));
+
+	const uuid id(data.safeAt("image").as_string(""));
+	sprite.image = AssetLibrary::instance().find<ImageAsset>(id);
+	deserialize(data.safeAt("rect"), sprite.rect);	
 	return sprite;
 }
 
-void Sprite::save(const std::filesystem::path& filename)
+void Sprite::save(const std::filesystem::path& path)
 {
 	json::value data = json::object({
 		{"image", image ? static_cast<std::string>(image->descriptor.id) : ""},
 		{"rect", serialize(rect)}
 		});
 
-	Archive ar(filename, Archive::Mode::Write);
+	Archive ar(path, Archive::Mode::Write);
 	ar << json::Serializer::to_string(data);
 }
 

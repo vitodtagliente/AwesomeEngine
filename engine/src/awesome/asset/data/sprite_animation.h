@@ -33,8 +33,8 @@ struct SpriteAnimation final
 	SpriteAnimation(const std::vector<Frame>& frames);
 	SpriteAnimation(const std::vector<Frame>& frames, int startingFrame);
 
-	static SpriteAnimation load(const std::filesystem::path& filename);
-	void save(const std::filesystem::path& filename);
+	static SpriteAnimation load(const std::filesystem::path& path);
+	void save(const std::filesystem::path& path);
 
 	SpriteAnimation& operator= (const SpriteAnimation& other);
 	bool operator== (const SpriteAnimation& other) const;

@@ -22,7 +22,7 @@ SpriteAnimation::SpriteAnimation(const std::vector<Frame>& frames, const int sta
 {
 }
 
-SpriteAnimation SpriteAnimation::load(const std::filesystem::path& filename)
+SpriteAnimation SpriteAnimation::load(const std::filesystem::path& path)
 {
 	static const auto read = [](const std::filesystem::path& filename) -> std::string
 	{
@@ -33,33 +33,24 @@ SpriteAnimation SpriteAnimation::load(const std::filesystem::path& filename)
 	};
 
 	SpriteAnimation animation;
-	json::value data = json::Deserializer::parse(read(filename));
-	if (data.contains("startingFrame"))
-	{
-		animation.startingFrame = static_cast<unsigned int>(data["startingFrame"].as_number().as_int());
-	}
+	json::value data = json::Deserializer::parse(read(path));
+	animation.startingFrame = static_cast<unsigned int>(data.safeAt("startingFrame").as_number(0).as_int());
 	if (data.contains("frames"))
 	{
 		const json::value::array_t& jframes = data["frames"].as_array();
 		for (const json::value& jframe : jframes)
 		{
-			Frame frame;
-			if (jframe.contains("sprite"))
-			{
-				const uuid id(jframe["sprite"].as_string());
-				frame.sprite = AssetLibrary::instance().find<SpriteAsset>(id);
-			}
-			if (jframe.contains("duration"))
-			{
-				frame.duration = jframe["duration"].as_number().as_double();
-			}
+			Frame frame;			
+			const uuid id(jframe.safeAt("sprite").as_string(""));
+			frame.sprite = AssetLibrary::instance().find<SpriteAsset>(id);
+			frame.duration = jframe.safeAt("duration").as_number(0.0).as_double();
 			animation.frames.push_back(frame);
 		}
 	}
 	return animation;
 }
 
-void SpriteAnimation::save(const std::filesystem::path& filename)
+void SpriteAnimation::save(const std::filesystem::path& path)
 {
 	json::value list = json::array();
 	for (const Frame& frame : frames)
@@ -75,7 +66,7 @@ void SpriteAnimation::save(const std::filesystem::path& filename)
 			{"frames", list}
 		});
 
-	Archive ar(filename, Archive::Mode::Write);
+	Archive ar(path, Archive::Mode::Write);
 	ar << json::Serializer::to_string(data);
 }
 

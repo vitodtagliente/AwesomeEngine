@@ -12,8 +12,8 @@ struct Sprite final
 	Sprite(const Sprite& other);
 	~Sprite();
 
-	static Sprite load(const std::filesystem::path& filename);
-	void save(const std::filesystem::path& filename);
+	static Sprite load(const std::filesystem::path& path);
+	void save(const std::filesystem::path& path);
 
 	Sprite& operator= (const Sprite& other);
 	bool operator== (const Sprite& other) const;
