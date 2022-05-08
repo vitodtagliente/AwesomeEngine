@@ -10,7 +10,12 @@ void Pawn::move(const math::vec3& direction)
 	{
 		m_body->move(direction * speed);
 	}
-	m_animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
+	
+	if (m_animator)
+	{
+		m_animator->play(delta != math::vec3::zero ? "walk" : "idle", true);
+	}
+
 	if (direction.x != 0.0f)
 	{
 		m_renderer->flipX = direction.x < 0.f;
