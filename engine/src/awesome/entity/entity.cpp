@@ -14,6 +14,8 @@ void Entity::prepareToSpawn(World* const world)
 			component->init();
 		}
 	}
+
+	m_state = State::Alive;
 }
 
 void Entity::prepareToDestroy()
@@ -29,6 +31,8 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 	m_children.clear();
+
+	m_state = State::PendingDestroy;
 }
 
 void Entity::setParent(Entity* const entity)

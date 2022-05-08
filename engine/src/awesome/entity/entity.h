@@ -23,6 +23,14 @@ namespace graphics
 class Entity : public ISerializable
 {
 public:
+
+	enum class State
+	{
+		PendingSpawn,
+		Alive,
+		PendingDestroy
+	};
+
 	Entity() = default;
 	Entity(const Entity& other) = delete;
 	~Entity() = default;
@@ -32,6 +40,7 @@ public:
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getParent() const { return m_parent; }
 	inline const uuid& getPrefab() const { return m_prefab; }
+	inline State getState() const { return m_state; }
 	inline World* const getWorld() const { return m_world; }
 	inline bool isSpawned() const { return m_world != nullptr; }
 
@@ -117,5 +126,6 @@ private:
 	uuid m_id;
 	Entity* m_parent{ nullptr };
 	uuid m_prefab{ uuid::Invalid };
+	State m_state{ State::PendingSpawn };
 	World* m_world{ nullptr };
 };
