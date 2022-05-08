@@ -19,8 +19,10 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
+#include "pawn/bullet.h"
 #include "pawn/combat_controller.h"
 #include "pawn/health.h"
+#include "pawn/lifetime.h"
 #include "pawn/pawn.h"
 #include "pawn/pawn_controller.h"
 
@@ -59,8 +61,10 @@ REFLECT_COMPONENT(Rotator)
 
 void Game::startup()
 {
+	TypeFactory::load<Bullet>();
 	TypeFactory::load<CombatController>();
 	TypeFactory::load<Health>();
+	TypeFactory::load<Lifetime>();
 	TypeFactory::load<Pawn>();
 	TypeFactory::load<PawnController>();
 	TypeFactory::load<Rotator>();

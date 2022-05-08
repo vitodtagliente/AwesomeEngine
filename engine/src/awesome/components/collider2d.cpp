@@ -15,8 +15,10 @@ void Collider2d::render(graphics::Renderer* const renderer)
 	}
 }
 
-bool Collider2d::collide(Collider2d& other) const
+bool Collider2d::collide(const Collider2d& other) const
 {
+	bool collision = false;
+
 	if (m_type == other.m_type)
 	{
 		const math::vec3 position = getOwner()->transform.position;
@@ -27,14 +29,14 @@ bool Collider2d::collide(Collider2d& other) const
 			const auto size1 = m_rectSize / 2;
 			const auto size2 = other.m_rectSize / 2;
 
-			return position.x + size1.x >= otherPosition.x - size2.x
+			collision = position.x + size1.x >= otherPosition.x - size2.x
 				&& position.x - size1.x <= otherPosition.x + size2.x
 				&& position.y + size1.y >= otherPosition.y - size2.y
 				&& position.y - size1.y <= otherPosition.y + size2.y;
 		}
 		else // circle
 		{
-			return position.distance(otherPosition) <= m_circleSize + other.m_circleSize;
+			collision = position.distance(otherPosition) <= m_circleSize + other.m_circleSize;
 		}
 	}
 	else
@@ -66,8 +68,27 @@ bool Collider2d::collide(Collider2d& other) const
 		else if (circlePosition.y <= rectPosition.y - rectSize.y) test.y = rectPosition.y - rectSize.y;
 
 		const auto distance = circlePosition.distance(test);
-		return distance <= circleSize;
+		collision = distance <= circleSize;
 	}
+
+	if (collision)
+	{
+		if (!isTrigger && !other.isTrigger)
+		{
+			return true;
+		}
+
+		if (isTrigger)
+		{
+			onTrigger(other);
+		}
+		if (other.isTrigger)
+		{
+			other.onTrigger(*this);
+		}
+		return false;
+	}
+	return false;
 }
 
 json::value Collider2d::serialize() const
@@ -76,15 +97,17 @@ json::value Collider2d::serialize() const
 	data["type"] = enumToString(m_type);
 	data["rectSize"] = ::serialize(m_rectSize);
 	data["circleSize"] = m_circleSize;
+	data["isTrigger"] = isTrigger;
 	return data;
 }
 
 void Collider2d::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
-	stringToEnum(value["type"].as_string(), m_type);
-	::deserialize(value["rectSize"], m_rectSize);
-	m_circleSize = value["circleSize"].as_number().as_float();
+	stringToEnum(value.safeAt("type").as_string(""), m_type);
+	::deserialize(value.safeAt("rectSize"), m_rectSize);
+	m_circleSize = value.safeAt("circleSize").as_number(1.f).as_float();
+	isTrigger = value.safeAt("isTrigger").as_bool(false);
 }
 
 void Collider2d::inspect()
@@ -101,6 +124,7 @@ void Collider2d::inspect()
 		break;
 	default: break;
 	}
+	editor::Layout::input("Is Trigger", isTrigger);
 }
 
 REFLECT_COMPONENT(Collider2d)

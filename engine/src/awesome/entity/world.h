@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+#include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/scene_asset.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
@@ -41,6 +42,9 @@ public:
 	Entity* const spawn();
 	Entity* const spawn(const vec3& position);
 	Entity* const spawn(const vec3& position, const quaternion& quaternion);
+	Entity* const spawn(const PrefabAssetPtr& prefab);
+	Entity* const spawn(const PrefabAssetPtr& prefab, const vec3& position);
+	Entity* const spawn(const PrefabAssetPtr& prefab, const vec3& position, const quaternion& quaternion);
 
 	void destroy(Entity* const entity);
 	void destroy(const uuid& id);

@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/transform.h>
@@ -36,6 +37,7 @@ public:
 	REFLECT()
 
 private:
+	PrefabAssetPtr m_bulletPrefab;
 	SpriteAssetPtr m_crosshair;
 	float m_crosshairRadius{ 1.0f };
 	math::transform m_crosshairTransform;

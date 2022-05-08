@@ -23,5 +23,5 @@ public:
 	REFLECT()
 
 private:
-	class Collider2d* m_collider;
+	class Collider2d* m_collider{ nullptr };
 };

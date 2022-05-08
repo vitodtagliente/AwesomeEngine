@@ -1,10 +1,14 @@
 #include "combat_controller.h"
 
+#include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture_library.h>
+
+#include "bullet.h"
 
 void CombatController::init()
 {
@@ -30,7 +34,7 @@ void CombatController::render(graphics::Renderer* const renderer)
 	}
 }
 
-void CombatController::update(const double deltaTime)
+void CombatController::update(const double /*deltaTime*/)
 {
 	const math::vec3 position = getOwner()->transform.position;
 	const math::vec3 direction = m_pawn->getDirection();
@@ -43,12 +47,24 @@ void CombatController::update(const double deltaTime)
 	);
 
 	m_crosshairTransform.update();
+
+	Input& input = Input::instance();
+	if (input.isKeyPressed(KeyCode::Space) && m_bulletPrefab && m_bulletPrefab->data.has_value())
+	{
+		Entity* const entity = World::instance().spawn(m_bulletPrefab, m_crosshairTransform.position);
+		Bullet* const bullet = entity->findComponent<Bullet>();
+		if (bullet)
+		{
+			bullet->shoot(direction);
+		}
+	}
 }
 
 void CombatController::inspect()
 {
 	Component::inspect();
 	editor::Layout::input("Type", m_type);
+	editor::Layout::input("Bullet Prefab", m_bulletPrefab);
 	editor::Layout::input("Crosshair", m_crosshair);
 	editor::Layout::input("Crosshair Radius", m_crosshairRadius);
 }
@@ -57,6 +73,7 @@ json::value CombatController::serialize() const
 {
 	json::value data = Component::serialize();
 	data["type"] = enumToString(m_type);
+	data["bulletPrefab"] = m_bulletPrefab ? ::serialize(m_bulletPrefab->descriptor.id) : "";
 	data["crosshair"] = m_crosshair ? ::serialize(m_crosshair->descriptor.id) : "";
 	data["crosshairRadius"] = m_crosshairRadius;
 	return data;
@@ -65,13 +82,17 @@ json::value CombatController::serialize() const
 void CombatController::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
-	stringToEnum(value["type"].as_string(), m_type);
+	stringToEnum(value.safeAt("type").as_string(""), m_type);
+
+	uuid bulletId = uuid::Invalid;
+	::deserialize(value.safeAt("bulletPrefab"), bulletId);
+	m_bulletPrefab = AssetLibrary::instance().find<PrefabAsset>(bulletId);
 
 	uuid crosshairId = uuid::Invalid;
-	::deserialize(value["crosshair"], crosshairId);
+	::deserialize(value.safeAt("crosshair"), crosshairId);
 	m_crosshair = AssetLibrary::instance().find<SpriteAsset>(crosshairId);
 
-	m_crosshairRadius = value["crosshairRadius"].as_number().as_float();
+	m_crosshairRadius = value.safeAt("crosshairRadius").as_number(1.f).as_float();
 }
 
 REFLECT_COMPONENT(CombatController)

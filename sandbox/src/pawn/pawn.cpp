@@ -18,6 +18,7 @@ void Pawn::move(const math::vec3& direction)
 	if (direction != math::vec3::zero)
 	{
 		m_direction = direction;
+		m_direction.normalize();
 	}
 }
 

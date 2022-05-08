@@ -17,5 +17,5 @@ public:
 	REFLECT()
 
 private:
-	Pawn* m_pawn;
+	Pawn* m_pawn{ nullptr };
 };

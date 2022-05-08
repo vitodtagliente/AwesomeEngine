@@ -28,8 +28,8 @@ public:
 	REFLECT()
 
 private:
-	SpriteAnimator* m_animator;
-	Body2d* m_body;
+	SpriteAnimator* m_animator{ nullptr };
+	Body2d* m_body{ nullptr };
 	math::vec3 m_direction{ math::vec3::right };
-	SpriteRenderer* m_renderer;
+	SpriteRenderer* m_renderer{ nullptr };
 };
