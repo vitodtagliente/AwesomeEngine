@@ -6,6 +6,7 @@
 
 void PawnController::init()
 {
+	m_combat = getOwner()->findComponent<CombatController>();
 	m_pawn = getOwner()->findComponent<Pawn>();
 }
 
@@ -19,7 +20,12 @@ void PawnController::update(const double deltaTime)
 
 	if (input.isKeyPressed(KeyCode::Space))
 	{
-		m_pawn->dash(direction, deltaTime);
+		m_pawn->dash(deltaTime);
+	}
+
+	if (m_combat && input.isKeyPressed(KeyCode::MouseLeftButton))
+	{
+		m_combat->attack();
 	}
 }
 

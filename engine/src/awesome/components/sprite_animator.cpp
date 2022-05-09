@@ -100,6 +100,15 @@ void SpriteAnimator::stop()
 	m_state.frameIndex = 0;
 }
 
+std::string SpriteAnimator::getPlayingAnimation() const
+{
+	if (m_isPlaying)
+	{
+		return m_state.name;
+	}
+	return "";
+}
+
 json::value SpriteAnimator::serialize() const
 {
 	json::value data = Component::serialize();

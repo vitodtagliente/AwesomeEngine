@@ -16,7 +16,7 @@ public:
 	inline const math::vec3& getDirection() const { return m_direction; }
 
 	void move(const math::vec3& direction, double deltaTime);
-	void dash(const math::vec3& direction, double deltaTime);
+	void dash(double deltaTime);
 
 	virtual void init() override;
 

@@ -8,7 +8,7 @@
 
 #include "pawn/pawn.h"
 
-REFLECT_ENUM(CombatType, 
+REFLECT_ENUM(CombatType,
 	Meele,
 	Ranged
 )
@@ -30,6 +30,8 @@ public:
 	virtual void render(graphics::Renderer* const renderer) override;
 	virtual void update(double deltaTime) override;
 
+	void attack();
+
 	virtual void inspect() override;
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
@@ -37,10 +39,10 @@ public:
 	REFLECT()
 
 private:
-	PrefabAssetPtr m_bulletPrefab;
-	SpriteAssetPtr m_crosshair;
+	PrefabAssetPtr m_bulletPrefab{ nullptr };
+	SpriteAssetPtr m_crosshair{ nullptr };
 	float m_crosshairRadius{ 1.0f };
 	math::transform m_crosshairTransform;
-	Pawn* m_pawn;
+	Pawn* m_pawn{ nullptr };
 	Type m_type{ Type::Meele };
 };

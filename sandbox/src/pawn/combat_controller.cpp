@@ -2,6 +2,7 @@
 
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
+#include <awesome/components/sprite_animator.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
@@ -47,16 +48,23 @@ void CombatController::update(const double /*deltaTime*/)
 	);
 
 	m_crosshairTransform.update();
+}
 
-	Input& input = Input::instance();
-	if (input.isKeyPressed(KeyCode::MouseLeftButton) && m_bulletPrefab && m_bulletPrefab->data.has_value())
+void CombatController::attack()
+{
+	if (m_type == Type::Ranged)
 	{
 		Entity* const entity = World::instance().spawn(m_bulletPrefab, m_crosshairTransform.position);
 		Bullet* const bullet = entity->findComponent<Bullet>();
 		if (bullet)
 		{
-			bullet->shoot(direction);
+			bullet->shoot(m_pawn->getDirection());
 		}
+	}
+	else
+	{
+		SpriteAnimator* const animator = getOwner()->findComponent<SpriteAnimator>();
+		if (animator) animator->play("attack");
 	}
 }
 

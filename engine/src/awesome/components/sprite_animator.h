@@ -24,6 +24,7 @@ public:
 	void stop();
 
 	inline bool isPlaying() const { return m_isPlaying; }
+	std::string getPlayingAnimation() const;
 
 	std::map<std::string, SpriteAnimationAssetPtr> animations;
 	bool autoplay;

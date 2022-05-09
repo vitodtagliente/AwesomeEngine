@@ -4,6 +4,7 @@
 #include <awesome/entity/component.h>
 
 #include "pawn.h"
+#include "combat_controller.h"
 
 class PawnController : public Component
 {
@@ -17,5 +18,6 @@ public:
 	REFLECT()
 
 private:
+	CombatController* m_combat{ nullptr };
 	Pawn* m_pawn{ nullptr };
 };

@@ -5,6 +5,13 @@
 
 void Pawn::move(const math::vec3& direction, const double deltaTime)
 {
+	if (m_animator
+		&& m_animator->isPlaying()
+		&& (m_animator->getPlayingAnimation() != "idle" && m_animator->getPlayingAnimation() != "walk"))
+	{
+		return;
+	}
+
 	if (direction != math::vec3::zero)
 	{
 		m_direction = direction;
@@ -15,7 +22,7 @@ void Pawn::move(const math::vec3& direction, const double deltaTime)
 	if (m_animator) m_animator->play(direction != math::vec3::zero ? "walk" : "idle", true);
 }
 
-void Pawn::dash(const math::vec3& direction, const double deltaTime)
+void Pawn::dash(const double deltaTime)
 {
 	if (m_body == nullptr) return;
 
