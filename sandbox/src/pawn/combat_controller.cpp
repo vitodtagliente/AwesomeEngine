@@ -49,7 +49,7 @@ void CombatController::update(const double /*deltaTime*/)
 	m_crosshairTransform.update();
 
 	Input& input = Input::instance();
-	if (input.isKeyPressed(KeyCode::Space) && m_bulletPrefab && m_bulletPrefab->data.has_value())
+	if (input.isKeyPressed(KeyCode::MouseLeftButton) && m_bulletPrefab && m_bulletPrefab->data.has_value())
 	{
 		Entity* const entity = World::instance().spawn(m_bulletPrefab, m_crosshairTransform.position);
 		Bullet* const bullet = entity->findComponent<Bullet>();
