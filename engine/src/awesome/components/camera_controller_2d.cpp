@@ -5,7 +5,6 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
-#include <awesome/graphics/renderer.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
@@ -47,11 +46,6 @@ void CameraController2d::update(double deltaTime)
 		math::vec3& scale = getOwner()->transform.scale;
 		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * -wheelPosition.y, 0.1f, 3.0f);
 	}
-}
-
-void CameraController2d::render(graphics::Renderer* const renderer)
-{
-	renderer->pushCamera(getOwner()->transform.matrix());
 }
 
 json::value CameraController2d::serialize() const

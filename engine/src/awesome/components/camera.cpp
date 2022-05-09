@@ -1,11 +1,13 @@
 #include "camera.h"
 
 #include <awesome/editor/layout.h>
+#include <awesome/entity/entity.h>
 #include <awesome/graphics/renderer.h>
 
 void Camera::render(graphics::Renderer* const renderer)
 {
 	renderer->backgroundColor = color;
+	renderer->pushCamera(getOwner()->transform.matrix());
 }
 
 json::value Camera::serialize() const

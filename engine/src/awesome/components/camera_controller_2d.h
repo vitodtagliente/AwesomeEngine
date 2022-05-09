@@ -7,18 +7,12 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
-namespace graphics
-{
-	class Renderer;
-}
-
 class CameraController2d : public Component
 {
 public:
 	CameraController2d();
 
 	void update(double deltaTime) override;
-	void render(graphics::Renderer* const renderer) override;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;

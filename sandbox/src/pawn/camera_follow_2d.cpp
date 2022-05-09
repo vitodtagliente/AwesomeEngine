@@ -17,11 +17,11 @@ void CameraFollow2d::update(const double deltaTime)
 	if (m_target)
 	{
 		math::vec3& position = getOwner()->transform.position;
-		const math::vec3& desiredPosition = m_target->transform.position;
+		const math::vec3& desiredPosition = m_target->transform.position / 32;
 
 		position = math::vec3(
-			math::lerp(position.x, desiredPosition.x, m_speed * static_cast<float>(deltaTime)),
-			math::lerp(position.y, desiredPosition.y, m_speed * static_cast<float>(deltaTime)),
+			math::lerp(position.x, -desiredPosition.x, m_speed * static_cast<float>(deltaTime)),
+			math::lerp(position.y, -desiredPosition.y, m_speed * static_cast<float>(deltaTime)),
 			desiredPosition.z
 		);
 	}
