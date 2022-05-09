@@ -16,6 +16,13 @@ void World::update(const double deltaTime)
 
 void World::render(graphics::Renderer* const renderer)
 {
+	// sort the entities by z
+	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
+		{
+			return a->transform.position.z < b->transform.position.z;
+		}
+	);
+
 	for (const auto& entity : m_entities)
 	{
 		entity->render(renderer);
