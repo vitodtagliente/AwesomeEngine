@@ -20,6 +20,7 @@
 #include <awesome/entity/world.h>
 
 #include "pawn/bullet.h"
+#include "pawn/camera_follow_2d.h"
 #include "pawn/combat_controller.h"
 #include "pawn/health.h"
 #include "pawn/lifetime.h"
@@ -63,6 +64,7 @@ REFLECT_COMPONENT(Rotator)
 void Game::startup()
 {
 	TypeFactory::load<Bullet>();
+	TypeFactory::load<CameraFollow2d>();
 	TypeFactory::load<CombatController>();
 	TypeFactory::load<Health>();
 	TypeFactory::load<Lifetime>();
