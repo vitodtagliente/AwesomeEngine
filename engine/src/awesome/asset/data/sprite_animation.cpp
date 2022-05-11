@@ -43,7 +43,7 @@ SpriteAnimation SpriteAnimation::load(const std::filesystem::path& path)
 			Frame frame;			
 			const uuid id(jframe.safeAt("sprite").as_string(""));
 			frame.sprite = AssetLibrary::instance().find<SpriteAsset>(id);
-			frame.duration = jframe.safeAt("duration").as_number(0.0).as_double();
+			frame.duration = jframe.safeAt("duration").as_number(.1f).as_double();
 			animation.frames.push_back(frame);
 		}
 	}

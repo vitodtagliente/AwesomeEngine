@@ -19,6 +19,7 @@
 #include <awesome/core/reflection.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
+#include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
@@ -106,21 +107,17 @@ namespace editor
 		template <Asset::Type T, typename D>
 		static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 		{
-			if (Layout::beginCombo(name.c_str(), value ? value->descriptor.path.stem().string() : ""))
-			{
-				const auto descriptors = AssetLibrary::instance().list(T);
-				for (const Asset::Descriptor& descriptor : descriptors)
-				{
-					if (Layout::selectable(descriptor.path.stem().string(), value ? value->descriptor == descriptor : false))
-					{
-						value = AssetLibrary::instance().find<BaseAsset<T, D>>(descriptor.id);
-						endCombo();
-						return;
-					}
+			static AssetBrowserDialog s_assetBrowserDialog;
 
-				}
-				endCombo();
+			if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
+			{
+				s_assetBrowserDialog.open(T, [&value](const AssetPtr& asset) -> void
+					{
+						value = std::dynamic_pointer_cast<BaseAsset<T, D>>(asset);
+					}
+				);
 			}
+			s_assetBrowserDialog.render();
 		}
 		// std::vector<T> support
 		template <typename T>
