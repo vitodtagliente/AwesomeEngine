@@ -75,6 +75,11 @@ float Input::getAxis(const keycode_t key1, const keycode_t key2) const
 
 void Input::setKeyState(const keycode_t key, const KeyState state)
 {
+	if (preventMouseEvents && (key == KeyCode::MouseLeftButton || key == KeyCode::MouseRightButton || key == KeyCode::MouseWheelButton))
+	{
+		return;
+	}
+
 	const auto it = m_keysState.find(key);
 	if (it != m_keysState.end())
 	{
