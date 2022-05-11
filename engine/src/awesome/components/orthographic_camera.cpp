@@ -7,8 +7,10 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/math/matrix4.h>
 
-void OrthographicCamera::update(const double)
+void OrthographicCamera::update(const double deltaTime)
 {
+	Camera::update(deltaTime);
+
 	Canvas& canvas = Canvas::instance();
 	graphics::Context* const context = &graphics::Context::instance();
 	if (context)
@@ -21,7 +23,7 @@ void OrthographicCamera::update(const double)
 		// pixel perfect
 		const float w = pixelPerfect ? static_cast<float>(width) / 2 / pixelsPerUnit : static_cast<float>(width) / 2;
 		const float h = pixelPerfect ? static_cast<float>(height) / 2 / pixelsPerUnit : static_cast<float>(height) / 2;
-		context->camera = math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
+		context->projection = math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
 	}
 }
 

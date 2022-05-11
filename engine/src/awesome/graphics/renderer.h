@@ -34,7 +34,10 @@ namespace graphics
 		void flush();
 		void clear();
 
-		void pushCamera(const math::mat4& camera);
+		void setProjection(const math::mat4& matrix);
+		void setView(const math::mat4& matrix);
+		const math::mat4& getViewProjectionMatrix() const;
+
 		void drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect = {});
 
 		Color backgroundColor;

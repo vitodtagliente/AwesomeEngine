@@ -14,7 +14,9 @@
 namespace graphics
 {
 	Context::Context()
-		: camera(math::mat4::identity)
+		: projection(math::mat4::identity)
+		, view(math::mat4::identity)
+		, viewProjectionMatrix(math::mat4::identity)
 		, m_shaderLibrary()
 		, m_textureLibrary()
 		, m_gizmosRenderingData()
@@ -133,7 +135,7 @@ namespace graphics
 		vertexBuffer->fillData((void*)&vertices[0], vertices.size() * sizeof(float));
 
 		m_gizmosProgram->bind();
-		m_gizmosProgram->set("u_matrix", camera);
+		m_gizmosProgram->set("u_matrix", viewProjectionMatrix);
 
 		const int primitiveType = GL_LINES;
 		const int offset = 0;
@@ -179,7 +181,7 @@ namespace graphics
 		m_spritebatchProgram->bind();
 		texture->bind(0);
 		m_spritebatchProgram->set("u_texture", 0);
-		m_spritebatchProgram->set("u_matrix", camera);
+		m_spritebatchProgram->set("u_matrix", viewProjectionMatrix);
 
 		const int primitiveType = GL_TRIANGLES;
 		const int offset = 0;

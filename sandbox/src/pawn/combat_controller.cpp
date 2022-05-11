@@ -2,6 +2,7 @@
 
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
+#include <awesome/components/camera.h>
 #include <awesome/components/sprite_animator.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
@@ -38,7 +39,15 @@ void CombatController::render(graphics::Renderer* const renderer)
 void CombatController::update(const double /*deltaTime*/)
 {
 	const math::vec3 position = getOwner()->transform.position;
-	const math::vec3 direction = m_pawn->getDirection();
+	math::vec3 direction = m_pawn->getDirection();
+
+	Input& input = Input::instance();
+	Camera* const camera = Camera::main();
+	if (camera && input.isMousePositionValid())
+	{
+		const math::vec3& worldPos = camera->screenToWorldCoords(input.getMousePosition());
+		direction = (worldPos - position).normalize();
+	}
 
 	auto angle = std::atan2(direction.y, direction.x);
 	m_crosshairTransform.position = position + math::vec3(

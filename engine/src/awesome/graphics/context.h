@@ -31,7 +31,9 @@ namespace graphics
 
 		void test();
 
-		math::mat4 camera;
+		math::mat4 projection;
+		math::mat4 view;
+		math::mat4 viewProjectionMatrix;
 
 	private:
 

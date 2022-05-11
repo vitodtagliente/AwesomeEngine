@@ -2,12 +2,33 @@
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
 
-void Camera::render(graphics::Renderer* const renderer)
+void Camera::update(double)
 {
-	renderer->backgroundColor = color;
-	renderer->pushCamera(getOwner()->transform.matrix());
+	auto& renderer = graphics::Renderer::instance();
+	renderer.backgroundColor = color;
+	renderer.setView(getOwner()->transform.matrix());
+}
+
+math::vec3 Camera::screenToWorldCoords(const math::vec2& point)
+{
+	auto& renderer = graphics::Renderer::instance();
+	bool isInvertible = false;
+	const auto r = renderer.getViewProjectionMatrix().inverse(isInvertible) * math::vec4(point.x, point.y, 0.f, 0.f);
+	return math::vec3(r.x, r.y, r.z);
+}
+
+Camera* const Camera::main()
+{
+	World& world = World::instance();
+	for (const auto& entity : world.getEntities())
+	{
+		Camera* const camera = entity->findComponent<Camera>();
+		if (camera) return camera;
+	}
+	return nullptr;
 }
 
 json::value Camera::serialize() const

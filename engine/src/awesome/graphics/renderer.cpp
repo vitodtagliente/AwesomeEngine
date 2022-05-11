@@ -20,6 +20,7 @@ namespace graphics
 	void Renderer::begin()
 	{
 		m_context.clear(backgroundColor);
+		m_context.viewProjectionMatrix = m_context.projection * m_context.view;
 		m_stats = {};
 	}
 
@@ -43,9 +44,19 @@ namespace graphics
 		m_stats = {};
 	}
 
-	void Renderer::pushCamera(const math::mat4& camera)
+	void Renderer::setProjection(const math::mat4& matrix)
 	{
-		m_context.camera = m_context.camera * camera;
+		m_context.projection = matrix;
+	}
+
+	void Renderer::setView(const math::mat4& matrix)
+	{
+		m_context.view = matrix;
+	}
+
+	const math::mat4& Renderer::getViewProjectionMatrix() const
+	{
+		return m_context.viewProjectionMatrix;
 	}
 
 	void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
