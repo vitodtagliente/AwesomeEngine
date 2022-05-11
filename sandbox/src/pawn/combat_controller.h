@@ -43,6 +43,7 @@ private:
 	SpriteAssetPtr m_crosshair{ nullptr };
 	float m_crosshairRadius{ 1.0f };
 	math::transform m_crosshairTransform;
+	math::vec3 m_direction{ math::vec3::right };
 	Pawn* m_pawn{ nullptr };
 	Type m_type{ Type::Meele };
 };

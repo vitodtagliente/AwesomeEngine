@@ -40,23 +40,27 @@ void CombatController::render(graphics::Renderer* const renderer)
 void CombatController::update(const double /*deltaTime*/)
 {
 	const math::vec3 position = getOwner()->transform.position;
-	math::vec3 direction = m_pawn->getDirection();
+	m_direction = m_pawn->getDirection();
 
 	Input& input = Input::instance();
 	Canvas& canvas = Canvas::instance();
 	if (input.isMousePositionValid())
 	{
-		const unsigned int width = canvas.getWidth();
-		const unsigned int height = canvas.getHeight();
+		const float width = static_cast<float>(canvas.getWidth());
+		const float height = static_cast<float>(canvas.getHeight());
 		const math::vec2& mousePosition = input.getMousePosition();
-		direction = math::vec3(mousePosition.x / width / 2, mousePosition.y / height / 2, 0.f);
+		m_direction = math::vec3(
+			2 * (mousePosition.x / width) - 1.0, 
+			2 * (-mousePosition.y / height) + 1.0f, 
+			0.f
+		).normalize();
 	}
 
-	auto angle = std::atan2(direction.y, direction.x);
+	auto angle = std::atan2(m_direction.y, m_direction.x);
 	m_crosshairTransform.position = position + math::vec3(
 		std::cos(angle) * m_crosshairRadius,
 		std::sin(angle) * m_crosshairRadius,
-		0.f
+		1.5f
 	);
 
 	m_crosshairTransform.update();
@@ -70,7 +74,7 @@ void CombatController::attack()
 		Bullet* const bullet = entity->findComponent<Bullet>();
 		if (bullet)
 		{
-			bullet->shoot(m_pawn->getDirection());
+			bullet->shoot(m_direction);
 		}
 	}
 	else

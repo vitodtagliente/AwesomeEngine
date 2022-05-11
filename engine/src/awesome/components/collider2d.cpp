@@ -21,8 +21,9 @@ bool Collider2d::collide(const Collider2d& other) const
 
 	if (m_type == other.m_type)
 	{
-		const math::vec3 position = getOwner()->transform.position;
-		const math::vec3 otherPosition = other.getOwner()->transform.position;
+		math::vec3 position = getOwner()->transform.position;
+		math::vec3 otherPosition = other.getOwner()->transform.position;
+		position.z = otherPosition.z = 0.0f;
 
 		if (m_type == Type::Rect)
 		{
