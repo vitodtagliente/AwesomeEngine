@@ -91,6 +91,7 @@ namespace graphics
 			m_textureProgram = createProgram(ShaderLibrary::names::TextureShader);
 		}
 
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -98,7 +99,7 @@ namespace graphics
 	void Context::clear(const Color& color)
 	{
 		glClearColor(color.red, color.green, color.blue, color.alpha);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Context::viewport(int width, int height)

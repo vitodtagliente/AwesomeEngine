@@ -1,5 +1,6 @@
 #include "combat_controller.h"
 
+#include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/components/camera.h>
@@ -42,11 +43,13 @@ void CombatController::update(const double /*deltaTime*/)
 	math::vec3 direction = m_pawn->getDirection();
 
 	Input& input = Input::instance();
-	Camera* const camera = Camera::main();
-	if (camera && input.isMousePositionValid())
+	Canvas& canvas = Canvas::instance();
+	if (input.isMousePositionValid())
 	{
-		const math::vec3& worldPos = camera->screenToWorldCoords(input.getMousePosition());
-		direction = (worldPos - position).normalize();
+		const unsigned int width = canvas.getWidth();
+		const unsigned int height = canvas.getHeight();
+		const math::vec2& mousePosition = input.getMousePosition();
+		direction = math::vec3(mousePosition.x / width / 2, mousePosition.y / height / 2, 0.f);
 	}
 
 	auto angle = std::atan2(direction.y, direction.x);
