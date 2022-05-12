@@ -111,13 +111,13 @@ namespace editor
 
 			if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
 			{
-				s_assetBrowserDialog.open(T, [&value](const AssetPtr& asset) -> void
+				s_assetBrowserDialog.open(name, T, [&value](const AssetPtr& asset) -> void
 					{
 						value = std::dynamic_pointer_cast<BaseAsset<T, D>>(asset);
 					}
 				);
 			}
-			s_assetBrowserDialog.render();
+			s_assetBrowserDialog.render(name);
 		}
 		// std::vector<T> support
 		template <typename T>

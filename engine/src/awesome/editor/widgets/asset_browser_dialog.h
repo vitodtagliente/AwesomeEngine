@@ -16,15 +16,15 @@ namespace editor
 		inline bool isOpen() const { return m_open; }
 
 		void close();
-		void open(Asset::Type type, const std::function<void(const AssetPtr&)>& handler);
-		void render();
+		void open(const std::string& id, Asset::Type type, const std::function<void(const AssetPtr&)>& handler);
+		void render(const std::string& id);
 
 	private:
 		std::string m_filter;
 		std::function<void(const AssetPtr&)> m_handler;
+		std::string m_id;
 		bool m_open;
 		AssetPtr m_selectedAsset;
-		std::string m_title;
 		Asset::Type m_type;
 	};
 }
