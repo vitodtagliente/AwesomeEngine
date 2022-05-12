@@ -44,11 +44,11 @@ namespace editor
 		ImGui::SetNextWindowSize(ImVec2(400.f, 0.f));
 		if (ImGui::BeginPopupModal("Asset Browser Dialog", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
-			ImGui::BeginChild("Header", ImVec2(0.f, 36.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+			ImGui::BeginChild("Header", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 			Layout::input(TextIcon::search(), m_filter);
 			ImGui::EndChild();
 
-			ImGui::BeginChild("Content", ImVec2(0.f, 240.f));
+			ImGui::BeginChild("Content", ImVec2(0.f, 240.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
 			const auto descriptors = AssetLibrary::instance().list(m_type);
 			for (const Asset::Descriptor& descriptor : descriptors)
 			{
@@ -58,7 +58,8 @@ namespace editor
 					continue;
 				}
 
-				if (ImGui::Selectable(name.c_str(), m_selectedAsset ? m_selectedAsset->descriptor == descriptor : false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
+				const bool isSelected = m_selectedAsset ? m_selectedAsset->descriptor == descriptor : false;
+				if (ImGui::Selectable(name.c_str(), isSelected, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 				{
 					m_selectedAsset = AssetLibrary::instance().find(descriptor.id);
 					if (ImGui::IsMouseDoubleClicked(0))
@@ -75,7 +76,7 @@ namespace editor
 			}
 			ImGui::EndChild();
 
-			ImGui::BeginChild("BottomBar", ImVec2(0.f, 36.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+			ImGui::BeginChild("BottomBar", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 
 			if (Layout::button("Cancel"))
 			{

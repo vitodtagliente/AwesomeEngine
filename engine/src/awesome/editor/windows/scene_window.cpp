@@ -1,5 +1,7 @@
 #include "scene_window.h"
 
+#include <imgui.h>
+
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/layout.h>
@@ -24,6 +26,7 @@ namespace editor
 			processInput(selectedEntity);
 		}
 
+		ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration);
 		if (Layout::button(TextIcon::plus()))
 		{
 			addEntity();
@@ -37,9 +40,11 @@ namespace editor
 		{
 			m_state = NavigationState::Navigating;
 		}
+		ImGui::EndChild();
 
 		Layout::separator();
 
+		ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
 		int i = 0;
 		for (const auto& entity : World::instance().getEntities())
 		{
@@ -64,6 +69,7 @@ namespace editor
 			}
 			++i;
 		}
+		ImGui::EndChild();
 	}
 
 	void SceneWindow::processInput(Entity* const entity)

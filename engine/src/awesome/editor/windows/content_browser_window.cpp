@@ -1,5 +1,7 @@
 #include "content_browser_window.h"
 
+#include <imgui.h>
+
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_filesystem.h>
 #include <awesome/core/string_util.h>
@@ -39,6 +41,7 @@ namespace editor
 	{
 		processInput(m_selectedItem);
 
+		ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration); 
 		if (Layout::button(TextIcon::plus()))
 		{
 			addFolder();
@@ -48,9 +51,11 @@ namespace editor
 
 		const std::string previousFilter = m_filter;
 		Layout::input(TextIcon::search(), m_filter);
+		ImGui::EndChild();
 
 		Layout::separator();
 
+		ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
 		if (m_dir.path != m_root)
 		{
 			if (Layout::selectable("..", false))
@@ -128,6 +133,7 @@ namespace editor
 				}
 			}
 		}
+		ImGui::EndChild();
 
 		for (const auto& item : m_menuItems)
 		{
