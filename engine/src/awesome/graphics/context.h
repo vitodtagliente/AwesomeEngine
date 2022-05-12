@@ -26,8 +26,8 @@ namespace graphics
 		void viewport(int width, int height);
 		void drawLines(const std::vector<std::pair<math::vec3, Color>>& points);
 		void drawLines(const std::vector<float>& vertices);
-		void drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites);
-		void drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops);
+		void drawSprites(Texture* const texture, const std::vector<std::tuple<math::mat4, TextureRect, Color>>& sprites);
+		void drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops, const std::vector<float>& colors);
 
 		void test();
 

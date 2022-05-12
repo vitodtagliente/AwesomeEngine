@@ -6,13 +6,16 @@ namespace graphics
 {
 #define TRANSFORM_COMPONENTS 16
 #define RECT_COMPONENTS 4
+#define COLOR_COMPONENTS 4
 
 	SpriteBatch::Batch::Data::Data(const size_t size)
 		: transforms()
 		, rects()
+		, colors()
 	{
 		transforms.reserve(size * TRANSFORM_COMPONENTS);
 		rects.reserve(size * RECT_COMPONENTS);
+		colors.reserve(size * COLOR_COMPONENTS);
 	}
 
 	SpriteBatch::Batch::Batch(const size_t size)
@@ -24,10 +27,11 @@ namespace graphics
 
 	}
 
-	void SpriteBatch::Batch::batch(const math::mat4& matrix, const TextureRect& rect)
+	void SpriteBatch::Batch::batch(const math::mat4& matrix, const TextureRect& rect, const Color& color)
 	{
 		data.transforms.insert(data.transforms.end(), matrix.data, matrix.data + matrix.length);
 		data.rects.insert(data.rects.end(), { rect.x, rect.y, rect.width, rect.height });
+		data.colors.insert(data.colors.end(), { color.red, color.green, color.blue, color.alpha });
 		++count;
 	}
 
@@ -37,6 +41,7 @@ namespace graphics
 		texture = nullptr;
 		data.transforms.clear();
 		data.rects.clear();
+		data.colors.clear();
 	}
 
 	SpriteBatch::SpriteBatch(const size_t batchSize)
@@ -50,12 +55,12 @@ namespace graphics
 		}
 	}
 
-	void SpriteBatch::batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
+	void SpriteBatch::batch(Texture* const texture, const math::mat4& matrix, const TextureRect& rect, const Color& color)
 	{
 		Batch& batch = findNextBatch(texture);
-		if (!batch.full()) 
+		if (!batch.full())
 		{
-			batch.batch(matrix, rect);
+			batch.batch(matrix, rect, color);
 		}
 	}
 
@@ -63,7 +68,7 @@ namespace graphics
 	{
 		for (auto& batch : m_batches)
 		{
-			context->drawSprites(batch.texture, batch.data.transforms, batch.data.rects);
+			context->drawSprites(batch.texture, batch.data.transforms, batch.data.rects, batch.data.colors);
 			batch.clear();
 		}
 	}

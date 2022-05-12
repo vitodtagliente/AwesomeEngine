@@ -59,9 +59,9 @@ namespace graphics
 		return m_context.viewProjectionMatrix;
 	}
 
-	void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect)
+	void Renderer::drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect, const Color& color)
 	{
-		m_spriteBatch.batch(texture, matrix, rect);
+		m_spriteBatch.batch(texture, matrix, rect, color);
 	}
 
 	Renderer::Stats::Stats()

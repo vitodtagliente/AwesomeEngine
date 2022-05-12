@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include <tuple>
 #include <vdtmath/matrix4.h>
 
 #include <glad/glad.h>
@@ -77,12 +78,16 @@ namespace graphics
 			cropBuffer.layout.push(VertexBufferElement("crop", VertexBufferElement::Type::Float, 4, true, true));
 			cropBuffer.layout.startingIndex = 2;
 
+			VertexBuffer& colorBuffer = *m_spritebatchRenderingData.addVertexBuffer("colorsBuffer", 4 * 2000 * sizeof(float), BufferUsageMode::Stream);
+			colorBuffer.layout.push(VertexBufferElement("color", VertexBufferElement::Type::Float, 4, true, true));
+			colorBuffer.layout.startingIndex = 3;
+
 			VertexBuffer& transformBuffer = *m_spritebatchRenderingData.addVertexBuffer("transformsBuffer", 16 * 2000 * sizeof(float), BufferUsageMode::Stream);
 			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
 			transformBuffer.layout.push(VertexBufferElement("transform", VertexBufferElement::Type::Float, 4, true, true));
-			transformBuffer.layout.startingIndex = 3;
+			transformBuffer.layout.startingIndex = 4;
 
 			m_spritebatchRenderingData.bind();
 		}
@@ -147,27 +152,34 @@ namespace graphics
 		++drawCalls;
 	}
 
-	void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
+	void Context::drawSprites(Texture* const texture, const std::vector<std::tuple<math::mat4, TextureRect, Color>>& sprites)
 	{
 		// fill geometry data
 		std::vector<float> crops;
 		std::vector<float> transforms;
+		std::vector<float> colors;
 		for (auto it = sprites.begin(); it != sprites.end(); ++it)
 		{
-			crops.push_back(it->second.x);
-			crops.push_back(it->second.y);
-			crops.push_back(it->second.width);
-			crops.push_back(it->second.height);
+			const auto& [transform, rect, color] = *it;
+			crops.push_back(rect.x);
+			crops.push_back(rect.y);
+			crops.push_back(rect.width);
+			crops.push_back(rect.height);
 
-			transforms.insert(transforms.end(), it->first.data, it->first.data + it->first.length);
+			transforms.insert(transforms.end(), transform.data, transform.data + transform.length);
+
+			colors.push_back(color.red);
+			colors.push_back(color.green);
+			colors.push_back(color.blue);
+			colors.push_back(color.alpha);
 		}
 
-		drawSprites(texture, transforms, crops);
+		drawSprites(texture, transforms, crops, colors);
 	}
 
-	void Context::drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops)
+	void Context::drawSprites(Texture* const texture, const std::vector<float>& transforms, const std::vector<float>& crops, const std::vector<float>& colors)
 	{
-		if (transforms.empty() || crops.empty()) return;
+		if (transforms.empty() || crops.empty() || colors.empty()) return;
 
 		const size_t instances = transforms.size() / 16;
 		if (instances != crops.size() / 4) return;
@@ -177,6 +189,10 @@ namespace graphics
 		VertexBuffer& cropBuffer = *m_spritebatchRenderingData.findVertexBuffer("cropsBuffer");
 		cropBuffer.bind();
 		cropBuffer.fillData((void*)&crops[0], crops.size() * sizeof(float));
+
+		VertexBuffer& colorBuffer = *m_spritebatchRenderingData.findVertexBuffer("colorsBuffer");
+		colorBuffer.bind();
+		colorBuffer.fillData((void*)&colors[0], colors.size() * sizeof(float));
 
 		VertexBuffer& transformBuffer = *m_spritebatchRenderingData.findVertexBuffer("transformsBuffer");
 		transformBuffer.bind();

@@ -93,13 +93,15 @@ namespace graphics
 			layout(location = 0) in vec4 a_position;
 			layout(location = 1) in vec2 a_texcoord;
 			layout(location = 2) in vec4 a_crop;
-			layout(location = 3) in mat4 a_transform;
+			layout(location = 3) in vec4 a_color;
+			layout(location = 4) in mat4 a_transform;
 
 			uniform mat4 u_matrix;
  
 			// a varying to pass the texture coordinates to the fragment shader
 			out vec2 v_texcoord;
 			out vec4 v_crop;
+			out vec4 v_color;
  
 			void main() {
 				// Multiply the position by the matrix.
@@ -108,6 +110,7 @@ namespace graphics
 				// Pass the texcoord to the fragment shader.
 				v_texcoord = a_texcoord;
 				v_crop = a_crop;
+				v_color = a_color;
 			}
 
 			#shader fragment
@@ -118,6 +121,7 @@ namespace graphics
 			// Passed in from the vertex shader.
 			in vec2 v_texcoord;
 			in vec4 v_crop;
+			in vec4 v_color;
  
 			// The texture.
 			uniform sampler2D u_texture;
@@ -126,8 +130,8 @@ namespace graphics
  
 			void main() {
 				// outColor = texture(u_texture, clamp(v_texcoord * v_crop.zw + v_crop.xy, vec2(0, 0), vec2(1, 1)));
-				outColor = texture(u_texture, v_texcoord * v_crop.zw + v_crop.xy);
-				// outColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+				outColor = texture(u_texture, v_texcoord * v_crop.zw + v_crop.xy) * v_color;
+				// outColor = v_color;
 			}
 		)"
 		));

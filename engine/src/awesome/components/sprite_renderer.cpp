@@ -18,7 +18,7 @@ void SpriteRenderer::render(graphics::Renderer* const renderer)
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
 			if (texture)
 			{
-				renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), data.rect);
+				renderer->drawSprite(texture.get(), getOwner()->transform.matrix(), data.rect, color);
 			}
 		}
 	}
