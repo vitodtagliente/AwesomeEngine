@@ -35,6 +35,8 @@ namespace graphics
 		math::mat4 view;
 		math::mat4 viewProjectionMatrix;
 
+		int drawCalls;
+
 	private:
 
 		ShaderProgram* const createProgram(const std::string& name);

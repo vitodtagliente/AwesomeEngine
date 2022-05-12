@@ -21,6 +21,7 @@ namespace graphics
 	{
 		m_context.clear(backgroundColor);
 		m_context.viewProjectionMatrix = m_context.projection * m_context.view;
+		m_context.drawCalls = 0;
 		m_stats = {};
 	}
 
@@ -30,12 +31,11 @@ namespace graphics
 		{
 			Command* const command = *it;
 			command->execute(m_context);
-
-			++m_stats.drawCalls;
 		}
 
 		m_spriteBatch.flush(&m_context);
 		m_gizmos.getBatch().flush(&m_context);
+		m_stats.drawCalls = m_context.drawCalls;
 	}
 
 	void Renderer::clear()

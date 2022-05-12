@@ -17,6 +17,7 @@ namespace graphics
 		: projection(math::mat4::identity)
 		, view(math::mat4::identity)
 		, viewProjectionMatrix(math::mat4::identity)
+		, drawCalls(0)
 		, m_shaderLibrary()
 		, m_textureLibrary()
 		, m_gizmosRenderingData()
@@ -143,6 +144,7 @@ namespace graphics
 		const int offset = 0;
 		const int count = static_cast<int>(vertices.size() / 7);
 		glDrawArrays(primitiveType, offset, count);
+		++drawCalls;
 	}
 
 	void Context::drawSprites(Texture* const texture, const std::vector<std::pair<math::mat4, TextureRect>>& sprites)
@@ -191,6 +193,7 @@ namespace graphics
 		const int numInstances = static_cast<int>(instances);
 		const int indexType = GL_UNSIGNED_INT;
 		glDrawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
+		++drawCalls;
 	}
 
 	void Context::test()
@@ -215,6 +218,7 @@ namespace graphics
 			m_colorProgram->bind();
 
 			glDrawArrays(GL_TRIANGLES, 0, 3);
+			++drawCalls;
 		}
 
 		// hello line
@@ -236,6 +240,7 @@ namespace graphics
 			m_colorProgram->bind();
 
 			glDrawArrays(GL_LINES, 0, 2);
+			++drawCalls;
 		}
 
 		// hello quad
@@ -266,6 +271,7 @@ namespace graphics
 			m_colorProgram->bind();
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			++drawCalls;
 		}
 	}
 
