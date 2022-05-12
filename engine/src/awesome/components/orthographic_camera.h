@@ -27,4 +27,7 @@ public:
 	float farPlane{ 1000.f };
 	bool pixelPerfect{ true };
 	int pixelsPerUnit{ 32 };
+
+protected:
+	virtual math::matrix4 computeProjectionMatrix() override;
 };

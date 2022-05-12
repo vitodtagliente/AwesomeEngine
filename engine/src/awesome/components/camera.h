@@ -3,6 +3,7 @@
 
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
+#include <awesome/math/matrix4.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
@@ -25,4 +26,7 @@ public:
 	REFLECT()
 
 	graphics::Color color;
+
+protected:
+	virtual math::matrix4 computeProjectionMatrix();
 };

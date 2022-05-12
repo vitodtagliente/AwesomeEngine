@@ -12,19 +12,8 @@ void OrthographicCamera::update(const double deltaTime)
 	Camera::update(deltaTime);
 
 	Canvas& canvas = Canvas::instance();
-	graphics::Context* const context = &graphics::Context::instance();
-	if (context)
-	{
-		const unsigned int width = canvas.getWidth();
-		const unsigned int height = canvas.getHeight();
-
-		context->viewport(width, height);
-
-		// pixel perfect
-		const float w = pixelPerfect ? static_cast<float>(width) / 2 / pixelsPerUnit : static_cast<float>(width) / 2;
-		const float h = pixelPerfect ? static_cast<float>(height) / 2 / pixelsPerUnit : static_cast<float>(height) / 2;
-		context->projection = math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
-	}
+	graphics::Context& context = graphics::Context::instance();
+	context.viewport(canvas.getWidth(), canvas.getHeight());
 }
 
 json::value OrthographicCamera::serialize() const
@@ -53,6 +42,18 @@ void OrthographicCamera::inspect()
 	editor::Layout::input("Far Plane", farPlane);
 	editor::Layout::input("Pixel Perfect", pixelPerfect);
 	editor::Layout::input("Pixel per unit", pixelsPerUnit);
+}
+
+math::matrix4 OrthographicCamera::computeProjectionMatrix()
+{
+	Canvas& canvas = Canvas::instance();
+	const unsigned int width = canvas.getWidth();
+	const unsigned int height = canvas.getHeight();
+
+	// pixel perfect
+	const float w = pixelPerfect ? static_cast<float>(width) / 2 / pixelsPerUnit : static_cast<float>(width) / 2;
+	const float h = pixelPerfect ? static_cast<float>(height) / 2 / pixelsPerUnit : static_cast<float>(height) / 2;
+	return math::mat4::orthographic(-w, w, -h, h, nearPlane, farPlane);
 }
 
 REFLECT_COMPONENT(OrthographicCamera)
