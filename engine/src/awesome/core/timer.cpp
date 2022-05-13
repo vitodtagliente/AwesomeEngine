@@ -20,6 +20,11 @@ void Timer::reset()
 	m_timer = m_time;
 }
 
+void Timer::reset(const double time)
+{
+	m_timer = m_time = time;
+}
+
 void Timer::expire()
 {
 	m_timer = 0;

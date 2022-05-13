@@ -8,13 +8,14 @@ public:
 
 	inline double getRemainingTime() const { return m_timer; }
 	inline bool isExpired() const { return m_timer <= 0.f; }
-	inline bool isticking() const { return m_canTick; }
+	inline bool isTicking() const { return m_canTick; }
 
 	void tick(double deltaTime);
 	
 	void expire();
 	void pause();
 	void reset();
+	void reset(double time);
 	void resume();
 	void stop();
 

@@ -76,11 +76,11 @@ void Game::startup()
 	PrefabAssetPtr prefab = AssetLibrary::instance().find<PrefabAsset>(uuid("146999684233600"));
 	prefab->onLoad = [prefab]()
 	{
-		World& world = World::instance();
-		for (int i = 0; i < 0; ++i)
-		{
-			Entity* const entity = world.spawn(prefab, math::vec3(math::random(-10.f, 10.f), math::random(-10.f, 10.f), 0.0f));
-		}
+		// World& world = World::instance();
+		// for (int i = 0; i < 0; ++i)
+		// {
+		// 	world.spawn(prefab, math::vec3(math::random(-10.f, 10.f), math::random(-10.f, 10.f), 0.0f));
+		// }
 	};
 }
 
