@@ -13,6 +13,7 @@ void Health::init()
 		m_colorToRestore = m_renderer->color;
 	}
 	m_value = math::clamp(m_value, min, max);
+	m_timer.stop();
 }
 
 void Health::update(const double deltaTime)

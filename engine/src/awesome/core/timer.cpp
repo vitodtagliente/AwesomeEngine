@@ -23,6 +23,7 @@ void Timer::reset()
 void Timer::reset(const double time)
 {
 	m_timer = m_time = time;
+	m_canTick = true;
 }
 
 void Timer::expire()
