@@ -39,13 +39,17 @@ void CombatController::render(graphics::Renderer* const renderer)
 
 void CombatController::update(const double /*deltaTime*/)
 {
-	const math::vec3& position = getOwner()->transform.position;
+	math::vec3& position = getOwner()->transform.position;
 	m_direction = m_pawn->getDirection();
 
 	Input& input = Input::instance();
 	if (input.isMousePositionValid())
 	{
 		m_direction = (Camera::main()->screenToWorldCoords(input.getMousePosition()) - position).normalize();
+		if (input.isKeyPressed(KeyCode::MouseWheelButton))
+		{
+			position = Camera::main()->screenToWorldCoords(input.getMousePosition());
+		}
 	}
 
 	auto angle = std::atan2(m_direction.y, m_direction.x);

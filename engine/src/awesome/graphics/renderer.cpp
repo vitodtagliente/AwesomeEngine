@@ -54,6 +54,16 @@ namespace graphics
 		m_context.view = matrix;
 	}
 
+	const math::mat4& Renderer::getProjection() const
+	{
+		return m_context.projection;
+	}
+
+	const math::mat4& Renderer::getView() const
+	{
+		return m_context.view;
+	}
+
 	const math::mat4& Renderer::getViewProjectionMatrix() const
 	{
 		return m_context.viewProjectionMatrix;

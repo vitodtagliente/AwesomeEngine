@@ -31,7 +31,7 @@ void CameraController2d::update(double deltaTime)
 		{
 			vec2 direction = input.getMousePosition() - m_dragPosition.value();
 			vec2 amount = direction * speed * static_cast<float>(deltaTime);
-			getOwner()->transform.position += vec3(amount.x, -amount.y, 0.0f);
+			getOwner()->transform.position += vec3(-amount.x, amount.y, 0.0f);
 			m_dragPosition = input.getMousePosition();
 		}
 		else
@@ -44,7 +44,7 @@ void CameraController2d::update(double deltaTime)
 	if (wheelPosition.y != 0.f)
 	{
 		math::vec3& scale = getOwner()->transform.scale;
-		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * -wheelPosition.y, 0.1f, 3.0f);
+		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * +wheelPosition.y, 0.1f, 3.0f);
 	}
 }
 

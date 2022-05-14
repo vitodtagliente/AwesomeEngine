@@ -11,23 +11,36 @@ void Camera::update(double)
 	auto& renderer = graphics::Renderer::instance();
 	renderer.backgroundColor = color;
 	renderer.setProjection(computeProjectionMatrix());
-	renderer.setView(getOwner()->transform.matrix());
+	bool invertible = false;
+	renderer.setView(getOwner()->transform.matrix().inverse(invertible));
 }
 
 math::vec3 Camera::screenToWorldCoords(const math::vec2& point)
 {
-	auto& renderer = graphics::Renderer::instance(); 
+	auto& renderer = graphics::Renderer::instance();
 	Canvas& canvas = Canvas::instance();
 	bool isInvertible = false;
 
+	// math::vec4 normalizedScreenPosition(
+	// 	2.f * (point.x / static_cast<float>(canvas.getWidth())) - 1.f - getOwner()->transform.position.x,
+	// 	2.f * (-point.y / static_cast<float>(canvas.getHeight())) + 1.f - getOwner()->transform.position.y,
+	// 	0.f,
+	// 	0.f
+	// );
+	// const auto r = renderer.getViewProjectionMatrix().inverse(isInvertible) * normalizedScreenPosition;
+	// return math::vec3(r.x, r.y, r.z);
 	math::vec4 normalizedScreenPosition(
-		2.f * (point.x / static_cast<float>(canvas.getWidth())) - 1.f - getOwner()->transform.position.x,
-		2.f * (-point.y / static_cast<float>(canvas.getHeight())) + 1.f - getOwner()->transform.position.y,
-		0.f,
+		((float)point.x / (float)canvas.getWidth() - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+		-((float)point.y / (float)canvas.getHeight() - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		0.f, // The near plane maps to Z=-1 in Normalized Device Coordinates
 		0.f
 	);
-	const auto r = renderer.getViewProjectionMatrix().inverse(isInvertible) * normalizedScreenPosition;
-	return math::vec3(r.x, r.y, r.z);
+
+	// Faster way (just one inverse)
+	math::mat4 M = renderer.getViewProjectionMatrix().inverse(isInvertible);
+	math::vec4 r = M * normalizedScreenPosition;
+
+	return math::vec3(r.x, r.y, 0.f);
 }
 
 Camera* const Camera::main()

@@ -36,6 +36,8 @@ namespace graphics
 
 		void setProjection(const math::mat4& matrix);
 		void setView(const math::mat4& matrix);
+		const math::mat4& getProjection() const;
+		const math::mat4& getView() const;
 		const math::mat4& getViewProjectionMatrix() const;
 
 		void drawSprite(Texture* const texture, const math::mat4& matrix, const TextureRect& rect = {}, const Color& color = Color::White);
