@@ -40,7 +40,7 @@ math::vec3 Camera::screenToWorldCoords(const math::vec2& point)
 	math::mat4 M = renderer.getViewProjectionMatrix().inverse(isInvertible);
 	math::vec4 r = M * normalizedScreenPosition;
 
-	return math::vec3(r.x, r.y, 0.f);
+	return math::vec3(r.x + getOwner()->transform.position.x * 32.f, r.y + getOwner()->transform.position.y * 16.f, 0.f);
 }
 
 Camera* const Camera::main()
