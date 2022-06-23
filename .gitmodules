@@ -13,3 +13,6 @@
 [submodule "engine/vendor/miniaudio"]
 	path = engine/vendor/miniaudio
 	url = https://github.com/mackron/miniaudio
+[submodule "engine/vendor/vdtgraphics"]
+	path = engine/vendor/vdtgraphics
+	url = https://github.com/vitodtagliente/vdtgraphics
