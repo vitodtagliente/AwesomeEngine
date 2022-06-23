@@ -15,6 +15,8 @@ public:
 	OrthographicCamera() = default;
 	virtual ~OrthographicCamera() = default;
 
+	virtual math::vec3 screenToWorldCoords(const math::vec2& point) override;
+
 	void update(double deltaTime) override;
 
 	virtual json::value serialize() const override;

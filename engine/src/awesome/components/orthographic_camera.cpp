@@ -7,6 +7,16 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/math/matrix4.h>
 
+math::vec3 OrthographicCamera::screenToWorldCoords(const math::vec2& point)
+{
+	const math::vec3 worldCoords = Camera::screenToWorldCoords(point);
+	if (pixelPerfect)
+	{
+		return worldCoords * pixelsPerUnit;
+	}
+	return worldCoords;
+}
+
 void OrthographicCamera::update(const double deltaTime)
 {
 	Camera::update(deltaTime);

@@ -15,7 +15,7 @@ public:
 
 	virtual void update(double) override;
 
-	math::vec3 screenToWorldCoords(const math::vec2& point);
+	virtual math::vec3 screenToWorldCoords(const math::vec2& point);
 
 	static Camera* const main();
 
