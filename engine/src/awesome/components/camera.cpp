@@ -4,43 +4,20 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
-#include <awesome/graphics/renderer.h>
+#include <awesome/graphics/context.h>
 
 void Camera::update(double)
 {
-	auto& renderer = graphics::Renderer::instance();
-	renderer.backgroundColor = color;
-	renderer.setProjection(computeProjectionMatrix());
-	bool invertible = false;
-	renderer.setView(getOwner()->transform.matrix().inverse(invertible));
+	auto& renderer = graphics::Context::instance().renderer;
+	renderer.setClearColor(color);
+	renderer.setProjectionMatrix(computeProjectionMatrix());
+	renderer.setViewMatrix(getOwner()->transform.matrix());
 }
 
 math::vec3 Camera::screenToWorldCoords(const math::vec2& point)
 {
-	auto& renderer = graphics::Renderer::instance();
-	Canvas& canvas = Canvas::instance();
-	bool isInvertible = false;
-
-	// math::vec4 normalizedScreenPosition(
-	// 	2.f * (point.x / static_cast<float>(canvas.getWidth())) - 1.f - getOwner()->transform.position.x,
-	// 	2.f * (-point.y / static_cast<float>(canvas.getHeight())) + 1.f - getOwner()->transform.position.y,
-	// 	0.f,
-	// 	0.f
-	// );
-	// const auto r = renderer.getViewProjectionMatrix().inverse(isInvertible) * normalizedScreenPosition;
-	// return math::vec3(r.x, r.y, r.z);
-	math::vec4 normalizedScreenPosition(
-		((float)point.x / (float)canvas.getWidth() - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
-		-((float)point.y / (float)canvas.getHeight() - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
-		0.f, // The near plane maps to Z=-1 in Normalized Device Coordinates
-		0.f
-	);
-
-	// Faster way (just one inverse)
-	math::mat4 M = renderer.getViewProjectionMatrix().inverse(isInvertible);
-	math::vec4 r = M * normalizedScreenPosition;
-
-	return math::vec3(r.x + getOwner()->transform.position.x * 32.f, r.y + getOwner()->transform.position.y * 16.f, 0.f);
+	auto& renderer = graphics::Context::instance().renderer;
+	return renderer.screenToWorldCoords(point);
 }
 
 Camera* const Camera::main()

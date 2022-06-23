@@ -16,8 +16,5 @@ namespace editor
 		virtual void update(double deltaTime) override;
 
 		REFLECT()
-
-	private:
-		graphics::Renderer::Stats m_stats;
 	};
 }

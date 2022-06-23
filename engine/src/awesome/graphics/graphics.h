@@ -5,9 +5,6 @@
 
 #include <awesome/application/application.h>
 
-#include "context.h"
-#include "renderer.h"
-
 namespace graphics
 {
 	class Graphics : public Application::Module
@@ -18,7 +15,6 @@ namespace graphics
 		void startup() override;
 		void shutdown() override;
 		void preRendering() override;
-		void render(graphics::Renderer* const renderer) override;
 		void postRendering() override;
 	};
 }

@@ -1,13 +1,12 @@
 #include "graphics.h"
 
-#include <glad/glad.h>
+#include "context.h"
 
 namespace graphics
 {
 	void Graphics::startup()
 	{
-		gladLoadGL();
-		Renderer::instance();
+
 	}
 
 	void Graphics::shutdown()
@@ -16,15 +15,11 @@ namespace graphics
 
 	void Graphics::preRendering()
 	{
-		Renderer::instance().begin();
-	}
-
-	void Graphics::render(graphics::Renderer* const)
-	{
+		Context::instance().renderer.begin();
 	}
 
 	void Graphics::postRendering()
 	{
-		Renderer::instance().flush();
+		Context::instance().renderer.flush();
 	}
 }

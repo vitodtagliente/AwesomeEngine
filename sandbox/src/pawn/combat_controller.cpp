@@ -31,7 +31,7 @@ void CombatController::render(graphics::Renderer* const renderer)
 			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
 			if (texture)
 			{
-				renderer->drawSprite(texture.get(), m_crosshairTransform.matrix(), data.rect);
+				renderer->drawTexture(texture.get(), m_crosshairTransform.matrix(), data.rect);
 			}
 		}
 	}

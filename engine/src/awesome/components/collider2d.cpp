@@ -7,12 +7,14 @@
 
 void Collider2d::render(graphics::Renderer* const renderer)
 {
+	renderer->setStyle(Renderer::StyleType::stroke);
 	switch (m_type)
 	{
-	case Type::Circle: renderer->getGizmos().circle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
-	case Type::Rect: renderer->getGizmos().rect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
+	case Type::Circle: renderer->drawCircle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
+	case Type::Rect: renderer->drawRect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
 	default: break;
 	}
+	renderer->setStyle(Renderer::StyleType::fill);
 }
 
 bool Collider2d::collide(const Collider2d& other) const

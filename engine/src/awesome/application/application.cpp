@@ -12,6 +12,7 @@
 #include <awesome/encoding/json.h>
 #include <awesome/editor/editor.h>
 #include <awesome/entity/world.h>
+#include <awesome/graphics/context.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/graphics/renderer.h>
 
@@ -70,7 +71,7 @@ int Application::run()
 
 		// rendering
 		{
-			graphics::Renderer* const renderer = &graphics::Renderer::instance();
+			graphics::Renderer* const renderer = &graphics::Context::instance().renderer;
 			for (const auto& module : m_modules)
 			{
 				module->preRendering();

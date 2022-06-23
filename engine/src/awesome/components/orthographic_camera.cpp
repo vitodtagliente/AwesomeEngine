@@ -12,8 +12,8 @@ void OrthographicCamera::update(const double deltaTime)
 	Camera::update(deltaTime);
 
 	Canvas& canvas = Canvas::instance();
-	graphics::Context& context = graphics::Context::instance();
-	context.viewport(canvas.getWidth(), canvas.getHeight());
+	graphics::Renderer& renderer = graphics::Context::instance().renderer;
+	renderer.setViewport(canvas.getWidth(), canvas.getHeight());
 }
 
 json::value OrthographicCamera::serialize() const
