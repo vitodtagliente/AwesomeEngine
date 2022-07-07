@@ -68,7 +68,7 @@ namespace editor
 		ImGui::NewFrame();
 	}
 
-	void Editor::render(graphics::Renderer* const)
+	void Editor::render(graphics::Renderer2D* const)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		m_menu.render();

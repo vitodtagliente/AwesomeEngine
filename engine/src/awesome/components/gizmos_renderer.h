@@ -25,7 +25,7 @@ public:
 	Type type;
 	graphics::Color color;
 
-	void render(graphics::Renderer* const renderer) override;
+	void render(graphics::Renderer2D* const renderer) override;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;

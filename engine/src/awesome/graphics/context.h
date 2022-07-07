@@ -13,6 +13,6 @@ namespace graphics
 	public:
 		Context();
 
-		Renderer renderer;		
+		Renderer2D renderer;		
 	};
 }

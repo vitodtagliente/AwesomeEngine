@@ -5,16 +5,16 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
-void Collider2d::render(graphics::Renderer* const renderer)
+void Collider2d::render(graphics::Renderer2D* const renderer)
 {
-	renderer->setStyle(Renderer::StyleType::stroke);
+	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (m_type)
 	{
 	case Type::Circle: renderer->drawCircle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
 	case Type::Rect: renderer->drawRect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
 	default: break;
 	}
-	renderer->setStyle(Renderer::StyleType::fill);
+	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }
 
 bool Collider2d::collide(const Collider2d& other) const

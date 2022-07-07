@@ -15,7 +15,7 @@ REFLECT_ENUM(CombatType,
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 class CombatController : public Component
@@ -27,7 +27,7 @@ public:
 	virtual ~CombatController() = default;
 
 	virtual void init() override;
-	virtual void render(graphics::Renderer* const renderer) override;
+	virtual void render(graphics::Renderer2D* const renderer) override;
 	virtual void update(double deltaTime) override;
 
 	void attack();

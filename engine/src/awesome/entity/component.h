@@ -11,7 +11,7 @@ class World;
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 class Component : public ISerializable
@@ -37,7 +37,7 @@ public:
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
-	virtual void render(graphics::Renderer* const /*renderer*/) {}
+	virtual void render(graphics::Renderer2D* const /*renderer*/) {}
 
 	// serialization
 	virtual json::value serialize() const override;

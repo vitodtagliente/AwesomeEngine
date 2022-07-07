@@ -18,7 +18,7 @@ void CombatController::init()
 	m_pawn = getOwner()->findComponent<Pawn>();
 }
 
-void CombatController::render(graphics::Renderer* const renderer)
+void CombatController::render(graphics::Renderer2D* const renderer)
 {
 	if (m_type != Type::Ranged)
 		return;

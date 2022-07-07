@@ -23,7 +23,7 @@ public:
 	bool flipX{ false };
 	bool flipY{ false };
 
-	virtual void render(graphics::Renderer* const renderer) override;
+	virtual void render(graphics::Renderer2D* const renderer) override;
 	virtual void update(double deltaTime) override;
 
 	virtual json::value serialize() const override;

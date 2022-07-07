@@ -12,16 +12,16 @@ GizmosRenderer::GizmosRenderer()
 
 }
 
-void GizmosRenderer::render(graphics::Renderer* const renderer)
+void GizmosRenderer::render(graphics::Renderer2D* const renderer)
 {
-	renderer->setStyle(Renderer::StyleType::stroke);
+	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (type)
 	{
 	case Type::Rect: renderer->drawRect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
 	case Type::Circle: renderer->drawCircle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
 	default: break;
 	}
-	renderer->setStyle(Renderer::StyleType::fill);
+	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }
 
 json::value GizmosRenderer::serialize() const

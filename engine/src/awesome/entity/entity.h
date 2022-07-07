@@ -17,7 +17,7 @@ class World;
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 class Entity : public ISerializable
@@ -47,7 +47,7 @@ public:
 	void prepareToDestroy();
 	void prepareToSpawn(World* const world);
 	void setParent(Entity* const entity);
-	void render(graphics::Renderer* const renderer);
+	void render(graphics::Renderer2D* const renderer);
 	void update(double deltaTime);
 
 	static void duplicate(const Entity& from, Entity& duplicate);

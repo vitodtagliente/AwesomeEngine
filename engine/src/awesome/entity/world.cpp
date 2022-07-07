@@ -14,7 +14,7 @@ void World::update(const double deltaTime)
 	m_sceneLoader.update(deltaTime);
 }
 
-void World::render(graphics::Renderer* const renderer)
+void World::render(graphics::Renderer2D* const renderer)
 {
 	// sort the entities by z
 	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool

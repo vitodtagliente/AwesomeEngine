@@ -16,8 +16,9 @@ void Camera::update(double)
 
 math::vec3 Camera::screenToWorldCoords(const math::vec2& point)
 {
-	auto& renderer = graphics::Context::instance().renderer;
-	return renderer.screenToWorldCoords(point);
+	// auto& renderer = graphics::Context::instance().renderer;
+	// return renderer.screenToWorldCoords(point);
+	return {};
 }
 
 Camera* const Camera::main()

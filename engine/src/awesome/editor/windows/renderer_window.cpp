@@ -15,7 +15,7 @@ namespace editor
 
 	void RendererWindow::update(const double)
 	{
-		// m_stats = graphics::Renderer::instance().getStats();
+		// m_stats = graphics::Renderer2D::instance().getStats();
 	}
 
 	REFLECT_WINDOW(RendererWindow)

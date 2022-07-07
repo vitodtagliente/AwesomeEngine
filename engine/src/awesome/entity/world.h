@@ -16,11 +16,11 @@
 
 #include "entity.h"
 
-class Renderer;
+class Renderer2D;
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 class World final : public Singleton<World>, ISerializable
@@ -30,7 +30,7 @@ public:
 	~World() = default;
 
 	void update(double deltaTime);
-	void render(graphics::Renderer* const renderer);
+	void render(graphics::Renderer2D* const renderer);
 	void flush();
 
 	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }

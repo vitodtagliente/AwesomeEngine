@@ -71,7 +71,7 @@ int Application::run()
 
 		// rendering
 		{
-			graphics::Renderer* const renderer = &graphics::Context::instance().renderer;
+			graphics::Renderer2D* const renderer = &graphics::Context::instance().renderer;
 			for (const auto& module : m_modules)
 			{
 				module->preRendering();

@@ -24,7 +24,7 @@ public:
 	Collider2d() = default;
 	virtual ~Collider2d() = default;
 
-	void render(graphics::Renderer* const renderer) override;
+	void render(graphics::Renderer2D* const renderer) override;
 
 	bool collide(const Collider2d& other) const;
 

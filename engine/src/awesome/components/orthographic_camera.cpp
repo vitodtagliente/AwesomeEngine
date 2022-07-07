@@ -22,7 +22,7 @@ void OrthographicCamera::update(const double deltaTime)
 	Camera::update(deltaTime);
 
 	Canvas& canvas = Canvas::instance();
-	graphics::Renderer& renderer = graphics::Context::instance().renderer;
+	graphics::Renderer2D& renderer = graphics::Context::instance().renderer;
 	renderer.setViewport(canvas.getWidth(), canvas.getHeight());
 }
 

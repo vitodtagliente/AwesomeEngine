@@ -70,7 +70,7 @@ void Entity::duplicate(const PrefabAssetPtr& prefab, Entity& duplicate)
 	}
 }
 
-void Entity::render(graphics::Renderer* const renderer)
+void Entity::render(graphics::Renderer2D* const renderer)
 {
 	for (const auto& component : m_components)
 	{

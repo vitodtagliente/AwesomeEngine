@@ -8,7 +8,7 @@
 #include <awesome/graphics/texture_library.h>
 #include <awesome/entity/entity.h>
 
-void SpriteRenderer::render(graphics::Renderer* const renderer)
+void SpriteRenderer::render(graphics::Renderer2D* const renderer)
 {
 	if (sprite && sprite->data.has_value())
 	{
