@@ -4,7 +4,7 @@
 
 #include <awesome/components/camera_controller_2d.h>
 #include <awesome/components/gizmos_renderer.h>
-#include <awesome/components/orthographic_camera.h>
+#include <awesome/components/orthographic_camera_component.h>
 #include <awesome/components/sprite_animator.h>
 #include <awesome/components/sprite_renderer.h>
 #include <awesome/data/archive.h>

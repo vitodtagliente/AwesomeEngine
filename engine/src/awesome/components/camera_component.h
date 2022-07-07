@@ -3,21 +3,22 @@
 
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
+#include <awesome/graphics/camera.h>
 #include <awesome/math/matrix4.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
-class Camera : public Component
+class CameraComponent : public Component
 {
 public:
-	Camera() = default;
-	virtual ~Camera() = default;
+	CameraComponent();
+	virtual ~CameraComponent() = default;
 
 	virtual void update(double) override;
 
 	virtual math::vec3 screenToWorldCoords(const math::vec2& point);
 
-	static Camera* const main();
+	static CameraComponent* const main();
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
@@ -28,5 +29,5 @@ public:
 	graphics::Color color;
 
 protected:
-	virtual math::matrix4 computeProjectionMatrix();
+	std::unique_ptr<graphics::Camera> m_data;
 };

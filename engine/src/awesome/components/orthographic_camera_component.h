@@ -1,21 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "camera.h"
+#include "camera_component.h"
 
-namespace graphics
-{
-	class Renderer;
-	class Texture;
-}
-
-class OrthographicCamera : public Camera
+class OrthographicCameraComponent : public CameraComponent
 {
 public:
-	OrthographicCamera() = default;
-	virtual ~OrthographicCamera() = default;
-
-	virtual math::vec3 screenToWorldCoords(const math::vec2& point) override;
+	OrthographicCameraComponent();
+	virtual ~OrthographicCameraComponent() = default;
 
 	void update(double deltaTime) override;
 
@@ -30,6 +22,4 @@ public:
 	bool pixelPerfect{ true };
 	int pixelsPerUnit{ 32 };
 
-protected:
-	virtual math::matrix4 computeProjectionMatrix() override;
 };

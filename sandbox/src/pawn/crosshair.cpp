@@ -1,7 +1,7 @@
 #include "crosshair.h"
 
 #include <awesome/application/input.h>
-#include <awesome/components/camera.h>
+#include <awesome/components/camera_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
@@ -26,9 +26,10 @@ void Crosshair::update(const double deltaTime)
 	}
 
 	Input& input = Input::instance();
-	if (input.isMousePositionValid())
+	CameraComponent* const camera = CameraComponent::main();
+	if (input.isMousePositionValid() && camera)
 	{
-		getOwner()->transform.position = Camera::main()->screenToWorldCoords(input.getMousePosition());
+		getOwner()->transform.position = camera->screenToWorldCoords(input.getMousePosition());
 		getOwner()->transform.position.z;
 	}
 }
