@@ -54,6 +54,10 @@ add_library(
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+
+if(NOT TARGET vdtecs)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
+endif()
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
 endif()
@@ -72,6 +76,7 @@ target_link_libraries(
     ${GLAD_LIBRARIES}
 	glfw
 	${GLFW_LIBRARIES}
+	vdtecs
 	vdtgraphics
 	vdtjson
 	vdtmath
