@@ -13,8 +13,6 @@
 
 #include "component.h"
 
-class World;
-
 namespace graphics
 {
 	class Renderer2D;
@@ -41,11 +39,10 @@ public:
 	inline Entity* const getParent() const { return m_parent; }
 	inline const uuid& getPrefab() const { return m_prefab; }
 	inline State getState() const { return m_state; }
-	inline World* const getWorld() const { return m_world; }
-	inline bool isSpawned() const { return m_world != nullptr; }
+	inline bool isSpawned() const { return m_state == State::Alive; }
 
 	void prepareToDestroy();
-	void prepareToSpawn(World* const world);
+	void prepareToSpawn();
 	void setParent(Entity* const entity);
 	void render(graphics::Renderer2D* const renderer);
 	void update(double deltaTime);
@@ -127,5 +124,4 @@ private:
 	Entity* m_parent{ nullptr };
 	uuid m_prefab{ uuid::Invalid };
 	State m_state{ State::PendingSpawn };
-	World* m_world{ nullptr };
 };

@@ -7,7 +7,6 @@
 #include <awesome/encoding/json.h>
 
 class Entity;
-class World;
 
 namespace graphics
 {
@@ -28,7 +27,6 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
-	World* const getWorld() const;
 	inline bool isAttached() const { return m_owner != nullptr; }
 
 	void attach(Entity* const entity);

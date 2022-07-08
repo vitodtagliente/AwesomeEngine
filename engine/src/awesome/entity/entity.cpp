@@ -1,12 +1,9 @@
 #include "entity.h"
 
 #include <awesome/graphics/renderer.h>
-#include <awesome/entity/world.h>
 
-void Entity::prepareToSpawn(World* const world)
+void Entity::prepareToSpawn()
 {
-	m_world = world;
-
 	for (const auto& component : m_components)
 	{
 		if (component->enabled)

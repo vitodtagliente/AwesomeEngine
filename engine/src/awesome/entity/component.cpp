@@ -4,7 +4,6 @@
 #include <awesome/graphics/renderer.h>
 
 #include "entity.h"
-#include "world.h"
 
 bool Component::operator==(const Component& other) const
 {
@@ -14,11 +13,6 @@ bool Component::operator==(const Component& other) const
 bool Component::operator!=(const Component& other) const
 {
 	return m_id != other.m_id;
-}
-
-World* const Component::getWorld() const
-{
-	return m_owner ? m_owner->getWorld() : nullptr;
 }
 
 void Component::attach(Entity* const entity)

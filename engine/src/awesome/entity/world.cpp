@@ -112,7 +112,7 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 	Entity* const entity = new Entity();
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn(this);
+	entity->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
 	return entity;
@@ -134,7 +134,7 @@ Entity* const World::spawn(const PrefabAssetPtr& prefab, const vec3& position, c
 	Entity::duplicate(prefab, *entity);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn(this);
+	entity->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
 	return entity;
@@ -176,7 +176,7 @@ void World::load(const SceneAssetPtr& scene)
 		{
 			for (auto& entity : entities)
 			{
-				entity->prepareToSpawn(this);
+				entity->prepareToSpawn();
 				m_pendingSpawnEntities.push_back(std::move(entity));
 			}
 		}
