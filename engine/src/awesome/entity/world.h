@@ -16,8 +16,6 @@
 
 #include "entity.h"
 
-class Renderer2D;
-
 namespace graphics
 {
 	class Renderer2D;
