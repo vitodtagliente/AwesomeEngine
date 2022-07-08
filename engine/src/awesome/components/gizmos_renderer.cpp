@@ -4,14 +4,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
-GizmosRenderer::GizmosRenderer()
-	: Component()
-	, type(Type::None)
-	, color(graphics::Color::White)
-{
-
-}
-
 void GizmosRenderer::render(graphics::Renderer2D* const renderer)
 {
 	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);

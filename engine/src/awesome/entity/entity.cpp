@@ -71,9 +71,12 @@ void Entity::render(graphics::Renderer2D* const renderer)
 {
 	for (const auto& component : m_components)
 	{
-		if (component->enabled)
+		if (!component->enabled) continue;
+
+
+		if (GraphicsComponent* const graphicsComponent = dynamic_cast<GraphicsComponent*>(component.get()))
 		{
-			component->render(renderer);
+			graphicsComponent->render(renderer);
 		}
 	}
 }

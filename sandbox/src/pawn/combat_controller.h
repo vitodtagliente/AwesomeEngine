@@ -18,7 +18,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-class CombatController : public Component
+class CombatController : public GraphicsComponent
 {
 public:
 	typedef CombatType Type;

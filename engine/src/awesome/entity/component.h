@@ -8,11 +8,6 @@
 
 class Entity;
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
 class Component : public ISerializable
 {
 public:
@@ -35,7 +30,6 @@ public:
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
-	virtual void render(graphics::Renderer2D* const /*renderer*/) {}
 
 	// serialization
 	virtual json::value serialize() const override;
@@ -50,6 +44,21 @@ public:
 private:
 	uuid m_id;
 	Entity* m_owner{ nullptr };
+};
+
+namespace graphics
+{
+	class Renderer2D;
+}
+
+class GraphicsComponent : public Component
+{
+public:
+	GraphicsComponent() = default;
+	GraphicsComponent(const GraphicsComponent& other) = delete;
+	virtual ~GraphicsComponent() = default;
+
+	virtual void render(graphics::Renderer2D* const /*renderer*/) = 0;
 };
 
 #define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)

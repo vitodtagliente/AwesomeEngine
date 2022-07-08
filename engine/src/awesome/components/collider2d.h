@@ -16,7 +16,7 @@ namespace graphics
 	class Renderer;
 }
 
-class Collider2d : public Component
+class Collider2d : public GraphicsComponent
 {
 public:
 	typedef Collider2dType Type;

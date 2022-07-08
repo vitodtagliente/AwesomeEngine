@@ -7,13 +7,13 @@
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
-class GizmosRenderer : public Component
+class GizmosRenderer : public GraphicsComponent
 {
 public:
-	GizmosRenderer();
+	GizmosRenderer() = default;
 
 	enum class Type : int
 	{
@@ -22,10 +22,10 @@ public:
 		Circle
 	};
 
-	Type type;
-	graphics::Color color;
+	Type type{ Type::None };
+	graphics::Color color{ graphics::Color::White };
 
-	void render(graphics::Renderer2D* const renderer) override;
+	void render(class graphics::Renderer2D* const renderer) override;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;

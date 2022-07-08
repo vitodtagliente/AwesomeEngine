@@ -1,7 +1,6 @@
 #include "component.h"
 
 #include <awesome/editor/layout.h>
-#include <awesome/graphics/renderer.h>
 
 #include "entity.h"
 

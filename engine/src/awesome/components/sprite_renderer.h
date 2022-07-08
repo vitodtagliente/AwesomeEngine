@@ -12,7 +12,7 @@ namespace graphics
 	class Renderer;
 }
 
-class SpriteRenderer : public Component
+class SpriteRenderer : public GraphicsComponent
 {
 public:
 	SpriteRenderer() = default;
