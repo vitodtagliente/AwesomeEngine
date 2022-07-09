@@ -1,7 +1,7 @@
 #include "crosshair.h"
 
 #include <awesome/application/input.h>
-#include <awesome/components/camera.h>
+#include <awesome/component/camera.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 

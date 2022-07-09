@@ -1,6 +1,6 @@
 #include "entity_layout.h"
 
-#include <awesome/components/sprite_renderer.h>
+#include <awesome/component/sprite_renderer.h>
 #include <awesome/core/reflection.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>

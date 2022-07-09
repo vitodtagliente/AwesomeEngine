@@ -3,8 +3,8 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
-#include <awesome/components/camera.h>
-#include <awesome/components/sprite_animator.h>
+#include <awesome/component/camera.h>
+#include <awesome/component/sprite_animator.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>

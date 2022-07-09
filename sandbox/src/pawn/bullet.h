@@ -1,8 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/components/body2d.h>
-#include <awesome/components/collider2d.h>
+#include <awesome/component/body2d.h>
+#include <awesome/component/collider2d.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 

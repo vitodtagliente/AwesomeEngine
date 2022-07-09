@@ -1,9 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/components/body2d.h>
-#include <awesome/components/sprite_animator.h>
-#include <awesome/components/sprite_renderer.h>
+#include <awesome/component/body2d.h>
+#include <awesome/component/sprite_animator.h>
+#include <awesome/component/sprite_renderer.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 

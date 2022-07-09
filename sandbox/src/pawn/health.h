@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/components/sprite_renderer.h>
+#include <awesome/component/sprite_renderer.h>
 #include <awesome/core/timer.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
