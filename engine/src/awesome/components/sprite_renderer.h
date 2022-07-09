@@ -9,7 +9,7 @@
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 class SpriteRenderer : public GraphicsComponent

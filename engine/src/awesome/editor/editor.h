@@ -11,7 +11,7 @@
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
 namespace editor

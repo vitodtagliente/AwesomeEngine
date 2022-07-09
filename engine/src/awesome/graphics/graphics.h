@@ -12,9 +12,9 @@ namespace graphics
 	public:
 		Graphics() = default;
 
-		void startup() override;
-		void shutdown() override;
-		void preRendering() override;
-		void postRendering() override;
+		virtual void startup() override;
+		virtual void shutdown() override;
+		virtual void preRendering() override;
+		virtual void postRendering() override;
 	};
 }
