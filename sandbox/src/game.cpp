@@ -2,22 +2,8 @@
 
 #include <iostream>
 
-#include <awesome/components/camera_controller_2d.h>
-#include <awesome/components/gizmos_renderer.h>
-#include <awesome/components/orthographic_camera_component.h>
-#include <awesome/components/sprite_animator.h>
-#include <awesome/components/sprite_renderer.h>
-#include <awesome/data/archive.h>
 #include <awesome/asset/asset_library.h>
-#include <awesome/asset/sprite_asset.h>
 #include <awesome/editor/layout.h>
-#include <awesome/encoding/json.h>
-#include <awesome/graphics/texture.h>
-#include <awesome/graphics/texture_library.h>
-#include <awesome/graphics/texture_rect.h>
-#include <awesome/entity/component.h>
-#include <awesome/entity/entity.h>
-#include <awesome/entity/world.h>
 
 #include "pawn/bullet.h"
 #include "pawn/camera_follow_2d.h"

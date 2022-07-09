@@ -3,7 +3,7 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
-#include <awesome/components/camera_component.h>
+#include <awesome/components/camera.h>
 #include <awesome/components/sprite_animator.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
@@ -43,7 +43,7 @@ void CombatController::update(const double /*deltaTime*/)
 	m_direction = m_pawn->getDirection();
 
 	Input& input = Input::instance();
-	CameraComponent* const camera = CameraComponent::main();
+	component::Camera* const camera = component::Camera::main();
 	if (input.isMousePositionValid() && camera)
 	{
 		m_direction = (camera->screenToWorldCoords(input.getMousePosition()) - position).normalize();
