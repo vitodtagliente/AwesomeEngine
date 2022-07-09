@@ -31,9 +31,9 @@ void Pawn::dash(const double deltaTime)
 
 void Pawn::init()
 {
-	m_animator = getOwner()->findComponent<SpriteAnimator>();
-	m_body = getOwner()->findComponent<Body2d>();
-	m_renderer = getOwner()->findComponent<SpriteRenderer>();
+	m_animator = getOwner()->findComponent<component::SpriteAnimator>();
+	m_body = getOwner()->findComponent<component::Body2d>();
+	m_renderer = getOwner()->findComponent<component::SpriteRenderer>();
 }
 
 void Pawn::inspect()

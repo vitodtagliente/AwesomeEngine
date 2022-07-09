@@ -59,7 +59,7 @@ namespace editor
 
 		// preview the sprite
 		{
-			SpriteRenderer* const component = entity.findComponent<SpriteRenderer>();
+			component::SpriteRenderer* const component = entity.findComponent<component::SpriteRenderer>();
 			if (component && component->sprite && component->sprite->data.has_value())
 			{
 				Layout::separator();

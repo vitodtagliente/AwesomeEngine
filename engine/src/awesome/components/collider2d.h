@@ -6,40 +6,43 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
-REFLECT_ENUM(Collider2dType,
-	Circle,
-	Rect
-)
-
 namespace graphics
 {
 	class Renderer;
 }
 
-class Collider2d : public GraphicsComponent
+REFLECT_ENUM(Collider2dType,
+	Circle,
+	Rect
+)
+
+namespace component
 {
-public:
-	typedef Collider2dType Type;
+	class Collider2d : public GraphicsComponent
+	{
+	public:
+		typedef Collider2dType Type;
 
-	Collider2d() = default;
-	virtual ~Collider2d() = default;
+		Collider2d() = default;
+		virtual ~Collider2d() = default;
 
-	void render(graphics::Renderer2D* const renderer) override;
+		void render(graphics::Renderer2D* const renderer) override;
 
-	bool collide(const Collider2d& other) const;
+		bool collide(const Collider2d& other) const;
 
-	std::function<void(const Collider2d&)> onTrigger;
+		std::function<void(const Collider2d&)> onTrigger;
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
+		virtual json::value serialize() const override;
+		virtual void deserialize(const json::value& value) override;
+		virtual void inspect() override;
 
-	bool isTrigger{ false };
+		bool isTrigger{ false };
 
-	REFLECT()
+		REFLECT()
 
-private:
-	Type m_type{ Type::Rect };
-	math::vec2 m_rectSize{ 1.0f, 1.0f };
-	float m_circleSize{ 1.0f };
-};
+	private:
+		Type m_type{ Type::Rect };
+		math::vec2 m_rectSize{ 1.0f, 1.0f };
+		float m_circleSize{ 1.0f };
+	};
+}

@@ -8,66 +8,69 @@
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
-CameraController2d::CameraController2d()
-	: speed(.05f)
-	, zoomSpeed(1.f)
-	, m_dragPosition(false)
+namespace component
 {
-}
-
-void CameraController2d::update(double deltaTime)
-{
-	Input& input = Input::instance();
-	if (!m_dragPosition.has_value())
+	CameraController2d::CameraController2d()
+		: speed(.05f)
+		, zoomSpeed(1.f)
+		, m_dragPosition(false)
 	{
-		if (input.isKeyDown(KeyCode::MouseRightButton))
-		{
-			m_dragPosition = input.getMousePosition();
-		}
 	}
-	else
+
+	void CameraController2d::update(double deltaTime)
 	{
-		if (input.isKeyDown(KeyCode::MouseRightButton))
+		Input& input = Input::instance();
+		if (!m_dragPosition.has_value())
 		{
-			math::vec2 direction = input.getMousePosition() - m_dragPosition.value();
-			math::vec2 amount = direction * speed * static_cast<float>(deltaTime);
-			getOwner()->transform.position += math::vec3(-amount.x, amount.y, 0.0f);
-			m_dragPosition = input.getMousePosition();
+			if (input.isKeyDown(KeyCode::MouseRightButton))
+			{
+				m_dragPosition = input.getMousePosition();
+			}
 		}
 		else
 		{
-			m_dragPosition.reset();
+			if (input.isKeyDown(KeyCode::MouseRightButton))
+			{
+				math::vec2 direction = input.getMousePosition() - m_dragPosition.value();
+				math::vec2 amount = direction * speed * static_cast<float>(deltaTime);
+				getOwner()->transform.position += math::vec3(-amount.x, amount.y, 0.0f);
+				m_dragPosition = input.getMousePosition();
+			}
+			else
+			{
+				m_dragPosition.reset();
+			}
+		}
+
+		const math::vec2& wheelPosition = input.getDeltaMouseWheelPosition();
+		if (wheelPosition.y != 0.f)
+		{
+			math::vec3& scale = getOwner()->transform.scale;
+			scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * +wheelPosition.y, 0.1f, 3.0f);
 		}
 	}
 
-	const math::vec2& wheelPosition = input.getDeltaMouseWheelPosition();
-	if (wheelPosition.y != 0.f)
+	json::value CameraController2d::serialize() const
 	{
-		math::vec3& scale = getOwner()->transform.scale;
-		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * +wheelPosition.y, 0.1f, 3.0f);
+		json::value data = Component::serialize();
+		data["speed"] = speed;
+		data["zoomSpeed"] = zoomSpeed;
+		return data;
 	}
-}
 
-json::value CameraController2d::serialize() const
-{
-	json::value data = Component::serialize();
-	data["speed"] = speed;
-	data["zoomSpeed"] = zoomSpeed;
-	return data;
-}
+	void CameraController2d::deserialize(const json::value& value)
+	{
+		Component::deserialize(value);
+		speed = value["speed"].as_number(0.0f).as_float();
+		zoomSpeed = value["zoomSpeed"].as_number(0.0f).as_float();
+	}
 
-void CameraController2d::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	speed = value["speed"].as_number(0.0f).as_float();
-	zoomSpeed = value["zoomSpeed"].as_number(0.0f).as_float();
-}
+	void CameraController2d::inspect()
+	{
+		Component::inspect();
+		editor::Layout::input("Speed", speed);
+		editor::Layout::input("Zoom speed", zoomSpeed);
+	}
 
-void CameraController2d::inspect()
-{
-	Component::inspect();
-	editor::Layout::input("Speed", speed);
-	editor::Layout::input("Zoom speed", zoomSpeed);
+	REFLECT_COMPONENT(CameraController2d)
 }
-
-REFLECT_COMPONENT(CameraController2d)

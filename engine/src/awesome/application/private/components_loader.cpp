@@ -13,12 +13,12 @@
 
 void ComponentsLoader::load()
 {
-	TypeFactory::load<Body2d>();
+	TypeFactory::load<component::Body2d>();
 	TypeFactory::load<component::Camera>();
-	TypeFactory::load<CameraController2d>();
-	TypeFactory::load<Collider2d>();
-	TypeFactory::load<GizmosRenderer>();
+	TypeFactory::load<component::CameraController2d>();
+	TypeFactory::load<component::Collider2d>();
+	TypeFactory::load<component::GizmosRenderer>();
 	TypeFactory::load<component::OrthographicCamera>();
-	TypeFactory::load<SpriteAnimator>();
-	TypeFactory::load<SpriteRenderer>();
+	TypeFactory::load<component::SpriteAnimator>();
+	TypeFactory::load<component::SpriteRenderer>();
 }

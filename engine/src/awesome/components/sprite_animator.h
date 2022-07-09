@@ -10,45 +10,48 @@
 #include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
 
-class SpriteAnimator : public Component
+namespace component
 {
-public:
-
-	SpriteAnimator();
-
-	void update(double deltaTime) override;
-
-	void play(const std::string& name, bool loop = false);
-	void pause();
-	void resume();
-	void stop();
-
-	inline bool isPlaying() const { return m_isPlaying; }
-	std::string getPlayingAnimation() const;
-
-	std::map<std::string, SpriteAnimationAssetPtr> animations;
-	bool autoplay;
-
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
-
-	REFLECT()
-
-private:
-
-	struct PlayingState
+	class SpriteAnimator : public Component
 	{
-		std::string name;
-		SpriteAnimationAssetPtr animation;
-		unsigned int frameIndex;
-		bool loop;
-		double timeLeft;
+	public:
+
+		SpriteAnimator();
+
+		void update(double deltaTime) override;
+
+		void play(const std::string& name, bool loop = false);
+		void pause();
+		void resume();
+		void stop();
+
+		inline bool isPlaying() const { return m_isPlaying; }
+		std::string getPlayingAnimation() const;
+
+		std::map<std::string, SpriteAnimationAssetPtr> animations;
+		bool autoplay;
+
+		virtual json::value serialize() const override;
+		virtual void deserialize(const json::value& value) override;
+		virtual void inspect() override;
+
+		REFLECT()
+
+	private:
+
+		struct PlayingState
+		{
+			std::string name;
+			SpriteAnimationAssetPtr animation;
+			unsigned int frameIndex;
+			bool loop;
+			double timeLeft;
+		};
+
+		void updateFrame(const SpriteAnimation::Frame& frame);
+
+		PlayingState m_state;
+		bool m_isPlaying;
+		class SpriteRenderer* m_spriteRenderer;
 	};
-
-	void updateFrame(const SpriteAnimation::Frame& frame);
-
-	PlayingState m_state;
-	bool m_isPlaying;
-	class SpriteRenderer* m_spriteRenderer;
-};
+}

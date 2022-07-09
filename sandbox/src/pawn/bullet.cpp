@@ -8,9 +8,9 @@
 
 void Bullet::init()
 {
-	m_body = getOwner()->findComponent<Body2d>();
-	m_collider = getOwner()->findComponent<Collider2d>();
-	m_collider->onTrigger = [this](const Collider2d& other) -> void
+	m_body = getOwner()->findComponent<component::Body2d>();
+	m_collider = getOwner()->findComponent<component::Collider2d>();
+	m_collider->onTrigger = [this](const component::Collider2d& other) -> void
 	{
 		Health* health = other.getOwner()->findComponent<Health>();
 		if (health)

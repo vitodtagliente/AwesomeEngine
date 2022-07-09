@@ -76,7 +76,7 @@ void CombatController::attack()
 	}
 	else
 	{
-		SpriteAnimator* const animator = getOwner()->findComponent<SpriteAnimator>();
+		component::SpriteAnimator* const animator = getOwner()->findComponent<component::SpriteAnimator>();
 		if (animator) animator->play("attack");
 	}
 }

@@ -12,23 +12,26 @@ namespace graphics
 	class Renderer2D;
 }
 
-class SpriteRenderer : public GraphicsComponent
+namespace component
 {
-public:
-	SpriteRenderer() = default;
-	virtual ~SpriteRenderer() = default;
+	class SpriteRenderer : public GraphicsComponent
+	{
+	public:
+		SpriteRenderer() = default;
+		virtual ~SpriteRenderer() = default;
 
-	SpriteAssetPtr sprite;
-	graphics::Color color{ graphics::Color::White };
-	bool flipX{ false };
-	bool flipY{ false };
+		SpriteAssetPtr sprite;
+		graphics::Color color{ graphics::Color::White };
+		bool flipX{ false };
+		bool flipY{ false };
 
-	virtual void render(graphics::Renderer2D* const renderer) override;
-	virtual void update(double deltaTime) override;
+		virtual void render(graphics::Renderer2D* const renderer) override;
+		virtual void update(double deltaTime) override;
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
+		virtual json::value serialize() const override;
+		virtual void deserialize(const json::value& value) override;
+		virtual void inspect() override;
 
-	REFLECT()
-};
+		REFLECT()
+	};
+}

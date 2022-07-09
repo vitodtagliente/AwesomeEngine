@@ -1,6 +1,5 @@
 #include "health.h"
 
-#include <awesome/components/sprite_renderer.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
@@ -8,7 +7,7 @@
 
 void Health::init()
 {
-	if (m_renderer = getOwner()->findComponent<SpriteRenderer>())
+	if (m_renderer = getOwner()->findComponent<component::SpriteRenderer>())
 	{
 		m_colorToRestore = m_renderer->color;
 	}

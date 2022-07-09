@@ -10,26 +10,29 @@ namespace graphics
 	class Renderer2D;
 }
 
-class GizmosRenderer : public GraphicsComponent
+namespace component
 {
-public:
-	GizmosRenderer() = default;
-
-	enum class Type : int
+	class GizmosRenderer : public GraphicsComponent
 	{
-		None,
-		Rect,
-		Circle
+	public:
+		GizmosRenderer() = default;
+
+		enum class Type : int
+		{
+			None,
+			Rect,
+			Circle
+		};
+
+		Type type{ Type::None };
+		graphics::Color color{ graphics::Color::White };
+
+		void render(class graphics::Renderer2D* const renderer) override;
+
+		virtual json::value serialize() const override;
+		virtual void deserialize(const json::value& value) override;
+		virtual void inspect() override;
+
+		REFLECT()
 	};
-
-	Type type{ Type::None };
-	graphics::Color color{ graphics::Color::White };
-
-	void render(class graphics::Renderer2D* const renderer) override;
-
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
-
-	REFLECT()
-};
+}

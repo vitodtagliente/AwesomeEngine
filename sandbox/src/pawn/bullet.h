@@ -26,8 +26,8 @@ public:
 	REFLECT()
 
 private:
-	Body2d* m_body;
-	Collider2d* m_collider;
+	component::Body2d* m_body;
+	component::Collider2d* m_collider;
 	math::vec3 m_direction;
 	float m_speed{ 1.f };
 };

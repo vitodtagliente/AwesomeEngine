@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/components/sprite_renderer.h>
 #include <awesome/core/timer.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
@@ -37,7 +38,7 @@ private:
 	bool m_destroyOnDeath{ false };
 	graphics::Color m_hitColor{ graphics::Color(1.f, 1.f, 1.f, 5.f) };
 	double m_hitDuration{ .1 };
-	class SpriteRenderer* m_renderer{ nullptr };
+	component::SpriteRenderer* m_renderer{ nullptr };
 	Timer m_timer{ .1 };
 	int m_value{ 100 };
 };
