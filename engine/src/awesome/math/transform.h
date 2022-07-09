@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtmath/transform.h>
-
-using namespace math;

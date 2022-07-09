@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtgraphics/texture_rect.h>
-
-using namespace graphics;

@@ -56,8 +56,8 @@ namespace editor
 		static void input(const std::string& name, float& value);
 		static void input(const std::string& name, double& value);
 		static void input(const std::string& name, std::string& value);
-		static void input(const std::string& name, vec2& value);
-		static void input(const std::string& name, vec3& value);
+		static void input(const std::string& name, math::vec2& value);
+		static void input(const std::string& name, math::vec3& value);
 		static void input(const std::string& name, graphics::Color& value);
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);

@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtgraphics/color.h>
-
-using namespace graphics;

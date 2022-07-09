@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtgraphics/texture_coords.h>
-
-using namespace graphics;

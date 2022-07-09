@@ -142,12 +142,12 @@ namespace editor
 		ImGui::InputText(name.c_str(), &value);
 	}
 
-	void Layout::input(const std::string& name, vec2& value)
+	void Layout::input(const std::string& name, math::vec2& value)
 	{
 		ImGui::InputFloat2(id(name).c_str(), value.data);
 	}
 
-	void Layout::input(const std::string& name, vec3& value)
+	void Layout::input(const std::string& name, math::vec3& value)
 	{
 		ImGui::InputFloat3(id(name).c_str(), value.data);
 	}

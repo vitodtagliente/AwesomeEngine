@@ -3,5 +3,3 @@
 
 #include <vdtgraphics/camera.h>
 #include <vdtgraphics/orthographic_camera.h>
-
-using namespace graphics;

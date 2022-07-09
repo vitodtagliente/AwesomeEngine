@@ -24,5 +24,5 @@ public:
 	REFLECT()
 
 private:
-	std::optional<vec2> m_dragPosition;
+	std::optional<math::vec2> m_dragPosition;
 };

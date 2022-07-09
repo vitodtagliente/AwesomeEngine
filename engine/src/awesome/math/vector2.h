@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtmath/vector2.h>
-
-using namespace math;

@@ -2,5 +2,3 @@
 #pragma once
 
 #include <vdtmath/matrix4.h>
-
-using namespace math;

@@ -99,12 +99,12 @@ Entity* const World::findEntityByName(const std::string& name) const
 
 Entity* const World::spawn()
 {
-	return spawn(vec3::zero, quaternion::identity);
+	return spawn(math::vec3::zero, math::quaternion::identity);
 }
 
-Entity* const World::spawn(const vec3& position)
+Entity* const World::spawn(const math::vec3& position)
 {
-	return spawn(position, quaternion::identity);
+	return spawn(position, math::quaternion::identity);
 }
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
@@ -120,15 +120,15 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 
 Entity* const World::spawn(const PrefabAssetPtr& prefab)
 {
-	return spawn(prefab, vec3::zero, quaternion::identity);
+	return spawn(prefab, math::vec3::zero, math::quaternion::identity);
 }
 
-Entity* const World::spawn(const PrefabAssetPtr& prefab, const vec3& position)
+Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position)
 {
-	return spawn(prefab, position, quaternion::identity);
+	return spawn(prefab, position, math::quaternion::identity);
 }
 
-Entity* const World::spawn(const PrefabAssetPtr& prefab, const vec3& position, const quaternion& quaternion)
+Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
 {
 	Entity* const entity = new Entity();
 	Entity::duplicate(prefab, *entity);

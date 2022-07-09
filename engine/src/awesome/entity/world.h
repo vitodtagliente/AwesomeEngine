@@ -38,11 +38,11 @@ public:
 	inline const uuid& getLoadedSceneId() const { return m_loadedSceneId; }
 
 	Entity* const spawn();
-	Entity* const spawn(const vec3& position);
-	Entity* const spawn(const vec3& position, const quaternion& quaternion);
+	Entity* const spawn(const math::vec3& position);
+	Entity* const spawn(const math::vec3& position, const math::quaternion& quaternion);
 	Entity* const spawn(const PrefabAssetPtr& prefab);
-	Entity* const spawn(const PrefabAssetPtr& prefab, const vec3& position);
-	Entity* const spawn(const PrefabAssetPtr& prefab, const vec3& position, const quaternion& quaternion);
+	Entity* const spawn(const PrefabAssetPtr& prefab, const math::vec3& position);
+	Entity* const spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion);
 
 	void destroy(Entity* const entity);
 	void destroy(const uuid& id);
