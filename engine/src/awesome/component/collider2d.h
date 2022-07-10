@@ -8,10 +8,15 @@
 
 namespace graphics
 {
-	class Renderer;
+	class Renderer2D;
 }
 
-REFLECT_ENUM(Collider2dType,
+namespace component
+{
+	enum class Collider2dType;
+}
+
+REFLECT_ENUM(component::Collider2dType,
 	Circle,
 	Rect
 )
