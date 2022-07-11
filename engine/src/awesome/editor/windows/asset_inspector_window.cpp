@@ -1,7 +1,8 @@
-#include "inspector_window.h"
+#include <awesome/editor/windows/asset_inspector_window.h>
 
+#include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
-#include <awesome/editor/windows/inspectors/entity_inspector.h>
+
 #include <awesome/editor/windows/inspectors/image_inspector.h>
 #include <awesome/editor/windows/inspectors/prefab_inspector.h>
 #include <awesome/editor/windows/inspectors/scene_inspector.h>
@@ -11,15 +12,8 @@
 
 namespace editor
 {
-	InspectorWindow::InspectorWindow()
-		: Window()
-		, m_inspectors()
+	void AssetInspectorWindow::init()
 	{
-	}
-
-	void InspectorWindow::init()
-	{
-		m_inspectors.push_back(std::make_unique<EntityInspector>());
 		m_inspectors.push_back(std::make_unique<ImageInspector>());
 		m_inspectors.push_back(std::make_unique<PrefabInspector>());
 		m_inspectors.push_back(std::make_unique<SceneInspector>());
@@ -28,37 +22,39 @@ namespace editor
 		m_inspectors.push_back(std::make_unique<TextInspector>());
 	}
 
-	void InspectorWindow::update(const double deltaTime)
+	void AssetInspectorWindow::render()
 	{
-		const auto& selection = State::instance().selection;
-		if (selection.has_value())
+		const State& state = State::instance();
+		if (state.selection.asset)
 		{
+			Layout::text(state.selection.asset->descriptor.path.filename().string());
+			Layout::separator();
 			for (const auto& inspector : m_inspectors)
 			{
-				if (inspector->canInspect(*selection))
+				if (inspector->canInspect(state.selection.asset))
 				{
-					inspector->update(*selection, deltaTime);
+					inspector->inspect(state.selection.asset);
 					break;
 				}
 			}
 		}
 	}
 
-	void InspectorWindow::render()
+	void AssetInspectorWindow::update(const double deltaTime)
 	{
-		const auto& selection = State::instance().selection;
-		if (selection.has_value())
+		const State& state = State::instance();
+		if (state.selection.asset)
 		{
 			for (const auto& inspector : m_inspectors)
 			{
-				if (inspector->canInspect(*selection))
+				if (inspector->canInspect(state.selection.asset))
 				{
-					inspector->inspect(*selection);
+					inspector->update(state.selection.asset, deltaTime);
 					break;
 				}
 			}
 		}
 	}
 
-	REFLECT_WINDOW(InspectorWindow)
+	REFLECT_WINDOW(AssetInspectorWindow);
 }

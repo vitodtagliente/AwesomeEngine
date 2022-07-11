@@ -10,8 +10,10 @@
 #include <awesome/core/reflection.h>
 #include <awesome/editor/color_scheme.h>
 #include <awesome/editor/layout.h>
+
+#include <awesome/editor/windows/asset_inspector_window.h>
 #include <awesome/editor/windows/content_browser_window.h>
-#include <awesome/editor/windows/inspector_window.h>
+#include <awesome/editor/windows/entity_inspector_window.h>
 #include <awesome/editor/windows/performance_window.h>
 #include <awesome/editor/windows/renderer_window.h>
 #include <awesome/editor/windows/scene_window.h>
@@ -105,8 +107,9 @@ namespace editor
 
 	void Editor::registerWindows()
 	{
+		TypeFactory::load<AssetInspectorWindow>();
 		TypeFactory::load<ContentBrowserWindow>();
-		TypeFactory::load<InspectorWindow>();
+		TypeFactory::load<EntityInspectorWindow>();
 		TypeFactory::load<PerformanceWindow>();
 		TypeFactory::load<RendererWindow>();
 		TypeFactory::load<SceneWindow>();

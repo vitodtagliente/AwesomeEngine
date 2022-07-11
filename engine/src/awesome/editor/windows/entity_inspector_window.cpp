@@ -1,24 +1,17 @@
-#include "entity_inspector.h"
+#include <awesome/editor/windows/entity_inspector_window.h>
 
 #include <awesome/asset/asset_importer.h>
-#include <awesome/asset/prefab_asset.h>
 #include <awesome/data/archive.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
-#include <awesome/editor/text_icon.h>
-#include <awesome/encoding/json.h>
 
 namespace editor
 {
-	bool EntityInspector::canInspect(const State::Selection& selection)
+	void EntityInspectorWindow::render()
 	{
-		return selection.type == State::Selection::Type::Entity;
-	}
-
-	void EntityInspector::inspect(const State::Selection& selection)
-	{
-		Entity* const entity = selection.asEntity();
+		const State& state = State::instance();
+		Entity* const entity = state.selection.entity;
 		if (entity == nullptr)
 		{
 			return;
@@ -46,4 +39,6 @@ namespace editor
 
 		m_saveFileDialog.render();
 	}
+
+	REFLECT_WINDOW(EntityInspectorWindow);
 }

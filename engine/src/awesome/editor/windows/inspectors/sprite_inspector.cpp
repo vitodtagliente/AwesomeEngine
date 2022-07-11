@@ -6,15 +6,14 @@
 
 namespace editor
 {
-	bool SpriteInspector::canInspect(const State::Selection& selection)
+	bool SpriteInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::Sprite;
+		return asset->descriptor.type == Asset::Type::Sprite;
 	}
 
-	void SpriteInspector::inspect(const State::Selection& selection)
+	void SpriteInspector::inspect(const AssetPtr& asset)
 	{
-		SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(selection.asAsset());
+		SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(asset);
 		if (sprite == nullptr || !sprite->data.has_value())
 		{
 			return;

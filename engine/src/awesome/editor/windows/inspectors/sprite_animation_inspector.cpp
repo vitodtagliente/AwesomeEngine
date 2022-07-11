@@ -6,15 +6,14 @@
 
 namespace editor
 {
-	bool SpriteAnimationInspector::canInspect(const State::Selection& selection)
+	bool SpriteAnimationInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::SpriteAnimation;
+		return asset->descriptor.type == Asset::Type::SpriteAnimation;
 	}
 
-	void SpriteAnimationInspector::inspect(const State::Selection& selection)
+	void SpriteAnimationInspector::inspect(const AssetPtr& asset)
 	{
-		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(selection.asAsset());
+		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(asset);
 		if (animation == nullptr || !animation->data.has_value())
 		{
 			return;
@@ -42,9 +41,9 @@ namespace editor
 		}
 	}
 
-	void SpriteAnimationInspector::update(const State::Selection& selection, double deltaTime)
+	void SpriteAnimationInspector::update(const AssetPtr& asset, const double deltaTime)
 	{
-		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(selection.asAsset());
+		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(asset);
 		if (animation == nullptr || !animation->data.has_value())
 		{
 			return;

@@ -15,10 +15,7 @@ namespace editor
 	void SceneWindow::render()
 	{
 		State& state = State::instance();
-		const auto& selection = state.selection;
-		Entity* const selectedEntity = selection.has_value() && selection->type == State::Selection::Type::Entity
-			? selection->asEntity()
-			: nullptr;
+		Entity* const selectedEntity = state.selection.entity;
 
 		const bool hasActiveFocus = Layout::isWindowFocused();
 		if (hasActiveFocus && selectedEntity != nullptr)

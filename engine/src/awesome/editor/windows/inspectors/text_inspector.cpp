@@ -5,20 +5,19 @@
 
 namespace editor
 {
-	bool TextInspector::canInspect(const State::Selection& selection)
+	bool TextInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::Text;
+		return asset->descriptor.type == Asset::Type::Text;
 	}
 
-	void TextInspector::inspect(const State::Selection& selection)
+	void TextInspector::inspect(const AssetPtr& asset)
 	{
-		TextAssetPtr asset = std::static_pointer_cast<TextAsset>(selection.asAsset());
-		if (asset == nullptr || !asset->data.has_value())
+		TextAssetPtr text = std::static_pointer_cast<TextAsset>(asset);
+		if (asset == nullptr || !text->data.has_value())
 		{
 			return;
 		}
 
-		Layout::textWrapped(asset->data.value());
+		Layout::textWrapped(text->data.value());
 	}
 }

@@ -6,15 +6,14 @@
 
 namespace editor
 {
-	bool ImageInspector::canInspect(const State::Selection& selection)
+	bool ImageInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::Image;
+		return asset->descriptor.type == Asset::Type::Image;
 	}
 
-	void ImageInspector::inspect(const State::Selection& selection)
+	void ImageInspector::inspect(const AssetPtr& asset)
 	{
-		ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(selection.asAsset());
+		ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(asset);
 		if (image == nullptr || !image->data.has_value())
 		{
 			return;

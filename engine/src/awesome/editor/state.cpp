@@ -15,20 +15,22 @@ namespace editor
 
 	void State::select(Entity* const entity)
 	{
-		selection = Selection(entity);
+		selection.entity = entity;
+		Layout::clear();
 	}
 
 	void State::select(const AssetPtr& asset)
 	{
 		static const size_t s_maxHistory{ 10 };
 
-		selection = Selection(asset);
+		selection.asset = asset;
 
 		if (history.size() == s_maxHistory)
 		{
-			history.pop_back();
+			history.pop();
 		}
-		history.push_back(asset);
+		history.push(asset);
+		Layout::clear();
 	}
 
 	bool State::hasPendingContentRefresh()
@@ -39,27 +41,13 @@ namespace editor
 
 	void State::select()
 	{
-		selection = Selection();
+		selection.clear();
 	}
 
-	State::Selection::Selection()
-		: type(Type::None)
-		, data()
+	void State::Selection::clear()
 	{
-		Layout::clear();
-	}
-
-	State::Selection::Selection(Entity* const entity)
-		: type(Type::Entity)
-		, data(entity)
-	{
-		Layout::clear();
-	}
-
-	State::Selection::Selection(const AssetPtr& asset)
-		: type(Type::Asset)
-		, data(asset)
-	{
-		Layout::clear();
+		asset = nullptr;
+		entity = nullptr;
+		path = AssetLibrary::instance().getDirectory();
 	}
 }

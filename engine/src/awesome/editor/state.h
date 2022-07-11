@@ -2,37 +2,27 @@
 #pragma once
 
 #include <filesystem>
-#include <optional>
 #include <string>
-#include <variant>
-#include <vector>
+#include <queue>
 
-#include <awesome/core/singleton.h>
 #include <awesome/asset/asset.h>
+#include <awesome/core/singleton.h>
 #include <awesome/entity/entity.h>
 
 namespace editor
 {
-	struct State : public Singleton<State>
+	class State : public Singleton<State>
 	{
+	public:
 		struct Selection
 		{
-			enum class Type
-			{
-				None,
-				Asset,
-				Entity
-			};
+			Selection() = default;
 
-			Selection();
-			Selection(Entity* const entity);
-			Selection(const AssetPtr& asset);
+			void clear();
 
-			inline Entity* asEntity() const { return std::get<Entity*>(data); }
-			inline AssetPtr asAsset() const { return std::get<AssetPtr>(data); }
-
-			Type type;
-			std::variant<Entity*, AssetPtr> data;
+			AssetPtr asset;
+			Entity* entity{ nullptr };
+			std::filesystem::path path;
 		};
 
 		State();
@@ -45,8 +35,10 @@ namespace editor
 
 		bool isContentChanged;
 		std::filesystem::path path;
-		std::optional<Selection> selection;
+		Selection selection;
 		bool showWindows{ true };
-		std::vector<AssetPtr> history;
+
+	private:
+		std::queue<AssetPtr> history;
 	};
 }

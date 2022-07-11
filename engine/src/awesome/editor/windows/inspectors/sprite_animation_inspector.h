@@ -1,23 +1,19 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
-
 #include <awesome/asset/sprite_animation_asset.h>
-#include <awesome/editor/windows/inspector_window.h>
+#include <awesome/editor/windows/asset_inspector_window.h>
 
 namespace editor
 {
-	class SpriteAnimationInspector : public InspectorWindow::Inspector
+	class SpriteAnimationInspector : public AssetInspectorWindow::Inspector
 	{
 	public:
 		SpriteAnimationInspector() = default;
 
-		virtual bool canInspect(const State::Selection& selection) override;
-		virtual void inspect(const State::Selection& selection) override;
-		virtual void update(const State::Selection& selection, double deltaTime) override;
+		virtual bool canInspect(const AssetPtr& asset) override;
+		virtual void inspect(const AssetPtr& asset) override;
+		virtual void update(const AssetPtr& asset, double deltaTime) override;
 
 	private:
 		SpriteAnimationAsset* m_previousSelectedAsset;

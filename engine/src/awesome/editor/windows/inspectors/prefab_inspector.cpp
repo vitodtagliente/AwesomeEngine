@@ -9,15 +9,14 @@
 
 namespace editor
 {
-	bool PrefabInspector::canInspect(const State::Selection& selection)
+	bool PrefabInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::Prefab;
+		return asset->descriptor.type == Asset::Type::Prefab;
 	}
 
-	void PrefabInspector::inspect(const State::Selection& selection)
+	void PrefabInspector::inspect(const AssetPtr& asset)
 	{
-		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(selection.asAsset());
+		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(asset);
 		if (prefab == nullptr || !prefab->data.has_value())
 		{
 			return;

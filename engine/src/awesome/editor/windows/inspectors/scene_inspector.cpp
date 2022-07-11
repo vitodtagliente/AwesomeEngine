@@ -2,29 +2,26 @@
 
 #include <awesome/asset/scene_asset.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
-#include <awesome/encoding/json.h>
 #include <awesome/entity/world.h>
 
 namespace editor
 {
-	bool SceneInspector::canInspect(const State::Selection& selection)
+	bool SceneInspector::canInspect(const AssetPtr& asset)
 	{
-		return selection.type == State::Selection::Type::Asset
-			&& selection.asAsset()->descriptor.type == Asset::Type::Scene;
+		return asset->descriptor.type == Asset::Type::Scene;
 	}
 
-	void SceneInspector::inspect(const State::Selection& selection)
+	void SceneInspector::inspect(const AssetPtr& asset)
 	{
-		SceneAssetPtr asset = std::static_pointer_cast<SceneAsset>(selection.asAsset());
-		if (asset == nullptr || !asset->data.has_value())
+		SceneAssetPtr scene = std::static_pointer_cast<SceneAsset>(asset);
+		if (scene == nullptr || !scene->data.has_value())
 		{
 			return;
 		}
 
 		if (Layout::button("Import"))
 		{
-			World::instance().load(asset);
+			World::instance().load(scene);
 		}
 	}
 }
