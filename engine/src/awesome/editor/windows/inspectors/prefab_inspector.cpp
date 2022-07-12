@@ -36,7 +36,7 @@ namespace editor
 
 		Layout::separator();
 
-		EntityLayout::input(m_entity);
+		EntityLayout::input(&m_entity);
 
 		Layout::separator();
 

@@ -1,11 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
-
-#include <awesome/entity/entity.h>
+class Entity;
 
 namespace editor
 {
@@ -13,6 +9,6 @@ namespace editor
 	{
 		EntityLayout() = delete;
 
-		static void input(Entity& entity);
+		static void input(Entity* const entity);
 	};
 }

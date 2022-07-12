@@ -23,7 +23,7 @@ namespace editor
 			return;
 		}
 
-		EntityLayout::input(*entity);
+		EntityLayout::input(entity);
 
 		Layout::separator();
 
