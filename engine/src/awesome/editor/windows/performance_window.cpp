@@ -6,6 +6,7 @@
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/world.h>
+#include <awesome/graphics/context.h>
 
 namespace editor
 {
@@ -15,6 +16,13 @@ namespace editor
 		{
 			std::ostringstream s;
 			s << std::round(1000.0f / ImGui::GetIO().Framerate) << " ms/frame (" << std::round(ImGui::GetIO().Framerate) << " FPS)";
+			Layout::text(s.str());
+		}
+
+		// Renderer
+		{
+			std::ostringstream s;
+			s << "Draw Calls: " << graphics::Context::instance().getDrawCalls();
 			Layout::text(s.str());
 		}
 

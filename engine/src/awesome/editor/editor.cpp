@@ -15,7 +15,6 @@
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/entity_inspector_window.h>
 #include <awesome/editor/windows/performance_window.h>
-#include <awesome/editor/windows/renderer_window.h>
 #include <awesome/editor/windows/scene_window.h>
 #include <awesome/editor/windows/settings_window.h>
 
@@ -111,7 +110,6 @@ namespace editor
 		TypeFactory::load<ContentBrowserWindow>();
 		TypeFactory::load<EntityInspectorWindow>();
 		TypeFactory::load<PerformanceWindow>();
-		TypeFactory::load<RendererWindow>();
 		TypeFactory::load<SceneWindow>();
 		TypeFactory::load<SettingsWindow>();
 

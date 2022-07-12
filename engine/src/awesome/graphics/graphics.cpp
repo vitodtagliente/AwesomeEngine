@@ -20,6 +20,7 @@ namespace graphics
 
 	void Graphics::postRendering()
 	{
-		Context::instance().renderer.flush();
+		Context& context = Context::instance();
+		context.m_drawCalls = context.renderer.flush();
 	}
 }

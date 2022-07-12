@@ -11,8 +11,14 @@ namespace graphics
 	class Context : public Singleton<Context>
 	{
 	public:
+		friend class Graphics;
+
 		Context();
 
-		Renderer2D renderer;		
+		Renderer2D renderer;
+		inline int getDrawCalls() const { return m_drawCalls; }
+
+	private:
+		int m_drawCalls;
 	};
 }
