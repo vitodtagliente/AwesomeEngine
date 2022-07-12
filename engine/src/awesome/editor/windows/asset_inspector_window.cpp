@@ -24,16 +24,17 @@ namespace editor
 
 	void AssetInspectorWindow::render()
 	{
-		const State& state = State::instance();
-		if (state.selection.asset)
+		AssetPtr asset = State::instance().selection.asset;
+		if (asset)
 		{
-			Layout::text(state.selection.asset->descriptor.path.filename().string());
+			Layout::text(asset->descriptor.path.filename().string());
+			Layout::text(enumToString(asset->descriptor.type));
 			Layout::separator();
 			for (const auto& inspector : m_inspectors)
 			{
-				if (inspector->canInspect(state.selection.asset))
+				if (inspector->canInspect(asset))
 				{
-					inspector->inspect(state.selection.asset);
+					inspector->inspect(asset);
 					break;
 				}
 			}

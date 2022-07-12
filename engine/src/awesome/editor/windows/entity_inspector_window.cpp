@@ -10,10 +10,16 @@ namespace editor
 {
 	void EntityInspectorWindow::render()
 	{
-		const State& state = State::instance();
+		State& state = State::instance();
 		Entity* const entity = state.selection.entity;
 		if (entity == nullptr)
 		{
+			return;
+		}
+
+		if (entity->getState() != Entity::State::Alive)
+		{
+			state.select();
 			return;
 		}
 
