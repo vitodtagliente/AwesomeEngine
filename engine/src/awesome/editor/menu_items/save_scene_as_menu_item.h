@@ -1,8 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <string>
-
 #include <awesome/editor/menu_item.h>
 #include <awesome/editor/widgets/save_file_dialog.h>
 

@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
 #include <vector>
 
 #include <awesome/editor/menu_item.h>
@@ -24,7 +23,7 @@ namespace editor
 		void menuScene();
 		void menuView();
 
-		std::vector<std::unique_ptr<MenuItem>> m_menuItems;
+		std::vector<MenuItemPtr> m_menuItems;
 		SaveFileDialog m_saveFileDialog;
 	};
 }

@@ -1,7 +1,5 @@
 #include "menu.h"
 
-#include <filesystem>
-
 #include <awesome/application/application.h>
 #include <awesome/editor/private/menu_layout.h>
 
@@ -29,7 +27,7 @@ namespace editor
 			MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);
 			if (item)
 			{
-				m_menuItems.push_back(std::unique_ptr<MenuItem>(item));
+				m_menuItems.push_back(MenuItemPtr(item));
 			}
 		}
 	}
