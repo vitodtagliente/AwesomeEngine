@@ -101,8 +101,13 @@ namespace editor
 
 	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect)
 	{
-		const float size = ImGui::GetContentRegionAvailWidth();
-		Layout::image(image, rect, size, size);
+		if (image && image->data.has_value())
+		{
+			const float size = ImGui::GetContentRegionAvailWidth();
+			const float width = std::min(size, image->data->width * rect.width * 2);
+			const float height = std::min(size, image->data->height * rect.height * 2);
+			Layout::image(image, rect, width, height);
+		}
 	}
 
 	void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect, const float width, const float height)
