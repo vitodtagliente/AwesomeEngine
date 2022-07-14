@@ -15,8 +15,14 @@ namespace editor
 	void ImageInspector::inspect(const AssetPtr& asset)
 	{
 		ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(asset);
-		if (image == nullptr || !image->data.has_value())
+		if (image == nullptr)
 		{
+			return;
+		}
+
+		if (!image->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 

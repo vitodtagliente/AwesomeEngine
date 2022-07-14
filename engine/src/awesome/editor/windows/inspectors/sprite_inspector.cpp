@@ -14,8 +14,14 @@ namespace editor
 	void SpriteInspector::inspect(const AssetPtr& asset)
 	{
 		SpriteAssetPtr sprite = std::static_pointer_cast<SpriteAsset>(asset);
-		if (sprite == nullptr || !sprite->data.has_value())
+		if (sprite == nullptr)
 		{
+			return;
+		}
+
+		if (!sprite->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 

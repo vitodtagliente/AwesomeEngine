@@ -14,8 +14,14 @@ namespace editor
 	void SceneInspector::inspect(const AssetPtr& asset)
 	{
 		SceneAssetPtr scene = std::static_pointer_cast<SceneAsset>(asset);
-		if (scene == nullptr || !scene->data.has_value())
+		if (scene == nullptr)
 		{
+			return;
+		}
+
+		if (!scene->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 

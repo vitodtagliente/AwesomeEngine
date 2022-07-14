@@ -66,7 +66,10 @@ namespace editor
 				}
 				else if (file.stem().extension() == m_extension)
 				{
-					ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups);
+					if (ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups))
+					{
+						m_filename = file.stem().stem().string();
+					}
 				}
 
 				if (changeDirectory)

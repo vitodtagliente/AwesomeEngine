@@ -13,8 +13,14 @@ namespace editor
 	void TextInspector::inspect(const AssetPtr& asset)
 	{
 		TextAssetPtr text = std::static_pointer_cast<TextAsset>(asset);
-		if (asset == nullptr || !text->data.has_value())
+		if (asset == nullptr)
 		{
+			return;
+		}
+
+		if (!text->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 

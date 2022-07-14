@@ -1,6 +1,5 @@
 #include "sprite_animation_inspector.h"
 
-#include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 
@@ -14,8 +13,14 @@ namespace editor
 	void SpriteAnimationInspector::inspect(const AssetPtr& asset)
 	{
 		SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(asset);
-		if (animation == nullptr || !animation->data.has_value())
+		if (animation == nullptr)
 		{
+			return;
+		}
+
+		if (!animation->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 

@@ -39,6 +39,7 @@ void SceneLoader::update(const double)
 	{
 		m_isLoading = false;
 		m_handler(m_entities);
+		m_entities.clear();
 	}
 }
 

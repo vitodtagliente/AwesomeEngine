@@ -17,8 +17,14 @@ namespace editor
 	void PrefabInspector::inspect(const AssetPtr& asset)
 	{
 		PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(asset);
-		if (prefab == nullptr || !prefab->data.has_value())
+		if (prefab == nullptr)
 		{
+			return;
+		}
+
+		if (!prefab->data.has_value())
+		{
+			Layout::text("Loading...");
 			return;
 		}
 		
