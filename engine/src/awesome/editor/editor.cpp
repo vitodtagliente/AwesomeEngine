@@ -9,6 +9,7 @@
 #include <awesome/application/input.h>
 #include <awesome/core/reflection.h>
 #include <awesome/editor/color_scheme.h>
+#include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 
 #include <awesome/editor/windows/asset_inspector_window.h>
@@ -83,6 +84,8 @@ namespace editor
 				Layout::end();
 			}
 		}
+
+		Dialog::instance().render();
 	}
 
 	void Editor::postRendering()
