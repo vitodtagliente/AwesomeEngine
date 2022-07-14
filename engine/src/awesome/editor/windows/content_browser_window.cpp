@@ -149,7 +149,7 @@ namespace editor
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
-		if (Layout::isWindowHovered())
+		if (hasFocus())
 		{
 			if (m_state == NavigationState::Navigating
 				&& !m_contextMenu.isOpen()

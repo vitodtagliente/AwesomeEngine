@@ -17,7 +17,7 @@ namespace editor
 		State& state = State::instance();
 		Entity* const selectedEntity = state.selection.entity;
 
-		const bool hasActiveFocus = Layout::isWindowFocused();
+		const bool hasActiveFocus = hasFocus();
 		if (hasActiveFocus && selectedEntity != nullptr)
 		{
 			processInput(selectedEntity);

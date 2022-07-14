@@ -180,7 +180,7 @@ namespace editor
 
 	bool Layout::isWindowFocused()
 	{
-		return ImGui::IsWindowFocused();
+		return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 	}
 
 	bool Layout::isWindowHovered()
