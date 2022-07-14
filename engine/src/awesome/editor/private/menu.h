@@ -4,7 +4,6 @@
 #include <vector>
 
 #include <awesome/editor/menu_item.h>
-#include <awesome/editor/widgets/save_file_dialog.h>
 
 namespace editor
 {
@@ -24,6 +23,5 @@ namespace editor
 		void menuView();
 
 		std::vector<MenuItemPtr> m_menuItems;
-		SaveFileDialog m_saveFileDialog;
 	};
 }

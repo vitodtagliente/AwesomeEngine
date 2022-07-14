@@ -10,7 +10,6 @@
 #include <awesome/core/reflection.h>
 #include <awesome/editor/menu_item.h>
 #include <awesome/editor/widgets/context_menu.h>
-#include <awesome/editor/widgets/open_file_dialog.h>
 #include <awesome/editor/window.h>
 #include <awesome/editor/utils/dir.h>
 
@@ -54,7 +53,6 @@ namespace editor
 		std::string m_filter;
 		std::vector<std::string> m_menuItemNames;
 		std::vector<std::unique_ptr<MenuItem>> m_menuItems;
-		OpenFileDialog m_openFileDialog;
 		std::filesystem::path m_root{ AssetLibrary::instance().getDirectory() };
 		std::filesystem::path m_selectedItem;
 		NavigationState m_state{ NavigationState::Navigating };

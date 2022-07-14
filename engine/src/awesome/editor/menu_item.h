@@ -17,7 +17,6 @@ namespace editor
 		virtual std::string getCategory() const = 0;
 		virtual std::string getName() const = 0;
 
-		virtual void render() {}
 		virtual void execute() = 0;
 	};
 

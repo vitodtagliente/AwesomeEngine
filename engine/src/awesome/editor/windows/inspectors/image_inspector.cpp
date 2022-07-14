@@ -2,6 +2,7 @@
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/sprite_asset.h>
+#include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 
 namespace editor
@@ -45,7 +46,7 @@ namespace editor
 
 			if (Layout::button(TextIcon::save(" Save")) && m_rows > 0 && m_columns > 0)
 			{
-				m_saveFileDialog.open("Save SpriteSheet...", Asset::getExtensionByType(Asset::Type::Sprite), [&image, rows = m_rows, columns = m_columns, padding = m_padding](const std::filesystem::path& path) -> void
+				Dialog::instance().save("Save SpriteSheet...", Asset::getExtensionByType(Asset::Type::Sprite), [&image, rows = m_rows, columns = m_columns, padding = m_padding](const std::filesystem::path& path) -> void
 					{
 						if (!path.string().empty())
 						{
@@ -73,9 +74,6 @@ namespace editor
 					}
 				);
 			}
-
 		}
-
-		m_saveFileDialog.render();
 	}
 }

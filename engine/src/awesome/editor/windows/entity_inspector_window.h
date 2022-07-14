@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/editor/window.h>
 
 namespace editor
@@ -15,8 +14,5 @@ namespace editor
 		void render() override;
 
 		REFLECT()
-
-	private:
-		SaveFileDialog m_saveFileDialog;
 	};
 }

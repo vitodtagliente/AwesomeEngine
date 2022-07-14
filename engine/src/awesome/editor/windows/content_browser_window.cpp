@@ -5,6 +5,7 @@
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_filesystem.h>
 #include <awesome/core/string_util.h>
+#include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
@@ -134,13 +135,7 @@ namespace editor
 			}
 		}
 		ImGui::EndChild();
-
-		for (const auto& item : m_menuItems)
-		{
-			item->render();
-		}
 		m_contextMenu.render();
-		m_openFileDialog.render();
 	}
 
 	void ContentBrowserWindow::update(const double)
@@ -264,7 +259,7 @@ namespace editor
 	{
 		if (name == "Import...")
 		{
-			m_openFileDialog.open("Import file...", {}, [](const std::filesystem::path&) -> void
+			Dialog::instance().open("Import file...", {}, [](const std::filesystem::path&) -> void
 				{
 					// TODO
 				}

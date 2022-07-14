@@ -43,12 +43,6 @@ namespace editor
 
 			MenuLayout::endMainMenu();
 		}
-
-		for (const auto& item : m_menuItems)
-		{
-			item->render();
-		}
-		m_saveFileDialog.render();
 	}
 
 	void Menu::menuAssets()

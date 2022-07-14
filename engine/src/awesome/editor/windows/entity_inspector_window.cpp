@@ -2,6 +2,7 @@
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/data/archive.h>
+#include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
@@ -29,7 +30,7 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save Prefab")))
 		{
-			m_saveFileDialog.open("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
+			Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
 				{
 					if (!path.string().empty())
 					{
@@ -42,8 +43,6 @@ namespace editor
 				}
 			);
 		}
-
-		m_saveFileDialog.render();
 	}
 
 	REFLECT_WINDOW(EntityInspectorWindow);

@@ -3,7 +3,6 @@
 
 #include <awesome/asset/image_asset.h>
 #include <awesome/editor/windows/asset_inspector_window.h>
-#include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/math/vector2.h>
 
 namespace editor
@@ -21,6 +20,5 @@ namespace editor
 		math::vec2 m_padding;
 		ImageAssetPtr m_previouslySelectedImage;
 		int m_rows;
-		SaveFileDialog m_saveFileDialog;
 	};
 }
