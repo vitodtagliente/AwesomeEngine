@@ -23,7 +23,7 @@ namespace editor
 		if (image != m_previouslySelectedImage)
 		{
 			m_previouslySelectedImage = image;
-			m_rows = m_columns = 0;
+			m_rows = m_columns = 1;
 			m_padding.x = m_padding.y = 0.0f;
 		}
 
@@ -46,7 +46,7 @@ namespace editor
 
 			if (Layout::button(TextIcon::save(" Save")) && m_rows > 0 && m_columns > 0)
 			{
-				Dialog::instance().save("Save SpriteSheet...", Asset::getExtensionByType(Asset::Type::Sprite), [&image, rows = m_rows, columns = m_columns, padding = m_padding](const std::filesystem::path& path) -> void
+				Dialog::instance().save("Save SpriteSheet...", Asset::getExtensionByType(Asset::Type::Sprite), [image, rows = m_rows, columns = m_columns, padding = m_padding](const std::filesystem::path& path) -> void
 					{
 						if (!path.string().empty())
 						{

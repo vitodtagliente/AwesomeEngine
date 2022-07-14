@@ -16,9 +16,9 @@ namespace editor
 		virtual void inspect(const AssetPtr& asset) override;
 
 	private:
-		int m_columns;
+		int m_columns{ 1 };
 		math::vec2 m_padding;
 		ImageAssetPtr m_previouslySelectedImage;
-		int m_rows;
+		int m_rows{ 1 };
 	};
 }

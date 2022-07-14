@@ -90,14 +90,11 @@ namespace editor
 			if (Layout::button(TextIcon::save(" Save")))
 			{
 				const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
-				if (!std::filesystem::exists(fileToSave))
-				{
-					m_handler(fileToSave);
-					State::instance().isContentChanged = true;
-					m_filename.clear();
-					m_open = false;
-					ImGui::CloseCurrentPopup();
-				}
+				m_handler(fileToSave);
+				State::instance().isContentChanged = true;
+				m_filename.clear();
+				m_open = false;
+				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
 		}
