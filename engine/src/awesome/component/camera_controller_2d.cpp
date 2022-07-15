@@ -33,7 +33,7 @@ namespace component
 			{
 				math::vec2 direction = input.getMousePosition() - m_dragPosition.value();
 				math::vec2 amount = direction * speed * static_cast<float>(deltaTime);
-				getOwner()->transform.position += math::vec3(-amount.x, amount.y, 0.0f);
+				getOwner()->transform.position += math::vec3(amount.x, -amount.y, 0.0f);
 				m_dragPosition = input.getMousePosition();
 			}
 			else
