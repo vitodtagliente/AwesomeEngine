@@ -12,32 +12,6 @@
 
 namespace editor
 {
-	void ContentBrowserWindow::init()
-	{
-		// m_menuItemNames.push_back("Import...");
-		// m_menuItemNames.push_back(ContextMenu::Separator);
-
-		std::set<std::string> types = TypeFactory::list("MenuItem");
-		for (const std::string& type : types)
-		{
-			std::unique_ptr<MenuItem> item(TypeFactory::instantiate<MenuItem>(type));
-			if (item)
-			{
-				if (item->getCategory() == "Assets")
-				{
-					m_menuItemNames.push_back(item->getName());
-					m_menuItems.push_back(std::move(item));
-				}
-			}
-		}
-
-		if (!m_menuItems.empty())
-		{
-			m_menuItemNames.push_back(ContextMenu::Separator);
-		}
-		m_menuItemNames.push_back("Refresh");
-	}
-
 	void ContentBrowserWindow::render()
 	{
 		processInput(m_selectedItem);
@@ -135,7 +109,6 @@ namespace editor
 			}
 		}
 		ImGui::EndChild();
-		m_contextMenu.render();
 	}
 
 	void ContentBrowserWindow::update(const double)
@@ -149,32 +122,7 @@ namespace editor
 	void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	{
 		Input& input = Input::instance();
-		if (hasFocus())
-		{
-			if (m_state == NavigationState::Navigating
-				&& !m_contextMenu.isOpen()
-				&& input.isKeyPressed(KeyCode::MouseRightButton))
-			{
-				m_state = NavigationState::ContextMenu;
-				m_contextMenu.open("Context Menu", m_menuItemNames, [this](const std::string& item)-> void
-					{
-						handleContextMenuInput(item);
-					}
-				);
-			}
-		}
-		else
-		{
-			if ((input.isKeyPressed(KeyCode::MouseLeftButton) || input.isKeyPressed(KeyCode::MouseRightButton))
-				&& ((m_state == NavigationState::ContextMenu && m_contextMenu.isOpen()) || m_state == NavigationState::Renaming))
-			{
-				m_state = NavigationState::Navigating;
-				m_contextMenu.close();
-			}
-
-		}
-
-		if (!Layout::isWindowFocused() || m_selectedItem.empty())
+		if (!hasFocus() || m_selectedItem.empty())
 		{
 			return;
 		}
@@ -253,33 +201,6 @@ namespace editor
 		m_selectedItem.clear();
 
 		refreshDirectory();
-	}
-
-	void editor::ContentBrowserWindow::handleContextMenuInput(const std::string& name)
-	{
-		if (name == "Import...")
-		{
-			Dialog::instance().open("Import file...", {}, [](const std::filesystem::path&) -> void
-				{
-					// TODO
-				}
-			);
-		}
-		else if (name == "Refresh")
-		{
-			refreshDirectory();
-		}
-		else
-		{
-			for (const auto& item : m_menuItems)
-			{
-				if (item->getName() == name)
-				{
-					item->execute();
-					break;
-				}
-			}
-		}
 	}
 
 	void editor::ContentBrowserWindow::importFile(const std::filesystem::path&)

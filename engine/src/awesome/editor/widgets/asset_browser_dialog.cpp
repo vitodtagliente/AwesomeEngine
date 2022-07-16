@@ -3,6 +3,8 @@
 #include <imgui.h>
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/asset/image_asset.h>
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/layout.h>
 
@@ -33,6 +35,8 @@ namespace editor
 
 	void AssetBrowserDialog::render(const std::string& id)
 	{
+		static const float s_widgetWidth = 400.f;
+
 		if (id != m_id) return;
 
 		if (m_open && !ImGui::IsPopupOpen("Asset Browser Dialog"))
@@ -41,7 +45,7 @@ namespace editor
 		}
 
 		ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-		ImGui::SetNextWindowSize(ImVec2(400.f, 0.f));
+		ImGui::SetNextWindowSize(ImVec2(s_widgetWidth, 0.f));
 		if (ImGui::BeginPopupModal("Asset Browser Dialog", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			ImGui::BeginChild("Header", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
@@ -75,6 +79,27 @@ namespace editor
 				}
 			}
 			ImGui::EndChild();
+
+			if (m_selectedAsset && (m_type == Asset::Type::Image || m_type == Asset::Type::Sprite))
+			{
+				float height = m_type == Asset::Type::Image ? 200.f : 128.f;
+				ImGui::BeginChild("Image Preview", ImVec2(0.f,  height), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+				switch (m_type)
+				{
+				case Asset::Type::Image: Layout::image(std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset), s_widgetWidth, height); break;
+				case Asset::Type::Sprite: 
+				{
+					auto sprite = std::dynamic_pointer_cast<SpriteAsset>(m_selectedAsset);
+					if (sprite && sprite->data.has_value())
+					{
+						Layout::image(sprite->data->image, sprite->data->rect, s_widgetWidth, height);
+					}
+					break;
+				}
+				default:break;
+				}
+				ImGui::EndChild();
+			}
 
 			ImGui::BeginChild("BottomBar", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 
