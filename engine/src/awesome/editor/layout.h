@@ -62,6 +62,13 @@ namespace editor
 		static void input(const std::string& name, graphics::TextureCoords& value);
 		static void input(const std::string& name, graphics::TextureRect& value);
 		static void input(const std::string& name, SpriteAnimation::Frame& value);
+		// Ranges
+		template <typename T>
+		static void input(const std::string& name, std::pair<T, T>& value)
+		{
+			input(name + "-0", value.first);
+			input(name + "-1", value.second);
+		}
 		// usable for displaying enums
 		template <typename T>
 		static void input(const std::string& name, T& value, const std::map<std::string, T>& values)
