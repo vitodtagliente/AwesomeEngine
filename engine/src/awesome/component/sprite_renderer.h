@@ -4,8 +4,9 @@
 #include <memory>
 
 #include <awesome/asset/sprite_asset.h>
-#include <awesome/graphics/color.h>
 #include <awesome/entity/component.h>
+#include <awesome/graphics/color.h>
+#include <awesome/graphics/graphics_component.h>
 
 namespace graphics
 {
@@ -14,7 +15,7 @@ namespace graphics
 
 namespace component
 {
-	class SpriteRenderer : public GraphicsComponent
+	class SpriteRenderer : public Component, public graphics::IGraphicsComponent
 	{
 	public:
 		SpriteRenderer() = default;

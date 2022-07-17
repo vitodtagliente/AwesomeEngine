@@ -4,6 +4,7 @@
 #include <functional>
 
 #include <awesome/entity/component.h>
+#include <awesome/graphics/graphics_component.h>
 #include <awesome/math/vector2.h>
 
 namespace graphics
@@ -23,7 +24,7 @@ REFLECT_ENUM(component::Collider2dType,
 
 namespace component
 {
-	class Collider2d : public GraphicsComponent
+	class Collider2d : public Component, public graphics::IGraphicsComponent
 	{
 	public:
 		typedef Collider2dType Type;

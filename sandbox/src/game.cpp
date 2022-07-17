@@ -10,7 +10,6 @@
 #include "pawn/combat_controller.h"
 #include "pawn/health.h"
 #include "pawn/lifetime.h"
-#include "pawn/patrol.h"
 #include "pawn/pawn.h"
 #include "pawn/pawn_controller.h"
 
@@ -54,7 +53,6 @@ void Game::startup()
 	TypeFactory::load<CombatController>();
 	TypeFactory::load<Health>();
 	TypeFactory::load<Lifetime>();
-	TypeFactory::load<Patrol>();
 	TypeFactory::load<Pawn>();
 	TypeFactory::load<PawnController>();
 	TypeFactory::load<Rotator>();

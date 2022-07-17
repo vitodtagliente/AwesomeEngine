@@ -3,6 +3,7 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/sprite_asset.h>
+#include <awesome/graphics/graphics_component.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/transform.h>
 
@@ -18,7 +19,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-class CombatController : public GraphicsComponent
+class CombatController : public Component, public graphics::IGraphicsComponent
 {
 public:
 	typedef CombatType Type;

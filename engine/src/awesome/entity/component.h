@@ -46,19 +46,4 @@ private:
 	Entity* m_owner{ nullptr };
 };
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
-class GraphicsComponent : public Component
-{
-public:
-	GraphicsComponent() = default;
-	GraphicsComponent(const GraphicsComponent& other) = delete;
-	virtual ~GraphicsComponent() = default;
-
-	virtual void render(graphics::Renderer2D* const /*renderer*/) = 0;
-};
-
 #define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)

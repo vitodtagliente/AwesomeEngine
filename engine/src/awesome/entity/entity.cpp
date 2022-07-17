@@ -1,5 +1,6 @@
 #include "entity.h"
 
+#include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/renderer.h>
 
 void Entity::prepareToSpawn()
@@ -74,7 +75,7 @@ void Entity::render(graphics::Renderer2D* const renderer)
 		if (!component->enabled) continue;
 
 
-		if (GraphicsComponent* const graphicsComponent = dynamic_cast<GraphicsComponent*>(component.get()))
+		if (graphics::IGraphicsComponent* const graphicsComponent = dynamic_cast<graphics::IGraphicsComponent*>(component.get()))
 		{
 			graphicsComponent->render(renderer);
 		}

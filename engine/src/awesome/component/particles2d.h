@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <awesome/entity/component.h>
+#include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/particle_system.h>
 
 namespace graphics
@@ -13,7 +14,7 @@ namespace graphics
 
 namespace component
 {
-	class Particles2d : public GraphicsComponent
+	class Particles2d : public Component, public graphics::IGraphicsComponent
 	{
 	public:
 		Particles2d() = default;

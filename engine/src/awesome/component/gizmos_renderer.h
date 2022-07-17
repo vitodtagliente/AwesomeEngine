@@ -2,6 +2,7 @@
 #pragma once
 
 #include <awesome/graphics/color.h>
+#include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/texture_rect.h>
 #include <awesome/entity/component.h>
 
@@ -12,7 +13,7 @@ namespace graphics
 
 namespace component
 {
-	class GizmosRenderer : public GraphicsComponent
+	class GizmosRenderer : public Component, public graphics::IGraphicsComponent
 	{
 	public:
 		GizmosRenderer() = default;
