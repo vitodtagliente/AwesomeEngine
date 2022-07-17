@@ -113,6 +113,7 @@ public:
 	virtual void deserialize(const json::value& value) override;
 
 	std::string name;
+	bool replicate;
 	std::string tag;
 	math::transform transform;
 

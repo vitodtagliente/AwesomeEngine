@@ -18,6 +18,7 @@ namespace editor
 		Layout::input("Rotation", entity->transform.rotation);
 		Layout::input("Scale", entity->transform.scale);
 		Layout::input("Static", entity->transform.isStatic);
+		Layout::input("Replicate", entity->replicate);
 		Layout::endContext();
 
 		Layout::separator();
