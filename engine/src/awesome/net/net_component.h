@@ -11,7 +11,8 @@ namespace net
 		INetworkComponent() = default;
 		virtual ~INetworkComponent() = default;
 
-		virtual json::value serialize() const = 0;
-		virtual void deserialize(const json::value& value) = 0;
+		virtual bool hasNetChanges() const = 0;
+		virtual json::value netSerialize() const = 0;
+		virtual void netDeserialize(const json::value& value) = 0;
 	};
 }
