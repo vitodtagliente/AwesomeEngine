@@ -1,10 +1,12 @@
 #include "net_module.h"
 
+#include <vdtnet/common.h>
+
 namespace net
 {
 	void Module::startup()
 	{
-
+		net::startup();
 	}
 
 	void Module::update(const double deltaTime)
@@ -14,6 +16,6 @@ namespace net
 
 	void Module::shutdown()
 	{
-
+		net::shutdown();
 	}
 }
