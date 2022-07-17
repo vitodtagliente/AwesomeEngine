@@ -3,7 +3,7 @@
 
 #include <awesome/encoding/json.h>
 
-namespace network
+namespace net
 {
 	class INetworkComponent
 	{

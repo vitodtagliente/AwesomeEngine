@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-namespace network
+namespace net
 {
 	class SessionManager
 	{

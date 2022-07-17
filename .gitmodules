@@ -16,3 +16,6 @@
 [submodule "engine/vendor/vdtgraphics"]
 	path = engine/vendor/vdtgraphics
 	url = https://github.com/vitodtagliente/vdtgraphics
+[submodule "engine/vendor/vdtnet"]
+	path = engine/vendor/vdtnet
+	url = https://github.com/vitodtagliente/vdtnet
