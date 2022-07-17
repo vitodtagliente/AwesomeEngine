@@ -16,10 +16,10 @@ namespace graphics
 
 namespace editor
 {
-	class Editor : public Application::Module
+	class Module : public Application::Module
 	{
 	public:
-		Editor() = default;
+		Module() = default;
 
 		virtual void startup() override;
 		virtual void shutdown() override;

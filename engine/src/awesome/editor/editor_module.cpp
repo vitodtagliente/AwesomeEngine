@@ -1,4 +1,4 @@
-#include "editor.h"
+#include "editor_module.h"
 
 #include <imgui.h>
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD 
@@ -23,7 +23,7 @@
 
 namespace editor
 {
-	void Editor::startup()
+	void Module::startup()
 	{
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
@@ -56,21 +56,21 @@ namespace editor
 		}
 	}
 
-	void Editor::shutdown()
+	void Module::shutdown()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
-	void Editor::preRendering()
+	void Module::preRendering()
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 	}
 
-	void Editor::render(graphics::Renderer2D* const)
+	void Module::render(graphics::Renderer2D* const)
 	{
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 		m_menu.render();
@@ -88,13 +88,13 @@ namespace editor
 		Dialog::instance().render();
 	}
 
-	void Editor::postRendering()
+	void Module::postRendering()
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void Editor::update(const double deltaTime)
+	void Module::update(const double deltaTime)
 	{
 		Input::instance().preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
 
@@ -107,7 +107,7 @@ namespace editor
 		}
 	}
 
-	void Editor::registerWindows()
+	void Module::registerWindows()
 	{
 		TypeFactory::load<AssetInspectorWindow>();
 		TypeFactory::load<ContentBrowserWindow>();
@@ -124,7 +124,6 @@ namespace editor
 			{
 				m_windows.push_back(std::unique_ptr<Window>(window));
 			}
-
 		}
 	}
 }

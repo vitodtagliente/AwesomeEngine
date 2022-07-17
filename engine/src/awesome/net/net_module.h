@@ -5,16 +5,15 @@
 
 #include <awesome/application/application.h>
 
-namespace graphics
+namespace net
 {
-	class Graphics : public Application::Module
+	class Module: public Application::Module
 	{
 	public:
-		Graphics() = default;
+		Module() = default;
 
 		virtual void startup() override;
+		virtual void update(double deltaTime) override;
 		virtual void shutdown() override;
-		virtual void preRendering() override;
-		virtual void postRendering() override;
 	};
 }

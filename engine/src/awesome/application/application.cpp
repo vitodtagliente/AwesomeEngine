@@ -10,11 +10,12 @@
 #include <awesome/core/timer.h>
 #include <awesome/data/archive.h>
 #include <awesome/encoding/json.h>
-#include <awesome/editor/editor.h>
+#include <awesome/editor/editor_module.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
-#include <awesome/graphics/graphics.h>
+#include <awesome/graphics/graphics_module.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/net/net_module.h>
 
 #include "private/components_loader.h"
 
@@ -155,13 +156,16 @@ void Application::registerDefaultModules()
 	if (m_settings.mode != Mode::Server)
 	{
 		registerModule<Audio>();
-		registerModule<graphics::Graphics>();
+		registerModule<graphics::Module>();
 	}
 
 	if (m_settings.mode == Mode::Editor)
 	{
-		registerModule<editor::Editor>();
+		registerModule<editor::Module>();
 	}
+
+	// common modules
+	registerModule<net::Module>();
 }
 
 Application::Settings Application::Settings::load(const std::filesystem::path& path)

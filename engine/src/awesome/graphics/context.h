@@ -11,7 +11,7 @@ namespace graphics
 	class Context : public Singleton<Context>
 	{
 	public:
-		friend class Graphics;
+		friend class Module;
 
 		Context();
 

@@ -1,24 +1,24 @@
-#include "graphics.h"
+#include "graphics_module.h"
 
 #include "context.h"
 
 namespace graphics
 {
-	void Graphics::startup()
+	void Module::startup()
 	{
 
 	}
 
-	void Graphics::shutdown()
+	void Module::shutdown()
 	{
 	}
 
-	void Graphics::preRendering()
+	void Module::preRendering()
 	{
 		Context::instance().renderer.begin();
 	}
 
-	void Graphics::postRendering()
+	void Module::postRendering()
 	{
 		Context& context = Context::instance();
 		context.m_drawCalls = context.renderer.flush();
