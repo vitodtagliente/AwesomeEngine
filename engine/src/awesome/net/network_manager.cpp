@@ -16,7 +16,15 @@ namespace net
 			m_socket = std::nullopt;
 			return false;
 		}
-		return m_socket->connect(net::Address(ip, port));
+		
+		if (!m_socket->bind())
+		{
+			return false;
+		}
+
+		m_socket->setNonBlockingMode();
+		m_serverAddress = net::Address(ip, port);
+		return true;
 	}
 
 	bool NetworkManager::listen(const std::string& ip, const uint16_t port, const unsigned int maxConnections)
@@ -29,7 +37,14 @@ namespace net
 			m_socket = std::nullopt;
 			return false;
 		}
-		return m_socket->listen(maxConnections);
+
+		if (!m_socket->bind())
+		{
+			return false;
+		}
+
+		m_socket->setNonBlockingMode();
+		return true;
 	}
 
 	void NetworkManager::update(const double /*deltaTime*/)
@@ -38,9 +53,10 @@ namespace net
 			return;
 
 		uint8_t buffer[100];
+		net::Address address;
 		const std::size_t buffer_size = sizeof(buffer);
 		int32_t byteRead{ 0 };
-		while (m_socket->receive(buffer, buffer_size, byteRead))
+		while (m_socket->receiveFrom(address, buffer, buffer_size, byteRead))
 		{
 			std::string message{ reinterpret_cast<char*>(buffer), (unsigned int)byteRead };
 			std::cout << message << std::endl;

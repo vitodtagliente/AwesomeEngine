@@ -29,6 +29,7 @@ namespace net
 
 	private:
 		std::optional<Socket> m_socket;
+		std::optional<net::Address> m_serverAddress;
 		Type m_type;
 	};
 }
