@@ -8,6 +8,7 @@
 
 #include <vdtnet/socket.h>
 
+#include "message.h"
 #include "session_manager.h"
 
 namespace net
@@ -33,8 +34,8 @@ namespace net
 		inline Type getType() const { return m_type; }
 
 	private:
-		void handleMessageServer(const Address& address, const std::string& message);
-		void handleMessageClient(const std::string& message);
+		void handleMessageServer(const Address& address, const Message& message);
+		void handleMessageClient(const Message& message);
 
 		SessionManager m_sessionManager;
 		std::optional<net::Address> m_serverAddress;

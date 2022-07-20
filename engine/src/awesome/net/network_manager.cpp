@@ -55,7 +55,11 @@ namespace net
 		int32_t byteRead{ 0 };
 		while (m_socket->receiveFrom(address, buffer, buffer_size, byteRead))
 		{
-			std::string message{ reinterpret_cast<char*>(buffer), static_cast<unsigned int>(byteRead) };
+			std::string data{ reinterpret_cast<char*>(buffer), static_cast<unsigned int>(byteRead) };
+			
+			Message message;
+			message.deserialize(data);
+
 			if (m_type == Type::Server)
 			{
 				handleMessageServer(address, message);
@@ -67,7 +71,7 @@ namespace net
 		}
 	}
 
-	void NetworkManager::handleMessageServer(const Address& address, const std::string& message)
+	void NetworkManager::handleMessageServer(const Address& address, const Message& message)
 	{
 		Session* session = m_sessionManager.find(address);
 		if (session == nullptr)
@@ -79,7 +83,7 @@ namespace net
 
 	}
 
-	void NetworkManager::handleMessageClient(const std::string& message)
+	void NetworkManager::handleMessageClient(const Message& message)
 	{
 	}
 }
