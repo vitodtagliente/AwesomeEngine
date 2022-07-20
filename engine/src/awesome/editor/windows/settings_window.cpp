@@ -29,6 +29,12 @@ namespace editor
 
 		Layout::separator();
 
+		Layout::input("Server IP", m_settings.serverIp);
+		Layout::input("Server Port", m_settings.serverPort);
+		Layout::input("Max Server Connections", m_settings.maxServerConnections);
+
+		Layout::separator();
+
 		if (Layout::button(TextIcon::save(" Save")))
 		{
 			m_settings.save(std::filesystem::current_path() / "settings.json");

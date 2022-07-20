@@ -18,6 +18,7 @@ namespace net
 
 		enum class Type
 		{
+			Unknown,
 			Client,
 			Server
 		};
@@ -38,6 +39,6 @@ namespace net
 		SessionManager m_sessionManager;
 		std::optional<net::Address> m_serverAddress;
 		std::optional<Socket> m_socket;
-		Type m_type;
+		Type m_type{ Type::Unknown };
 	};
 }

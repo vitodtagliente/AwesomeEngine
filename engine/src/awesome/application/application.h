@@ -45,6 +45,9 @@ public:
 		SceneAssetPtr editorScene;
 		SceneAssetPtr serverScene;
 		SceneAssetPtr standaloneScene;
+		std::string serverIp;
+		int serverPort;
+		int maxServerConnections;
 	};
 
 	class Module

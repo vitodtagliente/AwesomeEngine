@@ -209,6 +209,10 @@ Application::Settings Application::Settings::load(const std::filesystem::path& p
 		settings.standaloneScene = AssetLibrary::instance().find<SceneAsset>(id);
 	}
 
+	settings.serverIp = data.safeAt("serverIp").as_string("127.0.0.1");
+	settings.serverPort = data.safeAt("serverPort").as_number(96000).as_int();
+	settings.maxServerConnections = data.safeAt("maxServerConnections").as_number(100).as_int();
+
 	return settings;
 }
 
@@ -220,6 +224,9 @@ void Application::Settings::save(const std::filesystem::path& path)
 			{"editorScene", editorScene ? static_cast<std::string>(editorScene->descriptor.id) : ""},
 			{"serverScene", serverScene ? static_cast<std::string>(serverScene->descriptor.id) : ""},
 			{"standaloneScene", standaloneScene ? static_cast<std::string>(standaloneScene->descriptor.id) : ""},
+			{"serverIp", serverIp},
+			{"serverPort", serverPort},
+			{"maxServerConnections", maxServerConnections},
 			{"workspacePath", workspacePath.string()}
 		});
 
