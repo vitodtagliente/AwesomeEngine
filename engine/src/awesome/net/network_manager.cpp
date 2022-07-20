@@ -1,7 +1,5 @@
 #include "network_manager.h"
 
-#include <iostream>
-
 namespace net
 {
 #define CLIENT_PORT 36000
@@ -10,13 +8,13 @@ namespace net
 	{
 		m_socket = Socket(net::Address("127.0.0.1", CLIENT_PORT), net::Socket::TransportProtocol::UDP);
 		m_type = Type::Client;
-		
+
 		if (!m_socket->isValid())
 		{
 			m_socket = std::nullopt;
 			return false;
 		}
-		
+
 		if (!m_socket->bind())
 		{
 			return false;
@@ -49,8 +47,7 @@ namespace net
 
 	void NetworkManager::update(const double /*deltaTime*/)
 	{
-		if (!m_socket.has_value() || !m_socket->isValid())
-			return;
+		if (!m_socket.has_value() || !m_socket->isValid()) return;
 
 		uint8_t buffer[100];
 		net::Address address;
@@ -58,8 +55,31 @@ namespace net
 		int32_t byteRead{ 0 };
 		while (m_socket->receiveFrom(address, buffer, buffer_size, byteRead))
 		{
-			std::string message{ reinterpret_cast<char*>(buffer), (unsigned int)byteRead };
-			std::cout << message << std::endl;
+			std::string message{ reinterpret_cast<char*>(buffer), static_cast<unsigned int>(byteRead) };
+			if (m_type == Type::Server)
+			{
+				handleMessageServer(address, message);
+			}
+			else
+			{
+				handleMessageClient(message);
+			}
 		}
+	}
+
+	void NetworkManager::handleMessageServer(const Address& address, const std::string& message)
+	{
+		Session* session = m_sessionManager.find(address);
+		if (session == nullptr)
+		{
+			// new client connection
+			session = m_sessionManager.add(address);
+		}
+
+
+	}
+
+	void NetworkManager::handleMessageClient(const std::string& message)
+	{
 	}
 }

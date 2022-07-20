@@ -32,6 +32,9 @@ namespace net
 		inline Type getType() const { return m_type; }
 
 	private:
+		void handleMessageServer(const Address& address, const std::string& message);
+		void handleMessageClient(const std::string& message);
+
 		SessionManager m_sessionManager;
 		std::optional<net::Address> m_serverAddress;
 		std::optional<Socket> m_socket;
