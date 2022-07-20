@@ -8,6 +8,8 @@
 
 #include <vdtnet/socket.h>
 
+#include "session_manager.h"
+
 namespace net
 {
 	class NetworkManager : public Singleton<NetworkManager>
@@ -27,9 +29,12 @@ namespace net
 
 		void update(double deltaTime);
 
+		inline Type getType() const { return m_type; }
+
 	private:
-		std::optional<Socket> m_socket;
+		SessionManager m_sessionManager;
 		std::optional<net::Address> m_serverAddress;
+		std::optional<Socket> m_socket;
 		Type m_type;
 	};
 }
