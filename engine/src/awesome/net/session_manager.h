@@ -5,7 +5,7 @@
 
 #include <vdtnet/address.h>
 
-#include "session.h"
+#include "user_session.h"
 
 namespace net
 {
@@ -14,11 +14,12 @@ namespace net
 	public:
 		SessionManager() = default;
 
-		Session* const add(const Address& address);
-		Session* const find(const Address& address) const;
+		UserSession* const add(const Address& address);
+		UserSession* const find(const Address& address) const;
+		UserSession* const findOrAdd(const Address& address);
 		void remove(const Address& address);
 
 	private:
-		std::map<Address, SessionPtr> m_sessions;
+		std::map<Address, UserSessionPtr> m_sessions;
 	};
 }

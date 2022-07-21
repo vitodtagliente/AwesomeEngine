@@ -73,13 +73,7 @@ namespace net
 
 	void NetworkManager::handleMessageServer(const Address& address, const Message& message)
 	{
-		Session* session = m_sessionManager.find(address);
-		if (session == nullptr)
-		{
-			// new client connection
-			session = m_sessionManager.add(address);
-		}
-
+		
 
 	}
 

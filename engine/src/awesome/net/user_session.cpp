@@ -1,13 +1,13 @@
-#include "session.h"
+#include "user_session.h"
 
 namespace net
 {
-	void Session::resetInactivityTime()
+	void UserSession::resetInactivityTime()
 	{
 		m_inactivityTime = std::chrono::high_resolution_clock::now();
 	}
 
-	double Session::getInactivityTime() const
+	double UserSession::getInactivityTime() const
 	{
 		return std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_inactivityTime).count();
 	}

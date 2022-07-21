@@ -2,13 +2,13 @@
 
 namespace net
 {
-	Session* const SessionManager::add(const Address& address)
+	UserSession* const SessionManager::add(const Address& address)
 	{
-		auto newPair = m_sessions.insert(std::make_pair(address, std::make_unique<Session>()));
+		auto newPair = m_sessions.insert(std::make_pair(address, std::make_unique<UserSession>()));
 		return newPair.first->second.get();
 	}
 
-	Session* const SessionManager::find(const Address& address) const
+	UserSession* const SessionManager::find(const Address& address) const
 	{
 		const auto& it = m_sessions.find(address);
 		if (it != m_sessions.end())
@@ -16,6 +16,17 @@ namespace net
 			return it->second.get();
 		}
 		return nullptr;
+	}
+
+	UserSession* const SessionManager::findOrAdd(const Address& address)
+	{
+		const auto& it = m_sessions.find(address);
+		if (it != m_sessions.end())
+		{
+			return it->second.get();
+		}
+
+		return add(address);
 	}
 
 	void SessionManager::remove(const Address& address)

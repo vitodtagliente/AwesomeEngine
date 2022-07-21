@@ -8,29 +8,31 @@
 
 namespace net
 {
-	class Session
+	class UserSession
 	{
 	public:
 		
 		enum class State
 		{
-			PendingConnection,
 			Connected,
+			Disconnected,
+			PendingConnection,
 			PendingDisconnection,
-			Disconnected
 		};
 
-		Session() = default;
+		UserSession() = default;
 
 		const netid& netId() const { return m_id; }
 
 		void resetInactivityTime();
 		double getInactivityTime() const;
 
+		State state{ State::PendingConnection };
+
 	private:
 		netid m_id;
 		std::chrono::high_resolution_clock::time_point m_inactivityTime{ std::chrono::high_resolution_clock::now() };
 	};
 
-	typedef std::unique_ptr<Session> SessionPtr;
+	typedef std::unique_ptr<UserSession> UserSessionPtr;
 }
