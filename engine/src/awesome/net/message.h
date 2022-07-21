@@ -16,7 +16,8 @@ namespace net
 		{
 			netid id;
 			uint8_t version;
-			std::map<std::string, std::string> properties;
+			std::string commandId;
+			std::map<std::string, std::string> attributes;
 		};
 
 		struct Body
