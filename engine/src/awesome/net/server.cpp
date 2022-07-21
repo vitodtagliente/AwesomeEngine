@@ -1,5 +1,9 @@
 #include "server.h"
 
+#include <awesome/core/reflection.h>
+
+#include "server_command.h"
+
 namespace net
 {
 	void Server::close()
@@ -39,6 +43,15 @@ namespace net
 			case UserSession::State::PendingConnection:
 			{
 				userSession->state = UserSession::State::Connected;
+				break;
+			}
+			case UserSession::State::Connected:
+			{
+				ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
+				if (command)
+				{
+					command->execute(userSession, message);
+				}
 				break;
 			}
 			}

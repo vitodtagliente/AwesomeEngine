@@ -11,19 +11,21 @@
 
 namespace net
 {
-	class ServerMessageHandler
+	class IServerCommand
 	{
 	public:
-		ServerMessageHandler() = default;
-		~ServerMessageHandler() = default;
+		IServerCommand() = default;
+		~IServerCommand() = default;
 
 		virtual void execute(UserSession* const userSession, const Message& message) = 0;
 	};
 
+	typedef std::unique_ptr<IServerCommand> ServerCommandPtr;
+
 	template <typename RequestType, typename ResponseType, 
 		typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>,
 		typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
-	class ServerComand : public ServerMessageHandler
+	class ServerComand : public IServerCommand
 	{
 	public:
 		ServerComand() = default;
