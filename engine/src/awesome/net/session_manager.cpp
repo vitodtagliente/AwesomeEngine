@@ -8,11 +8,15 @@ namespace net
 		return newPair.first->second.get();
 	}
 
-	UserSession* const SessionManager::find(const Address& address) const
+	UserSession* const SessionManager::find(const Address& address, const bool resetInactivityTime) const
 	{
 		const auto& it = m_sessions.find(address);
 		if (it != m_sessions.end())
 		{
+			if (resetInactivityTime)
+			{
+				it->second->resetInactivityTime();
+			}
 			return it->second.get();
 		}
 		return nullptr;
@@ -23,6 +27,7 @@ namespace net
 		const auto& it = m_sessions.find(address);
 		if (it != m_sessions.end())
 		{
+			it->second->resetInactivityTime();
 			return it->second.get();
 		}
 

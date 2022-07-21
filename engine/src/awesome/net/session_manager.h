@@ -15,7 +15,7 @@ namespace net
 		SessionManager() = default;
 
 		UserSession* const add(const Address& address);
-		UserSession* const find(const Address& address) const;
+		UserSession* const find(const Address& address, bool resetInactivityTime) const;
 		UserSession* const findOrAdd(const Address& address);
 		void remove(const Address& address);
 

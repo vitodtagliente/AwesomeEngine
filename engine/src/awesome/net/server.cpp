@@ -38,7 +38,7 @@ namespace net
 			{
 			case UserSession::State::PendingConnection:
 			{
-
+				userSession->state = UserSession::State::Connected;
 				break;
 			}
 			}

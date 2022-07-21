@@ -15,6 +15,7 @@ namespace net
 		struct Header
 		{
 			netid id;
+			uint8_t version;
 			std::map<std::string, std::string> properties;
 		};
 
