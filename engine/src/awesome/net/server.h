@@ -29,7 +29,7 @@ namespace net
 
 	private:
 		std::unique_ptr<Connection> m_connection;
-		unsigned int m_maxConnections;
+		unsigned int m_maxConnections{ 4 };
 		SessionManager m_sessionManager;
 		State m_state{ State::Initialized };
 	};

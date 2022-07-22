@@ -6,6 +6,7 @@
 
 #include <awesome/core/singleton.h>
 
+#include "client.h"
 #include "server.h"
 
 namespace net
@@ -31,6 +32,7 @@ namespace net
 		inline Type getType() const { return m_type; }
 
 	private:
+		std::unique_ptr<Client> m_client;
 		std::unique_ptr<Server> m_server;
 		std::optional<net::Address> m_serverAddress;
 		Type m_type{ Type::Unknown };

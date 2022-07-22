@@ -7,32 +7,30 @@
 #include <awesome/encoding/json.h>
 
 #include "message.h"
-#include "user_session.h"
 
 namespace net
 {
-	class IServerCommand
+	class IClientCommand
 	{
 	public:
-		IServerCommand() = default;
-		virtual ~IServerCommand() = default;
+		IClientCommand() = default;
+		virtual ~IClientCommand() = default;
 
-		virtual void execute(UserSession* const userSession, const Message& message) = 0;
-		virtual bool requireAuthentication() const { return false; }
+		virtual void execute(const Message& message) = 0;
 	};
 
-	typedef std::unique_ptr<IServerCommand> ServerCommandPtr;
+	typedef std::unique_ptr<IClientCommand> ClientCommandPtr;
 
 	template <typename RequestType, typename ResponseType,
 		typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>,
 		typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
-		class ServerCommand : public IServerCommand
+		class ClientCommand : public IClientCommand
 	{
 	public:
-		ServerCommand() = default;
-		virtual ~ServerCommand() = default;
+		ClientCommand() = default;
+		virtual ~ClientCommand() = default;
 
-		virtual void execute(UserSession* const userSession, const Message& message) override
+		virtual void execute(const Message& message) override
 		{
 			RequestType request;
 			::deserialize(json::Deserializer::parse(message.body.data), request);
@@ -46,13 +44,13 @@ namespace net
 	};
 
 	template <typename RequestType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>>
-	class ServerCommandNoResponse : public IServerCommand
+	class ClientCommandNoResponse : public IClientCommand
 	{
 	public:
-		ServerCommandNoResponse() = default;
-		virtual ~ServerCommandNoResponse() = default;
+		ClientCommandNoResponse() = default;
+		virtual ~ClientCommandNoResponse() = default;
 
-		virtual void execute(UserSession* const userSession, const Message& message) override
+		virtual void execute(const Message& message) override
 		{
 			RequestType request;
 			::deserialize(json::Deserializer::parse(message.body.data), request);
@@ -65,5 +63,5 @@ namespace net
 		virtual void execute(const RequestType& request) = 0;
 	};
 
-#define REFLECT_SERVER_COMMAND(T) REFLECT_IMP_CATEGORY(T, ServerCommand)
+#define REFLECT_CLIENT_COMMAND(T) REFLECT_IMP_CATEGORY(T, ClientCommand)
 }

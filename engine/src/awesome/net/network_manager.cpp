@@ -4,7 +4,11 @@ namespace net
 {
 	bool NetworkManager::startClient(const std::string& ip, const Address::port_t port)
 	{
-		return false;
+		if (m_type != Type::Unknown) return false;
+
+		m_type = Type::Server;
+		m_client = std::make_unique<Client>();
+		return m_client->connect(ip, port) == Client::State::Connected;
 	}
 
 	bool NetworkManager::startServer(const Address::port_t port, const unsigned int maxConnections)
@@ -24,7 +28,7 @@ namespace net
 		}
 		else if (m_type == Type::Client)
 		{
-
+			m_client->update();
 		}
 	}
 }
