@@ -43,7 +43,7 @@ namespace net
 
 			Message message;
 			message.header.commandId = commandId;
-			message.body.data = json::Serializer::to_string(::serialize(request));
+			message.body.data = json::Serializer::to_string(request.serialize());
 
 			m_connection->send(m_serverAddress, message);
 

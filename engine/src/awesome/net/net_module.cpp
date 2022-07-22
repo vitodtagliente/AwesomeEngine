@@ -2,11 +2,29 @@
 
 #include <vdtnet/common.h>
 
+#include <awesome/application/application.h>
+#include <awesome/application/input.h>
 #include <awesome/net/network_manager.h>
+
+#include "client.h"
 
 namespace net
 {
-	static Socket* s_client;
+	struct Hello : public ISerializable
+	{
+		std::string text;
+
+		virtual json::value serialize() const override
+		{
+			return json::object({
+				{"text", text}
+				});
+		}
+		virtual void deserialize(const json::value& value) override
+		{
+			text = value.safeAt("text").as_string("");
+		}
+	};
 
 	void Module::startup()
 	{
@@ -16,14 +34,16 @@ namespace net
 	void Module::update(const double deltaTime)
 	{
 		NetworkManager::instance().update(deltaTime);
-		// static bool s_one = false;
-		// if (!s_one)
-		// {
-		// 	int32_t byteSent{ 0 };
-		// 	std::string welcome_text = "ciao";
-		// 	s_client->sendTo(net::Address("127.0.0.1", 96000), (uint8_t*)welcome_text.c_str(), welcome_text.size(), byteSent);
-		// 	s_one = true;
-		// }
+		
+		if (Input::instance().isKeyPressed(KeyCode::N))
+		{
+			auto client = std::make_unique<Client>();
+			client->connect(Application::instance().getSettings().serverIp, Application::instance().getSettings().serverPort);
+
+			Hello request;
+			request.text = "Hello Server";
+			client->call("hello", request);
+		}
 	}
 
 	void Module::shutdown()

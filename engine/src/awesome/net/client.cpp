@@ -20,7 +20,7 @@ namespace net
 		if (m_state == State::Connected) return m_state;
 
 		m_connection = std::make_unique<Connection>();
-		Connection::State connectionState = m_connection->connect(ip, port);
+		Connection::State connectionState = m_connection->connect(ip, port + 1);
 		if (connectionState == Connection::State::Connected)
 		{
 			m_serverAddress = Address(ip, port);

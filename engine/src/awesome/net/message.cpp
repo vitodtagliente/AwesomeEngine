@@ -16,7 +16,7 @@ namespace net
 	{
 		::deserialize(value.safeAt("id"), header.id);
 		header.version = value.safeAt("version").as_number(0.1).as_double();
-		header.commandId = value.safeAt("commandId").as_string();
-		body.data = value.safeAt("data").as_string();
+		header.commandId = value.safeAt("commandId").as_string("");
+		body.data = value.safeAt("data").as_string("");
 	}
 }
