@@ -39,8 +39,6 @@ namespace net
 			ResponseType response = execute(request);
 		}
 
-		REFLECT()
-
 	protected:
 		virtual ResponseType execute(const RequestType& request) = 0;
 	};
@@ -58,8 +56,6 @@ namespace net
 			request.deserialize(json::Deserializer::parse(message.body.data));
 			execute(userSession, request);
 		}
-
-		REFLECT()
 
 	protected:
 		virtual void execute(UserSession* const userSession, const RequestType& request) = 0;
