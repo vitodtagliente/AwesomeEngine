@@ -35,7 +35,7 @@ namespace net
 		virtual void execute(UserSession* const userSession, const Message& message) override
 		{
 			RequestType request;
-			::deserialize(json::Deserializer::parse(message.body.data), request);
+			request.deserialize(json::Deserializer::parse(message.body.data));
 			ResponseType response = execute(request);
 		}
 
@@ -55,15 +55,15 @@ namespace net
 		virtual void execute(UserSession* const userSession, const Message& message) override
 		{
 			RequestType request;
-			::deserialize(json::Deserializer::parse(message.body.data), request);
-			execute(request);
+			request.deserialize(json::Deserializer::parse(message.body.data));
+			execute(userSession, request);
 		}
 
 		REFLECT()
 
 	protected:
-		virtual void execute(const RequestType& request) = 0;
+		virtual void execute(UserSession* const userSession, const RequestType& request) = 0;
 	};
+}
 
 #define REFLECT_SERVER_COMMAND(T) REFLECT_IMP_CATEGORY(T, ServerCommand)
-}

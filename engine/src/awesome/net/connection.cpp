@@ -36,7 +36,7 @@ namespace net
 	{
 		if (m_state != State::Connected) return std::nullopt;
 
-		uint8_t buffer[100];
+		uint8_t buffer[1000];
 		net::Address address;
 		const std::size_t buffer_size = sizeof(buffer);
 		int32_t byteRead{ 0 };
