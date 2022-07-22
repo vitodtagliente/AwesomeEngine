@@ -45,7 +45,7 @@ namespace net
 			std::string data{ reinterpret_cast<char*>(buffer), static_cast<unsigned int>(byteRead) };
 
 			Message message;
-			message.deserialize(data);
+			message.deserialize(json::Deserializer::parse(data));
 
 			return std::make_pair(address, message);
 		}
