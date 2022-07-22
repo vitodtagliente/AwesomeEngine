@@ -22,9 +22,9 @@ namespace net
 	typedef std::unique_ptr<IClientCommand> ClientCommandPtr;
 
 	template <typename RequestType, typename ResponseType,
-		typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>,
-		typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
-		class ClientCommand : public IClientCommand
+	typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>,
+	typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
+	class ClientCommand : public IClientCommand
 	{
 	public:
 		ClientCommand() = default;
