@@ -38,22 +38,18 @@ namespace net
 		{
 			auto [address, message] = packet.value();
 			UserSession* const userSession = m_sessionManager.findOrAdd(address);
-			switch (userSession->state)
-			{
-			case UserSession::State::PendingConnection:
-			{
-				userSession->state = UserSession::State::Connected;
-				break;
-			}
-			case UserSession::State::Connected:
+
+			if (userSession->state == UserSession::State::PendingConnection
+				|| userSession->state == UserSession::State::Connected)
 			{
 				ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
 				if (command)
 				{
-					command->execute(userSession, message);
+					if (!command->requireAuthentication() || userSession->state == UserSession::State::Connected)
+					{
+						command->execute(userSession, message);
+					}
 				}
-				break;
-			}
 			}
 		}
 	}
