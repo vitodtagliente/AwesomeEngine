@@ -15,7 +15,7 @@ namespace net
 	void Module::startup()
 	{
 		net::startup();
-		reflect::TypeFactory::load<HelloCommand>();
+		// reflect::TypeFactory::load<net::HelloCommand>();
 	}
 
 	void Module::update(const double deltaTime)

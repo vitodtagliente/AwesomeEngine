@@ -26,7 +26,10 @@ namespace net
 	public:
 		HelloCommand() = default;
 
-		virtual void execute(UserSession* const userSession, const Hello& request) override;
+		virtual void execute(UserSession* const userSession, const Hello&) override
+		{
+			userSession->state = UserSession::State::Connected;
+		}
 
 		REFLECT()
 	};
