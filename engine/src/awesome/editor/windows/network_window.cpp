@@ -17,14 +17,14 @@ namespace editor
 
 			if (Layout::button("Start Server"))
 			{
-				networkManager.listen(settings.serverIp, static_cast<uint16_t>(settings.serverPort), static_cast<unsigned int>(settings.maxServerConnections));
+				networkManager.startServer(static_cast<uint16_t>(settings.serverPort), static_cast<unsigned int>(settings.maxServerConnections));
 			}
 
 			Layout::sameLine();
 
 			if (Layout::button("Connect"))
 			{
-				networkManager.connect(settings.serverIp, static_cast<uint16_t>(settings.serverPort));
+				networkManager.startClient(settings.serverIp, static_cast<uint16_t>(settings.serverPort));
 			}
 			break;
 		}

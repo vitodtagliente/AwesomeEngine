@@ -6,10 +6,7 @@
 
 #include <awesome/core/singleton.h>
 
-#include <vdtnet/socket.h>
-
-#include "message.h"
-#include "session_manager.h"
+#include "server.h"
 
 namespace net
 {
@@ -26,20 +23,16 @@ namespace net
 
 		NetworkManager() = default;
 
-		bool connect(const std::string& ip, uint16_t port);
-		bool listen(const std::string& ip, uint16_t port, unsigned int maxConnections);
+		bool startClient(const std::string& ip, Address::port_t port);
+		bool startServer(Address::port_t port, unsigned int maxConnections);
 
 		void update(double deltaTime);
 
 		inline Type getType() const { return m_type; }
 
 	private:
-		void handleMessageServer(const Address& address, const Message& message);
-		void handleMessageClient(const Message& message);
-
-		SessionManager m_sessionManager;
+		std::unique_ptr<Server> m_server;
 		std::optional<net::Address> m_serverAddress;
-		std::optional<Socket> m_socket;
 		Type m_type{ Type::Unknown };
 	};
 }
