@@ -25,7 +25,7 @@ namespace net
 		if (Input::instance().isKeyPressed(KeyCode::N))
 		{
 			auto client = std::make_unique<Client>();
-			client->connect(Application::instance().getSettings().serverIp, Application::instance().getSettings().serverPort);
+			client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
 
 			Hello request;
 			request.text = "Hello Server";

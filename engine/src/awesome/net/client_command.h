@@ -33,7 +33,7 @@ namespace net
 		virtual void execute(const Message& message) override
 		{
 			RequestType request;
-			::deserialize(json::Deserializer::parse(message.body.data), request);
+			request.deserialize(json::Deserializer::parse(message.body.data));
 			ResponseType response = execute(request);
 		}
 
@@ -53,7 +53,7 @@ namespace net
 		virtual void execute(const Message& message) override
 		{
 			RequestType request;
-			::deserialize(json::Deserializer::parse(message.body.data), request);
+			request.deserialize(json::Deserializer::parse(message.body.data));
 			execute(request);
 		}
 

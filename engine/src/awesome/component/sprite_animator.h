@@ -43,9 +43,9 @@ namespace component
 		{
 			std::string name;
 			SpriteAnimationAssetPtr animation;
-			unsigned int frameIndex;
-			bool loop;
-			double timeLeft;
+			unsigned int frameIndex{ 0 };
+			bool loop{ false };
+			double timeLeft{ 0.0 };
 		};
 
 		void updateFrame(const SpriteAnimation::Frame& frame);

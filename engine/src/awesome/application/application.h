@@ -46,8 +46,8 @@ public:
 		SceneAssetPtr serverScene;
 		SceneAssetPtr standaloneScene;
 		std::string serverIp;
-		int serverPort;
-		int maxServerConnections;
+		int serverPort{ 96000 };
+		int maxServerConnections{ 20 };
 	};
 
 	class Module
