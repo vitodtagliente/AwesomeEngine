@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <array>
 #include <memory>
 #include <optional>
 
@@ -33,6 +34,7 @@ namespace net
 		std::optional<std::pair<Address, Message>> receive();
 
 	protected:
+		std::array<uint8_t, 1024 * 1024> m_buffer;
 		std::unique_ptr<Socket> m_socket;
 		State m_state{ State::Initialized };
 	};

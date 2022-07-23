@@ -36,13 +36,12 @@ namespace net
 	{
 		if (m_state != State::Connected) return std::nullopt;
 
-		uint8_t buffer[1000];
 		net::Address address;
-		const std::size_t buffer_size = sizeof(buffer);
+		const std::size_t buffer_size = m_buffer.max_size();
 		int32_t byteRead{ 0 };
-		while (m_socket->receiveFrom(address, buffer, buffer_size, byteRead))
+		while (m_socket->receiveFrom(address, &m_buffer[0], buffer_size, byteRead))
 		{
-			std::string data{ reinterpret_cast<char*>(buffer), static_cast<unsigned int>(byteRead) };
+			std::string data{ reinterpret_cast<char*>(&m_buffer[0]), static_cast<unsigned int>(byteRead) };
 
 			Message message;
 			message.deserialize(json::Deserializer::parse(data));
