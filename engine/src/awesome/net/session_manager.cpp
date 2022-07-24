@@ -38,4 +38,14 @@ namespace net
 	{
 		m_sessions.erase(address);
 	}
+
+	std::vector<UserSession*> SessionManager::getUserSessions() const
+	{
+		std::vector<UserSession*> result;
+		for (const auto& pair : m_sessions)
+		{
+			result.push_back(pair.second.get());
+		}
+		return result;
+	}
 }

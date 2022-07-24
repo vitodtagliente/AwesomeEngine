@@ -8,6 +8,6 @@ namespace net
 {
 	void CommandsLoader::load()
 	{
-		TypeFactory::load<net::UpdateWorldCommand>();
+		TypeFactory::load<command::UpdateWorldCommand>();
 	}
 }

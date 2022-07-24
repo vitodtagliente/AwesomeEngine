@@ -2,6 +2,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 
 #include <vdtnet/address.h>
 
@@ -18,6 +19,8 @@ namespace net
 		UserSession* const find(const Address& address, bool resetInactivityTime) const;
 		UserSession* const findOrAdd(const Address& address);
 		void remove(const Address& address);
+
+		std::vector<UserSession*> getUserSessions() const;
 
 	private:
 		std::map<Address, UserSessionPtr> m_sessions;

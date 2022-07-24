@@ -4,23 +4,26 @@
 
 namespace net
 {
-	json::value UpdateWorldRequest::serialize() const
+	namespace command
 	{
-		return json::object({
-			{"data", data}
-			});
-	}
+		json::value UpdateWorldRequest::serialize() const
+		{
+			return json::object({
+				{"data", data}
+				});
+		}
 
-	void UpdateWorldRequest::deserialize(const json::value& value)
-	{
-		data = value.safeAt("data").as_string("");
-	}
+		void UpdateWorldRequest::deserialize(const json::value& value)
+		{
+			data = value.safeAt("data").as_string("");
+		}
 
-	void UpdateWorldCommand::execute(const UpdateWorldRequest& request)
-	{
-		json::value data = json::Deserializer::parse(request.data);
-		World::instance().netDeserialize(data);
-	}
+		void UpdateWorldCommand::execute(const UpdateWorldRequest& request)
+		{
+			json::value data = json::Deserializer::parse(request.data);
+			World::instance().netDeserialize(data);
+		}
 
-	REFLECT_CLIENT_COMMAND(UpdateWorldCommand)
+		REFLECT_CLIENT_COMMAND(UpdateWorldCommand)
+	}
 }

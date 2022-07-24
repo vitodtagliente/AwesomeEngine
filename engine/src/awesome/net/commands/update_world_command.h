@@ -5,23 +5,25 @@
 
 namespace net
 {
-
-	struct UpdateWorldRequest : public ISerializable
+	namespace command
 	{
-		std::string data;
+		struct UpdateWorldRequest : public ISerializable
+		{
+			std::string data;
 
-		virtual json::value serialize() const override;
-		virtual void deserialize(const json::value& value) override;
-	};
+			virtual json::value serialize() const override;
+			virtual void deserialize(const json::value& value) override;
+		};
 
-	class UpdateWorldCommand : public ClientCommandNoResponse<UpdateWorldRequest>
-	{
-	public:
-		UpdateWorldCommand() = default;
-		virtual ~UpdateWorldCommand() = default;
+		class UpdateWorldCommand : public ClientCommandNoResponse<UpdateWorldRequest>
+		{
+		public:
+			UpdateWorldCommand() = default;
+			virtual ~UpdateWorldCommand() = default;
 
-		virtual void execute(const UpdateWorldRequest& request) override;
+			virtual void execute(const UpdateWorldRequest& request) override;
 
-		REFLECT()
-	};
+			REFLECT()
+		};
+	}
 }

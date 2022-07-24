@@ -5,6 +5,8 @@
 
 #include "server_command.h"
 
+#include "commands/update_world_command.h"
+
 namespace net
 {
 	void Server::close()
@@ -58,6 +60,13 @@ namespace net
 		// TODO
 
 		// send the world update
-
+		{
+			command::UpdateWorldRequest request;
+			request.data = json::Serializer::to_string(World::instance().netSerialize());
+			for (UserSession* const userSession : m_sessionManager.getUserSessions())
+			{
+				call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+			}
+		}
 	}
 }

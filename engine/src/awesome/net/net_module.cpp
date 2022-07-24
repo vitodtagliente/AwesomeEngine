@@ -5,6 +5,7 @@
 #include <awesome/application/application.h>
 #include <awesome/application/input.h>
 #include <awesome/net/network_manager.h>
+#include "server_commands/hello_command.h"
 
 #include "private/commands_loader.h"
 
@@ -18,20 +19,25 @@ namespace net
 		// load the commands
 		CommandsLoader loader;
 		loader.load();
+
+
+		// test
+		TypeFactory::load<HelloCommand>();
 	}
 
 	void Module::update(const double deltaTime)
 	{
 		NetworkManager::instance().update(deltaTime);
 		
+		// test
 		if (Input::instance().isKeyPressed(KeyCode::N))
 		{
-			// auto client = std::make_unique<Client>();
-			// client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
-			// 
-			// Hello request;
-			// request.text = "Hello Server";
-			// client->call("HelloCommand", request);
+			auto client = std::make_unique<Client>();
+			client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
+			
+			Hello request;
+			request.text = "Hello Server";
+			client->call("HelloCommand", request);
 		}
 	}
 
