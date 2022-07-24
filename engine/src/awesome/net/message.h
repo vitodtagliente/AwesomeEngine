@@ -22,7 +22,7 @@ namespace net
 
 		struct Body
 		{
-			std::string data;
+			json::value data;
 		};
 
 		Header header;

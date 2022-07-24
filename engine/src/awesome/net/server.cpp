@@ -62,7 +62,7 @@ namespace net
 		// send the world update
 		{
 			command::UpdateWorldRequest request;
-			request.data = json::Serializer::to_string(World::instance().netSerialize());
+			request.data = World::instance().netSerialize();
 			for (UserSession* const userSession : m_sessionManager.getUserSessions())
 			{
 				call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);

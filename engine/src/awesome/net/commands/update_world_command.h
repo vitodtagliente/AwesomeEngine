@@ -9,7 +9,7 @@ namespace net
 	{
 		struct UpdateWorldRequest : public ISerializable
 		{
-			std::string data;
+			json::value data;
 
 			virtual json::value serialize() const override;
 			virtual void deserialize(const json::value& value) override;

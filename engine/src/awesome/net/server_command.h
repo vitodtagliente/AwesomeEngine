@@ -35,7 +35,7 @@ namespace net
 		virtual void execute(UserSession* const userSession, const Message& message) override
 		{
 			RequestType request;
-			request.deserialize(json::Deserializer::parse(message.body.data));
+			request.deserialize(message.body.data);
 			ResponseType response = execute(request);
 		}
 
@@ -53,7 +53,7 @@ namespace net
 		virtual void execute(UserSession* const userSession, const Message& message) override
 		{
 			RequestType request;
-			request.deserialize(json::Deserializer::parse(message.body.data));
+			request.deserialize(message.body.data);
 			execute(userSession, request);
 		}
 

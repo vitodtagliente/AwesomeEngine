@@ -8,20 +8,17 @@ namespace net
 	{
 		json::value UpdateWorldRequest::serialize() const
 		{
-			return json::object({
-				{"data", data}
-				});
+			return data;
 		}
 
 		void UpdateWorldRequest::deserialize(const json::value& value)
 		{
-			data = value.safeAt("data").as_string("");
+			data = value;
 		}
 
 		void UpdateWorldCommand::execute(const UpdateWorldRequest& request)
 		{
-			json::value data = json::Deserializer::parse(request.data);
-			World::instance().netDeserialize(data);
+			World::instance().netDeserialize(request.data);
 		}
 
 		REFLECT_CLIENT_COMMAND(UpdateWorldCommand)

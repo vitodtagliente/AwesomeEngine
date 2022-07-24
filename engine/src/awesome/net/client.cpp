@@ -37,8 +37,8 @@ namespace net
 		if (packet.has_value())
 		{
 			auto [address, message] = packet.value();
-			if (address.getIP() == m_serverAddress.getIP()
-				&& address.getPort() == m_serverAddress.getPort())
+			// if (address.getIP() == m_serverAddress.getIP()
+			// 	&& address.getPort() == m_serverAddress.getPort())
 			{
 				ClientCommandPtr command = std::unique_ptr<IClientCommand>(TypeFactory::instantiate<IClientCommand>(message.header.commandId));
 				if (command)

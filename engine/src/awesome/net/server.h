@@ -49,7 +49,7 @@ namespace net
 
 			Message message;
 			message.header.commandId = TypeDescriptor::get<CommandType>().name;
-			message.body.data = json::Serializer::to_string(request.serialize());
+			message.body.data = request.serialize();
 
 			m_connection->send(userSession->getAddress(), message);
 
