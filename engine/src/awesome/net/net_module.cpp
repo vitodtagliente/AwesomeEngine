@@ -13,6 +13,8 @@
 
 namespace net
 {
+	static std::unique_ptr<Client> s_client;
+
 	void Module::startup()
 	{
 		net::startup();
@@ -28,16 +30,21 @@ namespace net
 	void Module::update(const double deltaTime)
 	{
 		NetworkManager::instance().update(deltaTime);
-		
+
 		// test
 		if (Input::instance().isKeyPressed(KeyCode::N))
 		{
-			auto client = std::make_unique<Client>();
-			client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
-			
+			s_client = std::make_unique<Client>();
+			s_client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
+
 			Hello request;
 			request.text = "Hello Server";
-			client->call("HelloCommand", request);
+			s_client->call("HelloCommand", request);
+		}
+
+		if (s_client)
+		{
+			s_client->update();
 		}
 	}
 
