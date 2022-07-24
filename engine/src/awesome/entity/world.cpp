@@ -244,9 +244,9 @@ void World::netDeserialize(const json::value& value)
 		else
 		{
 			// net spawn
-			std::unique_ptr<Entity> entity = std::make_unique<Entity>();
-			entity->deserialize(jsonEntity);
-			m_pendingSpawnEntities.push_back(std::move(entity));
+			std::unique_ptr<Entity> netEntity = std::make_unique<Entity>();
+			netEntity->deserialize(jsonEntity);
+			m_pendingSpawnEntities.push_back(std::move(netEntity));
 		}
 	}
 }

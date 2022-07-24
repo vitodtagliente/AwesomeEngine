@@ -1,6 +1,7 @@
 #include "server.h"
 
 #include <awesome/core/reflection.h>
+#include <awesome/entity/world.h>
 
 #include "server_command.h"
 
