@@ -1,14 +1,23 @@
 #include "network_manager.h"
 
+#include "server_commands/hello_command.h"
+
 namespace net
 {
 	bool NetworkManager::startClient(const std::string& ip, const Address::port_t port)
 	{
 		if (m_type != Type::Unknown) return false;
 
-		m_type = Type::Server;
+		m_type = Type::Client;
 		m_client = std::make_unique<Client>();
-		return m_client->connect(ip, port) == Client::State::Connected;
+		if (m_client->connect(ip, port) == Client::State::Connected)
+		{
+			Hello request;
+			request.text = "Hello Server";
+			m_client->call("HelloCommand", request);
+			return true;
+		}
+		return false;
 	}
 
 	bool NetworkManager::startServer(const Address::port_t port, const unsigned int maxConnections)
