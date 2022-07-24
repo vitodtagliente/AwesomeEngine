@@ -31,4 +31,9 @@ namespace net
 			m_client->update();
 		}
 	}
+
+	bool NetworkManager::hasNetworkAuthority() const
+	{
+		return m_type == Type::Unknown || m_type == Type::Server;;
+	}
 }

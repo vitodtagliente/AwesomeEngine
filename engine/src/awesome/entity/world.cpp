@@ -3,6 +3,7 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/data/archive.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/net/network_manager.h>
 
 void World::update(const double deltaTime)
 {
@@ -109,6 +110,8 @@ Entity* const World::spawn(const math::vec3& position)
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
+	if (!net::NetworkManager::instance().hasNetworkAuthority()) return nullptr;
+
 	Entity* const entity = new Entity();
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
@@ -130,6 +133,8 @@ Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& posit
 
 Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
 {
+	if (!net::NetworkManager::instance().hasNetworkAuthority()) return nullptr;
+
 	Entity* const entity = new Entity();
 	Entity::duplicate(prefab, *entity);
 	entity->transform.position = position;
@@ -204,4 +209,44 @@ json::value World::serialize() const
 		data["entities"] = entities;
 	}
 	return data;
+}
+
+json::value World::netSerialize() const
+{
+	json::value data = json::object();
+	{
+		json::value entities = json::array();
+		for (const auto& entity : m_entities)
+		{
+			if (entity->replicate)
+			{
+				entities.push_back(entity->serialize());
+			}
+		}
+		data["entities"] = entities;
+	}
+	return data;
+}
+
+void World::netDeserialize(const json::value& value)
+{
+	const auto& jsonEntities = value.safeAt("entities").as_array({});
+	for(const json::value& jsonEntity : jsonEntities)
+	{
+		uuid entityId = uuid::Invalid;
+		::deserialize(jsonEntity.safeAt("id"), entityId);
+
+		Entity* entity = findEntityById(entityId);
+		if (entity != nullptr)
+		{
+			entity->deserialize(jsonEntity);
+		}
+		else
+		{
+			// net spawn
+			std::unique_ptr<Entity> entity = std::make_unique<Entity>();
+			entity->deserialize(jsonEntity);
+			m_pendingSpawnEntities.push_back(std::move(entity));
+		}
+	}
 }

@@ -52,5 +52,11 @@ namespace net
 				}
 			}
 		}
+
+		// inactivity check
+		// TODO
+
+		// send the world update
+
 	}
 }

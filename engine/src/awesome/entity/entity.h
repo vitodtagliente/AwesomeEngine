@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
+#include <awesome/asset/prefab_asset.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
-#include <awesome/asset/prefab_asset.h>
 #include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 

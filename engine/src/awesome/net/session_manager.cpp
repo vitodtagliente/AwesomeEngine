@@ -4,7 +4,7 @@ namespace net
 {
 	UserSession* const SessionManager::add(const Address& address)
 	{
-		auto newPair = m_sessions.insert(std::make_pair(address, std::make_unique<UserSession>()));
+		auto newPair = m_sessions.insert(std::make_pair(address, std::make_unique<UserSession>(address)));
 		return newPair.first->second.get();
 	}
 

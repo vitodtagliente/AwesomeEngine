@@ -31,6 +31,8 @@ namespace net
 
 		inline Type getType() const { return m_type; }
 
+		bool hasNetworkAuthority() const;
+
 	private:
 		std::unique_ptr<Client> m_client;
 		std::unique_ptr<Server> m_server;
