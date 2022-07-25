@@ -56,7 +56,7 @@ namespace editor
 		}
 	}
 
-	void NetworkWindow::onLog(const std::string& category, const std::string& level, const std::string& message)
+	void NetworkWindow::onLog(const std::string& time, const std::string& category, const std::string& level, const std::string& message)
 	{
 		if (category != "Net") return;
 
@@ -66,7 +66,7 @@ namespace editor
 		}
 
 		std::ostringstream s;
-		s << "[" << level << "] " << message;
+		s << time + " [" << level << "] " << message;
 		m_logs.push_back(s.str());
 	}
 

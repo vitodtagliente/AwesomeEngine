@@ -18,7 +18,7 @@ namespace editor
 		std::string getTitle() const override { return "Network"; }
 		void render() override;
 
-		virtual void onLog(const std::string& category, const std::string& level, const std::string& message) override;
+		virtual void onLog(const std::string& time, const std::string& category, const std::string& level, const std::string& message) override;
 
 		REFLECT()
 

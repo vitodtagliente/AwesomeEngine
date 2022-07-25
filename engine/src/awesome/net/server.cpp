@@ -27,7 +27,7 @@ namespace net
 		Connection::State connectionState = m_connection->connect("127.0.0.1", port);
 		if (connectionState == Connection::State::Connected)
 		{
-			INFO_LOG("Net", "Server listening...");
+			INFO_LOG("Net", THIS_FUNC + " Server listening...");
 			m_maxConnections = maxConnections;
 			return m_state = State::Listening, m_state;
 		}
