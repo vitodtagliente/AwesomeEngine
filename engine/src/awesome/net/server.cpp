@@ -52,8 +52,17 @@ namespace net
 				{
 					if (!command->requireAuthentication() || userSession->state == UserSession::State::Connected)
 					{
+						INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
 						command->execute(userSession, message);
 					}
+					else
+					{
+						ERR_LOG("Net", THIS_FUNC + " cannot execute the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]. Not authorized.");
+					}
+				}
+				else
+				{
+					ERR_LOG("Net", THIS_FUNC + " commandId[" + message.header.commandId + "] not found. Unable to process the message for the user[" + (std::string)userSession->netId() + "]");
 				}
 			}
 		}
