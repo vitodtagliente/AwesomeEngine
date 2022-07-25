@@ -16,7 +16,7 @@ public:
 	{
 	public:
 		IListener();
-		virtual ~IListener() = default;
+		virtual ~IListener();
 
 		virtual void onLog(const std::string& category, const std::string& level, const std::string& message) = 0;
 	};
