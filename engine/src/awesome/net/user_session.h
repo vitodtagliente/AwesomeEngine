@@ -6,7 +6,7 @@
 
 #include <vdtnet/address.h>
 
-#include "netid.h"
+#include "net_id.h"
 
 namespace net
 {

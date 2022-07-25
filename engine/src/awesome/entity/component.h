@@ -5,6 +5,7 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
+#include <awesome/net/net_mode.h>
 
 class Entity;
 
@@ -43,6 +44,7 @@ public:
 
 private:
 	uuid m_id;
+	net::NetMode m_netMode{ net::NetMode::Shared };
 	Entity* m_owner{ nullptr };
 };
 

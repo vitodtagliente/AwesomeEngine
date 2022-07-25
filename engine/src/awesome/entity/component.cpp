@@ -30,19 +30,22 @@ json::value Component::serialize() const
 	return json::object({
 		{"componentclass", getTypeDescriptor().name},
 		{"id", static_cast<std::string>(m_id)},
-		{"enabled", enabled}
+		{"enabled", enabled},
+		{"netMode", enumToString(m_netMode)}
 		});
 }
 
 void Component::deserialize(const json::value& value)
 {
-	::deserialize(value["id"], m_id);
-	enabled = value["enabled"].as_bool(false);
+	::deserialize(value.safeAt("id"), m_id);
+	enabled = value.safeAt("enabled").as_bool(false);
+	stringToEnum(value.safeAt("netMode").as_string(""), m_netMode);
 }
 
 void Component::inspect()
 {
 	editor::Layout::input("Enabled", enabled);
+	editor::Layout::input("Net Mode", m_netMode);
 }
 
 REFLECT_IMP(Component)
