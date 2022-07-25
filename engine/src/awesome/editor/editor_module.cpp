@@ -15,6 +15,7 @@
 #include <awesome/editor/windows/asset_inspector_window.h>
 #include <awesome/editor/windows/content_browser_window.h>
 #include <awesome/editor/windows/entity_inspector_window.h>
+#include <awesome/editor/windows/log_window.h>
 #include <awesome/editor/windows/network_window.h>
 #include <awesome/editor/windows/performance_window.h>
 #include <awesome/editor/windows/scene_window.h>
@@ -113,6 +114,7 @@ namespace editor
 		TypeFactory::load<AssetInspectorWindow>();
 		TypeFactory::load<ContentBrowserWindow>();
 		TypeFactory::load<EntityInspectorWindow>();
+		TypeFactory::load<LogWindow>();
 		TypeFactory::load<NetworkWindow>();
 		TypeFactory::load<PerformanceWindow>();
 		TypeFactory::load<SceneWindow>();
