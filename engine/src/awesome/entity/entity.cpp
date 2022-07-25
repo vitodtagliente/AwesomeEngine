@@ -2,6 +2,7 @@
 
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/net/network_manager.h>
 
 void Entity::prepareToSpawn()
 {
@@ -42,7 +43,8 @@ void Entity::update(const double deltaTime)
 {
 	for (const auto& component : m_components)
 	{
-		if (component->enabled)
+		if (component->enabled
+			&& (!replicate || net::NetworkManager::instance().hasNetworkAuthority(component->getNetMode())))
 		{
 			component->update(deltaTime);
 		}

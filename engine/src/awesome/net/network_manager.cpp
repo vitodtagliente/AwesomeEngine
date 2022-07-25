@@ -6,7 +6,7 @@ namespace net
 {
 	bool NetworkManager::startClient(const std::string& ip, const Address::port_t port)
 	{
-		if (m_type != Type::Unknown) return false;
+		if (m_type != Type::Offline) return false;
 
 		m_type = Type::Client;
 		m_client = std::make_unique<Client>();
@@ -22,7 +22,7 @@ namespace net
 
 	bool NetworkManager::startServer(const Address::port_t port, const unsigned int maxConnections)
 	{
-		if (m_type != Type::Unknown) return false;
+		if (m_type != Type::Offline) return false;
 
 		m_type = Type::Server;
 		m_server = std::make_unique<Server>();
@@ -43,6 +43,13 @@ namespace net
 
 	bool NetworkManager::hasNetworkAuthority() const
 	{
-		return m_type == Type::Unknown || m_type == Type::Server;;
+		return m_type == Type::Offline || m_type == Type::Server;
+	}
+
+	bool NetworkManager::hasNetworkAuthority(const NetMode netMode) const
+	{
+		if (netMode == NetMode::Client && m_type == Type::Server) return false;
+		if (netMode == NetMode::Server && m_type == Type::Client) return false;
+		return true;
 	}
 }

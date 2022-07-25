@@ -7,6 +7,7 @@
 #include <awesome/core/singleton.h>
 
 #include "client.h"
+#include "net_mode.h"
 #include "server.h"
 
 namespace net
@@ -17,7 +18,7 @@ namespace net
 
 		enum class Type
 		{
-			Unknown,
+			Offline,
 			Client,
 			Server
 		};
@@ -32,11 +33,12 @@ namespace net
 		inline Type getType() const { return m_type; }
 
 		bool hasNetworkAuthority() const;
+		bool hasNetworkAuthority(NetMode netMode) const;
 
 	private:
 		std::unique_ptr<Client> m_client;
 		std::unique_ptr<Server> m_server;
 		std::optional<net::Address> m_serverAddress;
-		Type m_type{ Type::Unknown };
+		Type m_type{ Type::Offline };
 	};
 }

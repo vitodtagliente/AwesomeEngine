@@ -11,7 +11,7 @@ namespace editor
 		net::NetworkManager& networkManager = net::NetworkManager::instance();
 		switch (networkManager.getType())
 		{
-		case net::NetworkManager::Type::Unknown:
+		case net::NetworkManager::Type::Offline:
 		{
 			const Application::Settings& settings = Application::instance().getSettings();
 
