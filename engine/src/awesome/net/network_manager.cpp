@@ -18,9 +18,8 @@ namespace net
 			const auto& [commandError, response] = commandResult.get();
 			if (commandError == CommandError::OK)
 			{
-
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}
