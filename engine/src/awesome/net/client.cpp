@@ -47,7 +47,7 @@ namespace net
 			}
 			else
 			{
-
+				m_responseMessages.insert(std::make_pair(message.header.id, std::make_tuple(message, std::chrono::high_resolution_clock::now())));
 			}
 		}
 	}

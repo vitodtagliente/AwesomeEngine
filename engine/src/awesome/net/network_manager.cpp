@@ -13,7 +13,13 @@ namespace net
 		if (m_client->connect(ip, port) == Client::State::Connected)
 		{
 			command::ConnectRequest request;
-			m_client->call<command::ConnectRequest, command::ConnectCommand>(request);
+			auto commandResult = m_client->asyncCall<command::ConnectRequest, command::ConnectResponse, command::ConnectCommand>(request);
+			commandResult.wait();
+			const auto& [commandError, response] = commandResult.get();
+			if (commandError == CommandError::OK)
+			{
+
+			}
 			return true;
 		}
 		return false;

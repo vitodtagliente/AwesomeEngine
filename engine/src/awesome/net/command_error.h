@@ -4,5 +4,6 @@
 enum class CommandError
 {
 	OK,
+	Timeout,
 	Unknown
 };
