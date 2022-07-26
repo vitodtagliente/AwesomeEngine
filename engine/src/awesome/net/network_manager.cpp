@@ -6,9 +6,9 @@ namespace net
 {
 	bool NetworkManager::startClient(const std::string& ip, const Address::port_t port)
 	{
-		if (m_type != Type::Offline) return false;
+		if (m_state != State::Offline) return false;
 
-		m_type = Type::Client;
+		m_state = State::Client;
 		m_client = std::make_unique<Client>();
 		if (m_client->connect(ip, port) == Client::State::Connected)
 		{
@@ -22,20 +22,20 @@ namespace net
 
 	bool NetworkManager::startServer(const Address::port_t port, const unsigned int maxConnections)
 	{
-		if (m_type != Type::Offline) return false;
+		if (m_state != State::Offline) return false;
 
-		m_type = Type::Server;
+		m_state = State::Server;
 		m_server = std::make_unique<Server>();
 		return m_server->listen(port, maxConnections) == Server::State::Listening;
 	}
 
 	void NetworkManager::update(const double /*deltaTime*/)
 	{
-		if (m_type == Type::Server)
+		if (m_state == State::Server)
 		{
 			m_server->update();
 		}
-		else if (m_type == Type::Client)
+		else if (m_state == State::Client)
 		{
 			m_client->update();
 		}
@@ -43,13 +43,18 @@ namespace net
 
 	bool NetworkManager::hasNetworkAuthority() const
 	{
-		return m_type == Type::Offline || m_type == Type::Server;
+		return m_state == State::Offline || m_state == State::Server;
 	}
 
 	bool NetworkManager::hasNetworkAuthority(const NetMode netMode) const
 	{
-		if (netMode == NetMode::Client && m_type == Type::Server) return false;
-		if (netMode == NetMode::Server && m_type == Type::Client) return false;
+		if (netMode == NetMode::Client && m_state == State::Server) return false;
+		if (netMode == NetMode::Server && m_state == State::Client) return false;
 		return true;
+	}
+	
+	bool NetworkManager::isOnline() const
+	{
+		return m_state != State::Offline;
 	}
 }

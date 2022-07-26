@@ -9,9 +9,9 @@ namespace editor
 	void NetworkWindow::render()
 	{
 		net::NetworkManager& networkManager = net::NetworkManager::instance();
-		switch (networkManager.getType())
+		switch (networkManager.getState())
 		{
-		case net::NetworkManager::Type::Offline:
+		case net::NetworkManager::State::Offline:
 		{
 			const Application::Settings& settings = Application::instance().getSettings();
 
@@ -28,7 +28,7 @@ namespace editor
 			}
 			break;
 		}
-		case net::NetworkManager::Type::Server:
+		case net::NetworkManager::State::Server:
 		{
 			if (Layout::button("Stop Server"))
 			{
@@ -36,7 +36,7 @@ namespace editor
 			}
 			break;
 		}
-		case net::NetworkManager::Type::Client:
+		case net::NetworkManager::State::Client:
 		{
 			if (Layout::button("Stop Client"))
 			{
