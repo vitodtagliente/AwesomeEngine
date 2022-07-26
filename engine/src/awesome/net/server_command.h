@@ -36,11 +36,11 @@ namespace net
 		{
 			RequestType request;
 			request.deserialize(message.body.data);
-			ResponseType response = execute(request);
+			ResponseType response = execute(userSession, request);
 		}
 
 	protected:
-		virtual ResponseType execute(const RequestType& request) = 0;
+		virtual ResponseType execute(UserSession* const userSession, const RequestType& request) = 0;
 	};
 
 	template <typename RequestType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>>
