@@ -1,6 +1,6 @@
 #include "network_manager.h"
 
-#include "server_commands/hello_command.h"
+#include <awesome/net/commands/connect_command.h>
 
 namespace net
 {
@@ -12,9 +12,8 @@ namespace net
 		m_client = std::make_unique<Client>();
 		if (m_client->connect(ip, port) == Client::State::Connected)
 		{
-			Hello request;
-			request.text = "Hello Server";
-			m_client->call("HelloCommand", request);
+			command::ConnectRequest request;
+			m_client->call<command::ConnectRequest, command::ConnectCommand>(request);
 			return true;
 		}
 		return false;

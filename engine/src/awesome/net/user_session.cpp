@@ -9,6 +9,16 @@ namespace net
 	{
 	}
 
+	void UserSession::connect()
+	{
+		m_state = State::Connected;
+	}
+
+	void UserSession::disconnect()
+	{
+		m_state = State::PendingDisconnection;
+	}
+
 	void UserSession::resetInactivityTime()
 	{
 		m_inactivityTime = std::chrono::high_resolution_clock::now();

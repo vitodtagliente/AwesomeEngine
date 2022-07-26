@@ -44,13 +44,13 @@ namespace net
 			auto [address, message] = packet.value();
 			UserSession* const userSession = m_sessionManager.findOrAdd(address);
 
-			if (userSession->state == UserSession::State::PendingConnection
-				|| userSession->state == UserSession::State::Connected)
+			if (userSession->getState() == UserSession::State::PendingConnection
+				|| userSession->getState() == UserSession::State::Connected)
 			{
 				ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
 				if (command)
 				{
-					if (!command->requireAuthentication() || userSession->state == UserSession::State::Connected)
+					if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
 					{
 						INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
 						command->execute(userSession, message);
@@ -68,7 +68,7 @@ namespace net
 		}
 
 		// inactivity check
-		// TODO
+		m_sessionManager.update();
 
 		// send the world update
 		{
@@ -76,7 +76,10 @@ namespace net
 			request.data = World::instance().netSerialize();
 			for (UserSession* const userSession : m_sessionManager.getUserSessions())
 			{
-				call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+				if (userSession->getState() == UserSession::State::Connected)
+				{
+					call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+				}
 			}
 		}
 	}

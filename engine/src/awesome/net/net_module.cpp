@@ -5,7 +5,7 @@
 #include <awesome/application/application.h>
 #include <awesome/application/input.h>
 #include <awesome/net/network_manager.h>
-#include "server_commands/hello_command.h"
+#include <awesome/net/commands/connect_command.h>
 
 #include "private/commands_loader.h"
 
@@ -21,10 +21,6 @@ namespace net
 		// load the commands
 		CommandsLoader loader;
 		loader.load();
-
-
-		// test
-		TypeFactory::load<HelloCommand>();
 	}
 
 	void Module::update(const double deltaTime)
@@ -37,9 +33,8 @@ namespace net
 			s_client = std::make_unique<Client>();
 			s_client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
 
-			Hello request;
-			request.text = "Hello Server";
-			s_client->call("HelloCommand", request);
+			command::ConnectRequest request;
+			s_client->call<command::ConnectRequest, command::ConnectCommand>(request);
 		}
 
 		if (s_client)

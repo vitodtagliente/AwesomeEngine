@@ -16,7 +16,7 @@ namespace net
 
 		void DisconnectCommand::execute(UserSession* const userSession, const DisconnectRequest& request)
 		{
-
+			userSession->disconnect();
 		}
 
 		REFLECT_SERVER_COMMAND(DisconnectCommand)

@@ -26,6 +26,10 @@ namespace net
 
 		ConnectResponse ConnectCommand::execute(UserSession* const userSession, const ConnectRequest&)
 		{
+			if (userSession->getState() == UserSession::State::PendingConnection)
+			{
+				userSession->connect();
+			}
 			return ConnectResponse();
 		}
 

@@ -7,6 +7,7 @@
 #include "command_error.h"
 #include "connection.h"
 #include "message.h"
+#include "server_command.h"
 
 namespace net
 {
@@ -28,21 +29,26 @@ namespace net
 		State connect(const std::string& ip, Address::port_t port);
 		void update();
 
-		template <typename RequestType, typename ResponseType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>, typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
-		CommandError call(const std::string& commandId, const RequestType& request, ResponseType& response)
-		{
-			if (m_state != State::Connected) return CommandError::Unknown;
+		// template <typename RequestType, typename ResponseType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>, typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
+		// CommandError call(const std::string& commandId, const RequestType& request, ResponseType& response)
+		// {
+		// 	if (m_state != State::Connected) return CommandError::Unknown;
+		// 
+		// 	return CommandError::Unknown;
+		// }
 
-			return CommandError::Unknown;
-		}
-
-		template <typename RequestType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>>
-		CommandError call(const std::string& commandId, const RequestType& request)
+		template <
+			typename RequestType,
+			typename CommandType,
+			typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>,
+			typename CommandEnabled = std::enable_if<std::is_base_of<IServerCommand, CommandType>::value>
+		>
+		CommandError call(const RequestType& request)
 		{
 			if (m_state != State::Connected) return CommandError::Unknown;
 
 			Message message;
-			message.header.commandId = commandId;
+			message.header.commandId = TypeDescriptor::get<CommandType>().name;
 			message.body.data = request.serialize();
 
 			m_connection->send(m_serverAddress, message);

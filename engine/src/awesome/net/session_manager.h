@@ -20,6 +20,8 @@ namespace net
 		UserSession* const findOrAdd(const Address& address);
 		void remove(const Address& address);
 
+		void update();
+
 		std::vector<UserSession*> getUserSessions() const;
 
 	private:

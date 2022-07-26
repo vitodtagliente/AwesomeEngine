@@ -1,11 +1,18 @@
 #include "session_manager.h"
 
+#include <string>
+
+#include <awesome/core/logger.h>
+
 namespace net
 {
 	UserSession* const SessionManager::add(const Address& address)
 	{
 		auto newPair = m_sessions.insert(std::make_pair(address, std::make_unique<UserSession>(address)));
-		return newPair.first->second.get();
+		UserSession* const userSession = newPair.first->second.get();
+
+		INFO_LOG("Net", THIS_FUNC + " Accepted a new session[" + (std::string)userSession->netId() + "]");
+		return userSession;
 	}
 
 	UserSession* const SessionManager::find(const Address& address, const bool resetInactivityTime) const
@@ -37,6 +44,20 @@ namespace net
 	void SessionManager::remove(const Address& address)
 	{
 		m_sessions.erase(address);
+	}
+
+	void SessionManager::update()
+	{
+		for (const auto& pair : m_sessions)
+		{
+			UserSession* const userSession = pair.second.get();
+			if (userSession->getState() == UserSession::State::PendingDisconnection
+				|| userSession->getInactivityTime() > 20.0) // 20 seconds
+			{
+				INFO_LOG("Net", THIS_FUNC + " Closing the session[" + (std::string)userSession->netId() + "]");
+				m_sessions.erase(pair.first);
+			}
+		}
 	}
 
 	std::vector<UserSession*> SessionManager::getUserSessions() const
