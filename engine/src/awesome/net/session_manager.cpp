@@ -1,5 +1,6 @@
 #include "session_manager.h"
 
+#include <queue>
 #include <string>
 
 #include <awesome/core/logger.h>
@@ -48,6 +49,7 @@ namespace net
 
 	void SessionManager::update()
 	{
+		std::queue<Address> sessionsToRemove;
 		for (const auto& pair : m_sessions)
 		{
 			UserSession* const userSession = pair.second.get();
@@ -55,8 +57,15 @@ namespace net
 				|| userSession->getInactivityTime() > 20.0) // 20 seconds
 			{
 				INFO_LOG("Net", THIS_FUNC + " Closing the session[" + (std::string)userSession->netId() + "]");
-				m_sessions.erase(pair.first);
+				sessionsToRemove.push(pair.first);
 			}
+		}
+
+		while (!sessionsToRemove.empty())
+		{
+			const Address address = sessionsToRemove.front();
+			m_sessions.erase(address);
+			sessionsToRemove.pop();
 		}
 	}
 
