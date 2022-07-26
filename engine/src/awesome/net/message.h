@@ -4,9 +4,20 @@
 #include <map>
 #include <string>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 
 #include "net_id.h"
+
+namespace net
+{
+	enum class CommandPhase;
+}
+
+REFLECT_ENUM(net::CommandPhase,
+	Request,
+	Response
+)
 
 namespace net
 {
@@ -17,6 +28,7 @@ namespace net
 			netid id;
 			double version{ 0.1 };
 			std::string commandId;
+			CommandPhase commandPhase{ CommandPhase::Request };
 			std::map<std::string, std::string> attributes;
 		};
 

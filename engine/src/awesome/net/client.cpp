@@ -37,14 +37,17 @@ namespace net
 		if (packet.has_value())
 		{
 			auto [address, message] = packet.value();
-			// if (address.getIP() == m_serverAddress.getIP()
-			// 	&& address.getPort() == m_serverAddress.getPort())
+			if (message.header.commandPhase == CommandPhase::Request)
 			{
 				ClientCommandPtr command = std::unique_ptr<IClientCommand>(TypeFactory::instantiate<IClientCommand>(message.header.commandId));
 				if (command)
 				{
 					command->execute(message);
 				}
+			}
+			else
+			{
+
 			}
 		}
 	}

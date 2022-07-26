@@ -47,22 +47,29 @@ namespace net
 			if (userSession->getState() == UserSession::State::PendingConnection
 				|| userSession->getState() == UserSession::State::Connected)
 			{
-				ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
-				if (command)
+				if (message.header.commandPhase == CommandPhase::Request)
 				{
-					if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
+					ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
+					if (command)
 					{
-						INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
-						command->execute(userSession, message);
+						if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
+						{
+							INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
+							command->execute(userSession, message);
+						}
+						else
+						{
+							ERR_LOG("Net", THIS_FUNC + " cannot execute the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]. Not authorized.");
+						}
 					}
 					else
 					{
-						ERR_LOG("Net", THIS_FUNC + " cannot execute the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]. Not authorized.");
+						ERR_LOG("Net", THIS_FUNC + " commandId[" + message.header.commandId + "] not found. Unable to process the message for the user[" + (std::string)userSession->netId() + "]");
 					}
 				}
 				else
 				{
-					ERR_LOG("Net", THIS_FUNC + " commandId[" + message.header.commandId + "] not found. Unable to process the message for the user[" + (std::string)userSession->netId() + "]");
+					// response
 				}
 			}
 		}

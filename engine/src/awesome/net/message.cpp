@@ -8,6 +8,7 @@ namespace net
 			{"id", ::serialize(header.id)},
 			{"version", header.version},
 			{"commandId", header.commandId},
+			{"commandPhase", enumToString(header.commandPhase)},
 			{"data", body.data},
 			});
 	}
@@ -17,6 +18,7 @@ namespace net
 		::deserialize(value.safeAt("id"), header.id);
 		header.version = value.safeAt("version").as_number(0.1).as_double();
 		header.commandId = value.safeAt("commandId").as_string("");
+		stringToEnum(value.safeAt("commandPhase").as_string(""), header.commandPhase);
 		body.data = value.safeAt("data");
 	}
 }
