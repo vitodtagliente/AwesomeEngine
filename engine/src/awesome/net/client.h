@@ -68,6 +68,7 @@ namespace net
 					const auto& [message, queueTime] = it->second;
 					ResponseType response;
 					response.deserialize(message.body.data);
+					m_responseMessages.erase(it);
 					return std::make_tuple(CommandError::OK, response);
 				}
 			);

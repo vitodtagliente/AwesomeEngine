@@ -14,9 +14,10 @@ namespace net
 
 		}
 
-		void DisconnectCommand::execute(UserSession* const userSession, const DisconnectRequest& request)
+		CommandError DisconnectCommand::execute(UserSession* const userSession, const DisconnectRequest&)
 		{
 			userSession->disconnect();
+			return CommandError::OK;
 		}
 
 		REFLECT_SERVER_COMMAND(DisconnectCommand)

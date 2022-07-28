@@ -25,7 +25,7 @@ namespace net
 			ConnectCommand() = default;
 			virtual ~ConnectCommand() = default;
 
-			virtual ConnectResponse execute(UserSession* const userSession, const ConnectRequest& request) override;
+			virtual CommandError execute(UserSession* const userSession, const ConnectRequest& request, ConnectResponse& response) override;
 
 			REFLECT()
 		};

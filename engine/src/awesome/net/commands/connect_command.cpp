@@ -24,13 +24,13 @@ namespace net
 
 		}
 
-		ConnectResponse ConnectCommand::execute(UserSession* const userSession, const ConnectRequest&)
+		CommandError ConnectCommand::execute(UserSession* const userSession, const ConnectRequest&, ConnectResponse&)
 		{
 			if (userSession->getState() == UserSession::State::PendingConnection)
 			{
 				userSession->connect();
 			}
-			return ConnectResponse();
+			return CommandError::OK;
 		}
 
 		REFLECT_SERVER_COMMAND(ConnectCommand)

@@ -55,7 +55,7 @@ namespace net
 						if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
 						{
 							INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
-							command->execute(userSession, message);
+							command->execute(m_connection.get(), userSession, message);
 						}
 						else
 						{

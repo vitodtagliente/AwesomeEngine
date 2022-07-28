@@ -19,7 +19,7 @@ namespace net
 			PingCommand() = default;
 			virtual ~PingCommand() = default;
 
-			virtual void execute(UserSession* const userSession, const PingRequest& request) override;
+			virtual CommandError execute(UserSession* const userSession, const PingRequest& request) override;
 
 			REFLECT()
 		};

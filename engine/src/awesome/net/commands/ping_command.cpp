@@ -14,9 +14,10 @@ namespace net
 
 		}
 
-		void PingCommand::execute(UserSession* const userSession, const PingRequest&)
+		CommandError PingCommand::execute(UserSession* const userSession, const PingRequest&)
 		{
 			userSession->resetInactivityTime();
+			return CommandError::OK;
 		}
 
 		REFLECT_SERVER_COMMAND(PingCommand)

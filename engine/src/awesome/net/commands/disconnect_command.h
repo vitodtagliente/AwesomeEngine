@@ -19,7 +19,7 @@ namespace net
 			DisconnectCommand() = default;
 			virtual ~DisconnectCommand() = default;
 
-			virtual void execute(UserSession* const userSession, const DisconnectRequest& request) override;
+			virtual CommandError execute(UserSession* const userSession, const DisconnectRequest& request) override;
 
 			REFLECT()
 		};
