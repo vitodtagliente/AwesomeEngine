@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <thread>
 
 #include "command_error.h"
 #include "connection.h"
@@ -55,7 +56,7 @@ namespace net
 					const std::chrono::high_resolution_clock::time_point begin = std::chrono::high_resolution_clock::now();
 					double timeLeft = 0.0;
 					
-					const auto it = m_responseMessages.find(messageId);
+					auto it = m_responseMessages.find(messageId);
 					while (it == m_responseMessages.end())
 					{
 						timeLeft = std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - begin).count();
@@ -63,6 +64,7 @@ namespace net
 						{
 							return std::make_tuple(CommandError::Timeout, ResponseType());
 						}
+						it = m_responseMessages.find(messageId);
 					}
 
 					const auto& [message, queueTime] = it->second;
@@ -98,5 +100,6 @@ namespace net
 		std::map<netid, std::tuple<Message, std::chrono::high_resolution_clock::time_point>> m_responseMessages;
 		Address m_serverAddress;
 		State m_state{ State::Initialized };
+		std::thread m_updateThread;
 	};
 }

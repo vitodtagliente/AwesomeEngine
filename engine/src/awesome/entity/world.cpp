@@ -218,7 +218,7 @@ json::value World::netSerialize() const
 		json::value entities = json::array();
 		for (const auto& entity : m_entities)
 		{
-			if (entity->replicate)
+			if (entity && entity->replicate)
 			{
 				entities.push_back(entity->serialize());
 			}

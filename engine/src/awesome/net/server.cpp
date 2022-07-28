@@ -29,6 +29,12 @@ namespace net
 		{
 			INFO_LOG("Net", THIS_FUNC + " Server listening at port " + std::to_string(port) + "...");
 			m_maxConnections = maxConnections;
+			m_updateThread = std::thread([this]() 
+				{ 
+					update(); 
+				}
+			);
+			m_updateThread.detach();
 			return m_state = State::Listening, m_state;
 		}
 		return m_state = State::Error, m_state;
@@ -36,56 +42,57 @@ namespace net
 
 	void Server::update()
 	{
-		if (m_state != State::Listening) return;
-
-		const auto& packet = m_connection->receive();
-		if (packet.has_value())
+		while (m_state == State::Listening) 
 		{
-			auto [address, message] = packet.value();
-			UserSession* const userSession = m_sessionManager.findOrAdd(address);
-
-			if (userSession->getState() == UserSession::State::PendingConnection
-				|| userSession->getState() == UserSession::State::Connected)
+			const auto& packet = m_connection->receive();
+			if (packet.has_value())
 			{
-				if (message.header.commandPhase == CommandPhase::Request)
+				auto [address, message] = packet.value();
+				UserSession* const userSession = m_sessionManager.findOrAdd(address);
+
+				if (userSession->getState() == UserSession::State::PendingConnection
+					|| userSession->getState() == UserSession::State::Connected)
 				{
-					ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
-					if (command)
+					if (message.header.commandPhase == CommandPhase::Request)
 					{
-						if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
+						ServerCommandPtr command = std::unique_ptr<IServerCommand>(TypeFactory::instantiate<IServerCommand>(message.header.commandId));
+						if (command)
 						{
-							INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
-							command->execute(m_connection.get(), userSession, message);
+							if (!command->requireAuthentication() || userSession->getState() == UserSession::State::Connected)
+							{
+								INFO_LOG("Net", THIS_FUNC + " executing the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]");
+								command->execute(m_connection.get(), userSession, message);
+							}
+							else
+							{
+								ERR_LOG("Net", THIS_FUNC + " cannot execute the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]. Not authorized.");
+							}
 						}
 						else
 						{
-							ERR_LOG("Net", THIS_FUNC + " cannot execute the commandId[" + message.header.commandId + "] for the user[" + (std::string)userSession->netId() + "]. Not authorized.");
+							ERR_LOG("Net", THIS_FUNC + " commandId[" + message.header.commandId + "] not found. Unable to process the message for the user[" + (std::string)userSession->netId() + "]");
 						}
 					}
 					else
 					{
-						ERR_LOG("Net", THIS_FUNC + " commandId[" + message.header.commandId + "] not found. Unable to process the message for the user[" + (std::string)userSession->netId() + "]");
+						// response
 					}
 				}
-				else
-				{
-					// response
-				}
 			}
-		}
 
-		// inactivity check
-		m_sessionManager.update();
+			// inactivity check
+			m_sessionManager.update();
 
-		// send the world update
-		{
-			command::UpdateWorldRequest request;
-			request.data = World::instance().netSerialize();
-			for (UserSession* const userSession : m_sessionManager.getUserSessions())
+			// send the world update
 			{
-				if (userSession->getState() == UserSession::State::Connected)
+				command::UpdateWorldRequest request;
+				request.data = World::instance().netSerialize();
+				for (UserSession* const userSession : m_sessionManager.getUserSessions())
 				{
-					call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+					if (userSession->getState() == UserSession::State::Connected)
+					{
+						call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+					}
 				}
 			}
 		}

@@ -14,7 +14,7 @@ namespace net
 		{
 			command::ConnectRequest request;
 			auto commandResult = m_client->asyncCall<command::ConnectRequest, command::ConnectResponse, command::ConnectCommand>(request);
-			commandResult.wait();
+			// commandResult.wait();
 			const auto& [commandError, response] = commandResult.get();
 			if (commandError == CommandError::OK)
 			{
@@ -35,14 +35,7 @@ namespace net
 
 	void NetworkManager::update(const double /*deltaTime*/)
 	{
-		if (m_state == State::Server)
-		{
-			m_server->update();
-		}
-		else if (m_state == State::Client)
-		{
-			m_client->update();
-		}
+
 	}
 
 	bool NetworkManager::hasNetworkAuthority() const

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <memory>
+#include <thread>
 
 #include "client_command.h"
 #include "command_error.h"
@@ -27,7 +28,6 @@ namespace net
 
 		void close();
 		State listen(Address::port_t port, unsigned int maxConnections);
-		void update();
 
 		// template <typename RequestType, typename ResponseType, typename RequestEnabled = std::enable_if<std::is_base_of<ISerializable, RequestType>::value>, typename ResponseEnabled = std::enable_if<std::is_base_of<ISerializable, ResponseType>::value>>
 		// CommandError call(UserSession* const userSession, const std::string& commandId, const RequestType& request, ResponseType& response)
@@ -57,9 +57,12 @@ namespace net
 		}
 
 	private:
+		void update();
+
 		std::unique_ptr<Connection> m_connection;
 		unsigned int m_maxConnections{ 4 };
 		SessionManager m_sessionManager;
 		State m_state{ State::Initialized };
+		std::thread m_updateThread;
 	};
 }

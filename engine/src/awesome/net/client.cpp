@@ -24,6 +24,12 @@ namespace net
 		if (connectionState == Connection::State::Connected)
 		{
 			m_serverAddress = Address(ip, port);
+			m_updateThread = std::thread([this]()
+				{
+					update();
+				}
+			);
+			m_updateThread.detach();
 			return m_state = State::Connected, m_state;
 		}
 		return m_state = State::Error, m_state;
@@ -31,23 +37,25 @@ namespace net
 
 	void Client::update()
 	{
-		if (m_state != State::Connected) return;
-
-		const auto& packet = m_connection->receive();
-		if (packet.has_value())
+		while (m_state == State::Connected)
 		{
-			auto [address, message] = packet.value();
-			if (message.header.commandPhase == CommandPhase::Request)
+
+			const auto& packet = m_connection->receive();
+			if (packet.has_value())
 			{
-				ClientCommandPtr command = std::unique_ptr<IClientCommand>(TypeFactory::instantiate<IClientCommand>(message.header.commandId));
-				if (command)
+				auto [address, message] = packet.value();
+				if (message.header.commandPhase == CommandPhase::Request)
 				{
-					command->execute(message);
+					ClientCommandPtr command = std::unique_ptr<IClientCommand>(TypeFactory::instantiate<IClientCommand>(message.header.commandId));
+					if (command)
+					{
+						command->execute(message);
+					}
 				}
-			}
-			else
-			{
-				m_responseMessages.insert(std::make_pair(message.header.id, std::make_tuple(message, std::chrono::high_resolution_clock::now())));
+				else
+				{
+					m_responseMessages.insert(std::make_pair(message.header.id, std::make_tuple(message, std::chrono::high_resolution_clock::now())));
+				}
 			}
 		}
 	}
