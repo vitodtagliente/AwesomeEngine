@@ -36,17 +36,25 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-# include flatbuffers
-if(NOT TARGET flatbuffers)
-	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
-endif()
+set(FLATC_CMD "${CMAKE_CURRENT_SOURCE_DIR}/vendor/flatc/flatc.exe")
+function(compile_fbs SRC_FBS)
+	get_filename_component(_fbs_path "${SRC_FBS}" PATH)
+	message(STATUS "`${SRC_FBS}`: add generation of C++ code in ${_fbs_path}")
+	execute_process(
+		COMMAND ${FLATC_CMD} --cpp -o ${_fbs_path} ${SRC_FBS} --no-includes --gen-compare --gen-name-strings
+		RESULT_VARIABLE CMD_ERROR
+		OUTPUT_FILE CMD_OUTPUT
+	)
+	message(STATUS "flatc_error:" ${CMD_ERROR})
+	message(STATUS "flatc_output:" ${CMD_OUTPUT})
+endfunction()
 
 # generate flatbuffers files
 file(GLOB_RECURSE PROJECT_FBS_FILES ${PROJECT_SOURCE_DIR}/src/*.fbs)
 
-foreach(_fbs IN ITEMS ${PROJECT_FBS_FILES})
-	compile_flatbuffers_schema_to_cpp_opt(${PROJECT_SOURCE_DIR}/src/awesome/asset/asset_types.fbs "--no-includes;--gen-compare;--gen-name-strings")
-endforeach()
+ foreach(_source IN ITEMS ${PROJECT_FBS_FILES})
+ 	compile_fbs(${_source})
+ endforeach()
 
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -75,6 +83,10 @@ add_library(
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 
+# include flatbuffers
+if(NOT TARGET flatbuffers)
+	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
+endif()
 if(NOT TARGET vdtecs)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
 endif()
