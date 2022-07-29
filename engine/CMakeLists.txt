@@ -55,6 +55,9 @@ add_library(
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 
+if(NOT TARGET flatbuffers)
+	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
+endif()
 if(NOT TARGET vdtecs)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
 endif()
@@ -76,13 +79,14 @@ endif()
 
 target_link_libraries(
     ${PROJECT_NAME}
-    ${GLAD_LIBRARIES}
-	glfw
-	${GLFW_LIBRARIES}
-	vdtecs
-	vdtgraphics
-	vdtjson
-	vdtmath
-	vdtnet
-	vdtreflect
+	PRIVATE flatbuffers
+    PRIVATE ${GLAD_LIBRARIES}
+	PRIVATE glfw
+	PRIVATE ${GLFW_LIBRARIES}
+	PUBLIC vdtecs
+	PUBLIC vdtgraphics
+	PUBLIC vdtjson
+	PUBLIC vdtmath
+	PUBLIC vdtnet
+	PUBLIC vdtreflect
 )
