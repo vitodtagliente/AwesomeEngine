@@ -1,0 +1,9 @@
+namespace Awesome.Asset;
+ 
+struct Foo {
+  x:float;
+  y:float;
+  z:float;
+}
+
+root_type Foo;

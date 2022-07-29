@@ -36,6 +36,18 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
+# include flatbuffers
+if(NOT TARGET flatbuffers)
+	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
+endif()
+
+# generate flatbuffers files
+file(GLOB_RECURSE PROJECT_FBS_FILES ${PROJECT_SOURCE_DIR}/src/*.fbs)
+
+foreach(_fbs IN ITEMS ${PROJECT_FBS_FILES})
+	compile_flatbuffers_schema_to_cpp_opt(${PROJECT_SOURCE_DIR}/src/awesome/asset/asset_types.fbs "--no-includes;--gen-compare;--gen-name-strings")
+endforeach()
+
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
@@ -46,18 +58,23 @@ foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
+foreach(_source IN ITEMS ${PROJECT_FBS_FILES})
+    get_filename_component(_source_path "${_source}" PATH)
+    file(RELATIVE_PATH _source_path_rel "${PROJECT_SOURCE_DIR}" "${_source_path}")
+    string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
+    source_group("${_group_path}" FILES "${_source}")
+endforeach()
+
 add_library(
     ${PROJECT_NAME} 
     STATIC
+	${PROJECT_FBS_FILES}
     ${VENDORS_SOURCES}
     ${PROJECT_SOURCE_FILES} 
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 
-if(NOT TARGET flatbuffers)
-	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
-endif()
 if(NOT TARGET vdtecs)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
 endif()
