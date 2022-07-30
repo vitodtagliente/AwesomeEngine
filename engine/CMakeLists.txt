@@ -16,6 +16,7 @@ include_directories(
 	vendor/imgui/misc/cpp/
 	vendor/miniaudio/
 	vendor/stb/
+	vendor/vdtproto/include/
 )
 
 # GLFW options
@@ -36,12 +37,17 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-set(FLATC_CMD "${CMAKE_CURRENT_SOURCE_DIR}/vendor/flatc/flatc.exe")
-function(compile_fbs SRC_FBS)
-	get_filename_component(_fbs_path "${SRC_FBS}" PATH)
-	message(STATUS "`${SRC_FBS}`: add generation of C++ code in ${_fbs_path}")
+if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
+    set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Debug/vdtproto.exe")
+else()
+	set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Release/vdtproto.exe")
+endif ()
+
+function(compile_proto SRC_PROTO)
+	get_filename_component(_proto_path "${SRC_PROTO}" PATH)
+	message(STATUS "`${SRC_PROTO}`: add generation of C++ code in ${_proto_path}")
 	execute_process(
-		COMMAND ${FLATC_CMD} --cpp -o ${_fbs_path} ${SRC_FBS} --no-includes --gen-compare --gen-name-strings
+		COMMAND ${VDTPROTO_EXE} ${_proto_path} ${SRC_PROTO}
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
@@ -50,10 +56,10 @@ function(compile_fbs SRC_FBS)
 endfunction()
 
 # generate flatbuffers files
-file(GLOB_RECURSE PROJECT_FBS_FILES ${PROJECT_SOURCE_DIR}/src/*.fbs)
+file(GLOB_RECURSE PROJECT_PROTO_FILES ${PROJECT_SOURCE_DIR}/src/*.proto)
 
- foreach(_source IN ITEMS ${PROJECT_FBS_FILES})
- 	compile_fbs(${_source})
+ foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
+ 	compile_proto(${_source})
  endforeach()
 
 # recursively include all source files
@@ -76,16 +82,15 @@ endforeach()
 add_library(
     ${PROJECT_NAME} 
     STATIC
-	${PROJECT_FBS_FILES}
+	${PROJECT_PROTO_FILES}
     ${VENDORS_SOURCES}
     ${PROJECT_SOURCE_FILES} 
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 
-# include flatbuffers
-if(NOT TARGET flatbuffers)
-	add_subdirectory(vendor/flatbuffers ${CMAKE_CURRENT_BINARY_DIR}/flatbuffers-build EXCLUDE_FROM_ALL)
+if(NOT TARGET vdtproto)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto)
 endif()
 if(NOT TARGET vdtecs)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
@@ -108,7 +113,6 @@ endif()
 
 target_link_libraries(
     ${PROJECT_NAME}
-	PRIVATE flatbuffers
     PRIVATE ${GLAD_LIBRARIES}
 	PRIVATE glfw
 	PRIVATE ${GLFW_LIBRARIES}
