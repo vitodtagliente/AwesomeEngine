@@ -19,6 +19,3 @@
 [submodule "engine/vendor/vdtnet"]
 	path = engine/vendor/vdtnet
 	url = https://github.com/vitodtagliente/vdtnet
-[submodule "engine/vendor/flatbuffers"]
-	path = engine/vendor/flatbuffers
-	url = https://github.com/google/flatbuffers
