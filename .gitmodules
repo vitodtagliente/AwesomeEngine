@@ -19,3 +19,6 @@
 [submodule "engine/vendor/vdtnet"]
 	path = engine/vendor/vdtnet
 	url = https://github.com/vitodtagliente/vdtnet
+[submodule "engine/vendor/vdtproto"]
+	path = engine/vendor/vdtproto
+	url = https://github.com/vitodtagliente/vdtproto
