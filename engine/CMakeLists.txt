@@ -42,17 +42,18 @@ if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
 else()
 	set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Release/vdtproto.exe")
 endif ()
+message(STATUS "compiler: `${VDTPROTO_EXE}`")
 
 function(compile_proto SRC_PROTO)
 	get_filename_component(_proto_path "${SRC_PROTO}" PATH)
 	message(STATUS "`${SRC_PROTO}`: add generation of C++ code in ${_proto_path}")
 	execute_process(
-		COMMAND ${VDTPROTO_EXE} ${_proto_path} ${SRC_PROTO}
+		COMMAND ${VDTPROTO_EXE} ${SRC_PROTO}
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
-	message(STATUS "flatc_error:" ${CMD_ERROR})
-	message(STATUS "flatc_output:" ${CMD_OUTPUT})
+	message(STATUS "vdtproto_error:" ${CMD_ERROR})
+	message(STATUS "vdtproto_output:" ${CMD_OUTPUT})
 endfunction()
 
 # generate flatbuffers files
@@ -72,7 +73,7 @@ foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
-foreach(_source IN ITEMS ${PROJECT_FBS_FILES})
+foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
     get_filename_component(_source_path "${_source}" PATH)
     file(RELATIVE_PATH _source_path_rel "${PROJECT_SOURCE_DIR}" "${_source_path}")
     string(REPLACE "/" "\\" _group_path "${_source_path_rel}")

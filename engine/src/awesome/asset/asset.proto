@@ -1,0 +1,11 @@
+
+enum AssetType
+{
+	None,
+	Image,
+	Prefab,
+	Scene,
+	Sprite,
+	SpriteAnimation,
+	Text
+)
