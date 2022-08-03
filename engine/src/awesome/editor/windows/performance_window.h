@@ -1,13 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class PerformanceWindow : public Window, public IProtoClass
+	class PerformanceWindow : public Window
 	{
 	public:
 		PerformanceWindow() = default;

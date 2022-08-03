@@ -1,15 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <string>
-
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/menu_item.h>
 
 namespace editor
 {
-	class SpriteMenuItem : public MenuItem, public IProtoClass
+	class SpriteMenuItem : public MenuItem
 	{
 	public:
 		SpriteMenuItem() = default;

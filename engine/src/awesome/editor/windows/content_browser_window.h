@@ -2,9 +2,6 @@
 #pragma once
 
 #include <filesystem>
-#include <string>
-
-#include <vdtproto/runtime.h>
 
 #include <awesome/asset/asset_library.h>
 #include <awesome/editor/window.h>
@@ -12,7 +9,7 @@
 
 namespace editor
 {
-	class ContentBrowserWindow : public Window, public IProtoClass
+	class ContentBrowserWindow : public Window
 	{
 	public:
 		ContentBrowserWindow() = default;

@@ -1,13 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class EntityInspectorWindow : public Window, public IProtoClass
+	class EntityInspectorWindow : public Window
 	{
 	public:
 		EntityInspectorWindow() = default;

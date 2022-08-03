@@ -1,14 +1,12 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/application/application.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class SettingsWindow : public Window, public IProtoClass
+	class SettingsWindow : public Window
 	{
 	public:
 		SettingsWindow();

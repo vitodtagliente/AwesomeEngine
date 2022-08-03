@@ -1,15 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <string>
-
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/menu_item.h>
 
 namespace editor
 {
-	class ShowWindowsMenuItem : public MenuItem, public IProtoClass
+	class ShowWindowsMenuItem : public MenuItem
 	{
 	public:
 		ShowWindowsMenuItem() = default;

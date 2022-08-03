@@ -1,17 +1,14 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
 #include <vector>
-
-#include <vdtproto/runtime.h>
 
 #include <awesome/asset/asset.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class AssetInspectorWindow : public Window, public IProtoClass
+	class AssetInspectorWindow : public Window
 	{
 	public:
 

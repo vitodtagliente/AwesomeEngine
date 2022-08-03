@@ -1,13 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/menu_item.h>
 
 namespace editor
 {
-	class SaveSceneAsMenuItem : public MenuItem, public IProtoClass
+	class SaveSceneAsMenuItem : public MenuItem
 	{
 	public:
 		SaveSceneAsMenuItem() = default;

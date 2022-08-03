@@ -1,17 +1,14 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <string>
 #include <vector>
-
-#include <vdtproto/runtime.h>
 
 #include <awesome/core/logger.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class LogWindow : public Window, public Logger::IListener, public IProtoClass
+	class LogWindow : public Window, public Logger::IListener
 	{
 	public:
 		LogWindow() = default;

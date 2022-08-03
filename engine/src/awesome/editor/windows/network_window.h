@@ -1,13 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class NetworkWindow : public Window, public IProtoClass
+	class NetworkWindow : public Window
 	{
 	public:
 		NetworkWindow() = default;

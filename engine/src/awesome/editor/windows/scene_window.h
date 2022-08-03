@@ -1,10 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <string>
-
-#include <vdtproto/runtime.h>
-
 #include <awesome/core/uuid.h>
 #include <awesome/editor/window.h>
 
@@ -12,7 +8,7 @@ class Entity;
 
 namespace editor
 {
-	class SceneWindow : public Window, public IProtoClass
+	class SceneWindow : public Window
 	{
 	public:
 		SceneWindow() = default;
