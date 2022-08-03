@@ -89,9 +89,6 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 if(NOT TARGET vdtproto)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto)
 endif()
-if(NOT TARGET vdtecs)
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtecs)
-endif()
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
 endif()
@@ -110,7 +107,6 @@ target_link_libraries(
     PRIVATE ${GLAD_LIBRARIES}
 	PRIVATE glfw
 	PRIVATE ${GLFW_LIBRARIES}
-	PUBLIC vdtecs
 	PUBLIC vdtgraphics
 	PUBLIC vdtjson
 	PUBLIC vdtmath

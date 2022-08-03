@@ -4,12 +4,6 @@
 [submodule "engine/vendor/vdtjson"]
 	path = engine/vendor/vdtjson
 	url = https://github.com/vitodtagliente/vdtjson
-[submodule "engine/vendor/vdtecs"]
-	path = engine/vendor/vdtecs
-	url = https://github.com/vitodtagliente/vdtecs
-[submodule "engine/vendor/vdtreflect"]
-	path = engine/vendor/vdtreflect
-	url = https://github.com/vitodtagliente/vdtreflect
 [submodule "engine/vendor/miniaudio"]
 	path = engine/vendor/miniaudio
 	url = https://github.com/mackron/miniaudio

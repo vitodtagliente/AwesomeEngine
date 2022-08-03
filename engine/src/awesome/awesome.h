@@ -1,7 +1,12 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "core/event.h"
-#include "core/string_id.h"
+#include <algorithm>
+#include <map>
+#include <string>
+#include <vector>
 
-#include "application/application.h"
+#include <vdtproto/runtime.h>
+
+#include "core/uuid.h"
+#include "encoding/json.h"
