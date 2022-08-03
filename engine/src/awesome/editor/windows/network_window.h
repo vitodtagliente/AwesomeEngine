@@ -1,11 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class NetworkWindow : public Window
+	class NetworkWindow : public Window, public IProtoClass
 	{
 	public:
 		NetworkWindow() = default;
@@ -14,6 +16,6 @@ namespace editor
 		std::string getTitle() const override { return "Network"; }
 		void render() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

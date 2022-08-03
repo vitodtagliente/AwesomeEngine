@@ -63,6 +63,4 @@ namespace component
 		Component::inspect();
 		editor::Layout::input("Color", color);
 	}
-
-	REFLECT_COMPONENT(Camera)
 }

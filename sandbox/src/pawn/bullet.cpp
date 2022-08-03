@@ -52,5 +52,3 @@ void Bullet::deserialize(const json::value& data)
 	damage = data.safeAt("damage").as_number(1).as_int();
 	m_speed = data.safeAt("speed").as_number(1.f).as_float();
 }
-
-REFLECT_COMPONENT(Bullet)

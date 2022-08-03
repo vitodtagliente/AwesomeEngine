@@ -28,7 +28,7 @@ void Component::detach()
 json::value Component::serialize() const
 {
 	return json::object({
-		{"componentclass", getTypeDescriptor().name},
+		{"componentclass", get_descriptor().name},
 		{"id", static_cast<std::string>(m_id)},
 		{"enabled", enabled},
 		{"netMode", enumToString(m_netMode)}
@@ -47,5 +47,3 @@ void Component::inspect()
 	editor::Layout::input("Enabled", enabled);
 	editor::Layout::input("Net Mode", m_netMode);
 }
-
-REFLECT_IMP(Component)

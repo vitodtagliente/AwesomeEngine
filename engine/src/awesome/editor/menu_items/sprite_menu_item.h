@@ -3,11 +3,13 @@
 
 #include <string>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/editor/menu_item.h>
 
 namespace editor
 {
-	class SpriteMenuItem : public MenuItem
+	class SpriteMenuItem : public MenuItem, public IProtoClass
 	{
 	public:
 		SpriteMenuItem() = default;
@@ -18,6 +20,6 @@ namespace editor
 
 		virtual void execute() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

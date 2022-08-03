@@ -141,6 +141,4 @@ namespace editor
 	{
 		entity->name = name;
 	}
-
-	REFLECT_WINDOW(SceneWindow)
 }

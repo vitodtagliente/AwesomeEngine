@@ -7,12 +7,8 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/transform.h>
 
-#include "pawn/pawn.h"
-
-REFLECT_ENUM(CombatType,
-	Meele,
-	Ranged
-)
+#include "pawn.h"
+#include "combat_type.h"
 
 namespace graphics
 {
@@ -37,7 +33,7 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	REFLECT()
+	PROTO()
 
 private:
 	PrefabAssetPtr m_bulletPrefab{ nullptr };

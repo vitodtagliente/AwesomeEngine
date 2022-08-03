@@ -71,6 +71,4 @@ namespace component
 		editor::Layout::input("Speed", speed);
 		editor::Layout::input("Zoom speed", zoomSpeed);
 	}
-
-	REFLECT_COMPONENT(CameraController2d)
 }

@@ -17,6 +17,4 @@ namespace editor
 			}
 		);
 	}
-
-	REFLECT_MENU_ITEM(SaveSceneAsMenuItem)
 }

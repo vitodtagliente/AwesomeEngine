@@ -27,7 +27,7 @@ public:
 	float speed{ 3.0f };
 	float dashSpeed{ 12.0f };
 
-	REFLECT()
+	PROTO()
 
 private:
 	component::SpriteAnimator* m_animator{ nullptr };

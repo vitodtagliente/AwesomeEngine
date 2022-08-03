@@ -15,7 +15,7 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
 
-	REFLECT()
+	PROTO()
 
 private:
 	CombatController* m_combat{ nullptr };

@@ -1,11 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/editor/menu_item.h>
 
 namespace editor
 {
-	class NewSceneMenuItem : public MenuItem
+	class NewSceneMenuItem : public MenuItem, public IProtoClass
 	{
 	public:
 		NewSceneMenuItem() = default;
@@ -16,6 +18,6 @@ namespace editor
 
 		virtual void execute() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

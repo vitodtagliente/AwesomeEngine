@@ -4,13 +4,15 @@
 #include <filesystem>
 #include <string>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/asset/asset_library.h>
 #include <awesome/editor/window.h>
 #include <awesome/editor/utils/dir.h>
 
 namespace editor
 {
-	class ContentBrowserWindow : public Window
+	class ContentBrowserWindow : public Window, public IProtoClass
 	{
 	public:
 		ContentBrowserWindow() = default;
@@ -19,7 +21,7 @@ namespace editor
 		virtual void render() override;
 		virtual void update(double deltaTime) override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 

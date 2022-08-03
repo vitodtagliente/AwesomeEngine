@@ -8,24 +8,11 @@
 #include <vector>
 
 #include <awesome/asset/scene_asset.h>
-#include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 #include <awesome/graphics/renderer.h>
 
+#include "application_settings.h"
 #include "time.h"
-
-REFLECT_ENUM(ApplicationMode,
-	Editor,
-	Server,
-	Standalone
-)
-
-REFLECT_ENUM(FpsMode,
-	Fps30 = 30,
-	Fps60 = 60,
-	Fps90 = 90,
-	Unlimited
-)
 
 class Application : public Singleton<Application>
 {

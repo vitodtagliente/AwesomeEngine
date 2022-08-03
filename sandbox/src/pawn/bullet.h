@@ -23,7 +23,7 @@ public:
 
 	int damage{ 1 };
 
-	REFLECT()
+	PROTO()
 
 private:
 	component::Body2d* m_body;

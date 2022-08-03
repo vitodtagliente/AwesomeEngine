@@ -37,18 +37,14 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-    set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Debug/vdtproto.exe")
-else()
-	set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Release/vdtproto.exe")
-endif ()
+set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Release/vdtproto.exe")
 message(STATUS "compiler: `${VDTPROTO_EXE}`")
 
 function(compile_proto SRC_PROTO)
 	get_filename_component(_proto_path "${SRC_PROTO}" PATH)
 	message(STATUS "`${SRC_PROTO}`: add generation of C++ code in ${_proto_path}")
 	execute_process(
-		COMMAND ${VDTPROTO_EXE} ${SRC_PROTO}
+		COMMAND ${VDTPROTO_EXE} ${SRC_PROTO} "--no-generated"
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
@@ -56,7 +52,7 @@ function(compile_proto SRC_PROTO)
 	message(STATUS "vdtproto_output:" ${CMD_OUTPUT})
 endfunction()
 
-# generate flatbuffers files
+# generate proto files
 file(GLOB_RECURSE PROJECT_PROTO_FILES ${PROJECT_SOURCE_DIR}/src/*.proto)
 
  foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
@@ -108,9 +104,6 @@ endif()
 if(NOT TARGET vdtnet)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtnet)
 endif()
-if(NOT TARGET vdtreflect)
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtreflect)
-endif()
 
 target_link_libraries(
     ${PROJECT_NAME}
@@ -122,5 +115,6 @@ target_link_libraries(
 	PUBLIC vdtjson
 	PUBLIC vdtmath
 	PUBLIC vdtnet
-	PUBLIC vdtreflect
 )
+
+target_include_directories(${PROJECT_NAME} PUBLIC src vendor/vdtproto/include)

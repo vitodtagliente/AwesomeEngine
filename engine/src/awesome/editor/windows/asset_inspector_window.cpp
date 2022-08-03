@@ -56,6 +56,4 @@ namespace editor
 			}
 		}
 	}
-
-	REFLECT_WINDOW(AssetInspectorWindow);
 }

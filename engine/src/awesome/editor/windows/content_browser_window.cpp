@@ -278,6 +278,4 @@ namespace editor
 	{
 		m_dir = Dir(m_dir.path);
 	}
-
-	REFLECT_WINDOW(ContentBrowserWindow);
 }

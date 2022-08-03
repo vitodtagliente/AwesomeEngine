@@ -4,12 +4,14 @@
 #include <string>
 #include <vector>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/core/logger.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class LogWindow : public Window, public Logger::IListener
+	class LogWindow : public Window, public Logger::IListener, public IProtoClass
 	{
 	public:
 		LogWindow() = default;
@@ -20,7 +22,7 @@ namespace editor
 
 		virtual void onLog(const std::string& time, const std::string& category, const std::string& level, const std::string& message) override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 		std::string m_filter;

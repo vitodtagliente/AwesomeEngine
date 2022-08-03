@@ -10,6 +10,4 @@ namespace editor
 		State::instance().select();
 		World::instance().clear();
 	}
-
-	REFLECT_MENU_ITEM(NewSceneMenuItem)
 }

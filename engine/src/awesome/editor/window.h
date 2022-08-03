@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include <awesome/core/reflection.h>
-
 namespace editor
 {
 	class Window
@@ -13,7 +11,7 @@ namespace editor
 		Window() = default;
 		virtual ~Window() = default;
 
-		virtual std::string getTitle() const;
+		virtual std::string getTitle() const = 0;
 		inline bool hasFocus() const { return m_hasFocus; }
 
 		void setFocus(bool focus);
@@ -24,11 +22,7 @@ namespace editor
 
 		virtual void onFocusChange(bool /*focus*/) {}
 
-		REFLECT()
-
 	private:
 		bool m_hasFocus{ false };
-	};
-
-#define REFLECT_WINDOW(T) REFLECT_IMP_CATEGORY(T, Window)
+	};	
 }

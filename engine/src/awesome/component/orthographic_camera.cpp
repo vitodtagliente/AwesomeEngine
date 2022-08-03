@@ -49,6 +49,4 @@ namespace component
 		editor::Layout::input("Pixel Perfect", pixelPerfect);
 		editor::Layout::input("Pixel per unit", pixelsPerUnit);
 	}
-
-	REFLECT_COMPONENT(OrthographicCamera)
 }

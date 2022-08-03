@@ -3,6 +3,8 @@
 
 #include <optional>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
@@ -22,7 +24,7 @@ namespace component
 		float speed;
 		float zoomSpeed;
 
-		REFLECT()
+		PROTO()
 
 	private:
 		std::optional<math::vec2> m_dragPosition;

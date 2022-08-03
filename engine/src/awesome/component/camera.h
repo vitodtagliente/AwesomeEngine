@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/camera.h>
@@ -27,7 +29,7 @@ namespace component
 
 		graphics::Color color;
 
-		REFLECT()
+		PROTO()
 
 	protected:
 		std::unique_ptr<graphics::Camera> m_data;

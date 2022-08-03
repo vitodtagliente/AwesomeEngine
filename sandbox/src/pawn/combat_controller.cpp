@@ -115,5 +115,3 @@ void CombatController::deserialize(const json::value& value)
 
 	m_crosshairRadius = value.safeAt("crosshairRadius").as_number(1.f).as_float();
 }
-
-REFLECT_COMPONENT(CombatController)

@@ -86,10 +86,10 @@ namespace editor
 				ImGui::BeginChild("Image Preview", ImVec2(0.f,  height), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 				switch (m_type)
 				{
-				case Asset::Type::Image: Layout::image(std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset), s_widgetWidth, height); break;
+				case Asset::Type::Image: Layout::image(std::static_pointer_cast<ImageAsset>(m_selectedAsset), s_widgetWidth, height); break;
 				case Asset::Type::Sprite: 
 				{
-					auto sprite = std::dynamic_pointer_cast<SpriteAsset>(m_selectedAsset);
+					auto sprite = std::static_pointer_cast<SpriteAsset>(m_selectedAsset);
 					if (sprite && sprite->data.has_value())
 					{
 						Layout::image(sprite->data->image, sprite->data->rect, s_widgetWidth, height);

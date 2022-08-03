@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include <awesome/core/reflection.h>
 #include <awesome/encoding/json.h>
 
 #include "message.h"

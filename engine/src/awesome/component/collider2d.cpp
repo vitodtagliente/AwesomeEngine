@@ -131,6 +131,4 @@ namespace component
 		}
 		editor::Layout::input("Is Trigger", isTrigger);
 	}
-
-	REFLECT_COMPONENT(Collider2d)
 }

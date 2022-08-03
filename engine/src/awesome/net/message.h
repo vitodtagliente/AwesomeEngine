@@ -4,20 +4,10 @@
 #include <map>
 #include <string>
 
-#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 
+#include "command_phase.h"
 #include "net_id.h"
-
-namespace net
-{
-	enum class CommandPhase;
-}
-
-REFLECT_ENUM(net::CommandPhase,
-	Request,
-	Response
-)
 
 namespace net
 {

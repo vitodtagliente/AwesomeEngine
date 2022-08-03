@@ -3,9 +3,13 @@
 
 #include <functional>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/math/vector2.h>
+
+#include "shape_type.h"
 
 namespace graphics
 {
@@ -14,20 +18,10 @@ namespace graphics
 
 namespace component
 {
-	enum class Collider2dType;
-}
-
-REFLECT_ENUM(component::Collider2dType,
-	Circle,
-	Rect
-)
-
-namespace component
-{
 	class Collider2d : public Component, public graphics::IGraphicsComponent
 	{
 	public:
-		typedef Collider2dType Type;
+		typedef ShapeType Type;
 
 		Collider2d() = default;
 		virtual ~Collider2d() = default;
@@ -44,7 +38,7 @@ namespace component
 
 		bool isTrigger{ false };
 
-		REFLECT()
+		PROTO()
 
 	private:
 		Type m_type{ Type::Rect };

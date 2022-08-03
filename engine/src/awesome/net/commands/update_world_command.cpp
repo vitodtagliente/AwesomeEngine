@@ -20,7 +20,5 @@ namespace net
 		{
 			World::instance().netDeserialize(request.data);
 		}
-
-		REFLECT_CLIENT_COMMAND(UpdateWorldCommand)
 	}
 }

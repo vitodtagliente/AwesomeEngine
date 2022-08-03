@@ -1,11 +1,13 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class EntityInspectorWindow : public Window
+	class EntityInspectorWindow : public Window, public IProtoClass
 	{
 	public:
 		EntityInspectorWindow() = default;
@@ -13,6 +15,6 @@ namespace editor
 		std::string getTitle() const override { return "Entity Inspector"; }
 		void render() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

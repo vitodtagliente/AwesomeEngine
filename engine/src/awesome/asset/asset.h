@@ -7,18 +7,9 @@
 #include <string>
 #include <vector>
 
-#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
-REFLECT_ENUM(AssetType,
-	None,
-	Image,
-	Prefab,
-	Scene,
-	Sprite,
-	SpriteAnimation,
-	Text
-)
+#include "asset_type.h"
 
 struct Asset
 {
@@ -64,8 +55,6 @@ struct Asset
 
 	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 	static constexpr char* const Extension = ".asset";
-
-	REFLECT()
 };
 
 typedef std::shared_ptr<Asset> AssetPtr;

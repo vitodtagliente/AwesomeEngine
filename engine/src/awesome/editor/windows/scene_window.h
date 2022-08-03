@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/core/uuid.h>
 #include <awesome/editor/window.h>
 
@@ -10,7 +12,7 @@ class Entity;
 
 namespace editor
 {
-	class SceneWindow : public Window
+	class SceneWindow : public Window, public IProtoClass
 	{
 	public:
 		SceneWindow() = default;
@@ -18,7 +20,7 @@ namespace editor
 		std::string getTitle() const override { return "Scene"; }
 		void render() override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 

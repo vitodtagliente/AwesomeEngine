@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/texture_rect.h>
@@ -34,6 +36,6 @@ namespace component
 		virtual void deserialize(const json::value& value) override;
 		virtual void inspect() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

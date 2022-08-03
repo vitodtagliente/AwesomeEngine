@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/net/server_command.h>
 
 namespace net
@@ -19,7 +21,7 @@ namespace net
 			virtual void deserialize(const json::value& value) override;
 		};
 
-		class ConnectCommand : public ServerCommand<ConnectRequest, ConnectResponse>
+		class ConnectCommand : public ServerCommand<ConnectRequest, ConnectResponse>, public IProtoClass
 		{
 		public:
 			ConnectCommand() = default;
@@ -27,7 +29,7 @@ namespace net
 
 			virtual CommandError execute(UserSession* const userSession, const ConnectRequest& request, ConnectResponse& response) override;
 
-			REFLECT()
+			PROTO()
 		};
 	}
 }

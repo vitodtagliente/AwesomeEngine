@@ -57,5 +57,3 @@ void Pawn::deserialize(const json::value& value)
 	speed = value.safeAt("speed").as_number(1.f).as_float();
 	dashSpeed = value.safeAt("dashSpeed").as_number(1.f).as_float();
 }
-
-REFLECT_COMPONENT(Pawn)

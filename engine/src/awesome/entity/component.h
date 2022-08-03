@@ -1,7 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/core/reflection.h>
+#include <vdtproto/runtime.h>
+
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
@@ -9,7 +10,7 @@
 
 class Entity;
 
-class Component : public ISerializable
+class Component : public ISerializable, public IProtoClass
 {
 public:
 
@@ -23,7 +24,7 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
-	inline net::NetMode getNetMode() const { return m_netMode; }
+	inline NetMode getNetMode() const { return m_netMode; }
 	inline bool isAttached() const { return m_owner != nullptr; }
 
 	void attach(Entity* const entity);
@@ -41,12 +42,8 @@ public:
 
 	bool enabled{ true };
 
-	REFLECT()
-
 private:
 	uuid m_id;
-	net::NetMode m_netMode{ net::NetMode::Shared };
+	NetMode m_netMode{ NetMode::Shared };
 	Entity* m_owner{ nullptr };
 };
-
-#define REFLECT_COMPONENT(T) REFLECT_IMP_CATEGORY(T, Component)

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/core/serialization.h>
 #include <awesome/entity/component.h>
@@ -35,7 +37,7 @@ namespace component
 		virtual void deserialize(const json::value& value) override;
 		virtual void inspect() override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 

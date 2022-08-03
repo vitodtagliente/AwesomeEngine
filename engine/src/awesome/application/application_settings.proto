@@ -1,0 +1,14 @@
+enum ApplicationMode
+{
+	Editor,
+	Server,
+	Standalone
+}
+
+enum FpsMode
+{
+	Fps30 = 30,
+	Fps60 = 60,
+	Fps90 = 90,
+	Unlimited
+}

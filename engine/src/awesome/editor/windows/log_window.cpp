@@ -40,6 +40,4 @@ namespace editor
 		s << time + " [" + category + "][" << level << "] " << message;
 		m_logs.push_back(s.str());
 	}
-
-	REFLECT_WINDOW(LogWindow)
 }

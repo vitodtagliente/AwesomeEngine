@@ -1,7 +1,8 @@
 #include "server.h"
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/core/logger.h>
-#include <awesome/core/reflection.h>
 #include <awesome/entity/world.h>
 
 #include "server_command.h"

@@ -19,7 +19,5 @@ namespace net
 			userSession->disconnect();
 			return CommandError::OK;
 		}
-
-		REFLECT_SERVER_COMMAND(DisconnectCommand)
 	}
 }

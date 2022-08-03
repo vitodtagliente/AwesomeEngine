@@ -158,6 +158,4 @@ namespace component
 			m_spriteRenderer->sprite = frame.sprite;
 		}
 	}
-
-	REFLECT_COMPONENT(SpriteAnimator)
 }

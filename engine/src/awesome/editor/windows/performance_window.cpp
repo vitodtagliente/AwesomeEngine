@@ -45,6 +45,4 @@ namespace editor
 			Layout::text(s.str());
 		}
 	}
-
-	REFLECT_WINDOW(PerformanceWindow)
 }

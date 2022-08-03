@@ -1,6 +1,6 @@
 #include "client.h"
 
-#include <awesome/core/reflection.h>
+#include <vdtproto/runtime.h>
 
 #include "client_command.h"
 

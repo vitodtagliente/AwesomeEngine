@@ -1,7 +1,5 @@
 #include "components_loader.h"
 
-#include <awesome/core/reflection.h>
-
 #include <awesome/component/body2d.h>
 #include <awesome/component/camera.h>
 #include <awesome/component/camera_controller_2d.h>
@@ -14,13 +12,13 @@
 
 void ComponentsLoader::load()
 {
-	TypeFactory::load<component::Body2d>();
-	TypeFactory::load<component::Camera>();
-	TypeFactory::load<component::CameraController2d>();
-	TypeFactory::load<component::Collider2d>();
-	TypeFactory::load<component::GizmosRenderer>();
-	TypeFactory::load<component::OrthographicCamera>();
-	TypeFactory::load<component::Particles2d>();
-	TypeFactory::load<component::SpriteAnimator>();
-	TypeFactory::load<component::SpriteRenderer>();
+	component::Body2d::autoload();
+	component::Camera::autoload();
+	component::CameraController2d::autoload();
+	component::Collider2d::autoload();
+	component::GizmosRenderer::autoload();
+	component::OrthographicCamera::autoload();
+	component::Particles2d::autoload();
+	component::SpriteAnimator::autoload();
+	component::SpriteRenderer::autoload();
 }

@@ -28,5 +28,3 @@ void PawnController::update(const double deltaTime)
 		m_combat->attack();
 	}
 }
-
-REFLECT_COMPONENT(PawnController)

@@ -13,6 +13,4 @@ namespace editor
 	{
 		State::instance().showWindows = !State::instance().showWindows;
 	}
-
-	REFLECT_MENU_ITEM(ShowWindowsMenuItem)
 }

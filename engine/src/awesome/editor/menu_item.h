@@ -4,8 +4,6 @@
 #include <memory>
 #include <string>
 
-#include <awesome/core/reflection.h>
-
 namespace editor
 {
 	class MenuItem
@@ -22,5 +20,3 @@ namespace editor
 
 	typedef std::unique_ptr<MenuItem> MenuItemPtr;
 }
-
-#define REFLECT_MENU_ITEM(T) REFLECT_IMP_CATEGORY(T, MenuItem)

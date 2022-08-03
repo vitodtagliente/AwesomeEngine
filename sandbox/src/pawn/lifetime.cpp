@@ -30,5 +30,3 @@ void Lifetime::deserialize(const json::value& data)
 	Component::deserialize(data);
 	m_timer = m_lifetime = data.safeAt("value").as_number(1.0).as_double();
 }
-
-REFLECT_COMPONENT(Lifetime)

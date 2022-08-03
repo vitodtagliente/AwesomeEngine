@@ -57,6 +57,4 @@ namespace component
 		Component::inspect();
 
 	}
-
-	REFLECT_COMPONENT(Body2d)
 }

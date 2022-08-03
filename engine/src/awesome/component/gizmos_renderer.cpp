@@ -39,6 +39,4 @@ namespace component
 		editor::Layout::input("Type", type, { {"None", Type::None}, {"Rect", Type::Rect}, {"Circle", Type::Circle} });
 		editor::Layout::input("Color", color);
 	}
-
-	REFLECT_COMPONENT(GizmosRenderer)
 }

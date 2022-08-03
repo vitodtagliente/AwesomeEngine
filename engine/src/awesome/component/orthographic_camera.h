@@ -22,6 +22,6 @@ namespace component
 		bool pixelPerfect{ true };
 		int pixelsPerUnit{ 32 };
 
-		REFLECT()
+		PROTO()
 	};
 }

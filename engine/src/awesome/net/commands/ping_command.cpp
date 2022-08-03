@@ -19,7 +19,5 @@ namespace net
 			userSession->resetInactivityTime();
 			return CommandError::OK;
 		}
-
-		REFLECT_SERVER_COMMAND(PingCommand)
 	}
 }

@@ -10,13 +10,14 @@
 #include <type_traits>
 #include <vector>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/asset/asset.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/base_asset.h>
 #include <awesome/asset/image_asset.h>
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/asset/sprite_asset.h>
-#include <awesome/core/reflection.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
@@ -98,7 +99,7 @@ namespace editor
 			const std::string strValue = enumToString(value);
 			if (Layout::beginCombo(name.c_str(), strValue))
 			{
-				for (const auto& pair : EnumReflect<T>::translate(EnumReflect<T>::describe()))
+				for (const auto& pair : EnumType<T>::values())
 				{
 					if (Layout::selectable(pair.first, strValue == pair.first))
 					{
@@ -120,7 +121,7 @@ namespace editor
 			{
 				s_assetBrowserDialog.open(name, T, [&value](const AssetPtr& asset) -> void
 					{
-						value = std::dynamic_pointer_cast<BaseAsset<T, D>>(asset);
+						value = std::static_pointer_cast<BaseAsset<T, D>>(asset);
 					}
 				);
 			}

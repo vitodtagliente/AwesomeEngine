@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/net/server_command.h>
 
 namespace net
@@ -13,7 +15,7 @@ namespace net
 			virtual void deserialize(const json::value& value) override;
 		};
 
-		class PingCommand : public ServerCommandNoResponse<PingRequest>
+		class PingCommand : public ServerCommandNoResponse<PingRequest>, public IProtoClass
 		{
 		public:
 			PingCommand() = default;
@@ -21,7 +23,7 @@ namespace net
 
 			virtual CommandError execute(UserSession* const userSession, const PingRequest& request) override;
 
-			REFLECT()
+			PROTO()
 		};
 	}
 }

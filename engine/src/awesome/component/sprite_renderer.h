@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
@@ -33,6 +35,6 @@ namespace component
 		virtual void deserialize(const json::value& value) override;
 		virtual void inspect() override;
 
-		REFLECT()
+		PROTO()
 	};
 }

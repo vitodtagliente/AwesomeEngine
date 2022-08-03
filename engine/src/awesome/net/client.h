@@ -8,6 +8,8 @@
 #include <string>
 #include <thread>
 
+#include <vdtproto/runtime.h>
+
 #include "command_error.h"
 #include "connection.h"
 #include "message.h"

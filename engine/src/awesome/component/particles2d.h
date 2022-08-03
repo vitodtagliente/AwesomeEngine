@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/particle_system.h>
@@ -38,7 +40,7 @@ namespace component
 		bool autoplay{ false };
 		bool loop{ false };
 
-		REFLECT()
+		PROTO()
 
 	private:
 		graphics::ParticleSystem m_system;

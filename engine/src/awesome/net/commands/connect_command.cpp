@@ -32,7 +32,5 @@ namespace net
 			}
 			return CommandError::OK;
 		}
-
-		REFLECT_SERVER_COMMAND(ConnectCommand)
 	}
 }

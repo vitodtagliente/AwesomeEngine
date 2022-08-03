@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/net/client_command.h>
 
 namespace net
@@ -15,7 +17,7 @@ namespace net
 			virtual void deserialize(const json::value& value) override;
 		};
 
-		class UpdateWorldCommand : public ClientCommandNoResponse<UpdateWorldRequest>
+		class UpdateWorldCommand : public ClientCommandNoResponse<UpdateWorldRequest>, public IProtoClass
 		{
 		public:
 			UpdateWorldCommand() = default;
@@ -23,7 +25,7 @@ namespace net
 
 			virtual void execute(const UpdateWorldRequest& request) override;
 
-			REFLECT()
+			PROTO()
 		};
 	}
 }

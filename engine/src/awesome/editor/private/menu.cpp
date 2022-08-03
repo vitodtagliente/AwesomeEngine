@@ -14,14 +14,14 @@ namespace editor
 {
 	void Menu::init()
 	{
-		TypeFactory::load<NewSceneMenuItem>();
-		TypeFactory::load<SaveSceneMenuItem>();
-		TypeFactory::load<SaveSceneAsMenuItem>();
-		TypeFactory::load<ShowWindowsMenuItem>();
-		TypeFactory::load<SpriteAnimationMenuItem>();
-		TypeFactory::load<SpriteMenuItem>();
+		NewSceneMenuItem::autoload();
+		SaveSceneMenuItem::autoload();
+		SaveSceneAsMenuItem::autoload();
+		ShowWindowsMenuItem::autoload();
+		SpriteAnimationMenuItem::autoload();
+		SpriteMenuItem::autoload();
 
-		static std::set<std::string> types = TypeFactory::list("MenuItem");
+		static std::vector<std::string> types = TypeFactory::list("Category", "MenuItem");
 		for (const std::string& type : types)
 		{
 			MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);

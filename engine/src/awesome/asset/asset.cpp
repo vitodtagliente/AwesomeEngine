@@ -78,8 +78,6 @@ Asset::Type Asset::getTypeByExtension(const std::string& extension)
 	return Asset::Type::None;
 }
 
-REFLECT_IMP(Asset)
-
 Asset::Descriptor::Descriptor()
 	: id()
 	, path()

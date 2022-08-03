@@ -4,6 +4,8 @@
 #include <memory>
 #include <thread>
 
+#include <vdtproto/runtime.h>
+
 #include "client_command.h"
 #include "command_error.h"
 #include "connection.h"

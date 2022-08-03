@@ -69,6 +69,4 @@ namespace component
 		editor::Layout::input("Flip X", flipX);
 		editor::Layout::input("Flip Y", flipY);
 	}
-
-	REFLECT_COMPONENT(SpriteRenderer)
 }

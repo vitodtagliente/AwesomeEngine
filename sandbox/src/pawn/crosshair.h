@@ -17,7 +17,7 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	REFLECT()
+	PROTO()
 
 private:
 	math::vec3 _minScale{ .4f, .4f, 1.f };

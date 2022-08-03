@@ -16,7 +16,7 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	REFLECT()
+	PROTO()
 
 private:
 	float m_speed{ 3.0f };

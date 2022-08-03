@@ -46,6 +46,4 @@ namespace editor
 		}
 		}
 	}
-
-	REFLECT_WINDOW(NetworkWindow)
 }

@@ -160,6 +160,4 @@ namespace component
 	{
 		return m_system.isPlaying();
 	}
-
-	REFLECT_COMPONENT(Particles2d)
 }

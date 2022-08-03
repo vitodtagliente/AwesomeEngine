@@ -4,12 +4,14 @@
 #include <memory>
 #include <vector>
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/asset/asset.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class AssetInspectorWindow : public Window
+	class AssetInspectorWindow : public Window, public IProtoClass
 	{
 	public:
 
@@ -29,7 +31,7 @@ namespace editor
 		virtual void render() override;
 		virtual void update(double deltaTime) override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 		std::vector<std::unique_ptr<Inspector>> m_inspectors;

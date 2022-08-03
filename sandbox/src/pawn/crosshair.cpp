@@ -58,5 +58,3 @@ void Crosshair::deserialize(const json::value& data)
 	::deserialize(data.safeAt("maxScale"), _maxScale);
 	_scaleSpeed = data.safeAt("scaleSpeed").as_number(1.f).as_float();
 }
-
-REFLECT_COMPONENT(Crosshair)

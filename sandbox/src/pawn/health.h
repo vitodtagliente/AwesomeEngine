@@ -31,7 +31,7 @@ public:
 	int min{ 0 };
 	int max{ 100 };
 
-	REFLECT()
+	PROTO()
 
 private:
 	graphics::Color m_colorToRestore{ graphics::Color::White };

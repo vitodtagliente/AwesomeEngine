@@ -3,7 +3,6 @@
 
 #include <memory>
 
-#include <awesome/core/reflection.h>
 #include <awesome/encoding/json.h>
 
 #include "command_error.h"
@@ -80,5 +79,3 @@ namespace net
 		virtual CommandError execute(UserSession* const userSession, const RequestType& request) = 0;
 	};
 }
-
-#define REFLECT_SERVER_COMMAND(T) REFLECT_IMP_CATEGORY(T, ServerCommand)

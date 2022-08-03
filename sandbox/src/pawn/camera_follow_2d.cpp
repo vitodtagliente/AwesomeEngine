@@ -45,5 +45,3 @@ void CameraFollow2d::deserialize(const json::value& data)
 	Component::deserialize(data);
 	m_speed = data.safeAt("speed").as_number(1.0f).as_float();
 }
-
-REFLECT_COMPONENT(CameraFollow2d)

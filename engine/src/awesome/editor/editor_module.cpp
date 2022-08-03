@@ -7,7 +7,6 @@
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
-#include <awesome/core/reflection.h>
 #include <awesome/editor/color_scheme.h>
 #include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
@@ -111,16 +110,16 @@ namespace editor
 
 	void Module::registerWindows()
 	{
-		TypeFactory::load<AssetInspectorWindow>();
-		TypeFactory::load<ContentBrowserWindow>();
-		TypeFactory::load<EntityInspectorWindow>();
-		TypeFactory::load<LogWindow>();
-		TypeFactory::load<NetworkWindow>();
-		TypeFactory::load<PerformanceWindow>();
-		TypeFactory::load<SceneWindow>();
-		TypeFactory::load<SettingsWindow>();
+		AssetInspectorWindow::autoload();
+		ContentBrowserWindow::autoload();
+		EntityInspectorWindow::autoload();
+		LogWindow::autoload();
+		NetworkWindow::autoload();
+		PerformanceWindow::autoload();
+		SceneWindow::autoload();
+		SettingsWindow::autoload();
 
-		static std::set<std::string> types = TypeFactory::list("Window");
+		static std::vector<std::string> types = TypeFactory::list("Category", "Window");
 		for (const std::string& type : types)
 		{
 			Window* const window = TypeFactory::instantiate<Window>(type);

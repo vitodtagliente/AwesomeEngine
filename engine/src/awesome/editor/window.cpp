@@ -2,11 +2,6 @@
 
 namespace editor
 {
-	std::string Window::getTitle() const
-	{
-		return getTypeDescriptor().name;
-	}
-
 	void Window::setFocus(bool focus)
 	{
 		if (m_hasFocus != focus)
@@ -15,6 +10,4 @@ namespace editor
 			onFocusChange(m_hasFocus);
 		}
 	}
-
-	REFLECT_IMP(Window)
 }

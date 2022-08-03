@@ -25,12 +25,17 @@ namespace editor
 
 		if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
 		{
-			static std::set<std::string> s_types = TypeFactory::list("Component");
+			static std::vector<std::string> s_types = TypeFactory::list("Category", "Component");
 			for (const std::string& type : s_types)
 			{
 				const auto& it = std::find_if(entity->getComponents().begin(), entity->getComponents().end(), [&type](const std::unique_ptr<Component>& component) -> bool
 					{
-						return component->getTypeDescriptor().name == type;
+						IProtoClass* const proto = dynamic_cast<IProtoClass*>(component.get());
+						if (proto)
+						{
+							return proto->get_descriptor().name == type;
+						}
+						return false;
 					}
 				);
 
@@ -56,7 +61,7 @@ namespace editor
 
 		for (const auto& component : entity->getComponents())
 		{
-			const std::string& componentName = component->getTypeDescriptor().name;
+			const std::string& componentName = dynamic_cast<IProtoClass*>(component.get())->get_descriptor().name;
 			Layout::beginContext(componentName);
 			if (Layout::collapsingHeader(componentName))
 			{

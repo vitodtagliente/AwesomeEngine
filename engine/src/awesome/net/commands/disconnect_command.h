@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/net/server_command.h>
 
 namespace net
@@ -13,7 +15,7 @@ namespace net
 			virtual void deserialize(const json::value& value) override;
 		};
 
-		class DisconnectCommand : public ServerCommandNoResponse<DisconnectRequest>
+		class DisconnectCommand : public ServerCommandNoResponse<DisconnectRequest>, public IProtoClass
 		{
 		public:
 			DisconnectCommand() = default;
@@ -21,7 +23,7 @@ namespace net
 
 			virtual CommandError execute(UserSession* const userSession, const DisconnectRequest& request) override;
 
-			REFLECT()
+			PROTO()
 		};
 	}
 }

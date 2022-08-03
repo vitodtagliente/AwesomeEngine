@@ -12,50 +12,18 @@
 #include "pawn/lifetime.h"
 #include "pawn/pawn.h"
 #include "pawn/pawn_controller.h"
-
-class Rotator : public Component
-{
-public:
-	Rotator()
-		: speed(math::random(5.0f, 40.0f))
-	{
-
-	}
-
-	void update(double deltaTime) override
-	{
-		math::transform& transform = getOwner()->transform;
-		transform.rotation.z = getOwner()->transform.rotation.z;
-		transform.rotation.z += speed * static_cast<float>(deltaTime);
-		if (transform.rotation.z >= 360.f)
-		{
-			transform.rotation.z = 0;
-		}
-	}
-
-	void inspect() override
-	{
-		Component::inspect();
-		editor::Layout::input("Speed", speed);
-	}
-
-	float speed;
-
-	REFLECT()
-};
-
-REFLECT_COMPONENT(Rotator)
+#include "pawn/rotator.h"
 
 void Game::startup()
 {
-	TypeFactory::load<Bullet>();
-	TypeFactory::load<CameraFollow2d>();
-	TypeFactory::load<CombatController>();
-	TypeFactory::load<Health>();
-	TypeFactory::load<Lifetime>();
-	TypeFactory::load<Pawn>();
-	TypeFactory::load<PawnController>();
-	TypeFactory::load<Rotator>();
+	Bullet::autoload();
+	CameraFollow2d::autoload();
+	CombatController::autoload();
+	Health::autoload();
+	Lifetime::autoload();
+	Pawn::autoload();
+	PawnController::autoload();
+	Rotator::autoload();
 
 	PrefabAssetPtr prefab = AssetLibrary::instance().find<PrefabAsset>(uuid("146999684233600"));
 	prefab->onLoad = [prefab]()

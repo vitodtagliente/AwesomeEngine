@@ -44,6 +44,4 @@ namespace editor
 			);
 		}
 	}
-
-	REFLECT_WINDOW(EntityInspectorWindow);
 }

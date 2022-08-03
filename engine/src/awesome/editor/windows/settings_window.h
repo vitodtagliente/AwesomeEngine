@@ -1,12 +1,14 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vdtproto/runtime.h>
+
 #include <awesome/application/application.h>
 #include <awesome/editor/window.h>
 
 namespace editor
 {
-	class SettingsWindow : public Window
+	class SettingsWindow : public Window, public IProtoClass
 	{
 	public:
 		SettingsWindow();
@@ -14,7 +16,7 @@ namespace editor
 		std::string getTitle() const override { return "Settings"; }
 		void render() override;
 
-		REFLECT()
+		PROTO()
 
 	private:
 		Application::Settings m_settings;

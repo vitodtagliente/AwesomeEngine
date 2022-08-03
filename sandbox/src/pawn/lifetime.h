@@ -15,7 +15,7 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	REFLECT()
+	PROTO()
 
 private:
 	double m_lifetime{ 1.0 };

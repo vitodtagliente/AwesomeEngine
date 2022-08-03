@@ -7,7 +7,8 @@
 
 void Health::init()
 {
-	if (m_renderer = getOwner()->findComponent<component::SpriteRenderer>())
+	m_renderer = getOwner()->findComponent<component::SpriteRenderer>();
+	if (m_renderer)
 	{
 		m_colorToRestore = m_renderer->color;
 	}
@@ -92,5 +93,3 @@ Health& Health::operator-=(const int value)
 	set(m_value - value);
 	return *this;
 }
-
-REFLECT_COMPONENT(Health)

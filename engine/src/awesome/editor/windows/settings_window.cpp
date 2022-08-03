@@ -40,6 +40,4 @@ namespace editor
 			m_settings.save(std::filesystem::current_path() / "settings.json");
 		}
 	}
-
-	REFLECT_WINDOW(SettingsWindow)
 }
