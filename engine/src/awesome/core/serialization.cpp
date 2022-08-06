@@ -9,6 +9,13 @@
 #include "serializers/vec4_serializer.h"
 #include "serializers/uuid_serializer.h"
 
+#include "serializers/image_asset_serializer.h"
+#include "serializers/prefab_asset_serializer.h"
+#include "serializers/scene_asset_serializer.h"
+#include "serializers/sprite_animation_asset_serializer.h"
+#include "serializers/sprite_asset_serializer.h"
+#include "serializers/text_asset_serializer.h"
+
 template<>
 json::value serialize(const uuid& id)
 {
@@ -191,6 +198,13 @@ void Serializer::load()
 	Vec4Serializer::autoload();
 	UuidSerializer::autoload();
 
+	ImageAssetSerializer::autoload();
+	PrefabAssetSerializer::autoload();
+	SceneAssetSerializer::autoload();
+	SpriteAnimationAssetSerializer::autoload();
+	SpriteAssetSerializer::autoload();
+	TextAssetSerializer::autoload();
+
 	for (const std::string& name : TypeFactory::list("Category", "Serializer"))
 	{
 		IFieldSerializer* const serializer = TypeFactory::instantiate<IFieldSerializer>(name);
@@ -239,8 +253,14 @@ json::value Serializer::serialize(IProtoClass* const proto) const
 			data[pair.first] = field.value<std::string>();
 			break;
 		case FieldDescriptor::Type::T_unknown:
-
+		{
+			const auto& it = m_serializers.find(field.typeStr);
+			if (it != m_serializers.end())
+			{
+				data[pair.first] = it->second->serialize(field);
+			}
 			break;
+		}
 		case FieldDescriptor::Type::T_vector:
 			// data[pair.first] = field.value<bool>();
 			break;

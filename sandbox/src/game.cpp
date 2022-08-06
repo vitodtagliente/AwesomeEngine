@@ -14,6 +14,8 @@
 #include "pawn/pawn_controller.h"
 #include "pawn/rotator.h"
 
+#include <awesome/application/application_settings.h>
+
 void Game::startup()
 {
 	Bullet::autoload();
@@ -24,6 +26,11 @@ void Game::startup()
 	Pawn::autoload();
 	PawnController::autoload();
 	Rotator::autoload();
+
+	Serializer::instance().load();
+
+	ApplicationSettings settings;
+	json::value value = Serializer::instance().serialize(&settings);
 
 	PrefabAssetPtr prefab = AssetLibrary::instance().find<PrefabAsset>(uuid("146999684233600"));
 	prefab->onLoad = [prefab]()

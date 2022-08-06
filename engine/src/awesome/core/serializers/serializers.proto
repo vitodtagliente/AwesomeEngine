@@ -7,6 +7,13 @@ include "vec3_serializer.h"
 include "vec4_serializer.h"
 include "uuid_serializer.h"
 
+include "image_asset_serializer.h"
+include "prefab_asset_serializer.h"
+include "scene_asset_serializer.h"
+include "sprite_animation_asset_serializer.h"
+include "sprite_asset_serializer.h"
+include "text_asset_serializer.h"
+
 [Category=Serializer]
 native_class ColorSerializer { }
 
@@ -30,3 +37,21 @@ native_class Vec4Serializer { }
 
 [Category=Serializer]
 native_class UuidSerializer { }
+
+[Category=Serializer]
+native_class ImageAssetSerializer { }
+
+[Category=Serializer]
+native_class PrefabAssetSerializer { }
+
+[Category=Serializer]
+native_class SceneAssetSerializer { }
+
+[Category=Serializer]
+native_class SpriteAnimationAssetSerializer { }
+
+[Category=Serializer]
+native_class SpriteAssetSerializer { }
+
+[Category=Serializer]
+native_class TextAssetSerializer { }

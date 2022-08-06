@@ -328,3 +328,249 @@ void UuidSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
     TypeFactoryRegister::hook("UuidSerializer", []() -> const TypeDescriptor& { return UuidSerializerType::s_typeDescriptor; }, []() -> void* { return new UuidSerializer(); });
 }
 
+const TypeDescriptor& ImageAssetSerializer::get_descriptor() const
+{
+    return ImageAssetSerializerType::descriptor();
+}
+
+fields_t ImageAssetSerializer::get_fields() const
+{
+    return ImageAssetSerializerType::fields(this);
+}
+
+void ImageAssetSerializer::autoload()
+{
+    TypeFactory::load<ImageAssetSerializer>();
+}
+
+const TypeDescriptor& ImageAssetSerializer::descriptor()
+{
+    return ImageAssetSerializerType::descriptor();
+}
+
+TypeDescriptor ImageAssetSerializerType::s_typeDescriptor{ ImageAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& ImageAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t ImageAssetSerializerType::fields(const ImageAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void ImageAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "ImageAssetSerializer";
+    descriptor->size = sizeof(ImageAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("ImageAssetSerializer", []() -> const TypeDescriptor& { return ImageAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new ImageAssetSerializer(); });
+}
+
+const TypeDescriptor& PrefabAssetSerializer::get_descriptor() const
+{
+    return PrefabAssetSerializerType::descriptor();
+}
+
+fields_t PrefabAssetSerializer::get_fields() const
+{
+    return PrefabAssetSerializerType::fields(this);
+}
+
+void PrefabAssetSerializer::autoload()
+{
+    TypeFactory::load<PrefabAssetSerializer>();
+}
+
+const TypeDescriptor& PrefabAssetSerializer::descriptor()
+{
+    return PrefabAssetSerializerType::descriptor();
+}
+
+TypeDescriptor PrefabAssetSerializerType::s_typeDescriptor{ PrefabAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& PrefabAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t PrefabAssetSerializerType::fields(const PrefabAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void PrefabAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "PrefabAssetSerializer";
+    descriptor->size = sizeof(PrefabAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("PrefabAssetSerializer", []() -> const TypeDescriptor& { return PrefabAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new PrefabAssetSerializer(); });
+}
+
+const TypeDescriptor& SceneAssetSerializer::get_descriptor() const
+{
+    return SceneAssetSerializerType::descriptor();
+}
+
+fields_t SceneAssetSerializer::get_fields() const
+{
+    return SceneAssetSerializerType::fields(this);
+}
+
+void SceneAssetSerializer::autoload()
+{
+    TypeFactory::load<SceneAssetSerializer>();
+}
+
+const TypeDescriptor& SceneAssetSerializer::descriptor()
+{
+    return SceneAssetSerializerType::descriptor();
+}
+
+TypeDescriptor SceneAssetSerializerType::s_typeDescriptor{ SceneAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& SceneAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t SceneAssetSerializerType::fields(const SceneAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void SceneAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "SceneAssetSerializer";
+    descriptor->size = sizeof(SceneAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("SceneAssetSerializer", []() -> const TypeDescriptor& { return SceneAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new SceneAssetSerializer(); });
+}
+
+const TypeDescriptor& SpriteAnimationAssetSerializer::get_descriptor() const
+{
+    return SpriteAnimationAssetSerializerType::descriptor();
+}
+
+fields_t SpriteAnimationAssetSerializer::get_fields() const
+{
+    return SpriteAnimationAssetSerializerType::fields(this);
+}
+
+void SpriteAnimationAssetSerializer::autoload()
+{
+    TypeFactory::load<SpriteAnimationAssetSerializer>();
+}
+
+const TypeDescriptor& SpriteAnimationAssetSerializer::descriptor()
+{
+    return SpriteAnimationAssetSerializerType::descriptor();
+}
+
+TypeDescriptor SpriteAnimationAssetSerializerType::s_typeDescriptor{ SpriteAnimationAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& SpriteAnimationAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t SpriteAnimationAssetSerializerType::fields(const SpriteAnimationAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void SpriteAnimationAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "SpriteAnimationAssetSerializer";
+    descriptor->size = sizeof(SpriteAnimationAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("SpriteAnimationAssetSerializer", []() -> const TypeDescriptor& { return SpriteAnimationAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new SpriteAnimationAssetSerializer(); });
+}
+
+const TypeDescriptor& SpriteAssetSerializer::get_descriptor() const
+{
+    return SpriteAssetSerializerType::descriptor();
+}
+
+fields_t SpriteAssetSerializer::get_fields() const
+{
+    return SpriteAssetSerializerType::fields(this);
+}
+
+void SpriteAssetSerializer::autoload()
+{
+    TypeFactory::load<SpriteAssetSerializer>();
+}
+
+const TypeDescriptor& SpriteAssetSerializer::descriptor()
+{
+    return SpriteAssetSerializerType::descriptor();
+}
+
+TypeDescriptor SpriteAssetSerializerType::s_typeDescriptor{ SpriteAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& SpriteAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t SpriteAssetSerializerType::fields(const SpriteAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void SpriteAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "SpriteAssetSerializer";
+    descriptor->size = sizeof(SpriteAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("SpriteAssetSerializer", []() -> const TypeDescriptor& { return SpriteAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new SpriteAssetSerializer(); });
+}
+
+const TypeDescriptor& TextAssetSerializer::get_descriptor() const
+{
+    return TextAssetSerializerType::descriptor();
+}
+
+fields_t TextAssetSerializer::get_fields() const
+{
+    return TextAssetSerializerType::fields(this);
+}
+
+void TextAssetSerializer::autoload()
+{
+    TypeFactory::load<TextAssetSerializer>();
+}
+
+const TypeDescriptor& TextAssetSerializer::descriptor()
+{
+    return TextAssetSerializerType::descriptor();
+}
+
+TypeDescriptor TextAssetSerializerType::s_typeDescriptor{ TextAssetSerializerType::registerTypeDescriptor };
+
+const TypeDescriptor& TextAssetSerializerType::descriptor()
+{
+    return s_typeDescriptor;
+}
+
+fields_t TextAssetSerializerType::fields(const TextAssetSerializer* const pointer)
+{
+    return fields_t();
+}
+
+void TextAssetSerializerType::registerTypeDescriptor(TypeDescriptor* descriptor)
+{
+    descriptor->name = "TextAssetSerializer";
+    descriptor->size = sizeof(TextAssetSerializer);
+    descriptor->attributes.insert(std::make_pair<std::string, std::string>("Category", "Serializer"));
+
+    TypeFactoryRegister::hook("TextAssetSerializer", []() -> const TypeDescriptor& { return TextAssetSerializerType::s_typeDescriptor; }, []() -> void* { return new TextAssetSerializer(); });
+}
+
