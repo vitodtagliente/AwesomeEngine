@@ -230,7 +230,7 @@ json::value Serializer::serialize(IProtoClass* const proto) const
 			data[pair.first] = field.value<bool>();
 			break;
 		case FieldDescriptor::Type::T_class:
-			// data[pair.first] = field.value<bool>();
+			data[pair.first] = serialize(field.value<IProtoClass* const>());
 			break;
 		case FieldDescriptor::Type::T_double:
 			data[pair.first] = field.value<double>();
@@ -273,5 +273,55 @@ json::value Serializer::serialize(IProtoClass* const proto) const
 
 bool Serializer::deserialize(IProtoClass* const proto, const json::value& value) const
 {
-	return false;
+	const std::string proto_id = value.safeAt("proto_id").as_string("");
+	if (proto_id != proto->get_descriptor().name) return false;
+
+	for (auto& pair : proto->get_fields())
+	{
+		FieldDescriptor& field = pair.second;
+		switch (field.type)
+		{
+		case FieldDescriptor::Type::T_bool:
+			field.value<bool>() = value.safeAt(pair.first).as_bool(false);
+			break;
+		case FieldDescriptor::Type::T_class:
+			deserialize(field.value<IProtoClass* const>(), value.safeAt(pair.first));
+			break;
+		case FieldDescriptor::Type::T_double:
+			field.value<double>() = value.safeAt(pair.first).as_number(0.0).as_double();
+			break;
+		case FieldDescriptor::Type::T_enum:
+			field.value<int>() = value.safeAt(pair.first).as_number(0).as_int();
+			break;
+		case FieldDescriptor::Type::T_float:
+			field.value<float>() = value.safeAt(pair.first).as_number(0.0f).as_float();
+			break;
+		case FieldDescriptor::Type::T_int:
+			field.value<int>() = value.safeAt(pair.first).as_number(0).as_int();
+			break;
+		case FieldDescriptor::Type::T_map:
+		{
+			// data[pair.first] = field.value<bool>();
+			break;
+		}
+		case FieldDescriptor::Type::T_string:
+			field.value<std::string>() = value.safeAt(pair.first).as_string("");
+			break;
+		case FieldDescriptor::Type::T_unknown:
+		{
+			const auto& it = m_serializers.find(field.typeStr);
+			if (it != m_serializers.end())
+			{
+				it->second->deserialize(field, value.safeAt(pair.first));
+			}
+			break;
+		}
+		case FieldDescriptor::Type::T_vector:
+			// data[pair.first] = field.value<bool>();
+			break;
+		case FieldDescriptor::Type::T_void:	break;
+		default: break;
+		}
+	}
+	return true;
 }

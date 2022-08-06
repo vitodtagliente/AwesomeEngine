@@ -7,6 +7,7 @@
 #include <awesome/audio/audio.h>
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
+#include <awesome/core/serialization.h>
 #include <awesome/core/timer.h>
 #include <awesome/data/archive.h>
 #include <awesome/encoding/json.h>
@@ -48,6 +49,9 @@ int Application::run()
 	{
 		module->startup();
 	}
+
+	// Load the serializers
+	Serializer::instance().load();
 
 	Timer fpsTimer(1.f / static_cast<int>(m_settings.fps));
 	double deltatime = 0.0;
