@@ -20,23 +20,6 @@ public:
 
 	typedef ApplicationMode Mode;
 
-	struct Settings
-	{
-		static Settings load(const std::filesystem::path& path);
-		void save(const std::filesystem::path& path);
-
-		FpsMode fps{ FpsMode::Fps60 };
-		ApplicationMode mode{ ApplicationMode::Editor };
-		std::filesystem::path workspacePath{ std::filesystem::current_path() / ".." / "assets" };
-
-		SceneAssetPtr editorScene;
-		SceneAssetPtr serverScene;
-		SceneAssetPtr standaloneScene;
-		std::string serverIp;
-		int serverPort{ 96000 };
-		int maxServerConnections{ 20 };
-	};
-
 	class Module
 	{
 	public:
@@ -53,7 +36,7 @@ public:
 	Application() = default;
 	virtual ~Application() = default;
 
-	inline const Settings& getSettings() const { return m_settings; }
+	inline const ApplicationSettings& getSettings() const { return m_settings; }
 
 	void init(const std::initializer_list<Module*>& modules = {});
 	int run();
@@ -72,6 +55,6 @@ private:
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
-	Settings m_settings;
+	ApplicationSettings m_settings;
 	Time m_time;
 };

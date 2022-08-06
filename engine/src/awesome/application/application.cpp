@@ -10,6 +10,7 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/timer.h>
 #include <awesome/data/archive.h>
+#include <awesome/data/json_file.h>
 #include <awesome/encoding/json.h>
 #include <awesome/editor/editor_module.h>
 #include <awesome/entity/world.h>
@@ -28,6 +29,9 @@ void Application::init(const std::initializer_list<Module*>& modules)
 	{
 		m_modules.push_back(std::unique_ptr<Module>(module));
 	}
+
+	// Load the serializers
+	Serializer::instance().load();
 }
 
 int Application::run()
@@ -49,9 +53,6 @@ int Application::run()
 	{
 		module->startup();
 	}
-
-	// Load the serializers
-	Serializer::instance().load();
 
 	Timer fpsTimer(1.f / static_cast<int>(m_settings.fps));
 	double deltatime = 0.0;
@@ -116,11 +117,7 @@ void Application::initSettings()
 {
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-	if (std::filesystem::exists(settingsPath))
-	{
-		m_settings = Settings::load(settingsPath);
-		reload = true;
-	}
+	reload = JsonFile::load(settingsPath, as_proto(&m_settings));
 
 	AssetImporter importer;
 	importer.import(m_settings.workspacePath, true);
@@ -128,7 +125,7 @@ void Application::initSettings()
 
 	if (reload)
 	{
-		m_settings = Settings::load(settingsPath);
+		JsonFile::load(settingsPath, as_proto(&m_settings));
 	}
 
 	SceneAssetPtr sceneToLoad;
@@ -170,70 +167,4 @@ void Application::registerDefaultModules()
 
 	// common modules
 	registerModule<net::Module>();
-}
-
-Application::Settings Application::Settings::load(const std::filesystem::path& path)
-{
-	static const auto read = [](const std::filesystem::path& filename) -> std::string
-	{
-		std::ostringstream buf;
-		std::ifstream input(filename.c_str());
-		buf << input.rdbuf();
-		return buf.str();
-	};
-
-	Settings settings;
-	json::value data = json::Deserializer::parse(read(path));
-	if (data.contains("fps"))
-	{
-		stringToEnum(data["fps"].as_string(""), settings.fps);
-	}
-	if (data.contains("mode"))
-	{
-		stringToEnum(data["mode"].as_string(""), settings.mode);
-	}
-	if (data.contains("workspacePath"))
-	{
-		settings.workspacePath = data["workspacePath"].as_string("");
-	}
-
-	if (data.contains("editorScene"))
-	{
-		const uuid id(data["editorScene"].as_string());
-		settings.editorScene = AssetLibrary::instance().find<SceneAsset>(id);
-	}
-	if (data.contains("serverScene"))
-	{
-		const uuid id(data["serverScene"].as_string());
-		settings.serverScene = AssetLibrary::instance().find<SceneAsset>(id);
-	}
-	if (data.contains("standaloneScene"))
-	{
-		const uuid id(data["standaloneScene"].as_string());
-		settings.standaloneScene = AssetLibrary::instance().find<SceneAsset>(id);
-	}
-
-	settings.serverIp = data.safeAt("serverIp").as_string("127.0.0.1");
-	settings.serverPort = data.safeAt("serverPort").as_number(96000).as_int();
-	settings.maxServerConnections = data.safeAt("maxServerConnections").as_number(100).as_int();
-
-	return settings;
-}
-
-void Application::Settings::save(const std::filesystem::path& path)
-{
-	const json::value& data = json::object({
-			{"fps", enumToString(fps)},
-			{"mode", enumToString(mode)},
-			{"editorScene", editorScene ? static_cast<std::string>(editorScene->descriptor.id) : ""},
-			{"serverScene", serverScene ? static_cast<std::string>(serverScene->descriptor.id) : ""},
-			{"standaloneScene", standaloneScene ? static_cast<std::string>(standaloneScene->descriptor.id) : ""},
-			{"serverIp", serverIp},
-			{"serverPort", serverPort},
-			{"maxServerConnections", maxServerConnections},
-			{"workspacePath", workspacePath.string()}
-		});
-
-	Archive archive(path, Archive::Mode::Write);
-	archive << json::Serializer::to_string(data);
 }

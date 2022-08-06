@@ -13,7 +13,7 @@ namespace editor
 		{
 		case net::NetworkManager::State::Offline:
 		{
-			const Application::Settings& settings = Application::instance().getSettings();
+			const ApplicationSettings& settings = Application::instance().getSettings();
 
 			if (Layout::button("Start Server"))
 			{

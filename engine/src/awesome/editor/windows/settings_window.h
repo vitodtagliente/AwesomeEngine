@@ -17,6 +17,6 @@ namespace editor
 		PROTO()
 
 	private:
-		Application::Settings m_settings;
+		ApplicationSettings m_settings;
 	};
 }

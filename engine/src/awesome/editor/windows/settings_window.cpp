@@ -1,6 +1,7 @@
 #include "settings_window.h"
 
 #include <awesome/application/application.h>
+#include <awesome/data/json_file.h>
 #include <awesome/editor/layout.h>
 
 namespace editor
@@ -37,7 +38,7 @@ namespace editor
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			m_settings.save(std::filesystem::current_path() / "settings.json");
+			JsonFile::save(as_proto(&m_settings), std::filesystem::current_path() / "settings.json");
 		}
 	}
 }

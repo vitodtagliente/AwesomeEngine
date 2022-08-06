@@ -66,7 +66,7 @@ public:
 
     FpsMode fps { FpsMode::Fps60 };
     ApplicationMode mode { ApplicationMode::Editor };
-    std::filesystem::path workspacePath { std::filesystem::current_path()/".."/"assets" };
+    std::filesystem::path workspacePath { std::filesystem::current_path() / ".." / "assets" };
     SceneAssetPtr editorScene;
     SceneAssetPtr serverScene;
     SceneAssetPtr standaloneScene;
