@@ -6,7 +6,7 @@
 class UuidSerializer : public Serializer::IFieldSerializer
 {
 public:
-	virtual std::string type() override;
+	virtual bool canSerialize(const FieldDescriptor& field) override;
 	virtual json::value serialize(const FieldDescriptor& field) override;
 	virtual bool deserialize(FieldDescriptor& field, const json::value& value) override;
 

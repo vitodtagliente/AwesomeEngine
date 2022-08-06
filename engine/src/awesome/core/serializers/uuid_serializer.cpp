@@ -2,11 +2,11 @@
 
 #include <awesome/core/uuid.h>
 
-std::string UuidSerializer::type()
+bool UuidSerializer::canSerialize(const FieldDescriptor& field)
 {
-	return "uuid";
+	return field.typeStr == "uuid"
+		;
 }
-
 json::value UuidSerializer::serialize(const FieldDescriptor& field)
 {
 	return static_cast<std::string>(field.value<uuid>());

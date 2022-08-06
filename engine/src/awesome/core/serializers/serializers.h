@@ -4,106 +4,44 @@
 
 #include <vdtproto/runtime.h>
 
-#include "color_serializer.h"
-#include "texture_coords_serializer.h"
-#include "texture_rect_serializer.h"
-#include "transform_serializer.h"
-#include "vec2_serializer.h"
-#include "vec3_serializer.h"
-#include "vec4_serializer.h"
+#include "asset_serializer.h"
+#include "graphics_serializer.h"
+#include "math_serializer.h"
 #include "uuid_serializer.h"
-#include "image_asset_serializer.h"
-#include "prefab_asset_serializer.h"
-#include "scene_asset_serializer.h"
-#include "sprite_animation_asset_serializer.h"
-#include "sprite_asset_serializer.h"
-#include "text_asset_serializer.h"
 
-class ColorSerializerType
+class AssetSerializerType
 {
 public:
-    ColorSerializerType() = delete;
+    AssetSerializerType() = delete;
 
     static const TypeDescriptor& descriptor();
-    static fields_t fields(const ColorSerializer* const pointer);
+    static fields_t fields(const AssetSerializer* const pointer);
 
 private:
     static TypeDescriptor s_typeDescriptor;
     static void registerTypeDescriptor(TypeDescriptor*);
 };
 
-class TextureCoordsSerializerType
+class GraphicsSerializerType
 {
 public:
-    TextureCoordsSerializerType() = delete;
+    GraphicsSerializerType() = delete;
 
     static const TypeDescriptor& descriptor();
-    static fields_t fields(const TextureCoordsSerializer* const pointer);
+    static fields_t fields(const GraphicsSerializer* const pointer);
 
 private:
     static TypeDescriptor s_typeDescriptor;
     static void registerTypeDescriptor(TypeDescriptor*);
 };
 
-class TextureRectSerializerType
+class MathSerializerType
 {
 public:
-    TextureRectSerializerType() = delete;
+    MathSerializerType() = delete;
 
     static const TypeDescriptor& descriptor();
-    static fields_t fields(const TextureRectSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class TransformSerializerType
-{
-public:
-    TransformSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const TransformSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class Vec2SerializerType
-{
-public:
-    Vec2SerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const Vec2Serializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class Vec3SerializerType
-{
-public:
-    Vec3SerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const Vec3Serializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class Vec4SerializerType
-{
-public:
-    Vec4SerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const Vec4Serializer* const pointer);
+    static fields_t fields(const MathSerializer* const pointer);
 
 private:
     static TypeDescriptor s_typeDescriptor;
@@ -117,84 +55,6 @@ public:
 
     static const TypeDescriptor& descriptor();
     static fields_t fields(const UuidSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class ImageAssetSerializerType
-{
-public:
-    ImageAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const ImageAssetSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class PrefabAssetSerializerType
-{
-public:
-    PrefabAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const PrefabAssetSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class SceneAssetSerializerType
-{
-public:
-    SceneAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const SceneAssetSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class SpriteAnimationAssetSerializerType
-{
-public:
-    SpriteAnimationAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const SpriteAnimationAssetSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class SpriteAssetSerializerType
-{
-public:
-    SpriteAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const SpriteAssetSerializer* const pointer);
-
-private:
-    static TypeDescriptor s_typeDescriptor;
-    static void registerTypeDescriptor(TypeDescriptor*);
-};
-
-class TextAssetSerializerType
-{
-public:
-    TextAssetSerializerType() = delete;
-
-    static const TypeDescriptor& descriptor();
-    static fields_t fields(const TextAssetSerializer* const pointer);
 
 private:
     static TypeDescriptor s_typeDescriptor;

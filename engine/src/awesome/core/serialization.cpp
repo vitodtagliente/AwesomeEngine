@@ -1,20 +1,9 @@
 #include "serialization.h"
 
-#include "serializers/color_serializer.h"
-#include "serializers/texture_coords_serializer.h"
-#include "serializers/texture_rect_serializer.h"
-#include "serializers/transform_serializer.h"
-#include "serializers/vec2_serializer.h"
-#include "serializers/vec3_serializer.h"
-#include "serializers/vec4_serializer.h"
+#include "serializers/asset_serializer.h"
+#include "serializers/graphics_serializer.h"
+#include "serializers/math_serializer.h"
 #include "serializers/uuid_serializer.h"
-
-#include "serializers/image_asset_serializer.h"
-#include "serializers/prefab_asset_serializer.h"
-#include "serializers/scene_asset_serializer.h"
-#include "serializers/sprite_animation_asset_serializer.h"
-#include "serializers/sprite_asset_serializer.h"
-#include "serializers/text_asset_serializer.h"
 
 template<>
 json::value serialize(const uuid& id)
@@ -189,28 +178,17 @@ bool deserialize(const json::value& value, math::vec4& v)
 
 void Serializer::load()
 {
-	ColorSerializer::autoload();
-	TextureCoordsSerializer::autoload();
-	TextureRectSerializer::autoload();
-	TransformSerializer::autoload();
-	Vec2Serializer::autoload();
-	Vec3Serializer::autoload();
-	Vec4Serializer::autoload();
+	AssetSerializer::autoload();
+	GraphicsSerializer::autoload();
+	MathSerializer::autoload();
 	UuidSerializer::autoload();
-
-	ImageAssetSerializer::autoload();
-	PrefabAssetSerializer::autoload();
-	SceneAssetSerializer::autoload();
-	SpriteAnimationAssetSerializer::autoload();
-	SpriteAssetSerializer::autoload();
-	TextAssetSerializer::autoload();
 
 	for (const std::string& name : TypeFactory::list("Category", "Serializer"))
 	{
 		IFieldSerializer* const serializer = TypeFactory::instantiate<IFieldSerializer>(name);
 		if (serializer != nullptr)
 		{
-			m_serializers.insert(std::make_pair<std::string, FieldSerializerPtr>(serializer->type(), std::unique_ptr<IFieldSerializer>(serializer)));
+			m_serializers.push_back(std::unique_ptr<IFieldSerializer>(serializer));
 		}
 	}
 }
@@ -254,10 +232,14 @@ json::value Serializer::serialize(IProtoClass* const proto) const
 			break;
 		case FieldDescriptor::Type::T_unknown:
 		{
-			const auto& it = m_serializers.find(field.typeStr);
+			const auto& it = std::find_if(m_serializers.begin(), m_serializers.end(), [&field](const FieldSerializerPtr& serializer) -> bool
+				{
+					return serializer->canSerialize(field);
+				}
+			);
 			if (it != m_serializers.end())
 			{
-				data[pair.first] = it->second->serialize(field);
+				data[pair.first] = (*it)->serialize(field);
 			}
 			break;
 		}
@@ -309,10 +291,14 @@ bool Serializer::deserialize(IProtoClass* const proto, const json::value& value)
 			break;
 		case FieldDescriptor::Type::T_unknown:
 		{
-			const auto& it = m_serializers.find(field.typeStr);
+			const auto& it = std::find_if(m_serializers.begin(), m_serializers.end(), [&field](const FieldSerializerPtr& serializer) -> bool
+				{
+					return serializer->canSerialize(field);
+				}
+			);
 			if (it != m_serializers.end())
 			{
-				it->second->deserialize(field, value.safeAt(pair.first));
+				(*it)->deserialize(field, value.safeAt(pair.first));
 			}
 			break;
 		}

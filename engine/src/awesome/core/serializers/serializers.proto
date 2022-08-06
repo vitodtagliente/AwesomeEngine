@@ -1,57 +1,16 @@
-include "color_serializer.h"
-include "texture_coords_serializer.h"
-include "texture_rect_serializer.h"
-include "transform_serializer.h"
-include "vec2_serializer.h"
-include "vec3_serializer.h"
-include "vec4_serializer.h"
+include "asset_serializer.h"
+include "graphics_serializer.h"
+include "math_serializer.h"
 include "uuid_serializer.h"
 
-include "image_asset_serializer.h"
-include "prefab_asset_serializer.h"
-include "scene_asset_serializer.h"
-include "sprite_animation_asset_serializer.h"
-include "sprite_asset_serializer.h"
-include "text_asset_serializer.h"
+[Category=Serializer]
+native_class AssetSerializer { }
 
 [Category=Serializer]
-native_class ColorSerializer { }
+native_class GraphicsSerializer { }
 
 [Category=Serializer]
-native_class TextureCoordsSerializer { }
-
-[Category=Serializer]
-native_class TextureRectSerializer { }
-
-[Category=Serializer]
-native_class TransformSerializer { }
-
-[Category=Serializer]
-native_class Vec2Serializer { }
-
-[Category=Serializer]
-native_class Vec3Serializer { }
-
-[Category=Serializer]
-native_class Vec4Serializer { }
+native_class MathSerializer { }
 
 [Category=Serializer]
 native_class UuidSerializer { }
-
-[Category=Serializer]
-native_class ImageAssetSerializer { }
-
-[Category=Serializer]
-native_class PrefabAssetSerializer { }
-
-[Category=Serializer]
-native_class SceneAssetSerializer { }
-
-[Category=Serializer]
-native_class SpriteAnimationAssetSerializer { }
-
-[Category=Serializer]
-native_class SpriteAssetSerializer { }
-
-[Category=Serializer]
-native_class TextAssetSerializer { }

@@ -23,7 +23,7 @@ public:
 		IFieldSerializer() = default;
 		virtual ~IFieldSerializer() = default;
 
-		virtual std::string type() = 0;
+		virtual bool canSerialize(const FieldDescriptor& field) = 0;
 		virtual json::value serialize(const FieldDescriptor& field) = 0;
 		virtual bool deserialize(FieldDescriptor& field, const json::value& value) = 0;
 	};
@@ -37,7 +37,7 @@ public:
 	bool deserialize(IProtoClass* const proto, const json::value& value) const;
 
 private:
-	std::map<std::string, FieldSerializerPtr> m_serializers;
+	std::vector<FieldSerializerPtr> m_serializers;
 };
 
 struct ISerializable
