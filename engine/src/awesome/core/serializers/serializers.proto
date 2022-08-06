@@ -1,0 +1,8 @@
+include "color_serializer.h"
+include "uuid_serializer.h"
+
+[Category=Component]
+native_class ColorSerializer { }
+
+[Category=Component]
+native_class UuidSerializer { }

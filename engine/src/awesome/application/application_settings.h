@@ -4,6 +4,9 @@
 
 #include <vdtproto/runtime.h>
 
+#include <filesystem>
+#include <awesome/asset/scene_asset.h>
+
 enum class ApplicationMode : int
 {
     Editor = 0,
@@ -48,5 +51,40 @@ struct EnumType<FpsMode>
         };
         return s_values;
     }
+};
+
+class ApplicationSettings : public IProtoClass
+{
+public:
+    virtual const TypeDescriptor& get_descriptor() const override;
+    virtual fields_t get_fields() const override;
+
+    static void autoload();
+    static const TypeDescriptor& descriptor();
+
+    ApplicationSettings() = default;
+
+    FpsMode fps { FpsMode::Fps60 };
+    ApplicationMode mode { ApplicationMode::Editor };
+    std::filesystem::path workspacePath { std::filesystem::current_path()/".."/"assets" };
+    SceneAssetPtr editorScene;
+    SceneAssetPtr serverScene;
+    SceneAssetPtr standaloneScene;
+    std::string serverIp;
+    int serverPort { 96000 };
+    int maxServerConnections { 20 };
+};
+
+class ApplicationSettingsType
+{
+public:
+    ApplicationSettingsType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const ApplicationSettings* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
 };
 

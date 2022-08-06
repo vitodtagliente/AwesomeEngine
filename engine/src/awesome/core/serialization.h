@@ -1,6 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/reflection.h>
+#include <awesome/core/singleton.h>
+
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
@@ -10,6 +13,32 @@
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
+
+class Serializer : public Singleton<Serializer>
+{
+public:
+
+	struct IFieldSerializer : public IProtoClass
+	{
+		IFieldSerializer() = default;
+		virtual ~IFieldSerializer() = default;
+
+		virtual std::string type() = 0;
+		virtual json::value serialize(const FieldDescriptor& field) = 0;
+		virtual bool deserialize(FieldDescriptor& field, const json::value& value) = 0;
+	};
+	typedef std::unique_ptr<IFieldSerializer> FieldSerializerPtr;
+
+	Serializer() = default;
+
+	void load();
+
+	json::value serialize(IProtoClass* const proto) const;
+	bool deserialize(IProtoClass* const proto, const json::value& value) const;
+
+private:
+	std::map<std::string, FieldSerializerPtr> m_serializers;
+};
 
 struct ISerializable
 {

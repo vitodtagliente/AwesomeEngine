@@ -1,5 +1,8 @@
 #include "serialization.h"
 
+#include "serializers/color_serializer.h"
+#include "serializers/uuid_serializer.h"
+
 template<>
 json::value serialize(const uuid& id)
 {
@@ -169,4 +172,74 @@ bool deserialize(const json::value& value, math::vec4& v)
 	v.z = value["z"].as_number(0.0f).as_float();
 	v.w = value["w"].as_number(0.0f).as_float();
 	return true;
+}
+
+void Serializer::load()
+{
+	ColorSerializer::autoload();
+	UuidSerializer::autoload();
+
+	for (const std::string& name : TypeFactory::list("Category", "Serializer"))
+	{
+		IFieldSerializer* const serializer = TypeFactory::instantiate<IFieldSerializer>(name);
+		if (serializer != nullptr)
+		{
+			m_serializers.insert(std::make_pair<std::string, FieldSerializerPtr>(serializer->type(), std::unique_ptr<IFieldSerializer>(serializer)));
+		}
+	}
+}
+
+json::value Serializer::serialize(IProtoClass* const proto) const
+{
+	if (proto == nullptr) return json::object();
+
+	json::value data = json::object();
+	data["proto_id"] = proto->get_descriptor().name;
+	for (const auto& pair : proto->get_fields())
+	{
+		const FieldDescriptor& field = pair.second;
+		switch (field.type)
+		{
+		case FieldDescriptor::Type::T_bool:
+			data[pair.first] = field.value<bool>();
+			break;
+		case FieldDescriptor::Type::T_class:
+			// data[pair.first] = field.value<bool>();
+			break;
+		case FieldDescriptor::Type::T_double:
+			data[pair.first] = field.value<double>();
+			break;
+		case FieldDescriptor::Type::T_enum:
+			data[pair.first] = field.value<int>();
+			break;
+		case FieldDescriptor::Type::T_float:
+			data[pair.first] = field.value<float>();
+			break;
+		case FieldDescriptor::Type::T_int:
+			data[pair.first] = field.value<int>();
+			break;
+		case FieldDescriptor::Type::T_map:
+		{
+			// data[pair.first] = field.value<bool>();
+			break;
+		}
+		case FieldDescriptor::Type::T_string:
+			data[pair.first] = field.value<std::string>();
+			break;
+		case FieldDescriptor::Type::T_unknown:
+
+			break;
+		case FieldDescriptor::Type::T_vector:
+			// data[pair.first] = field.value<bool>();
+			break;
+		case FieldDescriptor::Type::T_void:	break;
+		default: break;
+		}
+	}
+	return data;
+}
+
+bool Serializer::deserialize(IProtoClass* const proto, const json::value& value) const
+{
+	return false;
 }
