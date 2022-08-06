@@ -1,6 +1,12 @@
 #include "serialization.h"
 
 #include "serializers/color_serializer.h"
+#include "serializers/texture_coords_serializer.h"
+#include "serializers/texture_rect_serializer.h"
+#include "serializers/transform_serializer.h"
+#include "serializers/vec2_serializer.h"
+#include "serializers/vec3_serializer.h"
+#include "serializers/vec4_serializer.h"
 #include "serializers/uuid_serializer.h"
 
 template<>
@@ -177,6 +183,12 @@ bool deserialize(const json::value& value, math::vec4& v)
 void Serializer::load()
 {
 	ColorSerializer::autoload();
+	TextureCoordsSerializer::autoload();
+	TextureRectSerializer::autoload();
+	TransformSerializer::autoload();
+	Vec2Serializer::autoload();
+	Vec3Serializer::autoload();
+	Vec4Serializer::autoload();
 	UuidSerializer::autoload();
 
 	for (const std::string& name : TypeFactory::list("Category", "Serializer"))

@@ -5,6 +5,12 @@
 #include <vdtproto/runtime.h>
 
 #include "color_serializer.h"
+#include "texture_coords_serializer.h"
+#include "texture_rect_serializer.h"
+#include "transform_serializer.h"
+#include "vec2_serializer.h"
+#include "vec3_serializer.h"
+#include "vec4_serializer.h"
 #include "uuid_serializer.h"
 
 class ColorSerializerType
@@ -14,6 +20,84 @@ public:
 
     static const TypeDescriptor& descriptor();
     static fields_t fields(const ColorSerializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class TextureCoordsSerializerType
+{
+public:
+    TextureCoordsSerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const TextureCoordsSerializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class TextureRectSerializerType
+{
+public:
+    TextureRectSerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const TextureRectSerializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class TransformSerializerType
+{
+public:
+    TransformSerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const TransformSerializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class Vec2SerializerType
+{
+public:
+    Vec2SerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const Vec2Serializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class Vec3SerializerType
+{
+public:
+    Vec3SerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const Vec3Serializer* const pointer);
+
+private:
+    static TypeDescriptor s_typeDescriptor;
+    static void registerTypeDescriptor(TypeDescriptor*);
+};
+
+class Vec4SerializerType
+{
+public:
+    Vec4SerializerType() = delete;
+
+    static const TypeDescriptor& descriptor();
+    static fields_t fields(const Vec4Serializer* const pointer);
 
 private:
     static TypeDescriptor s_typeDescriptor;

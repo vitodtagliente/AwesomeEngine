@@ -1,8 +1,32 @@
 include "color_serializer.h"
+include "texture_coords_serializer.h"
+include "texture_rect_serializer.h"
+include "transform_serializer.h"
+include "vec2_serializer.h"
+include "vec3_serializer.h"
+include "vec4_serializer.h"
 include "uuid_serializer.h"
 
-[Category=Component]
+[Category=Serializer]
 native_class ColorSerializer { }
 
-[Category=Component]
+[Category=Serializer]
+native_class TextureCoordsSerializer { }
+
+[Category=Serializer]
+native_class TextureRectSerializer { }
+
+[Category=Serializer]
+native_class TransformSerializer { }
+
+[Category=Serializer]
+native_class Vec2Serializer { }
+
+[Category=Serializer]
+native_class Vec3Serializer { }
+
+[Category=Serializer]
+native_class Vec4Serializer { }
+
+[Category=Serializer]
 native_class UuidSerializer { }
