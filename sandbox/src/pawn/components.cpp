@@ -27,7 +27,7 @@ const TypeDescriptor& BulletType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t BulletType::fields(const Bullet* const pointer)
+fields_t BulletType::fields(const Bullet* const)
 {
     return fields_t();
 }
@@ -68,7 +68,7 @@ const TypeDescriptor& CameraFollow2dType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t CameraFollow2dType::fields(const CameraFollow2d* const pointer)
+fields_t CameraFollow2dType::fields(const CameraFollow2d* const)
 {
     return fields_t();
 }
@@ -109,7 +109,7 @@ const TypeDescriptor& CombatControllerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t CombatControllerType::fields(const CombatController* const pointer)
+fields_t CombatControllerType::fields(const CombatController* const)
 {
     return fields_t();
 }
@@ -150,7 +150,7 @@ const TypeDescriptor& CrosshairType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t CrosshairType::fields(const Crosshair* const pointer)
+fields_t CrosshairType::fields(const Crosshair* const)
 {
     return fields_t();
 }
@@ -191,7 +191,7 @@ const TypeDescriptor& HealthType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t HealthType::fields(const Health* const pointer)
+fields_t HealthType::fields(const Health* const)
 {
     return fields_t();
 }
@@ -232,7 +232,7 @@ const TypeDescriptor& LifetimeType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t LifetimeType::fields(const Lifetime* const pointer)
+fields_t LifetimeType::fields(const Lifetime* const)
 {
     return fields_t();
 }
@@ -273,7 +273,7 @@ const TypeDescriptor& PawnType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t PawnType::fields(const Pawn* const pointer)
+fields_t PawnType::fields(const Pawn* const)
 {
     return fields_t();
 }
@@ -314,7 +314,7 @@ const TypeDescriptor& PawnControllerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t PawnControllerType::fields(const PawnController* const pointer)
+fields_t PawnControllerType::fields(const PawnController* const)
 {
     return fields_t();
 }
@@ -355,7 +355,7 @@ const TypeDescriptor& RotatorType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t RotatorType::fields(const Rotator* const pointer)
+fields_t RotatorType::fields(const Rotator* const)
 {
     return fields_t();
 }

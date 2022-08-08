@@ -29,7 +29,7 @@ const TypeDescriptor& AssetInspectorWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t AssetInspectorWindowType::fields(const AssetInspectorWindow* const pointer)
+fields_t AssetInspectorWindowType::fields(const AssetInspectorWindow* const)
 {
     return fields_t();
 }
@@ -70,7 +70,7 @@ const TypeDescriptor& ContentBrowserWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t ContentBrowserWindowType::fields(const ContentBrowserWindow* const pointer)
+fields_t ContentBrowserWindowType::fields(const ContentBrowserWindow* const)
 {
     return fields_t();
 }
@@ -111,7 +111,7 @@ const TypeDescriptor& EntityInspectorWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t EntityInspectorWindowType::fields(const EntityInspectorWindow* const pointer)
+fields_t EntityInspectorWindowType::fields(const EntityInspectorWindow* const)
 {
     return fields_t();
 }
@@ -152,7 +152,7 @@ const TypeDescriptor& LogWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t LogWindowType::fields(const LogWindow* const pointer)
+fields_t LogWindowType::fields(const LogWindow* const)
 {
     return fields_t();
 }
@@ -193,7 +193,7 @@ const TypeDescriptor& NetworkWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t NetworkWindowType::fields(const NetworkWindow* const pointer)
+fields_t NetworkWindowType::fields(const NetworkWindow* const)
 {
     return fields_t();
 }
@@ -234,7 +234,7 @@ const TypeDescriptor& PerformanceWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t PerformanceWindowType::fields(const PerformanceWindow* const pointer)
+fields_t PerformanceWindowType::fields(const PerformanceWindow* const)
 {
     return fields_t();
 }
@@ -275,7 +275,7 @@ const TypeDescriptor& SceneWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SceneWindowType::fields(const SceneWindow* const pointer)
+fields_t SceneWindowType::fields(const SceneWindow* const)
 {
     return fields_t();
 }
@@ -316,7 +316,7 @@ const TypeDescriptor& SettingsWindowType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SettingsWindowType::fields(const SettingsWindow* const pointer)
+fields_t SettingsWindowType::fields(const SettingsWindow* const)
 {
     return fields_t();
 }

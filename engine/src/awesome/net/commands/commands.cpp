@@ -31,7 +31,7 @@ const TypeDescriptor& ConnectCommandType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t ConnectCommandType::fields(const ConnectCommand* const pointer)
+fields_t ConnectCommandType::fields(const ConnectCommand* const)
 {
     return fields_t();
 }
@@ -72,7 +72,7 @@ const TypeDescriptor& DisconnectCommandType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t DisconnectCommandType::fields(const DisconnectCommand* const pointer)
+fields_t DisconnectCommandType::fields(const DisconnectCommand* const)
 {
     return fields_t();
 }
@@ -113,7 +113,7 @@ const TypeDescriptor& PingCommandType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t PingCommandType::fields(const PingCommand* const pointer)
+fields_t PingCommandType::fields(const PingCommand* const)
 {
     return fields_t();
 }
@@ -154,7 +154,7 @@ const TypeDescriptor& UpdateWorldCommandType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t UpdateWorldCommandType::fields(const UpdateWorldCommand* const pointer)
+fields_t UpdateWorldCommandType::fields(const UpdateWorldCommand* const)
 {
     return fields_t();
 }

@@ -18,14 +18,14 @@ include <awesome/asset/scene_asset.h>
 
 class ApplicationSettings
 {
-	FpsMode fps = FpsMode::Fps60;
-	ApplicationMode mode = ApplicationMode::Editor;
+	FpsMode:enum fps = FpsMode::Fps60;
+	ApplicationMode:enum mode = ApplicationMode::Editor;
 	std::filesystem::path workspacePath = std::filesystem::current_path() / ".." / "assets";
 
 	SceneAssetPtr editorScene;
 	SceneAssetPtr serverScene;
 	SceneAssetPtr standaloneScene;
-	std::string serverIp;
+	string serverIp;
 	int serverPort = 96000;
 	int maxServerConnections = 20;
 }

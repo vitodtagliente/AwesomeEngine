@@ -29,7 +29,7 @@ const TypeDescriptor& Body2dType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t Body2dType::fields(const Body2d* const pointer)
+fields_t Body2dType::fields(const Body2d* const)
 {
     return fields_t();
 }
@@ -70,7 +70,7 @@ const TypeDescriptor& CameraType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t CameraType::fields(const Camera* const pointer)
+fields_t CameraType::fields(const Camera* const)
 {
     return fields_t();
 }
@@ -111,7 +111,7 @@ const TypeDescriptor& CameraController2dType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t CameraController2dType::fields(const CameraController2d* const pointer)
+fields_t CameraController2dType::fields(const CameraController2d* const)
 {
     return fields_t();
 }
@@ -152,7 +152,7 @@ const TypeDescriptor& Collider2dType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t Collider2dType::fields(const Collider2d* const pointer)
+fields_t Collider2dType::fields(const Collider2d* const)
 {
     return fields_t();
 }
@@ -193,7 +193,7 @@ const TypeDescriptor& GizmosRendererType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t GizmosRendererType::fields(const GizmosRenderer* const pointer)
+fields_t GizmosRendererType::fields(const GizmosRenderer* const)
 {
     return fields_t();
 }
@@ -234,7 +234,7 @@ const TypeDescriptor& OrthographicCameraType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t OrthographicCameraType::fields(const OrthographicCamera* const pointer)
+fields_t OrthographicCameraType::fields(const OrthographicCamera* const)
 {
     return fields_t();
 }
@@ -275,7 +275,7 @@ const TypeDescriptor& Particles2dType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t Particles2dType::fields(const Particles2d* const pointer)
+fields_t Particles2dType::fields(const Particles2d* const)
 {
     return fields_t();
 }
@@ -316,7 +316,7 @@ const TypeDescriptor& SpriteAnimatorType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SpriteAnimatorType::fields(const SpriteAnimator* const pointer)
+fields_t SpriteAnimatorType::fields(const SpriteAnimator* const)
 {
     return fields_t();
 }
@@ -357,7 +357,7 @@ const TypeDescriptor& SpriteRendererType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SpriteRendererType::fields(const SpriteRenderer* const pointer)
+fields_t SpriteRendererType::fields(const SpriteRenderer* const)
 {
     return fields_t();
 }

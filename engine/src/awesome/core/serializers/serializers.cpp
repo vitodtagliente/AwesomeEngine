@@ -27,7 +27,7 @@ const TypeDescriptor& AssetSerializerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t AssetSerializerType::fields(const AssetSerializer* const pointer)
+fields_t AssetSerializerType::fields(const AssetSerializer* const)
 {
     return fields_t();
 }
@@ -68,7 +68,7 @@ const TypeDescriptor& GraphicsSerializerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t GraphicsSerializerType::fields(const GraphicsSerializer* const pointer)
+fields_t GraphicsSerializerType::fields(const GraphicsSerializer* const)
 {
     return fields_t();
 }
@@ -109,7 +109,7 @@ const TypeDescriptor& MathSerializerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t MathSerializerType::fields(const MathSerializer* const pointer)
+fields_t MathSerializerType::fields(const MathSerializer* const)
 {
     return fields_t();
 }
@@ -150,7 +150,7 @@ const TypeDescriptor& UuidSerializerType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t UuidSerializerType::fields(const UuidSerializer* const pointer)
+fields_t UuidSerializerType::fields(const UuidSerializer* const)
 {
     return fields_t();
 }

@@ -29,7 +29,7 @@ const TypeDescriptor& NewSceneMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t NewSceneMenuItemType::fields(const NewSceneMenuItem* const pointer)
+fields_t NewSceneMenuItemType::fields(const NewSceneMenuItem* const)
 {
     return fields_t();
 }
@@ -70,7 +70,7 @@ const TypeDescriptor& SaveSceneAsMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SaveSceneAsMenuItemType::fields(const SaveSceneAsMenuItem* const pointer)
+fields_t SaveSceneAsMenuItemType::fields(const SaveSceneAsMenuItem* const)
 {
     return fields_t();
 }
@@ -111,7 +111,7 @@ const TypeDescriptor& SaveSceneMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SaveSceneMenuItemType::fields(const SaveSceneMenuItem* const pointer)
+fields_t SaveSceneMenuItemType::fields(const SaveSceneMenuItem* const)
 {
     return fields_t();
 }
@@ -152,7 +152,7 @@ const TypeDescriptor& ShowWindowsMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t ShowWindowsMenuItemType::fields(const ShowWindowsMenuItem* const pointer)
+fields_t ShowWindowsMenuItemType::fields(const ShowWindowsMenuItem* const)
 {
     return fields_t();
 }
@@ -193,7 +193,7 @@ const TypeDescriptor& SpriteAnimationMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SpriteAnimationMenuItemType::fields(const SpriteAnimationMenuItem* const pointer)
+fields_t SpriteAnimationMenuItemType::fields(const SpriteAnimationMenuItem* const)
 {
     return fields_t();
 }
@@ -234,7 +234,7 @@ const TypeDescriptor& SpriteMenuItemType::descriptor()
     return s_typeDescriptor;
 }
 
-fields_t SpriteMenuItemType::fields(const SpriteMenuItem* const pointer)
+fields_t SpriteMenuItemType::fields(const SpriteMenuItem* const)
 {
     return fields_t();
 }
