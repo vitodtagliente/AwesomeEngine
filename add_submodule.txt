@@ -1,1 +1,2 @@
 git submodule add <remote_url> <destination_folder>
+git rm <path-to-submodule>
