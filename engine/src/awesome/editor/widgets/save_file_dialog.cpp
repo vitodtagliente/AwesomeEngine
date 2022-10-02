@@ -8,99 +8,95 @@
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
-namespace editor
+SaveFileDialog::SaveFileDialog()
+	: m_dir(State::instance().path)
+	, m_extension()
+	, m_filename()
+	, m_handler()
+	, m_open(false)
+	, m_root(AssetLibrary::instance().getDirectory())
+	, m_title("Save File Dialog")
 {
-	SaveFileDialog::SaveFileDialog()
-		: m_dir(State::instance().path)
-		, m_extension()
-		, m_filename()
-		, m_handler()
-		, m_open(false)
-		, m_root(AssetLibrary::instance().getDirectory())
-		, m_title("Save File Dialog")
+}
+
+void SaveFileDialog::close()
+{
+	m_open = false;
+}
+
+void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
+{
+	m_dir = Dir(State::instance().path);
+	m_extension = extension;
+	m_handler = handler;
+	m_open = true;
+	m_title = title;
+}
+
+void SaveFileDialog::render()
+{
+	if (m_open && !ImGui::IsPopupOpen(m_title.c_str()))
 	{
+		ImGui::OpenPopup(m_title.c_str());
 	}
 
-	void SaveFileDialog::close()
+	ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+	if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		m_open = false;
-	}
-
-	void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
-	{
-		m_dir = Dir(State::instance().path);
-		m_extension = extension;
-		m_handler = handler;
-		m_open = true;
-		m_title = title;
-	}
-
-	void SaveFileDialog::render()
-	{
-		if (m_open && !ImGui::IsPopupOpen(m_title.c_str()))
+		if (m_dir.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 		{
-			ImGui::OpenPopup(m_title.c_str());
+			m_dir = Dir(m_dir.parent);
 		}
 
-		ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-		if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+		for (const auto& file : m_dir.files)
 		{
-			if (m_dir.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
+			const std::string filename = file.stem().string();
+			bool changeDirectory = false;
+			if (std::filesystem::is_directory(file) && filename != "..")
 			{
-				m_dir = Dir(m_dir.parent);
-			}
-
-			for (const auto& file : m_dir.files)
-			{
-				const std::string filename = file.stem().string();
-				bool changeDirectory = false;
-				if (std::filesystem::is_directory(file) && filename != "..")
+				if (ImGui::Selectable(TextIcon::folder(" " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 				{
-					if (ImGui::Selectable(TextIcon::folder(" " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
+					if (ImGui::IsMouseDoubleClicked(0))
 					{
-						if (ImGui::IsMouseDoubleClicked(0))
-						{
-							changeDirectory = true;
-						}
+						changeDirectory = true;
 					}
 				}
-				else if (file.stem().extension() == m_extension)
+			}
+			else if (file.stem().extension() == m_extension)
+			{
+				if (ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups))
 				{
-					if (ImGui::Selectable(filename.c_str(), false, ImGuiSelectableFlags_DontClosePopups))
-					{
-						m_filename = file.stem().stem().string();
-					}
-				}
-
-				if (changeDirectory)
-				{
-					m_dir = Dir(file);
-					break;
+					m_filename = file.stem().stem().string();
 				}
 			}
 
-			Layout::separator();
-
-			Layout::input("Filename", m_filename);
-			if (Layout::button("Cancel"))
+			if (changeDirectory)
 			{
-				m_open = false;
-				ImGui::CloseCurrentPopup();
+				m_dir = Dir(file);
+				break;
 			}
-
-			Layout::sameLine();
-
-			if (Layout::button(TextIcon::save(" Save")))
-			{
-				const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
-				m_handler(fileToSave);
-				State::instance().isContentChanged = true;
-				m_filename.clear();
-				m_open = false;
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndPopup();
 		}
-	}
 
+		Layout::separator();
+
+		Layout::input("Filename", m_filename);
+		if (Layout::button("Cancel"))
+		{
+			m_open = false;
+			ImGui::CloseCurrentPopup();
+		}
+
+		Layout::sameLine();
+
+		if (Layout::button(TextIcon::save(" Save")))
+		{
+			const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
+			m_handler(fileToSave);
+			State::instance().isContentChanged = true;
+			m_filename.clear();
+			m_open = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
 }

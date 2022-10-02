@@ -4,7 +4,7 @@
 #include <memory>
 #include <thread>
 
-#include <vdtproto/runtime.h>
+#include <awesome/core/reflection.h>
 
 #include "client_command.h"
 #include "command_error.h"

@@ -1,18 +1,15 @@
 #include "window.h"
 
-namespace editor
+std::string Window::getTitle() const
 {
-	std::string Window::getTitle() const
-	{
-		return get_descriptor().name;
-	}
+	return getTypeName();
+}
 
-	void Window::setFocus(const bool focus)
+void Window::setFocus(const bool focus)
+{
+	if (m_hasFocus != focus)
 	{
-		if (m_hasFocus != focus)
-		{
-			m_hasFocus = focus;
-			onFocusChange(m_hasFocus);
-		}
+		m_hasFocus = focus;
+		onFocusChange(m_hasFocus);
 	}
 }

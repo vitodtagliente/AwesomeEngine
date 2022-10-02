@@ -3,30 +3,28 @@
 
 #include <optional>
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/entity/component.h>
 #include <awesome/math/vector2.h>
 
-namespace component
+#include "camera_controller_2d_generated.h"
+
+CLASS()
+class CameraController2d : public Component
 {
-	class CameraController2d : public Component
-	{
-	public:
-		CameraController2d();
+public:
+	CameraController2d();
 
-		void update(double deltaTime) override;
+	void update(double deltaTime) override;
 
-		virtual json::value serialize() const override;
-		virtual void deserialize(const json::value& value) override;
-		virtual void inspect() override;
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
+	virtual void inspect() override;
 
-		float speed;
-		float zoomSpeed;
+	PROPERTY() float speed;
+	PROPERTY() float zoomSpeed;
 
-		PROTO()
+	GENERATED_BODY()
 
-	private:
-		std::optional<math::vec2> m_dragPosition;
-	};
-}
+private:
+	std::optional<math::vec2> m_dragPosition;
+};

@@ -3,19 +3,19 @@
 
 #include <awesome/editor/menu_item.h>
 
-namespace editor
+#include "save_scene_menu_item_generated.h"
+
+CLASS()
+class SaveSceneMenuItem : public MenuItem
 {
-	class SaveSceneMenuItem : public MenuItem
-	{
-	public:
-		SaveSceneMenuItem() = default;
-		virtual ~SaveSceneMenuItem() = default;
+public:
+	SaveSceneMenuItem() = default;
+	virtual ~SaveSceneMenuItem() = default;
 
-		virtual std::string getCategory() const override { return "Scene"; };
-		virtual std::string getName() const override { return "Save Scene"; };
+	virtual std::string getCategory() const override { return "Scene"; };
+	virtual std::string getName() const override { return "Save Scene"; };
 
-		virtual void execute() override;
+	virtual void execute() override;
 
-		PROTO()
-	};
-}
+	GENERATED_BODY()
+};

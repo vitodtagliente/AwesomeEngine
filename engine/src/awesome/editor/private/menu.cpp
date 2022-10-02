@@ -3,103 +3,86 @@
 #include <awesome/application/application.h>
 #include <awesome/editor/private/menu_layout.h>
 
-#include <awesome/editor/menu_items/new_scene_menu_item.h>
-#include <awesome/editor/menu_items/save_scene_as_menu_item.h>
-#include <awesome/editor/menu_items/save_scene_menu_item.h>
-#include <awesome/editor/menu_items/show_windows_menu_item.h>
-#include <awesome/editor/menu_items/sprite_animation_menu_item.h>
-#include <awesome/editor/menu_items/sprite_menu_item.h>
-
-namespace editor
+void Menu::init()
 {
-	void Menu::init()
+	static std::vector<std::string> types = TypeFactory::list("Category", "MenuItem");
+	for (const std::string& type : types)
 	{
-		NewSceneMenuItem::autoload();
-		SaveSceneMenuItem::autoload();
-		SaveSceneAsMenuItem::autoload();
-		ShowWindowsMenuItem::autoload();
-		SpriteAnimationMenuItem::autoload();
-		SpriteMenuItem::autoload();
-
-		static std::vector<std::string> types = TypeFactory::list("Category", "MenuItem");
-		for (const std::string& type : types)
+		MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);
+		if (item)
 		{
-			MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);
-			if (item)
-			{
-				m_menuItems.push_back(MenuItemPtr(item));
-			}
+			m_menuItems.push_back(MenuItemPtr(item));
 		}
 	}
+}
 
-	void Menu::render()
+void Menu::render()
+{
+	if (MenuLayout::beginMainMenu())
 	{
-		if (MenuLayout::beginMainMenu())
-		{
-			menuFile();
-			menuScene();
-			menuAssets();
-			menuView();
+		menuFile();
+		menuScene();
+		menuAssets();
+		menuView();
 
-			MenuLayout::endMainMenu();
-		}
+		MenuLayout::endMainMenu();
 	}
+}
 
-	void Menu::menuAssets()
+void Menu::menuAssets()
+{
+	if (MenuLayout::beginMenu("Assets"))
 	{
-		if (MenuLayout::beginMenu("Assets"))
+		for (const auto& item : m_menuItems)
 		{
-			for (const auto& item : m_menuItems)
+			if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
 			{
-				if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
-				{
-					item->execute();
-				}
+				item->execute();
 			}
-			MenuLayout::endMenu();
 		}
+		MenuLayout::endMenu();
 	}
+}
 
-	void Menu::menuFile()
+void Menu::menuFile()
+{
+	if (MenuLayout::beginMenu("File"))
 	{
-		if (MenuLayout::beginMenu("File"))
+		if (MenuLayout::item("Exit"))
 		{
-			if (MenuLayout::item("Exit"))
-			{
-				Application::instance().exit();
-			}
-
-			MenuLayout::endMenu();
+			Application::instance().exit();
 		}
+
+		MenuLayout::endMenu();
 	}
+}
 
-	void Menu::menuScene()
+void Menu::menuScene()
+{
+	if (MenuLayout::beginMenu("Scene"))
 	{
-		if (MenuLayout::beginMenu("Scene"))
+		for (const auto& item : m_menuItems)
 		{
-			for (const auto& item : m_menuItems)
+			if (item->getCategory() == "Scene" && MenuLayout::item(item->getName()))
 			{
-				if (item->getCategory() == "Scene" && MenuLayout::item(item->getName()))
-				{
-					item->execute();
-				}
+				item->execute();
 			}
-			MenuLayout::endMenu();
 		}
+		MenuLayout::endMenu();
 	}
+}
 
-	void Menu::menuView()
+void Menu::menuView()
+{
+	if (MenuLayout::beginMenu("View"))
 	{
-		if (MenuLayout::beginMenu("View"))
+		for (const auto& item : m_menuItems)
 		{
-			for (const auto& item : m_menuItems)
+			if (item->getCategory() == "View" && MenuLayout::item(item->getName()))
 			{
-				if (item->getCategory() == "View" && MenuLayout::item(item->getName()))
-				{
-					item->execute();
-				}
+				item->execute();
 			}
-			MenuLayout::endMenu();
 		}
+		MenuLayout::endMenu();
 	}
 }

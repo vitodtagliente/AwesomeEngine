@@ -3,21 +3,21 @@
 
 #include <memory>
 
-#include <awesome/core/reflection.h>
+#include "menu_item_generated.h"
 
-namespace editor
+CLASS()
+class MenuItem : public IType
 {
-	class MenuItem : public IProtoClass
-	{
-	public:
-		MenuItem() = default;
-		virtual ~MenuItem() = default;
+public:
+	MenuItem() = default;
+	virtual ~MenuItem() = default;
 
-		virtual std::string getCategory() const = 0;
-		virtual std::string getName() const { return get_descriptor().name; }
+	virtual std::string getCategory() const { return ""; };
+	virtual std::string getName() const { return getTypeName(); }
 
-		virtual void execute() = 0;
-	};
+	virtual void execute() {};
 
-	typedef std::unique_ptr<MenuItem> MenuItemPtr;
-}
+	GENERATED_BODY()
+};
+
+typedef std::unique_ptr<MenuItem> MenuItemPtr;

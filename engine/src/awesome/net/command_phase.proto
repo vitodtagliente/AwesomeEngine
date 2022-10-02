@@ -1,5 +1,0 @@
-enum CommandPhase
-{
-	Request,
-	Response
-}

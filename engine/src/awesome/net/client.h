@@ -8,7 +8,7 @@
 #include <string>
 #include <thread>
 
-#include <vdtproto/runtime.h>
+#include <awesome/core/reflection.h>
 
 #include "command_error.h"
 #include "connection.h"

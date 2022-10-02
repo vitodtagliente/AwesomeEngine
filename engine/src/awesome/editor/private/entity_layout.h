@@ -3,12 +3,9 @@
 
 class Entity;
 
-namespace editor
+struct EntityLayout final
 {
-	struct EntityLayout final
-	{
-		EntityLayout() = delete;
+	EntityLayout() = delete;
 
-		static void input(Entity* const entity);
-	};
-}
+	static void input(Entity* const entity);
+};

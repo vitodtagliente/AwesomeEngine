@@ -1,16 +1,17 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/net/net_mode.h>
 
+#include "component_generated.h"
+
 class Entity;
 
-class Component : public ISerializable, public IProtoClass
+CLASS()
+class Component : public ISerializable, public IType
 {
 public:
 
@@ -40,10 +41,12 @@ public:
 	// editor
 	virtual void inspect();
 
-	bool enabled{ true };
+	PROPERTY() bool enabled{ true };
+
+	GENERATED_BODY()
 
 private:
-	uuid m_id;
-	NetMode m_netMode{ NetMode::Shared };
+	PROPERTY() uuid m_id;
+	PROPERTY() NetMode m_netMode{ NetMode::Shared };
 	Entity* m_owner{ nullptr };
 };

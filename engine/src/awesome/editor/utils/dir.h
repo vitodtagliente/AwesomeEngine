@@ -3,14 +3,11 @@
 
 #include <filesystem>
 
-namespace editor
+struct Dir
 {
-	struct Dir
-	{
-		Dir(const std::filesystem::path& path, bool scanAssetsOnly = true);
+	Dir(const std::filesystem::path& path, bool scanAssetsOnly = true);
 
-		std::vector<std::filesystem::path> files;
-		std::filesystem::path parent;
-		std::filesystem::path path;
-	};
-}
+	std::vector<std::filesystem::path> files;
+	std::filesystem::path parent;
+	std::filesystem::path path;
+};

@@ -1,7 +1,5 @@
 #include "network_manager.h"
 
-#include <awesome/net/commands/connect_command.h>
-
 namespace net
 {
 	bool NetworkManager::startClient(const std::string& ip, const Address::port_t port)
@@ -12,14 +10,14 @@ namespace net
 		m_client = std::make_unique<Client>();
 		if (m_client->connect(ip, port) == Client::State::Connected)
 		{
-			command::ConnectRequest request;
-			auto commandResult = m_client->asyncCall<command::ConnectRequest, command::ConnectResponse, command::ConnectCommand>(request);
-			// commandResult.wait();
-			const auto& [commandError, response] = commandResult.get();
-			if (commandError == CommandError::OK)
-			{
-				return true;
-			}
+			// command::ConnectRequest request;
+			// auto commandResult = m_client->asyncCall<command::ConnectRequest, command::ConnectResponse, command::ConnectCommand>(request);
+			// // commandResult.wait();
+			// const auto& [commandError, response] = commandResult.get();
+			// if (commandError == CommandError::OK)
+			// {
+			// 	return true;
+			// }
 		}
 		return false;
 	}

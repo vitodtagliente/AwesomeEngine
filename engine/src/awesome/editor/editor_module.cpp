@@ -11,15 +11,6 @@
 #include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 
-#include <awesome/editor/windows/asset_inspector_window.h>
-#include <awesome/editor/windows/content_browser_window.h>
-#include <awesome/editor/windows/entity_inspector_window.h>
-#include <awesome/editor/windows/log_window.h>
-#include <awesome/editor/windows/network_window.h>
-#include <awesome/editor/windows/performance_window.h>
-#include <awesome/editor/windows/scene_window.h>
-#include <awesome/editor/windows/settings_window.h>
-
 #include <IconsFontAwesome5.h>
 
 namespace editor
@@ -110,15 +101,6 @@ namespace editor
 
 	void Module::registerWindows()
 	{
-		AssetInspectorWindow::autoload();
-		ContentBrowserWindow::autoload();
-		EntityInspectorWindow::autoload();
-		LogWindow::autoload();
-		NetworkWindow::autoload();
-		PerformanceWindow::autoload();
-		SceneWindow::autoload();
-		SettingsWindow::autoload();
-
 		static std::vector<std::string> types = TypeFactory::list("Category", "Window");
 		for (const std::string& type : types)
 		{

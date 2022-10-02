@@ -7,8 +7,6 @@
 
 #include <awesome/editor/utils/dir.h>
 
-namespace editor
-{
 	class SaveFileDialog
 	{
 	public:
@@ -29,4 +27,3 @@ namespace editor
 		std::filesystem::path m_root;
 		std::string m_title;
 	};
-}

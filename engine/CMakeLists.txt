@@ -9,6 +9,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY lib/)
 # specify my include directory 
 include_directories( 
     src/
+	generated/
     vendor/glad/include/
 	vendor/glfw/include/
 	vendor/IconFontCppHeaders/
@@ -37,7 +38,7 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/generator/vdtreflect-compiler.exe")
+set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/compiler/vdtreflect-compiler.exe")
 message(STATUS "compiler: `${VDTPROTO_EXE}`")
 
 function(generate_reflection SRC_FILE)
@@ -69,7 +70,7 @@ foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
-foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
+foreach(_source IN ITEMS ${PROJECT_GENERATED_FILES})
     get_filename_component(_source_path "${_source}" PATH)
     file(RELATIVE_PATH _source_path_rel "${PROJECT_SOURCE_DIR}" "${_source_path}")
     string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
@@ -79,7 +80,6 @@ endforeach()
 add_library(
     ${PROJECT_NAME} 
     STATIC
-	${PROJECT_PROTO_FILES}
     ${VENDORS_SOURCES}
     ${PROJECT_SOURCE_FILES} 
 )

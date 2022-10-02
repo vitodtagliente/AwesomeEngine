@@ -8,65 +8,62 @@
 #include <awesome/graphics/texture_library.h>
 #include <awesome/entity/entity.h>
 
-namespace component
+void SpriteRenderer::render(graphics::Renderer2D* const renderer)
 {
-	void SpriteRenderer::render(graphics::Renderer2D* const renderer)
+	if (sprite && sprite->data.has_value())
 	{
-		if (sprite && sprite->data.has_value())
+		const Sprite& data = sprite->data.value();
+		if (data.image)
 		{
-			const Sprite& data = sprite->data.value();
-			if (data.image)
+			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
+			if (texture)
 			{
-				std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
-				if (texture)
-				{
-					renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), data.rect, color);
-				}
+				renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), data.rect, color);
 			}
 		}
 	}
+}
 
-	void SpriteRenderer::update(const double /*deltaTime*/)
+void SpriteRenderer::update(const double /*deltaTime*/)
+{
+	math::vec3& scale = getOwner()->transform.scale;
+	if ((flipX && scale.x > 0) || (!flipX && scale.x < 0))
 	{
-		math::vec3& scale = getOwner()->transform.scale;
-		if ((flipX && scale.x > 0) || (!flipX && scale.x < 0))
-		{
-			scale.x = -scale.x;
-		}
-		if ((flipY && scale.y > 0) || (!flipY && scale.y < 0))
-		{
-			scale.y = -scale.y;
-		}
+		scale.x = -scale.x;
 	}
-
-	json::value SpriteRenderer::serialize() const
+	if ((flipY && scale.y > 0) || (!flipY && scale.y < 0))
 	{
-		json::value data = Component::serialize();
-		data["sprite"] = sprite ? ::serialize(sprite->descriptor.id) : "";
-		data["color"] = ::serialize(color);
-		data["flipX"] = flipX;
-		data["flipY"] = flipY;
-		return data;
+		scale.y = -scale.y;
 	}
+}
 
-	void SpriteRenderer::deserialize(const json::value& value)
-	{
-		Component::deserialize(value);
+json::value SpriteRenderer::serialize() const
+{
+	json::value data = Component::serialize();
+	data["sprite"] = sprite ? ::serialize(sprite->descriptor.id) : "";
+	data["color"] = ::serialize(color);
+	data["flipX"] = flipX;
+	data["flipY"] = flipY;
+	return data;
+}
 
-		uuid spriteId = uuid::Invalid;
-		::deserialize(value["sprite"], spriteId);
-		sprite = AssetLibrary::instance().find<SpriteAsset>(spriteId);
-		::deserialize(value["color"], color);
-		flipX = value.safeAt("flipX").as_bool(false);
-		flipY = value.safeAt("flipY").as_bool(false);
-	}
+void SpriteRenderer::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
 
-	void SpriteRenderer::inspect()
-	{
-		Component::inspect();
-		editor::Layout::input("Sprite", sprite);
-		editor::Layout::input("Color", color);
-		editor::Layout::input("Flip X", flipX);
-		editor::Layout::input("Flip Y", flipY);
-	}
+	uuid spriteId = uuid::Invalid;
+	::deserialize(value["sprite"], spriteId);
+	sprite = AssetLibrary::instance().find<SpriteAsset>(spriteId);
+	::deserialize(value["color"], color);
+	flipX = value.safeAt("flipX").as_bool(false);
+	flipY = value.safeAt("flipY").as_bool(false);
+}
+
+void SpriteRenderer::inspect()
+{
+	Component::inspect();
+	Layout::input("Sprite", sprite);
+	Layout::input("Color", color);
+	Layout::input("Flip X", flipX);
+	Layout::input("Flip Y", flipY);
 }

@@ -4,17 +4,14 @@
 #include <awesome/editor/dialog.h>
 #include <awesome/entity/world.h>
 
-namespace editor
+void SaveSceneAsMenuItem::execute()
 {
-	void SaveSceneAsMenuItem::execute()
-	{
-		Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+	Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+		{
+			if (!path.string().empty())
 			{
-				if (!path.string().empty())
-				{
-					World::instance().save(path);
-				}
+				World::instance().save(path);
 			}
-		);
-	}
+		}
+	);
 }

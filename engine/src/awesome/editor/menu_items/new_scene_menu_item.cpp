@@ -3,11 +3,8 @@
 #include <awesome/editor/state.h>
 #include <awesome/entity/world.h>
 
-namespace editor
+void NewSceneMenuItem::execute()
 {
-	void NewSceneMenuItem::execute()
-	{
-		State::instance().select();
-		World::instance().clear();
-	}
+	State::instance().select();
+	World::instance().clear();
 }

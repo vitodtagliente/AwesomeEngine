@@ -6,55 +6,52 @@
 
 #include "collider2d.h"
 
-namespace component
+void Body2d::init()
 {
-	void Body2d::init()
-	{
-		m_collider = getOwner()->findComponent<Collider2d>();
-	}
+	m_collider = getOwner()->findComponent<Collider2d>();
+}
 
-	void Body2d::move(const math::vec2& amount)
-	{
-		move(math::vec3(amount.x, amount.y, 0.0f));
-	}
+void Body2d::move(const math::vec2& amount)
+{
+	move(math::vec3(amount.x, amount.y, 0.0f));
+}
 
-	void Body2d::move(const math::vec3& amount)
+void Body2d::move(const math::vec3& amount)
+{
+	math::vec3& position = getOwner()->transform.position;
+	position += amount;
+	if (m_collider)
 	{
-		math::vec3& position = getOwner()->transform.position;
-		position += amount;
-		if (m_collider)
+		const math::vec3 futurePosition = position + amount;
+		for (const auto& entity : World::instance().getEntities())
 		{
-			const math::vec3 futurePosition = position + amount;
-			for (const auto& entity : World::instance().getEntities())
-			{
-				if (entity->getId() == getOwner()->getId()) continue;
+			if (entity->getId() == getOwner()->getId()) continue;
 
-				Collider2d* const collider = entity->findComponent<Collider2d>();
-				if (collider && collider->collide(*m_collider))
-				{
-					position -= amount; // reset the position
-					return;
-				}
+			Collider2d* const collider = entity->findComponent<Collider2d>();
+			if (collider && collider->collide(*m_collider))
+			{
+				position -= amount; // reset the position
+				return;
 			}
 		}
 	}
+}
 
-	json::value Body2d::serialize() const
-	{
-		json::value data = Component::serialize();
+json::value Body2d::serialize() const
+{
+	json::value data = Component::serialize();
 
-		return data;
-	}
+	return data;
+}
 
-	void Body2d::deserialize(const json::value& value)
-	{
-		Component::deserialize(value);
+void Body2d::deserialize(const json::value& value)
+{
+	Component::deserialize(value);
 
-	}
+}
 
-	void Body2d::inspect()
-	{
-		Component::inspect();
+void Body2d::inspect()
+{
+	Component::inspect();
 
-	}
 }

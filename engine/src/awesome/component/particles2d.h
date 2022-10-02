@@ -3,46 +3,39 @@
 
 #include <memory>
 
-#include <vdtproto/runtime.h>
-
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/particle_system.h>
 
-namespace graphics
+#include "particles2d_generated.h"
+
+CLASS()
+class Particles2d : public graphics::IGraphicsComponent, public Component
 {
-	class Renderer2D;
-}
+public:
+	Particles2d() = default;
+	virtual ~Particles2d() = default;
 
-namespace component
-{
-	class Particles2d : public Component, public graphics::IGraphicsComponent
-	{
-	public:
-		Particles2d() = default;
-		virtual ~Particles2d() = default;
+	virtual void init() override;
+	virtual void render(graphics::Renderer2D* const renderer) override;
+	virtual void update(double deltaTime) override;
 
-		virtual void init() override;
-		virtual void render(graphics::Renderer2D* const renderer) override;
-		virtual void update(double deltaTime) override;
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
+	virtual void inspect() override;
 
-		virtual json::value serialize() const override;
-		virtual void deserialize(const json::value& value) override;
-		virtual void inspect() override;
+	void play();
+	void pause();
+	void resume();
+	void stop();
 
-		void play();
-		void pause();
-		void resume();
-		void stop();
+	bool isPlaying() const;
 
-		bool isPlaying() const;
+	PROPERTY() bool autoplay{ false };
+	PROPERTY() bool loop{ false };
 
-		bool autoplay{ false };
-		bool loop{ false };
+	GENERATED_BODY()
 
-		PROTO()
-
-	private:
-		graphics::ParticleSystem m_system;
-	};
-}
+private:
+	graphics::ParticleSystem m_system;
+};

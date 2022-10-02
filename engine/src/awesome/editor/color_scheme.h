@@ -1,13 +1,10 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-namespace editor
+class ColorScheme
 {
-	class ColorScheme
-	{
-	public:
-		ColorScheme() = default;
+public:
+	ColorScheme() = default;
 
-		void apply();
-	};
-}
+	void apply();
+};

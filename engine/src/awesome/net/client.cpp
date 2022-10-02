@@ -1,7 +1,5 @@
 #include "client.h"
 
-#include <vdtproto/runtime.h>
-
 #include "client_command.h"
 
 namespace net

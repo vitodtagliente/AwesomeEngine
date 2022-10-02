@@ -5,25 +5,22 @@
 #include <string>
 #include <vector>
 
-namespace editor
+class ContextMenu
 {
-	class ContextMenu
-	{
-	public:
-		ContextMenu() = default;
+public:
+	ContextMenu() = default;
 
-		inline bool isOpen() const { return m_open; }
+	inline bool isOpen() const { return m_open; }
 
-		void close();
-		void open(const std::string& title, const std::vector<std::string>& items, const std::function<void(const std::string&)>& handler);
-		void render();
+	void close();
+	void open(const std::string& title, const std::vector<std::string>& items, const std::function<void(const std::string&)>& handler);
+	void render();
 
-		static constexpr char* const Separator{ "separator" };
+	static constexpr char* const Separator{ "separator" };
 
-	private:
-		std::function<void(const std::string&)> m_handler;
-		std::vector<std::string> m_items;
-		bool m_open{ false };
-		std::string m_title;
-	};
-}
+private:
+	std::function<void(const std::string&)> m_handler;
+	std::vector<std::string> m_items;
+	bool m_open{ false };
+	std::string m_title;
+};

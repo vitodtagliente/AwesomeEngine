@@ -1,27 +1,27 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "camera.h"
+#include "base_camera.h"
 
-namespace component
+#include "orthographic_camera_generated.h"
+
+CLASS()
+class OrthographicCamera : public BaseCamera
 {
-	class OrthographicCamera : public Camera
-	{
-	public:
-		OrthographicCamera();
-		virtual ~OrthographicCamera() = default;
+public:
+	OrthographicCamera();
+	virtual ~OrthographicCamera() = default;
 
-		void update(double deltaTime) override;
+	void update(double deltaTime) override;
 
-		virtual json::value serialize() const override;
-		virtual void deserialize(const json::value& value) override;
-		virtual void inspect() override;
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
+	virtual void inspect() override;
 
-		float nearPlane{ -30.f };
-		float farPlane{ 1000.f };
-		bool pixelPerfect{ true };
-		int pixelsPerUnit{ 32 };
+	PROPERTY() float nearPlane{ -30.f };
+	PROPERTY() float farPlane{ 1000.f };
+	PROPERTY() bool pixelPerfect{ true };
+	PROPERTY() int pixelsPerUnit{ 32 };
 
-		PROTO()
-	};
-}
+	GENERATED_BODY()
+};

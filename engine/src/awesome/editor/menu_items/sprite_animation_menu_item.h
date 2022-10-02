@@ -3,8 +3,9 @@
 
 #include <awesome/editor/menu_item.h>
 
-namespace editor
-{
+#include "sprite_animation_menu_item_generated.h"
+
+CLASS()
 	class SpriteAnimationMenuItem : public MenuItem
 	{
 	public:
@@ -16,6 +17,5 @@ namespace editor
 
 		virtual void execute() override;
 
-		PROTO()
+		GENERATED_BODY()
 	};
-}

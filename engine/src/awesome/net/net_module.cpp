@@ -5,9 +5,7 @@
 #include <awesome/application/application.h>
 #include <awesome/application/input.h>
 #include <awesome/net/network_manager.h>
-#include <awesome/net/commands/connect_command.h>
 
-#include "private/commands_loader.h"
 
 #include "client.h"
 
@@ -18,9 +16,6 @@ namespace net
 	void Module::startup()
 	{
 		net::startup();
-		// load the commands
-		CommandsLoader loader;
-		loader.load();
 	}
 
 	void Module::update(const double deltaTime)
@@ -33,8 +28,8 @@ namespace net
 			s_client = std::make_unique<Client>();
 			s_client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
 
-			command::ConnectRequest request;
-			s_client->call<command::ConnectRequest, command::ConnectCommand>(request);
+			// command::ConnectRequest request;
+			// s_client->call<command::ConnectRequest, command::ConnectCommand>(request);
 		}
 
 		if (s_client)

@@ -3,16 +3,16 @@
 
 #include <awesome/editor/window.h>
 
-namespace editor
+#include "performance_window_generated.h"
+
+CLASS()
+class PerformanceWindow : public Window
 {
-	class PerformanceWindow : public Window
-	{
-	public:
-		PerformanceWindow() = default;
+public:
+	PerformanceWindow() = default;
 
-		std::string getTitle() const override { return "Performance"; }
-		void render() override;
+	std::string getTitle() const override { return "Performance"; }
+	void render() override;
 
-		PROTO()
-	};
-}
+	GENERATED_BODY()
+};

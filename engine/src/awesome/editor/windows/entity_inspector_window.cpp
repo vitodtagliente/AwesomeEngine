@@ -7,41 +7,38 @@
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
 
-namespace editor
+void EntityInspectorWindow::render()
 {
-	void EntityInspectorWindow::render()
+	State& state = State::instance();
+	Entity* const entity = state.selection.entity;
+	if (entity == nullptr)
 	{
-		State& state = State::instance();
-		Entity* const entity = state.selection.entity;
-		if (entity == nullptr)
-		{
-			return;
-		}
+		return;
+	}
 
-		if (entity->getState() != Entity::State::Alive)
-		{
-			state.select();
-			return;
-		}
+	if (entity->getState() != Entity::State::Alive)
+	{
+		state.select();
+		return;
+	}
 
-		EntityLayout::input(entity);
+	EntityLayout::input(entity);
 
-		Layout::separator();
+	Layout::separator();
 
-		if (Layout::button(TextIcon::save(" Save Prefab")))
-		{
-			Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
+	if (Layout::button(TextIcon::save(" Save Prefab")))
+	{
+		Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
+			{
+				if (!path.string().empty())
 				{
-					if (!path.string().empty())
-					{
-						Archive archive(path, Archive::Mode::Write);
-						archive << json::Serializer::to_string(entity->serialize());
+					Archive archive(path, Archive::Mode::Write);
+					archive << json::Serializer::to_string(entity->serialize());
 
-						AssetImporter importer;
-						importer.import(path);
-					}
+					AssetImporter importer;
+					importer.import(path);
 				}
-			);
-		}
+			}
+		);
 	}
 }

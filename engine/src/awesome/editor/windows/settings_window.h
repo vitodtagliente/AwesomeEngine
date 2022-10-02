@@ -4,19 +4,19 @@
 #include <awesome/application/application.h>
 #include <awesome/editor/window.h>
 
-namespace editor
+#include "settings_window_generated.h"
+
+CLASS()
+class SettingsWindow : public Window
 {
-	class SettingsWindow : public Window
-	{
-	public:
-		SettingsWindow();
+public:
+	SettingsWindow();
 
-		std::string getTitle() const override { return "Settings"; }
-		void render() override;
+	std::string getTitle() const override { return "Settings"; }
+	void render() override;
 
-		PROTO()
+	GENERATED_BODY()
 
-	private:
-		ApplicationSettings m_settings;
-	};
-}
+private:
+	ApplicationSettings m_settings;
+};

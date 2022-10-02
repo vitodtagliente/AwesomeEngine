@@ -4,86 +4,78 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
-namespace editor
+void EntityLayout::input(Entity* const entity)
 {
-	void EntityLayout::input(Entity* const entity)
+	if (entity == nullptr) return;
+
+	Layout::beginContext("entity");
+	Layout::input("Name", entity->name);
+	Layout::input("Tag", entity->tag);
+	Layout::separator();
+	Layout::input("Position", entity->transform.position);
+	Layout::input("Rotation", entity->transform.rotation);
+	Layout::input("Scale", entity->transform.scale);
+	Layout::input("Static", entity->transform.isStatic);
+	Layout::input("Replicate", entity->replicate);
+	Layout::endContext();
+
+	Layout::separator();
+
+	if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
 	{
-		if (entity == nullptr) return;
-
-		Layout::beginContext("entity");
-		Layout::input("Name", entity->name);
-		Layout::input("Tag", entity->tag);
-		Layout::separator();
-		Layout::input("Position", entity->transform.position);
-		Layout::input("Rotation", entity->transform.rotation);
-		Layout::input("Scale", entity->transform.scale);
-		Layout::input("Static", entity->transform.isStatic);
-		Layout::input("Replicate", entity->replicate);
-		Layout::endContext();
-
-		Layout::separator();
-
-		if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
+		static std::vector<std::string> s_types = TypeFactory::list("Category", "Component");
+		for (const std::string& type : s_types)
 		{
-			static std::vector<std::string> s_types = TypeFactory::list("Category", "Component");
-			for (const std::string& type : s_types)
+			const auto& it = std::find_if(entity->getComponents().begin(), entity->getComponents().end(), [&type](const std::unique_ptr<Component>& component) -> bool
+				{
+					return component->getTypeName() == type;
+				}
+			);
+
+			// add one component only per type
+			if (it != entity->getComponents().end())
 			{
-				const auto& it = std::find_if(entity->getComponents().begin(), entity->getComponents().end(), [&type](const std::unique_ptr<Component>& component) -> bool
-					{
-						IProtoClass* const proto = dynamic_cast<IProtoClass*>(component.get());
-						if (proto)
-						{
-							return proto->get_descriptor().name == type;
-						}
-						return false;
-					}
-				);
-
-				// add one component only per type
-				if (it != entity->getComponents().end())
-				{
-					continue;
-				}
-
-				if (Layout::selectable(type.c_str(), false))
-				{
-					Component* const component = TypeFactory::instantiate<Component>(type);
-					if (component)
-					{
-						entity->addComponent(component);
-						Layout::endCombo();
-						return; // force the refresh of the inspector
-					}
-				}
+				continue;
 			}
-			Layout::endCombo();
-		}
 
-		for (const auto& component : entity->getComponents())
-		{
-			const std::string& componentName = dynamic_cast<IProtoClass*>(component.get())->get_descriptor().name;
-			Layout::beginContext(componentName);
-			if (Layout::collapsingHeader(componentName))
+			if (Layout::selectable(type.c_str(), false))
 			{
-				component->inspect();
-				Layout::separator();
-				if (Layout::button(TextIcon::minus(" Remove Component")))
+				Component* const component = TypeFactory::instantiate<Component>(type);
+				if (component)
 				{
-					entity->removeComponent(component->getId());
+					entity->addComponent(component);
+					Layout::endCombo();
 					return; // force the refresh of the inspector
 				}
 			}
-			Layout::endContext();
 		}
+		Layout::endCombo();
+	}
 
-		// preview the sprite
+	for (const auto& component : entity->getComponents())
+	{
+		const std::string& componentName = component->getTypeName();
+		Layout::beginContext(componentName);
+		if (Layout::collapsingHeader(componentName))
 		{
-			component::SpriteRenderer* const component = entity->findComponent<component::SpriteRenderer>();
-			if (component && component->sprite && component->sprite->data.has_value())
+			component->inspect();
+			Layout::separator();
+			if (Layout::button(TextIcon::minus(" Remove Component")))
 			{
-				Layout::separator();
-				Layout::image(component->sprite->data.value().image, component->sprite->data.value().rect);
+				entity->removeComponent(component->getId());
+				return; // force the refresh of the inspector
 			}
+		}
+		Layout::endContext();
+	}
+
+	// preview the sprite
+	{
+		SpriteRenderer* const component = entity->findComponent<SpriteRenderer>();
+		if (component && component->sprite && component->sprite->data.has_value())
+		{
+			Layout::separator();
+			Layout::image(component->sprite->data.value().image, component->sprite->data.value().rect);
 		}
 	}
 }

@@ -4,21 +4,18 @@
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/dialog.h>
 
-namespace editor
+void SpriteAnimationMenuItem::execute()
 {
-	void SpriteAnimationMenuItem::execute()
-	{
-		Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
+	Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
+		{
+			if (!filename.string().empty())
 			{
-				if (!filename.string().empty())
-				{
-					SpriteAnimationAsset::data_t animation;
-					animation.save(filename);
+				SpriteAnimationAsset::data_t animation;
+				animation.save(filename);
 
-					AssetImporter importer;
-					importer.import(filename);
-				}
+				AssetImporter importer;
+				importer.import(filename);
 			}
-		);
-	}
+		}
+	);
 }

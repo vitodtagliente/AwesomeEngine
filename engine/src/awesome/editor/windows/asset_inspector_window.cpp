@@ -10,49 +10,46 @@
 #include <awesome/editor/windows/inspectors/sprite_inspector.h>
 #include <awesome/editor/windows/inspectors/text_inspector.h>
 
-namespace editor
+void AssetInspectorWindow::init()
 {
-	void AssetInspectorWindow::init()
-	{
-		m_inspectors.push_back(std::make_unique<ImageInspector>());
-		m_inspectors.push_back(std::make_unique<PrefabInspector>());
-		m_inspectors.push_back(std::make_unique<SceneInspector>());
-		m_inspectors.push_back(std::make_unique<SpriteAnimationInspector>());
-		m_inspectors.push_back(std::make_unique<SpriteInspector>());
-		m_inspectors.push_back(std::make_unique<TextInspector>());
-	}
+	m_inspectors.push_back(std::make_unique<editor::ImageInspector>());
+	m_inspectors.push_back(std::make_unique<editor::PrefabInspector>());
+	m_inspectors.push_back(std::make_unique<editor::SceneInspector>());
+	m_inspectors.push_back(std::make_unique<editor::SpriteAnimationInspector>());
+	m_inspectors.push_back(std::make_unique<editor::SpriteInspector>());
+	m_inspectors.push_back(std::make_unique<editor::TextInspector>());
+}
 
-	void AssetInspectorWindow::render()
+void AssetInspectorWindow::render()
+{
+	AssetPtr asset = State::instance().selection.asset;
+	if (asset)
 	{
-		AssetPtr asset = State::instance().selection.asset;
-		if (asset)
+		Layout::text(asset->descriptor.path.filename().string());
+		Layout::text(enumToString(asset->descriptor.type));
+		Layout::separator();
+		for (const auto& inspector : m_inspectors)
 		{
-			Layout::text(asset->descriptor.path.filename().string());
-			Layout::text(enumToString(asset->descriptor.type));
-			Layout::separator();
-			for (const auto& inspector : m_inspectors)
+			if (inspector->canInspect(asset))
 			{
-				if (inspector->canInspect(asset))
-				{
-					inspector->inspect(asset);
-					break;
-				}
+				inspector->inspect(asset);
+				break;
 			}
 		}
 	}
+}
 
-	void AssetInspectorWindow::update(const double deltaTime)
+void AssetInspectorWindow::update(const double deltaTime)
+{
+	const State& state = State::instance();
+	if (state.selection.asset)
 	{
-		const State& state = State::instance();
-		if (state.selection.asset)
+		for (const auto& inspector : m_inspectors)
 		{
-			for (const auto& inspector : m_inspectors)
+			if (inspector->canInspect(state.selection.asset))
 			{
-				if (inspector->canInspect(state.selection.asset))
-				{
-					inspector->update(state.selection.asset, deltaTime);
-					break;
-				}
+				inspector->update(state.selection.asset, deltaTime);
+				break;
 			}
 		}
 	}

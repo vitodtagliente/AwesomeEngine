@@ -3,17 +3,14 @@
 
 #include <string>
 
-namespace editor
+class MenuLayout
 {
-	class MenuLayout
-	{
-	public:
+public:
 
-		static bool beginMainMenu();
-		static bool beginMenu(const std::string& name);
-		static void endMainMenu();
-		static void endMenu();
-		static bool item(const std::string& name);
-		static void separator();
-	};
-}
+	static bool beginMainMenu();
+	static bool beginMenu(const std::string& name);
+	static void endMainMenu();
+	static void endMenu();
+	static bool item(const std::string& name);
+	static void separator();
+};

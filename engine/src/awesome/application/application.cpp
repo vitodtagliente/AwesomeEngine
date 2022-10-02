@@ -19,8 +19,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/net/net_module.h>
 
-#include "private/components_loader.h"
-
 using namespace graphics;
 
 void Application::init(const std::initializer_list<Module*>& modules)
@@ -29,9 +27,6 @@ void Application::init(const std::initializer_list<Module*>& modules)
 	{
 		m_modules.push_back(std::unique_ptr<Module>(module));
 	}
-
-	// Load the serializers
-	Serializer::instance().load();
 }
 
 int Application::run()
@@ -47,7 +42,6 @@ int Application::run()
 
 	initSettings();
 	registerDefaultModules();
-	ComponentsLoader().load();
 
 	for (const auto& module : m_modules)
 	{
@@ -117,7 +111,7 @@ void Application::initSettings()
 {
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-	reload = JsonFile::load(settingsPath, as_proto(&m_settings));
+	reload = JsonFile::load(settingsPath, &m_settings);
 
 	AssetImporter importer;
 	importer.import(m_settings.workspacePath, true);
@@ -125,7 +119,7 @@ void Application::initSettings()
 
 	if (reload)
 	{
-		JsonFile::load(settingsPath, as_proto(&m_settings));
+		JsonFile::load(settingsPath, &m_settings);
 	}
 
 	SceneAssetPtr sceneToLoad;

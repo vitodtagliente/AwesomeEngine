@@ -5,23 +5,20 @@
 
 #include <awesome/editor/menu_item.h>
 
-namespace editor
+class Menu
 {
-	class Menu
-	{
-	public:
-		Menu() = default;
+public:
+	Menu() = default;
 
-		void init();
-		void render();
+	void init();
+	void render();
 
-	private:
+private:
 
-		void menuAssets();
-		void menuFile();
-		void menuScene();
-		void menuView();
+	void menuAssets();
+	void menuFile();
+	void menuScene();
+	void menuView();
 
-		std::vector<MenuItemPtr> m_menuItems;
-	};
-}
+	std::vector<MenuItemPtr> m_menuItems;
+};

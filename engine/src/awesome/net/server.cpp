@@ -1,13 +1,11 @@
 #include "server.h"
 
-#include <vdtproto/runtime.h>
+#include <vdtreflect/runtime.h>
 
 #include <awesome/core/logger.h>
 #include <awesome/entity/world.h>
 
 #include "server_command.h"
-
-#include "commands/update_world_command.h"
 
 namespace net
 {
@@ -86,15 +84,15 @@ namespace net
 
 			// send the world update
 			{
-				command::UpdateWorldRequest request;
-				request.data = World::instance().netSerialize();
-				for (UserSession* const userSession : m_sessionManager.getUserSessions())
-				{
-					if (userSession->getState() == UserSession::State::Connected)
-					{
-						call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
-					}
-				}
+				// command::UpdateWorldRequest request;
+				// request.data = World::instance().netSerialize();
+				// for (UserSession* const userSession : m_sessionManager.getUserSessions())
+				// {
+				// 	if (userSession->getState() == UserSession::State::Connected)
+				// 	{
+				// 		call<command::UpdateWorldRequest, command::UpdateWorldCommand>(userSession, request);
+				// 	}
+				// }
 			}
 		}
 	}

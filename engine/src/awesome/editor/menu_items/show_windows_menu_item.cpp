@@ -2,15 +2,12 @@
 
 #include <awesome/editor/state.h>
 
-namespace editor
+std::string ShowWindowsMenuItem::getName() const
 {
-	std::string ShowWindowsMenuItem::getName() const
-	{
-		return State::instance().showWindows ? "Hide windows" : "Show windows";
-	}
+	return State::instance().showWindows ? "Hide windows" : "Show windows";
+}
 
-	void ShowWindowsMenuItem::execute()
-	{
-		State::instance().showWindows = !State::instance().showWindows;
-	}
+void ShowWindowsMenuItem::execute()
+{
+	State::instance().showWindows = !State::instance().showWindows;
 }

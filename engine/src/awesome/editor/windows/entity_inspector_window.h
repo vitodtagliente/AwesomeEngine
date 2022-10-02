@@ -3,16 +3,16 @@
 
 #include <awesome/editor/window.h>
 
-namespace editor
+#include "entity_inspector_window_generated.h"
+
+CLASS()
+class EntityInspectorWindow : public Window
 {
-	class EntityInspectorWindow : public Window
-	{
-	public:
-		EntityInspectorWindow() = default;
+public:
+	EntityInspectorWindow() = default;
 
-		std::string getTitle() const override { return "Entity Inspector"; }
-		void render() override;
+	std::string getTitle() const override { return "Entity Inspector"; }
+	void render() override;
 
-		PROTO()
-	};
-}
+	GENERATED_BODY()
+};

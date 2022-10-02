@@ -4,30 +4,30 @@
 #include <memory>
 #include <string>
 
-#include <awesome/core/reflection.h>
+#include "window_generated.h"
 
-namespace editor
+CLASS()
+class Window : public IType
 {
-	class Window : public IProtoClass
-	{
-	public:
-		Window() = default;
-		virtual ~Window() = default;
+public:
+	Window() = default;
+	virtual ~Window() = default;
 
-		virtual std::string getTitle() const;
-		inline bool hasFocus() const { return m_hasFocus; }
+	virtual std::string getTitle() const;
+	inline bool hasFocus() const { return m_hasFocus; }
 
-		void setFocus(bool focus);
+	void setFocus(bool focus);
 
-		virtual void init() {}
-		virtual void render() {}
-		virtual void update(double /*deltaTime*/) {}
+	virtual void init() {}
+	virtual void render() {}
+	virtual void update(double /*deltaTime*/) {}
 
-		virtual void onFocusChange(bool /*focus*/) {}
+	virtual void onFocusChange(bool /*focus*/) {}
 
-	private:
-		bool m_hasFocus{ false };
-	};	
+	GENERATED_BODY()
 
-	typedef std::unique_ptr<Window> WindowPtr;
-}
+private:
+	bool m_hasFocus{ false };
+};
+
+typedef std::unique_ptr<Window> WindowPtr;

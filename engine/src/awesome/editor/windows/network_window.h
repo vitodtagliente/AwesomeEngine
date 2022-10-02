@@ -3,17 +3,17 @@
 
 #include <awesome/editor/window.h>
 
-namespace editor
+#include "network_window_generated.h"
+
+CLASS()
+class NetworkWindow : public Window
 {
-	class NetworkWindow : public Window
-	{
-	public:
-		NetworkWindow() = default;
-		virtual ~NetworkWindow() = default;
+public:
+	NetworkWindow() = default;
+	virtual ~NetworkWindow() = default;
 
-		std::string getTitle() const override { return "Network"; }
-		void render() override;
+	std::string getTitle() const override { return "Network"; }
+	void render() override;
 
-		PROTO()
-	};
-}
+	GENERATED_BODY()
+};
