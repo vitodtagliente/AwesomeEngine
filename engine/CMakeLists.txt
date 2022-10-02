@@ -37,26 +37,26 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto/compiler/Release/vdtproto.exe")
+set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/generator/vdtreflect-compiler.exe")
 message(STATUS "compiler: `${VDTPROTO_EXE}`")
 
-function(compile_proto SRC_PROTO)
-	get_filename_component(_proto_path "${SRC_PROTO}" PATH)
-	message(STATUS "`${SRC_PROTO}`: add generation of C++ code in ${_proto_path}")
+function(generate_reflection SRC_FILE)
+	get_filename_component(_src_path "${SRC_FILE}" PATH)
+	message(STATUS "`${SRC_FILE}`: add generation of C++ code in ${_src_path}")
 	execute_process(
-		COMMAND ${VDTPROTO_EXE} ${SRC_PROTO} "--no-generated"
+		COMMAND ${GENERATOR_EXE} ${SRC_FILE}
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
-	message(STATUS "vdtproto_error:" ${CMD_ERROR})
-	message(STATUS "vdtproto_output:" ${CMD_OUTPUT})
+	message(STATUS "vdtreflect-compiler error:" ${CMD_ERROR})
+	message(STATUS "vdtreflect-compiler output:" ${CMD_OUTPUT})
 endfunction()
 
 # generate proto files
-file(GLOB_RECURSE PROJECT_PROTO_FILES ${PROJECT_SOURCE_DIR}/src/*.proto)
+file(GLOB_RECURSE PROJECT_TO_GENERATE_FILES ${PROJECT_SOURCE_DIR}/src/*.h)
 
- foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
- 	compile_proto(${_source})
+ foreach(_source IN ITEMS ${PROJECT_TO_GENERATE_FILES})
+ 	generate_reflection(${_source})
  endforeach()
 
 # recursively include all source files
@@ -86,9 +86,6 @@ add_library(
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
 
-if(NOT TARGET vdtproto)
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtproto)
-endif()
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)
 endif()
@@ -101,6 +98,9 @@ endif()
 if(NOT TARGET vdtnet)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtnet)
 endif()
+if(NOT TARGET vdtreflect)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtreflect)
+endif()
 
 target_link_libraries(
     ${PROJECT_NAME}
@@ -111,6 +111,7 @@ target_link_libraries(
 	PUBLIC vdtjson
 	PUBLIC vdtmath
 	PUBLIC vdtnet
+	PUBLIC vdtreflect
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC src vendor/vdtproto/include)
