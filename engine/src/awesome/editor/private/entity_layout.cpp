@@ -1,6 +1,6 @@
 #include "entity_layout.h"
 
-#include <awesome/component/sprite_renderer.h>
+#include <awesome/component/sprite_renderer_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
@@ -71,7 +71,7 @@ void EntityLayout::input(Entity* const entity)
 
 	// preview the sprite
 	{
-		SpriteRenderer* const component = entity->findComponent<SpriteRenderer>();
+		SpriteRendererComponent* const component = entity->findComponent<SpriteRendererComponent>();
 		if (component && component->sprite && component->sprite->data.has_value())
 		{
 			Layout::separator();
