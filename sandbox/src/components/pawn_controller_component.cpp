@@ -1,16 +1,16 @@
-#include "pawn_controller.h"
+#include "pawn_controller_component.h"
 
 #include <awesome/application/input.h>
 #include <awesome/entity/entity.h>
 #include <awesome/math/vector3.h>
 
-void PawnController::init()
+void PawnControllerComponent::init()
 {
-	m_combat = getOwner()->findComponent<CombatController>();
-	m_pawn = getOwner()->findComponent<Pawn>();
+	m_combat = getOwner()->findComponent<CombatControllerComponent>();
+	m_pawn = getOwner()->findComponent<PawnComponent>();
 }
 
-void PawnController::update(const double deltaTime)
+void PawnControllerComponent::update(const double deltaTime)
 {
 	if (!m_pawn) return;
 

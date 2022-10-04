@@ -1,15 +1,15 @@
-#include "rotator.h"
+#include "rotator_component.h"
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
-Rotator::Rotator()
+RotatorComponent::RotatorComponent()
 	: speed(math::random(5.0f, 40.0f))
 {
 
 }
 
-void Rotator::update(double deltaTime)
+void RotatorComponent::update(double deltaTime)
 {
 	math::transform& transform = getOwner()->transform;
 	transform.rotation.z = getOwner()->transform.rotation.z;
@@ -20,8 +20,8 @@ void Rotator::update(double deltaTime)
 	}
 }
 
-void Rotator::inspect()
+void RotatorComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Speed", speed);
+	Layout::input("Speed", speed);
 }

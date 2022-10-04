@@ -1,24 +1,24 @@
-#include "combat_controller.h"
+#include "combat_controller_component.h"
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_library.h>
-#include <awesome/component/camera.h>
-#include <awesome/component/sprite_animator.h>
+#include <awesome/component/camera_component.h>
+#include <awesome/component/sprite_animator_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture_library.h>
 
-#include "bullet.h"
+#include "bullet_component.h"
 
-void CombatController::init()
+void CombatControllerComponent::init()
 {
-	m_pawn = getOwner()->findComponent<Pawn>();
+	m_pawn = getOwner()->findComponent<PawnComponent>();
 }
 
-void CombatController::render(graphics::Renderer2D* const renderer)
+void CombatControllerComponent::render(graphics::Renderer2D* const renderer)
 {
 	if (m_type != Type::Ranged)
 		return;
@@ -37,13 +37,13 @@ void CombatController::render(graphics::Renderer2D* const renderer)
 	}
 }
 
-void CombatController::update(const double /*deltaTime*/)
+void CombatControllerComponent::update(const double /*deltaTime*/)
 {
 	math::vec3& position = getOwner()->transform.position;
 	m_direction = m_pawn->getDirection();
 
 	Input& input = Input::instance();
-	component::Camera* const camera = component::Camera::main();
+	CameraComponent* const camera = CameraComponent::main();
 	if (input.isMousePositionValid() && camera)
 	{
 		m_direction = (camera->screenToWorldCoords(input.getMousePosition()) - position).normalize();
@@ -63,12 +63,12 @@ void CombatController::update(const double /*deltaTime*/)
 	m_crosshairTransform.update();
 }
 
-void CombatController::attack()
+void CombatControllerComponent::attack()
 {
 	if (m_type == Type::Ranged)
 	{
 		Entity* const entity = World::instance().spawn(m_bulletPrefab, m_crosshairTransform.position);
-		Bullet* const bullet = entity->findComponent<Bullet>();
+		BulletComponent* const bullet = entity->findComponent<BulletComponent>();
 		if (bullet)
 		{
 			bullet->shoot(m_direction);
@@ -76,21 +76,21 @@ void CombatController::attack()
 	}
 	else
 	{
-		component::SpriteAnimator* const animator = getOwner()->findComponent<component::SpriteAnimator>();
+		SpriteAnimatorComponent* const animator = getOwner()->findComponent<SpriteAnimatorComponent>();
 		if (animator) animator->play("attack");
 	}
 }
 
-void CombatController::inspect()
+void CombatControllerComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Type", m_type);
-	editor::Layout::input("Bullet Prefab", m_bulletPrefab);
-	editor::Layout::input("Crosshair", m_crosshair);
-	editor::Layout::input("Crosshair Radius", m_crosshairRadius);
+	Layout::input("Type", m_type);
+	Layout::input("Bullet Prefab", m_bulletPrefab);
+	Layout::input("Crosshair", m_crosshair);
+	Layout::input("Crosshair Radius", m_crosshairRadius);
 }
 
-json::value CombatController::serialize() const
+json::value CombatControllerComponent::serialize() const
 {
 	json::value data = Component::serialize();
 	data["type"] = enumToString(m_type);
@@ -100,7 +100,7 @@ json::value CombatController::serialize() const
 	return data;
 }
 
-void CombatController::deserialize(const json::value& value)
+void CombatControllerComponent::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 	stringToEnum(value.safeAt("type").as_string(""), m_type);

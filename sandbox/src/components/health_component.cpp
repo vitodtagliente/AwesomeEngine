@@ -1,13 +1,13 @@
-#include "health.h"
+#include "health_component.h"
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/math/algorithm.h>
 
-void Health::init()
+void HealthComponent::init()
 {
-	m_renderer = getOwner()->findComponent<component::SpriteRenderer>();
+	m_renderer = getOwner()->findComponent<SpriteRendererComponent>();
 	if (m_renderer)
 	{
 		m_colorToRestore = m_renderer->color;
@@ -16,7 +16,7 @@ void Health::init()
 	m_timer.stop();
 }
 
-void Health::update(const double deltaTime)
+void HealthComponent::update(const double deltaTime)
 {
 	if (m_timer.isTicking())
 	{
@@ -28,7 +28,7 @@ void Health::update(const double deltaTime)
 	}
 }
 
-void Health::inspect()
+void HealthComponent::inspect()
 {
 	Component::inspect();
 	editor::Layout::input("Min", min);
@@ -39,7 +39,7 @@ void Health::inspect()
 	editor::Layout::input("Hit Duration", m_hitDuration);
 }
 
-json::value Health::serialize() const
+json::value HealthComponent::serialize() const
 {
 	json::value data = Component::serialize();
 	data["min"] = min;
@@ -51,7 +51,7 @@ json::value Health::serialize() const
 	return data;
 }
 
-void Health::deserialize(const json::value& data)
+void HealthComponent::deserialize(const json::value& data)
 {
 	Component::deserialize(data);
 	min = data.safeAt("min").as_number(0).as_int();
@@ -62,7 +62,7 @@ void Health::deserialize(const json::value& data)
 	m_hitDuration = data.safeAt("hitDuration").as_number(.1).as_double();
 }
 
-void Health::set(int value)
+void HealthComponent::set(int value)
 {
 	const int lastValue = m_value;
 	m_value = math::clamp(value, min, max);
@@ -77,18 +77,18 @@ void Health::set(int value)
 	}
 }
 
-int Health::getPercentage() const
+int HealthComponent::getPercentage() const
 {
 	return 100 / max * m_value;
 }
 
-Health& Health::operator+=(const int value)
+HealthComponent& HealthComponent::operator+=(const int value)
 {
 	set(m_value + value);
 	return *this;
 }
 
-Health& Health::operator-=(const int value)
+HealthComponent& HealthComponent::operator-=(const int value)
 {
 	set(m_value - value);
 	return *this;

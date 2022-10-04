@@ -1,17 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/component/body2d.h>
-#include <awesome/component/sprite_animator.h>
-#include <awesome/component/sprite_renderer.h>
+#include <awesome/component/body2d_component.h>
+#include <awesome/component/sprite_animator_component.h>
+#include <awesome/component/sprite_renderer_component.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 
-class Pawn : public Component
+CLASS()
+class PawnComponent : public Component
 {
 public:
-	Pawn() = default;
-	virtual ~Pawn() = default;
+	PawnComponent() = default;
+	virtual ~PawnComponent() = default;
 
 	inline const math::vec3& getDirection() const { return m_direction; }
 
@@ -27,11 +28,11 @@ public:
 	float speed{ 3.0f };
 	float dashSpeed{ 12.0f };
 
-	PROTO()
+	GENERATED_BODY()
 
 private:
-	component::SpriteAnimator* m_animator{ nullptr };
-	component::Body2d* m_body{ nullptr };
+	SpriteAnimatorComponent* m_animator{ nullptr };
+	Body2dComponent* m_body{ nullptr };
 	math::vec3 m_direction{ math::vec3::right };
-	component::SpriteRenderer* m_renderer{ nullptr };
+	SpriteRendererComponent* m_renderer{ nullptr };
 };

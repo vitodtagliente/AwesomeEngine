@@ -38,26 +38,27 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/tools/compiler/vdtreflect-compiler.exe")
-message(STATUS "compiler: `${VDTPROTO_EXE}`")
+set(GENERATOR_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/tools/compiler/vdtreflect-compiler.exe")
 
-function(generate_reflection SRC_FILE)
-	get_filename_component(_src_path "${SRC_FILE}" PATH)
-	message(STATUS "`${SRC_FILE}`: add generation of C++ code in ${_src_path}")
+function(generate_reflection EXECUTABLE SRC_FILE)
 	execute_process(
-		COMMAND ${GENERATOR_EXE} ${SRC_FILE}
+		COMMAND ${EXECUTABLE} ${SRC_FILE}
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
-	message(STATUS "vdtreflect-compiler error:" ${CMD_ERROR})
-	message(STATUS "vdtreflect-compiler output:" ${CMD_OUTPUT})
+	if(${CMD_ERROR} EQUAL 0)
+		message(STATUS "Generated C++ code for ${SRC_FILE}")
+	else()
+		message(STATUS "`${SRC_FILE}` failed to generate C++ code with error: ${CMD_ERROR}")
+	endif()
 endfunction()
 
 # generate proto files
 file(GLOB_RECURSE PROJECT_TO_GENERATE_FILES ${PROJECT_SOURCE_DIR}/src/*.h)
 
+message(STATUS "Using generator: ${_src_path} ${GENERATOR_EXECUTABLE}")
  foreach(_source IN ITEMS ${PROJECT_TO_GENERATE_FILES})
- 	generate_reflection(${_source})
+ 	generate_reflection(${GENERATOR_EXECUTABLE} ${_source})
  endforeach()
 
 # recursively include all source files

@@ -1,33 +1,30 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/component/body2d.h>
-#include <awesome/component/collider2d.h>
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 
-class Bullet : public Component
+#include "crosshair_component_generated.h"
+
+CLASS()
+class CrosshairComponent : public Component
 {
 public:
-	Bullet() = default;
-	virtual ~Bullet() = default;
+	CrosshairComponent() = default;
+	virtual ~CrosshairComponent() = default;
 
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
-
-	void shoot(const math::vec3& direction);
 
 	virtual void inspect() override;
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	int damage{ 1 };
-
-	PROTO()
+	GENERATED_BODY()
 
 private:
-	component::Body2d* m_body;
-	component::Collider2d* m_collider;
-	math::vec3 m_direction;
-	float m_speed{ 1.f };
+	math::vec3 _minScale{ .4f, .4f, 1.f };
+	math::vec3 _maxScale{ .8f, .8f, 1.f };
+	float _scaleSpeed = 1.f;
+	bool _scaleUp{ false };
 };

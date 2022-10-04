@@ -1,16 +1,16 @@
-#include "crosshair.h"
+#include "crosshair_component.h"
 
 #include <awesome/application/input.h>
-#include <awesome/component/camera.h>
+#include <awesome/component/camera_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
-void Crosshair::init()
+void CrosshairComponent::init()
 {
 	getOwner()->transform.scale = _minScale;
 }
 
-void Crosshair::update(const double deltaTime)
+void CrosshairComponent::update(const double deltaTime)
 {
 	// scale animation
 	math::vec3& scale = getOwner()->transform.scale;
@@ -26,7 +26,7 @@ void Crosshair::update(const double deltaTime)
 	}
 
 	Input& input = Input::instance();
-	component::Camera* const camera = component::Camera::main();
+	CameraComponent* const camera = CameraComponent::main();
 	if (input.isMousePositionValid() && camera)
 	{
 		getOwner()->transform.position = camera->screenToWorldCoords(input.getMousePosition());
@@ -34,15 +34,15 @@ void Crosshair::update(const double deltaTime)
 	}
 }
 
-void Crosshair::inspect()
+void CrosshairComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Min Scale", _minScale);
-	editor::Layout::input("Max Scale", _maxScale);
-	editor::Layout::input("Scale Speed", _scaleSpeed);
+	Layout::input("Min Scale", _minScale);
+	Layout::input("Max Scale", _maxScale);
+	Layout::input("Scale Speed", _scaleSpeed);
 }
 
-json::value Crosshair::serialize() const
+json::value CrosshairComponent::serialize() const
 {
 	json::value data = Component::serialize();
 	data["minScale"] = ::serialize(_minScale);
@@ -51,7 +51,7 @@ json::value Crosshair::serialize() const
 	return data;
 }
 
-void Crosshair::deserialize(const json::value& data)
+void CrosshairComponent::deserialize(const json::value& data)
 {
 	Component::deserialize(data);
 	::deserialize(data.safeAt("minScale"), _minScale);

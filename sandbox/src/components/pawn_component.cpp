@@ -1,9 +1,9 @@
-#include "pawn.h"
+#include "pawn_component.h"
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
-void Pawn::move(const math::vec3& direction, const double deltaTime)
+void PawnComponent::move(const math::vec3& direction, const double deltaTime)
 {
 	if (m_animator
 		&& m_animator->isPlaying()
@@ -22,28 +22,28 @@ void Pawn::move(const math::vec3& direction, const double deltaTime)
 	if (m_animator) m_animator->play(direction != math::vec3::zero ? "walk" : "idle", true);
 }
 
-void Pawn::dash(const double deltaTime)
+void PawnComponent::dash(const double deltaTime)
 {
 	if (m_body == nullptr) return;
 
 	m_body->move(m_direction * dashSpeed * static_cast<float>(deltaTime));
 }
 
-void Pawn::init()
+void PawnComponent::init()
 {
-	m_animator = getOwner()->findComponent<component::SpriteAnimator>();
-	m_body = getOwner()->findComponent<component::Body2d>();
-	m_renderer = getOwner()->findComponent<component::SpriteRenderer>();
+	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
+	m_body = getOwner()->findComponent<Body2dComponent>();
+	m_renderer = getOwner()->findComponent<SpriteRendererComponent>();
 }
 
-void Pawn::inspect()
+void PawnComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Speed", speed);
-	editor::Layout::input("Dash Speed", dashSpeed);
+	Layout::input("Speed", speed);
+	Layout::input("Dash Speed", dashSpeed);
 }
 
-json::value Pawn::serialize() const
+json::value PawnComponent::serialize() const
 {
 	json::value data = Component::serialize();
 	data["speed"] = speed;
@@ -51,7 +51,7 @@ json::value Pawn::serialize() const
 	return data;
 }
 
-void Pawn::deserialize(const json::value& value)
+void PawnComponent::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
 	speed = value.safeAt("speed").as_number(1.f).as_float();

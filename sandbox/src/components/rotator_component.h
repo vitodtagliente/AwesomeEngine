@@ -3,15 +3,19 @@
 
 #include <awesome/entity/component.h>
 
-class Rotator : public Component
+#include "rotator_component_generated.h"
+
+CLASS()
+class RotatorComponent : public Component
 {
 public:
-	Rotator();
+	RotatorComponent();
 
 	void update(double deltaTime) override;
 	void inspect() override;
 
+	PROPERTY()
 	float speed;
 
-	PROTO()
+	GENERATED_BODY()
 };

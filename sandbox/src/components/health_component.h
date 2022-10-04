@@ -1,16 +1,19 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/component/sprite_renderer.h>
+#include <awesome/component/sprite_renderer_component.h>
 #include <awesome/core/timer.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
 
-class Health : public Component
+#include "health_component_generated.h"
+
+CLASS()
+class HealthComponent : public Component
 {
 public:
-	Health() = default;
-	virtual ~Health() = default;
+	HealthComponent() = default;
+	virtual ~HealthComponent() = default;
 
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
@@ -25,20 +28,20 @@ public:
 
 	int getPercentage() const;
 
-	Health& operator+= (int value);
-	Health& operator-= (int value);
+	HealthComponent& operator+= (int value);
+	HealthComponent& operator-= (int value);
 
 	int min{ 0 };
 	int max{ 100 };
 
-	PROTO()
+	GENERATED_BODY()
 
 private:
 	graphics::Color m_colorToRestore{ graphics::Color::White };
 	bool m_destroyOnDeath{ false };
 	graphics::Color m_hitColor{ graphics::Color(1.f, 1.f, 1.f, 5.f) };
 	double m_hitDuration{ .1 };
-	component::SpriteRenderer* m_renderer{ nullptr };
+	SpriteRendererComponent* m_renderer{ nullptr };
 	Timer m_timer{ .1 };
 	int m_value{ 100 };
 };
