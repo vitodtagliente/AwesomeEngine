@@ -5,7 +5,7 @@
 
 #include "network_window_generated.h"
 
-CLASS()
+CLASS(Category = Window)
 class NetworkWindow : public Window
 {
 public:

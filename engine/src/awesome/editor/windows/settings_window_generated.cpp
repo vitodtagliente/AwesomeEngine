@@ -24,6 +24,7 @@ SettingsWindow* const SettingsWindowType::instantiate()
 const meta_t& SettingsWindowType::meta()
 {
     static meta_t s_meta{
+        std::make_pair("Category", "Window"),
     };
     return s_meta;
 }

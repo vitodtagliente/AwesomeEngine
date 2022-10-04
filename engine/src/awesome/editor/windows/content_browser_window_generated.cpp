@@ -24,6 +24,7 @@ ContentBrowserWindow* const ContentBrowserWindowType::instantiate()
 const meta_t& ContentBrowserWindowType::meta()
 {
     static meta_t s_meta{
+        std::make_pair("Category", "Window"),
     };
     return s_meta;
 }

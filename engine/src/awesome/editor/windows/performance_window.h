@@ -5,7 +5,7 @@
 
 #include "performance_window_generated.h"
 
-CLASS()
+CLASS(Category = Window)
 class PerformanceWindow : public Window
 {
 public:

@@ -24,6 +24,7 @@ SceneWindow* const SceneWindowType::instantiate()
 const meta_t& SceneWindowType::meta()
 {
     static meta_t s_meta{
+        std::make_pair("Category", "Window"),
     };
     return s_meta;
 }

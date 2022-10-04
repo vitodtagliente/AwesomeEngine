@@ -24,6 +24,7 @@ LogWindow* const LogWindowType::instantiate()
 const meta_t& LogWindowType::meta()
 {
     static meta_t s_meta{
+        std::make_pair("Category", "Window"),
     };
     return s_meta;
 }

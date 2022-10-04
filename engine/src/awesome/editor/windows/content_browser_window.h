@@ -9,7 +9,7 @@
 
 #include "content_browser_window_generated.h"
 
-CLASS()
+CLASS(Category = Window)
 class ContentBrowserWindow : public Window
 {
 public:

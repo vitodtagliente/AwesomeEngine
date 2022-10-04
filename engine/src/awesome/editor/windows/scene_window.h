@@ -8,7 +8,7 @@
 
 class Entity;
 
-CLASS()
+CLASS(Category = Window)
 class SceneWindow : public Window
 {
 public:
