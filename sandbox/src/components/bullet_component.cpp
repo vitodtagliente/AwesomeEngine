@@ -4,7 +4,7 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
-#include "health.h"
+#include "health_component.h"
 
 void BulletComponent::init()
 {

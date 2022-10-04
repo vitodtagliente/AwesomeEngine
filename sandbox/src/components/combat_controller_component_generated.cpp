@@ -6,7 +6,7 @@ const meta_t& CombatControllerComponent::getTypeMeta() const { return CombatCont
 const char* CombatControllerComponent::getTypeName() const { return CombatControllerComponentType::name(); }
 const properties_t CombatControllerComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
-    properties_t properties = graphics::IGraphicsComponent::getTypeProperties();
+    properties_t properties = Component::getTypeProperties();
     return properties;
 }
 std::size_t CombatControllerComponent::getTypeSize() const { return sizeof(CombatControllerComponent); }

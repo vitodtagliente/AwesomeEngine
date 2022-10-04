@@ -18,7 +18,7 @@ namespace graphics
 }
 
 CLASS()
-class CombatControllerComponent : public Component, public graphics::IGraphicsComponent
+class CombatControllerComponent : public graphics::IGraphicsComponent, public Component
 {
 public:
 	typedef CombatType Type;

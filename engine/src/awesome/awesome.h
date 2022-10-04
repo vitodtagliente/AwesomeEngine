@@ -6,7 +6,5 @@
 #include <string>
 #include <vector>
 
-#include <vdtproto/runtime.h>
-
 #include "core/uuid.h"
 #include "encoding/json.h"

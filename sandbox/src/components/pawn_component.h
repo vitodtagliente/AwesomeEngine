@@ -7,6 +7,8 @@
 #include <awesome/entity/component.h>
 #include <awesome/math/vector3.h>
 
+#include "pawn_component_generated.h"
+
 CLASS()
 class PawnComponent : public Component
 {

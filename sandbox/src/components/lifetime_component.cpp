@@ -15,7 +15,7 @@ void LifetimeComponent::update(double deltaTime)
 void LifetimeComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Destroy after", m_lifetime);
+	Layout::input("Destroy after", m_lifetime);
 }
 
 json::value LifetimeComponent::serialize() const

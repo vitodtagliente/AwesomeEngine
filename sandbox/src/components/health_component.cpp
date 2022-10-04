@@ -31,12 +31,12 @@ void HealthComponent::update(const double deltaTime)
 void HealthComponent::inspect()
 {
 	Component::inspect();
-	editor::Layout::input("Min", min);
-	editor::Layout::input("Max", max);
-	editor::Layout::input("Value", m_value);
-	editor::Layout::input("Destroy on Death", m_destroyOnDeath);
-	editor::Layout::input("Hit Color", m_hitColor);
-	editor::Layout::input("Hit Duration", m_hitDuration);
+	Layout::input("Min", min);
+	Layout::input("Max", max);
+	Layout::input("Value", m_value);
+	Layout::input("Destroy on Death", m_destroyOnDeath);
+	Layout::input("Hit Color", m_hitColor);
+	Layout::input("Hit Duration", m_hitDuration);
 }
 
 json::value HealthComponent::serialize() const
