@@ -38,7 +38,7 @@ file(GLOB VENDORS_SOURCES
 ) 	
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
-set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/compiler/vdtreflect-compiler.exe")
+set(GENERATOR_EXE "${CMAKE_CURRENT_SOURCE_DIR}/tools/compiler/vdtreflect-compiler.exe")
 message(STATUS "compiler: `${VDTPROTO_EXE}`")
 
 function(generate_reflection SRC_FILE)
