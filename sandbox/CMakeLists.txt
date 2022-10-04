@@ -16,26 +16,13 @@ include_directories(
 	src/
 )
 
-set(VDTPROTO_EXE "${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/vdtproto/compiler/Release/vdtproto.exe")
-message(STATUS "compiler: `${VDTPROTO_EXE}`")
-
-function(compile_proto SRC_PROTO)
-	get_filename_component(_proto_path "${SRC_PROTO}" PATH)
-	message(STATUS "`${SRC_PROTO}`: add generation of C++ code in ${_proto_path}")
-	execute_process(
-		COMMAND ${VDTPROTO_EXE} ${SRC_PROTO} "--no-generated"
-		RESULT_VARIABLE CMD_ERROR
-		OUTPUT_FILE CMD_OUTPUT
-	)
-	message(STATUS "vdtproto_error:" ${CMD_ERROR})
-	message(STATUS "vdtproto_output:" ${CMD_OUTPUT})
-endfunction()
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
 
 # generate proto files
-file(GLOB_RECURSE PROJECT_PROTO_FILES ${PROJECT_SOURCE_DIR}/src/*.proto)
+file(GLOB_RECURSE PROJECT_TO_GENERATE_FILES ${PROJECT_SOURCE_DIR}/src/*.h)
 
- foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
- 	compile_proto(${_source})
+ foreach(_source IN ITEMS ${PROJECT_TO_GENERATE_FILES})
+ 	generate_reflection(${_source})
  endforeach()
 
 # recursively include all source files
@@ -48,22 +35,12 @@ foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
-foreach(_source IN ITEMS ${PROJECT_PROTO_FILES})
-    get_filename_component(_source_path "${_source}" PATH)
-    file(RELATIVE_PATH _source_path_rel "${PROJECT_SOURCE_DIR}" "${_source_path}")
-    string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
-    source_group("${_group_path}" FILES "${_source}")
-endforeach()
-
 add_executable(
     ${PROJECT_NAME} 
-	${PROJECT_PROTO_FILES}
     ${PROJECT_SOURCE_FILES} 
 )
 
 SET(CMAKE_DEFAULT_STARTUP_PROJECT Sandbox)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES 
     LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:WINDOWS")
