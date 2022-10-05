@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SettingsWindowType
+struct SettingsWindowType : RegisteredInTypeFactory<SettingsWindowType>
 {
     SettingsWindowType();
 
     static const meta_t& meta();
     static const char* name();
     static class SettingsWindow* const instantiate();
+    static bool registered() { return value; };
 };
-extern SettingsWindowType __settingswindow_type;
 

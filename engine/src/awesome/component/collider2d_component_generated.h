@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Collider2dComponentType
+struct Collider2dComponentType : RegisteredInTypeFactory<Collider2dComponentType>
 {
     Collider2dComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class Collider2dComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern Collider2dComponentType __collider2dcomponent_type;
 

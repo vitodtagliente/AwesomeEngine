@@ -31,5 +31,3 @@ const meta_t& AssetInspectorWindowType::meta()
 
 const char* AssetInspectorWindowType::name() { return "AssetInspectorWindow"; }
 
-AssetInspectorWindowType __assetinspectorwindow_type;
-

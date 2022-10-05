@@ -31,5 +31,3 @@ const meta_t& NetworkWindowType::meta()
 
 const char* NetworkWindowType::name() { return "NetworkWindow"; }
 
-NetworkWindowType __networkwindow_type;
-

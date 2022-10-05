@@ -36,5 +36,3 @@ const meta_t& ComponentType::meta()
 
 const char* ComponentType::name() { return "Component"; }
 
-ComponentType __component_type;
-

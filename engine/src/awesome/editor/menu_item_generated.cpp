@@ -30,5 +30,3 @@ const meta_t& MenuItemType::meta()
 
 const char* MenuItemType::name() { return "MenuItem"; }
 
-MenuItemType __menuitem_type;
-

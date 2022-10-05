@@ -30,5 +30,3 @@ const meta_t& CrosshairComponentType::meta()
 
 const char* CrosshairComponentType::name() { return "CrosshairComponent"; }
 
-CrosshairComponentType __crosshaircomponent_type;
-

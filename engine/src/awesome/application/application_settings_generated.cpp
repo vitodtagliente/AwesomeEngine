@@ -71,5 +71,3 @@ const meta_t& ApplicationSettingsType::meta()
 
 const char* ApplicationSettingsType::name() { return "ApplicationSettings"; }
 
-ApplicationSettingsType __applicationsettings_type;
-

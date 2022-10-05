@@ -34,5 +34,3 @@ const meta_t& CameraController2dComponentType::meta()
 
 const char* CameraController2dComponentType::name() { return "CameraController2dComponent"; }
 
-CameraController2dComponentType __cameracontroller2dcomponent_type;
-

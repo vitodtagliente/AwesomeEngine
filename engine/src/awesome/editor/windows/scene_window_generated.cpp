@@ -31,5 +31,3 @@ const meta_t& SceneWindowType::meta()
 
 const char* SceneWindowType::name() { return "SceneWindow"; }
 
-SceneWindowType __scenewindow_type;
-

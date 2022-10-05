@@ -34,5 +34,3 @@ const meta_t& GizmosRendererComponentType::meta()
 
 const char* GizmosRendererComponentType::name() { return "GizmosRendererComponent"; }
 
-GizmosRendererComponentType __gizmosrenderercomponent_type;
-

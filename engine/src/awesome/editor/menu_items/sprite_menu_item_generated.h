@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SpriteMenuItemType
+struct SpriteMenuItemType : RegisteredInTypeFactory<SpriteMenuItemType>
 {
     SpriteMenuItemType();
 
     static const meta_t& meta();
     static const char* name();
     static class SpriteMenuItem* const instantiate();
+    static bool registered() { return value; };
 };
-extern SpriteMenuItemType __spritemenuitem_type;
 

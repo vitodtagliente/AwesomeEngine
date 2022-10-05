@@ -30,5 +30,3 @@ const meta_t& CameraFollow2dComponentType::meta()
 
 const char* CameraFollow2dComponentType::name() { return "CameraFollow2dComponent"; }
 
-CameraFollow2dComponentType __camerafollow2dcomponent_type;
-

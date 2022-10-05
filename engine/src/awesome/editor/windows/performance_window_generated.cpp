@@ -31,5 +31,3 @@ const meta_t& PerformanceWindowType::meta()
 
 const char* PerformanceWindowType::name() { return "PerformanceWindow"; }
 
-PerformanceWindowType __performancewindow_type;
-

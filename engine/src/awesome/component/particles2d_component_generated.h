@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Particles2dComponentType
+struct Particles2dComponentType : RegisteredInTypeFactory<Particles2dComponentType>
 {
     Particles2dComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class Particles2dComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern Particles2dComponentType __particles2dcomponent_type;
 

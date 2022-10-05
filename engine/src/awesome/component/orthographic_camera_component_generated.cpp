@@ -38,5 +38,3 @@ const meta_t& OrthographicCameraComponentType::meta()
 
 const char* OrthographicCameraComponentType::name() { return "OrthographicCameraComponent"; }
 
-OrthographicCameraComponentType __orthographiccameracomponent_type;
-

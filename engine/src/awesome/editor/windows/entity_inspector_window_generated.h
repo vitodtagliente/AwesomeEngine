@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct EntityInspectorWindowType
+struct EntityInspectorWindowType : RegisteredInTypeFactory<EntityInspectorWindowType>
 {
     EntityInspectorWindowType();
 
     static const meta_t& meta();
     static const char* name();
     static class EntityInspectorWindow* const instantiate();
+    static bool registered() { return value; };
 };
-extern EntityInspectorWindowType __entityinspectorwindow_type;
 

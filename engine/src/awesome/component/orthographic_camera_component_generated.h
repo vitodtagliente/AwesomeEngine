@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct OrthographicCameraComponentType
+struct OrthographicCameraComponentType : RegisteredInTypeFactory<OrthographicCameraComponentType>
 {
     OrthographicCameraComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class OrthographicCameraComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern OrthographicCameraComponentType __orthographiccameracomponent_type;
 

@@ -30,5 +30,3 @@ const meta_t& WindowType::meta()
 
 const char* WindowType::name() { return "Window"; }
 
-WindowType __window_type;
-

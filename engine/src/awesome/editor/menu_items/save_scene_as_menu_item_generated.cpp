@@ -30,5 +30,3 @@ const meta_t& SaveSceneAsMenuItemType::meta()
 
 const char* SaveSceneAsMenuItemType::name() { return "SaveSceneAsMenuItem"; }
 
-SaveSceneAsMenuItemType __savesceneasmenuitem_type;
-

@@ -31,5 +31,3 @@ const meta_t& SettingsWindowType::meta()
 
 const char* SettingsWindowType::name() { return "SettingsWindow"; }
 
-SettingsWindowType __settingswindow_type;
-

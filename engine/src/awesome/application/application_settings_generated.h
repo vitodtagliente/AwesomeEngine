@@ -18,13 +18,13 @@ struct EnumType<enum class FpsMode>
     static const std::map<const char*, int> values();
 };
 
-struct ApplicationSettingsType
+struct ApplicationSettingsType : RegisteredInTypeFactory<ApplicationSettingsType>
 {
     ApplicationSettingsType();
 
     static const meta_t& meta();
     static const char* name();
     static class ApplicationSettings* const instantiate();
+    static bool registered() { return value; };
 };
-extern ApplicationSettingsType __applicationsettings_type;
 

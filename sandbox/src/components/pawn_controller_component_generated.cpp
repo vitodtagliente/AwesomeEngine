@@ -30,5 +30,3 @@ const meta_t& PawnControllerComponentType::meta()
 
 const char* PawnControllerComponentType::name() { return "PawnControllerComponent"; }
 
-PawnControllerComponentType __pawncontrollercomponent_type;
-

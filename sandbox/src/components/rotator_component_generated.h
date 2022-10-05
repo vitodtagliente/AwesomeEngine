@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct RotatorComponentType
+struct RotatorComponentType : RegisteredInTypeFactory<RotatorComponentType>
 {
     RotatorComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class RotatorComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern RotatorComponentType __rotatorcomponent_type;
 

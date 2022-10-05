@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct BulletComponentType
+struct BulletComponentType : RegisteredInTypeFactory<BulletComponentType>
 {
     BulletComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class BulletComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern BulletComponentType __bulletcomponent_type;
 

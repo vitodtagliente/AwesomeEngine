@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CameraController2dComponentType
+struct CameraController2dComponentType : RegisteredInTypeFactory<CameraController2dComponentType>
 {
     CameraController2dComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class CameraController2dComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern CameraController2dComponentType __cameracontroller2dcomponent_type;
 

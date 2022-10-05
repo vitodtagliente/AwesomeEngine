@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CrosshairComponentType
+struct CrosshairComponentType : RegisteredInTypeFactory<CrosshairComponentType>
 {
     CrosshairComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class CrosshairComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern CrosshairComponentType __crosshaircomponent_type;
 

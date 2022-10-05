@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct LifetimeComponentType
+struct LifetimeComponentType : RegisteredInTypeFactory<LifetimeComponentType>
 {
     LifetimeComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class LifetimeComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern LifetimeComponentType __lifetimecomponent_type;
 

@@ -30,5 +30,3 @@ const meta_t& SpriteAnimatorComponentType::meta()
 
 const char* SpriteAnimatorComponentType::name() { return "SpriteAnimatorComponent"; }
 
-SpriteAnimatorComponentType __spriteanimatorcomponent_type;
-

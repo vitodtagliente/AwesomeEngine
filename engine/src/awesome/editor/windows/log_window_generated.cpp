@@ -31,5 +31,3 @@ const meta_t& LogWindowType::meta()
 
 const char* LogWindowType::name() { return "LogWindow"; }
 
-LogWindowType __logwindow_type;
-

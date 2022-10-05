@@ -30,5 +30,3 @@ const meta_t& LifetimeComponentType::meta()
 
 const char* LifetimeComponentType::name() { return "LifetimeComponent"; }
 
-LifetimeComponentType __lifetimecomponent_type;
-

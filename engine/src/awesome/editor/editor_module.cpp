@@ -13,6 +13,8 @@
 
 #include <IconsFontAwesome5.h>
 
+#include "windows/windows.h"
+
 namespace editor
 {
 	void Module::startup()

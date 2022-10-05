@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SpriteRendererComponentType
+struct SpriteRendererComponentType : RegisteredInTypeFactory<SpriteRendererComponentType>
 {
     SpriteRendererComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class SpriteRendererComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern SpriteRendererComponentType __spriterenderercomponent_type;
 

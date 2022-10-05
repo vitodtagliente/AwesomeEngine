@@ -31,5 +31,3 @@ const meta_t& EntityInspectorWindowType::meta()
 
 const char* EntityInspectorWindowType::name() { return "EntityInspectorWindow"; }
 
-EntityInspectorWindowType __entityinspectorwindow_type;
-

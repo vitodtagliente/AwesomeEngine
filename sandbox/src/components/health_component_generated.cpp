@@ -30,5 +30,3 @@ const meta_t& HealthComponentType::meta()
 
 const char* HealthComponentType::name() { return "HealthComponent"; }
 
-HealthComponentType __healthcomponent_type;
-

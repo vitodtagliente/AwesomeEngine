@@ -30,5 +30,3 @@ const meta_t& CombatControllerComponentType::meta()
 
 const char* CombatControllerComponentType::name() { return "CombatControllerComponent"; }
 
-CombatControllerComponentType __combatcontrollercomponent_type;
-

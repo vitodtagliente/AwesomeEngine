@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CombatControllerComponentType
+struct CombatControllerComponentType : RegisteredInTypeFactory<CombatControllerComponentType>
 {
     CombatControllerComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class CombatControllerComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern CombatControllerComponentType __combatcontrollercomponent_type;
 

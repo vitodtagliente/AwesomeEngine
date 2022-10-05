@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ContentBrowserWindowType
+struct ContentBrowserWindowType : RegisteredInTypeFactory<ContentBrowserWindowType>
 {
     ContentBrowserWindowType();
 
     static const meta_t& meta();
     static const char* name();
     static class ContentBrowserWindow* const instantiate();
+    static bool registered() { return value; };
 };
-extern ContentBrowserWindowType __contentbrowserwindow_type;
 

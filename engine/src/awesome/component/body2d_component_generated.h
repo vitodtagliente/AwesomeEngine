@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Body2dComponentType
+struct Body2dComponentType : RegisteredInTypeFactory<Body2dComponentType>
 {
     Body2dComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class Body2dComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern Body2dComponentType __body2dcomponent_type;
 

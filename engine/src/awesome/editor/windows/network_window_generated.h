@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct NetworkWindowType
+struct NetworkWindowType : RegisteredInTypeFactory<NetworkWindowType>
 {
     NetworkWindowType();
 
     static const meta_t& meta();
     static const char* name();
     static class NetworkWindow* const instantiate();
+    static bool registered() { return value; };
 };
-extern NetworkWindowType __networkwindow_type;
 

@@ -34,5 +34,3 @@ const meta_t& SpriteRendererComponentType::meta()
 
 const char* SpriteRendererComponentType::name() { return "SpriteRendererComponent"; }
 
-SpriteRendererComponentType __spriterenderercomponent_type;
-

@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct PawnControllerComponentType
+struct PawnControllerComponentType : RegisteredInTypeFactory<PawnControllerComponentType>
 {
     PawnControllerComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class PawnControllerComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern PawnControllerComponentType __pawncontrollercomponent_type;
 

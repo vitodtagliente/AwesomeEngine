@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct GizmosRendererComponentType
+struct GizmosRendererComponentType : RegisteredInTypeFactory<GizmosRendererComponentType>
 {
     GizmosRendererComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class GizmosRendererComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern GizmosRendererComponentType __gizmosrenderercomponent_type;
 

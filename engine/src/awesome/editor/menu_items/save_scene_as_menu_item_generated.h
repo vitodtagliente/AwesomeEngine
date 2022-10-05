@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SaveSceneAsMenuItemType
+struct SaveSceneAsMenuItemType : RegisteredInTypeFactory<SaveSceneAsMenuItemType>
 {
     SaveSceneAsMenuItemType();
 
     static const meta_t& meta();
     static const char* name();
     static class SaveSceneAsMenuItem* const instantiate();
+    static bool registered() { return value; };
 };
-extern SaveSceneAsMenuItemType __savesceneasmenuitem_type;
 

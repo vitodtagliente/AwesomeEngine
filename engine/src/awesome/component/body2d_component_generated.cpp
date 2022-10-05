@@ -30,5 +30,3 @@ const meta_t& Body2dComponentType::meta()
 
 const char* Body2dComponentType::name() { return "Body2dComponent"; }
 
-Body2dComponentType __body2dcomponent_type;
-

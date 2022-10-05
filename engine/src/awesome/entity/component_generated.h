@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ComponentType
+struct ComponentType : RegisteredInTypeFactory<ComponentType>
 {
     ComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class Component* const instantiate();
+    static bool registered() { return value; };
 };
-extern ComponentType __component_type;
 

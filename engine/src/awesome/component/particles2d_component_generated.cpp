@@ -34,5 +34,3 @@ const meta_t& Particles2dComponentType::meta()
 
 const char* Particles2dComponentType::name() { return "Particles2dComponent"; }
 
-Particles2dComponentType __particles2dcomponent_type;
-

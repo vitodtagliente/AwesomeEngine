@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct HealthComponentType
+struct HealthComponentType : RegisteredInTypeFactory<HealthComponentType>
 {
     HealthComponentType();
 
     static const meta_t& meta();
     static const char* name();
     static class HealthComponent* const instantiate();
+    static bool registered() { return value; };
 };
-extern HealthComponentType __healthcomponent_type;
 

@@ -30,5 +30,3 @@ const meta_t& SaveSceneMenuItemType::meta()
 
 const char* SaveSceneMenuItemType::name() { return "SaveSceneMenuItem"; }
 
-SaveSceneMenuItemType __savescenemenuitem_type;
-

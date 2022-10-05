@@ -30,5 +30,3 @@ const meta_t& ShowWindowsMenuItemType::meta()
 
 const char* ShowWindowsMenuItemType::name() { return "ShowWindowsMenuItem"; }
 
-ShowWindowsMenuItemType __showwindowsmenuitem_type;
-

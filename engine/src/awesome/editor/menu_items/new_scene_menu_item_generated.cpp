@@ -30,5 +30,3 @@ const meta_t& NewSceneMenuItemType::meta()
 
 const char* NewSceneMenuItemType::name() { return "NewSceneMenuItem"; }
 
-NewSceneMenuItemType __newscenemenuitem_type;
-

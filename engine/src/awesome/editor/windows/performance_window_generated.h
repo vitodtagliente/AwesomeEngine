@@ -4,13 +4,13 @@
 
 #include <vdtreflect/runtime.h>
 
-struct PerformanceWindowType
+struct PerformanceWindowType : RegisteredInTypeFactory<PerformanceWindowType>
 {
     PerformanceWindowType();
 
     static const meta_t& meta();
     static const char* name();
     static class PerformanceWindow* const instantiate();
+    static bool registered() { return value; };
 };
-extern PerformanceWindowType __performancewindow_type;
 

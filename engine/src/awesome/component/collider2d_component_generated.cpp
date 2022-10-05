@@ -38,5 +38,3 @@ const meta_t& Collider2dComponentType::meta()
 
 const char* Collider2dComponentType::name() { return "Collider2dComponent"; }
 
-Collider2dComponentType __collider2dcomponent_type;
-

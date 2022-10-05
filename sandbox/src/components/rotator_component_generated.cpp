@@ -32,5 +32,3 @@ const meta_t& RotatorComponentType::meta()
 
 const char* RotatorComponentType::name() { return "RotatorComponent"; }
 
-RotatorComponentType __rotatorcomponent_type;
-

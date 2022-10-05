@@ -32,5 +32,3 @@ const meta_t& CameraComponentType::meta()
 
 const char* CameraComponentType::name() { return "CameraComponent"; }
 
-CameraComponentType __cameracomponent_type;
-

@@ -31,5 +31,3 @@ const meta_t& ContentBrowserWindowType::meta()
 
 const char* ContentBrowserWindowType::name() { return "ContentBrowserWindow"; }
 
-ContentBrowserWindowType __contentbrowserwindow_type;
-

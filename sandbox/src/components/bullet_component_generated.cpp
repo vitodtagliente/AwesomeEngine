@@ -30,5 +30,3 @@ const meta_t& BulletComponentType::meta()
 
 const char* BulletComponentType::name() { return "BulletComponent"; }
 
-BulletComponentType __bulletcomponent_type;
-

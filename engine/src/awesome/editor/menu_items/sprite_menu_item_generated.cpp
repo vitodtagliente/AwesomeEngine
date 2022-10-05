@@ -30,5 +30,3 @@ const meta_t& SpriteMenuItemType::meta()
 
 const char* SpriteMenuItemType::name() { return "SpriteMenuItem"; }
 
-SpriteMenuItemType __spritemenuitem_type;
-
