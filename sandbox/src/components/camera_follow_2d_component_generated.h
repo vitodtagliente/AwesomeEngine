@@ -6,11 +6,9 @@
 
 struct CameraFollow2dComponentType : RegisteredInTypeFactory<CameraFollow2dComponentType>
 {
-    CameraFollow2dComponentType();
+    CameraFollow2dComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class CameraFollow2dComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

@@ -6,11 +6,9 @@
 
 struct SaveSceneMenuItemType : RegisteredInTypeFactory<SaveSceneMenuItemType>
 {
-    SaveSceneMenuItemType();
+    SaveSceneMenuItemType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class SaveSceneMenuItem* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

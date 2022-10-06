@@ -6,11 +6,9 @@
 
 struct SpriteRendererComponentType : RegisteredInTypeFactory<SpriteRendererComponentType>
 {
-    SpriteRendererComponentType();
+    SpriteRendererComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class SpriteRendererComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

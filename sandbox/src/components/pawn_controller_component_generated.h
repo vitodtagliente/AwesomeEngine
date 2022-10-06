@@ -6,11 +6,9 @@
 
 struct PawnControllerComponentType : RegisteredInTypeFactory<PawnControllerComponentType>
 {
-    PawnControllerComponentType();
+    PawnControllerComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class PawnControllerComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

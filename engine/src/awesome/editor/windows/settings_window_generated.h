@@ -6,11 +6,9 @@
 
 struct SettingsWindowType : RegisteredInTypeFactory<SettingsWindowType>
 {
-    SettingsWindowType();
+    SettingsWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class SettingsWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

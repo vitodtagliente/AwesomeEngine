@@ -6,11 +6,9 @@
 
 struct Body2dComponentType : RegisteredInTypeFactory<Body2dComponentType>
 {
-    Body2dComponentType();
+    Body2dComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class Body2dComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

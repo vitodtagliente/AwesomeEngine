@@ -6,11 +6,9 @@
 
 struct CameraController2dComponentType : RegisteredInTypeFactory<CameraController2dComponentType>
 {
-    CameraController2dComponentType();
+    CameraController2dComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class CameraController2dComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

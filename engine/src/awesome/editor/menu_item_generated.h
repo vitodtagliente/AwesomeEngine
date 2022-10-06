@@ -6,11 +6,9 @@
 
 struct MenuItemType : RegisteredInTypeFactory<MenuItemType>
 {
-    MenuItemType();
+    MenuItemType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class MenuItem* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

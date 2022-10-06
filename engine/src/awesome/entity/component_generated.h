@@ -6,11 +6,9 @@
 
 struct ComponentType : RegisteredInTypeFactory<ComponentType>
 {
-    ComponentType();
+    ComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class Component* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

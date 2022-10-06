@@ -6,11 +6,9 @@
 
 struct PerformanceWindowType : RegisteredInTypeFactory<PerformanceWindowType>
 {
-    PerformanceWindowType();
+    PerformanceWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class PerformanceWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

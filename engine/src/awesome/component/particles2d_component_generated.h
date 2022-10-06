@@ -6,11 +6,9 @@
 
 struct Particles2dComponentType : RegisteredInTypeFactory<Particles2dComponentType>
 {
-    Particles2dComponentType();
+    Particles2dComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class Particles2dComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

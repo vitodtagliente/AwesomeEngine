@@ -6,11 +6,9 @@
 
 struct OrthographicCameraComponentType : RegisteredInTypeFactory<OrthographicCameraComponentType>
 {
-    OrthographicCameraComponentType();
+    OrthographicCameraComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class OrthographicCameraComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

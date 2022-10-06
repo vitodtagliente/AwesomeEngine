@@ -6,11 +6,9 @@
 
 struct LogWindowType : RegisteredInTypeFactory<LogWindowType>
 {
-    LogWindowType();
+    LogWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class LogWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

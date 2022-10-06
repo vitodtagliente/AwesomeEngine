@@ -25,8 +25,8 @@ const std::map<const char*, int>  EnumType<FpsMode>::values()
     return s_values;
 }
 
-const meta_t& ApplicationSettings::getTypeMeta() const { return ApplicationSettingsType::meta(); }
-const char* ApplicationSettings::getTypeName() const { return ApplicationSettingsType::name(); }
+const meta_t& ApplicationSettings::getTypeMeta() const { return ApplicationSettingsType::type().meta; }
+const std::string& ApplicationSettings::getTypeName() const { return ApplicationSettingsType::type().name; }
 const properties_t ApplicationSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -50,24 +50,11 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationSettings::getTypeSize() const { return sizeof(ApplicationSettings); }
+std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSettingsType::type().size; }
 
-ApplicationSettingsType::ApplicationSettingsType()
+const Type& ApplicationSettingsType::type()
 {
-    TypeFactoryRegister::load(ApplicationSettingsType::name(), []() -> const meta_t& { return ApplicationSettingsType::meta(); }, []() -> IType* { return ApplicationSettingsType::instantiate(); });
+    static const Type s_type([]() -> IType* { return new ApplicationSettings(); }, "ApplicationSettings", {
+    }, sizeof(ApplicationSettings));
+    return s_type;
 }
-
-ApplicationSettings* const ApplicationSettingsType::instantiate()
-{
-    return new ApplicationSettings();
-}
-
-const meta_t& ApplicationSettingsType::meta()
-{
-    static meta_t s_meta{
-    };
-    return s_meta;
-}
-
-const char* ApplicationSettingsType::name() { return "ApplicationSettings"; }
-

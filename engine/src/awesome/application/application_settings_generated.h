@@ -20,11 +20,9 @@ struct EnumType<enum class FpsMode>
 
 struct ApplicationSettingsType : RegisteredInTypeFactory<ApplicationSettingsType>
 {
-    ApplicationSettingsType();
+    ApplicationSettingsType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class ApplicationSettings* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

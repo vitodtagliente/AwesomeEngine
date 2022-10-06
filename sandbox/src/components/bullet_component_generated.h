@@ -6,11 +6,9 @@
 
 struct BulletComponentType : RegisteredInTypeFactory<BulletComponentType>
 {
-    BulletComponentType();
+    BulletComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class BulletComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

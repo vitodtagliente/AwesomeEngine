@@ -6,11 +6,9 @@
 
 struct CrosshairComponentType : RegisteredInTypeFactory<CrosshairComponentType>
 {
-    CrosshairComponentType();
+    CrosshairComponentType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class CrosshairComponent* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

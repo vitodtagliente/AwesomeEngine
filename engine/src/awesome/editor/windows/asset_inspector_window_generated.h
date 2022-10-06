@@ -6,11 +6,9 @@
 
 struct AssetInspectorWindowType : RegisteredInTypeFactory<AssetInspectorWindowType>
 {
-    AssetInspectorWindowType();
+    AssetInspectorWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class AssetInspectorWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

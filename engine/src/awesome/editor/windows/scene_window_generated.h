@@ -6,11 +6,9 @@
 
 struct SceneWindowType : RegisteredInTypeFactory<SceneWindowType>
 {
-    SceneWindowType();
+    SceneWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class SceneWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

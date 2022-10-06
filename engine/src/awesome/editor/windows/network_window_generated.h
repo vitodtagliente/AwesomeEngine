@@ -6,11 +6,9 @@
 
 struct NetworkWindowType : RegisteredInTypeFactory<NetworkWindowType>
 {
-    NetworkWindowType();
+    NetworkWindowType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class NetworkWindow* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 

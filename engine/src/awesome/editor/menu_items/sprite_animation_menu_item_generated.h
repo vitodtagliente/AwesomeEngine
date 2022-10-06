@@ -6,11 +6,9 @@
 
 struct SpriteAnimationMenuItemType : RegisteredInTypeFactory<SpriteAnimationMenuItemType>
 {
-    SpriteAnimationMenuItemType();
+    SpriteAnimationMenuItemType() = delete;
 
-    static const meta_t& meta();
-    static const char* name();
-    static class SpriteAnimationMenuItem* const instantiate();
+    static const Type& type();
     static bool registered() { return value; };
 };
 
