@@ -7,9 +7,9 @@ const std::string& CameraController2dComponent::getTypeName() const { return Cam
 const properties_t CameraController2dComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", NativeType::NT_int, "int", sizeof(int), origin + offsetof(CameraController2dComponent, speed), {
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(CameraController2dComponent, speed), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("zoomSpeed", Property("zoomSpeed", NativeType::NT_int, "int", sizeof(int), origin + offsetof(CameraController2dComponent, zoomSpeed), {
+    properties.insert(std::make_pair<std::string, Property>("zoomSpeed", Property("zoomSpeed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(CameraController2dComponent, zoomSpeed), {
     })));
     return properties;
 }

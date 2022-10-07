@@ -5,7 +5,6 @@
 const meta_t& ContentBrowserWindow::getTypeMeta() const { return ContentBrowserWindowType::type().meta; }
 const std::string& ContentBrowserWindow::getTypeName() const { return ContentBrowserWindowType::type().name; }
 const properties_t ContentBrowserWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

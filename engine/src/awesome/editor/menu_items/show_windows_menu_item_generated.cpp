@@ -5,7 +5,6 @@
 const meta_t& ShowWindowsMenuItem::getTypeMeta() const { return ShowWindowsMenuItemType::type().meta; }
 const std::string& ShowWindowsMenuItem::getTypeName() const { return ShowWindowsMenuItemType::type().name; }
 const properties_t ShowWindowsMenuItem::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = MenuItem::getTypeProperties();
     return properties;
 }

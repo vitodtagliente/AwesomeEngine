@@ -5,7 +5,6 @@
 const meta_t& SettingsWindow::getTypeMeta() const { return SettingsWindowType::type().meta; }
 const std::string& SettingsWindow::getTypeName() const { return SettingsWindowType::type().name; }
 const properties_t SettingsWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

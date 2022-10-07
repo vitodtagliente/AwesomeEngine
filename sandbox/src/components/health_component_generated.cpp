@@ -5,7 +5,6 @@
 const meta_t& HealthComponent::getTypeMeta() const { return HealthComponentType::type().meta; }
 const std::string& HealthComponent::getTypeName() const { return HealthComponentType::type().name; }
 const properties_t HealthComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

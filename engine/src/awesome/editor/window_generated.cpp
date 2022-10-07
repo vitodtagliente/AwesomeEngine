@@ -5,7 +5,6 @@
 const meta_t& Window::getTypeMeta() const { return WindowType::type().meta; }
 const std::string& Window::getTypeName() const { return WindowType::type().name; }
 const properties_t Window::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
     return properties;
 }

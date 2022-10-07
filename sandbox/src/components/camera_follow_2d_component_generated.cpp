@@ -5,7 +5,6 @@
 const meta_t& CameraFollow2dComponent::getTypeMeta() const { return CameraFollow2dComponentType::type().meta; }
 const std::string& CameraFollow2dComponent::getTypeName() const { return CameraFollow2dComponentType::type().name; }
 const properties_t CameraFollow2dComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

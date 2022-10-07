@@ -5,7 +5,6 @@
 const meta_t& PawnComponent::getTypeMeta() const { return PawnComponentType::type().meta; }
 const std::string& PawnComponent::getTypeName() const { return PawnComponentType::type().name; }
 const properties_t PawnComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

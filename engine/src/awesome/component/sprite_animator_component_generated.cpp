@@ -5,7 +5,6 @@
 const meta_t& SpriteAnimatorComponent::getTypeMeta() const { return SpriteAnimatorComponentType::type().meta; }
 const std::string& SpriteAnimatorComponent::getTypeName() const { return SpriteAnimatorComponentType::type().name; }
 const properties_t SpriteAnimatorComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

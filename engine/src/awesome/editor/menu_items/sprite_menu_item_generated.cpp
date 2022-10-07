@@ -5,7 +5,6 @@
 const meta_t& SpriteMenuItem::getTypeMeta() const { return SpriteMenuItemType::type().meta; }
 const std::string& SpriteMenuItem::getTypeName() const { return SpriteMenuItemType::type().name; }
 const properties_t SpriteMenuItem::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = MenuItem::getTypeProperties();
     return properties;
 }

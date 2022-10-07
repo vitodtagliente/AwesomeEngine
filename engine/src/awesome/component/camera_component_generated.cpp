@@ -7,7 +7,7 @@ const std::string& CameraComponent::getTypeName() const { return CameraComponent
 const properties_t CameraComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("color", Property("color", NativeType::NT_int, "int", sizeof(int), origin + offsetof(CameraComponent, color), {
+    properties.insert(std::make_pair<std::string, Property>("color", Property("color", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(CameraComponent, color), {
     })));
     return properties;
 }

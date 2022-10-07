@@ -5,7 +5,6 @@
 const meta_t& MenuItem::getTypeMeta() const { return MenuItemType::type().meta; }
 const std::string& MenuItem::getTypeName() const { return MenuItemType::type().name; }
 const properties_t MenuItem::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
     return properties;
 }

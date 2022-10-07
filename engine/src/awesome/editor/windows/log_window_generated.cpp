@@ -5,7 +5,6 @@
 const meta_t& LogWindow::getTypeMeta() const { return LogWindowType::type().meta; }
 const std::string& LogWindow::getTypeName() const { return LogWindowType::type().name; }
 const properties_t LogWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

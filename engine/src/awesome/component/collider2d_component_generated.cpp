@@ -7,13 +7,13 @@ const std::string& Collider2dComponent::getTypeName() const { return Collider2dC
 const properties_t Collider2dComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("isTrigger", Property("isTrigger", NativeType::NT_int, "int", sizeof(int), origin + offsetof(Collider2dComponent, isTrigger), {
+    properties.insert(std::make_pair<std::string, Property>("isTrigger", Property("isTrigger", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(Collider2dComponent, isTrigger), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_type", Property("m_type", NativeType::NT_int, "int", sizeof(int), origin + offsetof(Collider2dComponent, m_type), {
+    properties.insert(std::make_pair<std::string, Property>("m_type", Property("m_type", PropertyType::T_unknown, "Type", true, sizeof(Type), origin + offsetof(Collider2dComponent, m_type), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_rectSize", Property("m_rectSize", NativeType::NT_int, "int", sizeof(int), origin + offsetof(Collider2dComponent, m_rectSize), {
+    properties.insert(std::make_pair<std::string, Property>("m_rectSize", Property("m_rectSize", PropertyType::T_unknown, "math::vec2", true, sizeof(math::vec2), origin + offsetof(Collider2dComponent, m_rectSize), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_circleSize", Property("m_circleSize", NativeType::NT_int, "int", sizeof(int), origin + offsetof(Collider2dComponent, m_circleSize), {
+    properties.insert(std::make_pair<std::string, Property>("m_circleSize", Property("m_circleSize", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(Collider2dComponent, m_circleSize), {
     })));
     return properties;
 }

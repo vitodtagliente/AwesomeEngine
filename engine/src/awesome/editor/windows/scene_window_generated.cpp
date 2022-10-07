@@ -5,7 +5,6 @@
 const meta_t& SceneWindow::getTypeMeta() const { return SceneWindowType::type().meta; }
 const std::string& SceneWindow::getTypeName() const { return SceneWindowType::type().name; }
 const properties_t SceneWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

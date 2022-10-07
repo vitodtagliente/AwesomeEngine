@@ -7,9 +7,9 @@ const std::string& SpriteRendererComponent::getTypeName() const { return SpriteR
 const properties_t SpriteRendererComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("flipX", Property("flipX", NativeType::NT_int, "int", sizeof(int), origin + offsetof(SpriteRendererComponent, flipX), {
+    properties.insert(std::make_pair<std::string, Property>("flipX", Property("flipX", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(SpriteRendererComponent, flipX), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("flipY", Property("flipY", NativeType::NT_int, "int", sizeof(int), origin + offsetof(SpriteRendererComponent, flipY), {
+    properties.insert(std::make_pair<std::string, Property>("flipY", Property("flipY", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(SpriteRendererComponent, flipY), {
     })));
     return properties;
 }

@@ -5,7 +5,6 @@
 const meta_t& EntityInspectorWindow::getTypeMeta() const { return EntityInspectorWindowType::type().meta; }
 const std::string& EntityInspectorWindow::getTypeName() const { return EntityInspectorWindowType::type().name; }
 const properties_t EntityInspectorWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

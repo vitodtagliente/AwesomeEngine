@@ -7,7 +7,7 @@ const std::string& RotatorComponent::getTypeName() const { return RotatorCompone
 const properties_t RotatorComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", NativeType::NT_int, "int", sizeof(int), origin + offsetof(RotatorComponent, speed), {
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(RotatorComponent, speed), {
     })));
     return properties;
 }

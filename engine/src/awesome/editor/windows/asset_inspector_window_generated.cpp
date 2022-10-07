@@ -5,7 +5,6 @@
 const meta_t& AssetInspectorWindow::getTypeMeta() const { return AssetInspectorWindowType::type().meta; }
 const std::string& AssetInspectorWindow::getTypeName() const { return AssetInspectorWindowType::type().name; }
 const properties_t AssetInspectorWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

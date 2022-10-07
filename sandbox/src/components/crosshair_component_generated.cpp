@@ -5,7 +5,6 @@
 const meta_t& CrosshairComponent::getTypeMeta() const { return CrosshairComponentType::type().meta; }
 const std::string& CrosshairComponent::getTypeName() const { return CrosshairComponentType::type().name; }
 const properties_t CrosshairComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

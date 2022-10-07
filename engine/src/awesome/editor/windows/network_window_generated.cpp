@@ -5,7 +5,6 @@
 const meta_t& NetworkWindow::getTypeMeta() const { return NetworkWindowType::type().meta; }
 const std::string& NetworkWindow::getTypeName() const { return NetworkWindowType::type().name; }
 const properties_t NetworkWindow::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Window::getTypeProperties();
     return properties;
 }

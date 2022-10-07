@@ -5,7 +5,6 @@
 const meta_t& LifetimeComponent::getTypeMeta() const { return LifetimeComponentType::type().meta; }
 const std::string& LifetimeComponent::getTypeName() const { return LifetimeComponentType::type().name; }
 const properties_t LifetimeComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

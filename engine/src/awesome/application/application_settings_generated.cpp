@@ -30,23 +30,23 @@ const std::string& ApplicationSettings::getTypeName() const { return Application
 const properties_t ApplicationSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("fps", Property("fps", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, fps), {
+    properties.insert(std::make_pair<std::string, Property>("fps", Property("fps", PropertyType::T_unknown, "FpsMode", true, sizeof(FpsMode), origin + offsetof(ApplicationSettings, fps), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, mode), {
+    properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", PropertyType::T_unknown, "ApplicationMode", true, sizeof(ApplicationMode), origin + offsetof(ApplicationSettings, mode), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, workspacePath), {
+    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", PropertyType::T_unknown, "std::filesystem::path", true, sizeof(std::filesystem::path), origin + offsetof(ApplicationSettings, workspacePath), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, editorScene), {
+    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, editorScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, serverScene), {
+    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, serverScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, standaloneScene), {
+    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, standaloneScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, serverIp), {
+    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(ApplicationSettings, serverIp), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, serverPort), {
+    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, serverPort), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", NativeType::NT_int, "int", sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
+    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
     })));
     return properties;
 }

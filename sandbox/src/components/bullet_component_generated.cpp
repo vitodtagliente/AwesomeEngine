@@ -5,7 +5,6 @@
 const meta_t& BulletComponent::getTypeMeta() const { return BulletComponentType::type().meta; }
 const std::string& BulletComponent::getTypeName() const { return BulletComponentType::type().name; }
 const properties_t BulletComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

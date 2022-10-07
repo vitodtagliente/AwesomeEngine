@@ -5,7 +5,6 @@
 const meta_t& Body2dComponent::getTypeMeta() const { return Body2dComponentType::type().meta; }
 const std::string& Body2dComponent::getTypeName() const { return Body2dComponentType::type().name; }
 const properties_t Body2dComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
     return properties;
 }

@@ -5,7 +5,6 @@
 const meta_t& SaveSceneMenuItem::getTypeMeta() const { return SaveSceneMenuItemType::type().meta; }
 const std::string& SaveSceneMenuItem::getTypeName() const { return SaveSceneMenuItemType::type().name; }
 const properties_t SaveSceneMenuItem::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = MenuItem::getTypeProperties();
     return properties;
 }
