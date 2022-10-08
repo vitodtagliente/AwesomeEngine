@@ -18,7 +18,7 @@ public:
 	virtual ~SpriteRendererComponent() = default;
 
 	SpriteAssetPtr sprite;
-	graphics::Color color{ graphics::Color::White };
+	PROPERTY() graphics::Color color{ graphics::Color::White };
 	PROPERTY() bool flipX{ false };
 	PROPERTY() bool flipY{ false };
 
@@ -27,7 +27,6 @@ public:
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
 
 	GENERATED_BODY()
 };

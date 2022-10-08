@@ -16,8 +16,6 @@ public:
 
 	void update(double deltaTime) override;
 
-	virtual void inspect() override;
-
 	PROPERTY() float speed;
 	PROPERTY() float zoomSpeed;
 

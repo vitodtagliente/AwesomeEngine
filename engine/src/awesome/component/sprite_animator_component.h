@@ -29,11 +29,10 @@ public:
 	std::string getPlayingAnimation() const;
 
 	std::map<std::string, SpriteAnimationAssetPtr> animations;
-	bool autoplay;
+	PROPERTY() bool autoplay;
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
 
 	GENERATED_BODY()
 

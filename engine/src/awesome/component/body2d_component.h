@@ -19,8 +19,6 @@ public:
 	void move(const math::vec2& amount);
 	void move(const math::vec3& amount);
 
-	virtual void inspect() override;
-
 	GENERATED_BODY()
 
 private:

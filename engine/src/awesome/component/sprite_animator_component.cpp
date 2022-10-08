@@ -1,7 +1,6 @@
 #include "sprite_animator_component.h"
 
 #include <awesome/asset/asset_library.h>
-#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
 #include "sprite_renderer_component.h"
@@ -135,13 +134,6 @@ void SpriteAnimatorComponent::deserialize(const json::value& value)
 		::deserialize(pair.second, animationId);
 		animations.insert(std::make_pair(pair.first, AssetLibrary::instance().find<SpriteAnimationAsset>(animationId)));
 	}
-}
-
-void SpriteAnimatorComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Animations", animations);
-	Layout::input("Autoplay", autoplay);
 }
 
 void SpriteAnimatorComponent::updateFrame(const SpriteAnimation::Frame& frame)

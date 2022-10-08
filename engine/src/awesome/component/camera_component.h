@@ -22,8 +22,6 @@ public:
 
 	static CameraComponent* const main();
 
-	virtual void inspect() override;
-
 	PROPERTY() graphics::Color color;
 
 	GENERATED_BODY()

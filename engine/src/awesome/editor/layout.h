@@ -26,6 +26,7 @@
 #include <awesome/graphics/texture_rect.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
+#include <awesome/math/vector4.h>
 
 class Layout
 {
@@ -56,6 +57,7 @@ public:
 	static void input(const std::string& name, std::string& value);
 	static void input(const std::string& name, math::vec2& value);
 	static void input(const std::string& name, math::vec3& value);
+	static void input(const std::string& name, math::vec4& value);
 	static void input(const std::string& name, graphics::Color& value);
 	static void input(const std::string& name, graphics::TextureCoords& value);
 	static void input(const std::string& name, graphics::TextureRect& value);

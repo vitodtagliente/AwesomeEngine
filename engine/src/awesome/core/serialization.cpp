@@ -17,9 +17,39 @@ json::value serialize(const IType& type)
 		case PropertyType::T_int: data[name] = prop.value<int>(); break;
 		case PropertyType::T_void: break;
 		case PropertyType::T_container_string: data[name] = prop.value<std::string>(); break;
-		case PropertyType::T_unknown: 
+		case PropertyType::T_unknown:
 		default:
+		{
+			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			{
+				data[name] = serialize(prop.value<graphics::Color>());
+			}
+			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			{
+				data[name] = serialize(prop.value<graphics::TextureCoords>());
+			}
+			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			{
+				data[name] = serialize(prop.value<graphics::TextureRect>());
+			}
+			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			{
+				data[name] = serialize(prop.value<math::transform>());
+			}
+			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			{
+				data[name] = serialize(prop.value<math::vec4>());
+			}
+			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			{
+				data[name] = serialize(prop.value<math::vec3>());
+			}
+			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			{
+				data[name] = serialize(prop.value<math::vec2>());
+			}
 			break;
+		}
 		}
 	}
 	return data;
@@ -101,6 +131,66 @@ json::value serialize(const math::vec4& v)
 		{"z", v.z},
 		{"w", v.w}
 		});
+}
+
+template<>
+bool deserialize(const json::value& value, IType& type)
+{
+	for (const auto& [name, prop] : type.getTypeProperties())
+	{
+		if (!prop.isNormal) continue;
+
+		switch (prop.type)
+		{
+		case PropertyType::T_bool: prop.value<bool>() = value.safeAt(name).as_bool(false); break;
+		case PropertyType::T_char: {
+			const std::string str = value.safeAt(name).as_string("");
+			if (str.length() == 1) {
+				prop.value<char>() = str.at(0);
+			}
+			break;
+		}
+		case PropertyType::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
+		case PropertyType::T_float: prop.value<double>() = value.safeAt(name).as_number(0).as_float(); break;
+		case PropertyType::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
+		case PropertyType::T_void: break;
+		case PropertyType::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
+		case PropertyType::T_unknown:
+		default:
+		{
+			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			{
+				deserialize(value.safeAt(name), prop.value<graphics::Color>());
+			}
+			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			{
+				deserialize(value.safeAt(name), prop.value<graphics::TextureCoords>());
+			}
+			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			{
+				deserialize(value.safeAt(name), prop.value<graphics::TextureRect>());
+			}
+			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			{
+				deserialize(value.safeAt(name), prop.value<math::transform>());
+			}
+			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			{
+				deserialize(value.safeAt(name), prop.value<math::vec4>());
+			}
+			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			{
+				deserialize(value.safeAt(name), prop.value<math::vec3>());
+			}
+			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			{
+				deserialize(value.safeAt(name), prop.value<math::vec2>());
+			}
+			break;
+		}
+		}
+	}
+	return true;
 }
 
 template<>

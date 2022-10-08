@@ -1,6 +1,5 @@
 #include "collider2d_component.h"
 
-#include <awesome/editor/layout.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
@@ -92,21 +91,4 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 		return false;
 	}
 	return false;
-}
-
-void Collider2dComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Type", m_type);
-	switch (m_type)
-	{
-	case Type::Rect:
-		Layout::input("Size", m_rectSize);
-		break;
-	case Type::Circle:
-		Layout::input("Size", m_circleSize);
-		break;
-	default: break;
-	}
-	Layout::input("Is Trigger", isTrigger);
 }

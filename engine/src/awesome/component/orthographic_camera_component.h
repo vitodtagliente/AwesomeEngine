@@ -14,8 +14,6 @@ public:
 
 	void update(double deltaTime) override;
 
-	virtual void inspect() override;
-
 	PROPERTY() float nearPlane{ -30.f };
 	PROPERTY() float farPlane{ 1000.f };
 	PROPERTY() bool pixelPerfect{ true };

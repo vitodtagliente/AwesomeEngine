@@ -1,7 +1,5 @@
 #include "orthographic_camera_component.h"
 
-#include <awesome/editor/layout.h>
-
 OrthographicCameraComponent::OrthographicCameraComponent()
 	: CameraComponent()
 {
@@ -18,13 +16,4 @@ void OrthographicCameraComponent::update(const double deltaTime)
 		data->pixelsPerUnit = pixelsPerUnit;
 	}
 	CameraComponent::update(deltaTime);
-}
-
-void OrthographicCameraComponent::inspect()
-{
-	CameraComponent::inspect();
-	Layout::input("Near Plane", nearPlane);
-	Layout::input("Far Plane", farPlane);
-	Layout::input("Pixel Perfect", pixelPerfect);
-	Layout::input("Pixel per unit", pixelsPerUnit);
 }

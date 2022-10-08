@@ -31,8 +31,6 @@ public:
 
 	std::function<void(const Collider2dComponent&)> onTrigger;
 
-	virtual void inspect() override;
-
 	PROPERTY() bool isTrigger{ false };
 
 	GENERATED_BODY()

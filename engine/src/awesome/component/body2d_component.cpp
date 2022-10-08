@@ -1,6 +1,5 @@
 #include "body2d_component.h"
 
-#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
@@ -35,10 +34,4 @@ void Body2dComponent::move(const math::vec3& amount)
 			}
 		}
 	}
-}
-
-void Body2dComponent::inspect()
-{
-	Component::inspect();
-
 }

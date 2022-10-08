@@ -26,7 +26,5 @@ public:
 
 	void render(class graphics::Renderer2D* const renderer) override;
 
-	virtual void inspect() override;
-
 	GENERATED_BODY()
 };

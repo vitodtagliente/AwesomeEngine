@@ -1,7 +1,6 @@
 #include "camera_component.h"
 
 #include <awesome/application/canvas.h>
-#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
@@ -41,10 +40,4 @@ CameraComponent* const CameraComponent::main()
 		if (camera) return camera;
 	}
 	return nullptr;
-}
-
-void CameraComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Color", color);
 }

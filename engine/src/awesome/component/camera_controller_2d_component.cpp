@@ -2,7 +2,6 @@
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
-#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/math/vector2.h>
@@ -46,11 +45,4 @@ void CameraController2dComponent::update(double deltaTime)
 		math::vec3& scale = getOwner()->transform.scale;
 		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * +wheelPosition.y, 0.1f, 3.0f);
 	}
-}
-
-void CameraController2dComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Speed", speed);
-	Layout::input("Zoom speed", zoomSpeed);
 }

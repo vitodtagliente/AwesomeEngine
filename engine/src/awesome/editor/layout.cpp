@@ -155,6 +155,11 @@ void Layout::input(const std::string& name, math::vec3& value)
 	ImGui::InputFloat3(id(name).c_str(), value.data);
 }
 
+void Layout::input(const std::string& name, math::vec4& value)
+{
+	ImGui::InputFloat4(id(name).c_str(), value.data);
+}
+
 void Layout::input(const std::string& name, graphics::Color& value)
 {
 	ImGui::ColorEdit4(id(name).c_str(), value.data);

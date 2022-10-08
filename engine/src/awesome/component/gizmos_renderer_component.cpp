@@ -1,6 +1,5 @@
 #include "gizmos_renderer_component.h"
 
-#include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
@@ -14,11 +13,4 @@ void GizmosRendererComponent::render(graphics::Renderer2D* const renderer)
 	default: break;
 	}
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
-}
-
-void GizmosRendererComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Type", type, { {"None", Type::None}, {"Rect", Type::Rect}, {"Circle", Type::Circle} });
-	Layout::input("Color", color);
 }

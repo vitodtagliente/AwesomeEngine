@@ -2,7 +2,6 @@
 
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/sprite_asset.h>
-#include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -57,13 +56,4 @@ void SpriteRendererComponent::deserialize(const json::value& value)
 	::deserialize(value["color"], color);
 	flipX = value.safeAt("flipX").as_bool(false);
 	flipY = value.safeAt("flipY").as_bool(false);
-}
-
-void SpriteRendererComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Sprite", sprite);
-	Layout::input("Color", color);
-	Layout::input("Flip X", flipX);
-	Layout::input("Flip Y", flipY);
 }
