@@ -13,6 +13,7 @@ std::size_t NewSceneMenuItem::getTypeSize() const { return NewSceneMenuItemType:
 const Type& NewSceneMenuItemType::type()
 {
     static const Type s_type([]() -> IType* { return new NewSceneMenuItem(); }, "NewSceneMenuItem", {
+        std::make_pair("Category", "MenuItem"),
     }, sizeof(NewSceneMenuItem));
     return s_type;
 }

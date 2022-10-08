@@ -13,6 +13,7 @@ std::size_t ShowWindowsMenuItem::getTypeSize() const { return ShowWindowsMenuIte
 const Type& ShowWindowsMenuItemType::type()
 {
     static const Type s_type([]() -> IType* { return new ShowWindowsMenuItem(); }, "ShowWindowsMenuItem", {
+        std::make_pair("Category", "MenuItem"),
     }, sizeof(ShowWindowsMenuItem));
     return s_type;
 }

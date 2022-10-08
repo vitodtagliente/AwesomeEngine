@@ -16,7 +16,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-CLASS()
+CLASS(Category = Component)
 class Collider2dComponent : public graphics::IGraphicsComponent, public Component
 {
 public:
@@ -40,7 +40,7 @@ public:
 	GENERATED_BODY()
 
 private:
-	PROPERTY() Type m_type{ Type::Rect };
+	PROPERTY(IsEnum) Type m_type{ Type::Rect };
 	PROPERTY() math::vec2 m_rectSize{ 1.0f, 1.0f };
 	PROPERTY() float m_circleSize{ 1.0f };
 };

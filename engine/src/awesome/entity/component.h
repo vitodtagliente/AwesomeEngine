@@ -47,6 +47,6 @@ public:
 
 private:
 	PROPERTY() uuid m_id;
-	PROPERTY() NetMode m_netMode{ NetMode::Shared };
+	PROPERTY(IsEnum) NetMode m_netMode{ NetMode::Shared };
 	Entity* m_owner{ nullptr };
 };

@@ -1,6 +1,31 @@
 #include "serialization.h"
 
 template<>
+json::value serialize(const IType& type)
+{
+	json::value data = json::object();
+	for (const auto& [name, prop] : type.getTypeProperties())
+	{
+		if (!prop.isNormal) continue;
+
+		switch (prop.type)
+		{
+		case PropertyType::T_bool: data[name] = prop.value<bool>(); break;
+		case PropertyType::T_char: data[name] = prop.value<char>(); break;
+		case PropertyType::T_double: data[name] = prop.value<double>(); break;
+		case PropertyType::T_float: data[name] = prop.value<float>(); break;
+		case PropertyType::T_int: data[name] = prop.value<int>(); break;
+		case PropertyType::T_void: break;
+		case PropertyType::T_container_string: data[name] = prop.value<std::string>(); break;
+		case PropertyType::T_unknown: 
+		default:
+			break;
+		}
+	}
+	return data;
+}
+
+template<>
 json::value serialize(const uuid& id)
 {
 	return json::value(static_cast<std::string>(id));
@@ -91,10 +116,10 @@ bool deserialize(const json::value& value, graphics::Color& color)
 	if (!value.is_object())
 		return false;
 
-	color.red = value["r"].as_number(0.0f).as_float();
-	color.green = value["g"].as_number(0.0f).as_float();
-	color.blue = value["b"].as_number(0.0f).as_float();
-	color.alpha = value["a"].as_number(0.0f).as_float();
+	color.red = value.at("r").as_number(0.0f).as_float();
+	color.green = value.at("g").as_number(0.0f).as_float();
+	color.blue = value.at("b").as_number(0.0f).as_float();
+	color.alpha = value.at("a").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -104,8 +129,8 @@ bool deserialize(const json::value& value, graphics::TextureCoords& coords)
 	if (!value.is_object())
 		return false;
 
-	coords.u = value["u"].as_number(0.0f).as_float();
-	coords.v = value["v"].as_number(0.0f).as_float();
+	coords.u = value.at("u").as_number(0.0f).as_float();
+	coords.v = value.at("v").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -115,10 +140,10 @@ bool deserialize(const json::value& value, graphics::TextureRect& rect)
 	if (!value.is_object())
 		return false;
 
-	rect.x = value["x"].as_number(0.0f).as_float();
-	rect.y = value["y"].as_number(0.0f).as_float();
-	rect.width = value["width"].as_number(0.0f).as_float();
-	rect.height = value["height"].as_number(0.0f).as_float();
+	rect.x = value.at("x").as_number(0.0f).as_float();
+	rect.y = value.at("y").as_number(0.0f).as_float();
+	rect.width = value.at("width").as_number(0.0f).as_float();
+	rect.height = value.at("height").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -128,10 +153,10 @@ bool deserialize(const json::value& value, math::transform& t)
 	if (!value.is_object())
 		return false;
 
-	deserialize(value["position"], t.position);
-	deserialize(value["rotation"], t.rotation);
-	deserialize(value["scale"], t.scale);
-	t.isStatic = value["isStatic"].as_bool(false);
+	deserialize(value.at("position"), t.position);
+	deserialize(value.at("rotation"), t.rotation);
+	deserialize(value.at("scale"), t.scale);
+	t.isStatic = value.at("isStatic").as_bool(false);
 	return true;
 }
 
@@ -141,8 +166,8 @@ bool deserialize(const json::value& value, math::vec2& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number(0.0f).as_float();
-	v.y = value["y"].as_number(0.0f).as_float();
+	v.x = value.at("x").as_number(0.0f).as_float();
+	v.y = value.at("y").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -152,9 +177,9 @@ bool deserialize(const json::value& value, math::vec3& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number(0.0f).as_float();
-	v.y = value["y"].as_number(0.0f).as_float();
-	v.z = value["z"].as_number(0.0f).as_float();
+	v.x = value.at("x").as_number(0.0f).as_float();
+	v.y = value.at("y").as_number(0.0f).as_float();
+	v.z = value.at("z").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -164,9 +189,9 @@ bool deserialize(const json::value& value, math::vec4& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value["x"].as_number(0.0f).as_float();
-	v.y = value["y"].as_number(0.0f).as_float();
-	v.z = value["z"].as_number(0.0f).as_float();
-	v.w = value["w"].as_number(0.0f).as_float();
+	v.x = value.at("x").as_number(0.0f).as_float();
+	v.y = value.at("y").as_number(0.0f).as_float();
+	v.z = value.at("z").as_number(0.0f).as_float();
+	v.w = value.at("w").as_number(0.0f).as_float();
 	return true;
 }

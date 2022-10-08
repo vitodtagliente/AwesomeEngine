@@ -13,6 +13,7 @@ std::size_t Body2dComponent::getTypeSize() const { return Body2dComponentType::t
 const Type& Body2dComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new Body2dComponent(); }, "Body2dComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(Body2dComponent));
     return s_type;
 }

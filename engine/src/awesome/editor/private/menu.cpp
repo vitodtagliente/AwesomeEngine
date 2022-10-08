@@ -3,6 +3,8 @@
 #include <awesome/application/application.h>
 #include <awesome/editor/private/menu_layout.h>
 
+#include <awesome/editor/menu_items/menu_items.h>
+
 void Menu::init()
 {
 	static std::vector<std::string> types = TypeFactory::list("Category", "MenuItem");

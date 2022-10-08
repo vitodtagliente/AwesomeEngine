@@ -22,6 +22,7 @@ std::size_t OrthographicCameraComponent::getTypeSize() const { return Orthograph
 const Type& OrthographicCameraComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new OrthographicCameraComponent(); }, "OrthographicCameraComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(OrthographicCameraComponent));
     return s_type;
 }

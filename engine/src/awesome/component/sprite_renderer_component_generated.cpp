@@ -18,6 +18,7 @@ std::size_t SpriteRendererComponent::getTypeSize() const { return SpriteRenderer
 const Type& SpriteRendererComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new SpriteRendererComponent(); }, "SpriteRendererComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(SpriteRendererComponent));
     return s_type;
 }

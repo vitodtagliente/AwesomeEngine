@@ -5,7 +5,7 @@
 
 #include "save_scene_menu_item_generated.h"
 
-CLASS()
+CLASS(Category = MenuItem)
 class SaveSceneMenuItem : public MenuItem
 {
 public:

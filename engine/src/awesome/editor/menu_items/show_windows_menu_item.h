@@ -5,7 +5,7 @@
 
 #include "show_windows_menu_item_generated.h"
 
-CLASS()
+CLASS(Category = MenuItem)
 class ShowWindowsMenuItem : public MenuItem
 {
 public:

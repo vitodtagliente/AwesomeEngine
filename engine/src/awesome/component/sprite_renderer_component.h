@@ -10,7 +10,7 @@
 
 #include "sprite_renderer_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class SpriteRendererComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

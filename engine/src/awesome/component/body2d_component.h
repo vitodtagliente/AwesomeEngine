@@ -7,7 +7,7 @@
 
 #include "body2d_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class Body2dComponent : public Component
 {
 public:

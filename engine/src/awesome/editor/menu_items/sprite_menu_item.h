@@ -5,7 +5,7 @@
 
 #include "sprite_menu_item_generated.h"
 
-CLASS()
+CLASS(Category = MenuItem)
 class SpriteMenuItem : public MenuItem
 {
 public:

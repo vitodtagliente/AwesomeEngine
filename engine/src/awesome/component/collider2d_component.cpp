@@ -96,12 +96,7 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 
 json::value Collider2dComponent::serialize() const
 {
-	json::value data = Component::serialize();
-	data["type"] = enumToString(m_type);
-	data["rectSize"] = ::serialize(m_rectSize);
-	data["circleSize"] = m_circleSize;
-	data["isTrigger"] = isTrigger;
-	return data;
+	return ::serialize((const IType&) * this);
 }
 
 void Collider2dComponent::deserialize(const json::value& value)

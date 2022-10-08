@@ -9,7 +9,7 @@
 
 #include "particles2d_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class Particles2dComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

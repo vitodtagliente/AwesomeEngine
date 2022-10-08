@@ -2,8 +2,6 @@
 #pragma once
 
 #include <awesome/core/reflection.h>
-#include <awesome/core/singleton.h>
-
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
@@ -29,6 +27,7 @@ json::value serialize(const T& data)
 template <typename T>
 bool deserialize(const json::value& value, T& data) { return true; }
 
+template <> json::value serialize(const IType& type);
 template <> json::value serialize(const uuid& id);
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
