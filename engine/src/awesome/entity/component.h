@@ -11,10 +11,9 @@
 class Entity;
 
 CLASS()
-class Component : public ISerializable, public IType
+class Component : public IType, public ISerializable
 {
 public:
-
 	Component() = default;
 	Component(const Component& other) = delete;
 	virtual ~Component() = default;

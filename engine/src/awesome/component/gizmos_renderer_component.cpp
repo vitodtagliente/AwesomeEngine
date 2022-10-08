@@ -16,21 +16,6 @@ void GizmosRendererComponent::render(graphics::Renderer2D* const renderer)
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }
 
-json::value GizmosRendererComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["type"] = static_cast<int>(type);
-	data["color"] = ::serialize(color);
-	return data;
-}
-
-void GizmosRendererComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	type = static_cast<Type>(value["type"].as_number(static_cast<int>(Type::None)).as_int());
-	::deserialize(value["color"], color);
-}
-
 void GizmosRendererComponent::inspect()
 {
 	Component::inspect();

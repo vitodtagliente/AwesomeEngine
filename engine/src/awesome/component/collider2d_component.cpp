@@ -94,20 +94,6 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 	return false;
 }
 
-json::value Collider2dComponent::serialize() const
-{
-	return ::serialize((const IType&) * this);
-}
-
-void Collider2dComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	stringToEnum(value.safeAt("type").as_string(""), m_type);
-	::deserialize(value.safeAt("rectSize"), m_rectSize);
-	m_circleSize = value.safeAt("circleSize").as_number(1.f).as_float();
-	isTrigger = value.safeAt("isTrigger").as_bool(false);
-}
-
 void Collider2dComponent::inspect()
 {
 	Component::inspect();

@@ -48,21 +48,6 @@ void CameraController2dComponent::update(double deltaTime)
 	}
 }
 
-json::value CameraController2dComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["speed"] = speed;
-	data["zoomSpeed"] = zoomSpeed;
-	return data;
-}
-
-void CameraController2dComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	speed = value["speed"].as_number(0.0f).as_float();
-	zoomSpeed = value["zoomSpeed"].as_number(0.0f).as_float();
-}
-
 void CameraController2dComponent::inspect()
 {
 	Component::inspect();

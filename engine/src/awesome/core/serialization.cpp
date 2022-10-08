@@ -116,10 +116,10 @@ bool deserialize(const json::value& value, graphics::Color& color)
 	if (!value.is_object())
 		return false;
 
-	color.red = value.at("r").as_number(0.0f).as_float();
-	color.green = value.at("g").as_number(0.0f).as_float();
-	color.blue = value.at("b").as_number(0.0f).as_float();
-	color.alpha = value.at("a").as_number(0.0f).as_float();
+	color.red = value.safeAt("r").as_number(0.0f).as_float();
+	color.green = value.safeAt("g").as_number(0.0f).as_float();
+	color.blue = value.safeAt("b").as_number(0.0f).as_float();
+	color.alpha = value.safeAt("a").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -129,8 +129,8 @@ bool deserialize(const json::value& value, graphics::TextureCoords& coords)
 	if (!value.is_object())
 		return false;
 
-	coords.u = value.at("u").as_number(0.0f).as_float();
-	coords.v = value.at("v").as_number(0.0f).as_float();
+	coords.u = value.safeAt("u").as_number(0.0f).as_float();
+	coords.v = value.safeAt("v").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -140,10 +140,10 @@ bool deserialize(const json::value& value, graphics::TextureRect& rect)
 	if (!value.is_object())
 		return false;
 
-	rect.x = value.at("x").as_number(0.0f).as_float();
-	rect.y = value.at("y").as_number(0.0f).as_float();
-	rect.width = value.at("width").as_number(0.0f).as_float();
-	rect.height = value.at("height").as_number(0.0f).as_float();
+	rect.x = value.safeAt("x").as_number(0.0f).as_float();
+	rect.y = value.safeAt("y").as_number(0.0f).as_float();
+	rect.width = value.safeAt("width").as_number(0.0f).as_float();
+	rect.height = value.safeAt("height").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -153,10 +153,10 @@ bool deserialize(const json::value& value, math::transform& t)
 	if (!value.is_object())
 		return false;
 
-	deserialize(value.at("position"), t.position);
-	deserialize(value.at("rotation"), t.rotation);
-	deserialize(value.at("scale"), t.scale);
-	t.isStatic = value.at("isStatic").as_bool(false);
+	deserialize(value.safeAt("position"), t.position);
+	deserialize(value.safeAt("rotation"), t.rotation);
+	deserialize(value.safeAt("scale"), t.scale);
+	t.isStatic = value.safeAt("isStatic").as_bool(false);
 	return true;
 }
 
@@ -166,8 +166,8 @@ bool deserialize(const json::value& value, math::vec2& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value.at("x").as_number(0.0f).as_float();
-	v.y = value.at("y").as_number(0.0f).as_float();
+	v.x = value.safeAt("x").as_number(0.0f).as_float();
+	v.y = value.safeAt("y").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -177,9 +177,9 @@ bool deserialize(const json::value& value, math::vec3& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value.at("x").as_number(0.0f).as_float();
-	v.y = value.at("y").as_number(0.0f).as_float();
-	v.z = value.at("z").as_number(0.0f).as_float();
+	v.x = value.safeAt("x").as_number(0.0f).as_float();
+	v.y = value.safeAt("y").as_number(0.0f).as_float();
+	v.z = value.safeAt("z").as_number(0.0f).as_float();
 	return true;
 }
 
@@ -189,9 +189,9 @@ bool deserialize(const json::value& value, math::vec4& v)
 	if (!value.is_object())
 		return false;
 
-	v.x = value.at("x").as_number(0.0f).as_float();
-	v.y = value.at("y").as_number(0.0f).as_float();
-	v.z = value.at("z").as_number(0.0f).as_float();
-	v.w = value.at("w").as_number(0.0f).as_float();
+	v.x = value.safeAt("x").as_number(0.0f).as_float();
+	v.y = value.safeAt("y").as_number(0.0f).as_float();
+	v.z = value.safeAt("z").as_number(0.0f).as_float();
+	v.w = value.safeAt("w").as_number(0.0f).as_float();
 	return true;
 }

@@ -22,8 +22,6 @@ public:
 
 	static CameraComponent* const main();
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 	virtual void inspect() override;
 
 	PROPERTY() graphics::Color color;

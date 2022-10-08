@@ -20,25 +20,6 @@ void OrthographicCameraComponent::update(const double deltaTime)
 	CameraComponent::update(deltaTime);
 }
 
-json::value OrthographicCameraComponent::serialize() const
-{
-	json::value data = CameraComponent::serialize();
-	data["nearPlane"] = nearPlane;
-	data["farPlane"] = farPlane;
-	data["pixelPerfect"] = pixelPerfect;
-	data["pixelsPerUnit"] = pixelsPerUnit;
-	return data;
-}
-
-void OrthographicCameraComponent::deserialize(const json::value& value)
-{
-	CameraComponent::deserialize(value);
-	nearPlane = value["nearPlane"].as_number(-30.f).as_float();
-	farPlane = value["farPlane"].as_number(1000.f).as_float();
-	pixelPerfect = value["pixelPerfect"].as_bool(true);
-	pixelsPerUnit = value["pixelsPerUnit"].as_number(32).as_int();
-}
-
 void OrthographicCameraComponent::inspect()
 {
 	CameraComponent::inspect();

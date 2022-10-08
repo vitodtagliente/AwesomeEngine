@@ -14,8 +14,6 @@ public:
 
 	void update(double deltaTime) override;
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 	virtual void inspect() override;
 
 	PROPERTY() float nearPlane{ -30.f };

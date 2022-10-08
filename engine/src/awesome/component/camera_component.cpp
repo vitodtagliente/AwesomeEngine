@@ -43,19 +43,6 @@ CameraComponent* const CameraComponent::main()
 	return nullptr;
 }
 
-json::value CameraComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["color"] = ::serialize(color);
-	return data;
-}
-
-void CameraComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	::deserialize(value["color"].as_object({}), color);
-}
-
 void CameraComponent::inspect()
 {
 	Component::inspect();

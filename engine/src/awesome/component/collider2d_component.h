@@ -31,8 +31,6 @@ public:
 
 	std::function<void(const Collider2dComponent&)> onTrigger;
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 	virtual void inspect() override;
 
 	PROPERTY() bool isTrigger{ false };

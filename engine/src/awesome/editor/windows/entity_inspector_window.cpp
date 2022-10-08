@@ -6,6 +6,7 @@
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/editor/state.h>
+#include <awesome/entity/world.h>
 
 void EntityInspectorWindow::render()
 {
@@ -28,10 +29,15 @@ void EntityInspectorWindow::render()
 
 	if (Layout::button(TextIcon::save(" Save Prefab")))
 	{
-		Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [&entity](const std::filesystem::path& path) -> void
+		const uuid entityId = entity->getId();
+		Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [entityId](const std::filesystem::path& path) -> void
 			{
 				if (!path.string().empty())
 				{
+					World& world = World::instance();
+					Entity* const entity = world.findEntityById(entityId);
+					if (entity == nullptr) return;
+
 					Archive archive(path, Archive::Mode::Write);
 					archive << json::Serializer::to_string(entity->serialize());
 

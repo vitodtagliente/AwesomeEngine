@@ -27,12 +27,9 @@ void Component::detach()
 
 json::value Component::serialize() const
 {
-	return json::object({
-		{"componentclass", getTypeName()},
-		{"id", static_cast<std::string>(m_id)},
-		{"enabled", enabled},
-		{"netMode", enumToString(m_netMode)}
-		});
+	json::value data = ::serialize((const IType&)*this);
+	data["component_type"] = this->getTypeName();
+	return data;
 }
 
 void Component::deserialize(const json::value& value)

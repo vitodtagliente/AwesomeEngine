@@ -37,19 +37,6 @@ void Body2dComponent::move(const math::vec3& amount)
 	}
 }
 
-json::value Body2dComponent::serialize() const
-{
-	json::value data = Component::serialize();
-
-	return data;
-}
-
-void Body2dComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-
-}
-
 void Body2dComponent::inspect()
 {
 	Component::inspect();
