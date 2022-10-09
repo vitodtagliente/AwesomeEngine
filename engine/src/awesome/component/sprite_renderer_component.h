@@ -17,7 +17,7 @@ public:
 	SpriteRendererComponent() = default;
 	virtual ~SpriteRendererComponent() = default;
 
-	SpriteAssetPtr sprite;
+	PROPERTY() SpriteAssetPtr sprite;
 	PROPERTY() graphics::Color color{ graphics::Color::White };
 	PROPERTY() bool flipX{ false };
 	PROPERTY() bool flipY{ false };

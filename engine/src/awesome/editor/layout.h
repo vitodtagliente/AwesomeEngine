@@ -24,6 +24,7 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
+#include <awesome/math/transform.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
@@ -55,6 +56,7 @@ public:
 	static void input(const std::string& name, float& value);
 	static void input(const std::string& name, double& value);
 	static void input(const std::string& name, std::string& value);
+	static void input(const std::string& name, math::transform& value);
 	static void input(const std::string& name, math::vec2& value);
 	static void input(const std::string& name, math::vec3& value);
 	static void input(const std::string& name, math::vec4& value);
@@ -62,6 +64,7 @@ public:
 	static void input(const std::string& name, graphics::TextureCoords& value);
 	static void input(const std::string& name, graphics::TextureRect& value);
 	static void input(const std::string& name, SpriteAnimation::Frame& value);
+	static void input(IType& value);
 	// Ranges
 	template <typename T>
 	static void input(const std::string& name, std::pair<T, T>& value)

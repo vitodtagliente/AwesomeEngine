@@ -6,6 +6,9 @@
 #include <imgui_stdlib.h>
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/asset/prefab_asset.h>
+#include <awesome/asset/scene_asset.h>
+#include <awesome/asset/text_asset.h>
 #include <awesome/graphics/texture_library.h>
 
 std::string Layout::s_context{};
@@ -145,6 +148,14 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(name.c_str(), &value);
 }
 
+void Layout::input(const std::string& name, math::transform& value)
+{
+	input("Position", value.position);
+	input("Rotation", value.rotation);
+	input("Scale", value.scale);
+	input("Static", value.isStatic);
+}
+
 void Layout::input(const std::string& name, math::vec2& value)
 {
 	ImGui::InputFloat2(id(name).c_str(), value.data);
@@ -179,6 +190,89 @@ void Layout::input(const std::string&, SpriteAnimation::Frame& value)
 {
 	input("Sprite", value.sprite);
 	input("Duration", value.duration);
+}
+
+void Layout::input(IType& value)
+{
+	for (const auto& [name, prop] : value.getTypeProperties())
+	{
+		if (!prop.isNormal) continue;
+
+		std::string label = name;
+		const auto& it = prop.meta.find("Label");
+		if (it != prop.meta.end())
+		{
+			label = !it->second.empty() ? it->second : name;
+		}
+
+		switch (prop.type)
+		{
+		case PropertyType::T_bool: input(label, prop.value<bool>()); break;
+		case PropertyType::T_char: break;
+		case PropertyType::T_double: input(label, prop.value<double>()); break;
+		case PropertyType::T_float: input(label, prop.value<float>()); break;
+		case PropertyType::T_int: input(label, prop.value<int>()); break;
+		case PropertyType::T_void: break;
+		case PropertyType::T_container_string: input(label, prop.value<std::string>()); break;
+		case PropertyType::T_unknown:
+		default:
+		{
+			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			{
+				input(label, prop.value<graphics::Color>());
+			}
+			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			{
+				input(label, prop.value<graphics::TextureCoords>());
+			}
+			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			{
+				input(label, prop.value<graphics::TextureRect>());
+			}
+			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			{
+				input("Position", prop.value<math::transform>());
+			}
+			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			{
+				Layout::input(label, prop.value<math::vec4>());
+			}
+			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			{
+				Layout::input(label, prop.value<math::vec3>());
+			}
+			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			{
+				Layout::input(label, prop.value<math::vec2>());
+			}
+			else if (prop.typeStr == "ImageAssetPtr")
+			{
+				Layout::input(label, prop.value<ImageAssetPtr>());
+			}
+			else if (prop.typeStr == "PrefabAssetPtr")
+			{
+				Layout::input(label, prop.value<PrefabAssetPtr>());
+			}
+			else if (prop.typeStr == "SceneAssetPtr")
+			{
+				Layout::input(label, prop.value<SceneAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			{
+				Layout::input(label, prop.value<SpriteAnimationAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAssetPtr")
+			{
+				Layout::input(label, prop.value<SpriteAssetPtr>());
+			}
+			else if (prop.typeStr == "TextAssetPtr")
+			{
+				Layout::input(label, prop.value<TextAssetPtr>());
+			}
+			break;
+		}
+		}
+	}
 }
 
 bool Layout::isWindowFocused()
