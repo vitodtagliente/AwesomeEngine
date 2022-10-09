@@ -155,16 +155,16 @@ void Entity::deserialize(const json::value& value)
 	m_children.clear();
 	m_components.clear();
 
-	::deserialize(value["id"], m_id);
+	::deserialize(value.safeAt("id"), m_id);
 	replicate = value.safeAt("replicate").as_bool(false);
 	name = value.safeAt("name").as_string("");
 	tag = value.safeAt("tag").as_string("");
-	::deserialize(value["transform"], transform);
+	::deserialize(value.safeAt("transform"), transform);
 
-	const json::value::array_t& components = value["components"].as_array();
+	const json::value::array_t& components = value.safeAt("components").as_array();
 	for (const json::value& data : components)
 	{
-		const std::string& type = data["componentclass"].as_string();
+		const std::string& type = data.safeAt("component_type").as_string();
 		Component* const component = TypeFactory::instantiate<Component>(type);
 		if (component != nullptr)
 		{
