@@ -8,7 +8,7 @@
 
 #include "camera_controller_2d_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class CameraController2dComponent : public Component
 {
 public:
