@@ -2,6 +2,7 @@
 
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
 void Collider2dComponent::render(graphics::Renderer2D* const renderer)
@@ -91,4 +92,10 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 		return false;
 	}
 	return false;
+}
+
+void Collider2dComponent::inspect()
+{
+	Component::inspect();
+	Layout::input("ShapeType", m_type);
 }

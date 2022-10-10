@@ -22,6 +22,8 @@ public:
 
 	bool collide(const Collider2dComponent& other) const;
 
+	virtual void inspect() override;
+
 	std::function<void(const Collider2dComponent&)> onTrigger;
 	PROPERTY() bool isTrigger{ false };
 
