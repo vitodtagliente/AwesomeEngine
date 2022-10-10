@@ -3,10 +3,10 @@
 
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/graphics_component.h>
-#include <awesome/graphics/texture_rect.h>
 #include <awesome/entity/component.h>
 
 #include "gizmos_renderer_component_generated.h"
+#include "shape_type.h"
 
 CLASS(Category = Component)
 class GizmosRendererComponent : public graphics::IGraphicsComponent, public Component
@@ -14,14 +14,7 @@ class GizmosRendererComponent : public graphics::IGraphicsComponent, public Comp
 public:
 	GizmosRendererComponent() = default;
 
-	enum class Type : int
-	{
-		None,
-		Rect,
-		Circle
-	};
-
-	PROPERTY() Type type{ Type::None };
+	PROPERTY(IsEnum) ShapeType type{ ShapeType::None };
 	PROPERTY() graphics::Color color{ graphics::Color::White };
 
 	void render(class graphics::Renderer2D* const renderer) override;

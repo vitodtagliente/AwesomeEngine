@@ -9,8 +9,8 @@ void Collider2dComponent::render(graphics::Renderer2D* const renderer)
 	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (m_type)
 	{
-	case Type::Circle: renderer->drawCircle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
-	case Type::Rect: renderer->drawRect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
+	case ShapeType::Circle: renderer->drawCircle(getOwner()->transform.position, m_circleSize, graphics::Color::Green); break;
+	case ShapeType::Rect: renderer->drawRect(getOwner()->transform.position, m_rectSize.x, m_rectSize.y, graphics::Color::Green); break;
 	default: break;
 	}
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
@@ -26,7 +26,7 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 		math::vec3 otherPosition = other.getOwner()->transform.position;
 		position.z = otherPosition.z = 0.0f;
 
-		if (m_type == Type::Rect)
+		if (m_type == ShapeType::Rect)
 		{
 			const auto size1 = m_rectSize / 2;
 			const auto size2 = other.m_rectSize / 2;
@@ -46,7 +46,7 @@ bool Collider2dComponent::collide(const Collider2dComponent& other) const
 		math::vec3 circlePosition, rectPosition;
 		math::vec2 rectSize;
 		float circleSize;
-		if (m_type == Type::Circle)
+		if (m_type == ShapeType::Circle)
 		{
 			circlePosition = getOwner()->transform.position;
 			circleSize = m_circleSize;

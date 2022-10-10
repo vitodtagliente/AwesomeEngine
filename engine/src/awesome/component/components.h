@@ -3,6 +3,7 @@
 
 #include "body2d_component.h"
 #include "camera_component.h"
+#include "camera_controller_2d_component.h"
 #include "collider2d_component.h"
 #include "gizmos_renderer_component.h"
 #include "orthographic_camera_component.h"

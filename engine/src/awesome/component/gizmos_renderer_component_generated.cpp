@@ -7,7 +7,8 @@ const std::string& GizmosRendererComponent::getTypeName() const { return GizmosR
 const properties_t GizmosRendererComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("type", Property("type", PropertyType::T_unknown, "Type", true, sizeof(Type), origin + offsetof(GizmosRendererComponent, type), {
+    properties.insert(std::make_pair<std::string, Property>("type", Property("type", PropertyType::T_custom_enum, "ShapeType", true, sizeof(ShapeType), origin + offsetof(GizmosRendererComponent, type), {
+        std::make_pair("IsEnum", ""),
     })));
     properties.insert(std::make_pair<std::string, Property>("color", Property("color", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(GizmosRendererComponent, color), {
     })));

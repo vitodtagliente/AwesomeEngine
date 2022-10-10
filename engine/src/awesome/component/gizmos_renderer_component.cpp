@@ -8,8 +8,8 @@ void GizmosRendererComponent::render(graphics::Renderer2D* const renderer)
 	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (type)
 	{
-	case Type::Rect: renderer->drawRect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
-	case Type::Circle: renderer->drawCircle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
+	case ShapeType::Rect: renderer->drawRect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
+	case ShapeType::Circle: renderer->drawCircle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
 	default: break;
 	}
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);

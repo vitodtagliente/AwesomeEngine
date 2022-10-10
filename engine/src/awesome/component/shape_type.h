@@ -9,6 +9,7 @@
 ENUM()
 enum class ShapeType : int
 {
-    Circle = 0,
-    Rect = 1,
+    None = 0,
+    Circle,
+    Rect
 };
