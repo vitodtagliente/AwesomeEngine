@@ -33,6 +33,7 @@ public:
 
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
+	virtual void inspect() override;
 
 	GENERATED_BODY()
 

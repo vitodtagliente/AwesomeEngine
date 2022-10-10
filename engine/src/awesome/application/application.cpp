@@ -111,7 +111,7 @@ void Application::initSettings()
 {
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-	reload = JsonFile::load(settingsPath, &m_settings);
+	reload = JsonFile::load(settingsPath, m_settings);
 
 	AssetImporter importer;
 	importer.import(m_settings.workspacePath, true);
@@ -119,7 +119,7 @@ void Application::initSettings()
 
 	if (reload)
 	{
-		JsonFile::load(settingsPath, &m_settings);
+		JsonFile::load(settingsPath, m_settings);
 	}
 
 	SceneAssetPtr sceneToLoad;

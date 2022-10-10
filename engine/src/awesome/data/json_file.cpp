@@ -11,9 +11,9 @@ void JsonFile::save(const json::value& data, const std::filesystem::path& path)
 	archive << json::Serializer::to_string(data);
 }
 
-void JsonFile::save(IType* const type, const std::filesystem::path& path)
+void JsonFile::save(const IType& type, const std::filesystem::path& path)
 {
-	// save(Serializer::instance().serialize(proto), path);
+	save(::serialize(type), path);
 }
 
 bool JsonFile::load(const std::filesystem::path& path, json::value& data)
@@ -33,12 +33,12 @@ bool JsonFile::load(const std::filesystem::path& path, json::value& data)
 	return false;
 }
 
-bool JsonFile::load(const std::filesystem::path& path, IType* const type)
+bool JsonFile::load(const std::filesystem::path& path, IType& type)
 {
 	json::value data;
 	if (load(path, data))
 	{
-		// return Serializer::instance().deserialize(proto, data);
+		return ::deserialize(data, type);
 	}
 	return false;
 }

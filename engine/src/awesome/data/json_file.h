@@ -12,7 +12,7 @@ public:
 	JsonFile() = delete;
 
 	static void save(const json::value& data, const std::filesystem::path& path);
-	static void save(IType* const type, const std::filesystem::path& path);
+	static void save(const IType& type, const std::filesystem::path& path);
 	static bool load(const std::filesystem::path& path, json::value& data);
-	static bool load(const std::filesystem::path& path, IType* const type);
+	static bool load(const std::filesystem::path& path, IType& type);
 };

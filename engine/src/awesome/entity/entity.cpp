@@ -164,7 +164,7 @@ void Entity::deserialize(const json::value& value)
 	const json::value::array_t& components = value.safeAt("components").as_array();
 	for (const json::value& data : components)
 	{
-		const std::string& type = data.safeAt("component_type").as_string();
+		const std::string& type = data.safeAt("component_type").as_string("");
 		Component* const component = TypeFactory::instantiate<Component>(type);
 		if (component != nullptr)
 		{

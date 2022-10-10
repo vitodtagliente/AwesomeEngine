@@ -14,6 +14,7 @@ json::value serialize(const IType& type)
 		{
 		case PropertyType::T_bool: data[name] = prop.value<bool>(); break;
 		case PropertyType::T_char: data[name] = prop.value<char>(); break;
+		case PropertyType::T_custom_enum: data[name] = prop.value<int>(); break;
 		case PropertyType::T_double: data[name] = prop.value<double>(); break;
 		case PropertyType::T_float: data[name] = prop.value<float>(); break;
 		case PropertyType::T_int: data[name] = prop.value<int>(); break;
@@ -162,37 +163,37 @@ json::value serialize(const math::vec4& v)
 template<>
 json::value serialize(const ImageAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
 json::value serialize(const PrefabAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
 json::value serialize(const SceneAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
 json::value serialize(const SpriteAnimationAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
 json::value serialize(const SpriteAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
 json::value serialize(const TextAssetPtr& asset)
 {
-	return static_cast<std::string>(asset->descriptor.id);
+	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
 template<>
@@ -212,6 +213,7 @@ bool deserialize(const json::value& value, IType& type)
 			}
 			break;
 		}
+		case PropertyType::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case PropertyType::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
 		case PropertyType::T_float: prop.value<double>() = value.safeAt(name).as_number(0).as_float(); break;
 		case PropertyType::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;

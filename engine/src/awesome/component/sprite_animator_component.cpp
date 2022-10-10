@@ -1,6 +1,7 @@
 #include "sprite_animator_component.h"
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
 #include "sprite_renderer_component.h"
@@ -111,14 +112,11 @@ std::string SpriteAnimatorComponent::getPlayingAnimation() const
 json::value SpriteAnimatorComponent::serialize() const
 {
 	json::value data = Component::serialize();
-
 	json::value anims = json::object();
 	for (const auto& pair : animations)
 	{
 		anims[pair.first] = ::serialize(pair.second->descriptor.id);
 	}
-
-	data["autoplay"] = autoplay;
 	data["animations"] = anims;
 	return data;
 }
@@ -126,14 +124,19 @@ json::value SpriteAnimatorComponent::serialize() const
 void SpriteAnimatorComponent::deserialize(const json::value& value)
 {
 	Component::deserialize(value);
-	autoplay = value["autoplay"].as_bool(false);
-	const auto& anims = value["animations"].as_object({});
+	const auto& anims = value.safeAt("animations").as_object({});
 	for (const auto& pair : anims)
 	{
 		uuid animationId = uuid::Invalid;
 		::deserialize(pair.second, animationId);
 		animations.insert(std::make_pair(pair.first, AssetLibrary::instance().find<SpriteAnimationAsset>(animationId)));
 	}
+}
+
+void SpriteAnimatorComponent::inspect()
+{
+	Component::inspect();
+	Layout::input("Animations", animations);
 }
 
 void SpriteAnimatorComponent::updateFrame(const SpriteAnimation::Frame& frame)
