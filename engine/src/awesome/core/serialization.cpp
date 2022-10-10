@@ -1,5 +1,7 @@
 #include "serialization.h"
 
+#include <awesome/asset/asset_library.h>
+
 template<>
 json::value serialize(const IType& type)
 {
@@ -47,6 +49,30 @@ json::value serialize(const IType& type)
 			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
 			{
 				data[name] = serialize(prop.value<math::vec2>());
+			}
+			else if (prop.typeStr == "ImageAssetPtr")
+			{
+				data[name] = serialize(prop.value<ImageAssetPtr>());
+			}
+			else if (prop.typeStr == "PrefabAssetPtr")
+			{
+				data[name] = serialize(prop.value<PrefabAssetPtr>());
+			}
+			else if (prop.typeStr == "SceneAssetPtr")
+			{
+				data[name] = serialize(prop.value<SceneAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			{
+				data[name] = serialize(prop.value<SpriteAnimationAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAssetPtr")
+			{
+				data[name] = serialize(prop.value<SpriteAssetPtr>());
+			}
+			else if (prop.typeStr == "TextAssetPtr")
+			{
+				data[name] = serialize(prop.value<TextAssetPtr>());
 			}
 			break;
 		}
@@ -134,6 +160,42 @@ json::value serialize(const math::vec4& v)
 }
 
 template<>
+json::value serialize(const ImageAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
+json::value serialize(const PrefabAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
+json::value serialize(const SceneAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
+json::value serialize(const SpriteAnimationAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
+json::value serialize(const SpriteAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
+json::value serialize(const TextAssetPtr& asset)
+{
+	return static_cast<std::string>(asset->descriptor.id);
+}
+
+template<>
 bool deserialize(const json::value& value, IType& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
@@ -185,6 +247,30 @@ bool deserialize(const json::value& value, IType& type)
 			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
 			{
 				deserialize(value.safeAt(name), prop.value<math::vec2>());
+			}
+			else if (prop.typeStr == "ImageAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<ImageAssetPtr>());
+			}
+			else if (prop.typeStr == "PrefabAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<PrefabAssetPtr>());
+			}
+			else if (prop.typeStr == "SceneAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<SceneAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<SpriteAnimationAssetPtr>());
+			}
+			else if (prop.typeStr == "SpriteAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<SpriteAssetPtr>());
+			}
+			else if (prop.typeStr == "TextAssetPtr")
+			{
+				deserialize(value.safeAt(name), prop.value<TextAssetPtr>());
 			}
 			break;
 		}
@@ -283,5 +369,59 @@ bool deserialize(const json::value& value, math::vec4& v)
 	v.y = value.safeAt("y").as_number(0.0f).as_float();
 	v.z = value.safeAt("z").as_number(0.0f).as_float();
 	v.w = value.safeAt("w").as_number(0.0f).as_float();
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, ImageAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<ImageAsset>(id);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, PrefabAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<PrefabAsset>(id);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, SceneAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<SceneAsset>(id);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<SpriteAnimationAsset>(id);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, SpriteAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<SpriteAsset>(id);
+	return true;
+}
+
+template<>
+bool deserialize(const json::value& value, TextAssetPtr& asset)
+{
+	uuid id = uuid::Invalid;
+	::deserialize(value, id);
+	asset = AssetLibrary::instance().find<TextAsset>(id);
 	return true;
 }

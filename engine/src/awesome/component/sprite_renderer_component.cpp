@@ -1,7 +1,5 @@
 #include "sprite_renderer_component.h"
 
-#include <awesome/asset/asset_library.h>
-#include <awesome/asset/sprite_asset.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -34,26 +32,4 @@ void SpriteRendererComponent::update(const double /*deltaTime*/)
 	{
 		scale.y = -scale.y;
 	}
-}
-
-json::value SpriteRendererComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["sprite"] = sprite ? ::serialize(sprite->descriptor.id) : "";
-	data["color"] = ::serialize(color);
-	data["flipX"] = flipX;
-	data["flipY"] = flipY;
-	return data;
-}
-
-void SpriteRendererComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-
-	uuid spriteId = uuid::Invalid;
-	::deserialize(value["sprite"], spriteId);
-	sprite = AssetLibrary::instance().find<SpriteAsset>(spriteId);
-	::deserialize(value["color"], color);
-	flipX = value.safeAt("flipX").as_bool(false);
-	flipY = value.safeAt("flipY").as_bool(false);
 }
