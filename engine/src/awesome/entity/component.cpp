@@ -33,7 +33,7 @@ json::value Component::serialize() const
 
 void Component::deserialize(const json::value& value)
 {
-	::deserialize(value.safeAt("id"), (IType&)*this);
+	::deserialize(value, (IType&)*this);
 }
 
 void Component::inspect()
