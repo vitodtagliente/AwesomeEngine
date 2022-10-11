@@ -1,6 +1,7 @@
 #include "world.h"
 
 #include <awesome/asset/asset_importer.h>
+#include <awesome/component/collider2d_component.h>
 #include <awesome/data/archive.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/net/network_manager.h>
@@ -10,9 +11,16 @@ void World::update(const double deltaTime)
 	for (const auto& entity : m_entities)
 	{
 		entity->update(deltaTime);
+
+		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
+		if (collider != nullptr)
+		{
+			m_quadspace.insert(entity.get());
+		}
 	}
 
 	m_sceneLoader.update(deltaTime);
+	checkCollisions();
 }
 
 void World::render(graphics::Renderer2D* const renderer)
@@ -53,6 +61,7 @@ void World::flush()
 		m_entities.push_back(std::move(entityToSpawn));
 	}
 	m_pendingSpawnEntities.clear();
+	m_quadspace.clear();
 }
 
 std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
@@ -96,6 +105,30 @@ Entity* const World::findEntityByName(const std::string& name) const
 		return it->get();
 	}
 	return nullptr;
+}
+
+Entity* const World::findNearestEntity(Entity* const entity) const
+{
+	std::vector<Entity*> entities = findNearestEntities(entity);
+	if (entities.empty()) return nullptr;
+
+	int nearestIndex = 0;
+	float minDistance = entity->transform.position.distance(entities[0]->transform.position);
+	for (int i = 1; i < entities.size(); ++i)
+	{
+		const float distance = entity->transform.position.distance(entities[i]->transform.position);
+		if (distance < minDistance)
+		{
+			minDistance = distance;
+			nearestIndex = i;
+		}
+	}
+	return entities[nearestIndex];
+}
+
+std::vector<Entity*> World::findNearestEntities(Entity* const entity) const
+{
+	return m_quadspace.retrieve(entity);
 }
 
 Entity* const World::spawn()
@@ -174,7 +207,7 @@ bool World::isLoading(size_t& progress) const
 void World::load(const SceneAssetPtr& scene)
 {
 	m_loadedSceneId = scene->descriptor.id;
-	
+
 	clear();
 
 	m_sceneLoader.load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
@@ -231,7 +264,7 @@ json::value World::netSerialize() const
 void World::netDeserialize(const json::value& value)
 {
 	const auto& jsonEntities = value.safeAt("entities").as_array({});
-	for(const json::value& jsonEntity : jsonEntities)
+	for (const json::value& jsonEntity : jsonEntities)
 	{
 		uuid entityId = uuid::Invalid;
 		::deserialize(jsonEntity.safeAt("id"), entityId);
@@ -247,6 +280,23 @@ void World::netDeserialize(const json::value& value)
 			std::unique_ptr<Entity> netEntity = std::make_unique<Entity>();
 			netEntity->deserialize(jsonEntity);
 			m_pendingSpawnEntities.push_back(std::move(netEntity));
+		}
+	}
+}
+
+void World::checkCollisions()
+{
+	for (const auto& entity : m_entities)
+	{
+		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
+		if (collider == nullptr) continue;
+
+		for (Entity* const other : findNearestEntities(entity.get()))
+		{
+			Collider2dComponent* const otherCollider = other->findComponent<Collider2dComponent>();
+			if (otherCollider == nullptr) continue;
+
+			collider->collide(*otherCollider);
 		}
 	}
 }

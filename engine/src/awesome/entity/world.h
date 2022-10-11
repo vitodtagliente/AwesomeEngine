@@ -15,6 +15,7 @@
 #include <awesome/math/vector3.h>
 
 #include "entity.h"
+#include "quadspace.h"
 
 namespace graphics
 {
@@ -35,6 +36,8 @@ public:
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
 	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;
+	Entity* const findNearestEntity(Entity* const entity) const;
+	std::vector<Entity*> findNearestEntities(Entity* const entity) const;
 	inline const uuid& getLoadedSceneId() const { return m_loadedSceneId; }
 
 	Entity* const spawn();
@@ -56,15 +59,17 @@ public:
 	// serialization
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value&) override {};
-	
+
 	json::value netSerialize() const;
 	void netDeserialize(const json::value&);
 
 private:
+	void checkCollisions();
 
 	std::vector<std::unique_ptr<Entity>> m_entities;
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
 	uuid m_loadedSceneId{ uuid::Invalid };
+	Quadspace m_quadspace{ 200 };
 	SceneLoader m_sceneLoader;
 };
