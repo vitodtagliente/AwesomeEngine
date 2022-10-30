@@ -36,6 +36,8 @@ void World::render(graphics::Renderer2D* const renderer)
 	{
 		entity->render(renderer);
 	}
+
+	m_quadspace.render(renderer);
 }
 
 void World::flush()

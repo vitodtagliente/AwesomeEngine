@@ -7,14 +7,21 @@
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
+namespace graphics
+{
+	class Renderer2D;
+}
+
 class Quadspace
 {
 public:
 	Quadspace(int bounds);
 
-	std::vector<Entity*> retrieve(Entity* const entity) const;
 	void clear();
 	void insert(Entity* const entity);
+	std::vector<Entity*> retrieve(Entity* const entity) const;
+
+	void render(graphics::Renderer2D* const renderer);
 
 private:
 	void insertNewSpace(Entity* const entity);
@@ -26,7 +33,7 @@ private:
 
 		std::vector<Entity*> entities;
 		math::vec3 position;
-		int bounds;
+		int bounds{ 0 };
 
 		void clear();
 	};

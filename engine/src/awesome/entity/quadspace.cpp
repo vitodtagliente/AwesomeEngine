@@ -1,5 +1,7 @@
 #include "quadspace.h"
 
+#include <awesome/graphics/renderer.h>
+
 void Quadspace::Space::clear()
 {
 	entities.clear();
@@ -29,6 +31,16 @@ std::vector<Entity*> Quadspace::retrieve(Entity* const entity) const
 		}
 	}
 	return result;
+}
+
+void Quadspace::render(graphics::Renderer2D* const renderer)
+{
+	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
+	for (const Space& space : m_spaces)
+	{
+		renderer->drawCircle(space.position, static_cast<float>(space.bounds), graphics::Color::White);
+	}
+	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }
 
 /**

@@ -215,7 +215,7 @@ bool deserialize(const json::value& value, IType& type)
 		}
 		case PropertyType::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case PropertyType::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
-		case PropertyType::T_float: prop.value<double>() = value.safeAt(name).as_number(0).as_float(); break;
+		case PropertyType::T_float: prop.value<float>() = value.safeAt(name).as_number(0).as_float(); break;
 		case PropertyType::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case PropertyType::T_void: break;
 		case PropertyType::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
