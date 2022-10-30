@@ -3,6 +3,7 @@
 
 #include <functional>
 
+#include <awesome/core/event.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/math/vector2.h>
@@ -20,17 +21,18 @@ public:
 
 	void render(class graphics::Renderer2D* const renderer) override;
 
-	bool collide(const Collider2dComponent& other) const;
+	bool collide(const Collider2dComponent& other);
 
 	virtual void inspect() override;
 
-	std::function<void(const Collider2dComponent&)> onTrigger;
 	PROPERTY() bool isTrigger{ false };
+	event_t<const Collider2dComponent&> onCollision;
+	event_t<const Collider2dComponent&> onTrigger;
 
 	GENERATED_BODY()
 
 private:
 	PROPERTY(IsEnum) ShapeType m_type{ ShapeType::Rect };
-	PROPERTY() math::vec2 m_rectSize{ 1.0f, 1.0f };
-	PROPERTY() float m_circleSize{ 1.0f };
+	PROPERTY() math::vec2 m_bounds{ 1.0f, 1.0f };
+	bool m_isColliding{ false };
 };

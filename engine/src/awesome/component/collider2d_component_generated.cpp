@@ -12,9 +12,7 @@ const properties_t Collider2dComponent::getTypeProperties() const {
     properties.insert(std::make_pair<std::string, Property>("m_type", Property("m_type", PropertyType::T_custom_enum, "ShapeType", true, sizeof(ShapeType), origin + offsetof(Collider2dComponent, m_type), {
         std::make_pair("IsEnum", ""),
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_rectSize", Property("m_rectSize", PropertyType::T_unknown, "math::vec2", true, sizeof(math::vec2), origin + offsetof(Collider2dComponent, m_rectSize), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("m_circleSize", Property("m_circleSize", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(Collider2dComponent, m_circleSize), {
+    properties.insert(std::make_pair<std::string, Property>("m_bounds", Property("m_bounds", PropertyType::T_unknown, "math::vec2", true, sizeof(math::vec2), origin + offsetof(Collider2dComponent, m_bounds), {
     })));
     return properties;
 }

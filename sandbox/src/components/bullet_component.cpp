@@ -10,15 +10,16 @@ void BulletComponent::init()
 {
 	m_body = getOwner()->findComponent<Body2dComponent>();
 	m_collider = getOwner()->findComponent<Collider2dComponent>();
-	m_collider->onTrigger = [this](const Collider2dComponent& other) -> void
-	{
-		HealthComponent* health = other.getOwner()->findComponent<HealthComponent>();
-		if (health)
+	m_collider->onTrigger.bind([this](const Collider2dComponent& other) -> void
 		{
-			*health -= damage;
-			World::instance().destroy(getOwner());
+			HealthComponent* health = other.getOwner()->findComponent<HealthComponent>();
+			if (health)
+			{
+				*health -= damage;
+				World::instance().destroy(getOwner());
+			}
 		}
-	};
+	);
 }
 
 void BulletComponent::update(const double deltaTime)
