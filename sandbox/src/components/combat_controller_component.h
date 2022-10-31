@@ -17,7 +17,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-CLASS()
+CLASS(Category = Component)
 class CombatControllerComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

@@ -16,6 +16,7 @@ std::size_t RotatorComponent::getTypeSize() const { return RotatorComponentType:
 const Type& RotatorComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new RotatorComponent(); }, "RotatorComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(RotatorComponent));
     return s_type;
 }

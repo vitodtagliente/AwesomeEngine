@@ -19,9 +19,3 @@ void RotatorComponent::update(double deltaTime)
 		transform.rotation.z = 0;
 	}
 }
-
-void RotatorComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Speed", speed);
-}

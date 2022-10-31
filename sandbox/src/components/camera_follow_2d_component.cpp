@@ -26,22 +26,3 @@ void CameraFollow2dComponent::update(const double deltaTime)
 		);
 	}
 }
-
-void CameraFollow2dComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Speed", m_speed);
-}
-
-json::value CameraFollow2dComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["speed"] = m_speed;
-	return data;
-}
-
-void CameraFollow2dComponent::deserialize(const json::value& data)
-{
-	Component::deserialize(data);
-	m_speed = data.safeAt("speed").as_number(1.0f).as_float();
-}

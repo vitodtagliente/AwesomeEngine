@@ -6,7 +6,7 @@
 
 #include "bullet_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class BulletComponent : public Component
 {
 public:
@@ -18,11 +18,8 @@ public:
 
 	void shoot(const math::vec3& direction);
 
-	virtual void inspect() override;
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-
-	int damage{ 1 };
+	PROPERTY() int damage{ 1 };
+	PROPERTY() float speed{ 1.f };
 
 	GENERATED_BODY()
 
@@ -30,5 +27,4 @@ private:
 	Body2dComponent* m_body;
 	Collider2dComponent* m_collider;
 	math::vec3 m_direction;
-	float m_speed{ 1.f };
 };

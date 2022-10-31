@@ -24,32 +24,10 @@ void BulletComponent::init()
 
 void BulletComponent::update(const double deltaTime)
 {
-	m_body->move(m_direction * m_speed * static_cast<float>(deltaTime));
+	m_body->move(m_direction * speed * static_cast<float>(deltaTime));
 }
 
 void BulletComponent::shoot(const math::vec3& direction)
 {
 	m_direction = direction;
-}
-
-void BulletComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Damage", damage);
-	Layout::input("Speed", m_speed);
-}
-
-json::value BulletComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["damage"] = damage;
-	data["speed"] = m_speed;
-	return data;
-}
-
-void BulletComponent::deserialize(const json::value& data)
-{
-	Component::deserialize(data);
-	damage = data.safeAt("damage").as_number(1).as_int();
-	m_speed = data.safeAt("speed").as_number(1.f).as_float();
 }

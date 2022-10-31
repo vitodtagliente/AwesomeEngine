@@ -8,7 +8,7 @@
 
 #include "pawn_controller_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class PawnControllerComponent : public Component
 {
 public:

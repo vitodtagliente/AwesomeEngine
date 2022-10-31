@@ -5,7 +5,22 @@
 const meta_t& HealthComponent::getTypeMeta() const { return HealthComponentType::type().meta; }
 const std::string& HealthComponent::getTypeName() const { return HealthComponentType::type().name; }
 const properties_t HealthComponent::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
+    properties.insert(std::make_pair<std::string, Property>("min", Property("min", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(HealthComponent, min), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("max", Property("max", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(HealthComponent, max), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_colorToRestore", Property("m_colorToRestore", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(HealthComponent, m_colorToRestore), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_destroyOnDeath", Property("m_destroyOnDeath", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(HealthComponent, m_destroyOnDeath), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_hitColor", Property("m_hitColor", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(HealthComponent, m_hitColor), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_hitDuration", Property("m_hitDuration", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(HealthComponent, m_hitDuration), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_value", Property("m_value", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(HealthComponent, m_value), {
+    })));
     return properties;
 }
 std::size_t HealthComponent::getTypeSize() const { return HealthComponentType::type().size; }
@@ -13,6 +28,7 @@ std::size_t HealthComponent::getTypeSize() const { return HealthComponentType::t
 const Type& HealthComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new HealthComponent(); }, "HealthComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(HealthComponent));
     return s_type;
 }

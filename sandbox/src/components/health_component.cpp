@@ -28,41 +28,7 @@ void HealthComponent::update(const double deltaTime)
 	}
 }
 
-void HealthComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Min", min);
-	Layout::input("Max", max);
-	Layout::input("Value", m_value);
-	Layout::input("Destroy on Death", m_destroyOnDeath);
-	Layout::input("Hit Color", m_hitColor);
-	Layout::input("Hit Duration", m_hitDuration);
-}
-
-json::value HealthComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["min"] = min;
-	data["max"] = max;
-	data["value"] = m_value;
-	data["destroyOnDeath"] = m_destroyOnDeath;
-	data["hitColor"] = ::serialize(m_hitColor);
-	data["hitDuration"] = m_hitDuration;
-	return data;
-}
-
-void HealthComponent::deserialize(const json::value& data)
-{
-	Component::deserialize(data);
-	min = data.safeAt("min").as_number(0).as_int();
-	max = data.safeAt("max").as_number(10).as_int();
-	m_value = data.safeAt("value").as_number(10).as_int();
-	m_destroyOnDeath = data.safeAt("destroyOnDeath").as_bool(false);
-	::deserialize(data.safeAt("hitColor"), m_hitColor);
-	m_hitDuration = data.safeAt("hitDuration").as_number(.1).as_double();
-}
-
-void HealthComponent::set(int value)
+void HealthComponent::setValue(int value)
 {
 	const int lastValue = m_value;
 	m_value = math::clamp(value, min, max);
@@ -84,12 +50,12 @@ int HealthComponent::getPercentage() const
 
 HealthComponent& HealthComponent::operator+=(const int value)
 {
-	set(m_value + value);
+	setValue(m_value + value);
 	return *this;
 }
 
 HealthComponent& HealthComponent::operator-=(const int value)
 {
-	set(m_value - value);
+	setValue(m_value - value);
 	return *this;
 }

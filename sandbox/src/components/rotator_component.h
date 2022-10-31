@@ -5,17 +5,15 @@
 
 #include "rotator_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class RotatorComponent : public Component
 {
 public:
 	RotatorComponent();
 
-	void update(double deltaTime) override;
-	void inspect() override;
+	virtual void update(double deltaTime) override;
 
-	PROPERTY()
-	float speed;
+	PROPERTY() float speed;
 
 	GENERATED_BODY()
 };

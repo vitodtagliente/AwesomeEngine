@@ -5,7 +5,12 @@
 const meta_t& BulletComponent::getTypeMeta() const { return BulletComponentType::type().meta; }
 const std::string& BulletComponent::getTypeName() const { return BulletComponentType::type().name; }
 const properties_t BulletComponent::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
+    properties.insert(std::make_pair<std::string, Property>("damage", Property("damage", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(BulletComponent, damage), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(BulletComponent, speed), {
+    })));
     return properties;
 }
 std::size_t BulletComponent::getTypeSize() const { return BulletComponentType::type().size; }
@@ -13,6 +18,7 @@ std::size_t BulletComponent::getTypeSize() const { return BulletComponentType::t
 const Type& BulletComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new BulletComponent(); }, "BulletComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(BulletComponent));
     return s_type;
 }

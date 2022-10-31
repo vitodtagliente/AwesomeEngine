@@ -13,6 +13,7 @@ std::size_t PawnControllerComponent::getTypeSize() const { return PawnController
 const Type& PawnControllerComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new PawnControllerComponent(); }, "PawnControllerComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(PawnControllerComponent));
     return s_type;
 }

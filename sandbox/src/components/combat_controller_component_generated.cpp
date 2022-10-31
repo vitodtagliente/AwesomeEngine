@@ -13,6 +13,7 @@ std::size_t CombatControllerComponent::getTypeSize() const { return CombatContro
 const Type& CombatControllerComponentType::type()
 {
     static const Type s_type([]() -> IType* { return new CombatControllerComponent(); }, "CombatControllerComponent", {
+        std::make_pair("Category", "Component"),
     }, sizeof(CombatControllerComponent));
     return s_type;
 }

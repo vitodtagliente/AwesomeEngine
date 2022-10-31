@@ -9,7 +9,7 @@
 
 #include "pawn_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class PawnComponent : public Component
 {
 public:
@@ -23,12 +23,8 @@ public:
 
 	virtual void init() override;
 
-	void inspect() override;
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-
-	float speed{ 3.0f };
-	float dashSpeed{ 12.0f };
+	PROPERTY() float speed{ 3.0f };
+	PROPERTY() float dashSpeed{ 12.0f };
 
 	GENERATED_BODY()
 

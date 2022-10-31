@@ -35,25 +35,3 @@ void PawnComponent::init()
 	m_body = getOwner()->findComponent<Body2dComponent>();
 	m_renderer = getOwner()->findComponent<SpriteRendererComponent>();
 }
-
-void PawnComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("Speed", speed);
-	Layout::input("Dash Speed", dashSpeed);
-}
-
-json::value PawnComponent::serialize() const
-{
-	json::value data = Component::serialize();
-	data["speed"] = speed;
-	data["dashSpeed"] = dashSpeed;
-	return data;
-}
-
-void PawnComponent::deserialize(const json::value& value)
-{
-	Component::deserialize(value);
-	speed = value.safeAt("speed").as_number(1.f).as_float();
-	dashSpeed = value.safeAt("dashSpeed").as_number(1.f).as_float();
-}

@@ -6,7 +6,7 @@
 
 #include "camera_follow_2d_component_generated.h"
 
-CLASS()
+CLASS(Category = Component)
 class CameraFollow2dComponent : public Component
 {
 public:
@@ -15,13 +15,9 @@ public:
 
 	virtual void update(double deltaTime) override;
 
-	virtual void inspect() override;
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-
 	GENERATED_BODY()
 
 private:
-	float m_speed{ 3.0f };
+	PROPERTY() float m_speed{ 3.0f };
 	Entity* m_target{ nullptr };
 };
