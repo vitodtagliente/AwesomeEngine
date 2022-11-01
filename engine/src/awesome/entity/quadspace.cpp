@@ -7,11 +7,6 @@ void Quadspace::Space::clear()
 	entities.clear();
 }
 
-Quadspace::Quadspace(const int bounds)
-	: m_bounds(bounds)
-{
-}
-
 /**
  * Retrieve the list of entities near to the specified one
  * @param entity The entity to surround
@@ -77,7 +72,7 @@ void Quadspace::insertNewSpace(Entity* const entity)
 	Space space;
 	space.entities.push_back(entity);
 	space.position = entity->transform.position;
-	space.bounds = m_bounds;
+	space.bounds = settings.bounds;
 	m_spaces.push_back(space);
 }
 

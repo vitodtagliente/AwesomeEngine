@@ -15,13 +15,22 @@ namespace graphics
 class Quadspace
 {
 public:
-	Quadspace(int bounds);
+
+	struct Settings
+	{
+		int bounds{ 100 };
+	};
+
+	Quadspace() = default;
 
 	void clear();
 	void insert(Entity* const entity);
 	std::vector<Entity*> retrieve(Entity* const entity) const;
+	std::size_t size() const { return m_spaces.size(); }
 
 	void render(graphics::Renderer2D* const renderer);
+
+	Settings settings;
 
 private:
 	void insertNewSpace(Entity* const entity);
@@ -39,5 +48,4 @@ private:
 	};
 
 	std::vector<Space> m_spaces;
-	int m_bounds;
 };

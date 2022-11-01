@@ -23,14 +23,14 @@ namespace net
 		NetworkManager::instance().update(deltaTime);
 
 		// test
-		if (Input::instance().isKeyPressed(KeyCode::N))
-		{
-			s_client = std::make_unique<Client>();
-			s_client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
-
-			// command::ConnectRequest request;
-			// s_client->call<command::ConnectRequest, command::ConnectCommand>(request);
-		}
+		// if (Input::instance().isKeyPressed(KeyCode::N))
+		// {
+		// 	s_client = std::make_unique<Client>();
+		// 	s_client->connect(Application::instance().getSettings().serverIp, static_cast<Address::port_t>(Application::instance().getSettings().serverPort));
+		// 
+		// 	// command::ConnectRequest request;
+		// 	// s_client->call<command::ConnectRequest, command::ConnectCommand>(request);
+		// }
 
 		if (s_client)
 		{

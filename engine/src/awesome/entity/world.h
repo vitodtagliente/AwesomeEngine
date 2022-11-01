@@ -70,6 +70,6 @@ private:
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
 	uuid m_loadedSceneId{ uuid::Invalid };
-	Quadspace m_quadspace{ 32 };
+	Quadspace m_quadspace;
 	SceneLoader m_sceneLoader;
 };
