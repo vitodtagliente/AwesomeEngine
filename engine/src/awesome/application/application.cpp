@@ -77,7 +77,7 @@ int Application::run()
 				module->preRendering();
 			}
 
-			world.render(renderer, settings.enabledWireframes);
+			world.render(renderer, settings.wireframesEnabled, settings.wireframesColor);
 
 			for (const auto& module : m_modules)
 			{

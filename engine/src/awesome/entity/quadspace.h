@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <awesome/entity/entity.h>
+#include <awesome/graphics/color.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
@@ -28,7 +29,7 @@ public:
 	std::vector<Entity*> retrieve(Entity* const entity) const;
 	std::size_t size() const { return m_spaces.size(); }
 
-	void render(graphics::Renderer2D* const renderer);
+	void render(graphics::Renderer2D* const renderer, const graphics::Color& wireframesColor);
 
 	Settings settings;
 

@@ -28,12 +28,12 @@ std::vector<Entity*> Quadspace::retrieve(Entity* const entity) const
 	return result;
 }
 
-void Quadspace::render(graphics::Renderer2D* const renderer)
+void Quadspace::render(graphics::Renderer2D* const renderer, const graphics::Color& wireframesColor)
 {
 	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	for (const Space& space : m_spaces)
 	{
-		renderer->drawCircle(space.position, static_cast<float>(space.bounds), graphics::Color::White);
+		renderer->drawCircle(space.position, static_cast<float>(space.bounds), wireframesColor);
 	}
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }

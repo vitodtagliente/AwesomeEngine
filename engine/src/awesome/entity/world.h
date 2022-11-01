@@ -10,6 +10,7 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
+#include <awesome/graphics/color.h>
 #include <awesome/entity/private/scene_loader.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
@@ -29,7 +30,7 @@ public:
 	~World() = default;
 
 	void update(double deltaTime, int quadspaceBounds);
-	void render(graphics::Renderer2D* const renderer, bool drawWireframes);
+	void render(graphics::Renderer2D* const renderer, bool drawWireframes, const graphics::Color& wireframesColor);
 	void flush();
 
 	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }

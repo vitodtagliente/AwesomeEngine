@@ -6,6 +6,7 @@
 
 #include <filesystem>
 #include <awesome/asset/scene_asset.h>
+#include <awesome/graphics/color.h>
 
 #include "application_settings_generated.h"
 
@@ -42,7 +43,8 @@ public:
     PROPERTY() int serverPort { 96000 };
     PROPERTY() int maxServerConnections { 20 };
     PROPERTY() int quadspaceBounds{ 100 };
-    PROPERTY() bool enabledWireframes{ true };
+    PROPERTY() bool wireframesEnabled{ true };
+    PROPERTY() graphics::Color wireframesColor{ graphics::Color::White };
 
     GENERATED_BODY()
 };

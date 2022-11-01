@@ -23,7 +23,7 @@ void World::update(const double deltaTime, const int quadspaceBounds)
 	checkCollisions();
 }
 
-void World::render(graphics::Renderer2D* const renderer, const bool drawWireframes)
+void World::render(graphics::Renderer2D* const renderer, const bool drawWireframes, const graphics::Color& wireframesColor)
 {
 	// sort the entities by z
 	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
@@ -39,7 +39,7 @@ void World::render(graphics::Renderer2D* const renderer, const bool drawWirefram
 
 	if (drawWireframes)
 	{
-		m_quadspace.render(renderer);
+		m_quadspace.render(renderer, wireframesColor);
 	}
 }
 
