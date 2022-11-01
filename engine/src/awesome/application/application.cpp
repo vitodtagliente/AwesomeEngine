@@ -48,7 +48,7 @@ int Application::run()
 		module->startup();
 	}
 
-	Timer fpsTimer(1.f / static_cast<int>(m_settings.fps));
+	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
 	double deltatime = 0.0;
 
 	while (canvas.isOpen())
@@ -56,7 +56,7 @@ int Application::run()
 		m_time.tick();
 		fpsTimer.tick(m_time.getDeltaTime());
 		deltatime += m_time.getDeltaTime();
-		if (!fpsTimer.isExpired() && m_settings.fps != FpsMode::Unlimited) continue;
+		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();
 		canvas.update();
@@ -67,7 +67,7 @@ int Application::run()
 		}
 
 		input.update();
-		world.update(deltatime);
+		world.update(deltatime, settings.quadspaceBounds);
 
 		// rendering
 		{
@@ -77,7 +77,7 @@ int Application::run()
 				module->preRendering();
 			}
 
-			world.render(renderer);
+			world.render(renderer, settings.enabledWireframes);
 
 			for (const auto& module : m_modules)
 			{
@@ -111,23 +111,23 @@ void Application::initSettings()
 {
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
-	reload = JsonFile::load(settingsPath, m_settings);
+	reload = JsonFile::load(settingsPath, settings);
 
 	AssetImporter importer;
-	importer.import(m_settings.workspacePath, true);
-	AssetLibrary::instance().m_directory = m_settings.workspacePath;
+	importer.import(settings.workspacePath, true);
+	AssetLibrary::instance().m_directory = settings.workspacePath;
 
 	if (reload)
 	{
-		JsonFile::load(settingsPath, m_settings);
+		JsonFile::load(settingsPath, settings);
 	}
 
 	SceneAssetPtr sceneToLoad;
-	switch (m_settings.mode)
+	switch (settings.mode)
 	{
-	case Mode::Editor: sceneToLoad = m_settings.editorScene; break;
-	case Mode::Server: sceneToLoad = m_settings.serverScene; break;
-	case Mode::Standalone: sceneToLoad = m_settings.standaloneScene; break;
+	case Mode::Editor: sceneToLoad = settings.editorScene; break;
+	case Mode::Server: sceneToLoad = settings.serverScene; break;
+	case Mode::Standalone: sceneToLoad = settings.standaloneScene; break;
 	}
 
 	if (sceneToLoad)
@@ -148,13 +148,13 @@ void Application::initSettings()
 
 void Application::registerDefaultModules()
 {
-	if (m_settings.mode != Mode::Server)
+	if (settings.mode != Mode::Server)
 	{
 		registerModule<Audio>();
 		registerModule<graphics::Module>();
 	}
 
-	if (m_settings.mode == Mode::Editor)
+	if (settings.mode == Mode::Editor)
 	{
 		registerModule<editor::Module>();
 	}

@@ -50,7 +50,7 @@ void Quadspace::clear()
  * Insert the entity into the quadspace
  * @param entity The entity
  */
-void Quadspace::insert(Entity* const entity)
+void Quadspace::insert(Entity* const entity, const int bounds)
 {
 	const int index = getIndex(entity->transform.position);
 	if (index >= 0)
@@ -59,7 +59,7 @@ void Quadspace::insert(Entity* const entity)
 	}
 	else
 	{
-		insertNewSpace(entity);
+		insertNewSpace(entity, bounds);
 	}
 }
 
@@ -67,12 +67,12 @@ void Quadspace::insert(Entity* const entity)
  * Insert a new space and entity
  * @param entity The entity
  */
-void Quadspace::insertNewSpace(Entity* const entity)
+void Quadspace::insertNewSpace(Entity* const entity, const int bounds)
 {
 	Space space;
 	space.entities.push_back(entity);
 	space.position = entity->transform.position;
-	space.bounds = settings.bounds;
+	space.bounds = bounds;
 	m_spaces.push_back(space);
 }
 

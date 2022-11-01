@@ -23,7 +23,7 @@ enum class FpsMode : int
     Fps30 = 30,
     Fps60 = 60,
     Fps90 = 90,
-    Unlimited = 91,
+    Unlimited,
 };
 
 CLASS()
@@ -41,6 +41,8 @@ public:
     PROPERTY() std::string serverIp;
     PROPERTY() int serverPort { 96000 };
     PROPERTY() int maxServerConnections { 20 };
+    PROPERTY() int quadspaceBounds{ 100 };
+    PROPERTY() bool enabledWireframes{ true };
 
     GENERATED_BODY()
 };

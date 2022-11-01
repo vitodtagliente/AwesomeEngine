@@ -36,8 +36,6 @@ public:
 	Application() = default;
 	virtual ~Application() = default;
 
-	inline const ApplicationSettings& getSettings() const { return m_settings; }
-
 	void init(const std::initializer_list<Module*>& modules = {});
 	int run();
 	void exit();
@@ -50,11 +48,12 @@ public:
 		return module;
 	}
 
+	ApplicationSettings settings;
+
 private:
 	void initSettings();
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
-	ApplicationSettings m_settings;
 	Time m_time;
 };

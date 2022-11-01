@@ -11,7 +11,7 @@ void NetworkWindow::render()
 	{
 	case net::NetworkManager::State::Offline:
 	{
-		const ApplicationSettings& settings = Application::instance().getSettings();
+		const ApplicationSettings& settings = Application::instance().settings;
 
 		if (Layout::button("Start Server"))
 		{

@@ -6,7 +6,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/net/network_manager.h>
 
-void World::update(const double deltaTime)
+void World::update(const double deltaTime, const int quadspaceBounds)
 {
 	for (const auto& entity : m_entities)
 	{
@@ -15,7 +15,7 @@ void World::update(const double deltaTime)
 		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
 		if (collider != nullptr)
 		{
-			m_quadspace.insert(entity.get());
+			m_quadspace.insert(entity.get(), quadspaceBounds);
 		}
 	}
 
@@ -23,7 +23,7 @@ void World::update(const double deltaTime)
 	checkCollisions();
 }
 
-void World::render(graphics::Renderer2D* const renderer)
+void World::render(graphics::Renderer2D* const renderer, const bool drawWireframes)
 {
 	// sort the entities by z
 	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
@@ -37,7 +37,10 @@ void World::render(graphics::Renderer2D* const renderer)
 		entity->render(renderer);
 	}
 
-	m_quadspace.render(renderer);
+	if (drawWireframes)
+	{
+		m_quadspace.render(renderer);
+	}
 }
 
 void World::flush()

@@ -28,11 +28,12 @@ public:
 	World() = default;
 	~World() = default;
 
-	void update(double deltaTime);
-	void render(graphics::Renderer2D* const renderer);
+	void update(double deltaTime, int quadspaceBounds);
+	void render(graphics::Renderer2D* const renderer, bool drawWireframes);
 	void flush();
 
 	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
+	inline const Quadspace& getQuadspace() const { return m_quadspace; }
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
 	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;

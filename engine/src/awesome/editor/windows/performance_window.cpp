@@ -41,5 +41,6 @@ void PerformanceWindow::render()
 		}
 
 		Layout::text(s.str());
+		Layout::text("Quadspaces: " + std::to_string(world.getQuadspace().size()));
 	}
 }

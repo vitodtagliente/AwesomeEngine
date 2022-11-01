@@ -4,13 +4,9 @@
 #include <awesome/data/json_file.h>
 #include <awesome/editor/layout.h>
 
-SettingsWindow::SettingsWindow()
-	: m_settings(Application::instance().getSettings())
-{
-}
-
 void SettingsWindow::render()
 {
+	/*
 	Layout::input("FPS", m_settings.fps);
 	Layout::input("Mode", m_settings.mode);
 	std::string path = m_settings.workspacePath.string();
@@ -31,11 +27,17 @@ void SettingsWindow::render()
 	Layout::input("Server IP", m_settings.serverIp);
 	Layout::input("Server Port", m_settings.serverPort);
 	Layout::input("Max Server Connections", m_settings.maxServerConnections);
+	*/
+
+	ApplicationSettings& settings = Application::instance().settings;
+	Layout::input("FPS", settings.fps);
+	Layout::input("Mode", settings.mode);
+	Layout::input((IType&)settings);
 
 	Layout::separator();
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(m_settings, std::filesystem::current_path() / "settings.json");
+		JsonFile::save(settings, std::filesystem::current_path() / "settings.json");
 	}
 }

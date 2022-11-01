@@ -48,6 +48,10 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("quadspaceBounds", Property("quadspaceBounds", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, quadspaceBounds), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("enabledWireframes", Property("enabledWireframes", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(ApplicationSettings, enabledWireframes), {
+    })));
     return properties;
 }
 std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSettingsType::type().size; }

@@ -24,7 +24,7 @@ public:
 	Quadspace() = default;
 
 	void clear();
-	void insert(Entity* const entity);
+	void insert(Entity* const entity, int bounds);
 	std::vector<Entity*> retrieve(Entity* const entity) const;
 	std::size_t size() const { return m_spaces.size(); }
 
@@ -33,7 +33,7 @@ public:
 	Settings settings;
 
 private:
-	void insertNewSpace(Entity* const entity);
+	void insertNewSpace(Entity* const entity, int bounds);
 	int getIndex(const math::vec3& position) const;
 
 	struct Space
