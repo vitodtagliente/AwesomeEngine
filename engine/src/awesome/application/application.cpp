@@ -17,6 +17,7 @@
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/graphics_module.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/player/player.h>
 #include <awesome/net/net_module.h>
 
 using namespace graphics;
@@ -47,6 +48,10 @@ int Application::run()
 	{
 		module->startup();
 	}
+
+	// initialize the local player
+	// there's always a player at index 0
+	Player player(PlayerIndex::Player0, new PlayerController(new PlayerState()));
 
 	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
 	double deltatime = 0.0;
