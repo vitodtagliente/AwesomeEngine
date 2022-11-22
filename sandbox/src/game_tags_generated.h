@@ -5,7 +5,7 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct EnumType<enum class CombatType>
+struct EnumType<enum class GameTags>
 {
     static const char* name();
     static const std::map<const char*, int> values();

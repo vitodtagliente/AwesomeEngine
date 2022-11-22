@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CrosshairComponentType : RegisteredInTypeFactory<CrosshairComponentType>
+struct MinionControllerComponentType : RegisteredInTypeFactory<MinionControllerComponentType>
 {
-    CrosshairComponentType() = delete;
+    MinionControllerComponentType() = delete;
 
     static const Type& type();
     static bool registered() { return value; };

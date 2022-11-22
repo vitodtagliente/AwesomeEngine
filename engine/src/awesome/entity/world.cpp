@@ -112,6 +112,21 @@ Entity* const World::findEntityByName(const std::string& name) const
 	return nullptr;
 }
 
+Entity* const World::findEntityByTag(const std::string& tag) const
+{
+	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&tag](const std::unique_ptr<Entity>& entity) -> bool
+		{
+			return entity->tag == tag;
+		}
+	);
+
+	if (it != m_entities.end())
+	{
+		return it->get();
+	}
+	return nullptr;
+}
+
 Entity* const World::findNearestEntity(Entity* const entity) const
 {
 	std::vector<Entity*> entities = findNearestEntities(entity);

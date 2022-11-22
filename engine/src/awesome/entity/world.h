@@ -38,6 +38,7 @@ public:
 	std::vector<Entity*> findEntitiesByTag(const std::string& tag) const;
 	Entity* const findEntityById(const uuid& id) const;
 	Entity* const findEntityByName(const std::string& name) const;
+	Entity* const findEntityByTag(const std::string& tag) const;
 	Entity* const findNearestEntity(Entity* const entity) const;
 	std::vector<Entity*> findNearestEntities(Entity* const entity) const;
 	inline const uuid& getLoadedSceneId() const { return m_loadedSceneId; }

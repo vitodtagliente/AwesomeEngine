@@ -1,0 +1,1 @@
+#include "magic_wand_component.h"
