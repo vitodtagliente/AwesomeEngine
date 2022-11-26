@@ -3,6 +3,16 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
+#include "health_component.h"
+
+void PawnComponent::init()
+{
+	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
+	m_body = getOwner()->findComponent<Body2dComponent>();
+	m_health = getOwner()->findComponent<HealthComponent>();
+	m_renderer = getOwner()->findComponent<SpriteRendererComponent>();
+}
+
 void PawnComponent::move(const math::vec3& direction, const double deltaTime)
 {
 	if (m_animator
@@ -27,11 +37,4 @@ void PawnComponent::dash(const double deltaTime)
 	if (m_body == nullptr) return;
 
 	m_body->move(m_direction * dashSpeed * static_cast<float>(deltaTime));
-}
-
-void PawnComponent::init()
-{
-	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
-	m_body = getOwner()->findComponent<Body2dComponent>();
-	m_renderer = getOwner()->findComponent<SpriteRendererComponent>();
 }

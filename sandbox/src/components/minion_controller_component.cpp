@@ -14,10 +14,10 @@ void MinionControllerComponent::init()
 
 void MinionControllerComponent::update(const double deltaTime)
 {
-	if (findNexus())
+	if (findTarget())
 	{
-		// const auto direction = (m_nexus->getOwner()->transform.position - getOwner()->transform.position).normalize();
-		// if (m_pawn) m_pawn->move(direction, deltaTime);
+		const auto direction = (m_target->transform.position - getOwner()->transform.position).normalize();
+		if (m_pawn) m_pawn->move(direction, deltaTime);
 	}
 	else
 	{
@@ -25,7 +25,10 @@ void MinionControllerComponent::update(const double deltaTime)
 	}
 }
 
-bool MinionControllerComponent::findNexus()
+bool MinionControllerComponent::findTarget()
 {
-	return false;
+	if (m_target) return true;
+
+	m_target = World::instance().findEntityByTag(m_targetTag);
+	return m_target != nullptr;
 }

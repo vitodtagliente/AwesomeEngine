@@ -18,7 +18,9 @@ public:
 	GENERATED_BODY()
 
 private:
-	bool findNexus();
+	bool findTarget();
 
 	class PawnComponent* m_pawn{ nullptr };
+	class Entity* m_target{ nullptr };
+	PROPERTY() std::string m_targetTag;
 };
