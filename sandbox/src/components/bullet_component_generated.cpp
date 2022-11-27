@@ -11,6 +11,8 @@ const properties_t BulletComponent::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(BulletComponent, speed), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("m_destroyOnCollision", Property("m_destroyOnCollision", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(BulletComponent, m_destroyOnCollision), {
+    })));
     return properties;
 }
 std::size_t BulletComponent::getTypeSize() const { return BulletComponentType::type().size; }

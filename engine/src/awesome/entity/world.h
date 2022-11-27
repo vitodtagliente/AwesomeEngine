@@ -41,6 +41,7 @@ public:
 	Entity* const findEntityByTag(const std::string& tag) const;
 	Entity* const findNearestEntity(Entity* const entity) const;
 	std::vector<Entity*> findNearestEntities(Entity* const entity) const;
+	std::vector<Entity*> findNearestEntities(Entity* const entity, float distance) const;
 	inline const uuid& getLoadedSceneId() const { return m_loadedSceneId; }
 
 	Entity* const spawn();

@@ -1,8 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/component/body2d_component.h>
-#include <awesome/component/collider2d_component.h>
+#include <awesome/entity/component.h>
 
 #include "bullet_component_generated.h"
 
@@ -24,7 +23,8 @@ public:
 	GENERATED_BODY()
 
 private:
-	Body2dComponent* m_body;
-	Collider2dComponent* m_collider;
+	class Body2dComponent* m_body;
+	class Collider2dComponent* m_collider;
+	PROPERTY() bool m_destroyOnCollision{ true };
 	math::vec3 m_direction;
 };

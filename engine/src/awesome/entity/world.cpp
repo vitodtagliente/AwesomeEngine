@@ -8,15 +8,20 @@
 
 void World::update(const double deltaTime, const int quadspaceBounds)
 {
+	// quadtree update
 	for (const auto& entity : m_entities)
 	{
-		entity->update(deltaTime);
-
 		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
 		if (collider != nullptr)
 		{
 			m_quadspace.insert(entity.get(), quadspaceBounds);
 		}
+	}
+
+	// entities update
+	for (const auto& entity : m_entities)
+	{
+		entity->update(deltaTime);
 	}
 
 	m_sceneLoader.update(deltaTime);
@@ -129,7 +134,7 @@ Entity* const World::findEntityByTag(const std::string& tag) const
 
 Entity* const World::findNearestEntity(Entity* const entity) const
 {
-	std::vector<Entity*> entities = findNearestEntities(entity);
+	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
 	if (entities.empty()) return nullptr;
 
 	int nearestIndex = 0;
@@ -149,6 +154,20 @@ Entity* const World::findNearestEntity(Entity* const entity) const
 std::vector<Entity*> World::findNearestEntities(Entity* const entity) const
 {
 	return m_quadspace.retrieve(entity);
+}
+
+std::vector<Entity*> World::findNearestEntities(Entity* const entity, const float distance) const
+{
+	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
+
+	entities.erase(std::remove_if(entities.begin(), entities.end(), [entity, distance](Entity* const nearEntity) -> bool
+			{
+				return entity->transform.position.distance(nearEntity->transform.position) > distance;
+			}
+		), entities.end()
+	);
+
+	return entities;
 }
 
 Entity* const World::spawn()

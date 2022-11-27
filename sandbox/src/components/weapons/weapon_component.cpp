@@ -1,0 +1,1 @@
+#include "weapon_component.h"

@@ -1,5 +1,7 @@
 #include "bullet_component.h"
 
+#include <awesome/component/body2d_component.h>
+#include <awesome/component/collider2d_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
@@ -16,7 +18,10 @@ void BulletComponent::init()
 			if (health)
 			{
 				*health -= damage;
-				World::instance().destroy(getOwner());
+				if (m_destroyOnCollision)
+				{
+					World::instance().destroy(getOwner());
+				}
 			}
 		}
 	);
