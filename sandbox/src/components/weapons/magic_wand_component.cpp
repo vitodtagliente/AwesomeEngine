@@ -8,8 +8,7 @@
 
 void MagicWandComponent::init()
 {
-	m_activationTimer = frequency;
-	enabled = m_bulletPrefab != nullptr;
+
 }
 
 void MagicWandComponent::update(const double deltaTime)
@@ -17,7 +16,10 @@ void MagicWandComponent::update(const double deltaTime)
 	m_activationTimer -= deltaTime;
 	if (m_activationTimer <= 0)
 	{
-		activate();
+		if (m_bulletPrefab != nullptr)
+		{
+			activate();
+		}
 		m_activationTimer = frequency;
 	}
 }

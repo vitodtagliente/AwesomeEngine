@@ -8,7 +8,7 @@
 
 void ShiedComponent::init()
 {
-	m_activationTimer = frequency;
+
 }
 
 void ShiedComponent::render(graphics::Renderer2D* const renderer)

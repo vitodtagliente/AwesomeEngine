@@ -6,8 +6,6 @@
 void HealerComponent::init()
 {
 	m_health = getOwner()->findComponent<HealthComponent>();
-	enabled = m_health != nullptr;
-	m_activationTimer = frequency;
 }
 
 void HealerComponent::update(const double deltaTime)
@@ -15,7 +13,10 @@ void HealerComponent::update(const double deltaTime)
 	m_activationTimer -= deltaTime;
 	if (m_activationTimer <= 0)
 	{
-		(*m_health) += efficacy;
+		if (m_health)
+		{
+			(*m_health) += efficacy;
+		}
 		m_activationTimer = frequency;
 	}
 }

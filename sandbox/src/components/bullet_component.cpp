@@ -8,6 +8,7 @@
 #include <awesome/core/logger.h>
 
 #include "health_component.h"
+#include  "../game_tags.h"
 
 void BulletComponent::init()
 {
@@ -18,6 +19,8 @@ void BulletComponent::init()
 	{
 		m_collider->onTrigger.bind([this](const Collider2dComponent& other) -> void
 			{
+				if (other.getOwner()->tag != enumToString(GameTags::Minion)) return;
+
 				HealthComponent* health = other.getOwner()->findComponent<HealthComponent>();
 				if (health)
 				{
