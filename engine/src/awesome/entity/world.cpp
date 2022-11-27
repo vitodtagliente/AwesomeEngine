@@ -151,6 +151,37 @@ Entity* const World::findNearestEntity(Entity* const entity) const
 	return entities[nearestIndex];
 }
 
+Entity* const World::findNearestEntityByTag(Entity* const entity, const std::string& tag) const
+{
+	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
+	if (entities.empty()) return nullptr;
+
+	int nearestIndex = -1;
+	float minDistance = 0;
+	for (int i = 0; i < entities.size(); ++i)
+	{
+		if (entities[i]->tag != tag) continue;
+
+		const float distance = entity->transform.position.distance(entities[i]->transform.position);
+
+		if (nearestIndex == -1)
+		{
+			nearestIndex = i;
+			minDistance = distance;
+			continue;
+		}
+
+		if (distance < minDistance)
+		{
+			minDistance = distance;
+			nearestIndex = i;
+		}
+	}
+
+	if (nearestIndex == -1) return nullptr;
+	return entities[nearestIndex];
+}
+
 std::vector<Entity*> World::findNearestEntities(Entity* const entity) const
 {
 	return m_quadspace.retrieve(entity);
@@ -164,6 +195,34 @@ std::vector<Entity*> World::findNearestEntities(Entity* const entity, const floa
 			{
 				return entity->transform.position.distance(nearEntity->transform.position) > distance;
 			}
+		), entities.end()
+	);
+
+	return entities;
+}
+
+std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const std::string& tag) const
+{
+	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
+
+	entities.erase(std::remove_if(entities.begin(), entities.end(), [tag](Entity* const nearEntity) -> bool
+		{
+			return nearEntity->tag != tag;
+		}
+		), entities.end()
+	);
+
+	return entities;
+}
+
+std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const float distance, const std::string& tag) const
+{
+	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
+
+	entities.erase(std::remove_if(entities.begin(), entities.end(), [entity, distance, tag](Entity* const nearEntity) -> bool
+		{
+			return nearEntity->tag != tag || entity->transform.position.distance(nearEntity->transform.position) > distance;
+		}
 		), entities.end()
 	);
 

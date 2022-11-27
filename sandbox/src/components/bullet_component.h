@@ -16,6 +16,7 @@ public:
 	virtual void update(double deltaTime) override;
 
 	void shoot(const math::vec3& direction);
+	void shoot(Entity* const entity);
 
 	PROPERTY() int damage{ 1 };
 	PROPERTY() float speed{ 1.f };
@@ -27,4 +28,5 @@ private:
 	class Collider2dComponent* m_collider;
 	PROPERTY() bool m_destroyOnCollision{ true };
 	math::vec3 m_direction;
+	class Entity* m_target{ nullptr };
 };
