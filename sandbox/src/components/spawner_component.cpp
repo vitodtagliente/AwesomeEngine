@@ -62,7 +62,7 @@ void SpawnerComponent::update(const double deltaTime)
 json::value SpawnerComponent::serialize() const
 {
 	json::value data = Component::serialize();
-	json::value waves = json::object();
+	json::value waves = json::array();
 	for (const Wave& wave : m_waves)
 	{
 		waves.push_back(::serialize((const IType&)wave));
