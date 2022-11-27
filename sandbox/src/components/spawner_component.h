@@ -1,7 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vector>
+
 #include <awesome/entity/component.h>
+
+#include "../data/wave.h"
 
 #include "spawner_component_generated.h"
 
@@ -15,8 +19,28 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime);
 
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
+	virtual void inspect() override;
+	
+	void start();
+
 	GENERATED_BODY()
 
 private:
+	enum class WavePhase
+	{
+		Beginning,
+		Waiting,
+		Spawning,
+		Ending
+	};
 
+	PROPERTY() bool m_autostart{ false };
+	bool m_running{ false };
+	double m_timer{ 0 };
+	int m_waveIndex{ 0 };
+	int m_waveInternalIndex{ 0 };
+	WavePhase m_wavePhase{ WavePhase::Beginning };
+	std::vector<Wave> m_waves;
 };

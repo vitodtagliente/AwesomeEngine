@@ -5,7 +5,10 @@
 const meta_t& SpawnerComponent::getTypeMeta() const { return SpawnerComponentType::type().meta; }
 const std::string& SpawnerComponent::getTypeName() const { return SpawnerComponentType::type().name; }
 const properties_t SpawnerComponent::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
+    properties.insert(std::make_pair<std::string, Property>("m_autostart", Property("m_autostart", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(SpawnerComponent, m_autostart), {
+    })));
     return properties;
 }
 std::size_t SpawnerComponent::getTypeSize() const { return SpawnerComponentType::type().size; }
