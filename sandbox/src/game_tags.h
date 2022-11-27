@@ -9,6 +9,6 @@ ENUM()
 enum class GameTags
 {
 	Bullet,
-	Mininon,
+	Minion,
 	Player
 };

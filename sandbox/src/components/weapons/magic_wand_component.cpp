@@ -26,7 +26,7 @@ void MagicWandComponent::activate()
 {
 	World& world = World::instance();
 
-	Entity* const nearestEntity = world.findNearestEntityByTag(getOwner(), enumToString(GameTags::Mininon));
+	Entity* const nearestEntity = world.findNearestEntityByTag(getOwner(), enumToString(GameTags::Minion));
 	if (nearestEntity == nullptr) return;
 
 	Entity* const bulletEntity = world.spawn(m_bulletPrefab, getOwner()->transform.position);

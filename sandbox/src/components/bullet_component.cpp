@@ -5,6 +5,7 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
+#include <awesome/core/logger.h>
 
 #include "health_component.h"
 
@@ -13,19 +14,27 @@ void BulletComponent::init()
 	m_body = getOwner()->findComponent<Body2dComponent>();
 	enabled = m_body != nullptr;
 	m_collider = getOwner()->findComponent<Collider2dComponent>();
-	m_collider->onTrigger.bind([this](const Collider2dComponent& other) -> void
-		{
-			HealthComponent* health = other.getOwner()->findComponent<HealthComponent>();
-			if (health)
+	if (m_collider)
+	{
+		m_collider->onTrigger.bind([this](const Collider2dComponent& other) -> void
 			{
-				*health -= damage;
-				if (m_destroyOnCollision)
+				HealthComponent* health = other.getOwner()->findComponent<HealthComponent>();
+				if (health)
 				{
-					World::instance().destroy(getOwner());
+					*health -= damage;
+					if (m_destroyOnCollision)
+					{
+						World::instance().destroy(getOwner());
+					}
 				}
 			}
-		}
-	);
+		);
+	}
+	else
+	{
+		ERR_LOG("BulletComponent", "Invalid Collider2dComponent, destroying the entity...");
+		World::instance().destroy(getOwner());
+	}
 }
 
 void BulletComponent::update(const double deltaTime)

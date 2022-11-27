@@ -7,7 +7,7 @@ const std::map<const char*, int>  EnumType<GameTags>::values()
 {
     static std::map<const char*, int> s_values{
         { "Bullet", static_cast<int>(GameTags::Bullet) }, 
-        { "Mininon", static_cast<int>(GameTags::Mininon) }, 
+        { "Minion", static_cast<int>(GameTags::Minion) }, 
         { "Player", static_cast<int>(GameTags::Player) }, 
     };
     return s_values;
