@@ -50,7 +50,13 @@ void SpawnerComponent::update(const double deltaTime)
 				break;
 			}
 
-			World::instance().spawn(currentWave.minionPrefab);
+			math::vec3 spawnPosition = currentWave.spawnPosition;
+			if (currentWave.spawnType == SpawnType::AroundPosition)
+			{
+				spawnPosition.x += math::random(-currentWave.spawnRange.x, currentWave.spawnRange.x);
+				spawnPosition.y = math::random(-currentWave.spawnRange.y, currentWave.spawnRange.y);
+			}
+			World::instance().spawn(currentWave.minionPrefab, spawnPosition);
 			m_timer = currentWave.perSpawnDelay;
 			break;
 		}
@@ -71,7 +77,9 @@ json::value SpawnerComponent::serialize() const
 	json::value waves = json::array();
 	for (const Wave& wave : m_waves)
 	{
-		waves.push_back(::serialize(wave));
+		json::value waveData = ::serialize(wave);
+		waveData["spawnType"] = enumToString(wave.spawnType);
+		waves.push_back(waveData);
 	}
 	data["waves"] = waves;
 	return data;
@@ -85,6 +93,7 @@ void SpawnerComponent::deserialize(const json::value& value)
 	{
 		Wave wave;
 		::deserialize(waveData, wave);
+		stringToEnum(waveData.safeAt("spawnType").as_string(""), wave.spawnType);
 		m_waves.push_back(wave);
 	}
 }
@@ -95,6 +104,7 @@ void SpawnerComponent::inspect()
 	Layout::input<Wave>("Waves", m_waves, [](Wave& wave) -> void
 		{
 			Layout::input(wave);
+			Layout::input("spawnType", wave.spawnType);
 		}
 	);
 }
