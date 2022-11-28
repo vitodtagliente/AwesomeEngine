@@ -27,11 +27,24 @@ struct ISerializable
 template <typename T>
 json::value serialize(const T& data)
 {
-	return T.serialize();
+	const IType* const type = dynamic_cast<const IType* const>(&data);
+	if (type != nullptr)
+	{
+		return serialize(*type);
+	}
+	return json::value();
 }
 
 template <typename T>
-bool deserialize(const json::value&, T&) { return true; }
+bool deserialize(const json::value& value, T& data) 
+{
+	IType* const type = dynamic_cast<IType* const>(&data);
+	if (type != nullptr)
+	{
+		return deserialize(value, *type);
+	}
+	return false; 
+}
 
 template <> json::value serialize(const IType& type);
 template <> json::value serialize(const uuid& id);

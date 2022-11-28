@@ -26,17 +26,17 @@ void Component::detach()
 
 json::value Component::serialize() const
 {
-	json::value data = ::serialize((const IType&)*this);
+	json::value data = ::serialize(*this);
 	data["component_type"] = this->getTypeName();
 	return data;
 }
 
 void Component::deserialize(const json::value& value)
 {
-	::deserialize(value, (IType&)*this);
+	::deserialize(value, *this);
 }
 
 void Component::inspect()
 {
-	Layout::input((IType&)*this);
+	Layout::input(*this);
 }

@@ -38,7 +38,13 @@ void SpawnerComponent::update(const double deltaTime)
 		case WavePhase::Spawning:
 		{
 			const Wave& currentWave = m_waves[m_waveIndex];
-			if (m_waveInternalIndex++ > currentWave.quantity)
+			if (currentWave.minionPrefab == nullptr
+				|| !currentWave.minionPrefab->data.has_value())
+			{
+				break;
+			}
+
+			if (m_waveInternalIndex++ >= currentWave.quantity)
 			{
 				m_wavePhase = WavePhase::Ending;
 				break;
@@ -65,7 +71,7 @@ json::value SpawnerComponent::serialize() const
 	json::value waves = json::array();
 	for (const Wave& wave : m_waves)
 	{
-		waves.push_back(::serialize((const IType&)wave));
+		waves.push_back(::serialize(wave));
 	}
 	data["waves"] = waves;
 	return data;
