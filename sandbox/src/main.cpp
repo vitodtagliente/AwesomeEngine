@@ -6,6 +6,7 @@
 #include <awesome/awesome.h>
 
 #include "game.h"
+#include "windows/game_settings_window.h"
 
 int main()
 {

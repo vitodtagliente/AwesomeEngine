@@ -107,6 +107,11 @@ void SpawnerComponent::inspect()
 			Layout::input("spawnType", wave.spawnType);
 		}
 	);
+	Layout::separator();
+	if (Layout::button("Start"))
+	{
+		start();
+	}
 }
 
 void SpawnerComponent::start()

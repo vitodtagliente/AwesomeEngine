@@ -29,4 +29,5 @@ private:
 	PROPERTY() bool m_destroyOnCollision{ true };
 	math::vec3 m_direction;
 	class Entity* m_target{ nullptr };
+	PROPERTY() std::string m_targetTag;
 };
