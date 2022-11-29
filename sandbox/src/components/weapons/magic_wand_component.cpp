@@ -8,7 +8,7 @@
 
 void MagicWandComponent::init()
 {
-
+	WeaponComponent::init();
 }
 
 void MagicWandComponent::update(const double deltaTime)

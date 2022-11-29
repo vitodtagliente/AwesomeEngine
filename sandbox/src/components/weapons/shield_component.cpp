@@ -8,7 +8,7 @@
 
 void ShiedComponent::init()
 {
-
+	WeaponComponent::init();
 }
 
 void ShiedComponent::render(graphics::Renderer2D* const renderer)
