@@ -36,16 +36,20 @@ public:
 };
 
 CLASS(Category = Data)
-class GameSettings : public Singleton<GameSettings>, public ISerializable, public IType
+class GameSettings : public Singleton<GameSettings>, protected ISerializable, public IType
 {
 public:
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
+	void load();
+	void save();
 
 	static const std::string filename;
 
 	std::map<std::string, WeaponItem> weapons;
+
+private:
+	// serialization
+	virtual json::value serialize() const override;
+	virtual void deserialize(const json::value& value) override;
 
 	GENERATED_BODY()
 };

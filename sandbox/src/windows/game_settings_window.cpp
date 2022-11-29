@@ -1,6 +1,5 @@
 #include "game_settings_window.h"
 
-#include <awesome/data/archive.h>
 #include <awesome/editor/layout.h>
 
 #include "../data/game_settings.h"
@@ -23,7 +22,6 @@ void GameSettingsWindow::render()
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		Archive archive(GameSettings::filename, Archive::Mode::Write);
-		archive << json::Serializer::to_string(settings.serialize());
+		settings.save();
 	}
 }
