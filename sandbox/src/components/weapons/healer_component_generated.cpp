@@ -5,12 +5,7 @@
 const meta_t& HealerComponent::getTypeMeta() const { return HealerComponentType::type().meta; }
 const std::string& HealerComponent::getTypeName() const { return HealerComponentType::type().name; }
 const properties_t HealerComponent::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = WeaponComponent::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("efficacy", Property("efficacy", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(HealerComponent, efficacy), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(HealerComponent, frequency), {
-    })));
     return properties;
 }
 std::size_t HealerComponent::getTypeSize() const { return HealerComponentType::type().size; }

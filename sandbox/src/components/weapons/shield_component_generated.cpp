@@ -7,12 +7,6 @@ const std::string& ShiedComponent::getTypeName() const { return ShiedComponentTy
 const properties_t ShiedComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = WeaponComponent::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("power", Property("power", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ShiedComponent, power), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(ShiedComponent, frequency), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("range", Property("range", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(ShiedComponent, range), {
-    })));
     properties.insert(std::make_pair<std::string, Property>("m_color", Property("m_color", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(ShiedComponent, m_color), {
     })));
     return properties;

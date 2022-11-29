@@ -19,10 +19,6 @@ public:
 	virtual void render(class graphics::Renderer2D* const renderer) override;
 	virtual void update(double deltaTime) override;
 
-	PROPERTY() int power{ 1 };
-	PROPERTY() double frequency{ 1 };
-	PROPERTY() float range{ 1.f };
-
 	GENERATED_BODY()
 
 private:

@@ -17,8 +17,6 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
 
-	PROPERTY() double frequency{ 1 };
-
 	GENERATED_BODY()
 
 private:
