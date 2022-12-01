@@ -14,12 +14,94 @@ json::value serialize(const IType& type)
 		{
 		case Property::Type::T_bool: data[name] = prop.value<bool>(); break;
 		case Property::Type::T_char: data[name] = prop.value<char>(); break;
-		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
 		case Property::Type::T_double: data[name] = prop.value<double>(); break;
 		case Property::Type::T_float: data[name] = prop.value<float>(); break;
 		case Property::Type::T_int: data[name] = prop.value<int>(); break;
 		case Property::Type::T_void: break;
+		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
+		case Property::Type::T_custom_type: 
+		{
+			data[name] = ::serialize(prop.value<IType>());
+			break;
+		}
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
+		case Property::Type::T_container_map:
+		{
+
+			break;
+		}
+		case Property::Type::T_container_vector:
+		{
+			switch (prop.descriptor.children.front().type)
+			{
+			case Property::Type::T_bool: data[name] = ::serialize(prop.value<std::vector<bool>>()); break;
+			case Property::Type::T_char: data[name] = ::serialize(prop.value<std::vector<char>>()); break;
+			case Property::Type::T_double: data[name] = ::serialize(prop.value<std::vector<double>>()); break;
+			case Property::Type::T_float: data[name] = ::serialize(prop.value<std::vector<float>>()); break;
+			case Property::Type::T_int: data[name] = ::serialize(prop.value<std::vector<int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: data[name] = ::serialize(prop.value<std::vector<int>>()); break;
+			case Property::Type::T_custom_type: ::serialize(prop.value<std::vector<IType>>()); break;
+			case Property::Type::T_unknown:
+			default:
+			{
+				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				{
+					data[name] = ::serialize(prop.value<std::vector<graphics::Color>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				{
+					data[name] = ::serialize(prop.value<std::vector<graphics::TextureCoords>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				{
+					data[name] = ::serialize(prop.value<std::vector<graphics::TextureRect>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				{
+					data[name] = ::serialize(prop.value<std::vector<math::transform>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				{
+					data[name] = ::serialize(prop.value<std::vector<math::vec4>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				{
+					data[name] = ::serialize(prop.value<std::vector<math::vec3>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				{
+					data[name] = ::serialize(prop.value<std::vector<math::vec2>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<ImageAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<PrefabAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<SceneAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<SpriteAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				{
+					data[name] = ::serialize(prop.value<std::vector<TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
+			break;
+		}
 		case Property::Type::T_unknown:
 		default:
 		{
@@ -80,6 +162,36 @@ json::value serialize(const IType& type)
 		}
 	}
 	return data;
+}
+
+template<>
+json::value serialize(const bool& primitive)
+{
+	return json::value(primitive);
+}
+
+template<>
+json::value serialize(const int& primitive)
+{
+	return json::value(primitive);
+}
+
+template<>
+json::value serialize(const float& primitive)
+{
+	return json::value(primitive);
+}
+
+template<>
+json::value serialize(const double& primitive)
+{
+	return json::value(primitive);
+}
+
+template<>
+json::value serialize(const char& primitive)
+{
+	return json::value(primitive);
 }
 
 template<>

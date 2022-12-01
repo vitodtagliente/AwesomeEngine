@@ -47,6 +47,11 @@ bool deserialize(const json::value& value, T& data)
 }
 
 template <> json::value serialize(const IType& type);
+template <> json::value serialize(const bool& primitive);
+template <> json::value serialize(const int& primitive);
+template <> json::value serialize(const float& primitive);
+template <> json::value serialize(const double& primitive);
+template <> json::value serialize(const char& primitive);
 template <> json::value serialize(const uuid& id);
 template <> json::value serialize(const graphics::Color& color);
 template <> json::value serialize(const graphics::TextureCoords& coords);
@@ -61,6 +66,17 @@ template <> json::value serialize(const SceneAssetPtr& asset);
 template <> json::value serialize(const SpriteAnimationAssetPtr& asset);
 template <> json::value serialize(const SpriteAssetPtr& asset);
 template <> json::value serialize(const TextAssetPtr& asset);
+
+template <typename T>
+json::value serialize(const std::vector<T>& list)
+{
+	json::value data = json::array();
+	for (const auto& element : list)
+	{
+		data.push_back(::serialize(element));
+	}
+	return data;
+}
 
 template <> bool deserialize(const json::value& value, IType& type);
 template <> bool deserialize(const json::value& value, uuid& id);
