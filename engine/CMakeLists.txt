@@ -40,26 +40,21 @@ source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 set(GENERATOR_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/tools/compiler/vdtreflect-compiler.exe")
 
-function(generate_reflection EXECUTABLE SRC_FILE)
+function(generate_reflection EXECUTABLE SRC_DIR)
 	execute_process(
-		COMMAND ${EXECUTABLE} ${SRC_FILE}
+		COMMAND ${EXECUTABLE} ${SRC_DIR}
 		RESULT_VARIABLE CMD_ERROR
 		OUTPUT_FILE CMD_OUTPUT
 	)
 	if(${CMD_ERROR} EQUAL 0)
-		message(STATUS "Generated C++ code for ${SRC_FILE}")
+		message(STATUS "Generated C++ code for ${SRC_DIR}")
 	else()
-		message(STATUS "`${SRC_FILE}` failed to generate C++ code with error: ${CMD_ERROR}")
+		message(STATUS "`${SRC_DIR}` failed to generate C++ code with error: ${CMD_ERROR}")
 	endif()
 endfunction()
 
-# generate proto files
-file(GLOB_RECURSE PROJECT_TO_GENERATE_FILES ${PROJECT_SOURCE_DIR}/src/*.h)
-
-message(STATUS "Using generator: ${_src_path} ${GENERATOR_EXECUTABLE}")
- foreach(_source IN ITEMS ${PROJECT_TO_GENERATE_FILES})
- 	generate_reflection(${GENERATOR_EXECUTABLE} ${_source})
- endforeach()
+# generate reflection data
+generate_reflection(${GENERATOR_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src)
 
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.cpp)

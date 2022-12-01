@@ -7,13 +7,13 @@ const std::string& OrthographicCameraComponent::getTypeName() const { return Ort
 const properties_t OrthographicCameraComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = CameraComponent::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("nearPlane", Property("nearPlane", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(OrthographicCameraComponent, nearPlane), {
+    properties.insert(std::make_pair<std::string, Property>("nearPlane", Property("nearPlane", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(OrthographicCameraComponent, nearPlane), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("farPlane", Property("farPlane", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(OrthographicCameraComponent, farPlane), {
+    properties.insert(std::make_pair<std::string, Property>("farPlane", Property("farPlane", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(OrthographicCameraComponent, farPlane), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("pixelPerfect", Property("pixelPerfect", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(OrthographicCameraComponent, pixelPerfect), {
+    properties.insert(std::make_pair<std::string, Property>("pixelPerfect", Property("pixelPerfect", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(OrthographicCameraComponent, pixelPerfect), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("pixelsPerUnit", Property("pixelsPerUnit", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(OrthographicCameraComponent, pixelsPerUnit), {
+    properties.insert(std::make_pair<std::string, Property>("pixelsPerUnit", Property("pixelsPerUnit", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(OrthographicCameraComponent, pixelsPerUnit), {
     })));
     return properties;
 }

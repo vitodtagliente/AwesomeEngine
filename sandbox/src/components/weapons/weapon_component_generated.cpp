@@ -7,17 +7,17 @@ const std::string& WeaponComponent::getTypeName() const { return WeaponComponent
 const properties_t WeaponComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("efficacy", Property("efficacy", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(WeaponComponent, efficacy), {
+    properties.insert(std::make_pair<std::string, Property>("efficacy", Property("efficacy", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, efficacy), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(WeaponComponent, frequency), {
+    properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, frequency), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("power", Property("power", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(WeaponComponent, power), {
+    properties.insert(std::make_pair<std::string, Property>("power", Property("power", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(WeaponComponent, power), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("quantity", Property("quantity", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(WeaponComponent, quantity), {
+    properties.insert(std::make_pair<std::string, Property>("quantity", Property("quantity", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(WeaponComponent, quantity), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("range", Property("range", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(WeaponComponent, range), {
+    properties.insert(std::make_pair<std::string, Property>("range", Property("range", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, range), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(WeaponComponent, speed), {
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, speed), {
     })));
     return properties;
 }

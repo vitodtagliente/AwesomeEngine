@@ -20,12 +20,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DI
 
 set(GENERATOR_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/../engine/tools/compiler/vdtreflect-compiler.exe")
 
-# generate proto files
-file(GLOB_RECURSE PROJECT_TO_GENERATE_FILES ${PROJECT_SOURCE_DIR}/src/*.h)
-
- foreach(_source IN ITEMS ${PROJECT_TO_GENERATE_FILES})
- 	generate_reflection(${GENERATOR_EXECUTABLE} ${_source})
- endforeach()
+# generate reflection data
+generate_reflection(${GENERATOR_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src)
 
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.cpp)

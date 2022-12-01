@@ -7,13 +7,13 @@ const std::string& BulletComponent::getTypeName() const { return BulletComponent
 const properties_t BulletComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("damage", Property("damage", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(BulletComponent, damage), {
+    properties.insert(std::make_pair<std::string, Property>("damage", Property("damage", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(BulletComponent, damage), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(BulletComponent, speed), {
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(BulletComponent, speed), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_destroyOnCollision", Property("m_destroyOnCollision", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(BulletComponent, m_destroyOnCollision), {
+    properties.insert(std::make_pair<std::string, Property>("m_destroyOnCollision", Property("m_destroyOnCollision", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(BulletComponent, m_destroyOnCollision), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_targetTag", Property("m_targetTag", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(BulletComponent, m_targetTag), {
+    properties.insert(std::make_pair<std::string, Property>("m_targetTag", Property("m_targetTag", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(BulletComponent, m_targetTag), {
     })));
     return properties;
 }

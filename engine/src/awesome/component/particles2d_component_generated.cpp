@@ -7,9 +7,9 @@ const std::string& Particles2dComponent::getTypeName() const { return Particles2
 const properties_t Particles2dComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("autoplay", Property("autoplay", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(Particles2dComponent, autoplay), {
+    properties.insert(std::make_pair<std::string, Property>("autoplay", Property("autoplay", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Particles2dComponent, autoplay), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("loop", Property("loop", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(Particles2dComponent, loop), {
+    properties.insert(std::make_pair<std::string, Property>("loop", Property("loop", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Particles2dComponent, loop), {
     })));
     return properties;
 }

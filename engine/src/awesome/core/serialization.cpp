@@ -8,70 +8,70 @@ json::value serialize(const IType& type)
 	json::value data = json::object();
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
-		if (!prop.isNormal) continue;
+		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
-		switch (prop.type)
+		switch (prop.descriptor.type)
 		{
-		case PropertyType::T_bool: data[name] = prop.value<bool>(); break;
-		case PropertyType::T_char: data[name] = prop.value<char>(); break;
-		case PropertyType::T_custom_enum: data[name] = prop.value<int>(); break;
-		case PropertyType::T_double: data[name] = prop.value<double>(); break;
-		case PropertyType::T_float: data[name] = prop.value<float>(); break;
-		case PropertyType::T_int: data[name] = prop.value<int>(); break;
-		case PropertyType::T_void: break;
-		case PropertyType::T_container_string: data[name] = prop.value<std::string>(); break;
-		case PropertyType::T_unknown:
+		case Property::Type::T_bool: data[name] = prop.value<bool>(); break;
+		case Property::Type::T_char: data[name] = prop.value<char>(); break;
+		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
+		case Property::Type::T_double: data[name] = prop.value<double>(); break;
+		case Property::Type::T_float: data[name] = prop.value<float>(); break;
+		case Property::Type::T_int: data[name] = prop.value<int>(); break;
+		case Property::Type::T_void: break;
+		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
+		case Property::Type::T_unknown:
 		default:
 		{
-			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				data[name] = serialize(prop.value<graphics::Color>());
 			}
-			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			else if (prop.descriptor.name == "graphics::TextureCoords" || prop.descriptor.name == "TextureCoords")
 			{
 				data[name] = serialize(prop.value<graphics::TextureCoords>());
 			}
-			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			else if (prop.descriptor.name == "graphics::TextureRect" || prop.descriptor.name == "TextureRect")
 			{
 				data[name] = serialize(prop.value<graphics::TextureRect>());
 			}
-			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			else if (prop.descriptor.name == "math::transform" || prop.descriptor.name == "transform")
 			{
 				data[name] = serialize(prop.value<math::transform>());
 			}
-			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			else if (prop.descriptor.name == "math::vec4" || prop.descriptor.name == "vec4" || prop.descriptor.name == "math::vector4" || prop.descriptor.name == "vector4")
 			{
 				data[name] = serialize(prop.value<math::vec4>());
 			}
-			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			else if (prop.descriptor.name == "math::vec3" || prop.descriptor.name == "vec3" || prop.descriptor.name == "math::vector3" || prop.descriptor.name == "vector3")
 			{
 				data[name] = serialize(prop.value<math::vec3>());
 			}
-			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			else if (prop.descriptor.name == "math::vec2" || prop.descriptor.name == "vec2" || prop.descriptor.name == "math::vector2" || prop.descriptor.name == "vector2")
 			{
 				data[name] = serialize(prop.value<math::vec2>());
 			}
-			else if (prop.typeStr == "ImageAssetPtr")
+			else if (prop.descriptor.name == "ImageAssetPtr")
 			{
 				data[name] = serialize(prop.value<ImageAssetPtr>());
 			}
-			else if (prop.typeStr == "PrefabAssetPtr")
+			else if (prop.descriptor.name == "PrefabAssetPtr")
 			{
 				data[name] = serialize(prop.value<PrefabAssetPtr>());
 			}
-			else if (prop.typeStr == "SceneAssetPtr")
+			else if (prop.descriptor.name == "SceneAssetPtr")
 			{
 				data[name] = serialize(prop.value<SceneAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
 			{
 				data[name] = serialize(prop.value<SpriteAnimationAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAssetPtr")
+			else if (prop.descriptor.name == "SpriteAssetPtr")
 			{
 				data[name] = serialize(prop.value<SpriteAssetPtr>());
 			}
-			else if (prop.typeStr == "TextAssetPtr")
+			else if (prop.descriptor.name == "TextAssetPtr")
 			{
 				data[name] = serialize(prop.value<TextAssetPtr>());
 			}
@@ -201,76 +201,76 @@ bool deserialize(const json::value& value, IType& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
-		if (!prop.isNormal) continue;
+		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
-		switch (prop.type)
+		switch (prop.descriptor.type)
 		{
-		case PropertyType::T_bool: prop.value<bool>() = value.safeAt(name).as_bool(false); break;
-		case PropertyType::T_char: {
+		case Property::Type::T_bool: prop.value<bool>() = value.safeAt(name).as_bool(false); break;
+		case Property::Type::T_char: {
 			const std::string str = value.safeAt(name).as_string("");
 			if (str.length() == 1) {
 				prop.value<char>() = str.at(0);
 			}
 			break;
 		}
-		case PropertyType::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
-		case PropertyType::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
-		case PropertyType::T_float: prop.value<float>() = value.safeAt(name).as_number(0).as_float(); break;
-		case PropertyType::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
-		case PropertyType::T_void: break;
-		case PropertyType::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
-		case PropertyType::T_unknown:
+		case Property::Type::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
+		case Property::Type::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
+		case Property::Type::T_float: prop.value<float>() = value.safeAt(name).as_number(0).as_float(); break;
+		case Property::Type::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
+		case Property::Type::T_void: break;
+		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
+		case Property::Type::T_unknown:
 		default:
 		{
-			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				deserialize(value.safeAt(name), prop.value<graphics::Color>());
 			}
-			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			else if (prop.descriptor.name == "graphics::TextureCoords" || prop.descriptor.name == "TextureCoords")
 			{
 				deserialize(value.safeAt(name), prop.value<graphics::TextureCoords>());
 			}
-			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			else if (prop.descriptor.name == "graphics::TextureRect" || prop.descriptor.name == "TextureRect")
 			{
 				deserialize(value.safeAt(name), prop.value<graphics::TextureRect>());
 			}
-			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			else if (prop.descriptor.name == "math::transform" || prop.descriptor.name == "transform")
 			{
 				deserialize(value.safeAt(name), prop.value<math::transform>());
 			}
-			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			else if (prop.descriptor.name == "math::vec4" || prop.descriptor.name == "vec4" || prop.descriptor.name == "math::vector4" || prop.descriptor.name == "vector4")
 			{
 				deserialize(value.safeAt(name), prop.value<math::vec4>());
 			}
-			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			else if (prop.descriptor.name == "math::vec3" || prop.descriptor.name == "vec3" || prop.descriptor.name == "math::vector3" || prop.descriptor.name == "vector3")
 			{
 				deserialize(value.safeAt(name), prop.value<math::vec3>());
 			}
-			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			else if (prop.descriptor.name == "math::vec2" || prop.descriptor.name == "vec2" || prop.descriptor.name == "math::vector2" || prop.descriptor.name == "vector2")
 			{
 				deserialize(value.safeAt(name), prop.value<math::vec2>());
 			}
-			else if (prop.typeStr == "ImageAssetPtr")
+			else if (prop.descriptor.name == "ImageAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<ImageAssetPtr>());
 			}
-			else if (prop.typeStr == "PrefabAssetPtr")
+			else if (prop.descriptor.name == "PrefabAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<PrefabAssetPtr>());
 			}
-			else if (prop.typeStr == "SceneAssetPtr")
+			else if (prop.descriptor.name == "SceneAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<SceneAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<SpriteAnimationAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAssetPtr")
+			else if (prop.descriptor.name == "SpriteAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<SpriteAssetPtr>());
 			}
-			else if (prop.typeStr == "TextAssetPtr")
+			else if (prop.descriptor.name == "TextAssetPtr")
 			{
 				deserialize(value.safeAt(name), prop.value<TextAssetPtr>());
 			}

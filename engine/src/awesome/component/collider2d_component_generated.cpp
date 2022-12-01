@@ -7,12 +7,12 @@ const std::string& Collider2dComponent::getTypeName() const { return Collider2dC
 const properties_t Collider2dComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("isTrigger", Property("isTrigger", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(Collider2dComponent, isTrigger), {
+    properties.insert(std::make_pair<std::string, Property>("isTrigger", Property("isTrigger", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Collider2dComponent, isTrigger), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_type", Property("m_type", PropertyType::T_custom_enum, "ShapeType", true, sizeof(ShapeType), origin + offsetof(Collider2dComponent, m_type), {
+    properties.insert(std::make_pair<std::string, Property>("m_type", Property("m_type", Property::TypeDescriptor("ShapeType", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(ShapeType), origin + offsetof(Collider2dComponent, m_type), {
         std::make_pair("IsEnum", ""),
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_bounds", Property("m_bounds", PropertyType::T_unknown, "math::vec2", true, sizeof(math::vec2), origin + offsetof(Collider2dComponent, m_bounds), {
+    properties.insert(std::make_pair<std::string, Property>("m_bounds", Property("m_bounds", Property::TypeDescriptor("math::vec2", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec2), origin + offsetof(Collider2dComponent, m_bounds), {
     })));
     return properties;
 }

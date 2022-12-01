@@ -30,29 +30,29 @@ const std::string& ApplicationSettings::getTypeName() const { return Application
 const properties_t ApplicationSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("fps", Property("fps", PropertyType::T_unknown, "FpsMode", true, sizeof(FpsMode), origin + offsetof(ApplicationSettings, fps), {
+    properties.insert(std::make_pair<std::string, Property>("fps", Property("fps", Property::TypeDescriptor("FpsMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(FpsMode), origin + offsetof(ApplicationSettings, fps), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", PropertyType::T_unknown, "ApplicationMode", true, sizeof(ApplicationMode), origin + offsetof(ApplicationSettings, mode), {
+    properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", Property::TypeDescriptor("ApplicationMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(ApplicationMode), origin + offsetof(ApplicationSettings, mode), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", PropertyType::T_unknown, "std::filesystem::path", true, sizeof(std::filesystem::path), origin + offsetof(ApplicationSettings, workspacePath), {
+    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", Property::TypeDescriptor("std::filesystem::path", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(std::filesystem::path), origin + offsetof(ApplicationSettings, workspacePath), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, editorScene), {
+    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, editorScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, serverScene), {
+    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, serverScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", PropertyType::T_unknown, "SceneAssetPtr", true, sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, standaloneScene), {
+    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, standaloneScene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(ApplicationSettings, serverIp), {
+    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(ApplicationSettings, serverIp), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, serverPort), {
+    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, serverPort), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
+    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("quadspaceBounds", Property("quadspaceBounds", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(ApplicationSettings, quadspaceBounds), {
+    properties.insert(std::make_pair<std::string, Property>("quadspaceBounds", Property("quadspaceBounds", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, quadspaceBounds), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("wireframesEnabled", Property("wireframesEnabled", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(ApplicationSettings, wireframesEnabled), {
+    properties.insert(std::make_pair<std::string, Property>("wireframesEnabled", Property("wireframesEnabled", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(ApplicationSettings, wireframesEnabled), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("wireframesColor", Property("wireframesColor", PropertyType::T_unknown, "graphics::Color", true, sizeof(graphics::Color), origin + offsetof(ApplicationSettings, wireframesColor), {
+    properties.insert(std::make_pair<std::string, Property>("wireframesColor", Property("wireframesColor", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ApplicationSettings, wireframesColor), {
     })));
     return properties;
 }

@@ -7,9 +7,9 @@ const std::string& PawnComponent::getTypeName() const { return PawnComponentType
 const properties_t PawnComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(PawnComponent, speed), {
+    properties.insert(std::make_pair<std::string, Property>("speed", Property("speed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(PawnComponent, speed), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("dashSpeed", Property("dashSpeed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(PawnComponent, dashSpeed), {
+    properties.insert(std::make_pair<std::string, Property>("dashSpeed", Property("dashSpeed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(PawnComponent, dashSpeed), {
     })));
     return properties;
 }

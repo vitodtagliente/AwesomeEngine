@@ -7,7 +7,7 @@ const std::string& CameraFollow2dComponent::getTypeName() const { return CameraF
 const properties_t CameraFollow2dComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("m_speed", Property("m_speed", PropertyType::T_float, "float", true, sizeof(float), origin + offsetof(CameraFollow2dComponent, m_speed), {
+    properties.insert(std::make_pair<std::string, Property>("m_speed", Property("m_speed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(CameraFollow2dComponent, m_speed), {
     })));
     return properties;
 }

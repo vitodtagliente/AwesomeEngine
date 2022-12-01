@@ -148,7 +148,7 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(name.c_str(), &value);
 }
 
-void Layout::input(const std::string& name, math::transform& value)
+void Layout::input(const std::string&, math::transform& value)
 {
 	input("Position", value.position);
 	input("Rotation", value.rotation);
@@ -196,7 +196,7 @@ void Layout::input(IType& value)
 {
 	for (const auto& [name, prop] : value.getTypeProperties())
 	{
-		if (!prop.isNormal) continue;
+		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
 		std::string label = name;
 		const auto& it = prop.meta.find("Label");
@@ -205,67 +205,67 @@ void Layout::input(IType& value)
 			label = !it->second.empty() ? it->second : name;
 		}
 
-		switch (prop.type)
+		switch (prop.descriptor.type)
 		{
-		case PropertyType::T_bool: input(label, prop.value<bool>()); break;
-		case PropertyType::T_char: break;
-		case PropertyType::T_double: input(label, prop.value<double>()); break;
-		case PropertyType::T_float: input(label, prop.value<float>()); break;
-		case PropertyType::T_int: input(label, prop.value<int>()); break;
-		case PropertyType::T_void: break;
-		case PropertyType::T_container_string: input(label, prop.value<std::string>()); break;
-		case PropertyType::T_unknown:
+		case Property::Type::T_bool: input(label, prop.value<bool>()); break;
+		case Property::Type::T_char: break;
+		case Property::Type::T_double: input(label, prop.value<double>()); break;
+		case Property::Type::T_float: input(label, prop.value<float>()); break;
+		case Property::Type::T_int: input(label, prop.value<int>()); break;
+		case Property::Type::T_void: break;
+		case Property::Type::T_container_string: input(label, prop.value<std::string>()); break;
+		case Property::Type::T_unknown:
 		default:
 		{
-			if (prop.typeStr == "graphics::Color" || prop.typeStr == "Color")
+			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				input(label, prop.value<graphics::Color>());
 			}
-			else if (prop.typeStr == "graphics::TextureCoords" || prop.typeStr == "TextureCoords")
+			else if (prop.descriptor.name == "graphics::TextureCoords" || prop.descriptor.name == "TextureCoords")
 			{
 				input(label, prop.value<graphics::TextureCoords>());
 			}
-			else if (prop.typeStr == "graphics::TextureRect" || prop.typeStr == "TextureRect")
+			else if (prop.descriptor.name == "graphics::TextureRect" || prop.descriptor.name == "TextureRect")
 			{
 				input(label, prop.value<graphics::TextureRect>());
 			}
-			else if (prop.typeStr == "math::transform" || prop.typeStr == "transform")
+			else if (prop.descriptor.name == "math::transform" || prop.descriptor.name == "transform")
 			{
 				input("Position", prop.value<math::transform>());
 			}
-			else if (prop.typeStr == "math::vec4" || prop.typeStr == "vec4" || prop.typeStr == "math::vector4" || prop.typeStr == "vector4")
+			else if (prop.descriptor.name == "math::vec4" || prop.descriptor.name == "vec4" || prop.descriptor.name == "math::vector4" || prop.descriptor.name == "vector4")
 			{
 				Layout::input(label, prop.value<math::vec4>());
 			}
-			else if (prop.typeStr == "math::vec3" || prop.typeStr == "vec3" || prop.typeStr == "math::vector3" || prop.typeStr == "vector3")
+			else if (prop.descriptor.name == "math::vec3" || prop.descriptor.name == "vec3" || prop.descriptor.name == "math::vector3" || prop.descriptor.name == "vector3")
 			{
 				Layout::input(label, prop.value<math::vec3>());
 			}
-			else if (prop.typeStr == "math::vec2" || prop.typeStr == "vec2" || prop.typeStr == "math::vector2" || prop.typeStr == "vector2")
+			else if (prop.descriptor.name == "math::vec2" || prop.descriptor.name == "vec2" || prop.descriptor.name == "math::vector2" || prop.descriptor.name == "vector2")
 			{
 				Layout::input(label, prop.value<math::vec2>());
 			}
-			else if (prop.typeStr == "ImageAssetPtr")
+			else if (prop.descriptor.name == "ImageAssetPtr")
 			{
 				Layout::input(label, prop.value<ImageAssetPtr>());
 			}
-			else if (prop.typeStr == "PrefabAssetPtr")
+			else if (prop.descriptor.name == "PrefabAssetPtr")
 			{
 				Layout::input(label, prop.value<PrefabAssetPtr>());
 			}
-			else if (prop.typeStr == "SceneAssetPtr")
+			else if (prop.descriptor.name == "SceneAssetPtr")
 			{
 				Layout::input(label, prop.value<SceneAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAnimationAssetPtr")
+			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
 			{
 				Layout::input(label, prop.value<SpriteAnimationAssetPtr>());
 			}
-			else if (prop.typeStr == "SpriteAssetPtr")
+			else if (prop.descriptor.name == "SpriteAssetPtr")
 			{
 				Layout::input(label, prop.value<SpriteAssetPtr>());
 			}
-			else if (prop.typeStr == "TextAssetPtr")
+			else if (prop.descriptor.name == "TextAssetPtr")
 			{
 				Layout::input(label, prop.value<TextAssetPtr>());
 			}

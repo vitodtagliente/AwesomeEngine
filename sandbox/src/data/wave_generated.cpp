@@ -17,23 +17,23 @@ const std::string& Wave::getTypeName() const { return WaveType::type().name; }
 const properties_t Wave::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("name", Property("name", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(Wave, name), {
+    properties.insert(std::make_pair<std::string, Property>("name", Property("name", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(Wave, name), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("description", Property("description", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(Wave, description), {
+    properties.insert(std::make_pair<std::string, Property>("description", Property("description", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(Wave, description), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("minionPrefab", Property("minionPrefab", PropertyType::T_unknown, "PrefabAssetPtr", true, sizeof(PrefabAssetPtr), origin + offsetof(Wave, minionPrefab), {
+    properties.insert(std::make_pair<std::string, Property>("minionPrefab", Property("minionPrefab", Property::TypeDescriptor("PrefabAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(PrefabAssetPtr), origin + offsetof(Wave, minionPrefab), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("quantity", Property("quantity", PropertyType::T_int, "int", true, sizeof(int), origin + offsetof(Wave, quantity), {
+    properties.insert(std::make_pair<std::string, Property>("quantity", Property("quantity", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(Wave, quantity), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("perSpawnDelay", Property("perSpawnDelay", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(Wave, perSpawnDelay), {
+    properties.insert(std::make_pair<std::string, Property>("perSpawnDelay", Property("perSpawnDelay", Property::TypeDescriptor("double", Property::Type::T_double, Property::DecoratorType::D_normalized, {}), sizeof(double), origin + offsetof(Wave, perSpawnDelay), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("spawnType", Property("spawnType", PropertyType::T_unknown, "SpawnType", true, sizeof(SpawnType), origin + offsetof(Wave, spawnType), {
+    properties.insert(std::make_pair<std::string, Property>("spawnType", Property("spawnType", Property::TypeDescriptor("SpawnType", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(SpawnType), origin + offsetof(Wave, spawnType), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("spawnPosition", Property("spawnPosition", PropertyType::T_unknown, "math::vec3", true, sizeof(math::vec3), origin + offsetof(Wave, spawnPosition), {
+    properties.insert(std::make_pair<std::string, Property>("spawnPosition", Property("spawnPosition", Property::TypeDescriptor("math::vec3", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec3), origin + offsetof(Wave, spawnPosition), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("spawnRange", Property("spawnRange", PropertyType::T_unknown, "math::vec2", true, sizeof(math::vec2), origin + offsetof(Wave, spawnRange), {
+    properties.insert(std::make_pair<std::string, Property>("spawnRange", Property("spawnRange", Property::TypeDescriptor("math::vec2", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec2), origin + offsetof(Wave, spawnRange), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("startSpawnDelay", Property("startSpawnDelay", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(Wave, startSpawnDelay), {
+    properties.insert(std::make_pair<std::string, Property>("startSpawnDelay", Property("startSpawnDelay", Property::TypeDescriptor("double", Property::Type::T_double, Property::DecoratorType::D_normalized, {}), sizeof(double), origin + offsetof(Wave, startSpawnDelay), {
     })));
     return properties;
 }

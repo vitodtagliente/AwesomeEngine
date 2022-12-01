@@ -7,7 +7,7 @@ const std::string& MinionControllerComponent::getTypeName() const { return Minio
 const properties_t MinionControllerComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("m_targetTag", Property("m_targetTag", PropertyType::T_container_string, "std::string", true, sizeof(std::string), origin + offsetof(MinionControllerComponent, m_targetTag), {
+    properties.insert(std::make_pair<std::string, Property>("m_targetTag", Property("m_targetTag", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(MinionControllerComponent, m_targetTag), {
     })));
     return properties;
 }

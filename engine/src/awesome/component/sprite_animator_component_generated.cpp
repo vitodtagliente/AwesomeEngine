@@ -7,7 +7,7 @@ const std::string& SpriteAnimatorComponent::getTypeName() const { return SpriteA
 const properties_t SpriteAnimatorComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("autoplay", Property("autoplay", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(SpriteAnimatorComponent, autoplay), {
+    properties.insert(std::make_pair<std::string, Property>("autoplay", Property("autoplay", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(SpriteAnimatorComponent, autoplay), {
     })));
     return properties;
 }

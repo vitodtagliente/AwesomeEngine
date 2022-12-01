@@ -7,7 +7,7 @@ const std::string& MagicWandComponent::getTypeName() const { return MagicWandCom
 const properties_t MagicWandComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = WeaponComponent::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("m_bulletPrefab", Property("m_bulletPrefab", PropertyType::T_unknown, "PrefabAssetPtr", true, sizeof(PrefabAssetPtr), origin + offsetof(MagicWandComponent, m_bulletPrefab), {
+    properties.insert(std::make_pair<std::string, Property>("m_bulletPrefab", Property("m_bulletPrefab", Property::TypeDescriptor("PrefabAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(PrefabAssetPtr), origin + offsetof(MagicWandComponent, m_bulletPrefab), {
     })));
     return properties;
 }

@@ -7,11 +7,11 @@ const std::string& Component::getTypeName() const { return ComponentType::type()
 const properties_t Component::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("enabled", Property("enabled", PropertyType::T_bool, "bool", true, sizeof(bool), origin + offsetof(Component, enabled), {
+    properties.insert(std::make_pair<std::string, Property>("enabled", Property("enabled", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Component, enabled), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_id", Property("m_id", PropertyType::T_unknown, "uuid", true, sizeof(uuid), origin + offsetof(Component, m_id), {
+    properties.insert(std::make_pair<std::string, Property>("m_id", Property("m_id", Property::TypeDescriptor("uuid", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(uuid), origin + offsetof(Component, m_id), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_netMode", Property("m_netMode", PropertyType::T_custom_enum, "NetMode", true, sizeof(NetMode), origin + offsetof(Component, m_netMode), {
+    properties.insert(std::make_pair<std::string, Property>("m_netMode", Property("m_netMode", Property::TypeDescriptor("NetMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(NetMode), origin + offsetof(Component, m_netMode), {
         std::make_pair("IsEnum", ""),
     })));
     return properties;

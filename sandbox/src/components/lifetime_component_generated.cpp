@@ -7,7 +7,7 @@ const std::string& LifetimeComponent::getTypeName() const { return LifetimeCompo
 const properties_t LifetimeComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("value", Property("value", PropertyType::T_double, "double", true, sizeof(double), origin + offsetof(LifetimeComponent, value), {
+    properties.insert(std::make_pair<std::string, Property>("value", Property("value", Property::TypeDescriptor("double", Property::Type::T_double, Property::DecoratorType::D_normalized, {}), sizeof(double), origin + offsetof(LifetimeComponent, value), {
     })));
     return properties;
 }
