@@ -25,5 +25,5 @@ void GameSettings::load()
 void GameSettings::save()
 {
 	Archive archive(AssetLibrary::instance().getDirectory() / GameSettings::filename, Archive::Mode::Write);
-	archive << json::Serializer::to_string(Serializer{}.serialize(*this));
+	archive << json::Serializer::to_string(Serializer::serialize(*this));
 }
