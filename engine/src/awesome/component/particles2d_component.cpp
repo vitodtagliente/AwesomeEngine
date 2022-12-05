@@ -49,18 +49,19 @@ void Particles2dComponent::update(const double deltaTime)
 
 json::value Particles2dComponent::serialize() const
 {
+	Serializer serializer;
 	json::value data = Component::serialize();
 	data["autoplay"] = autoplay;
 	data["loop"] = loop;
-	data["direction"] = ::serialize(m_system.direction);
+	data["direction"] = serializer.serialize(m_system.direction);
 	data["duration"] = m_system.duration;
 	data["initialParticles"] = m_system.initialParticles;
 	data["maxParticles"] = m_system.maxParticles;
 	data["spawnTime"] = m_system.spawnTime;
 	data["spawnAmountRange-0"] = m_system.spawnAmountRange.first;
 	data["spawnAmountRange-1"] = m_system.spawnAmountRange.second;
-	data["particleColorRange-0"] = ::serialize(m_system.particleColorRange.first);
-	data["particleColorRange-1"] = ::serialize(m_system.particleColorRange.second);
+	data["particleColorRange-0"] = serializer.serialize(m_system.particleColorRange.first);
+	data["particleColorRange-1"] = serializer.serialize(m_system.particleColorRange.second);
 	data["particleLifetimeRange-0"] = m_system.particleLifetimeRange.first;
 	data["particleLifetimeRange-1"] = m_system.particleLifetimeRange.second;
 	data["particleSizeRange-0"] = m_system.particleSizeRange.first;
@@ -79,19 +80,20 @@ json::value Particles2dComponent::serialize() const
 
 void Particles2dComponent::deserialize(const json::value& value)
 {
+	Deserializer deserializer;
 	Component::deserialize(value);
 
 	autoplay = value.safeAt("autoplay").as_bool(false);
 	loop = value.safeAt("loop").as_bool(false);
-	::deserialize(value["direction"], m_system.direction);
+	deserializer.deserialize(value["direction"], m_system.direction);
 	m_system.duration = value.safeAt("duration").as_number(0.f).as_float();
 	m_system.initialParticles = value.safeAt("initialParticles").as_number(0).as_int();
 	m_system.maxParticles = value.safeAt("maxParticles").as_number(0).as_int();
 	m_system.spawnTime = value.safeAt("spawnTime").as_number(0.f).as_float();
 	m_system.spawnAmountRange.first = value.safeAt("spawnAmountRange-0").as_number(0).as_int();
 	m_system.spawnAmountRange.second = value.safeAt("spawnAmountRange-1").as_number(0).as_int();
-	::deserialize(value.safeAt("particleColorRange-0"), m_system.particleColorRange.first);
-	::deserialize(value.safeAt("particleColorRange-1"), m_system.particleColorRange.second);
+	deserializer.deserialize(value.safeAt("particleColorRange-0"), m_system.particleColorRange.first);
+	deserializer.deserialize(value.safeAt("particleColorRange-1"), m_system.particleColorRange.second);
 	m_system.particleLifetimeRange.first = value.safeAt("particleLifetimeRange-0").as_number(0.f).as_float();
 	m_system.particleLifetimeRange.second = value.safeAt("particleLifetimeRange-1").as_number(0.f).as_float();
 	m_system.particleSizeRange.first = value.safeAt("particleSizeRange-0").as_number(0.f).as_float();

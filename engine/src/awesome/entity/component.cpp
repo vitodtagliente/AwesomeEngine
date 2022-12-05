@@ -26,14 +26,14 @@ void Component::detach()
 
 json::value Component::serialize() const
 {
-	json::value data = ::serialize(*this);
+	json::value data = Serializer{}.serialize(*this);
 	data["component_type"] = this->getTypeName();
 	return data;
 }
 
 void Component::deserialize(const json::value& value)
 {
-	::deserialize(value, *this);
+	Deserializer{}.deserialize(value, *this);
 }
 
 void Component::inspect()

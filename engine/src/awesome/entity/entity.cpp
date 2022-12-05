@@ -136,12 +136,13 @@ json::value Entity::serialize() const
 		return data;
 	};
 
+	Serializer serializer;
 	return json::object({
-		{"id", ::serialize(m_id)},
+		{"id", serializer.serialize(m_id)},
 		{"name", name},
 		{"replicate", replicate},
 		{"tag", tag},
-		{"transform", ::serialize(transform)},
+		{"transform", serializer.serialize(transform)},
 		{"children", entitiesToJson(m_children)},
 		{"components", componentsToJson(m_components)}
 		});
@@ -152,14 +153,15 @@ void Entity::deserialize(const json::value& value)
 	if (!value.is_object())
 		return;
 
+	Deserializer deserializer;
 	m_children.clear();
 	m_components.clear();
 
-	::deserialize(value.safeAt("id"), m_id);
+	deserializer.deserialize(value.safeAt("id"), m_id);
 	replicate = value.safeAt("replicate").as_bool(false);
 	name = value.safeAt("name").as_string("");
 	tag = value.safeAt("tag").as_string("");
-	::deserialize(value.safeAt("transform"), transform);
+	deserializer.deserialize(value.safeAt("transform"), transform);
 
 	const json::value::array_t& components = value.safeAt("components").as_array();
 	for (const json::value& data : components)

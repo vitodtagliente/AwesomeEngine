@@ -2,8 +2,7 @@
 
 #include <awesome/asset/asset_library.h>
 
-template<>
-json::value serialize(const IType& type)
+json::value Serializer::serialize(const IType& type)
 {
 	json::value data = json::object();
 	for (const auto& [name, prop] : type.getTypeProperties())
@@ -21,7 +20,7 @@ json::value serialize(const IType& type)
 		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
 		case Property::Type::T_custom_type: 
 		{
-			data[name] = ::serialize(prop.value<IType>());
+			// data[name] = ::serialize(prop.value<IType>());
 			break;
 		}
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
@@ -34,68 +33,78 @@ json::value serialize(const IType& type)
 		{
 			switch (prop.descriptor.children.front().type)
 			{
-			case Property::Type::T_bool: data[name] = ::serialize(prop.value<std::vector<bool>>()); break;
-			case Property::Type::T_char: data[name] = ::serialize(prop.value<std::vector<char>>()); break;
-			case Property::Type::T_double: data[name] = ::serialize(prop.value<std::vector<double>>()); break;
-			case Property::Type::T_float: data[name] = ::serialize(prop.value<std::vector<float>>()); break;
-			case Property::Type::T_int: data[name] = ::serialize(prop.value<std::vector<int>>()); break;
+			case Property::Type::T_bool: data[name] = serialize(prop.value<std::vector<bool>>()); break;
+			case Property::Type::T_char: data[name] = serialize(prop.value<std::vector<char>>()); break;
+			case Property::Type::T_double: data[name] = serialize(prop.value<std::vector<double>>()); break;
+			case Property::Type::T_float: data[name] = serialize(prop.value<std::vector<float>>()); break;
+			case Property::Type::T_int: data[name] = serialize(prop.value<std::vector<int>>()); break;
 			case Property::Type::T_void: break;
-			case Property::Type::T_custom_enum: data[name] = ::serialize(prop.value<std::vector<int>>()); break;
-			case Property::Type::T_custom_type: ::serialize(prop.value<std::vector<IType>>()); break;
+			case Property::Type::T_custom_enum: data[name] = serialize(prop.value<std::vector<int>>()); break;
+			case Property::Type::T_custom_type: 
+			{
+				switch (prop.descriptor.children.front().decoratorType)
+				{
+				case Property::DecoratorType::D_shared_ptr: serialize(prop.value<std::vector<std::shared_ptr<IType>>>()); break;
+				case Property::DecoratorType::D_unique_ptr: serialize(prop.value<std::vector<std::unique_ptr<IType>>>()); break;
+				case Property::DecoratorType::D_weak_ptr: serialize(prop.value<std::vector<std::weak_ptr<IType>>>()); break;
+				default:break;
+				}
+				break;
+			}
 			case Property::Type::T_unknown:
 			default:
 			{
 				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
 				{
-					data[name] = ::serialize(prop.value<std::vector<graphics::Color>>()); break;
+					data[name] = serialize(prop.value<std::vector<graphics::Color>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
 				{
-					data[name] = ::serialize(prop.value<std::vector<graphics::TextureCoords>>()); break;
+					data[name] = serialize(prop.value<std::vector<graphics::TextureCoords>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
 				{
-					data[name] = ::serialize(prop.value<std::vector<graphics::TextureRect>>()); break;
+					data[name] = serialize(prop.value<std::vector<graphics::TextureRect>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
 				{
-					data[name] = ::serialize(prop.value<std::vector<math::transform>>()); break;
+					data[name] = serialize(prop.value<std::vector<math::transform>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
 				{
-					data[name] = ::serialize(prop.value<std::vector<math::vec4>>()); break;
+					data[name] = serialize(prop.value<std::vector<math::vec4>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
 				{
-					data[name] = ::serialize(prop.value<std::vector<math::vec3>>()); break;
+					data[name] = serialize(prop.value<std::vector<math::vec3>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
 				{
-					data[name] = ::serialize(prop.value<std::vector<math::vec2>>()); break;
+					data[name] = serialize(prop.value<std::vector<math::vec2>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<ImageAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<ImageAssetPtr>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<PrefabAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<PrefabAssetPtr>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<SceneAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<SceneAssetPtr>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<SpriteAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<SpriteAssetPtr>>()); break;
 				}
 				else if (prop.descriptor.children.front().name == "TextAssetPtr")
 				{
-					data[name] = ::serialize(prop.value<std::vector<TextAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<TextAssetPtr>>()); break;
 				}
 				break;
 			}
@@ -164,44 +173,60 @@ json::value serialize(const IType& type)
 	return data;
 }
 
-template<>
-json::value serialize(const bool& primitive)
+json::value Serializer::serialize(const std::shared_ptr<IType>& type)
+{
+	if (type != nullptr)
+	{
+		return serialize(*type.get());
+	}
+	return json::value();
+}
+
+json::value Serializer::serialize(const std::unique_ptr<IType>& type)
+{
+	if (type != nullptr)
+	{
+		return serialize(*type.get());
+	}
+	return json::value();
+}
+
+json::value Serializer::serialize(const std::weak_ptr<IType>& type)
+{
+	return serialize(type.lock());
+}
+
+json::value Serializer::serialize(const bool& primitive)
 {
 	return json::value(primitive);
 }
 
-template<>
-json::value serialize(const int& primitive)
+json::value Serializer::serialize(const int& primitive)
 {
 	return json::value(primitive);
 }
 
-template<>
-json::value serialize(const float& primitive)
+json::value Serializer::serialize(const float& primitive)
 {
 	return json::value(primitive);
 }
 
-template<>
-json::value serialize(const double& primitive)
+json::value Serializer::serialize(const double& primitive)
 {
 	return json::value(primitive);
 }
 
-template<>
-json::value serialize(const char& primitive)
+json::value Serializer::serialize(const char& primitive)
 {
 	return json::value(primitive);
 }
 
-template<>
-json::value serialize(const uuid& id)
+json::value Serializer::serialize(const uuid& id)
 {
 	return json::value(static_cast<std::string>(id));
 }
 
-template <>
-json::value serialize(const graphics::Color& color)
+json::value Serializer::serialize(const graphics::Color& color)
 {
 	return json::object({
 		{"r", color.red},
@@ -211,8 +236,7 @@ json::value serialize(const graphics::Color& color)
 		});
 }
 
-template <>
-json::value serialize(const graphics::TextureCoords& coords)
+json::value Serializer::serialize(const graphics::TextureCoords& coords)
 {
 	return json::object({
 		{"u", coords.u},
@@ -220,8 +244,7 @@ json::value serialize(const graphics::TextureCoords& coords)
 		});
 }
 
-template <>
-json::value serialize(const graphics::TextureRect& rect)
+json::value Serializer::serialize(const graphics::TextureRect& rect)
 {
 	return json::object({
 		{"x", rect.x},
@@ -231,8 +254,7 @@ json::value serialize(const graphics::TextureRect& rect)
 		});
 }
 
-template <>
-json::value serialize(const math::transform& t)
+json::value Serializer::serialize(const math::transform& t)
 {
 	return json::object({
 		{"position", serialize(t.position)},
@@ -242,8 +264,7 @@ json::value serialize(const math::transform& t)
 		});
 }
 
-template <>
-json::value serialize(const math::vec2& v)
+json::value Serializer::serialize(const math::vec2& v)
 {
 	return json::object({
 		{"x", v.x},
@@ -251,8 +272,7 @@ json::value serialize(const math::vec2& v)
 		});
 }
 
-template <>
-json::value serialize(const math::vec3& v)
+json::value Serializer::serialize(const math::vec3& v)
 {
 	return json::object({
 		{"x", v.x},
@@ -261,8 +281,7 @@ json::value serialize(const math::vec3& v)
 		});
 }
 
-template <>
-json::value serialize(const math::vec4& v)
+json::value Serializer::serialize(const math::vec4& v)
 {
 	return json::object({
 		{"x", v.x},
@@ -272,44 +291,37 @@ json::value serialize(const math::vec4& v)
 		});
 }
 
-template<>
-json::value serialize(const ImageAssetPtr& asset)
+json::value Serializer::serialize(const ImageAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-json::value serialize(const PrefabAssetPtr& asset)
+json::value Serializer::serialize(const PrefabAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-json::value serialize(const SceneAssetPtr& asset)
+json::value Serializer::serialize(const SceneAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-json::value serialize(const SpriteAnimationAssetPtr& asset)
+json::value Serializer::serialize(const SpriteAnimationAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-json::value serialize(const SpriteAssetPtr& asset)
+json::value Serializer::serialize(const SpriteAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-json::value serialize(const TextAssetPtr& asset)
+json::value Serializer::serialize(const TextAssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-template<>
-bool deserialize(const json::value& value, IType& type)
+bool Deserializer::deserialize(const json::value& value, IType& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
@@ -393,15 +405,13 @@ bool deserialize(const json::value& value, IType& type)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, uuid& id)
+bool Deserializer::deserialize(const json::value& value, uuid& id)
 {
 	id = uuid(value.as_string(static_cast<std::string>(uuid::Invalid)));
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, graphics::Color& color)
+bool Deserializer::deserialize(const json::value& value, graphics::Color& color)
 {
 	if (!value.is_object())
 		return false;
@@ -413,8 +423,7 @@ bool deserialize(const json::value& value, graphics::Color& color)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, graphics::TextureCoords& coords)
+bool Deserializer::deserialize(const json::value& value, graphics::TextureCoords& coords)
 {
 	if (!value.is_object())
 		return false;
@@ -424,8 +433,7 @@ bool deserialize(const json::value& value, graphics::TextureCoords& coords)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, graphics::TextureRect& rect)
+bool Deserializer::deserialize(const json::value& value, graphics::TextureRect& rect)
 {
 	if (!value.is_object())
 		return false;
@@ -437,8 +445,7 @@ bool deserialize(const json::value& value, graphics::TextureRect& rect)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, math::transform& t)
+bool Deserializer::deserialize(const json::value& value, math::transform& t)
 {
 	if (!value.is_object())
 		return false;
@@ -450,8 +457,7 @@ bool deserialize(const json::value& value, math::transform& t)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, math::vec2& v)
+bool Deserializer::deserialize(const json::value& value, math::vec2& v)
 {
 	if (!value.is_object())
 		return false;
@@ -461,8 +467,7 @@ bool deserialize(const json::value& value, math::vec2& v)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, math::vec3& v)
+bool Deserializer::deserialize(const json::value& value, math::vec3& v)
 {
 	if (!value.is_object())
 		return false;
@@ -473,8 +478,7 @@ bool deserialize(const json::value& value, math::vec3& v)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, math::vec4& v)
+bool Deserializer::deserialize(const json::value& value, math::vec4& v)
 {
 	if (!value.is_object())
 		return false;
@@ -486,56 +490,50 @@ bool deserialize(const json::value& value, math::vec4& v)
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, ImageAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, ImageAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<ImageAsset>(id);
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, PrefabAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, PrefabAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<PrefabAsset>(id);
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, SceneAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, SceneAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<SceneAsset>(id);
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, SpriteAnimationAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<SpriteAnimationAsset>(id);
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, SpriteAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, SpriteAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<SpriteAsset>(id);
 	return true;
 }
 
-template<>
-bool deserialize(const json::value& value, TextAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, TextAssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
-	::deserialize(value, id);
+	deserialize(value, id);
 	asset = AssetLibrary::instance().find<TextAsset>(id);
 	return true;
 }

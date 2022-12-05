@@ -3,7 +3,6 @@
 
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/core/reflection.h>
-#include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 
 #include "game_settings_generated.h"
@@ -36,7 +35,7 @@ public:
 };
 
 CLASS(Category = Data)
-class GameSettings : public Singleton<GameSettings>, protected ISerializable, public IType
+class GameSettings : public Singleton<GameSettings>, public IType
 {
 public:
 	void load();
@@ -45,11 +44,6 @@ public:
 	static const std::string filename;
 
 	std::map<std::string, WeaponItem> weapons;
-
-private:
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 
 	GENERATED_BODY()
 };
