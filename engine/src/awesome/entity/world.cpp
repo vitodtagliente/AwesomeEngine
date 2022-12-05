@@ -361,12 +361,11 @@ json::value World::netSerialize() const
 
 void World::netDeserialize(const json::value& value)
 {
-	Deserializer deserializer;
 	const auto& jsonEntities = value.safeAt("entities").as_array({});
 	for (const json::value& jsonEntity : jsonEntities)
 	{
 		uuid entityId = uuid::Invalid;
-		deserializer.deserialize(jsonEntity.safeAt("id"), entityId);
+		Deserializer::deserialize(jsonEntity.safeAt("id"), entityId);
 
 		Entity* entity = findEntityById(entityId);
 		if (entity != nullptr)

@@ -50,7 +50,7 @@ Sprite Sprite::load(const std::filesystem::path& path)
 
 	const uuid id(data.safeAt("image").as_string(""));
 	sprite.image = AssetLibrary::instance().find<ImageAsset>(id);
-	Deserializer{}.deserialize(data.safeAt("rect"), sprite.rect);
+	Deserializer::deserialize(data.safeAt("rect"), sprite.rect);
 	return sprite;
 }
 
@@ -58,7 +58,7 @@ void Sprite::save(const std::filesystem::path& path)
 {
 	json::value data = json::object({
 		{"image", image ? static_cast<std::string>(image->descriptor.id) : ""},
-		{"rect", Serializer{}.serialize(rect)}
+		{"rect", Serializer::serialize(rect)}
 		});
 
 	Archive ar(path, Archive::Mode::Write);

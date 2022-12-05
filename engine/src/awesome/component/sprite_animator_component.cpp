@@ -111,12 +111,11 @@ std::string SpriteAnimatorComponent::getPlayingAnimation() const
 
 json::value SpriteAnimatorComponent::serialize() const
 {
-	Serializer serializer;
 	json::value data = Component::serialize();
 	json::value anims = json::object();
 	for (const auto& pair : animations)
 	{
-		anims[pair.first] = serializer.serialize(pair.second->descriptor.id);
+		anims[pair.first] = Serializer::serialize(pair.second->descriptor.id);
 	}
 	data["animations"] = anims;
 	return data;
@@ -124,13 +123,12 @@ json::value SpriteAnimatorComponent::serialize() const
 
 void SpriteAnimatorComponent::deserialize(const json::value& value)
 {
-	Deserializer deserializer;
 	Component::deserialize(value);
 	const auto& anims = value.safeAt("animations").as_object({});
 	for (const auto& pair : anims)
 	{
 		uuid animationId = uuid::Invalid;
-		deserializer.deserialize(pair.second, animationId);
+		Deserializer::deserialize(pair.second, animationId);
 		animations.insert(std::make_pair(pair.first, AssetLibrary::instance().find<SpriteAnimationAsset>(animationId)));
 	}
 }

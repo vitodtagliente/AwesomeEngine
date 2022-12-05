@@ -132,7 +132,7 @@ Asset::Descriptor Asset::Descriptor::load(const std::filesystem::path& filename)
 	std::string content = read(filename);
 	json::value value = json::Deserializer::parse(content);
 	{
-		Deserializer{}.deserialize(value.safeAt("id"), descriptor.id);
+		Deserializer::deserialize(value.safeAt("id"), descriptor.id);
 		stringToEnum(value["type"].as_string(""), descriptor.type);
 	}
 	return descriptor;

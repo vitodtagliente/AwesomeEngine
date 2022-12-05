@@ -73,12 +73,11 @@ void SpawnerComponent::update(const double deltaTime)
 
 json::value SpawnerComponent::serialize() const
 {
-	Serializer serializer;
 	json::value data = Component::serialize();
 	json::value waves = json::array();
 	for (const Wave& wave : m_waves)
 	{
-		json::value waveData = serializer.serialize(wave);
+		json::value waveData = Serializer::serialize(wave);
 		waveData["spawnType"] = enumToString(wave.spawnType);
 		waves.push_back(waveData);
 	}
@@ -88,13 +87,12 @@ json::value SpawnerComponent::serialize() const
 
 void SpawnerComponent::deserialize(const json::value& value)
 {
-	Deserializer deserializer;
 	Component::deserialize(value);
 	const auto& wavesData = value.safeAt("waves").as_array({});
 	for (const json::value& waveData : wavesData)
 	{
 		Wave wave;
-		deserializer.deserialize(waveData, wave);
+		Deserializer::deserialize(waveData, wave);
 		stringToEnum(waveData.safeAt("spawnType").as_string(""), wave.spawnType);
 		m_waves.push_back(wave);
 	}

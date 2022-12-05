@@ -26,31 +26,31 @@ struct ISerializable
 
 struct Serializer
 {
-	json::value serialize(const IType& type);
-	json::value serialize(const std::shared_ptr<IType>& type);
-	json::value serialize(const std::unique_ptr<IType>& type);
-	json::value serialize(const std::weak_ptr<IType>& type);
-	json::value serialize(const bool& primitive);
-	json::value serialize(const int& primitive);
-	json::value serialize(const float& primitive);
-	json::value serialize(const double& primitive);
-	json::value serialize(const char& primitive);
-	json::value serialize(const uuid& id);
-	json::value serialize(const graphics::Color& color);
-	json::value serialize(const graphics::TextureCoords& coords);
-	json::value serialize(const graphics::TextureRect& rect);
-	json::value serialize(const math::transform& t);
-	json::value serialize(const math::vec2& v);
-	json::value serialize(const math::vec3& v);
-	json::value serialize(const math::vec4& v);
-	json::value serialize(const ImageAssetPtr& asset);
-	json::value serialize(const PrefabAssetPtr& asset);
-	json::value serialize(const SceneAssetPtr& asset);
-	json::value serialize(const SpriteAnimationAssetPtr& asset);
-	json::value serialize(const SpriteAssetPtr& asset);
-	json::value serialize(const TextAssetPtr& asset);
+	static json::value serialize(const IType& type);
+	static json::value serialize(const std::shared_ptr<IType>& type);
+	static json::value serialize(const std::unique_ptr<IType>& type);
+	static json::value serialize(const std::weak_ptr<IType>& type);
+	static json::value serialize(const bool& primitive);
+	static json::value serialize(const int& primitive);
+	static json::value serialize(const float& primitive);
+	static json::value serialize(const double& primitive);
+	static json::value serialize(const char& primitive);
+	static json::value serialize(const uuid& id);
+	static json::value serialize(const graphics::Color& color);
+	static json::value serialize(const graphics::TextureCoords& coords);
+	static json::value serialize(const graphics::TextureRect& rect);
+	static json::value serialize(const math::transform& t);
+	static json::value serialize(const math::vec2& v);
+	static json::value serialize(const math::vec3& v);
+	static json::value serialize(const math::vec4& v);
+	static json::value serialize(const ImageAssetPtr& asset);
+	static json::value serialize(const PrefabAssetPtr& asset);
+	static json::value serialize(const SceneAssetPtr& asset);
+	static json::value serialize(const SpriteAnimationAssetPtr& asset);
+	static json::value serialize(const SpriteAssetPtr& asset);
+	static json::value serialize(const TextAssetPtr& asset);
 	template <typename T>
-	json::value serialize(const std::vector<T>& list)
+	static json::value serialize(const std::vector<T>& list)
 	{
 		json::value data = json::array();
 		for (const auto& element : list)
@@ -63,19 +63,19 @@ struct Serializer
 
 struct Deserializer
 {
-	bool deserialize(const json::value& value, IType& type);
-	bool deserialize(const json::value& value, uuid& id);
-	bool deserialize(const json::value& value, graphics::Color& color);
-	bool deserialize(const json::value& value, graphics::TextureCoords& coords);
-	bool deserialize(const json::value& value, graphics::TextureRect& rect);
-	bool deserialize(const json::value& value, math::transform& t);
-	bool deserialize(const json::value& value, math::vec2& v);
-	bool deserialize(const json::value& value, math::vec3& v);
-	bool deserialize(const json::value& value, math::vec4& v);
-	bool deserialize(const json::value& value, ImageAssetPtr& asset);
-	bool deserialize(const json::value& value, PrefabAssetPtr& asset);
-	bool deserialize(const json::value& value, SceneAssetPtr& asset);
-	bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset);
-	bool deserialize(const json::value& value, SpriteAssetPtr& asset);
-	bool deserialize(const json::value& value, TextAssetPtr& asset);
+	static bool deserialize(const json::value& value, IType& type);
+	static bool deserialize(const json::value& value, uuid& id);
+	static bool deserialize(const json::value& value, graphics::Color& color);
+	static bool deserialize(const json::value& value, graphics::TextureCoords& coords);
+	static bool deserialize(const json::value& value, graphics::TextureRect& rect);
+	static bool deserialize(const json::value& value, math::transform& t);
+	static bool deserialize(const json::value& value, math::vec2& v);
+	static bool deserialize(const json::value& value, math::vec3& v);
+	static bool deserialize(const json::value& value, math::vec4& v);
+	static bool deserialize(const json::value& value, ImageAssetPtr& asset);
+	static bool deserialize(const json::value& value, PrefabAssetPtr& asset);
+	static bool deserialize(const json::value& value, SceneAssetPtr& asset);
+	static bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset);
+	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
+	static bool deserialize(const json::value& value, TextAssetPtr& asset);
 };

@@ -4,9 +4,8 @@ namespace net
 {
 	json::value Message::serialize() const
 	{
-		Serializer serializer;
 		return json::object({
-			{"id", serializer.serialize(header.id)},
+			{"id", Serializer::serialize(header.id)},
 			{"version", header.version},
 			{"commandId", header.commandId},
 			{"commandPhase", enumToString(header.commandPhase)},

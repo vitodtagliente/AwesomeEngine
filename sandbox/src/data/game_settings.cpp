@@ -19,7 +19,7 @@ void GameSettings::load()
 	};
 
 	std::string content = read(AssetLibrary::instance().getDirectory() / GameSettings::filename);
-	Deserializer{}.deserialize(json::Deserializer::parse(content), *this);
+	Deserializer::deserialize(json::Deserializer::parse(content), *this);
 }
 
 void GameSettings::save()
