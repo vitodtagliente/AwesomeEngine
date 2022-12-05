@@ -10,10 +10,10 @@ const properties_t ContentBrowserWindow::getTypeProperties() const {
 }
 std::size_t ContentBrowserWindow::getTypeSize() const { return ContentBrowserWindowType::type().size; }
 
-const Type& ContentBrowserWindowType::type()
+const TypeDefinition& ContentBrowserWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new ContentBrowserWindow(); }, "ContentBrowserWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new ContentBrowserWindow(); }, "ContentBrowserWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(ContentBrowserWindow));
-    return s_type;
+    return s_typeDefinition;
 }

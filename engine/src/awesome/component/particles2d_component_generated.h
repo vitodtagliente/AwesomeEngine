@@ -8,7 +8,7 @@ struct Particles2dComponentType : RegisteredInTypeFactory<Particles2dComponentTy
 {
     Particles2dComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

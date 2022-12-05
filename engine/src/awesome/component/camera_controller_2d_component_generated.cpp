@@ -15,10 +15,10 @@ const properties_t CameraController2dComponent::getTypeProperties() const {
 }
 std::size_t CameraController2dComponent::getTypeSize() const { return CameraController2dComponentType::type().size; }
 
-const Type& CameraController2dComponentType::type()
+const TypeDefinition& CameraController2dComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new CameraController2dComponent(); }, "CameraController2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraController2dComponent(); }, "CameraController2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(CameraController2dComponent));
-    return s_type;
+    return s_typeDefinition;
 }

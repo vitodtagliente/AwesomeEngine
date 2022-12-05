@@ -13,10 +13,10 @@ const properties_t CameraFollow2dComponent::getTypeProperties() const {
 }
 std::size_t CameraFollow2dComponent::getTypeSize() const { return CameraFollow2dComponentType::type().size; }
 
-const Type& CameraFollow2dComponentType::type()
+const TypeDefinition& CameraFollow2dComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new CameraFollow2dComponent(); }, "CameraFollow2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraFollow2dComponent(); }, "CameraFollow2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(CameraFollow2dComponent));
-    return s_type;
+    return s_typeDefinition;
 }

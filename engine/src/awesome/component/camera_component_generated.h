@@ -8,7 +8,7 @@ struct CameraComponentType : RegisteredInTypeFactory<CameraComponentType>
 {
     CameraComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

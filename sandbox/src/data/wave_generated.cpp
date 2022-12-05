@@ -39,10 +39,10 @@ const properties_t Wave::getTypeProperties() const {
 }
 std::size_t Wave::getTypeSize() const { return WaveType::type().size; }
 
-const Type& WaveType::type()
+const TypeDefinition& WaveType::type()
 {
-    static const Type s_type([]() -> IType* { return new Wave(); }, "Wave", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Wave(); }, "Wave", {
         std::make_pair("Category", "Data"),
     }, sizeof(Wave));
-    return s_type;
+    return s_typeDefinition;
 }

@@ -13,10 +13,10 @@ const properties_t MinionControllerComponent::getTypeProperties() const {
 }
 std::size_t MinionControllerComponent::getTypeSize() const { return MinionControllerComponentType::type().size; }
 
-const Type& MinionControllerComponentType::type()
+const TypeDefinition& MinionControllerComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new MinionControllerComponent(); }, "MinionControllerComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new MinionControllerComponent(); }, "MinionControllerComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(MinionControllerComponent));
-    return s_type;
+    return s_typeDefinition;
 }

@@ -22,7 +22,7 @@ struct ApplicationSettingsType : RegisteredInTypeFactory<ApplicationSettingsType
 {
     ApplicationSettingsType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

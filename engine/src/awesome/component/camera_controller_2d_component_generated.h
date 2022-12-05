@@ -8,7 +8,7 @@ struct CameraController2dComponentType : RegisteredInTypeFactory<CameraControlle
 {
     CameraController2dComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

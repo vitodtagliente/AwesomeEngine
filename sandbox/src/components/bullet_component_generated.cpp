@@ -19,10 +19,10 @@ const properties_t BulletComponent::getTypeProperties() const {
 }
 std::size_t BulletComponent::getTypeSize() const { return BulletComponentType::type().size; }
 
-const Type& BulletComponentType::type()
+const TypeDefinition& BulletComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new BulletComponent(); }, "BulletComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new BulletComponent(); }, "BulletComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(BulletComponent));
-    return s_type;
+    return s_typeDefinition;
 }

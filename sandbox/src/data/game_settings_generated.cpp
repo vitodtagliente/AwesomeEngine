@@ -23,12 +23,12 @@ const properties_t WeaponLevel::getTypeProperties() const {
 }
 std::size_t WeaponLevel::getTypeSize() const { return WeaponLevelType::type().size; }
 
-const Type& WeaponLevelType::type()
+const TypeDefinition& WeaponLevelType::type()
 {
-    static const Type s_type([]() -> IType* { return new WeaponLevel(); }, "WeaponLevel", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new WeaponLevel(); }, "WeaponLevel", {
         std::make_pair("Category", "Data"),
     }, sizeof(WeaponLevel));
-    return s_type;
+    return s_typeDefinition;
 }
 const meta_t& WeaponItem::getTypeMeta() const { return WeaponItemType::type().meta; }
 const std::string& WeaponItem::getTypeName() const { return WeaponItemType::type().name; }
@@ -47,12 +47,12 @@ const properties_t WeaponItem::getTypeProperties() const {
 }
 std::size_t WeaponItem::getTypeSize() const { return WeaponItemType::type().size; }
 
-const Type& WeaponItemType::type()
+const TypeDefinition& WeaponItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new WeaponItem(); }, "WeaponItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new WeaponItem(); }, "WeaponItem", {
         std::make_pair("Category", "Data"),
     }, sizeof(WeaponItem));
-    return s_type;
+    return s_typeDefinition;
 }
 const meta_t& GameSettings::getTypeMeta() const { return GameSettingsType::type().meta; }
 const std::string& GameSettings::getTypeName() const { return GameSettingsType::type().name; }
@@ -62,10 +62,10 @@ const properties_t GameSettings::getTypeProperties() const {
 }
 std::size_t GameSettings::getTypeSize() const { return GameSettingsType::type().size; }
 
-const Type& GameSettingsType::type()
+const TypeDefinition& GameSettingsType::type()
 {
-    static const Type s_type([]() -> IType* { return new GameSettings(); }, "GameSettings", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new GameSettings(); }, "GameSettings", {
         std::make_pair("Category", "Data"),
     }, sizeof(GameSettings));
-    return s_type;
+    return s_typeDefinition;
 }

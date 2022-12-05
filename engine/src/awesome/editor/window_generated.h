@@ -8,7 +8,7 @@ struct WindowType : RegisteredInTypeFactory<WindowType>
 {
     WindowType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

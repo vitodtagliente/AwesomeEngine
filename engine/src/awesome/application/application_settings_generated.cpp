@@ -58,9 +58,9 @@ const properties_t ApplicationSettings::getTypeProperties() const {
 }
 std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSettingsType::type().size; }
 
-const Type& ApplicationSettingsType::type()
+const TypeDefinition& ApplicationSettingsType::type()
 {
-    static const Type s_type([]() -> IType* { return new ApplicationSettings(); }, "ApplicationSettings", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new ApplicationSettings(); }, "ApplicationSettings", {
     }, sizeof(ApplicationSettings));
-    return s_type;
+    return s_typeDefinition;
 }

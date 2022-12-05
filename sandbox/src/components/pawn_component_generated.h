@@ -8,7 +8,7 @@ struct PawnComponentType : RegisteredInTypeFactory<PawnComponentType>
 {
     PawnComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

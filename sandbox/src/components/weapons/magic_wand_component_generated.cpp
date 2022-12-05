@@ -13,10 +13,10 @@ const properties_t MagicWandComponent::getTypeProperties() const {
 }
 std::size_t MagicWandComponent::getTypeSize() const { return MagicWandComponentType::type().size; }
 
-const Type& MagicWandComponentType::type()
+const TypeDefinition& MagicWandComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new MagicWandComponent(); }, "MagicWandComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new MagicWandComponent(); }, "MagicWandComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(MagicWandComponent));
-    return s_type;
+    return s_typeDefinition;
 }

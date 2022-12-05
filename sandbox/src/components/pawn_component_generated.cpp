@@ -15,10 +15,10 @@ const properties_t PawnComponent::getTypeProperties() const {
 }
 std::size_t PawnComponent::getTypeSize() const { return PawnComponentType::type().size; }
 
-const Type& PawnComponentType::type()
+const TypeDefinition& PawnComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new PawnComponent(); }, "PawnComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new PawnComponent(); }, "PawnComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(PawnComponent));
-    return s_type;
+    return s_typeDefinition;
 }

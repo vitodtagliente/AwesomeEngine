@@ -10,10 +10,10 @@ const properties_t SettingsWindow::getTypeProperties() const {
 }
 std::size_t SettingsWindow::getTypeSize() const { return SettingsWindowType::type().size; }
 
-const Type& SettingsWindowType::type()
+const TypeDefinition& SettingsWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new SettingsWindow(); }, "SettingsWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SettingsWindow(); }, "SettingsWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(SettingsWindow));
-    return s_type;
+    return s_typeDefinition;
 }

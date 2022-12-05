@@ -13,10 +13,10 @@ const properties_t ShiedComponent::getTypeProperties() const {
 }
 std::size_t ShiedComponent::getTypeSize() const { return ShiedComponentType::type().size; }
 
-const Type& ShiedComponentType::type()
+const TypeDefinition& ShiedComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new ShiedComponent(); }, "ShiedComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new ShiedComponent(); }, "ShiedComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(ShiedComponent));
-    return s_type;
+    return s_typeDefinition;
 }

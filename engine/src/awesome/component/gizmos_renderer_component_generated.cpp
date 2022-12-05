@@ -16,10 +16,10 @@ const properties_t GizmosRendererComponent::getTypeProperties() const {
 }
 std::size_t GizmosRendererComponent::getTypeSize() const { return GizmosRendererComponentType::type().size; }
 
-const Type& GizmosRendererComponentType::type()
+const TypeDefinition& GizmosRendererComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new GizmosRendererComponent(); }, "GizmosRendererComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new GizmosRendererComponent(); }, "GizmosRendererComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(GizmosRendererComponent));
-    return s_type;
+    return s_typeDefinition;
 }

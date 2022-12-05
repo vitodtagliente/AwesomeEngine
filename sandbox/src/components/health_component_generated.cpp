@@ -25,10 +25,10 @@ const properties_t HealthComponent::getTypeProperties() const {
 }
 std::size_t HealthComponent::getTypeSize() const { return HealthComponentType::type().size; }
 
-const Type& HealthComponentType::type()
+const TypeDefinition& HealthComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new HealthComponent(); }, "HealthComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new HealthComponent(); }, "HealthComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(HealthComponent));
-    return s_type;
+    return s_typeDefinition;
 }

@@ -10,10 +10,10 @@ const properties_t EntityInspectorWindow::getTypeProperties() const {
 }
 std::size_t EntityInspectorWindow::getTypeSize() const { return EntityInspectorWindowType::type().size; }
 
-const Type& EntityInspectorWindowType::type()
+const TypeDefinition& EntityInspectorWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new EntityInspectorWindow(); }, "EntityInspectorWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new EntityInspectorWindow(); }, "EntityInspectorWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(EntityInspectorWindow));
-    return s_type;
+    return s_typeDefinition;
 }

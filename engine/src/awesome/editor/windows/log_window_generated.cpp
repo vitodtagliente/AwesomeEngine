@@ -10,10 +10,10 @@ const properties_t LogWindow::getTypeProperties() const {
 }
 std::size_t LogWindow::getTypeSize() const { return LogWindowType::type().size; }
 
-const Type& LogWindowType::type()
+const TypeDefinition& LogWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new LogWindow(); }, "LogWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new LogWindow(); }, "LogWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(LogWindow));
-    return s_type;
+    return s_typeDefinition;
 }

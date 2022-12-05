@@ -8,7 +8,7 @@ struct ShiedComponentType : RegisteredInTypeFactory<ShiedComponentType>
 {
     ShiedComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

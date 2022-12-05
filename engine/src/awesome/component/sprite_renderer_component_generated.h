@@ -8,7 +8,7 @@ struct SpriteRendererComponentType : RegisteredInTypeFactory<SpriteRendererCompo
 {
     SpriteRendererComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

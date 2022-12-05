@@ -8,7 +8,7 @@ struct WeaponLevelType : RegisteredInTypeFactory<WeaponLevelType>
 {
     WeaponLevelType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
@@ -16,7 +16,7 @@ struct WeaponItemType : RegisteredInTypeFactory<WeaponItemType>
 {
     WeaponItemType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
@@ -24,7 +24,7 @@ struct GameSettingsType : RegisteredInTypeFactory<GameSettingsType>
 {
     GameSettingsType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

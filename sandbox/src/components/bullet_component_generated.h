@@ -8,7 +8,7 @@ struct BulletComponentType : RegisteredInTypeFactory<BulletComponentType>
 {
     BulletComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

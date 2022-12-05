@@ -10,10 +10,10 @@ const properties_t AssetInspectorWindow::getTypeProperties() const {
 }
 std::size_t AssetInspectorWindow::getTypeSize() const { return AssetInspectorWindowType::type().size; }
 
-const Type& AssetInspectorWindowType::type()
+const TypeDefinition& AssetInspectorWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new AssetInspectorWindow(); }, "AssetInspectorWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new AssetInspectorWindow(); }, "AssetInspectorWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(AssetInspectorWindow));
-    return s_type;
+    return s_typeDefinition;
 }

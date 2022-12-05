@@ -8,7 +8,7 @@ struct ComponentType : RegisteredInTypeFactory<ComponentType>
 {
     ComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

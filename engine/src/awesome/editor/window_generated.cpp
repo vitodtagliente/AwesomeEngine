@@ -10,9 +10,9 @@ const properties_t Window::getTypeProperties() const {
 }
 std::size_t Window::getTypeSize() const { return WindowType::type().size; }
 
-const Type& WindowType::type()
+const TypeDefinition& WindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new Window(); }, "Window", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Window(); }, "Window", {
     }, sizeof(Window));
-    return s_type;
+    return s_typeDefinition;
 }

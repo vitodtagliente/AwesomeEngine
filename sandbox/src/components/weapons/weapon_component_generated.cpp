@@ -23,9 +23,9 @@ const properties_t WeaponComponent::getTypeProperties() const {
 }
 std::size_t WeaponComponent::getTypeSize() const { return WeaponComponentType::type().size; }
 
-const Type& WeaponComponentType::type()
+const TypeDefinition& WeaponComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new WeaponComponent(); }, "WeaponComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new WeaponComponent(); }, "WeaponComponent", {
     }, sizeof(WeaponComponent));
-    return s_type;
+    return s_typeDefinition;
 }

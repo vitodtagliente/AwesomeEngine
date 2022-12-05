@@ -10,10 +10,10 @@ const properties_t SpriteMenuItem::getTypeProperties() const {
 }
 std::size_t SpriteMenuItem::getTypeSize() const { return SpriteMenuItemType::type().size; }
 
-const Type& SpriteMenuItemType::type()
+const TypeDefinition& SpriteMenuItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new SpriteMenuItem(); }, "SpriteMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpriteMenuItem(); }, "SpriteMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(SpriteMenuItem));
-    return s_type;
+    return s_typeDefinition;
 }

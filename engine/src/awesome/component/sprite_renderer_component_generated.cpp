@@ -19,10 +19,10 @@ const properties_t SpriteRendererComponent::getTypeProperties() const {
 }
 std::size_t SpriteRendererComponent::getTypeSize() const { return SpriteRendererComponentType::type().size; }
 
-const Type& SpriteRendererComponentType::type()
+const TypeDefinition& SpriteRendererComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new SpriteRendererComponent(); }, "SpriteRendererComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpriteRendererComponent(); }, "SpriteRendererComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(SpriteRendererComponent));
-    return s_type;
+    return s_typeDefinition;
 }

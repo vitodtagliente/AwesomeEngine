@@ -10,10 +10,10 @@ const properties_t SceneWindow::getTypeProperties() const {
 }
 std::size_t SceneWindow::getTypeSize() const { return SceneWindowType::type().size; }
 
-const Type& SceneWindowType::type()
+const TypeDefinition& SceneWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new SceneWindow(); }, "SceneWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SceneWindow(); }, "SceneWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(SceneWindow));
-    return s_type;
+    return s_typeDefinition;
 }

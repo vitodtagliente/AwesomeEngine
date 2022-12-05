@@ -8,7 +8,7 @@ struct GameSettingsWindowType : RegisteredInTypeFactory<GameSettingsWindowType>
 {
     GameSettingsWindowType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

@@ -10,10 +10,10 @@ const properties_t NewSceneMenuItem::getTypeProperties() const {
 }
 std::size_t NewSceneMenuItem::getTypeSize() const { return NewSceneMenuItemType::type().size; }
 
-const Type& NewSceneMenuItemType::type()
+const TypeDefinition& NewSceneMenuItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new NewSceneMenuItem(); }, "NewSceneMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new NewSceneMenuItem(); }, "NewSceneMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(NewSceneMenuItem));
-    return s_type;
+    return s_typeDefinition;
 }

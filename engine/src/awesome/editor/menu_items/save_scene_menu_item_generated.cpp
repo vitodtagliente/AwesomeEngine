@@ -10,10 +10,10 @@ const properties_t SaveSceneMenuItem::getTypeProperties() const {
 }
 std::size_t SaveSceneMenuItem::getTypeSize() const { return SaveSceneMenuItemType::type().size; }
 
-const Type& SaveSceneMenuItemType::type()
+const TypeDefinition& SaveSceneMenuItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new SaveSceneMenuItem(); }, "SaveSceneMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SaveSceneMenuItem(); }, "SaveSceneMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(SaveSceneMenuItem));
-    return s_type;
+    return s_typeDefinition;
 }

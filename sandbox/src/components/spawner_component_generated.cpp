@@ -13,10 +13,10 @@ const properties_t SpawnerComponent::getTypeProperties() const {
 }
 std::size_t SpawnerComponent::getTypeSize() const { return SpawnerComponentType::type().size; }
 
-const Type& SpawnerComponentType::type()
+const TypeDefinition& SpawnerComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new SpawnerComponent(); }, "SpawnerComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpawnerComponent(); }, "SpawnerComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(SpawnerComponent));
-    return s_type;
+    return s_typeDefinition;
 }

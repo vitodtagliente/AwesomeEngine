@@ -13,10 +13,10 @@ const properties_t SpriteAnimatorComponent::getTypeProperties() const {
 }
 std::size_t SpriteAnimatorComponent::getTypeSize() const { return SpriteAnimatorComponentType::type().size; }
 
-const Type& SpriteAnimatorComponentType::type()
+const TypeDefinition& SpriteAnimatorComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new SpriteAnimatorComponent(); }, "SpriteAnimatorComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpriteAnimatorComponent(); }, "SpriteAnimatorComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(SpriteAnimatorComponent));
-    return s_type;
+    return s_typeDefinition;
 }

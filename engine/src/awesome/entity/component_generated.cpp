@@ -18,9 +18,9 @@ const properties_t Component::getTypeProperties() const {
 }
 std::size_t Component::getTypeSize() const { return ComponentType::type().size; }
 
-const Type& ComponentType::type()
+const TypeDefinition& ComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new Component(); }, "Component", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Component(); }, "Component", {
     }, sizeof(Component));
-    return s_type;
+    return s_typeDefinition;
 }

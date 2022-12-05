@@ -10,9 +10,9 @@ const properties_t MenuItem::getTypeProperties() const {
 }
 std::size_t MenuItem::getTypeSize() const { return MenuItemType::type().size; }
 
-const Type& MenuItemType::type()
+const TypeDefinition& MenuItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new MenuItem(); }, "MenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new MenuItem(); }, "MenuItem", {
     }, sizeof(MenuItem));
-    return s_type;
+    return s_typeDefinition;
 }

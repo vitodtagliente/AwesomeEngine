@@ -10,10 +10,10 @@ const properties_t NetworkWindow::getTypeProperties() const {
 }
 std::size_t NetworkWindow::getTypeSize() const { return NetworkWindowType::type().size; }
 
-const Type& NetworkWindowType::type()
+const TypeDefinition& NetworkWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new NetworkWindow(); }, "NetworkWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new NetworkWindow(); }, "NetworkWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(NetworkWindow));
-    return s_type;
+    return s_typeDefinition;
 }

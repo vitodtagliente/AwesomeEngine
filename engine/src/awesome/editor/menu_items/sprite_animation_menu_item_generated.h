@@ -8,7 +8,7 @@ struct SpriteAnimationMenuItemType : RegisteredInTypeFactory<SpriteAnimationMenu
 {
     SpriteAnimationMenuItemType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

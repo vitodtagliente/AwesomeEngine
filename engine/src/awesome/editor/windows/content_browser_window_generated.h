@@ -8,7 +8,7 @@ struct ContentBrowserWindowType : RegisteredInTypeFactory<ContentBrowserWindowTy
 {
     ContentBrowserWindowType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

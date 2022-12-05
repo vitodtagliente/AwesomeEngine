@@ -19,10 +19,10 @@ const properties_t OrthographicCameraComponent::getTypeProperties() const {
 }
 std::size_t OrthographicCameraComponent::getTypeSize() const { return OrthographicCameraComponentType::type().size; }
 
-const Type& OrthographicCameraComponentType::type()
+const TypeDefinition& OrthographicCameraComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new OrthographicCameraComponent(); }, "OrthographicCameraComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new OrthographicCameraComponent(); }, "OrthographicCameraComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(OrthographicCameraComponent));
-    return s_type;
+    return s_typeDefinition;
 }

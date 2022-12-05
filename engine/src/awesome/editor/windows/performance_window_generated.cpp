@@ -10,10 +10,10 @@ const properties_t PerformanceWindow::getTypeProperties() const {
 }
 std::size_t PerformanceWindow::getTypeSize() const { return PerformanceWindowType::type().size; }
 
-const Type& PerformanceWindowType::type()
+const TypeDefinition& PerformanceWindowType::type()
 {
-    static const Type s_type([]() -> IType* { return new PerformanceWindow(); }, "PerformanceWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new PerformanceWindow(); }, "PerformanceWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(PerformanceWindow));
-    return s_type;
+    return s_typeDefinition;
 }

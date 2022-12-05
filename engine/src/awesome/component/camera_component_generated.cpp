@@ -13,9 +13,9 @@ const properties_t CameraComponent::getTypeProperties() const {
 }
 std::size_t CameraComponent::getTypeSize() const { return CameraComponentType::type().size; }
 
-const Type& CameraComponentType::type()
+const TypeDefinition& CameraComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new CameraComponent(); }, "CameraComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraComponent(); }, "CameraComponent", {
     }, sizeof(CameraComponent));
-    return s_type;
+    return s_typeDefinition;
 }

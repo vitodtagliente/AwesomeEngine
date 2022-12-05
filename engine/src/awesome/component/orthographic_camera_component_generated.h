@@ -8,7 +8,7 @@ struct OrthographicCameraComponentType : RegisteredInTypeFactory<OrthographicCam
 {
     OrthographicCameraComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

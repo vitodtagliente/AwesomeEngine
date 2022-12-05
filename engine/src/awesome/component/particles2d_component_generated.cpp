@@ -15,10 +15,10 @@ const properties_t Particles2dComponent::getTypeProperties() const {
 }
 std::size_t Particles2dComponent::getTypeSize() const { return Particles2dComponentType::type().size; }
 
-const Type& Particles2dComponentType::type()
+const TypeDefinition& Particles2dComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new Particles2dComponent(); }, "Particles2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Particles2dComponent(); }, "Particles2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(Particles2dComponent));
-    return s_type;
+    return s_typeDefinition;
 }

@@ -10,10 +10,10 @@ const properties_t ShowWindowsMenuItem::getTypeProperties() const {
 }
 std::size_t ShowWindowsMenuItem::getTypeSize() const { return ShowWindowsMenuItemType::type().size; }
 
-const Type& ShowWindowsMenuItemType::type()
+const TypeDefinition& ShowWindowsMenuItemType::type()
 {
-    static const Type s_type([]() -> IType* { return new ShowWindowsMenuItem(); }, "ShowWindowsMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new ShowWindowsMenuItem(); }, "ShowWindowsMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(ShowWindowsMenuItem));
-    return s_type;
+    return s_typeDefinition;
 }

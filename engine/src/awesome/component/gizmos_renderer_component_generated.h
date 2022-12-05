@@ -8,7 +8,7 @@ struct GizmosRendererComponentType : RegisteredInTypeFactory<GizmosRendererCompo
 {
     GizmosRendererComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

@@ -18,10 +18,10 @@ const properties_t Collider2dComponent::getTypeProperties() const {
 }
 std::size_t Collider2dComponent::getTypeSize() const { return Collider2dComponentType::type().size; }
 
-const Type& Collider2dComponentType::type()
+const TypeDefinition& Collider2dComponentType::type()
 {
-    static const Type s_type([]() -> IType* { return new Collider2dComponent(); }, "Collider2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Collider2dComponent(); }, "Collider2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(Collider2dComponent));
-    return s_type;
+    return s_typeDefinition;
 }

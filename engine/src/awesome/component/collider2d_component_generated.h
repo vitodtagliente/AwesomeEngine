@@ -8,7 +8,7 @@ struct Collider2dComponentType : RegisteredInTypeFactory<Collider2dComponentType
 {
     Collider2dComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

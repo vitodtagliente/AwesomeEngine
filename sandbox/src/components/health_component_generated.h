@@ -8,7 +8,7 @@ struct HealthComponentType : RegisteredInTypeFactory<HealthComponentType>
 {
     HealthComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

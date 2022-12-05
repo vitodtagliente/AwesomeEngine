@@ -8,7 +8,7 @@ struct LifetimeComponentType : RegisteredInTypeFactory<LifetimeComponentType>
 {
     LifetimeComponentType() = delete;
 
-    static const Type& type();
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
