@@ -11,7 +11,7 @@
 class Entity;
 
 CLASS()
-class Component : public ISerializable, public Type
+class Component : public Type, public ISerializable
 {
 public:
 	Component() = default;
