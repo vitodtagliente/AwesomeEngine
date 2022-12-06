@@ -15,7 +15,7 @@ std::size_t LifetimeComponent::getTypeSize() const { return LifetimeComponentTyp
 
 const TypeDefinition& LifetimeComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new LifetimeComponent(); }, "LifetimeComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new LifetimeComponent(); }, "LifetimeComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(LifetimeComponent));
     return s_typeDefinition;

@@ -12,7 +12,7 @@ std::size_t Window::getTypeSize() const { return WindowType::type().size; }
 
 const TypeDefinition& WindowType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Window(); }, "Window", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new Window(); }, "Window", {
     }, sizeof(Window));
     return s_typeDefinition;
 }

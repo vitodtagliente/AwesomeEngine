@@ -25,7 +25,7 @@ std::size_t WeaponComponent::getTypeSize() const { return WeaponComponentType::t
 
 const TypeDefinition& WeaponComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new WeaponComponent(); }, "WeaponComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new WeaponComponent(); }, "WeaponComponent", {
     }, sizeof(WeaponComponent));
     return s_typeDefinition;
 }

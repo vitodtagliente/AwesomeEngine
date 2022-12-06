@@ -15,7 +15,7 @@ std::size_t CameraComponent::getTypeSize() const { return CameraComponentType::t
 
 const TypeDefinition& CameraComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraComponent(); }, "CameraComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new CameraComponent(); }, "CameraComponent", {
     }, sizeof(CameraComponent));
     return s_typeDefinition;
 }

@@ -15,7 +15,7 @@ std::size_t CameraFollow2dComponent::getTypeSize() const { return CameraFollow2d
 
 const TypeDefinition& CameraFollow2dComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraFollow2dComponent(); }, "CameraFollow2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new CameraFollow2dComponent(); }, "CameraFollow2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(CameraFollow2dComponent));
     return s_typeDefinition;

@@ -32,7 +32,7 @@ void SettingsWindow::render()
 	ApplicationSettings& settings = Application::instance().settings;
 	Layout::input("FPS", settings.fps);
 	Layout::input("Mode", settings.mode);
-	Layout::input((IType&)settings);
+	Layout::input((Type&)settings);
 
 	Layout::separator();
 

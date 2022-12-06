@@ -12,7 +12,7 @@ std::size_t HealerComponent::getTypeSize() const { return HealerComponentType::t
 
 const TypeDefinition& HealerComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new HealerComponent(); }, "HealerComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new HealerComponent(); }, "HealerComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(HealerComponent));
     return s_typeDefinition;

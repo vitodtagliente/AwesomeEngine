@@ -21,7 +21,7 @@ std::size_t BulletComponent::getTypeSize() const { return BulletComponentType::t
 
 const TypeDefinition& BulletComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new BulletComponent(); }, "BulletComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new BulletComponent(); }, "BulletComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(BulletComponent));
     return s_typeDefinition;

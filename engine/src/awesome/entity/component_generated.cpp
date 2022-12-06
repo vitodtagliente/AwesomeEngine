@@ -20,7 +20,7 @@ std::size_t Component::getTypeSize() const { return ComponentType::type().size; 
 
 const TypeDefinition& ComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Component(); }, "Component", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new Component(); }, "Component", {
     }, sizeof(Component));
     return s_typeDefinition;
 }

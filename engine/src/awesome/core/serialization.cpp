@@ -2,7 +2,7 @@
 
 #include <awesome/asset/asset_library.h>
 
-json::value Serializer::serialize(const IType& type)
+json::value Serializer::serialize(const Type& type)
 {
 	json::value data = json::object();
 	for (const auto& [name, prop] : type.getTypeProperties())
@@ -20,7 +20,7 @@ json::value Serializer::serialize(const IType& type)
 		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
 		case Property::Type::T_custom_type: 
 		{
-			// data[name] = ::serialize(prop.value<IType>());
+			// data[name] = ::serialize(prop.value<Type>());
 			break;
 		}
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
@@ -44,9 +44,8 @@ json::value Serializer::serialize(const IType& type)
 			{
 				switch (prop.descriptor.children.front().decoratorType)
 				{
-				case Property::DecoratorType::D_shared_ptr: serialize(prop.value<std::vector<std::shared_ptr<IType>>>()); break;
-				case Property::DecoratorType::D_unique_ptr: serialize(prop.value<std::vector<std::unique_ptr<IType>>>()); break;
-				case Property::DecoratorType::D_weak_ptr: serialize(prop.value<std::vector<std::weak_ptr<IType>>>()); break;
+				case Property::DecoratorType::D_shared_ptr: serialize(prop.value<std::vector<std::shared_ptr<Type>>>()); break;
+				case Property::DecoratorType::D_unique_ptr: serialize(prop.value<std::vector<std::unique_ptr<Type>>>()); break;
 				default:break;
 				}
 				break;
@@ -173,7 +172,7 @@ json::value Serializer::serialize(const IType& type)
 	return data;
 }
 
-json::value Serializer::serialize(const std::shared_ptr<IType>& type)
+json::value Serializer::serialize(const std::shared_ptr<Type>& type)
 {
 	if (type != nullptr)
 	{
@@ -182,18 +181,13 @@ json::value Serializer::serialize(const std::shared_ptr<IType>& type)
 	return json::value();
 }
 
-json::value Serializer::serialize(const std::unique_ptr<IType>& type)
+json::value Serializer::serialize(const std::unique_ptr<Type>& type)
 {
 	if (type != nullptr)
 	{
 		return serialize(*type.get());
 	}
 	return json::value();
-}
-
-json::value Serializer::serialize(const std::weak_ptr<IType>& type)
-{
-	return serialize(type.lock());
 }
 
 json::value Serializer::serialize(const bool& primitive)
@@ -321,7 +315,7 @@ json::value Serializer::serialize(const TextAssetPtr& asset)
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-bool Deserializer::deserialize(const json::value& value, IType& type)
+bool Deserializer::deserialize(const json::value& value, Type& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
@@ -343,6 +337,93 @@ bool Deserializer::deserialize(const json::value& value, IType& type)
 		case Property::Type::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case Property::Type::T_void: break;
 		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
+		case Property::Type::T_container_map: 
+		{
+			break;
+		}
+		case Property::Type::T_container_vector:
+		{
+			/*
+			switch (prop.descriptor.children.front().type)
+			{
+			case Property::Type::T_bool: deserialize(value.safeAt(name), prop.value<std::vector<bool>>()); break;
+			case Property::Type::T_char: deserialize(value.safeAt(name), prop.value<std::vector<char>>()); break;
+			case Property::Type::T_double: deserialize(value.safeAt(name), prop.value<std::vector<double>>()); break;
+			case Property::Type::T_float: deserialize(value.safeAt(name), prop.value<std::vector<float>>()); break;
+			case Property::Type::T_int: deserialize(value.safeAt(name), prop.value<std::vector<int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: deserialize(value.safeAt(name), prop.value<std::vector<int>>()); break;
+			case Property::Type::T_custom_type:
+			{
+				switch (prop.descriptor.children.front().decoratorType)
+				{
+				// case Property::DecoratorType::D_shared_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::shared_ptr<Type>>>()); break;
+				// case Property::DecoratorType::D_unique_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::unique_ptr<Type>>>()); break;
+				default:break;
+				}
+				break;
+			}
+			case Property::Type::T_unknown:
+			default:
+			{
+				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<graphics::Color>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<graphics::TextureCoords>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<graphics::TextureRect>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<math::transform>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<math::vec4>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<math::vec3>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<math::vec2>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<ImageAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<PrefabAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<SceneAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
+			*/
+			break;
+		}
 		case Property::Type::T_unknown:
 		default:
 		{
@@ -403,6 +484,18 @@ bool Deserializer::deserialize(const json::value& value, IType& type)
 		}
 	}
 	return true;
+}
+
+bool Deserializer::deserialize(const json::value& value, std::shared_ptr<Type>& type)
+{
+	type = std::make_shared<Type>();
+	return deserialize(value, *type.get());
+}
+
+bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& type)
+{
+	type = std::make_unique<Type>();
+	return deserialize(value, *type.get());
 }
 
 bool Deserializer::deserialize(const json::value& value, uuid& id)

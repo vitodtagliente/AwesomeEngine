@@ -15,7 +15,7 @@ std::size_t MagicWandComponent::getTypeSize() const { return MagicWandComponentT
 
 const TypeDefinition& MagicWandComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new MagicWandComponent(); }, "MagicWandComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new MagicWandComponent(); }, "MagicWandComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(MagicWandComponent));
     return s_typeDefinition;

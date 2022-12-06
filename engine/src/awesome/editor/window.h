@@ -7,7 +7,7 @@
 #include "window_generated.h"
 
 CLASS()
-class Window : public IType
+class Window : public Type
 {
 public:
 	Window() = default;

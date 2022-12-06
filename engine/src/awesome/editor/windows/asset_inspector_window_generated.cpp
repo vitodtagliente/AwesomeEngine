@@ -12,7 +12,7 @@ std::size_t AssetInspectorWindow::getTypeSize() const { return AssetInspectorWin
 
 const TypeDefinition& AssetInspectorWindowType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new AssetInspectorWindow(); }, "AssetInspectorWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new AssetInspectorWindow(); }, "AssetInspectorWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(AssetInspectorWindow));
     return s_typeDefinition;

@@ -192,7 +192,7 @@ void Layout::input(const std::string&, SpriteAnimation::Frame& value)
 	input("Duration", value.duration);
 }
 
-void Layout::input(IType& value)
+void Layout::input(Type& value)
 {
 	for (const auto& [name, prop] : value.getTypeProperties())
 	{

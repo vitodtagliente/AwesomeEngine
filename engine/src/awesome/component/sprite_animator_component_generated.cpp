@@ -15,7 +15,7 @@ std::size_t SpriteAnimatorComponent::getTypeSize() const { return SpriteAnimator
 
 const TypeDefinition& SpriteAnimatorComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpriteAnimatorComponent(); }, "SpriteAnimatorComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpriteAnimatorComponent(); }, "SpriteAnimatorComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(SpriteAnimatorComponent));
     return s_typeDefinition;

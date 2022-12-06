@@ -60,7 +60,7 @@ std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSetting
 
 const TypeDefinition& ApplicationSettingsType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new ApplicationSettings(); }, "ApplicationSettings", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationSettings(); }, "ApplicationSettings", {
     }, sizeof(ApplicationSettings));
     return s_typeDefinition;
 }

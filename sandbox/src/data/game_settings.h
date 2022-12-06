@@ -8,7 +8,7 @@
 #include "game_settings_generated.h"
 
 CLASS(Category = Data)
-class WeaponLevel : public IType
+class WeaponLevel : public Type
 {
 public:
 	PROPERTY() float efficacy{ 0.f };
@@ -22,7 +22,7 @@ public:
 };
 
 CLASS(Category = Data)
-class WeaponItem : public IType
+class WeaponItem : public Type
 {
 public:
 	PROPERTY() std::string name;
@@ -35,7 +35,7 @@ public:
 };
 
 CLASS(Category = Data)
-class GameSettings : public Singleton<GameSettings>, public IType
+class GameSettings : public Singleton<GameSettings>, public Type
 {
 public:
 	void load();

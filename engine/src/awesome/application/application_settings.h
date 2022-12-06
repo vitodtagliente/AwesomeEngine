@@ -28,7 +28,7 @@ enum class FpsMode : int
 };
 
 CLASS()
-class ApplicationSettings : public IType
+class ApplicationSettings : public Type
 {
 public:
     ApplicationSettings() = default;

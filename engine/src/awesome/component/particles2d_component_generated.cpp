@@ -17,7 +17,7 @@ std::size_t Particles2dComponent::getTypeSize() const { return Particles2dCompon
 
 const TypeDefinition& Particles2dComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Particles2dComponent(); }, "Particles2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new Particles2dComponent(); }, "Particles2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(Particles2dComponent));
     return s_typeDefinition;

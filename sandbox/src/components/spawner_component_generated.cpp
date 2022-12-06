@@ -15,7 +15,7 @@ std::size_t SpawnerComponent::getTypeSize() const { return SpawnerComponentType:
 
 const TypeDefinition& SpawnerComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpawnerComponent(); }, "SpawnerComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpawnerComponent(); }, "SpawnerComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(SpawnerComponent));
     return s_typeDefinition;

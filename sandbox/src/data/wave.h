@@ -16,7 +16,7 @@ enum class SpawnType
 };
 
 CLASS(Category = Data)
-class Wave : public IType
+class Wave : public Type
 {
 public:
 	PROPERTY() std::string name;

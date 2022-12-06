@@ -12,7 +12,7 @@ std::size_t SpriteAnimationMenuItem::getTypeSize() const { return SpriteAnimatio
 
 const TypeDefinition& SpriteAnimationMenuItemType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SpriteAnimationMenuItem(); }, "SpriteAnimationMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpriteAnimationMenuItem(); }, "SpriteAnimationMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(SpriteAnimationMenuItem));
     return s_typeDefinition;

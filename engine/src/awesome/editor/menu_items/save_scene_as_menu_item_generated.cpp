@@ -12,7 +12,7 @@ std::size_t SaveSceneAsMenuItem::getTypeSize() const { return SaveSceneAsMenuIte
 
 const TypeDefinition& SaveSceneAsMenuItemType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new SaveSceneAsMenuItem(); }, "SaveSceneAsMenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new SaveSceneAsMenuItem(); }, "SaveSceneAsMenuItem", {
         std::make_pair("Category", "MenuItem"),
     }, sizeof(SaveSceneAsMenuItem));
     return s_typeDefinition;

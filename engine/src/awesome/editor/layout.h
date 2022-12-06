@@ -64,7 +64,7 @@ public:
 	static void input(const std::string& name, graphics::TextureCoords& value);
 	static void input(const std::string& name, graphics::TextureRect& value);
 	static void input(const std::string& name, SpriteAnimation::Frame& value);
-	static void input(IType& value);
+	static void input(Type& value);
 	// Ranges
 	template <typename T>
 	static void input(const std::string& name, std::pair<T, T>& value)

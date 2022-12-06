@@ -26,10 +26,11 @@ struct ISerializable
 
 struct Serializer
 {
-	static json::value serialize(const IType& type);
-	static json::value serialize(const std::shared_ptr<IType>& type);
-	static json::value serialize(const std::unique_ptr<IType>& type);
-	static json::value serialize(const std::weak_ptr<IType>& type);
+	Serializer() = delete;
+
+	static json::value serialize(const Type& type);
+	static json::value serialize(const std::shared_ptr<Type>& type);
+	static json::value serialize(const std::unique_ptr<Type>& type);
 	static json::value serialize(const bool& primitive);
 	static json::value serialize(const int& primitive);
 	static json::value serialize(const float& primitive);
@@ -63,7 +64,11 @@ struct Serializer
 
 struct Deserializer
 {
-	static bool deserialize(const json::value& value, IType& type);
+	Deserializer() = delete;
+
+	static bool deserialize(const json::value& value, Type& type);
+	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);
+	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type);
 	static bool deserialize(const json::value& value, uuid& id);
 	static bool deserialize(const json::value& value, graphics::Color& color);
 	static bool deserialize(const json::value& value, graphics::TextureCoords& coords);
@@ -78,4 +83,30 @@ struct Deserializer
 	static bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset);
 	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
 	static bool deserialize(const json::value& value, TextAssetPtr& asset);
+	template <typename T>
+	static json::value deserialize(const json::value& value, std::vector<T>& list)
+	{
+		for (const auto& elementValue : value.as_array())
+		{
+			T data;
+			if (deserialize(elementValue, data))
+			{
+				list.push_back(data);
+			}
+		}
+		return true;
+	}
+	template <typename T>
+	static json::value deserialize(const json::value& value, std::vector<std::unique_ptr<T>>& list)
+	{
+		for (const auto& elementValue : value.as_array())
+		{
+			std::unique_ptr<T> data;
+			if (deserialize(elementValue, data))
+			{
+				list.push_back(std::move(data));
+			}
+		}
+		return true;
+	}
 };

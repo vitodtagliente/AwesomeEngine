@@ -12,7 +12,7 @@ std::size_t MenuItem::getTypeSize() const { return MenuItemType::type().size; }
 
 const TypeDefinition& MenuItemType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new MenuItem(); }, "MenuItem", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new MenuItem(); }, "MenuItem", {
     }, sizeof(MenuItem));
     return s_typeDefinition;
 }

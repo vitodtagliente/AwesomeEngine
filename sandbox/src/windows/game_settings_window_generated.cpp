@@ -12,7 +12,7 @@ std::size_t GameSettingsWindow::getTypeSize() const { return GameSettingsWindowT
 
 const TypeDefinition& GameSettingsWindowType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new GameSettingsWindow(); }, "GameSettingsWindow", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new GameSettingsWindow(); }, "GameSettingsWindow", {
         std::make_pair("Category", "Window"),
     }, sizeof(GameSettingsWindow));
     return s_typeDefinition;

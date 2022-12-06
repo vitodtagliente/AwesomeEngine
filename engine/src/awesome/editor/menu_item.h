@@ -6,7 +6,7 @@
 #include "menu_item_generated.h"
 
 CLASS()
-class MenuItem : public IType
+class MenuItem : public Type
 {
 public:
 	MenuItem() = default;

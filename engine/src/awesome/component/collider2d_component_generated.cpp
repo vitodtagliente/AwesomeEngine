@@ -20,7 +20,7 @@ std::size_t Collider2dComponent::getTypeSize() const { return Collider2dComponen
 
 const TypeDefinition& Collider2dComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new Collider2dComponent(); }, "Collider2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new Collider2dComponent(); }, "Collider2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(Collider2dComponent));
     return s_typeDefinition;

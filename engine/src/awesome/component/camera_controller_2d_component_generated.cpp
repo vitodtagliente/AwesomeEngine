@@ -17,7 +17,7 @@ std::size_t CameraController2dComponent::getTypeSize() const { return CameraCont
 
 const TypeDefinition& CameraController2dComponentType::type()
 {
-    static const TypeDefinition s_typeDefinition([]() -> IType* { return new CameraController2dComponent(); }, "CameraController2dComponent", {
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new CameraController2dComponent(); }, "CameraController2dComponent", {
         std::make_pair("Category", "Component"),
     }, sizeof(CameraController2dComponent));
     return s_typeDefinition;
