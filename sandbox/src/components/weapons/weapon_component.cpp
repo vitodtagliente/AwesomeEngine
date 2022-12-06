@@ -4,6 +4,8 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
+#include <data/game_settings.h>
+
 void WeaponComponent::init()
 {
 	Component::init();
@@ -12,7 +14,7 @@ void WeaponComponent::init()
 	const auto& it = settings.weapons.find(getTypeName());
 	if (it != settings.weapons.end())
 	{
-		m_data = it->second;
+		m_data = it->second.get();
 		applyLevel(0);
 	}
 	else
@@ -43,16 +45,21 @@ bool WeaponComponent::upgrade()
 	return false;
 }
 
+int WeaponComponent::getLevels() const
+{
+	return static_cast<int>(m_data->levels.size());
+}
+
 void WeaponComponent::applyLevel(const int level)
 {
 	if (level < getLevels())
 	{
-		const WeaponLevel& data = m_data.levels[level];
-		efficacy = data.efficacy;
-		frequency = data.frequency;
-		power = data.power;
-		quantity = data.quantity;
-		range = data.range;
-		speed = data.speed;
+		WeaponLevel* const data = m_data->levels[level].get();
+		efficacy = data->efficacy;
+		frequency = data->frequency;
+		power = data->power;
+		quantity = data->quantity;
+		range = data->range;
+		speed = data->speed;
 	}
 }

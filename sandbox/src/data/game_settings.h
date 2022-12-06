@@ -29,7 +29,7 @@ public:
 	PROPERTY() std::string description;
 	PROPERTY() std::string component;
 	PROPERTY() SpriteAssetPtr icon;
-	std::vector<WeaponLevel> levels;
+	PROPERTY() std::vector<std::unique_ptr<WeaponLevel>> levels;
 
 	GENERATED_BODY()
 };
@@ -43,7 +43,8 @@ public:
 
 	static const std::string filename;
 
-	std::map<std::string, WeaponItem> weapons;
+	PROPERTY() std::map<std::string, std::unique_ptr<WeaponItem>> weapons;
+	PROPERTY() std::vector<std::unique_ptr<WeaponItem>> test_weapons;
 
 	GENERATED_BODY()
 };

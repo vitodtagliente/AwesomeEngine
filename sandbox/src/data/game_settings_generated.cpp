@@ -43,6 +43,8 @@ const properties_t WeaponItem::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("icon", Property("icon", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(WeaponItem, icon), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("levels", Property("levels", Property::TypeDescriptor("std::vector<std::unique_ptr<WeaponLevel>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("WeaponLevel", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<WeaponLevel>>), origin + offsetof(WeaponItem, levels), {
+    })));
     return properties;
 }
 std::size_t WeaponItem::getTypeSize() const { return WeaponItemType::type().size; }
@@ -57,7 +59,12 @@ const TypeDefinition& WeaponItemType::type()
 const meta_t& GameSettings::getTypeMeta() const { return GameSettingsType::type().meta; }
 const std::string& GameSettings::getTypeName() const { return GameSettingsType::type().name; }
 const properties_t GameSettings::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("weapons", Property("weapons", Property::TypeDescriptor("std::map<std::string, std::unique_ptr<WeaponItem>>", Property::Type::T_container_map, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), Property::TypeDescriptor("WeaponItem", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::map<std::string, std::unique_ptr<WeaponItem>>), origin + offsetof(GameSettings, weapons), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("test_weapons", Property("test_weapons", Property::TypeDescriptor("std::vector<std::unique_ptr<WeaponItem>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("WeaponItem", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<WeaponItem>>), origin + offsetof(GameSettings, test_weapons), {
+    })));
     return properties;
 }
 std::size_t GameSettings::getTypeSize() const { return GameSettingsType::type().size; }

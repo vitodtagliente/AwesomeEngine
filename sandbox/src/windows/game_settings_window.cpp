@@ -7,12 +7,23 @@
 void GameSettingsWindow::render()
 {
 	GameSettings& settings = GameSettings::instance();
-	Layout::input<WeaponItem>("Weapons", settings.weapons, [](WeaponItem& weapon) -> void
+	// Layout::input<WeaponItem>("Weapons", settings.weapons, [](WeaponItem& weapon) -> void
+	// 	{
+	// 		Layout::input(weapon);
+	// 		Layout::input<WeaponLevel>("Levels", weapon.levels, [](WeaponLevel& level) -> void
+	// 			{
+	// 				Layout::input(level);
+	// 			}
+	// 		);
+	// 	}
+	// );
+
+	Layout::input<std::unique_ptr<WeaponItem>>("Weapons", settings.test_weapons, [](std::unique_ptr<WeaponItem>& weapon) -> void
 		{
-			Layout::input(weapon);
-			Layout::input<WeaponLevel>("Levels", weapon.levels, [](WeaponLevel& level) -> void
+			Layout::input(*weapon.get());
+			Layout::input<std::unique_ptr<WeaponLevel>>("Levels", weapon->levels, [](std::unique_ptr<WeaponLevel>& level) -> void
 				{
-					Layout::input(level);
+					Layout::input(*level.get());
 				}
 			);
 		}
