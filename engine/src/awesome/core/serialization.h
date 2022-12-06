@@ -69,6 +69,11 @@ struct Deserializer
 	static bool deserialize(const json::value& value, Type& type);
 	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);
 	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type);
+	static bool deserialize(const json::value& value, bool& primitive);
+	static bool deserialize(const json::value& value, int& primitive);
+	static bool deserialize(const json::value& value, float& primitive);
+	static bool deserialize(const json::value& value, double& primitive);
+	static bool deserialize(const json::value& value, char& primitive);
 	static bool deserialize(const json::value& value, uuid& id);
 	static bool deserialize(const json::value& value, graphics::Color& color);
 	static bool deserialize(const json::value& value, graphics::TextureCoords& coords);
@@ -84,7 +89,7 @@ struct Deserializer
 	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
 	static bool deserialize(const json::value& value, TextAssetPtr& asset);
 	template <typename T>
-	static json::value deserialize(const json::value& value, std::vector<T>& list)
+	static bool deserialize(const json::value& value, std::vector<T>& list)
 	{
 		for (const auto& elementValue : value.as_array())
 		{
@@ -97,7 +102,7 @@ struct Deserializer
 		return true;
 	}
 	template <typename T>
-	static json::value deserialize(const json::value& value, std::vector<std::unique_ptr<T>>& list)
+	static bool deserialize(const json::value& value, std::vector<std::unique_ptr<T>>& list)
 	{
 		for (const auto& elementValue : value.as_array())
 		{

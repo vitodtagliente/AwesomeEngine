@@ -343,7 +343,6 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		}
 		case Property::Type::T_container_vector:
 		{
-			/*
 			switch (prop.descriptor.children.front().type)
 			{
 			case Property::Type::T_bool: deserialize(value.safeAt(name), prop.value<std::vector<bool>>()); break;
@@ -357,8 +356,8 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			{
 				switch (prop.descriptor.children.front().decoratorType)
 				{
-				// case Property::DecoratorType::D_shared_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::shared_ptr<Type>>>()); break;
-				// case Property::DecoratorType::D_unique_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::unique_ptr<Type>>>()); break;
+				case Property::DecoratorType::D_shared_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::shared_ptr<Type>>>()); break;
+				case Property::DecoratorType::D_unique_ptr: deserialize(value.safeAt(name), prop.value<std::vector<std::unique_ptr<Type>>>()); break;
 				default:break;
 				}
 				break;
@@ -421,7 +420,6 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 				break;
 			}
 			}
-			*/
 			break;
 		}
 		case Property::Type::T_unknown:
@@ -496,6 +494,31 @@ bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& 
 {
 	type = std::make_unique<Type>();
 	return deserialize(value, *type.get());
+}
+
+bool Deserializer::deserialize(const json::value& value, bool& primitive)
+{
+	return primitive = value.as_bool(false), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, int& primitive)
+{
+	return primitive = value.as_number(0).as_int(), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, float& primitive)
+{
+	return primitive = value.as_number(0.f).as_float(), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, double& primitive)
+{
+	return primitive = value.as_number(0).as_double(), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, char& primitive)
+{
+	return primitive = value.as_string(" ").at(0), true;
 }
 
 bool Deserializer::deserialize(const json::value& value, uuid& id)
