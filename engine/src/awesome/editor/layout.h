@@ -152,7 +152,7 @@ public:
 		}
 		if (button(TextIcon::plus()))
 		{
-			list.push_back(createHandler());
+			list.push_back(std::move(createHandler()));
 		}
 		if (!list.empty())
 		{
@@ -183,12 +183,12 @@ public:
 	static void input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
 	// std::map<K,T> support
 	template <typename K, typename T>
-	static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)
+	static void input(const std::string& name, std::map<K, T>& map, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
 	{
 		text(name);
 		for (auto& pair : map)
 		{
-			const std::string context = name + "[" + toKey(pair.first) + "]";
+			const std::string context = name + "[" + pair.first + "]";
 			beginContext(context);
 			if (collapsingHeader(context))
 			{
@@ -220,7 +220,7 @@ public:
 		sameLine();
 		if (button(TextIcon::plus()))
 		{
-			map.insert(std::make_pair(*newKey, T()));
+			map.insert(std::make_pair(*newKey, std::move(createHandler())));
 			if (typeid(K) == typeid(std::string))
 			{
 				reinterpret_cast<std::string*>(newKey)->clear();
@@ -235,25 +235,24 @@ public:
 			}
 		}
 	}
-	template <typename T>
-	static void input(const std::string& name, std::map<std::string, T>& map, const std::function<void(T&)>& handler)
+	template<typename K, typename T>
+	static void input(const std::string& name, std::map<K, T>& map)
 	{
-		input<std::string, T>(name, map, [](const std::string& key) -> std::string { return key; }, handler);
+		input<K, T>(
+			name,
+			map,
+			[](T& element) -> void
+			{
+				input("Value", element);
+			},
+			[]() -> T
+			{
+				return T();
+			}
+		);
 	}
-	template <typename K, typename T>
-	static void input(const std::string& name, std::map<std::string, T>& map, const std::function<std::string(const K&)>& toKey)
-	{
-		input<T>(name, map, toKey, [](T& value) -> void {
-			input("Value", value);
-			});
-	}
-	template <typename T>
-	static void input(const std::string& name, std::map<std::string, T>& map)
-	{
-		input<T>(name, map, [](T& value) -> void {
-			input("Value", value);
-			});
-	}
+	static void input(const std::string& name, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName);
+	static void input(const std::string& name, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName);
 	static bool isWindowFocused();
 	static bool isWindowHovered();
 	static void newLine();

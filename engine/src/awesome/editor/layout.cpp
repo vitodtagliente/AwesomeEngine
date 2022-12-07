@@ -415,6 +415,38 @@ void Layout::input(const std::string& name, std::vector<std::unique_ptr<Type>>& 
 	);
 }
 
+void Layout::input(const std::string& name, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName)
+{
+	input<std::string, std::shared_ptr<Type>>(
+		name,
+		map,
+		[](std::shared_ptr<Type>& element) -> void
+		{
+			input(element);
+		},
+		[typeName]() -> std::shared_ptr<Type>
+		{
+			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+		}
+	);
+}
+
+void Layout::input(const std::string& name, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName)
+{
+	input<std::string, std::unique_ptr<Type>>(
+		name,
+		map,
+		[](std::unique_ptr<Type>& element) -> void
+		{
+			input(element);
+		},
+		[typeName]() -> std::unique_ptr<Type>
+		{
+			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+		}
+	);
+}
+
 bool Layout::isWindowFocused()
 {
 	return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
