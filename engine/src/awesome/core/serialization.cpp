@@ -486,13 +486,19 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 
 bool Deserializer::deserialize(const json::value& value, std::shared_ptr<Type>& type)
 {
-	type = std::make_shared<Type>();
+	if (type == nullptr)
+	{
+		type = std::make_shared<Type>();
+	}
 	return deserialize(value, *type.get());
 }
 
 bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& type)
 {
-	type = std::make_unique<Type>();
+	if (type == nullptr)
+	{
+		type = std::make_unique<Type>();
+	}
 	return deserialize(value, *type.get());
 }
 
