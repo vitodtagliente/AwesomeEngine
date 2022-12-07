@@ -26,7 +26,7 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
 		case Property::Type::T_container_map:
 		{
-			if (prop.descriptor.children.back().type != Property::Type::T_container_string)
+			if (prop.descriptor.children.front().type != Property::Type::T_container_string)
 			{
 				// string keys only are supported
 				break;
@@ -423,7 +423,7 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
 		case Property::Type::T_container_map:
 		{
-			if (prop.descriptor.children.back().type != Property::Type::T_container_string)
+			if (prop.descriptor.children.front().type != Property::Type::T_container_string)
 			{
 				// string keys only are supported
 				break;

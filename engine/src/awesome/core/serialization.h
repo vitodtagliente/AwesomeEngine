@@ -101,6 +101,8 @@ struct Deserializer
 	template <typename T>
 	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T()>& createHandler)
 	{
+		if (!value.is_array()) return false;
+
 		for (const auto& elementValue : value.as_array())
 		{
 			T element = createHandler();
@@ -128,6 +130,8 @@ struct Deserializer
 	template <typename T>
 	static bool deserialize(const json::value& value, std::map<std::string, T>& map, const std::function<T()>& createHandler)
 	{
+		if (!value.is_object()) return false;
+
 		for (const auto& [name, elementValue] : value.as_object())
 		{
 			T element = createHandler();
