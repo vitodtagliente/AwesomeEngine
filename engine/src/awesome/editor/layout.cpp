@@ -222,7 +222,90 @@ void Layout::input(Type& value)
 		case Property::Type::T_container_string: input(label, prop.value<std::string>()); break;
 		case Property::Type::T_container_map:
 		{
+			if (prop.descriptor.children.front().type != Property::Type::T_container_string)
+			{
+				// string keys only are supported
+				break;
+			}
 
+			switch (prop.descriptor.children.back().type)
+			{
+			case Property::Type::T_bool: input(label, prop.value<std::map<std::string, bool>>()); break;
+			case Property::Type::T_char: break;
+			case Property::Type::T_double: input(label, prop.value<std::map<std::string, double>>()); break;
+			case Property::Type::T_float: input(label, prop.value<std::map<std::string, float>>()); break;
+			case Property::Type::T_int: input(label, prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: input(label, prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_custom_type:
+			{
+				switch (prop.descriptor.children.back().decoratorType)
+				{
+				case Property::DecoratorType::D_shared_ptr: input(label, prop.value<std::map<std::string, std::shared_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				case Property::DecoratorType::D_unique_ptr: input(label, prop.value<std::map<std::string, std::unique_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				default:break;
+				}
+				break;
+			}
+			case Property::Type::T_unknown:
+			default:
+			{
+				const std::string& backChildTypeName = prop.descriptor.children.back().name;
+				if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
+				{
+					input(label, prop.value<std::map<std::string, graphics::Color>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureCoords" || backChildTypeName == "TextureCoords")
+				{
+					input(label, prop.value<std::map<std::string, graphics::TextureCoords>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureRect" || backChildTypeName == "TextureRect")
+				{
+					input(label, prop.value<std::map<std::string, graphics::TextureRect>>()); break;
+				}
+				else if (backChildTypeName == "math::transform" || backChildTypeName == "transform")
+				{
+					input(label, prop.value<std::map<std::string, math::transform>>()); break;
+				}
+				else if (backChildTypeName == "math::vec4" || backChildTypeName == "vec4" || backChildTypeName == "math::vector4" || backChildTypeName == "vector4")
+				{
+					input(label, prop.value<std::map<std::string, math::vec4>>()); break;
+				}
+				else if (backChildTypeName == "math::vec3" || backChildTypeName == "vec3" || backChildTypeName == "math::vector3" || backChildTypeName == "vector3")
+				{
+					input(label, prop.value<std::map<std::string, math::vec3>>()); break;
+				}
+				else if (backChildTypeName == "math::vec2" || backChildTypeName == "vec2" || backChildTypeName == "math::vector2" || backChildTypeName == "vector2")
+				{
+					input(label, prop.value<std::map<std::string, math::vec2>>()); break;
+				}
+				else if (backChildTypeName == "ImageAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, ImageAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "PrefabAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SceneAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, SceneAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAnimationAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "TextAssetPtr")
+				{
+					input(label, prop.value<std::map<std::string, TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
 			break;
 		}
 		case Property::Type::T_container_vector:
@@ -249,55 +332,56 @@ void Layout::input(Type& value)
 			case Property::Type::T_unknown:
 			default:
 			{
-				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				const std::string& frontChildTypeName = prop.descriptor.children.front().name;
+				if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
 				{
 					input(label, prop.value<std::vector<graphics::Color>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				else if (frontChildTypeName == "graphics::TextureCoords" || frontChildTypeName == "TextureCoords")
 				{
 					input(label, prop.value<std::vector<graphics::TextureCoords>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				else if (frontChildTypeName == "graphics::TextureRect" || frontChildTypeName == "TextureRect")
 				{
 					input(label, prop.value<std::vector<graphics::TextureRect>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				else if (frontChildTypeName == "math::transform" || frontChildTypeName == "transform")
 				{
 					input(label, prop.value<std::vector<math::transform>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				else if (frontChildTypeName == "math::vec4" || frontChildTypeName == "vec4" || frontChildTypeName == "math::vector4" || frontChildTypeName == "vector4")
 				{
 					input(label, prop.value<std::vector<math::vec4>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				else if (frontChildTypeName == "math::vec3" || frontChildTypeName == "vec3" || frontChildTypeName == "math::vector3" || frontChildTypeName == "vector3")
 				{
 					input(label, prop.value<std::vector<math::vec3>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				else if (frontChildTypeName == "math::vec2" || frontChildTypeName == "vec2" || frontChildTypeName == "math::vector2" || frontChildTypeName == "vector2")
 				{
 					input(label, prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				else if (frontChildTypeName == "ImageAssetPtr")
 				{
 					input(label, prop.value<std::vector<ImageAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				else if (frontChildTypeName == "PrefabAssetPtr")
 				{
 					input(label, prop.value<std::vector<PrefabAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				else if (frontChildTypeName == "SceneAssetPtr")
 				{
 					input(label, prop.value<std::vector<SceneAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
 				{
 					input(label, prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				else if (frontChildTypeName == "SpriteAssetPtr")
 				{
 					input(label, prop.value<std::vector<SpriteAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				else if (frontChildTypeName == "TextAssetPtr")
 				{
 					input(label, prop.value<std::vector<TextAssetPtr>>()); break;
 				}

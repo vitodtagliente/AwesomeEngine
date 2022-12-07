@@ -44,7 +44,6 @@ public:
 	static const std::string filename;
 
 	PROPERTY() std::map<std::string, std::unique_ptr<WeaponItem>> weapons;
-	PROPERTY() std::vector<std::unique_ptr<WeaponItem>> test_weapons;
 
 	GENERATED_BODY()
 };
