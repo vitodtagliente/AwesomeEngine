@@ -89,24 +89,11 @@ struct Deserializer
 	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
 	static bool deserialize(const json::value& value, TextAssetPtr& asset);
 	template <typename T>
-	static bool deserialize(const json::value& value, std::vector<T>& list)
+	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T()>& createHandler)
 	{
 		for (const auto& elementValue : value.as_array())
 		{
-			T data;
-			if (deserialize(elementValue, data))
-			{
-				list.push_back(data);
-			}
-		}
-		return true;
-	}
-	template <typename T>
-	static bool deserialize(const json::value& value, std::vector<std::unique_ptr<T>>& list)
-	{
-		for (const auto& elementValue : value.as_array())
-		{
-			std::unique_ptr<T> data;
+			T data = createHandler();
 			if (deserialize(elementValue, data))
 			{
 				list.push_back(std::move(data));
@@ -114,4 +101,18 @@ struct Deserializer
 		}
 		return true;
 	}
+	template <typename T>
+	static bool deserialize(const json::value& value, std::vector<T>& list)
+	{
+		return deserialize<T>(
+			value,
+			list,
+			[]() -> T
+			{
+				return T();
+			}
+		);
+	}
+	static bool deserialize(const json::value& value, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName);
+	static bool deserialize(const json::value& value, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
 };

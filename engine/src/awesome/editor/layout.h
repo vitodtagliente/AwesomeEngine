@@ -179,36 +179,8 @@ public:
 			}
 		);
 	}
-	static void input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName)
-	{
-		input<std::shared_ptr<Type>>(
-			name,
-			list,
-			[](std::shared_ptr<Type>& element) -> void
-			{
-				input(element);
-			},
-			[typeName]() -> std::shared_ptr<Type>
-			{
-				return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
-			}
-		);
-	}
-	static void input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName)
-	{
-		input<std::unique_ptr<Type>>(
-			name,
-			list,
-			[](std::unique_ptr<Type>& element) -> void
-			{
-				input(element);
-			},
-			[typeName]() -> std::unique_ptr<Type>
-			{
-				return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
-			}
-		);
-	}
+	static void input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName);
+	static void input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
 	// std::map<K,T> support
 	template <typename K, typename T>
 	static void input(const std::string& name, std::map<K, T>& map, const std::function<std::string(const K&)>& toKey, const std::function<void(T&)>& handler)

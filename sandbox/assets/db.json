@@ -1,1 +1,1 @@
-{"weapons":{"MagicWandComponent":{"icon":"12395755988200","component":"MagicWandComponent","description":"Magic Wand","name":"Magic Wand","levels":[{"efficacy":1.000000,"frequency":1.000000,"power":1,"speed":1.000000,"quantity":1,"range":1.000000},{"efficacy":2.000000,"frequency":0.500000,"power":1,"quantity":1,"speed":1.000000,"range":1.000000},{"efficacy":5.000000,"frequency":0.200000,"power":1,"speed":1.000000,"quantity":1,"range":1.000000}]}}}
+{"test_weapons":[{"component":"a","icon":"1061699598674900","description":"a","levels":[],"name":"a"}]}
