@@ -60,6 +60,16 @@ struct Serializer
 		}
 		return data;
 	}
+	template <typename T>
+	static json::value serialize(const std::map<std::string, T>& map)
+	{
+		json::value data = json::object();
+		for (const auto& [name, element] : map)
+		{
+			data[name] = serialize(element);
+		}
+		return data;
+	}
 };
 
 struct Deserializer
@@ -93,10 +103,10 @@ struct Deserializer
 	{
 		for (const auto& elementValue : value.as_array())
 		{
-			T data = createHandler();
-			if (deserialize(elementValue, data))
+			T element = createHandler();
+			if (deserialize(elementValue, element))
 			{
-				list.push_back(std::move(data));
+				list.push_back(std::move(element));
 			}
 		}
 		return true;
@@ -115,4 +125,31 @@ struct Deserializer
 	}
 	static bool deserialize(const json::value& value, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName);
 	static bool deserialize(const json::value& value, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
+	template <typename T>
+	static bool deserialize(const json::value& value, std::map<std::string, T>& map, const std::function<T()>& createHandler)
+	{
+		for (const auto& [name, elementValue] : value.as_object())
+		{
+			T element = createHandler();
+			if (deserialize(elementValue, element))
+			{
+				map.insert(std::make_pair(name, std::move(element)));
+			}
+		}
+		return true;
+	}
+	template <typename T>
+	static bool deserialize(const json::value& value, std::map<std::string, T>& map)
+	{
+		return deserialize<T>(
+			value,
+			map,
+			[]() -> T
+			{
+				return T();
+			}
+		);
+	}
+	static bool deserialize(const json::value& value, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName);
+	static bool deserialize(const json::value& value, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName);
 };

@@ -26,7 +26,90 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
 		case Property::Type::T_container_map:
 		{
+			if (prop.descriptor.children.back().type != Property::Type::T_container_string)
+			{
+				// string keys only are supported
+				break;
+			}
 
+			switch (prop.descriptor.children.back().type)
+			{
+			case Property::Type::T_bool: data[name] = serialize(prop.value<std::map<std::string, bool>>()); break;
+			case Property::Type::T_char: data[name] = serialize(prop.value<std::map<std::string, char>>()); break;
+			case Property::Type::T_double: data[name] = serialize(prop.value<std::map<std::string, double>>()); break;
+			case Property::Type::T_float: data[name] = serialize(prop.value<std::map<std::string, float>>()); break;
+			case Property::Type::T_int: data[name] = serialize(prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: data[name] = serialize(prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_custom_type:
+			{
+				switch (prop.descriptor.children.back().decoratorType)
+				{
+				case Property::DecoratorType::D_shared_ptr: data[name] = serialize(prop.value<std::map<std::string, std::shared_ptr<Type>>>()); break;
+				case Property::DecoratorType::D_unique_ptr: data[name] = serialize(prop.value<std::map<std::string, std::unique_ptr<Type>>>()); break;
+				default:break;
+				}
+				break;
+			}
+			case Property::Type::T_unknown:
+			default:
+			{
+				const std::string& backChildTypeName = prop.descriptor.children.back().name;
+				if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, graphics::Color>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureCoords" || backChildTypeName == "TextureCoords")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, graphics::TextureCoords>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureRect" || backChildTypeName == "TextureRect")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, graphics::TextureRect>>()); break;
+				}
+				else if (backChildTypeName == "math::transform" || backChildTypeName == "transform")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, math::transform>>()); break;
+				}
+				else if (backChildTypeName == "math::vec4" || backChildTypeName == "vec4" || backChildTypeName == "math::vector4" || backChildTypeName == "vector4")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, math::vec4>>()); break;
+				}
+				else if (backChildTypeName == "math::vec3" || backChildTypeName == "vec3" || backChildTypeName == "math::vector3" || backChildTypeName == "vector3")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, math::vec3>>()); break;
+				}
+				else if (backChildTypeName == "math::vec2" || backChildTypeName == "vec2" || backChildTypeName == "math::vector2" || backChildTypeName == "vector2")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, math::vec2>>()); break;
+				}
+				else if (backChildTypeName == "ImageAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, ImageAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "PrefabAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SceneAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, SceneAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAnimationAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "TextAssetPtr")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
 			break;
 		}
 		case Property::Type::T_container_vector:
@@ -53,55 +136,56 @@ json::value Serializer::serialize(const Type& type)
 			case Property::Type::T_unknown:
 			default:
 			{
-				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				const std::string& frontChildTypeName = prop.descriptor.children.front().name;
+				if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
 				{
 					data[name] = serialize(prop.value<std::vector<graphics::Color>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				else if (frontChildTypeName == "graphics::TextureCoords" || frontChildTypeName == "TextureCoords")
 				{
 					data[name] = serialize(prop.value<std::vector<graphics::TextureCoords>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				else if (frontChildTypeName == "graphics::TextureRect" || frontChildTypeName == "TextureRect")
 				{
 					data[name] = serialize(prop.value<std::vector<graphics::TextureRect>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				else if (frontChildTypeName == "math::transform" || frontChildTypeName == "transform")
 				{
 					data[name] = serialize(prop.value<std::vector<math::transform>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				else if (frontChildTypeName == "math::vec4" || frontChildTypeName == "vec4" || frontChildTypeName == "math::vector4" || frontChildTypeName == "vector4")
 				{
 					data[name] = serialize(prop.value<std::vector<math::vec4>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				else if (frontChildTypeName == "math::vec3" || frontChildTypeName == "vec3" || frontChildTypeName == "math::vector3" || frontChildTypeName == "vector3")
 				{
 					data[name] = serialize(prop.value<std::vector<math::vec3>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				else if (frontChildTypeName == "math::vec2" || frontChildTypeName == "vec2" || frontChildTypeName == "math::vector2" || frontChildTypeName == "vector2")
 				{
 					data[name] = serialize(prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				else if (frontChildTypeName == "ImageAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<ImageAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				else if (frontChildTypeName == "PrefabAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<PrefabAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				else if (frontChildTypeName == "SceneAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<SceneAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				else if (frontChildTypeName == "SpriteAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<SpriteAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				else if (frontChildTypeName == "TextAssetPtr")
 				{
 					data[name] = serialize(prop.value<std::vector<TextAssetPtr>>()); break;
 				}
@@ -339,6 +423,90 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
 		case Property::Type::T_container_map:
 		{
+			if (prop.descriptor.children.back().type != Property::Type::T_container_string)
+			{
+				// string keys only are supported
+				break;
+			}
+
+			switch (prop.descriptor.children.back().type)
+			{
+			case Property::Type::T_bool: deserialize(value.safeAt(name), prop.value<std::map<std::string, bool>>()); break;
+			case Property::Type::T_char: deserialize(value.safeAt(name), prop.value<std::map<std::string, char>>()); break;
+			case Property::Type::T_double: deserialize(value.safeAt(name), prop.value<std::map<std::string, double>>()); break;
+			case Property::Type::T_float: deserialize(value.safeAt(name), prop.value<std::map<std::string, float>>()); break;
+			case Property::Type::T_int: deserialize(value.safeAt(name), prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: deserialize(value.safeAt(name), prop.value<std::map<std::string, int>>()); break;
+			case Property::Type::T_custom_type:
+			{
+				switch (prop.descriptor.children.back().decoratorType)
+				{
+				case Property::DecoratorType::D_shared_ptr: deserialize(value.safeAt(name), prop.value<std::map<std::string, std::shared_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				case Property::DecoratorType::D_unique_ptr: deserialize(value.safeAt(name), prop.value<std::map<std::string, std::unique_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				default:break;
+				}
+				break;
+			}
+			case Property::Type::T_unknown:
+			default:
+			{
+				const std::string& backChildTypeName = prop.descriptor.children.back().name;
+				if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, graphics::Color>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureCoords" || backChildTypeName == "TextureCoords")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, graphics::TextureCoords>>()); break;
+				}
+				else if (backChildTypeName == "graphics::TextureRect" || backChildTypeName == "TextureRect")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, graphics::TextureRect>>()); break;
+				}
+				else if (backChildTypeName == "math::transform" || backChildTypeName == "transform")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, math::transform>>()); break;
+				}
+				else if (backChildTypeName == "math::vec4" || backChildTypeName == "vec4" || backChildTypeName == "math::vector4" || backChildTypeName == "vector4")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, math::vec4>>()); break;
+				}
+				else if (backChildTypeName == "math::vec3" || backChildTypeName == "vec3" || backChildTypeName == "math::vector3" || backChildTypeName == "vector3")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, math::vec3>>()); break;
+				}
+				else if (backChildTypeName == "math::vec2" || backChildTypeName == "vec2" || backChildTypeName == "math::vector2" || backChildTypeName == "vector2")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, math::vec2>>()); break;
+				}
+				else if (backChildTypeName == "ImageAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, ImageAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "PrefabAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SceneAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, SceneAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAnimationAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "SpriteAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
+				}
+				else if (backChildTypeName == "TextAssetPtr")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
 			break;
 		}
 		case Property::Type::T_container_vector:
@@ -365,55 +533,56 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			case Property::Type::T_unknown:
 			default:
 			{
-				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				const std::string& frontChildTypeName = prop.descriptor.children.front().name;
+				if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<graphics::Color>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				else if (frontChildTypeName == "graphics::TextureCoords" || frontChildTypeName == "TextureCoords")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<graphics::TextureCoords>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				else if (frontChildTypeName == "graphics::TextureRect" || frontChildTypeName == "TextureRect")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<graphics::TextureRect>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				else if (frontChildTypeName == "math::transform" || frontChildTypeName == "transform")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<math::transform>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				else if (frontChildTypeName == "math::vec4" || frontChildTypeName == "vec4" || frontChildTypeName == "math::vector4" || frontChildTypeName == "vector4")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<math::vec4>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				else if (frontChildTypeName == "math::vec3" || frontChildTypeName == "vec3" || frontChildTypeName == "math::vector3" || frontChildTypeName == "vector3")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<math::vec3>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				else if (frontChildTypeName == "math::vec2" || frontChildTypeName == "vec2" || frontChildTypeName == "math::vector2" || frontChildTypeName == "vector2")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				else if (frontChildTypeName == "ImageAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<ImageAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				else if (frontChildTypeName == "PrefabAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<PrefabAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				else if (frontChildTypeName == "SceneAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<SceneAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				else if (frontChildTypeName == "SpriteAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAssetPtr>>()); break;
 				}
-				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				else if (frontChildTypeName == "TextAssetPtr")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<TextAssetPtr>>()); break;
 				}
@@ -677,6 +846,30 @@ bool Deserializer::deserialize(const json::value& value, std::vector<std::unique
 	return deserialize<std::unique_ptr<Type>>(
 		value,
 		list,
+		[typeName]() -> std::unique_ptr<Type>
+		{
+			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+		}
+	);
+}
+
+bool Deserializer::deserialize(const json::value& value, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName)
+{
+	return deserialize<std::shared_ptr<Type>>(
+		value,
+		map,
+		[typeName]() -> std::shared_ptr<Type>
+		{
+			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+		}
+	);
+}
+
+bool Deserializer::deserialize(const json::value& value, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName)
+{
+	return deserialize<std::unique_ptr<Type>>(
+		value,
+		map,
 		[typeName]() -> std::unique_ptr<Type>
 		{
 			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
