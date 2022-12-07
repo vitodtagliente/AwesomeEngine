@@ -241,8 +241,8 @@ void Layout::input(Type& value)
 			{
 				switch (prop.descriptor.children.back().decoratorType)
 				{
-				case Property::DecoratorType::D_shared_ptr: input(label, prop.value<std::map<std::string, std::shared_ptr<Type>>>(), prop.descriptor.children.front().name); break;
-				case Property::DecoratorType::D_unique_ptr: input(label, prop.value<std::map<std::string, std::unique_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				case Property::DecoratorType::D_shared_ptr: input(label, prop.value<std::map<std::string, std::shared_ptr<Type>>>(), prop.descriptor.children.back().name); break;
+				case Property::DecoratorType::D_unique_ptr: input(label, prop.value<std::map<std::string, std::unique_ptr<Type>>>(), prop.descriptor.children.back().name); break;
 				default:break;
 				}
 				break;
