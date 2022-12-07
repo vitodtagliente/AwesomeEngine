@@ -31,10 +31,8 @@
 
 class Layout
 {
-private:
-	Layout() = default;
-
 public:
+	Layout() = delete;
 
 	static void begin(const std::string& name);
 	static bool beginCombo(const std::string& name, const std::string& value);
@@ -65,6 +63,8 @@ public:
 	static void input(const std::string& name, graphics::TextureRect& value);
 	static void input(const std::string& name, SpriteAnimation::Frame& value);
 	static void input(Type& value);
+	static void input(std::unique_ptr<Type>& type);
+	static void input(std::shared_ptr<Type>& type);
 	// Ranges
 	template <typename T>
 	static void input(const std::string& name, std::pair<T, T>& value)
@@ -72,7 +72,7 @@ public:
 		input(name + "-0", value.first);
 		input(name + "-1", value.second);
 	}
-	// usable for displaying enums
+	// Enum input
 	template <typename T>
 	static void input(const std::string& name, T& value, const std::map<std::string, T>& values)
 	{
@@ -95,6 +95,7 @@ public:
 			Layout::endCombo();
 		}
 	}
+	// Enum input
 	template <typename T, typename std::enable_if<std::is_enum<T>::value>::type* = nullptr>
 	static void input(const std::string& name, T& value)
 	{
@@ -113,7 +114,7 @@ public:
 			endCombo();
 		}
 	}
-	// assets support
+	// Asset input
 	template <Asset::Type T, typename D>
 	static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
 	{
@@ -129,9 +130,9 @@ public:
 		}
 		s_assetBrowserDialog.render(name);
 	}
-	// std::vector<T> support
+	// std::vector<T> input
 	template <typename T>
-	static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler)
+	static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
 	{
 		text(name);
 		for (size_t i = 0; i < list.size(); ++i)
@@ -151,7 +152,7 @@ public:
 		}
 		if (button(TextIcon::plus()))
 		{
-			list.push_back(T());
+			list.push_back(createHandler());
 		}
 		if (!list.empty())
 		{
@@ -162,12 +163,51 @@ public:
 			}
 		}
 	}
-	template <typename T>
+	template<typename T> 
 	static void input(const std::string& name, std::vector<T>& list)
 	{
-		input<T>(name, list, [](T& element) -> void {
-			input("Value", element);
-			});
+		input<T>(
+			name, 
+			list, 
+			[](T& element) -> void 
+			{
+				input("Value", element);
+			},
+			[]() -> T
+			{
+				return T();
+			}
+		);
+	}
+	static void input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName)
+	{
+		input<std::shared_ptr<Type>>(
+			name,
+			list,
+			[](std::shared_ptr<Type>& element) -> void
+			{
+				input(element);
+			},
+			[typeName]() -> std::shared_ptr<Type>
+			{
+				return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+			}
+		);
+	}
+	static void input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName)
+	{
+		input<std::unique_ptr<Type>>(
+			name,
+			list,
+			[](std::unique_ptr<Type>& element) -> void
+			{
+				input(element);
+			},
+			[typeName]() -> std::unique_ptr<Type>
+			{
+				return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+			}
+		);
 	}
 	// std::map<K,T> support
 	template <typename K, typename T>

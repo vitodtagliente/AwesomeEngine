@@ -213,7 +213,99 @@ void Layout::input(Type& value)
 		case Property::Type::T_float: input(label, prop.value<float>()); break;
 		case Property::Type::T_int: input(label, prop.value<int>()); break;
 		case Property::Type::T_void: break;
+		case Property::Type::T_custom_enum: input(label, prop.value<int>()); break;
+		case Property::Type::T_custom_type:
+		{
+			// data[name] = ::serialize(prop.value<Type>());
+			break;
+		}
 		case Property::Type::T_container_string: input(label, prop.value<std::string>()); break;
+		case Property::Type::T_container_map:
+		{
+
+			break;
+		}
+		case Property::Type::T_container_vector:
+		{
+			switch (prop.descriptor.children.front().type)
+			{
+			case Property::Type::T_bool: break;
+			case Property::Type::T_char: break;
+			case Property::Type::T_double: input(label, prop.value<std::vector<double>>()); break;
+			case Property::Type::T_float: input(label, prop.value<std::vector<float>>()); break;
+			case Property::Type::T_int: input(label, prop.value<std::vector<int>>()); break;
+			case Property::Type::T_void: break;
+			case Property::Type::T_custom_enum: input(label, prop.value<std::vector<int>>()); break;
+			case Property::Type::T_custom_type:
+			{
+				switch (prop.descriptor.children.front().decoratorType)
+				{
+				case Property::DecoratorType::D_shared_ptr: input(label, prop.value<std::vector<std::shared_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				case Property::DecoratorType::D_unique_ptr: input(label, prop.value<std::vector<std::unique_ptr<Type>>>(), prop.descriptor.children.front().name); break;
+				default:break;
+				}
+				break;
+			}
+			case Property::Type::T_unknown:
+			default:
+			{
+				if (prop.descriptor.children.front().children.front().name == "graphics::Color" || prop.descriptor.children.front().children.front().name == "Color")
+				{
+					input(label, prop.value<std::vector<graphics::Color>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureCoords" || prop.descriptor.children.front().name == "TextureCoords")
+				{
+					input(label, prop.value<std::vector<graphics::TextureCoords>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "graphics::TextureRect" || prop.descriptor.children.front().name == "TextureRect")
+				{
+					input(label, prop.value<std::vector<graphics::TextureRect>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::transform" || prop.descriptor.children.front().name == "transform")
+				{
+					input(label, prop.value<std::vector<math::transform>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec4" || prop.descriptor.children.front().name == "vec4" || prop.descriptor.children.front().name == "math::vector4" || prop.descriptor.children.front().name == "vector4")
+				{
+					input(label, prop.value<std::vector<math::vec4>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec3" || prop.descriptor.children.front().name == "vec3" || prop.descriptor.children.front().name == "math::vector3" || prop.descriptor.children.front().name == "vector3")
+				{
+					input(label, prop.value<std::vector<math::vec3>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "math::vec2" || prop.descriptor.children.front().name == "vec2" || prop.descriptor.children.front().name == "math::vector2" || prop.descriptor.children.front().name == "vector2")
+				{
+					input(label, prop.value<std::vector<math::vec2>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "ImageAssetPtr")
+				{
+					input(label, prop.value<std::vector<ImageAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "PrefabAssetPtr")
+				{
+					input(label, prop.value<std::vector<PrefabAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SceneAssetPtr")
+				{
+					input(label, prop.value<std::vector<SceneAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAnimationAssetPtr")
+				{
+					input(label, prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "SpriteAssetPtr")
+				{
+					input(label, prop.value<std::vector<SpriteAssetPtr>>()); break;
+				}
+				else if (prop.descriptor.children.front().name == "TextAssetPtr")
+				{
+					input(label, prop.value<std::vector<TextAssetPtr>>()); break;
+				}
+				break;
+			}
+			}
+			break;
+		}
 		case Property::Type::T_unknown:
 		default:
 		{
@@ -272,6 +364,22 @@ void Layout::input(Type& value)
 			break;
 		}
 		}
+	}
+}
+
+void Layout::input(std::unique_ptr<Type>& type)
+{
+	if (type != nullptr)
+	{
+		input(*type.get());
+	}
+}
+
+void Layout::input(std::shared_ptr<Type>& type)
+{
+	if (type != nullptr)
+	{
+		input(*type.get());
 	}
 }
 

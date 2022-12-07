@@ -101,12 +101,7 @@ void SpawnerComponent::deserialize(const json::value& value)
 void SpawnerComponent::inspect()
 {
 	Component::inspect();
-	Layout::input<Wave>("Waves", m_waves, [](Wave& wave) -> void
-		{
-			Layout::input(wave);
-			Layout::input("spawnType", wave.spawnType);
-		}
-	);
+	// Layout::input(m_waves);
 	Layout::separator();
 	if (Layout::button("Start"))
 	{
