@@ -8,7 +8,12 @@ template <>
 struct EnumType<enum class SpawnType>
 {
     static const char* name();
-    static const std::map<const char*, int> values();
+    static const  enum_values_t& values();
+};
+
+struct SpawnTypeEnum : RegisteredInEnumFactory<enum class SpawnType>
+{
+    static bool registered() { return value; };
 };
 
 struct WaveType : RegisteredInTypeFactory<WaveType>

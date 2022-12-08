@@ -8,6 +8,11 @@ template <>
 struct EnumType<enum class AssetType>
 {
     static const char* name();
-    static const std::map<const char*, int> values();
+    static const  enum_values_t& values();
+};
+
+struct AssetTypeEnum : RegisteredInEnumFactory<enum class AssetType>
+{
+    static bool registered() { return value; };
 };
 

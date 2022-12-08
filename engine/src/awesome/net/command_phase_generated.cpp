@@ -3,9 +3,9 @@
 #include "command_phase.h"
 
 const char* EnumType<CommandPhase>::name() { return "CommandPhase"; }
-const std::map<const char*, int>  EnumType<CommandPhase>::values()
+const enum_values_t& EnumType<CommandPhase>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "Request", static_cast<int>(CommandPhase::Request) }, 
         { "Response", static_cast<int>(CommandPhase::Response) }, 
     };

@@ -3,9 +3,9 @@
 #include "game_tags.h"
 
 const char* EnumType<GameTags>::name() { return "GameTags"; }
-const std::map<const char*, int>  EnumType<GameTags>::values()
+const enum_values_t& EnumType<GameTags>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "Bullet", static_cast<int>(GameTags::Bullet) }, 
         { "Minion", static_cast<int>(GameTags::Minion) }, 
         { "Player", static_cast<int>(GameTags::Player) }, 

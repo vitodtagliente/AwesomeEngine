@@ -3,9 +3,9 @@
 #include "asset_type.h"
 
 const char* EnumType<AssetType>::name() { return "AssetType"; }
-const std::map<const char*, int>  EnumType<AssetType>::values()
+const enum_values_t& EnumType<AssetType>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "None", static_cast<int>(AssetType::None) }, 
         { "Image", static_cast<int>(AssetType::Image) }, 
         { "Prefab", static_cast<int>(AssetType::Prefab) }, 

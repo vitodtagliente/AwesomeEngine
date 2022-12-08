@@ -3,9 +3,9 @@
 #include "application_settings.h"
 
 const char* EnumType<ApplicationMode>::name() { return "ApplicationMode"; }
-const std::map<const char*, int>  EnumType<ApplicationMode>::values()
+const enum_values_t& EnumType<ApplicationMode>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "Editor", static_cast<int>(ApplicationMode::Editor) }, 
         { "Server", static_cast<int>(ApplicationMode::Server) }, 
         { "Standalone", static_cast<int>(ApplicationMode::Standalone) }, 
@@ -14,9 +14,9 @@ const std::map<const char*, int>  EnumType<ApplicationMode>::values()
 }
 
 const char* EnumType<FpsMode>::name() { return "FpsMode"; }
-const std::map<const char*, int>  EnumType<FpsMode>::values()
+const enum_values_t& EnumType<FpsMode>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "Fps30", static_cast<int>(FpsMode::Fps30) }, 
         { "Fps60", static_cast<int>(FpsMode::Fps60) }, 
         { "Fps90", static_cast<int>(FpsMode::Fps90) }, 

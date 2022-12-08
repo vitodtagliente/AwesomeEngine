@@ -8,6 +8,11 @@ template <>
 struct EnumType<enum class GameTags>
 {
     static const char* name();
-    static const std::map<const char*, int> values();
+    static const  enum_values_t& values();
+};
+
+struct GameTagsEnum : RegisteredInEnumFactory<enum class GameTags>
+{
+    static bool registered() { return value; };
 };
 

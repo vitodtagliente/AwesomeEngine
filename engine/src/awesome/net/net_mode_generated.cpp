@@ -3,9 +3,9 @@
 #include "net_mode.h"
 
 const char* EnumType<NetMode>::name() { return "NetMode"; }
-const std::map<const char*, int>  EnumType<NetMode>::values()
+const enum_values_t& EnumType<NetMode>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "Client", static_cast<int>(NetMode::Client) }, 
         { "Shared", static_cast<int>(NetMode::Shared) }, 
         { "Server", static_cast<int>(NetMode::Server) }, 

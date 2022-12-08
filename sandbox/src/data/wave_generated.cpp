@@ -3,9 +3,9 @@
 #include "wave.h"
 
 const char* EnumType<SpawnType>::name() { return "SpawnType"; }
-const std::map<const char*, int>  EnumType<SpawnType>::values()
+const enum_values_t& EnumType<SpawnType>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "AroundPosition", static_cast<int>(SpawnType::AroundPosition) }, 
         { "AtPosition", static_cast<int>(SpawnType::AtPosition) }, 
     };

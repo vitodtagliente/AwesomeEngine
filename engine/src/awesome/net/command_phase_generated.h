@@ -8,6 +8,11 @@ template <>
 struct EnumType<enum class CommandPhase>
 {
     static const char* name();
-    static const std::map<const char*, int> values();
+    static const  enum_values_t& values();
+};
+
+struct CommandPhaseEnum : RegisteredInEnumFactory<enum class CommandPhase>
+{
+    static bool registered() { return value; };
 };
 

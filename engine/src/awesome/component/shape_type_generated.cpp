@@ -3,9 +3,9 @@
 #include "shape_type.h"
 
 const char* EnumType<ShapeType>::name() { return "ShapeType"; }
-const std::map<const char*, int>  EnumType<ShapeType>::values()
+const enum_values_t& EnumType<ShapeType>::values()
 {
-    static std::map<const char*, int> s_values{
+    static enum_values_t s_values{
         { "None", static_cast<int>(ShapeType::None) }, 
         { "Circle", static_cast<int>(ShapeType::Circle) }, 
         { "Rect", static_cast<int>(ShapeType::Rect) }, 
