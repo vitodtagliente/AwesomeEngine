@@ -6,33 +6,8 @@
 
 void SettingsWindow::render()
 {
-	/*
-	Layout::input("FPS", m_settings.fps);
-	Layout::input("Mode", m_settings.mode);
-	std::string path = m_settings.workspacePath.string();
-	Layout::input("Workspace Path", path);
-	if (path != m_settings.workspacePath.string())
-	{
-		m_settings.workspacePath = path;
-	}
-
-	Layout::separator();
-
-	Layout::input("Editor Scene", m_settings.editorScene);
-	Layout::input("Server Scene", m_settings.serverScene);
-	Layout::input("Standalone Scene", m_settings.standaloneScene);
-
-	Layout::separator();
-
-	Layout::input("Server IP", m_settings.serverIp);
-	Layout::input("Server Port", m_settings.serverPort);
-	Layout::input("Max Server Connections", m_settings.maxServerConnections);
-	*/
-
 	ApplicationSettings& settings = Application::instance().settings;
-	Layout::input("FPS", settings.fps);
-	Layout::input("Mode", settings.mode);
-	Layout::input((Type&)settings);
+	Layout::input(Application::instance().settings);
 
 	Layout::separator();
 
