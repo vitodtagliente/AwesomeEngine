@@ -9,6 +9,8 @@ const properties_t SpawnerComponent::getTypeProperties() const {
     properties_t properties = Component::getTypeProperties();
     properties.insert(std::make_pair<std::string, Property>("m_autostart", Property("m_autostart", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(SpawnerComponent, m_autostart), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("m_waves", Property("m_waves", Property::TypeDescriptor("std::vector<std::unique_ptr<Wave>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Wave", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Wave>>), origin + offsetof(SpawnerComponent, m_waves), {
+    })));
     return properties;
 }
 std::size_t SpawnerComponent::getTypeSize() const { return SpawnerComponentType::type().size; }

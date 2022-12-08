@@ -19,8 +19,6 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime);
 
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 	virtual void inspect() override;
 	
 	void start();
@@ -42,5 +40,5 @@ private:
 	int m_waveIndex{ 0 };
 	int m_waveInternalIndex{ 0 };
 	WavePhase m_wavePhase{ WavePhase::Beginning };
-	std::vector<Wave> m_waves;
+	PROPERTY() std::vector<std::unique_ptr<Wave>> m_waves;
 };
