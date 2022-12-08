@@ -213,7 +213,7 @@ void Layout::input(Type& value)
 		case Property::Type::T_float: input(label, prop.value<float>()); break;
 		case Property::Type::T_int: input(label, prop.value<int>()); break;
 		case Property::Type::T_void: break;
-		case Property::Type::T_custom_enum: input(label, prop.value<int>()); break;
+		case Property::Type::T_custom_enum: input(label, prop.value<int>(), EnumFactory::definition(prop.descriptor.name)); break;
 		case Property::Type::T_custom_type:
 		{
 			// data[name] = ::serialize(prop.value<Type>());
