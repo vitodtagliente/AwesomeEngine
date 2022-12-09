@@ -24,6 +24,19 @@ bool Canvas::open(Settings settings)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	const unsigned int adaptiveWidth = static_cast<unsigned int>(mode->width - static_cast<int>(static_cast<double>(mode->width) * 0.25));
+	const unsigned int adaptiveHeight = static_cast<unsigned int>(mode->height - static_cast<int>(static_cast<double>(mode->height) * 0.25));
+
+	if (adaptiveWidth > settings.width)
+	{
+		settings.width = adaptiveWidth;
+	}
+	if (adaptiveHeight > settings.height)
+	{
+		settings.height = adaptiveHeight;
+	}
+
 	GLFWwindow* const handler = glfwCreateWindow(
 		settings.width,
 		settings.height,
