@@ -20,12 +20,11 @@ public:
 	inline int getLevel() const { return m_level; }
 	int getLevels() const;
 
-	PROPERTY() float efficacy{ 1.f };
-	PROPERTY() float frequency{ 1.f };
-	PROPERTY() int power{ 1 };
-	PROPERTY() int quantity{ 1 };
-	PROPERTY() float range{ 1.f };
-	PROPERTY() float speed{ 1.f };
+	PROPERTY() float efficacy{ 0.f };
+	PROPERTY() float frequency{ 0.f };
+	PROPERTY() int quantity{ 0 };
+	PROPERTY() float range{ 0.f };
+	PROPERTY() float speed{ 0.f };
 
 protected:
 	void applyLevel(int level);

@@ -57,7 +57,6 @@ void WeaponComponent::applyLevel(const int level)
 		WeaponLevel* const data = m_data->levels[level].get();
 		efficacy = data->efficacy;
 		frequency = data->frequency;
-		power = data->power;
 		quantity = data->quantity;
 		range = data->range;
 		speed = data->speed;

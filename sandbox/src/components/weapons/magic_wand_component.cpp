@@ -35,6 +35,7 @@ void MagicWandComponent::activate()
 	BulletComponent* const bulletComponent = bulletEntity->findComponent<BulletComponent>();
 	if (bulletComponent)
 	{
+		bulletComponent->damage = static_cast<int>(efficacy);
 		bulletComponent->shoot(nearestEntity);
 	}
 	else

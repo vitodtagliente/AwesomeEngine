@@ -4,21 +4,22 @@
 #include <awesome/entity/world.h>
 #include <awesome/graphics/renderer.h>
 
-#include "../health_component.h"
+#include <components/health_component.h>
+#include <game_tags.h>
 
-void ShiedComponent::init()
+void ShieldComponent::init()
 {
 	WeaponComponent::init();
 }
 
-void ShiedComponent::render(graphics::Renderer2D* const renderer)
+void ShieldComponent::render(graphics::Renderer2D* const renderer)
 {
 	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	renderer->drawCircle(getOwner()->transform.position, range, m_color); 
 	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }
 
-void ShiedComponent::update(const double deltaTime)
+void ShieldComponent::update(const double deltaTime)
 {
 	m_activationTimer -= deltaTime;
 	if (m_activationTimer <= 0)
@@ -28,15 +29,15 @@ void ShiedComponent::update(const double deltaTime)
 	}
 }
 
-void ShiedComponent::activate()
+void ShieldComponent::activate()
 {
-	const std::vector<Entity*>& entities = World::instance().findNearestEntities(getOwner(), range);
+	const std::vector<Entity*>& entities = World::instance().findNearestEntitiesByTag(getOwner(), range, enumToString(GameTags::Minion));
 	for (Entity* const entity : entities)
 	{
 		HealthComponent* const health = entity->findComponent<HealthComponent>();
 		if (health)
 		{
-			(*health) -= power;
+			(*health) -= efficacy;
 		}
 	}
 }

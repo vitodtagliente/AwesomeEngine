@@ -11,8 +11,6 @@ const properties_t WeaponLevel::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponLevel, frequency), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("power", Property("power", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(WeaponLevel, power), {
-    })));
     properties.insert(std::make_pair<std::string, Property>("quantity", Property("quantity", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(WeaponLevel, quantity), {
     })));
     properties.insert(std::make_pair<std::string, Property>("range", Property("range", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponLevel, range), {

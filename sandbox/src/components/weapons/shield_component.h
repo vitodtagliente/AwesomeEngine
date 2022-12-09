@@ -9,11 +9,11 @@
 #include "shield_component_generated.h"
 
 CLASS(Category = Component)
-class ShiedComponent : public graphics::IGraphicsComponent, public WeaponComponent
+class ShieldComponent : public graphics::IGraphicsComponent, public WeaponComponent
 {
 public:
-	ShiedComponent() = default;
-	virtual ~ShiedComponent() = default;
+	ShieldComponent() = default;
+	virtual ~ShieldComponent() = default;
 
 	virtual void init() override;
 	virtual void render(class graphics::Renderer2D* const renderer) override;

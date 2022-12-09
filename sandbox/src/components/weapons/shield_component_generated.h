@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ShiedComponentType : RegisteredInTypeFactory<ShiedComponentType>
+struct ShieldComponentType : RegisteredInTypeFactory<ShieldComponentType>
 {
-    ShiedComponentType() = delete;
+    ShieldComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

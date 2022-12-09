@@ -13,7 +13,6 @@ class WeaponLevel : public Type
 public:
 	PROPERTY() float efficacy{ 0.f };
 	PROPERTY() float frequency{ 0.f };
-	PROPERTY() int power{ 0 };
 	PROPERTY() int quantity{ 0 };
 	PROPERTY() float range{ 0.f };
 	PROPERTY() float speed{ 0.f };
