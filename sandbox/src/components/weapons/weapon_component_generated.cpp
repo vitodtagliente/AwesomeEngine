@@ -7,6 +7,8 @@ const std::string& WeaponComponent::getTypeName() const { return WeaponComponent
 const properties_t WeaponComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
+    properties.insert(std::make_pair<std::string, Property>("duration", Property("duration", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, duration), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("efficacy", Property("efficacy", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, efficacy), {
     })));
     properties.insert(std::make_pair<std::string, Property>("frequency", Property("frequency", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(WeaponComponent, frequency), {

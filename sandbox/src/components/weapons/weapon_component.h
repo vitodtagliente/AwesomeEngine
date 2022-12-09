@@ -20,6 +20,7 @@ public:
 	inline int getLevel() const { return m_level; }
 	int getLevels() const;
 
+	PROPERTY() float duration{ 0.f };
 	PROPERTY() float efficacy{ 0.f };
 	PROPERTY() float frequency{ 0.f };
 	PROPERTY() int quantity{ 0 };

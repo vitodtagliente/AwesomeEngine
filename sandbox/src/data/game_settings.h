@@ -11,6 +11,7 @@ CLASS(Category = Data)
 class WeaponLevel : public Type
 {
 public:
+	PROPERTY() float duration{ 0.f };
 	PROPERTY() float efficacy{ 0.f };
 	PROPERTY() float frequency{ 0.f };
 	PROPERTY() int quantity{ 0 };

@@ -55,6 +55,7 @@ void WeaponComponent::applyLevel(const int level)
 	if (level < getLevels())
 	{
 		WeaponLevel* const data = m_data->levels[level].get();
+		duration = data->duration;
 		efficacy = data->efficacy;
 		frequency = data->frequency;
 		quantity = data->quantity;
