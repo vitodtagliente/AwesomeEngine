@@ -1,6 +1,7 @@
 #include "serialization.h"
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/core/string_util.h>
 
 json::value Serializer::serialize(const Type& type)
 {
@@ -249,6 +250,10 @@ json::value Serializer::serialize(const Type& type)
 			{
 				data[name] = serialize(prop.value<TextAssetPtr>());
 			}
+			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
+			{
+				data[name] = serialize(prop.value<TypeName<Type>>());
+			}
 			break;
 		}
 		}
@@ -295,6 +300,11 @@ json::value Serializer::serialize(const double& primitive)
 }
 
 json::value Serializer::serialize(const char& primitive)
+{
+	return json::value(primitive);
+}
+
+json::value Serializer::serialize(const std::string& primitive)
 {
 	return json::value(primitive);
 }
@@ -646,6 +656,10 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			{
 				deserialize(value.safeAt(name), prop.value<TextAssetPtr>());
 			}
+			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
+			{
+				deserialize(value.safeAt(name), prop.value<TypeName<Type>>());
+			}
 			break;
 		}
 		}
@@ -694,6 +708,11 @@ bool Deserializer::deserialize(const json::value& value, double& primitive)
 bool Deserializer::deserialize(const json::value& value, char& primitive)
 {
 	return primitive = value.as_string(" ").at(0), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, std::string& primitive)
+{
+	return primitive = value.as_string(""), true;
 }
 
 bool Deserializer::deserialize(const json::value& value, uuid& id)

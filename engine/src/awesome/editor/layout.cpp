@@ -9,6 +9,7 @@
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/scene_asset.h>
 #include <awesome/asset/text_asset.h>
+#include <awesome/core/string_util.h>
 #include <awesome/graphics/texture_library.h>
 
 std::string Layout::s_context{};
@@ -190,6 +191,24 @@ void Layout::input(const std::string&, SpriteAnimation::Frame& value)
 {
 	input("Sprite", value.sprite);
 	input("Duration", value.duration);
+}
+
+void Layout::input(const std::string& name, const std::string& category, TypeName<Type>& type)
+{
+	if (Layout::beginCombo(name, type.value))
+	{
+		const std::vector<std::string>& s_types = TypeFactory::list("Category", category);
+		for (const std::string& s_type : s_types)
+		{
+			if (Layout::selectable(s_type.c_str(), false))
+			{
+				type.value = s_type;
+				Layout::endCombo();
+				return; // force the refresh of the inspector
+			}
+		}
+		Layout::endCombo();
+	}
 }
 
 void Layout::input(Type& value)
@@ -444,6 +463,10 @@ void Layout::input(Type& value)
 			else if (prop.descriptor.name == "TextAssetPtr")
 			{
 				Layout::input(label, prop.value<TextAssetPtr>());
+			}
+			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
+			{
+				Layout::input(label, prop.descriptor.children.front().name, prop.value<TypeName<Type>>());
 			}
 			break;
 		}

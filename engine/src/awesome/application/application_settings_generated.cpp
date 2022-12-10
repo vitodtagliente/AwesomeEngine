@@ -54,6 +54,10 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("wireframesColor", Property("wireframesColor", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ApplicationSettings, wireframesColor), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("playerControllerType", Property("playerControllerType", Property::TypeDescriptor("TypeName<PlayerController>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerController", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerController>), origin + offsetof(ApplicationSettings, playerControllerType), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("playerStateType", Property("playerStateType", Property::TypeDescriptor("TypeName<PlayerState>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerState", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerState>), origin + offsetof(ApplicationSettings, playerStateType), {
+    })));
     return properties;
 }
 std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSettingsType::type().size; }

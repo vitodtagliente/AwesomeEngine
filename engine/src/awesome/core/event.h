@@ -54,6 +54,7 @@ public:
 
 			m_id = ++counter;
 		}
+		virtual ~handler_t() = default;
 
 		virtual void execute(Params... args) = 0;
 

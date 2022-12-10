@@ -51,7 +51,11 @@ int Application::run()
 
 	// initialize the local player
 	// there's always a player at index 0
-	// Player player(PlayerIndex::Player0, new PlayerController(new PlayerState()));
+	Player player(
+		PlayerIndex::Player0,
+		TypeFactory::instantiate<PlayerController>(settings.playerControllerType.value.empty() ? "PlayerController" : settings.playerControllerType.value),
+		TypeFactory::instantiate<PlayerState>(settings.playerStateType.value.empty() ? "PlayerState" : settings.playerControllerType.value)
+	);
 
 	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
 	double deltatime = 0.0;

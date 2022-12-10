@@ -23,8 +23,8 @@ void EntityLayout::input(Entity* const entity)
 
 	if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
 	{
-		static std::vector<std::string> s_types = TypeFactory::list("Category", "Component");
-		for (const std::string& type : s_types)
+		const std::vector<std::string>& types = TypeFactory::list("Category", "Component");
+		for (const std::string& type : types)
 		{
 			const auto& it = std::find_if(entity->getComponents().begin(), entity->getComponents().end(), [&type](const std::unique_ptr<Component>& component) -> bool
 				{

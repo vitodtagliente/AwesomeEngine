@@ -6,7 +6,9 @@
 
 #include <filesystem>
 #include <awesome/asset/scene_asset.h>
+#include <awesome/core/type_name.h>
 #include <awesome/graphics/color.h>
+#include <awesome/player/player_controller.h>
 
 #include "application_settings_generated.h"
 
@@ -45,6 +47,8 @@ public:
     PROPERTY() int quadspaceBounds{ 100 };
     PROPERTY() bool wireframesEnabled{ true };
     PROPERTY() graphics::Color wireframesColor{ graphics::Color::White };
+    PROPERTY() TypeName<PlayerController> playerControllerType;
+    PROPERTY() TypeName<PlayerState> playerStateType;
 
     GENERATED_BODY()
 };

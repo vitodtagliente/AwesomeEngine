@@ -9,6 +9,7 @@
 #include <awesome/asset/text_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/sub_type.h>
+#include <awesome/core/type_name.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
@@ -37,6 +38,7 @@ struct Serializer
 	static json::value serialize(const float& primitive);
 	static json::value serialize(const double& primitive);
 	static json::value serialize(const char& primitive);
+	static json::value serialize(const std::string& primitive);
 	static json::value serialize(const uuid& id);
 	static json::value serialize(const graphics::Color& color);
 	static json::value serialize(const graphics::TextureCoords& coords);
@@ -52,12 +54,9 @@ struct Serializer
 	static json::value serialize(const SpriteAssetPtr& asset);
 	static json::value serialize(const TextAssetPtr& asset);
 	template <typename T = Type>
-	static json::value serialize(const SubType<T>& type)
+	static json::value serialize(const TypeName<T>& type)
 	{
-		return json::object({
-			{"type", type.type},
-			{"value", static_cast<std::unique_ptr<Type>>(type)}
-			});
+		return serialize(type.value);
 	}
 	template <typename T>
 	static json::value serialize(const std::vector<T>& list)
@@ -93,6 +92,7 @@ struct Deserializer
 	static bool deserialize(const json::value& value, float& primitive);
 	static bool deserialize(const json::value& value, double& primitive);
 	static bool deserialize(const json::value& value, char& primitive);
+	static bool deserialize(const json::value& value, std::string& primitive);
 	static bool deserialize(const json::value& value, uuid& id);
 	static bool deserialize(const json::value& value, graphics::Color& color);
 	static bool deserialize(const json::value& value, graphics::TextureCoords& coords);
@@ -108,14 +108,9 @@ struct Deserializer
 	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
 	static bool deserialize(const json::value& value, TextAssetPtr& asset);
 	template <typename T = Type>
-	static bool deserialize(const json::value& value, SubType<T>& type)
+	static bool deserialize(const json::value& value, TypeName<T>& type)
 	{
-		if (!value.is_object())
-			return false;
-
-		type.type = value.safeAt("type").as_string("");
-		deserialize(value.safeAt("value"), static_cast<std::unique_ptr<Type>&>(type));
-		return true;
+		return deserialize(value, type.value);
 	}
 	template <typename T>
 	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T()>& createHandler)

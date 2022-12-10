@@ -17,6 +17,7 @@
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/core/reflection.h>
+#include <awesome/core/type_name.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
@@ -62,6 +63,7 @@ public:
 	static void input(const std::string& name, graphics::TextureCoords& value);
 	static void input(const std::string& name, graphics::TextureRect& value);
 	static void input(const std::string& name, SpriteAnimation::Frame& value);
+	static void input(const std::string& name, const std::string& category, TypeName<Type>& type);
 	static void input(Type& value);
 	static void input(std::unique_ptr<Type>& type);
 	static void input(std::shared_ptr<Type>& type);
