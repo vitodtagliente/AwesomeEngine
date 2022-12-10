@@ -8,9 +8,8 @@
 #include "game_settings_generated.h"
 
 CLASS(Category = Data)
-class WeaponLevel : public Type
+struct WeaponLevel : public Type
 {
-public:
 	PROPERTY() float duration{ 0.f };
 	PROPERTY() float efficacy{ 0.f };
 	PROPERTY() float frequency{ 0.f };
@@ -22,9 +21,8 @@ public:
 };
 
 CLASS(Category = Data)
-class WeaponItem : public Type
+struct WeaponItem : public Type
 {
-public:
 	PROPERTY() std::string name;
 	PROPERTY() std::string description;
 	PROPERTY() std::string component;
@@ -35,15 +33,15 @@ public:
 };
 
 CLASS(Category = Data)
-class GameSettings : public Singleton<GameSettings>, public Type
+struct GameSettings : public Singleton<GameSettings>, public Type
 {
-public:
 	void load();
 	void save();
 
 	static const std::string filename;
 
 	PROPERTY() std::map<std::string, std::unique_ptr<WeaponItem>> weapons;
+	PROPERTY() std::vector<int> playerProgression;
 
 	GENERATED_BODY()
 };

@@ -63,6 +63,8 @@ const properties_t GameSettings::getTypeProperties() const {
     properties_t properties;
     properties.insert(std::make_pair<std::string, Property>("weapons", Property("weapons", Property::TypeDescriptor("std::map<std::string, std::unique_ptr<WeaponItem>>", Property::Type::T_container_map, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), Property::TypeDescriptor("WeaponItem", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::map<std::string, std::unique_ptr<WeaponItem>>), origin + offsetof(GameSettings, weapons), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("playerProgression", Property("playerProgression", Property::TypeDescriptor("std::vector<int>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {})}), sizeof(std::vector<int>), origin + offsetof(GameSettings, playerProgression), {
+    })));
     return properties;
 }
 std::size_t GameSettings::getTypeSize() const { return GameSettingsType::type().size; }
