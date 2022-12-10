@@ -37,7 +37,7 @@ void ShieldComponent::activate()
 		HealthComponent* const health = entity->findComponent<HealthComponent>();
 		if (health)
 		{
-			(*health) -= efficacy;
+			(*health) -= static_cast<int>(efficacy);
 		}
 	}
 }
