@@ -2,10 +2,11 @@
 
 std::vector<Player*> Player::s_instances{};
 
-Player::Player(PlayerIndex index, PlayerController* const controller)
+Player::Player(PlayerIndex index, PlayerController* const controller, PlayerState* const state)
 	: m_controller(std::unique_ptr<PlayerController>(controller))
 	, m_index(index)
 {
+	m_controller->m_state = std::unique_ptr<PlayerState>(state);
 	s_instances.push_back(this);
 }
 

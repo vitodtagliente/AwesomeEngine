@@ -8,6 +8,7 @@
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/asset/text_asset.h>
 #include <awesome/core/reflection.h>
+#include <awesome/core/sub_type.h>
 #include <awesome/core/uuid.h>
 #include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
@@ -50,6 +51,14 @@ struct Serializer
 	static json::value serialize(const SpriteAnimationAssetPtr& asset);
 	static json::value serialize(const SpriteAssetPtr& asset);
 	static json::value serialize(const TextAssetPtr& asset);
+	template <typename T = Type>
+	static json::value serialize(const SubType<T>& type)
+	{
+		return json::object({
+			{"type", type.type},
+			{"value", static_cast<std::unique_ptr<Type>>(type)}
+			});
+	}
 	template <typename T>
 	static json::value serialize(const std::vector<T>& list)
 	{
@@ -98,6 +107,16 @@ struct Deserializer
 	static bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset);
 	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
 	static bool deserialize(const json::value& value, TextAssetPtr& asset);
+	template <typename T = Type>
+	static bool deserialize(const json::value& value, SubType<T>& type)
+	{
+		if (!value.is_object())
+			return false;
+
+		type.type = value.safeAt("type").as_string("");
+		deserialize(value.safeAt("value"), static_cast<std::unique_ptr<Type>&>(type));
+		return true;
+	}
 	template <typename T>
 	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T()>& createHandler)
 	{

@@ -3,14 +3,20 @@
 
 #include <memory>
 
+#include <awesome/core/reflection.h>
 #include <awesome/entity/entity.h>
 
 #include "player_state.h"
 
-class PlayerController
+#include "player_controller_generated.h"
+
+CLASS(Category = PlayerController)
+class PlayerController : public Type
 {
 public:
-	PlayerController(PlayerState* const state);
+	friend class Player;
+
+	PlayerController() = default;
 	virtual ~PlayerController() = default;
 
 	virtual void init();
@@ -20,6 +26,8 @@ public:
 
 	Entity* const getPossessedEntity() const;
 	PlayerState* const getState() const;
+
+	GENERATED_BODY()
 
 protected:
 	Entity* m_possessedEntity;

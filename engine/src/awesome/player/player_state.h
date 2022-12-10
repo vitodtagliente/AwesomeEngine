@@ -3,7 +3,12 @@
 
 #include <string>
 
-class PlayerState
+#include <awesome/core/reflection.h>
+
+#include "player_state_generated.h"
+
+CLASS(Category = PlayerState)
+class PlayerState : public Type
 {
 public:
 	PlayerState() = default;
@@ -12,5 +17,7 @@ public:
 	virtual void init() {}
 	virtual void update(double /*deltaTime*/) {}
 
-	std::string gamertag;
+	PROPERTY() std::string gamertag;
+
+	GENERATED_BODY()
 };

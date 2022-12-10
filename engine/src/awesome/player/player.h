@@ -7,7 +7,10 @@
 
 #include "player_controller.h"
 
-enum class PlayerIndex
+#include "player_generated.h"
+
+ENUM()
+enum class PlayerIndex : int
 {
 	Invalid = -1,
 	Player0 = 0,
@@ -24,7 +27,7 @@ enum class PlayerIndex
 class Player
 {
 public:
-	Player(PlayerIndex index, PlayerController* const controller);
+	Player(PlayerIndex index, PlayerController* const controller, PlayerState* const state);
 	~Player();
 
 	void init();

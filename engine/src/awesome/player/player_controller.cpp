@@ -1,11 +1,5 @@
 #include "player_controller.h"
 
-PlayerController::PlayerController(PlayerState* const state)
-	: m_possessedEntity(nullptr)
-	, m_state(std::unique_ptr<PlayerState>(state))
-{
-}
-
 void PlayerController::init()
 {
 	m_state->init();
