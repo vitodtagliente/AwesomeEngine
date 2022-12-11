@@ -6,6 +6,7 @@
 #include <awesome/core/singleton.h>
 
 #include "game_settings_generated.h"
+#include "item.h"
 
 CLASS(Category = Data)
 struct WeaponLevel : public Type
@@ -40,6 +41,7 @@ struct GameSettings : public Singleton<GameSettings>, public Type
 
 	static const std::string filename;
 
+	PROPERTY() std::map<std::string, std::unique_ptr<Item>> items;
 	PROPERTY() std::map<std::string, std::unique_ptr<WeaponItem>> weapons;
 	PROPERTY() std::vector<int> playerProgression;
 

@@ -19,7 +19,6 @@ public:
 	AimComponent() = default;
 	virtual ~AimComponent() = default;
 
-	virtual void init() override;
 	virtual void render(graphics::Renderer2D* const renderer) override;
 	virtual void update(double deltaTime) override;
 

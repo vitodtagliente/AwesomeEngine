@@ -8,11 +8,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture_library.h>
 
-void AimComponent::init()
-{
-
-}
-
 void AimComponent::render(graphics::Renderer2D* const renderer)
 {
 	if (!m_visible) return;

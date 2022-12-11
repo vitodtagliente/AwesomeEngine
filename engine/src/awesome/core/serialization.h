@@ -87,6 +87,8 @@ struct Deserializer
 	static bool deserialize(const json::value& value, Type& type);
 	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);
 	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type);
+	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type, const std::string& typeName);
+	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type, const std::string& typeName);
 	static bool deserialize(const json::value& value, bool& primitive);
 	static bool deserialize(const json::value& value, int& primitive);
 	static bool deserialize(const json::value& value, float& primitive);

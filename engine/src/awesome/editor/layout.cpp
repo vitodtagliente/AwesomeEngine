@@ -215,6 +215,16 @@ void Layout::input(Type& value)
 {
 	for (const auto& [name, prop] : value.getTypeProperties())
 	{
+		if (prop.descriptor.type == Property::Type::T_custom_type)
+		{
+			switch (prop.descriptor.decoratorType)
+			{
+			case Property::DecoratorType::D_shared_ptr: input(prop.value<std::shared_ptr<Type>>(), prop.descriptor.name); break;
+			case Property::DecoratorType::D_unique_ptr: input(prop.value<std::unique_ptr<Type>>(), prop.descriptor.name); break;
+			default:break;
+			}
+		}
+
 		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
 		std::string label = name;
@@ -235,7 +245,7 @@ void Layout::input(Type& value)
 		case Property::Type::T_custom_enum: input(label, prop.value<int>(), EnumFactory::definition(prop.descriptor.name)); break;
 		case Property::Type::T_custom_type:
 		{
-			// data[name] = ::serialize(prop.value<Type>());
+			
 			break;
 		}
 		case Property::Type::T_container_string: input(label, prop.value<std::string>()); break;
@@ -488,6 +498,24 @@ void Layout::input(std::shared_ptr<Type>& type)
 	{
 		input(*type.get());
 	}
+}
+
+void Layout::input(std::unique_ptr<Type>& type, const std::string& typeName)
+{
+	if (type == nullptr)
+	{
+		type = std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+	}
+	input(type);
+}
+
+void Layout::input(std::shared_ptr<Type>& type, const std::string& typeName)
+{
+	if (type == nullptr)
+	{
+		type = std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+	}
+	input(type);
 }
 
 void Layout::input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName)

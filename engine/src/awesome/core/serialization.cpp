@@ -8,6 +8,16 @@ json::value Serializer::serialize(const Type& type)
 	json::value data = json::object();
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
+		if (prop.descriptor.type == Property::Type::T_custom_type)
+		{
+			switch (prop.descriptor.decoratorType)
+			{
+			case Property::DecoratorType::D_shared_ptr: data[name] = serialize(prop.value<std::shared_ptr<Type>>()); break;
+			case Property::DecoratorType::D_unique_ptr: data[name] = serialize(prop.value<std::unique_ptr<Type>>()); break;
+			default:break;
+			}
+		}
+
 		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
 		switch (prop.descriptor.type)
@@ -21,7 +31,7 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
 		case Property::Type::T_custom_type:
 		{
-			// data[name] = ::serialize(prop.value<Type>());
+			
 			break;
 		}
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
@@ -413,6 +423,16 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
+		if (prop.descriptor.type == Property::Type::T_custom_type)
+		{
+			switch (prop.descriptor.decoratorType)
+			{
+			case Property::DecoratorType::D_shared_ptr: deserialize(value.safeAt(name), prop.value<std::shared_ptr<Type>>(), prop.descriptor.name); break;
+			case Property::DecoratorType::D_unique_ptr: deserialize(value.safeAt(name), prop.value<std::unique_ptr<Type>>(), prop.descriptor.name); break;
+			default:break;
+			}
+		}
+
 		if (prop.descriptor.decoratorType != Property::DecoratorType::D_normalized) continue;
 
 		switch (prop.descriptor.type)
@@ -425,11 +445,16 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			}
 			break;
 		}
-		case Property::Type::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case Property::Type::T_double: prop.value<double>() = value.safeAt(name).as_number(0).as_double(); break;
 		case Property::Type::T_float: prop.value<float>() = value.safeAt(name).as_number(0).as_float(); break;
 		case Property::Type::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case Property::Type::T_void: break;
+		case Property::Type::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
+		case Property::Type::T_custom_type: 
+		{
+			
+			break;
+		}
 		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
 		case Property::Type::T_container_map:
 		{
@@ -681,6 +706,24 @@ bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& 
 	if (type == nullptr)
 	{
 		type = std::make_unique<Type>();
+	}
+	return deserialize(value, *type.get());
+}
+
+bool Deserializer::deserialize(const json::value& value, std::shared_ptr<Type>& type, const std::string& typeName)
+{
+	if (type == nullptr)
+	{
+		type = std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+	}
+	return deserialize(value, *type.get());
+}
+
+bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& type, const std::string& typeName)
+{
+	if (type == nullptr)
+	{
+		type = std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
 	}
 	return deserialize(value, *type.get());
 }
