@@ -67,8 +67,8 @@ public:
 	static void input(Type& value);
 	static void input(std::unique_ptr<Type>& type);
 	static void input(std::shared_ptr<Type>& type);
-	static void input(std::unique_ptr<Type>& type, const std::string& typeName);
-	static void input(std::shared_ptr<Type>& type, const std::string& typeName);
+	static void input(const std::string& name, std::unique_ptr<Type>& type, const std::string& typeName);
+	static void input(const std::string& name, std::shared_ptr<Type>& type, const std::string& typeName);
 	// Ranges
 	template <typename T>
 	static void input(const std::string& name, std::pair<T, T>& value)

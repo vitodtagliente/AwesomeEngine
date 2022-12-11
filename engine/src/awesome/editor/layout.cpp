@@ -219,8 +219,8 @@ void Layout::input(Type& value)
 		{
 			switch (prop.descriptor.decoratorType)
 			{
-			case Property::DecoratorType::D_shared_ptr: input(prop.value<std::shared_ptr<Type>>(), prop.descriptor.name); break;
-			case Property::DecoratorType::D_unique_ptr: input(prop.value<std::unique_ptr<Type>>(), prop.descriptor.name); break;
+			case Property::DecoratorType::D_shared_ptr: input(name, prop.value<std::shared_ptr<Type>>(), prop.descriptor.name); break;
+			case Property::DecoratorType::D_unique_ptr: input(name, prop.value<std::unique_ptr<Type>>(), prop.descriptor.name); break;
 			default:break;
 			}
 		}
@@ -500,22 +500,28 @@ void Layout::input(std::shared_ptr<Type>& type)
 	}
 }
 
-void Layout::input(std::unique_ptr<Type>& type, const std::string& typeName)
+void Layout::input(const std::string& name, std::unique_ptr<Type>& type, const std::string& typeName)
 {
 	if (type == nullptr)
 	{
 		type = std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
 	}
-	input(type);
+	if (collapsingHeader(name))
+	{
+		input(type);
+	}
 }
 
-void Layout::input(std::shared_ptr<Type>& type, const std::string& typeName)
+void Layout::input(const std::string& name, std::shared_ptr<Type>& type, const std::string& typeName)
 {
 	if (type == nullptr)
 	{
 		type = std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
 	}
-	input(type);
+	if (collapsingHeader(name))
+	{
+		input(type);
+	}
 }
 
 void Layout::input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName)
