@@ -12,7 +12,7 @@
 #include <awesome/core/string_util.h>
 #include <awesome/graphics/texture_library.h>
 
-std::string Layout::s_context{};
+std::vector<std::string> Layout::s_context;
 std::map<std::string, void*> Layout::s_keyCache{};
 
 void Layout::begin(const std::string& name)
@@ -27,7 +27,7 @@ bool Layout::beginCombo(const std::string& name, const std::string& value)
 
 void Layout::beginContext(const std::string context)
 {
-	s_context = context;
+	s_context.push_back(context);
 }
 
 void Layout::beginDrag(const std::string& name, const std::string& item, void* const data, const size_t size)
@@ -72,7 +72,7 @@ void Layout::endCombo()
 
 void Layout::endContext()
 {
-	s_context.clear();
+	s_context.pop_back();
 }
 
 void Layout::endDrag(const std::string& name, const std::function<void(void*, size_t)>& handler)
@@ -146,7 +146,7 @@ void Layout::input(const std::string& name, double& value)
 
 void Layout::input(const std::string& name, std::string& value)
 {
-	ImGui::InputText(name.c_str(), &value);
+	ImGui::InputText(id(name).c_str(), &value);
 }
 
 void Layout::input(const std::string&, math::transform& value)
@@ -213,6 +213,8 @@ void Layout::input(const std::string& name, const std::string& category, TypeNam
 
 void Layout::input(Type& value)
 {
+	beginContext(value.getTypeName());
+
 	for (const auto& [name, prop] : value.getTypeProperties())
 	{
 		if (prop.descriptor.type == Property::Type::T_custom_type)
@@ -482,6 +484,8 @@ void Layout::input(Type& value)
 		}
 		}
 	}
+
+	endContext();
 }
 
 void Layout::input(std::unique_ptr<Type>& type)
@@ -712,5 +716,12 @@ std::string Layout::id(const std::string& label)
 	{
 		return label;
 	}
-	return std::string(label) + "###" + s_context + "_" + label;
+
+	std::string context = "";
+	for (const std::string& c : s_context)
+	{
+		context += (context.empty() ? "" : "_") + c;
+	}
+
+	return std::string(label) + "###" + context + "_" + label;
 }

@@ -138,6 +138,8 @@ public:
 	template <typename T>
 	static void input(const std::string& name, std::vector<T>& list, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
 	{
+		beginContext(name);
+
 		text(name);
 		for (size_t i = 0; i < list.size(); ++i)
 		{
@@ -166,6 +168,8 @@ public:
 				list.clear();
 			}
 		}
+
+		endContext();
 	}
 	template<typename T> 
 	static void input(const std::string& name, std::vector<T>& list)
@@ -189,6 +193,8 @@ public:
 	template <typename K, typename T>
 	static void input(const std::string& name, std::map<K, T>& map, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
 	{
+		beginContext(name);
+
 		text(name);
 		for (auto& pair : map)
 		{
@@ -238,6 +244,8 @@ public:
 				map.clear();
 			}
 		}
+
+		endContext();
 	}
 	template<typename K, typename T>
 	static void input(const std::string& name, std::map<K, T>& map)
@@ -282,6 +290,6 @@ private:
 
 	static std::string id(const std::string& label);
 
-	static std::string s_context;
+	static std::vector<std::string> s_context;
 	static std::map<std::string, void*> s_keyCache;
 };
