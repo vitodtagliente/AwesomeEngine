@@ -151,7 +151,9 @@ public:
 				if (button(TextIcon::minus()))
 				{
 					list.erase(list.begin() + i);
-					return;
+
+					endContext();
+					break;
 				}
 			}
 			endContext();
@@ -206,7 +208,9 @@ public:
 				if (button(TextIcon::minus()))
 				{
 					map.erase(pair.first);
-					return;
+					
+					endContext();
+					break;
 				}
 			}
 			endContext();

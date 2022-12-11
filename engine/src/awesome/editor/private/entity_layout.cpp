@@ -63,6 +63,7 @@ void EntityLayout::input(Entity* const entity)
 			if (Layout::button(TextIcon::minus(" Remove Component")))
 			{
 				entity->removeComponent(component->getId());
+				Layout::endContext();
 				return; // force the refresh of the inspector
 			}
 		}

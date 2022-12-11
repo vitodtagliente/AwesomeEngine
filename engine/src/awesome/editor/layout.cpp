@@ -247,7 +247,7 @@ void Layout::input(Type& value)
 		case Property::Type::T_custom_enum: input(label, prop.value<int>(), EnumFactory::definition(prop.descriptor.name)); break;
 		case Property::Type::T_custom_type:
 		{
-			
+
 			break;
 		}
 		case Property::Type::T_container_string: input(label, prop.value<std::string>()); break;
@@ -541,7 +541,7 @@ void Layout::input(const std::string& name, std::vector<std::shared_ptr<Type>>& 
 		{
 			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
 		}
-	);
+		);
 }
 
 void Layout::input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName)
@@ -557,7 +557,7 @@ void Layout::input(const std::string& name, std::vector<std::unique_ptr<Type>>& 
 		{
 			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
 		}
-	);
+		);
 }
 
 void Layout::input(const std::string& name, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName)
@@ -573,7 +573,7 @@ void Layout::input(const std::string& name, std::map<std::string, std::shared_pt
 		{
 			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
 		}
-	);
+		);
 }
 
 void Layout::input(const std::string& name, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName)
@@ -589,7 +589,7 @@ void Layout::input(const std::string& name, std::map<std::string, std::unique_pt
 		{
 			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
 		}
-	);
+		);
 }
 
 bool Layout::isWindowFocused()
