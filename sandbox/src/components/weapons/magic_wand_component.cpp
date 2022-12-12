@@ -3,8 +3,8 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
-#include "../../game_tags.h"
-#include "../bullet_component.h"
+#include <game_tags.h>
+#include <components/bullet_component.h>
 
 void MagicWandComponent::init()
 {

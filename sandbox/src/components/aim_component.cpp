@@ -21,7 +21,7 @@ void AimComponent::render(graphics::Renderer2D* const renderer)
 			if (texture)
 			{
 				math::transform transform = getOwner()->transform;
-				transform.position += m_direction * m_range;
+				transform.position = m_position;
 				transform.scale.x = transform.scale.y = m_size;
 				transform.update();
 				renderer->drawTexture(texture.get(), transform.matrix(), data.rect, graphics::Color::White);
@@ -39,6 +39,7 @@ void AimComponent::update(const double deltaTime)
 	m_direction = (inputPosition - getOwner()->transform.position).normalize();
 	const float distance = inputPosition.distance(getOwner()->transform.position);
 	m_range = math::clamp(distance, m_minRange, m_maxRange);
+	m_position = getOwner()->transform.position + m_direction * m_range;
 
 	m_size = math::clamp(m_size + m_resizeSpeed * static_cast<float>(deltaTime) * (m_reduceSize ? -1.f : 1.f), m_minSize, m_maxSize);
 	if (m_reduceSize && m_size == m_minSize)
