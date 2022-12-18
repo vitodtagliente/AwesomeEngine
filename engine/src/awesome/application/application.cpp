@@ -32,6 +32,7 @@ void Application::init(const std::initializer_list<Module*>& modules)
 
 int Application::run()
 {
+	Time time;
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
 	World& world = World::instance();
@@ -62,9 +63,9 @@ int Application::run()
 
 	while (canvas.isOpen())
 	{
-		m_time.tick();
-		fpsTimer.tick(m_time.getDeltaTime());
-		deltatime += m_time.getDeltaTime();
+		time.tick();
+		fpsTimer.tick(time.getDeltaTime());
+		deltatime += time.getDeltaTime();
 		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();

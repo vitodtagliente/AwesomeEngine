@@ -2,7 +2,6 @@
 #pragma once
 
 #include <map>
-#include <vector>
 
 #include <awesome/core/singleton.h>
 #include <vdtmath/vector2.h>

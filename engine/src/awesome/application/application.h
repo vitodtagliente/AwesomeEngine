@@ -1,18 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
 #include <initializer_list>
 #include <memory>
-#include <string>
 #include <vector>
 
-#include <awesome/asset/scene_asset.h>
 #include <awesome/core/singleton.h>
-#include <awesome/graphics/renderer.h>
 
 #include "application_settings.h"
-#include "time.h"
+
+namespace graphics
+{
+	class Renderer2d;
+}
 
 class Application : public Singleton<Application>
 {
@@ -29,7 +29,7 @@ public:
 		virtual void shutdown() {}
 		virtual void update(double /*deltaTime*/) {}
 		virtual void preRendering() {}
-		virtual void render(graphics::Renderer2D* const /*renderer*/) {}
+		virtual void render(Renderer2D* const /*renderer*/) {}
 		virtual void postRendering() {}
 	};
 
@@ -55,5 +55,4 @@ private:
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<Module>> m_modules;
-	Time m_time;
 };
