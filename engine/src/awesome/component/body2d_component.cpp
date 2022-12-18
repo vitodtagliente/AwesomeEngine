@@ -22,14 +22,15 @@ void Body2dComponent::move(const math::vec3& amount)
 	if (m_collider)
 	{
 		const math::vec3 futurePosition = position + amount;
-		for (const auto& entity : World::instance().getEntities())
+		for (const auto& entity : World::instance().findNearestEntities(getOwner()))
 		{
-			if (entity->getId() == getOwner()->getId()) continue;
-
 			Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
 			if (collider && collider->collide(*m_collider))
 			{
-				position -= amount; // reset the position
+				if (!m_collider->isTrigger)
+				{
+					position -= amount; // reset the position
+				}
 				return;
 			}
 		}
