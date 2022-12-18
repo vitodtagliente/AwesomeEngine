@@ -1,14 +1,11 @@
 #include "json_file.h"
 
-#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
-
-#include "archive.h"
+#include "text_file.h"
 
 void JsonFile::save(const json::value& data, const std::filesystem::path& path)
 {
-	Archive archive(path, Archive::Mode::Write);
-	archive << json::Serializer::to_string(data);
+	TextFile::save(json::Serializer::to_string(data), path);
 }
 
 void JsonFile::save(const Type& type, const std::filesystem::path& path)
@@ -18,17 +15,13 @@ void JsonFile::save(const Type& type, const std::filesystem::path& path)
 
 bool JsonFile::load(const std::filesystem::path& path, json::value& data)
 {
-	static const auto read = [](const std::filesystem::path& filename) -> std::string
-	{
-		std::ostringstream buf;
-		std::ifstream input(filename.c_str());
-		buf << input.rdbuf();
-		return buf.str();
-	};
-
 	if (std::filesystem::exists(path))
 	{
-		return data = json::Deserializer::parse(read(path)), true;
+		std::string content;
+		if (TextFile::load(path, content))
+		{
+			return data = json::Deserializer::parse(content), true;
+		}		
 	}
 	return false;
 }
