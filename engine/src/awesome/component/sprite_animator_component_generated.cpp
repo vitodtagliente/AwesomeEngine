@@ -7,6 +7,8 @@ const std::string& SpriteAnimatorComponent::getTypeName() const { return SpriteA
 const properties_t SpriteAnimatorComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
+    properties.insert(std::make_pair<std::string, Property>("animations", Property("animations", Property::TypeDescriptor("std::map<std::string, SpriteAnimationAssetPtr>", Property::Type::T_container_map, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), Property::TypeDescriptor("SpriteAnimationAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {})}), sizeof(std::map<std::string, SpriteAnimationAssetPtr>), origin + offsetof(SpriteAnimatorComponent, animations), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("autoplay", Property("autoplay", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(SpriteAnimatorComponent, autoplay), {
     })));
     return properties;

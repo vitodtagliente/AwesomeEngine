@@ -32,7 +32,7 @@ public:
 	GENERATED_BODY()
 
 private:
-	PROPERTY(IsEnum) ShapeType m_type{ ShapeType::Rect };
+	PROPERTY() ShapeType m_type{ ShapeType::Rect };
 	PROPERTY() math::vec2 m_bounds{ 1.0f, 1.0f };
 	bool m_isColliding{ false };
 };

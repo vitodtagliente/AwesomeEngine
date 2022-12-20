@@ -1,8 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
-
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/particle_system.h>

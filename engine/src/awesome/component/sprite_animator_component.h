@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <awesome/asset/sprite_animation_asset.h>
-#include <awesome/core/serialization.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/texture_rect.h>
 
@@ -28,12 +27,8 @@ public:
 	inline bool isPlaying() const { return m_isPlaying; }
 	std::string getPlayingAnimation() const;
 
-	std::map<std::string, SpriteAnimationAssetPtr> animations;
+	PROPERTY() std::map<std::string, SpriteAnimationAssetPtr> animations;
 	PROPERTY() bool autoplay;
-
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
-	virtual void inspect() override;
 
 	GENERATED_BODY()
 
