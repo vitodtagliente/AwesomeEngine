@@ -19,12 +19,16 @@ std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 
 Asset::Asset()
 	: descriptor()
+	, onLoad()
+	, state(State::None)
 {
 
 }
 
 Asset::Asset(const Descriptor& descriptor)
 	: descriptor(descriptor)
+	, onLoad()
+	, state(State::None)
 {
 }
 

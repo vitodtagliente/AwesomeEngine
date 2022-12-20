@@ -14,7 +14,7 @@ namespace editor
 	void TilesetInspector::inspect(const AssetPtr& asset)
 	{
 		TilesetAssetPtr tileset = std::static_pointer_cast<TilesetAsset>(asset);
-		if (tileset == nullptr)
+		if (tileset->state != Asset::State::Ready)
 		{
 			return;
 		}
@@ -23,7 +23,7 @@ namespace editor
 		Layout::input("image", data.image);
 		for (const auto& tile : data.tiles)
 		{
-			Layout::image(data.image, tile->rect, data.tileSize.x, data.tileSize.y);
+			Layout::image(data.image, tile->rect, 32, 32);
 		}
 
 		if (Layout::collapsingHeader("Edit"))
@@ -33,17 +33,19 @@ namespace editor
 			if (Layout::button("Generate") && data.image != nullptr)
 			{
 				data.tiles.clear();
-				const int h = static_cast<int>(data.image->data->height / data.tileSize.y);
-				const int w = static_cast<int>(data.image->data->width / data.tileSize.x);
+				const int h = static_cast<float>(data.image->data->height) / data.tileSize.y;
+				const int w = static_cast<float>(data.image->data->width) / data.tileSize.x;
+				const float size_x = 1.f / data.tileSize.x;
+				const float size_y = 1.f / data.tileSize.y;
 				for (int j = 0; j < h; ++j)
 				{
 					for (int i = 0; i < w; ++i)
 					{
 						std::unique_ptr<Tile> tile = std::make_unique<Tile>();
-						tile->rect.x = static_cast<float>(i) * data.tileSize.x;
-						tile->rect.y = static_cast<float>(j) * data.tileSize.y;
-						tile->rect.width = data.tileSize.x;
-						tile->rect.height = data.tileSize.y;
+						tile->rect.x = i * size_x;
+						tile->rect.y = j * size_y;
+						tile->rect.width = size_x;
+						tile->rect.height = size_y;
 
 						data.tiles.push_back(std::move(tile));
 					}

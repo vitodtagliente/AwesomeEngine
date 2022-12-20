@@ -93,9 +93,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Image:
 	{
 		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
 				asset->data = Image::load(path);
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
@@ -104,9 +106,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Prefab:
 	{
 		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
 				asset->data = json::Deserializer::parse(load(path));
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
@@ -115,9 +119,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Scene:
 	{
 		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]() 
 			{ 
 				asset->data = json::Deserializer::parse(load(path));
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);		
@@ -126,9 +132,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Sprite:
 	{
 		SpriteAssetPtr asset = std::make_shared<SpriteAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
 				asset->data = Sprite::load(path);
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
@@ -137,9 +145,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::SpriteAnimation:
 	{
 		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
 				asset->data = SpriteAnimation::load(path);
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
@@ -148,9 +158,11 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Text:
 	{
 		TextAssetPtr asset = std::make_shared<TextAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
 				asset->data = load(path);
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
@@ -159,6 +171,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	case Asset::Type::Tileset:
 	{
 		TilesetAssetPtr asset = std::make_shared<TilesetAsset>(descriptor);
+		asset->state = Asset::State::Loading;
 		asset->data = Tileset();
 		std::thread handler(
 			[path, asset]() -> void
@@ -166,6 +179,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 				json::value data;
 				JsonFile::load(path, data);
 				Deserializer::deserialize(data, asset->data.value());
+				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);

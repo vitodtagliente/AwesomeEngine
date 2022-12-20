@@ -15,6 +15,14 @@ struct Asset
 {
 	typedef AssetType Type;
 
+	enum class State
+	{
+		None,
+		Error,
+		Loading,
+		Ready
+	};
+
 	struct Descriptor
 	{
 		Descriptor();
@@ -52,6 +60,7 @@ struct Asset
 
 	Descriptor descriptor;
 	std::function<void()> onLoad;
+	State state;
 
 	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 	static constexpr char* const Extension = ".asset";
