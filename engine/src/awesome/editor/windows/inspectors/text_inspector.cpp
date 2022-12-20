@@ -13,7 +13,7 @@ namespace editor
 	void TextInspector::inspect(const AssetPtr& asset)
 	{
 		TextAssetPtr text = std::static_pointer_cast<TextAsset>(asset);
-		if (asset == nullptr)
+		if (text == nullptr)
 		{
 			return;
 		}

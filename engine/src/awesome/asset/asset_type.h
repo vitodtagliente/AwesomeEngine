@@ -16,4 +16,5 @@ enum class AssetType : int
     Sprite = 4,
     SpriteAnimation = 5,
     Text = 6,
+    Tileset = 7
 };

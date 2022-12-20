@@ -9,6 +9,7 @@
 #include <awesome/editor/windows/inspectors/sprite_animation_inspector.h>
 #include <awesome/editor/windows/inspectors/sprite_inspector.h>
 #include <awesome/editor/windows/inspectors/text_inspector.h>
+#include <awesome/editor/windows/inspectors/tileset_inspector.h>
 
 void AssetInspectorWindow::init()
 {
@@ -18,6 +19,7 @@ void AssetInspectorWindow::init()
 	m_inspectors.push_back(std::make_unique<editor::SpriteAnimationInspector>());
 	m_inspectors.push_back(std::make_unique<editor::SpriteInspector>());
 	m_inspectors.push_back(std::make_unique<editor::TextInspector>());
+	m_inspectors.push_back(std::make_unique<editor::TilesetInspector>());
 }
 
 void AssetInspectorWindow::render()

@@ -13,6 +13,7 @@ const enum_values_t& EnumType<AssetType>::values()
         { "Sprite", static_cast<int>(AssetType::Sprite) }, 
         { "SpriteAnimation", static_cast<int>(AssetType::SpriteAnimation) }, 
         { "Text", static_cast<int>(AssetType::Text) }, 
+        { "Tileset", static_cast<int>(AssetType::Tileset) }, 
     };
     return s_values;
 }

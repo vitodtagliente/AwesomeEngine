@@ -3,6 +3,8 @@
 #include <fstream>
 #include <thread>
 
+#include <awesome/core/serialization.h>
+#include <awesome/data/json_file.h>
 #include <awesome/encoding/json.h>
 
 #include "image_asset.h"
@@ -11,6 +13,7 @@
 #include "sprite_animation_asset.h"
 #include "sprite_asset.h"
 #include "text_asset.h"
+#include "tileset_asset.h"
 
 void AssetLibrary::unload(const uuid& id)
 {
@@ -148,6 +151,21 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler([path, asset]()
 			{
 				asset->data = load(path);
+				if (asset->onLoad) asset->onLoad();
+			}
+		);
+		return handler.detach(), asset;
+	}
+	case Asset::Type::Tileset:
+	{
+		TilesetAssetPtr asset = std::make_shared<TilesetAsset>(descriptor);
+		asset->data = Tileset();
+		std::thread handler(
+			[path, asset]() -> void
+			{
+				json::value data;
+				JsonFile::load(path, data);
+				Deserializer::deserialize(data, asset->data.value());
 				if (asset->onLoad) asset->onLoad();
 			}
 		);

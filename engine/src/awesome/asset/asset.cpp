@@ -13,7 +13,8 @@ std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 	{ Asset::Type::Scene, {".scene"} },
 	{ Asset::Type::Sprite, {".sprite"} },
 	{ Asset::Type::SpriteAnimation, {".spriteanim"} },
-	{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} }
+	{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} },
+	{ Asset::Type::Tileset, {".tileset"} }
 };
 
 Asset::Asset()

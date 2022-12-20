@@ -7,3 +7,4 @@
 #include "show_windows_menu_item.h"
 #include "sprite_animation_menu_item.h"
 #include "sprite_menu_item.h"
+#include "tileset_menu_item.h"
