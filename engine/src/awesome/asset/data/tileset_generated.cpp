@@ -28,7 +28,11 @@ const std::string& Tileset::getTypeName() const { return TilesetType::type().nam
 const properties_t Tileset::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("image", Property("image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(Tileset, image), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("tiles", Property("tiles", Property::TypeDescriptor("std::vector<std::unique_ptr<Tile>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Tile", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Tile>>), origin + offsetof(Tileset, tiles), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("tileSize", Property("tileSize", Property::TypeDescriptor("math::vec2", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec2), origin + offsetof(Tileset, tileSize), {
     })));
     return properties;
 }

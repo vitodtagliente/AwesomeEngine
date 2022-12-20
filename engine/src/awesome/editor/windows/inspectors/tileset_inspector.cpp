@@ -19,7 +19,37 @@ namespace editor
 			return;
 		}
 
-		Layout::input(tileset->data.value());
+		TilesetAsset::data_t& data = tileset->data.value();
+		Layout::input("image", data.image);
+		for (const auto& tile : data.tiles)
+		{
+			Layout::image(data.image, tile->rect, data.tileSize.x, data.tileSize.y);
+		}
+
+		if (Layout::collapsingHeader("Edit"))
+		{
+			Layout::image(data.image);
+			Layout::input("Tile Size", data.tileSize);
+			if (Layout::button("Generate") && data.image != nullptr)
+			{
+				data.tiles.clear();
+				const int h = static_cast<int>(data.image->data->height / data.tileSize.y);
+				const int w = static_cast<int>(data.image->data->width / data.tileSize.x);
+				for (int j = 0; j < h; ++j)
+				{
+					for (int i = 0; i < w; ++i)
+					{
+						std::unique_ptr<Tile> tile = std::make_unique<Tile>();
+						tile->rect.x = static_cast<float>(i) * data.tileSize.x;
+						tile->rect.y = static_cast<float>(j) * data.tileSize.y;
+						tile->rect.width = data.tileSize.x;
+						tile->rect.height = data.tileSize.y;
+
+						data.tiles.push_back(std::move(tile));
+					}
+				}
+			}
+		}		
 
 		Layout::separator();
 
