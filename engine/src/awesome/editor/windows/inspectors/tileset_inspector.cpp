@@ -20,17 +20,23 @@ namespace editor
 		}
 
 		TilesetAsset::data_t& data = tileset->data.value();
-		for (size_t i = 0; i < data.tiles.size(); ++i)
+		
+		Layout::image(data.image);
+
+		if (Layout::collapsingHeader("Tiles"))
 		{
-			const std::string context = "[tile-" + std::to_string(i) + "]";
-			Layout::beginContext(context);
-			if (Layout::collapsingHeader(context))
+			for (size_t i = 0; i < data.tiles.size(); ++i)
 			{
-				Layout::input("Rect", data.tiles[i]->rect);
-				Layout::image(data.image, data.tiles[i]->rect);
+				const std::string context = "[tile-" + std::to_string(i) + "]";
+				Layout::beginContext(context);
+				if (Layout::collapsingHeader(context))
+				{
+					Layout::input("Rect", data.tiles[i]->rect);
+					Layout::image(data.image, data.tiles[i]->rect);
+				}
+				Layout::endContext();
 			}
-			Layout::endContext();
-		}
+		}		
 
 		if (Layout::collapsingHeader("Edit"))
 		{
