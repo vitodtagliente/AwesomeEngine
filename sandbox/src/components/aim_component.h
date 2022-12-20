@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/asset/sprite_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
 #include <awesome/math/vector3.h>

@@ -43,9 +43,18 @@ bool StringUtil::startsWith(const std::string& str, const std::string& match, co
 	}
 }
 
-bool StringUtil::endsWith(const std::string&, const std::string&, const CompareMode)
+bool StringUtil::endsWith(const std::string& str, const std::string& match, const CompareMode mode)
 {
-	return false;
+	std::string a(str);
+	std::string b(match);
+	if (mode == CompareMode::IgnoreCase)
+	{
+		a = toLower(a);
+		b = toLower(b);
+	}
+
+	if (b.size() > a.size()) return false;
+	return std::equal(a.begin() + a.size() - b.size(), a.end(), b.begin());
 }
 
 std::string StringUtil::toLower(const std::string& str)

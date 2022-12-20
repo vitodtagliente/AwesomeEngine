@@ -29,7 +29,7 @@ public:
 		virtual void shutdown() {}
 		virtual void update(double /*deltaTime*/) {}
 		virtual void preRendering() {}
-		virtual void render(Renderer2D* const /*renderer*/) {}
+		virtual void render(graphics::Renderer2D* const /*renderer*/) {}
 		virtual void postRendering() {}
 	};
 

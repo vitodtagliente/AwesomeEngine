@@ -1,12 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/asset/image_asset.h>
-#include <awesome/asset/prefab_asset.h>
-#include <awesome/asset/scene_asset.h>
-#include <awesome/asset/sprite_animation_asset.h>
-#include <awesome/asset/sprite_asset.h>
-#include <awesome/asset/text_asset.h>
+#include <awesome/asset/asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/sub_type.h>
 #include <awesome/core/type_name.h>
@@ -47,12 +42,7 @@ struct Serializer
 	static json::value serialize(const math::vec2& v);
 	static json::value serialize(const math::vec3& v);
 	static json::value serialize(const math::vec4& v);
-	static json::value serialize(const ImageAssetPtr& asset);
-	static json::value serialize(const PrefabAssetPtr& asset);
-	static json::value serialize(const SceneAssetPtr& asset);
-	static json::value serialize(const SpriteAnimationAssetPtr& asset);
-	static json::value serialize(const SpriteAssetPtr& asset);
-	static json::value serialize(const TextAssetPtr& asset);
+	static json::value serialize(const AssetPtr& asset);
 	template <typename T = Type>
 	static json::value serialize(const TypeName<T>& type)
 	{
@@ -103,12 +93,7 @@ struct Deserializer
 	static bool deserialize(const json::value& value, math::vec2& v);
 	static bool deserialize(const json::value& value, math::vec3& v);
 	static bool deserialize(const json::value& value, math::vec4& v);
-	static bool deserialize(const json::value& value, ImageAssetPtr& asset);
-	static bool deserialize(const json::value& value, PrefabAssetPtr& asset);
-	static bool deserialize(const json::value& value, SceneAssetPtr& asset);
-	static bool deserialize(const json::value& value, SpriteAnimationAssetPtr& asset);
-	static bool deserialize(const json::value& value, SpriteAssetPtr& asset);
-	static bool deserialize(const json::value& value, TextAssetPtr& asset);
+	static bool deserialize(const json::value& value, AssetPtr& asset);
 	template <typename T = Type>
 	static bool deserialize(const json::value& value, TypeName<T>& type)
 	{

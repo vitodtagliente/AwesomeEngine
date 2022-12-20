@@ -31,7 +31,7 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_custom_enum: data[name] = prop.value<int>(); break;
 		case Property::Type::T_custom_type:
 		{
-			
+
 			break;
 		}
 		case Property::Type::T_container_string: data[name] = prop.value<std::string>(); break;
@@ -94,29 +94,9 @@ json::value Serializer::serialize(const Type& type)
 				{
 					data[name] = serialize(prop.value<std::map<std::string, math::vec2>>()); break;
 				}
-				else if (backChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::endsWith(backChildTypeName, "AssetPtr"))
 				{
-					data[name] = serialize(prop.value<std::map<std::string, ImageAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "PrefabAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SceneAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::map<std::string, SceneAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "TextAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::map<std::string, TextAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -176,29 +156,9 @@ json::value Serializer::serialize(const Type& type)
 				{
 					data[name] = serialize(prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (frontChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::endsWith(frontChildTypeName, "AssetPtr"))
 				{
-					data[name] = serialize(prop.value<std::vector<ImageAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "PrefabAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::vector<PrefabAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SceneAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::vector<SceneAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::vector<SpriteAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "TextAssetPtr")
-				{
-					data[name] = serialize(prop.value<std::vector<TextAssetPtr>>()); break;
+					data[name] = serialize(prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -236,29 +196,9 @@ json::value Serializer::serialize(const Type& type)
 			{
 				data[name] = serialize(prop.value<math::vec2>());
 			}
-			else if (prop.descriptor.name == "ImageAssetPtr")
+			else if (StringUtil::endsWith(prop.descriptor.name, "AssetPtr"))
 			{
-				data[name] = serialize(prop.value<ImageAssetPtr>());
-			}
-			else if (prop.descriptor.name == "PrefabAssetPtr")
-			{
-				data[name] = serialize(prop.value<PrefabAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SceneAssetPtr")
-			{
-				data[name] = serialize(prop.value<SceneAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
-			{
-				data[name] = serialize(prop.value<SpriteAnimationAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAssetPtr")
-			{
-				data[name] = serialize(prop.value<SpriteAssetPtr>());
-			}
-			else if (prop.descriptor.name == "TextAssetPtr")
-			{
-				data[name] = serialize(prop.value<TextAssetPtr>());
+				data[name] = serialize(prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{
@@ -389,32 +329,7 @@ json::value Serializer::serialize(const math::vec4& v)
 		});
 }
 
-json::value Serializer::serialize(const ImageAssetPtr& asset)
-{
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
-}
-
-json::value Serializer::serialize(const PrefabAssetPtr& asset)
-{
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
-}
-
-json::value Serializer::serialize(const SceneAssetPtr& asset)
-{
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
-}
-
-json::value Serializer::serialize(const SpriteAnimationAssetPtr& asset)
-{
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
-}
-
-json::value Serializer::serialize(const SpriteAssetPtr& asset)
-{
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
-}
-
-json::value Serializer::serialize(const TextAssetPtr& asset)
+json::value Serializer::serialize(const AssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
@@ -450,9 +365,9 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		case Property::Type::T_int: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
 		case Property::Type::T_void: break;
 		case Property::Type::T_custom_enum: prop.value<int>() = value.safeAt(name).as_number(0).as_int(); break;
-		case Property::Type::T_custom_type: 
+		case Property::Type::T_custom_type:
 		{
-			
+
 			break;
 		}
 		case Property::Type::T_container_string: prop.value<std::string>() = value.safeAt(name).as_string(""); break;
@@ -515,29 +430,9 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 				{
 					deserialize(value.safeAt(name), prop.value<std::map<std::string, math::vec2>>()); break;
 				}
-				else if (backChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::endsWith(backChildTypeName, "AssetPtr"))
 				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, ImageAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "PrefabAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SceneAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, SceneAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "TextAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::map<std::string, TextAssetPtr>>()); break;
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -597,29 +492,9 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (frontChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::endsWith(frontChildTypeName, "AssetPtr"))
 				{
-					deserialize(value.safeAt(name), prop.value<std::vector<ImageAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "PrefabAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::vector<PrefabAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SceneAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::vector<SceneAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::vector<SpriteAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "TextAssetPtr")
-				{
-					deserialize(value.safeAt(name), prop.value<std::vector<TextAssetPtr>>()); break;
+					deserialize(value.safeAt(name), prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -657,29 +532,9 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			{
 				deserialize(value.safeAt(name), prop.value<math::vec2>());
 			}
-			else if (prop.descriptor.name == "ImageAssetPtr")
+			else if (StringUtil::endsWith(prop.descriptor.name, "AssetPtr"))
 			{
-				deserialize(value.safeAt(name), prop.value<ImageAssetPtr>());
-			}
-			else if (prop.descriptor.name == "PrefabAssetPtr")
-			{
-				deserialize(value.safeAt(name), prop.value<PrefabAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SceneAssetPtr")
-			{
-				deserialize(value.safeAt(name), prop.value<SceneAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
-			{
-				deserialize(value.safeAt(name), prop.value<SpriteAnimationAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAssetPtr")
-			{
-				deserialize(value.safeAt(name), prop.value<SpriteAssetPtr>());
-			}
-			else if (prop.descriptor.name == "TextAssetPtr")
-			{
-				deserialize(value.safeAt(name), prop.value<TextAssetPtr>());
+				deserialize(value.safeAt(name), prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{
@@ -843,51 +698,11 @@ bool Deserializer::deserialize(const json::value& value, math::vec4& v)
 	return true;
 }
 
-bool Deserializer::deserialize(const json::value& value, ImageAssetPtr& asset)
+bool Deserializer::deserialize(const json::value& value, AssetPtr& asset)
 {
 	uuid id = uuid::Invalid;
 	deserialize(value, id);
-	asset = AssetLibrary::instance().find<ImageAsset>(id);
-	return true;
-}
-
-bool Deserializer::deserialize(const json::value& value, PrefabAssetPtr& asset)
-{
-	uuid id = uuid::Invalid;
-	deserialize(value, id);
-	asset = AssetLibrary::instance().find<PrefabAsset>(id);
-	return true;
-}
-
-bool Deserializer::deserialize(const json::value& value, SceneAssetPtr& asset)
-{
-	uuid id = uuid::Invalid;
-	deserialize(value, id);
-	asset = AssetLibrary::instance().find<SceneAsset>(id);
-	return true;
-}
-
-bool Deserializer::deserialize(const json::value& value, SpriteAnimationAssetPtr& asset)
-{
-	uuid id = uuid::Invalid;
-	deserialize(value, id);
-	asset = AssetLibrary::instance().find<SpriteAnimationAsset>(id);
-	return true;
-}
-
-bool Deserializer::deserialize(const json::value& value, SpriteAssetPtr& asset)
-{
-	uuid id = uuid::Invalid;
-	deserialize(value, id);
-	asset = AssetLibrary::instance().find<SpriteAsset>(id);
-	return true;
-}
-
-bool Deserializer::deserialize(const json::value& value, TextAssetPtr& asset)
-{
-	uuid id = uuid::Invalid;
-	deserialize(value, id);
-	asset = AssetLibrary::instance().find<TextAsset>(id);
+	asset = AssetLibrary::instance().find(id);
 	return true;
 }
 
