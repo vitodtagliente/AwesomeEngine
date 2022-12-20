@@ -20,10 +20,16 @@ namespace editor
 		}
 
 		TilesetAsset::data_t& data = tileset->data.value();
-		Layout::input("image", data.image);
-		for (const auto& tile : data.tiles)
+		for (size_t i = 0; i < data.tiles.size(); ++i)
 		{
-			Layout::image(data.image, tile->rect, 32, 32);
+			const std::string context = "[tile-" + std::to_string(i) + "]";
+			Layout::beginContext(context);
+			if (Layout::collapsingHeader(context))
+			{
+				Layout::input("Rect", data.tiles[i]->rect);
+				Layout::image(data.image, data.tiles[i]->rect);
+			}
+			Layout::endContext();
 		}
 
 		if (Layout::collapsingHeader("Edit"))
@@ -33,10 +39,10 @@ namespace editor
 			if (Layout::button("Generate") && data.image != nullptr)
 			{
 				data.tiles.clear();
-				const int h = static_cast<float>(data.image->data->height) / data.tileSize.y;
-				const int w = static_cast<float>(data.image->data->width) / data.tileSize.x;
-				const float size_x = 1.f / data.tileSize.x;
-				const float size_y = 1.f / data.tileSize.y;
+				const int w = data.image->data->width / static_cast<int>(data.tileSize.x);
+				const int h = data.image->data->height / static_cast<int>(data.tileSize.y);
+				const float size_x = 1.f / static_cast<float>(w);
+				const float size_y = 1.f / static_cast<float>(h);
 				for (int j = 0; j < h; ++j)
 				{
 					for (int i = 0; i < w; ++i)
