@@ -34,6 +34,8 @@ void AimComponent::update(const double deltaTime)
 {
 	Input& input = Input::instance();
 	CameraComponent* const camera = CameraComponent::main();
+	if (camera == nullptr) return;
+
 	m_visible = input.isMousePositionValid();
 	const math::vec3 inputPosition = camera->screenToWorldCoords(input.getMousePosition());
 	m_direction = (inputPosition - getOwner()->transform.position).normalize();

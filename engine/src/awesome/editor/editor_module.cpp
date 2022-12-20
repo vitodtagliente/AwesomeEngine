@@ -5,15 +5,14 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
-#include <awesome/application/canvas.h>
-#include <awesome/application/input.h>
-#include <awesome/component/components.h>
-#include <awesome/editor/color_scheme.h>
-#include <awesome/editor/dialog.h>
-#include <awesome/editor/layout.h>
-
 #include <IconsFontAwesome5.h>
 
+#include <awesome/application/canvas.h>
+#include <awesome/application/input.h>
+
+#include "color_scheme.h"
+#include "dialog.h"
+#include "layout.h"
 #include "windows/windows.h"
 
 namespace editor
