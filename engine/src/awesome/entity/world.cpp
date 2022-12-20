@@ -6,6 +6,8 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/net/network_manager.h>
 
+#include "private/scene_loader.h"
+
 void World::update(const double deltaTime, const int quadspaceBounds)
 {
 	// quadtree update
@@ -23,8 +25,7 @@ void World::update(const double deltaTime, const int quadspaceBounds)
 	{
 		entity->update(deltaTime);
 	}
-
-	m_sceneLoader.update(deltaTime);
+	
 	checkCollisions();
 }
 
@@ -295,10 +296,6 @@ void World::clear()
 
 bool World::isLoading(size_t& progress) const
 {
-	if (m_sceneLoader.isLoading())
-	{
-		return progress = m_sceneLoader.getProgress(), true;
-	}
 	return progress = 0, false;
 }
 
@@ -308,7 +305,7 @@ void World::load(const SceneAssetPtr& scene)
 
 	clear();
 
-	m_sceneLoader.load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
+	SceneLoader::load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
 		{
 			for (auto& entity : entities)
 			{

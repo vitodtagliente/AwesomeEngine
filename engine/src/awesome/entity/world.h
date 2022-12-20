@@ -10,8 +10,6 @@
 #include <awesome/core/serialization.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
-#include <awesome/graphics/color.h>
-#include <awesome/entity/private/scene_loader.h>
 #include <awesome/math/quaternion.h>
 #include <awesome/math/vector3.h>
 
@@ -78,5 +76,4 @@ private:
 	std::vector<uuid> m_pendingDestroyEntities;
 	uuid m_loadedSceneId{ uuid::Invalid };
 	Quadspace m_quadspace;
-	SceneLoader m_sceneLoader;
 };
