@@ -124,6 +124,42 @@ void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect
 	}
 }
 
+bool Layout::imageButton(const ImageAssetPtr& image)
+{
+	const float size = ImGui::GetContentRegionAvailWidth();
+	return Layout::imageButton(image, graphics::TextureRect(), size, size);
+}
+
+bool Layout::imageButton(const ImageAssetPtr& image, const float width, const float height)
+{
+	return Layout::imageButton(image, graphics::TextureRect(), width, height);
+}
+
+bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect)
+{
+	if (image && image->data.has_value())
+	{
+		const float size = ImGui::GetContentRegionAvailWidth();
+		const float width = std::min(size, image->data->width * rect.width * 2);
+		const float height = std::min(size, image->data->height * rect.height * 2);
+		return Layout::imageButton(image, rect, width, height);
+	}
+	return false;
+}
+
+bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect, const float width, const float height)
+{
+	if (image != nullptr)
+	{
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
+		if (texture)
+		{
+			return ImGui::ImageButton((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
+		}
+	}
+	return false;
+}
+
 void Layout::input(const std::string& name, int& value)
 {
 	ImGui::InputInt(id(name).c_str(), &value);

@@ -20,25 +20,23 @@ namespace editor
 		}
 
 		TilesetAsset::data_t& data = tileset->data.value();
-		
+
 		Layout::input("Image", data.image);
 
-		if (Layout::collapsingHeader("Tiles"))
+		for (size_t i = 0; i < data.tiles.size(); ++i)
 		{
-			for (size_t i = 0; i < data.tiles.size(); ++i)
+			const std::string context = "[tile-" + std::to_string(i) + "]";
+			Layout::beginContext(context);
+			if (Layout::collapsingHeader(context))
 			{
-				const std::string context = "[tile-" + std::to_string(i) + "]";
-				Layout::beginContext(context);
-				if (Layout::collapsingHeader(context))
-				{
-					Layout::input("Rect", data.tiles[i]->rect);
-					Layout::image(data.image, data.tiles[i]->rect);
-					Layout::input("Value", data.tiles[i]->value);
-					Layout::input("Has Collider", data.tiles[i]->hasCollider);
-				}
-				Layout::endContext();
+				Tile& tile = *data.tiles[i];
+				Layout::input("Rect", tile.rect);
+				Layout::image(data.image, tile.rect);
+				Layout::input("Value", tile.value);
+				Layout::input("Has Collider", tile.hasCollider);
 			}
-		}		
+			Layout::endContext();
+		}
 
 		if (Layout::collapsingHeader("Edit"))
 		{
@@ -68,7 +66,7 @@ namespace editor
 				}
 				data.size = math::vec2(static_cast<float>(w), static_cast<float>(h));
 			}
-		}		
+		}
 
 		Layout::separator();
 

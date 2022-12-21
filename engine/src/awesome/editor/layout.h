@@ -50,6 +50,10 @@ public:
 	static void image(const ImageAssetPtr& image, float width, float height);
 	static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);
 	static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect, float width, float height);
+	static bool imageButton(const ImageAssetPtr& image);
+	static bool imageButton(const ImageAssetPtr& image, float width, float height);
+	static bool imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect);
+	static bool imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect, float width, float height);
 	static void input(const std::string& name, int& value);
 	static void input(const std::string& name, bool& value);
 	static void input(const std::string& name, float& value);
