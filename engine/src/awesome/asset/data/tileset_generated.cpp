@@ -22,7 +22,6 @@ std::size_t Tile::getTypeSize() const { return TileType::type().size; }
 const TypeDefinition& TileType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new Tile(); }, "Tile", {
-        std::make_pair("AssetType", "Tileset"),
         std::make_pair("Category", "Data"),
     }, sizeof(Tile));
     return s_typeDefinition;
@@ -47,6 +46,7 @@ std::size_t Tileset::getTypeSize() const { return TilesetType::type().size; }
 const TypeDefinition& TilesetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new Tileset(); }, "Tileset", {
+        std::make_pair("AssetType", "Tileset"),
         std::make_pair("Category", "Data"),
     }, sizeof(Tileset));
     return s_typeDefinition;

@@ -66,7 +66,6 @@ public:
 	static void input(const std::string& name, graphics::Color& value);
 	static void input(const std::string& name, graphics::TextureCoords& value);
 	static void input(const std::string& name, graphics::TextureRect& value);
-	static void input(const std::string& name, SpriteAnimation::Frame& value);
 	static void input(const std::string& name, const std::string& category, TypeName<Type>& type);
 	static void input(Type& value);
 	static void input(std::unique_ptr<Type>& type);

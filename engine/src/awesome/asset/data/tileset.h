@@ -9,7 +9,7 @@
 
 #include "tileset_generated.h"
 
-CLASS(Category = Data, AssetType = Tileset)
+CLASS(Category = Data)
 struct Tile : public Type
 {
 	static constexpr int InvalidIndex = 0;
@@ -22,7 +22,7 @@ struct Tile : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data)
+CLASS(Category = Data, AssetType = Tileset)
 struct Tileset : public Type
 {
 	PROPERTY() ImageAssetPtr image;

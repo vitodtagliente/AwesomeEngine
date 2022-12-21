@@ -21,7 +21,7 @@ void SpriteAnimatorComponent::update(const double deltaTime)
 		m_state.timeLeft -= deltaTime;
 		if (m_state.timeLeft <= 0)
 		{
-			const SpriteAnimation& animation = m_state.animation->data.value();
+			const SpriteAnimationData& animation = m_state.animation->data.value();
 			++m_state.frameIndex;
 			if (m_state.frameIndex >= animation.frames.size())
 			{
@@ -38,9 +38,9 @@ void SpriteAnimatorComponent::update(const double deltaTime)
 
 			if (m_state.frameIndex < animation.frames.size())
 			{
-				const SpriteAnimation::Frame& frame = animation.frames[m_state.frameIndex];
-				m_state.timeLeft = frame.duration;
-				updateFrame(frame);
+				const auto& frame = animation.frames[m_state.frameIndex];
+				m_state.timeLeft = frame->duration;
+				updateFrame(*frame);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ void SpriteAnimatorComponent::play(const std::string& name, const bool loop)
 	if (it == animations.end()) return;
 	if (!it->second->data.has_value()) return;
 
-	const SpriteAnimation& animation = it->second->data.value();
+	const SpriteAnimationData& animation = it->second->data.value();
 
 	m_state.name = name;
 	m_state.animation = it->second;
@@ -74,9 +74,9 @@ void SpriteAnimatorComponent::play(const std::string& name, const bool loop)
 
 	if (m_state.frameIndex < animation.frames.size())
 	{
-		const SpriteAnimation::Frame& frame = animation.frames[m_state.frameIndex];
-		m_state.timeLeft = frame.duration;
-		updateFrame(frame);
+		const auto& frame = animation.frames[m_state.frameIndex];
+		m_state.timeLeft = frame->duration;
+		updateFrame(*frame);
 	}
 
 	m_isPlaying = true;
@@ -107,7 +107,7 @@ std::string SpriteAnimatorComponent::getPlayingAnimation() const
 	return "";
 }
 
-void SpriteAnimatorComponent::updateFrame(const SpriteAnimation::Frame& frame)
+void SpriteAnimatorComponent::updateFrame(const SpriteAnimationFrame& frame)
 {
 	if (m_spriteRenderer == nullptr)
 	{
@@ -116,6 +116,6 @@ void SpriteAnimatorComponent::updateFrame(const SpriteAnimation::Frame& frame)
 
 	if (m_spriteRenderer)
 	{
-		m_spriteRenderer->sprite = frame.sprite;
+		m_spriteRenderer->sprite->data.value().rect = frame.rect;
 	}
 }

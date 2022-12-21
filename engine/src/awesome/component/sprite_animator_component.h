@@ -43,7 +43,7 @@ private:
 		double timeLeft{ 0.0 };
 	};
 
-	void updateFrame(const SpriteAnimation::Frame& frame);
+	void updateFrame(const SpriteAnimationFrame& frame);
 
 	PlayingState m_state;
 	bool m_isPlaying;

@@ -2,6 +2,7 @@
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/sprite_animation_asset.h>
+#include <awesome/data/json_file.h>
 #include <awesome/editor/dialog.h>
 
 void SpriteAnimationMenuItem::execute()
@@ -10,8 +11,8 @@ void SpriteAnimationMenuItem::execute()
 		{
 			if (!filename.string().empty())
 			{
-				SpriteAnimationAsset::data_t animation;
-				animation.save(filename);
+				SpriteAnimationAsset::data_t tileset;
+				JsonFile::save(tileset, filename);
 
 				AssetImporter importer;
 				importer.import(filename);

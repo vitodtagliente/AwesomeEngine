@@ -3,6 +3,7 @@
 
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/windows/asset_inspector_window.h>
+#include <awesome/graphics/texture_rect.h>
 
 namespace editor
 {
@@ -19,5 +20,11 @@ namespace editor
 		SpriteAnimationAsset* m_previousSelectedAsset;
 		double m_timeLeft;
 		int m_frameIndex;
+		graphics::TextureRect m_frameRect;
+		double m_frameDuration{ 1.0 };
+		int m_cols{ 1 };
+		int m_rows{ 1 };
+		int m_rowIndex{ 0 };
+		int m_columnIndex{ 0 };
 	};
 }

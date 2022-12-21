@@ -146,9 +146,13 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	{
 		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor);
 		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
+		asset->data = SpriteAnimationData();
+		std::thread handler(
+			[path, asset]() -> void
 			{
-				asset->data = SpriteAnimation::load(path);
+				json::value data;
+				JsonFile::load(path, data);
+				Deserializer::deserialize(data, asset->data.value());
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}

@@ -223,12 +223,6 @@ void Layout::input(const std::string& name, graphics::TextureRect& value)
 	ImGui::InputFloat4(id(name).c_str(), value.data);
 }
 
-void Layout::input(const std::string&, SpriteAnimation::Frame& value)
-{
-	input("Sprite", value.sprite);
-	input("Duration", value.duration);
-}
-
 void Layout::input(const std::string& name, const std::string& category, TypeName<Type>& type)
 {
 	if (Layout::beginCombo(name, type.value))
