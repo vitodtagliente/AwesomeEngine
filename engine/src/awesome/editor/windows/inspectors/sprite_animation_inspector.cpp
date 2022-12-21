@@ -77,7 +77,7 @@ namespace editor
 		if (!frames.empty() && m_frameIndex < frames.size())
 		{
 			Layout::image(data.image, frames[m_frameIndex]->rect);
-			Layout::slider("Playing", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
+			Layout::slider("Playing Frame", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
 		}
 	}
 
