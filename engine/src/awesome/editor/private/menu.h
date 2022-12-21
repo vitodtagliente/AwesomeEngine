@@ -1,10 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <vector>
-
-#include <awesome/editor/menu_item.h>
-
 class Menu
 {
 public:
@@ -19,6 +15,4 @@ private:
 	void menuFile();
 	void menuScene();
 	void menuView();
-
-	std::vector<MenuItemPtr> m_menuItems;
 };

@@ -1,21 +1,22 @@
 #include "menu.h"
 
-#include <awesome/application/application.h>
-#include <awesome/editor/private/menu_layout.h>
+#include <filesystem>
 
-#include <awesome/editor/menu_items/menu_items.h>
+#include <awesome/application/application.h>
+#include <awesome/asset/asset_importer.h>
+#include <awesome/asset/asset_library.h>
+#include <awesome/asset/sprite_animation_asset.h>
+#include <awesome/asset/sprite_asset.h>
+#include <awesome/asset/tileset_asset.h>
+#include <awesome/data/json_file.h>
+#include <awesome/editor/dialog.h>
+#include <awesome/editor/private/menu_layout.h>
+#include <awesome/editor/state.h>
+#include <awesome/entity/world.h>
 
 void Menu::init()
 {
-	static std::vector<std::string> types = TypeFactory::list("Category", "MenuItem");
-	for (const std::string& type : types)
-	{
-		MenuItem* const item = TypeFactory::instantiate<MenuItem>(type);
-		if (item)
-		{
-			m_menuItems.push_back(MenuItemPtr(item));
-		}
-	}
+	
 }
 
 void Menu::render()
@@ -35,12 +36,50 @@ void Menu::menuAssets()
 {
 	if (MenuLayout::beginMenu("Assets"))
 	{
-		for (const auto& item : m_menuItems)
+		if (MenuLayout::item("Sprite"))
 		{
-			if (item->getCategory() == "Assets" && MenuLayout::item(item->getName()))
-			{
-				item->execute();
-			}
+			Dialog::instance().save("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [](const std::filesystem::path& filename) -> void
+				{
+					if (!filename.string().empty())
+					{
+						SpriteAsset::data_t sprite(nullptr, graphics::TextureRect());
+						sprite.save(filename);
+
+						AssetImporter importer;
+						importer.import(filename);
+					}
+				}
+			);
+		}
+		if (MenuLayout::item("SpriteAnimation"))
+		{
+			Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
+				{
+					if (!filename.string().empty())
+					{
+						SpriteAnimationAsset::data_t tileset;
+						JsonFile::save(tileset, filename);
+
+						AssetImporter importer;
+						importer.import(filename);
+					}
+				}
+			);
+		}
+		if (MenuLayout::item("Tileset"))
+		{
+			Dialog::instance().save("Save Tileset...", Asset::getExtensionByType(Asset::Type::Tileset), [](const std::filesystem::path& filename) -> void
+				{
+					if (!filename.string().empty())
+					{
+						TilesetAsset::data_t tileset;
+						JsonFile::save(tileset, filename);
+
+						AssetImporter importer;
+						importer.import(filename);
+					}
+				}
+			);
 		}
 		MenuLayout::endMenu();
 	}
@@ -63,12 +102,45 @@ void Menu::menuScene()
 {
 	if (MenuLayout::beginMenu("Scene"))
 	{
-		for (const auto& item : m_menuItems)
+		if (MenuLayout::item("New Scene..."))
 		{
-			if (item->getCategory() == "Scene" && MenuLayout::item(item->getName()))
+			State::instance().select();
+			World::instance().clear();
+		}
+		MenuLayout::separator();
+		if (MenuLayout::item("Save Scene"))
+		{
+			World& world = World::instance();
+			if (world.getLoadedSceneId() != uuid::Invalid)
 			{
-				item->execute();
+				SceneAssetPtr asset = AssetLibrary::instance().find<SceneAsset>(world.getLoadedSceneId());
+				if (asset)
+				{
+					world.save(asset->descriptor.getDataPath());
+				}
+				else
+				{
+					Dialog::instance().save("Save Scene", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+						{
+							if (!path.string().empty())
+							{
+								World::instance().save(path);
+							}
+						}
+					);
+				}
 			}
+		}
+		if (MenuLayout::item("Save Scene as..."))
+		{
+			Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+				{
+					if (!path.string().empty())
+					{
+						World::instance().save(path);
+					}
+				}
+			);
 		}
 		MenuLayout::endMenu();
 	}
@@ -78,12 +150,9 @@ void Menu::menuView()
 {
 	if (MenuLayout::beginMenu("View"))
 	{
-		for (const auto& item : m_menuItems)
+		if (MenuLayout::item(State::instance().showWindows ? "Hide windows" : "Show windows"))
 		{
-			if (item->getCategory() == "View" && MenuLayout::item(item->getName()))
-			{
-				item->execute();
-			}
+			State::instance().showWindows = !State::instance().showWindows;
 		}
 		MenuLayout::endMenu();
 	}
