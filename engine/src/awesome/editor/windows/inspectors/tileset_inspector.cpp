@@ -21,7 +21,7 @@ namespace editor
 
 		TilesetAsset::data_t& data = tileset->data.value();
 		
-		Layout::image(data.image);
+		Layout::input("Image", data.image);
 
 		if (Layout::collapsingHeader("Tiles"))
 		{
@@ -33,6 +33,8 @@ namespace editor
 				{
 					Layout::input("Rect", data.tiles[i]->rect);
 					Layout::image(data.image, data.tiles[i]->rect);
+					Layout::input("Value", data.tiles[i]->value);
+					Layout::input("Has Collider", data.tiles[i]->hasCollider);
 				}
 				Layout::endContext();
 			}
@@ -49,11 +51,13 @@ namespace editor
 				const int h = data.image->data->height / static_cast<int>(data.tileSize.y);
 				const float size_x = 1.f / static_cast<float>(w);
 				const float size_y = 1.f / static_cast<float>(h);
+				int index = Tile::InvalidIndex;
 				for (int j = 0; j < h; ++j)
 				{
 					for (int i = 0; i < w; ++i)
 					{
 						std::unique_ptr<Tile> tile = std::make_unique<Tile>();
+						tile->index = ++index;
 						tile->rect.x = i * size_x;
 						tile->rect.y = j * size_y;
 						tile->rect.width = size_x;
@@ -62,6 +66,7 @@ namespace editor
 						data.tiles.push_back(std::move(tile));
 					}
 				}
+				data.size = math::vec2(static_cast<float>(w), static_cast<float>(h));
 			}
 		}		
 

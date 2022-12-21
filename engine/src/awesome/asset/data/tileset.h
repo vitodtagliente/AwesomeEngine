@@ -12,8 +12,12 @@
 CLASS(Category = Data, AssetType = Tileset)
 struct Tile : public Type
 {
-	PROPERTY() uuid id;
+	static constexpr int InvalidIndex = 0;
+
+	PROPERTY() int index{ InvalidIndex };
 	PROPERTY() graphics::TextureRect rect;
+	PROPERTY() int value{ 0 };
+	PROPERTY() bool hasCollider{ false };
 
 	GENERATED_BODY()
 };
@@ -23,6 +27,7 @@ struct Tileset : public Type
 {
 	PROPERTY() ImageAssetPtr image;
 	PROPERTY() std::vector<std::unique_ptr<Tile>> tiles;
+	PROPERTY() math::vec2 size{ 1.f, 1.f };
 	PROPERTY() math::vec2 tileSize{ 32.0f, 32.0f };
 
 	GENERATED_BODY()

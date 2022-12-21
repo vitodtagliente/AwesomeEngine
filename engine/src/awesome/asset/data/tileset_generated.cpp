@@ -7,9 +7,13 @@ const std::string& Tile::getTypeName() const { return TileType::type().name; }
 const properties_t Tile::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("id", Property("id", Property::TypeDescriptor("uuid", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(uuid), origin + offsetof(Tile, id), {
+    properties.insert(std::make_pair<std::string, Property>("index", Property("index", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(Tile, index), {
     })));
     properties.insert(std::make_pair<std::string, Property>("rect", Property("rect", Property::TypeDescriptor("graphics::TextureRect", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::TextureRect), origin + offsetof(Tile, rect), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("value", Property("value", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(Tile, value), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("hasCollider", Property("hasCollider", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Tile, hasCollider), {
     })));
     return properties;
 }
@@ -31,6 +35,8 @@ const properties_t Tileset::getTypeProperties() const {
     properties.insert(std::make_pair<std::string, Property>("image", Property("image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(Tileset, image), {
     })));
     properties.insert(std::make_pair<std::string, Property>("tiles", Property("tiles", Property::TypeDescriptor("std::vector<std::unique_ptr<Tile>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Tile", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Tile>>), origin + offsetof(Tileset, tiles), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("size", Property("size", Property::TypeDescriptor("math::vec2", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec2), origin + offsetof(Tileset, size), {
     })));
     properties.insert(std::make_pair<std::string, Property>("tileSize", Property("tileSize", Property::TypeDescriptor("math::vec2", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(math::vec2), origin + offsetof(Tileset, tileSize), {
     })));
