@@ -7,7 +7,6 @@
 
 #include <awesome/asset/asset.h>
 #include <awesome/core/singleton.h>
-#include <awesome/entity/entity.h>
 
 class State : public Singleton<State>
 {
@@ -19,14 +18,14 @@ public:
 		void clear();
 
 		AssetPtr asset;
-		Entity* entity{ nullptr };
+		class Entity* entity{ nullptr };
 		std::filesystem::path path;
 	};
 
 	State();
 
 	void select();
-	void select(Entity* const entity);
+	void select(class Entity* const entity);
 	void select(const AssetPtr& asset);
 
 	bool hasPendingContentRefresh();

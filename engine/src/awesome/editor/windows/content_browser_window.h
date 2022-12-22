@@ -3,7 +3,6 @@
 
 #include <filesystem>
 
-#include <awesome/asset/asset_library.h>
 #include <awesome/data/directory.h>
 #include <awesome/editor/window.h>
 
@@ -16,6 +15,7 @@ public:
 	ContentBrowserWindow() = default;
 
 	std::string getTitle() const override { return "Content Browser"; }
+	virtual void init() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;
 
@@ -40,9 +40,9 @@ private:
 		Renaming
 	};
 
-	Directory m_directory{ Directory::scan(AssetLibrary::instance().getDirectory(), Directory::ScanSettings(Asset::Extension, false))};
+	Directory m_directory;
 	std::string m_filter;
-	std::filesystem::path m_root{ AssetLibrary::instance().getDirectory() };
+	std::filesystem::path m_root;
 	std::filesystem::path m_selectedItem;
 	NavigationState m_state{ NavigationState::Navigating };
 	std::string m_tempRename;

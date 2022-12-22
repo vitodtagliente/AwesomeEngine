@@ -1,6 +1,7 @@
 #include "state.h"
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/entity/entity.h>
 
 #include "layout.h"
 

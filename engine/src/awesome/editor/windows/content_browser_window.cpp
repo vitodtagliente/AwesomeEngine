@@ -4,11 +4,18 @@
 
 #include <awesome/application/input.h>
 #include <awesome/asset/asset_filesystem.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/dialog.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
+
+void ContentBrowserWindow::init()
+{
+	m_directory = Directory::scan(AssetLibrary::instance().getDirectory(), Directory::ScanSettings(Asset::Extension, false));
+	m_root = AssetLibrary::instance().getDirectory();
+}
 
 void ContentBrowserWindow::render()
 {
