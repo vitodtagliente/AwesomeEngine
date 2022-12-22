@@ -13,6 +13,6 @@ void SettingsWindow::render()
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(settings, std::filesystem::current_path() / "settings.json");
+		JsonFile::save(settings, std::filesystem::current_path() / ApplicationSettings::filename);
 	}
 }

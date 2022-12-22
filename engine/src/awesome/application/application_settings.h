@@ -33,6 +33,8 @@ class ApplicationSettings : public Type
 public:
     ApplicationSettings() = default;
 
+    static constexpr char* filename{ "settings.json" };
+
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() ApplicationMode mode { ApplicationMode::Editor };
     PROPERTY() std::filesystem::path workspacePath { std::filesystem::current_path() / ".." / "assets" };

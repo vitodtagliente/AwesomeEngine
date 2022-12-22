@@ -120,7 +120,7 @@ void Application::exit()
 void Application::initSettings()
 {
 	bool reload = false;
-	const std::filesystem::path settingsPath = std::filesystem::current_path() / "settings.json";
+	const std::filesystem::path settingsPath = std::filesystem::current_path() / ApplicationSettings::filename;
 	reload = JsonFile::load(settingsPath, settings);
 
 	AssetImporter importer;
