@@ -11,7 +11,7 @@
 
 namespace graphics
 {
-	class Renderer2d;
+	class Renderer2D;
 }
 
 class Application : public Singleton<Application>

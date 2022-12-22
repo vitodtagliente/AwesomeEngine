@@ -1,11 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <map>
-#include <vector>
-#include <string>
-
-#include "player_controller.h"
+#include <awesome/entity/entity.h>
 
 #include "player_generated.h"
 
@@ -24,24 +20,27 @@ enum class PlayerIndex : int
 	Count
 };
 
-class Player
+class Player : public Entity
 {
 public:
-	Player(PlayerIndex index, PlayerController* const controller, PlayerState* const state);
-	~Player();
+	Player() = default;
+	virtual ~Player() = default;
 
-	void init();
-	void update(double deltaTime);
+	virtual void prepareToSpawn() override;
+	virtual void prepareToDestroy() override;
 
-	PlayerController* const getController() const { return m_controller.get(); }
-	PlayerIndex getIndex() const { return m_index; }
+	inline class PlayerController* const getController() const { return m_controller; }
+	inline PlayerIndex getIndex() const { return m_index; }
 
+	static Player* const initialize(PlayerIndex index, const std::string& controller, const std::string& state);
 	static Player* const getLocalPlayer() { return getPlayer(PlayerIndex::Player0); }
 	static Player* const getPlayer(PlayerIndex index);
-	static const std::vector<Player*>& getPlayes() { return s_instances; }
+	static const std::vector<Player*>& getPlayers() { return s_instances; }
+
+	static const std::string EntityTag;
 
 private:
-	std::unique_ptr<PlayerController> m_controller;
+	class PlayerController* m_controller{ nullptr };
 	PlayerIndex m_index{ PlayerIndex::Invalid };
 
 	static std::vector<Player*> s_instances;

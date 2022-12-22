@@ -107,7 +107,7 @@ namespace editor
 		for (const std::string& type : types)
 		{
 			Window* const window = TypeFactory::instantiate<Window>(type);
-			if (window)
+			if (window != nullptr)
 			{
 				m_windows.push_back(std::unique_ptr<Window>(window));
 			}

@@ -1,35 +1,34 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
-
-#include <awesome/core/reflection.h>
-#include <awesome/entity/entity.h>
+#include <awesome/entity/component.h>
 
 #include "player_state.h"
 
 #include "player_controller_generated.h"
 
 CLASS(Category = PlayerController)
-class PlayerController : public Type
+class PlayerController : public Component
 {
 public:
-	friend class Player;
-
 	PlayerController() = default;
 	virtual ~PlayerController() = default;
 
-	virtual void init();
-	virtual void update(double deltaTime);
-	virtual void possess(Entity* const entity);
+	virtual void init() override;
+	virtual void possess(class Entity* const entity);
 	virtual void unposses();
 
-	Entity* const getPossessedEntity() const;
-	PlayerState* const getState() const;
+	inline class Entity* const getPossessedEntity() const { return m_possessedEntity; };
+	inline class PlayerState* const getState() const { return m_state;  };
+	template <typename T = PlayerState>
+	T* const getState() const
+	{
+		return dynamic_cast<T*>(m_state);
+	}
 
 	GENERATED_BODY()
 
 protected:
-	Entity* m_possessedEntity;
-	std::unique_ptr<PlayerState> m_state;
+	class Entity* m_possessedEntity;
+	class PlayerState* m_state;
 };

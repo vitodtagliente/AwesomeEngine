@@ -6,7 +6,7 @@ const meta_t& PlayerState::getTypeMeta() const { return PlayerStateType::type().
 const std::string& PlayerState::getTypeName() const { return PlayerStateType::type().name; }
 const properties_t PlayerState::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
-    properties_t properties;
+    properties_t properties = Component::getTypeProperties();
     properties.insert(std::make_pair<std::string, Property>("gamertag", Property("gamertag", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(PlayerState, gamertag), {
     })));
     return properties;

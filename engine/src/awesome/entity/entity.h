@@ -8,7 +8,6 @@
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
-#include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
@@ -31,7 +30,7 @@ public:
 
 	Entity() = default;
 	Entity(const Entity& other) = delete;
-	~Entity() = default;
+	virtual ~Entity() = default;
 
 	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
 	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
@@ -41,8 +40,8 @@ public:
 	inline State getState() const { return m_state; }
 	inline bool isSpawned() const { return m_state == State::Alive; }
 
-	void prepareToDestroy();
-	void prepareToSpawn();
+	virtual void prepareToDestroy();
+	virtual void prepareToSpawn();
 	void setParent(Entity* const entity);
 	void render(graphics::Renderer2D* const renderer);
 	void update(double deltaTime);
@@ -113,9 +112,11 @@ public:
 	virtual void deserialize(const json::value& value) override;
 
 	std::string name;
-	bool replicate;
+	bool persistent{ false };
+	bool replicate{ false };
 	std::string tag;
 	math::transform transform;
+	bool transient{ false };
 
 private:
 

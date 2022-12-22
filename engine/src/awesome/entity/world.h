@@ -48,6 +48,12 @@ public:
 	Entity* const spawn();
 	Entity* const spawn(const math::vec3& position);
 	Entity* const spawn(const math::vec3& position, const math::quaternion& quaternion);
+	Entity* const spawn(Entity* const entity);
+	template <typename T = Entity>
+	T* const spawn()
+	{
+		return spawn(new T());
+	}
 	Entity* const spawn(const PrefabAssetPtr& prefab);
 	Entity* const spawn(const PrefabAssetPtr& prefab, const math::vec3& position);
 	Entity* const spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion);

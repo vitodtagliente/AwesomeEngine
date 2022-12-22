@@ -1,13 +1,12 @@
 #include "player_controller.h"
 
+#include <awesome/entity/entity.h>
+
+#include "player_state.h"
+
 void PlayerController::init()
 {
-	m_state->init();
-}
-
-void PlayerController::update(const double deltaTime)
-{
-	m_state->update(deltaTime);
+	m_state = getOwner()->findComponent<PlayerState>();
 }
 
 void PlayerController::possess(Entity* const entity)
@@ -18,14 +17,4 @@ void PlayerController::possess(Entity* const entity)
 void PlayerController::unposses()
 {
 	m_possessedEntity = nullptr;
-}
-
-Entity* const PlayerController::getPossessedEntity() const
-{
-	return m_possessedEntity;
-}
-
-PlayerState* const PlayerController::getState() const
-{
-	return m_state.get();
 }

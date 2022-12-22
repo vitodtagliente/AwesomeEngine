@@ -5,7 +5,7 @@
 const meta_t& PlayerController::getTypeMeta() const { return PlayerControllerType::type().meta; }
 const std::string& PlayerController::getTypeName() const { return PlayerControllerType::type().name; }
 const properties_t PlayerController::getTypeProperties() const {
-    properties_t properties;
+    properties_t properties = Component::getTypeProperties();
     return properties;
 }
 std::size_t PlayerController::getTypeSize() const { return PlayerControllerType::type().size; }
