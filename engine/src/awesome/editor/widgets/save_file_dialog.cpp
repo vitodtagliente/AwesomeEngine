@@ -9,7 +9,7 @@
 #include <awesome/editor/text_icon.h>
 
 SaveFileDialog::SaveFileDialog()
-	: m_dir(State::instance().path)
+	: m_directory()
 	, m_extension()
 	, m_filename()
 	, m_handler()
@@ -26,7 +26,7 @@ void SaveFileDialog::close()
 
 void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 {
-	m_dir = Dir(State::instance().path);
+	m_directory = Directory::scan(State::instance().path, Directory::ScanSettings(Asset::Extension, false));
 	m_extension = extension;
 	m_handler = handler;
 	m_open = true;
@@ -43,12 +43,12 @@ void SaveFileDialog::render()
 	ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 	if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		if (m_dir.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
+		if (m_directory.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 		{
-			m_dir = Dir(m_dir.parent);
+			m_directory.up();
 		}
 
-		for (const auto& file : m_dir.files)
+		for (const auto& file : m_directory.files)
 		{
 			const std::string filename = file.stem().string();
 			bool changeDirectory = false;
@@ -72,7 +72,7 @@ void SaveFileDialog::render()
 
 			if (changeDirectory)
 			{
-				m_dir = Dir(file);
+				m_directory.directory(file);
 				break;
 			}
 		}
@@ -90,7 +90,7 @@ void SaveFileDialog::render()
 
 		if (Layout::button(TextIcon::save(" Save")))
 		{
-			const std::filesystem::path fileToSave = m_dir.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
+			const std::filesystem::path fileToSave = m_directory.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 			m_handler(fileToSave);
 			State::instance().isContentChanged = true;
 			m_filename.clear();

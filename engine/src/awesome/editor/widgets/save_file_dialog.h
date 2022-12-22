@@ -5,7 +5,7 @@
 #include <functional>
 #include <string>
 
-#include <awesome/editor/utils/dir.h>
+#include <awesome/data/directory.h>
 
 	class SaveFileDialog
 	{
@@ -19,7 +19,7 @@
 		void render();
 
 	private:
-		Dir m_dir;
+		Directory m_directory;
 		std::string m_extension;
 		std::string m_filename;
 		std::function<void(const std::filesystem::path&)> m_handler;

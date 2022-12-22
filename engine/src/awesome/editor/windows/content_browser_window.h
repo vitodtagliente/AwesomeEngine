@@ -4,8 +4,8 @@
 #include <filesystem>
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/data/directory.h>
 #include <awesome/editor/window.h>
-#include <awesome/editor/utils/dir.h>
 
 #include "content_browser_window_generated.h"
 
@@ -40,7 +40,7 @@ private:
 		Renaming
 	};
 
-	Dir m_dir{ AssetLibrary::instance().getDirectory() };
+	Directory m_directory{ Directory::scan(AssetLibrary::instance().getDirectory(), Directory::ScanSettings(Asset::Extension, false))};
 	std::string m_filter;
 	std::filesystem::path m_root{ AssetLibrary::instance().getDirectory() };
 	std::filesystem::path m_selectedItem;

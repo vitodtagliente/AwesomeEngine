@@ -29,15 +29,15 @@ void ContentBrowserWindow::render()
 	Layout::separator();
 
 	ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
-	if (m_dir.path != m_root)
+	if (m_directory.path != m_root)
 	{
 		if (Layout::selectable("..", false))
 		{
 			m_state = NavigationState::Navigating;
-			selectFile(m_dir.parent);
+			selectFile(m_directory.parent);
 		}
 
-		Layout::endDrag("FILE_MOVE", [this, file = m_dir.parent](void* const data, const size_t) -> void
+		Layout::endDrag("FILE_MOVE", [this, file = m_directory.parent](void* const data, const size_t) -> void
 		{
 			const std::filesystem::path from = *(const std::filesystem::path*)data;
 			moveFile(from, file);
@@ -46,7 +46,7 @@ void ContentBrowserWindow::render()
 		);
 	}
 
-	for (const auto& file : m_dir.files)
+	for (const auto& file : m_directory.files)
 	{
 		const bool isSelected = m_selectedItem == file;
 		if (isSelected && m_state == NavigationState::Renaming)
@@ -98,10 +98,9 @@ void ContentBrowserWindow::render()
 				break;
 			}
 
-			if (changeDirectory)
+			if (changeDirectory && m_directory.directory(file))
 			{
-				m_dir = Dir(file);
-				State::instance().path = m_dir.path;
+				State::instance().path = m_directory.path;
 				break;
 			}
 		}
@@ -152,7 +151,7 @@ void ContentBrowserWindow::addFolder()
 	int i = 0;
 	while (true)
 	{
-		std::filesystem::path path = m_dir.path / (DefaultName + ((i == 0) ? "" : std::string(" ") + std::to_string(i)));
+		std::filesystem::path path = m_directory.path / (DefaultName + ((i == 0) ? "" : std::string(" ") + std::to_string(i)));
 		if (!std::filesystem::exists(path))
 		{
 			std::filesystem::create_directory(path);
@@ -237,10 +236,9 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	m_selectedItem = file;
 	if (std::filesystem::is_directory(file))
 	{
-		if (m_dir.parent == file)
+		if (m_directory.parent == file && m_directory.up())
 		{
-			m_dir = Dir(file);
-			State::instance().path = m_dir.path;
+			State::instance().path = m_directory.path;
 		}
 	}
 	else
@@ -274,5 +272,5 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 
 void ContentBrowserWindow::refreshDirectory()
 {
-	m_dir = Dir(m_dir.path);
+	m_directory.refresh();
 }

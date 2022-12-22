@@ -8,7 +8,7 @@
 #include <awesome/editor/text_icon.h>
 
 OpenFileDialog::OpenFileDialog()
-	: m_dir(AssetLibrary::instance().getDirectory(), false)
+	: m_directory(Directory::scan(AssetLibrary::instance().getDirectory()))
 	, m_extensions()
 	, m_handler()
 	, m_open(false)
@@ -25,7 +25,7 @@ void OpenFileDialog::close()
 
 void OpenFileDialog::open(const std::string& title, const std::vector<std::string>& extensions, const std::function<void(const std::filesystem::path&)>& handler)
 {
-	m_dir = Dir(AssetLibrary::instance().getDirectory().parent_path());
+	m_directory = Directory::scan(AssetLibrary::instance().getDirectory().parent_path());
 	m_extensions = extensions;
 	m_handler = handler;
 	m_open = true;
@@ -43,12 +43,12 @@ void OpenFileDialog::render()
 	ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 	if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		if (std::filesystem::exists(m_dir.parent) && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
+		if (std::filesystem::exists(m_directory.parent) && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 		{
-			m_dir = Dir(m_dir.parent, false);
+			m_directory = Directory::scan(m_directory.parent);
 		}
 
-		for (const auto& file : m_dir.files)
+		for (const auto& file : m_directory.files)
 		{
 			const bool isDirectory = std::filesystem::is_directory(file);
 			if (isDirectory && file == m_root)
@@ -80,7 +80,7 @@ void OpenFileDialog::render()
 
 			if (changeDirectory)
 			{
-				m_dir = Dir(file, false);
+				m_directory = Directory::scan(file);
 				break;
 			}
 		}

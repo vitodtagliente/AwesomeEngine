@@ -6,7 +6,7 @@
 #include <optional>
 #include <string>
 
-#include <awesome/editor/utils/dir.h>
+#include <awesome/data/directory.h>
 
 class OpenFileDialog
 {
@@ -20,7 +20,7 @@ public:
 	void render();
 
 private:
-	Dir m_dir;
+	Directory m_directory;
 	std::vector<std::string> m_extensions;
 	std::function<void(const std::filesystem::path&)> m_handler;
 	bool m_open;
