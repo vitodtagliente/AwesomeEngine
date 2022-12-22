@@ -101,7 +101,7 @@ void Layout::image(const ImageAssetPtr& image, const float width, const float he
 
 void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect)
 {
-	if (image && image->data.has_value())
+	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		const float size = ImGui::GetContentRegionAvailWidth();
 		const float width = std::min(size, image->data->width * rect.width * 2);
@@ -112,7 +112,7 @@ void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect
 
 void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image != nullptr)
+	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
 		if (texture)
@@ -135,7 +135,7 @@ bool Layout::imageButton(const ImageAssetPtr& image, const float width, const fl
 
 bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect)
 {
-	if (image && image->data.has_value())
+	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		const float size = ImGui::GetContentRegionAvailWidth();
 		const float width = std::min(size, image->data->width * rect.width * 2);
@@ -147,10 +147,10 @@ bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect
 
 bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image != nullptr)
+	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
-		if (texture)
+		if (texture != nullptr)
 		{
 			return ImGui::ImageButton((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
 		}
