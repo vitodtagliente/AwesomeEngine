@@ -337,6 +337,8 @@ json::value World::serialize() const
 		json::value entities = json::array();
 		for (const auto& entity : m_entities)
 		{
+			if (entity->transient) continue;
+
 			entities.push_back(entity->serialize());
 		}
 		data["entities"] = entities;
