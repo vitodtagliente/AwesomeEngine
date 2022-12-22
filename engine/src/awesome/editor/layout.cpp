@@ -6,10 +6,8 @@
 #include <imgui_stdlib.h>
 
 #include <awesome/asset/asset_library.h>
-#include <awesome/asset/prefab_asset.h>
-#include <awesome/asset/scene_asset.h>
-#include <awesome/asset/text_asset.h>
 #include <awesome/core/string_util.h>
+#include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/graphics/texture_library.h>
 
 std::vector<std::string> Layout::s_context;
@@ -185,6 +183,26 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(id(name).c_str(), &value);
 }
 
+void Layout::input(const std::string& name, AssetPtr& value)
+{
+	static AssetBrowserDialog s_assetBrowserDialog;
+
+	if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
+	{
+		s_assetBrowserDialog.open(name, value->descriptor.type, [&value](const AssetPtr& asset) -> void
+			{
+				value = asset;
+			}
+		);
+	}
+	s_assetBrowserDialog.render(name);
+}
+
+void Layout::input(const std::string& name, ImageAssetPtr& value)
+{
+	input(name, (AssetPtr&)value);
+}
+
 void Layout::input(const std::string&, math::transform& value)
 {
 	input("Position", value.position);
@@ -340,29 +358,9 @@ void Layout::input(Type& value)
 				{
 					input(label, prop.value<std::map<std::string, math::vec2>>()); break;
 				}
-				else if (backChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::contains(backChildTypeName, "AssetPtr"))
 				{
-					input(label, prop.value<std::map<std::string, ImageAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "PrefabAssetPtr")
-				{
-					input(label, prop.value<std::map<std::string, PrefabAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SceneAssetPtr")
-				{
-					input(label, prop.value<std::map<std::string, SceneAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					input(label, prop.value<std::map<std::string, SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "SpriteAssetPtr")
-				{
-					input(label, prop.value<std::map<std::string, SpriteAssetPtr>>()); break;
-				}
-				else if (backChildTypeName == "TextAssetPtr")
-				{
-					input(label, prop.value<std::map<std::string, TextAssetPtr>>()); break;
+					input(label, prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -422,29 +420,9 @@ void Layout::input(Type& value)
 				{
 					input(label, prop.value<std::vector<math::vec2>>()); break;
 				}
-				else if (frontChildTypeName == "ImageAssetPtr")
+				else if (StringUtil::contains(frontChildTypeName, "AssetPtr"))
 				{
-					input(label, prop.value<std::vector<ImageAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "PrefabAssetPtr")
-				{
-					input(label, prop.value<std::vector<PrefabAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SceneAssetPtr")
-				{
-					input(label, prop.value<std::vector<SceneAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAnimationAssetPtr")
-				{
-					input(label, prop.value<std::vector<SpriteAnimationAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "SpriteAssetPtr")
-				{
-					input(label, prop.value<std::vector<SpriteAssetPtr>>()); break;
-				}
-				else if (frontChildTypeName == "TextAssetPtr")
-				{
-					input(label, prop.value<std::vector<TextAssetPtr>>()); break;
+					input(label, prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -482,29 +460,9 @@ void Layout::input(Type& value)
 			{
 				Layout::input(label, prop.value<math::vec2>());
 			}
-			else if (prop.descriptor.name == "ImageAssetPtr")
+			else if (StringUtil::contains(prop.descriptor.name, "AssetPtr"))
 			{
-				Layout::input(label, prop.value<ImageAssetPtr>());
-			}
-			else if (prop.descriptor.name == "PrefabAssetPtr")
-			{
-				Layout::input(label, prop.value<PrefabAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SceneAssetPtr")
-			{
-				Layout::input(label, prop.value<SceneAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAnimationAssetPtr")
-			{
-				Layout::input(label, prop.value<SpriteAnimationAssetPtr>());
-			}
-			else if (prop.descriptor.name == "SpriteAssetPtr")
-			{
-				Layout::input(label, prop.value<SpriteAssetPtr>());
-			}
-			else if (prop.descriptor.name == "TextAssetPtr")
-			{
-				Layout::input(label, prop.value<TextAssetPtr>());
+				Layout::input(label, prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{
@@ -696,24 +654,6 @@ void Layout::slider(const std::string& name, const float min, const float max, f
 void Layout::setKeyboardFocusHere()
 {
 	ImGui::SetKeyboardFocusHere();
-}
-
-void Layout::sprite(const SpriteAssetPtr& sprite)
-{
-	if (sprite && sprite->data.has_value())
-	{
-		const Sprite& data = sprite->data.value();
-		image(data.image, data.rect);
-	}
-}
-
-void Layout::sprite(const SpriteAssetPtr& sprite, const float width, const float height)
-{
-	if (sprite && sprite->data.has_value())
-	{
-		const Sprite& data = sprite->data.value();
-		image(data.image, data.rect, width, height);
-	}
 }
 
 void Layout::text(const std::string& str)

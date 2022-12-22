@@ -1,28 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
 #include <functional>
 #include <map>
 #include <memory>
 #include <string>
-#include <typeinfo>
-#include <type_traits>
 #include <vector>
 
 #include <awesome/asset/asset.h>
-#include <awesome/asset/asset_library.h>
-#include <awesome/asset/base_asset.h>
 #include <awesome/asset/image_asset.h>
-#include <awesome/asset/sprite_animation_asset.h>
-#include <awesome/asset/sprite_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/type_name.h>
-#include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
-#include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/graphics/color.h>
-#include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
 #include <awesome/math/transform.h>
@@ -59,6 +49,8 @@ public:
 	static void input(const std::string& name, float& value);
 	static void input(const std::string& name, double& value);
 	static void input(const std::string& name, std::string& value);
+	static void input(const std::string& name, AssetPtr& value);
+	static void input(const std::string& name, ImageAssetPtr& value);
 	static void input(const std::string& name, math::transform& value);
 	static void input(const std::string& name, math::vec2& value);
 	static void input(const std::string& name, math::vec3& value);
@@ -120,22 +112,6 @@ public:
 			}
 			endCombo();
 		}
-	}
-	// Asset input
-	template <Asset::Type T, typename D>
-	static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
-	{
-		static AssetBrowserDialog s_assetBrowserDialog;
-
-		if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
-		{
-			s_assetBrowserDialog.open(name, T, [&value](const AssetPtr& asset) -> void
-				{
-					value = std::static_pointer_cast<BaseAsset<T, D>>(asset);
-				}
-			);
-		}
-		s_assetBrowserDialog.render(name);
 	}
 	// std::vector<T> input
 	template <typename T>
@@ -285,8 +261,6 @@ public:
 	static void slider(const std::string& name, int min, int max, int& value);
 	static void slider(const std::string& name, float min, float max, float& value);
 	static void setKeyboardFocusHere();
-	static void sprite(const SpriteAssetPtr& sprite);
-	static void sprite(const SpriteAssetPtr& sprite, float width, float height);
 	static void text(const std::string& str);
 	static void textWrapped(const std::string& str);
 	static void title(const std::string& title);
