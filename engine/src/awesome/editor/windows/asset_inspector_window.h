@@ -13,10 +13,10 @@ class AssetInspectorWindow : public Window
 {
 public:
 
-	struct Inspector
+	struct AssetInspector
 	{
-		Inspector() = default;
-		virtual ~Inspector() = default;
+		AssetInspector() = default;
+		virtual ~AssetInspector() = default;
 		virtual bool canInspect(const AssetPtr& /*asset*/) { return false; }
 		virtual void update(const AssetPtr&, double /*deltaTime*/) {}
 		virtual void inspect(const AssetPtr& /*asset*/) = 0;
@@ -32,5 +32,5 @@ public:
 	GENERATED_BODY()
 
 private:
-	std::vector<std::unique_ptr<Inspector>> m_inspectors;
+	std::vector<std::unique_ptr<AssetInspector>> m_inspectors;
 };

@@ -3,29 +3,23 @@
 #include <awesome/editor/layout.h>
 #include <awesome/editor/state.h>
 
-#include <awesome/editor/windows/inspectors/image_inspector.h>
-#include <awesome/editor/windows/inspectors/prefab_inspector.h>
-#include <awesome/editor/windows/inspectors/scene_inspector.h>
-#include <awesome/editor/windows/inspectors/sprite_animation_inspector.h>
-#include <awesome/editor/windows/inspectors/sprite_inspector.h>
-#include <awesome/editor/windows/inspectors/text_inspector.h>
-#include <awesome/editor/windows/inspectors/tileset_inspector.h>
+#include <awesome/editor/private/asset_inspectors/asset_inspectors.h>
 
 void AssetInspectorWindow::init()
 {
-	m_inspectors.push_back(std::make_unique<editor::ImageInspector>());
-	m_inspectors.push_back(std::make_unique<editor::PrefabInspector>());
-	m_inspectors.push_back(std::make_unique<editor::SceneInspector>());
-	m_inspectors.push_back(std::make_unique<editor::SpriteAnimationInspector>());
-	m_inspectors.push_back(std::make_unique<editor::SpriteInspector>());
-	m_inspectors.push_back(std::make_unique<editor::TextInspector>());
-	m_inspectors.push_back(std::make_unique<editor::TilesetInspector>());
+	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());
+	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
+	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());
+	m_inspectors.push_back(std::make_unique<SpriteAnimationAssetInspector>());
+	m_inspectors.push_back(std::make_unique<SpriteAssetInspector>());
+	m_inspectors.push_back(std::make_unique<TextAssetInspector>());
+	m_inspectors.push_back(std::make_unique<TilesetAssetInspector>());
 }
 
 void AssetInspectorWindow::render()
 {
 	AssetPtr asset = State::instance().selection.asset;
-	if (asset)
+	if (asset != nullptr)
 	{
 		Layout::text(asset->descriptor.path.filename().string());
 		Layout::text(enumToString(asset->descriptor.type));
@@ -43,14 +37,14 @@ void AssetInspectorWindow::render()
 
 void AssetInspectorWindow::update(const double deltaTime)
 {
-	const State& state = State::instance();
-	if (state.selection.asset)
+	AssetPtr asset = State::instance().selection.asset;
+	if (asset != nullptr && asset->state == Asset::State::Ready)
 	{
 		for (const auto& inspector : m_inspectors)
 		{
-			if (inspector->canInspect(state.selection.asset))
+			if (inspector->canInspect(asset))
 			{
-				inspector->update(state.selection.asset, deltaTime);
+				inspector->update(asset, deltaTime);
 				break;
 			}
 		}
