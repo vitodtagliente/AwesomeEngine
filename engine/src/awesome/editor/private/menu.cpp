@@ -10,8 +10,8 @@
 #include <awesome/asset/tileset_asset.h>
 #include <awesome/data/json_file.h>
 #include <awesome/editor/dialog.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/private/menu_layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/entity/world.h>
 
 void Menu::init()
@@ -104,7 +104,7 @@ void Menu::menuScene()
 	{
 		if (MenuLayout::item("New Scene..."))
 		{
-			State::instance().select();
+			Editor::instance().state.select();
 			World::instance().clear();
 		}
 		MenuLayout::separator();
@@ -150,9 +150,10 @@ void Menu::menuView()
 {
 	if (MenuLayout::beginMenu("View"))
 	{
-		if (MenuLayout::item(State::instance().showWindows ? "Hide windows" : "Show windows"))
+		EditorSettings& settings = Editor::instance().settings;
+		if (MenuLayout::item(settings.renderWindows ? "Hide windows" : "Show windows"))
 		{
-			State::instance().showWindows = !State::instance().showWindows;
+			settings.renderWindows = !settings.renderWindows;
 		}
 		MenuLayout::endMenu();
 	}

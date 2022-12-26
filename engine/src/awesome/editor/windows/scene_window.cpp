@@ -4,16 +4,15 @@
 
 #include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
 void SceneWindow::render()
 {
-	State& state = State::instance();
-	Entity* const selectedEntity = state.selection.entity;
+	Entity* const selectedEntity = Editor::instance().state.selection.entity;
 
 	const bool hasActiveFocus = hasFocus();
 	if (hasActiveFocus && selectedEntity != nullptr)
@@ -96,7 +95,7 @@ void SceneWindow::addEntity()
 	World& world = World::instance();
 	Entity* const newEntity = world.spawn();
 	newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
-	State::instance().select(newEntity);
+	Editor::instance().state.select(newEntity);
 	Layout::scrollToBottom();
 }
 
@@ -112,27 +111,27 @@ void SceneWindow::deleteEntity(Entity* const entity)
 		{
 			if (entities.size() > 1)
 			{
-				State::instance().select(entities[1].get());
+				Editor::instance().state.select(entities[1].get());
 			}
 			else
 			{
-				State::instance().select();
+				Editor::instance().state.select();
 			}
 		}
 		else
 		{
-			State::instance().select(entities[0].get());
+			Editor::instance().state.select(entities[0].get());
 		}
 	}
 	else
 	{
-		State::instance().select();
+		Editor::instance().state.select();
 	}
 }
 
 void SceneWindow::selectEntity(Entity* const entity)
 {
-	State::instance().select(entity);
+	Editor::instance().state.select(entity);
 }
 
 void SceneWindow::renameEntity(Entity* const entity, const std::string& name)

@@ -3,9 +3,8 @@
 #include <imgui.h>
 
 #include <awesome/core/string_util.h>
-#include <awesome/asset/asset_library.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
 SaveFileDialog::SaveFileDialog()
@@ -14,7 +13,7 @@ SaveFileDialog::SaveFileDialog()
 	, m_filename()
 	, m_handler()
 	, m_open(false)
-	, m_root(AssetLibrary::instance().getDirectory())
+	, m_root()
 	, m_title("Save File Dialog")
 {
 }
@@ -26,7 +25,7 @@ void SaveFileDialog::close()
 
 void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 {
-	m_directory = Directory::scan(State::instance().path, Directory::ScanSettings(Asset::Extension, false));
+	m_directory = Directory::scan(Editor::instance().state.path, Directory::ScanSettings(Asset::Extension, false));
 	m_extension = extension;
 	m_handler = handler;
 	m_open = true;
@@ -92,7 +91,7 @@ void SaveFileDialog::render()
 		{
 			const std::filesystem::path fileToSave = m_directory.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 			m_handler(fileToSave);
-			State::instance().isContentChanged = true;
+			// State::instance().isContentChanged = true;
 			m_filename.clear();
 			m_open = false;
 			ImGui::CloseCurrentPopup();

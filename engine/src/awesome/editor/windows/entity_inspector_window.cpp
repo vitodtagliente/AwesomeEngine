@@ -3,14 +3,14 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/data/archive.h>
 #include <awesome/editor/dialog.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/entity/world.h>
 
 void EntityInspectorWindow::render()
 {
-	State& state = State::instance();
+	Editor::State& state = Editor::instance().state;
 	Entity* const entity = state.selection.entity;
 	if (entity == nullptr)
 	{

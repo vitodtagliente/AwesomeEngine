@@ -7,8 +7,8 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/dialog.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
 void ContentBrowserWindow::init()
@@ -107,7 +107,7 @@ void ContentBrowserWindow::render()
 
 			if (changeDirectory && m_directory.directory(file))
 			{
-				State::instance().path = m_directory.path;
+				Editor::instance().state.select(m_directory.path);
 				break;
 			}
 		}
@@ -117,10 +117,10 @@ void ContentBrowserWindow::render()
 
 void ContentBrowserWindow::update(const double)
 {
-	if (State::instance().hasPendingContentRefresh())
-	{
-		refreshDirectory();
-	}
+	// if (State::instance().hasPendingContentRefresh())
+	// {
+	// 	refreshDirectory();
+	// }
 }
 
 void ContentBrowserWindow::processInput(const std::filesystem::path& file)
@@ -201,7 +201,7 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 		AssetFilesystem::remove(descriptor);
 	}
 
-	State::instance().select();
+	Editor::instance().state.select();
 	m_selectedItem.clear();
 
 	refreshDirectory();
@@ -245,7 +245,7 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	{
 		if (m_directory.parent == file && m_directory.up())
 		{
-			State::instance().path = m_directory.path;
+			Editor::instance().state.select(m_directory.path);
 		}
 	}
 	else
@@ -254,11 +254,11 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 		std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 		if (asset)
 		{
-			State::instance().select(asset);
+			Editor::instance().state.select(asset);
 		}
 		else
 		{
-			State::instance().select();
+			Editor::instance().state.select();
 		}
 	}
 }

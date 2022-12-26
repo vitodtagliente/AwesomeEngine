@@ -1,7 +1,7 @@
 #include <awesome/editor/windows/asset_inspector_window.h>
 
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 
 #include <awesome/editor/private/asset_inspectors/asset_inspectors.h>
 
@@ -18,7 +18,7 @@ void AssetInspectorWindow::init()
 
 void AssetInspectorWindow::render()
 {
-	AssetPtr asset = State::instance().selection.asset;
+	AssetPtr asset = Editor::instance().state.selection.asset;
 	if (asset != nullptr)
 	{
 		Layout::text(asset->descriptor.path.filename().string());
@@ -37,7 +37,7 @@ void AssetInspectorWindow::render()
 
 void AssetInspectorWindow::update(const double deltaTime)
 {
-	AssetPtr asset = State::instance().selection.asset;
+	AssetPtr asset = Editor::instance().state.selection.asset;
 	if (asset != nullptr && asset->state == Asset::State::Ready)
 	{
 		for (const auto& inspector : m_inspectors)

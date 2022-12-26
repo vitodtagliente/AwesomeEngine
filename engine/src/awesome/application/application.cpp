@@ -12,7 +12,7 @@
 #include <awesome/data/archive.h>
 #include <awesome/data/json_file.h>
 #include <awesome/encoding/json.h>
-#include <awesome/editor/editor_module.h>
+#include <awesome/editor/editor.h>
 #include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
 #include <awesome/graphics/graphics_module.h>
@@ -166,7 +166,7 @@ void Application::registerDefaultModules()
 
 	if (settings.mode == Mode::Editor)
 	{
-		registerModule<editor::Module>();
+		registerModule<Editor>();
 	}
 
 	// common modules

@@ -3,8 +3,8 @@
 #include <imgui.h>
 
 #include <awesome/asset/asset_library.h>
+#include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-#include <awesome/editor/state.h>
 #include <awesome/editor/text_icon.h>
 
 OpenFileDialog::OpenFileDialog()
@@ -100,7 +100,7 @@ void OpenFileDialog::render()
 			if (m_selectedFile.has_value() && std::filesystem::exists(*m_selectedFile))
 			{
 				m_handler(*m_selectedFile);
-				State::instance().isContentChanged = true;
+				// State::instance().isContentChanged = true;
 				m_open = false;
 				m_selectedFile.reset();
 				ImGui::CloseCurrentPopup();
