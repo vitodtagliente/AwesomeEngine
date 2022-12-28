@@ -32,18 +32,20 @@ public:
 			class Entity* entity{ nullptr };
 		};
 
-		void select();
 		void select(const AssetPtr& asset);
 		void select(class Entity* const entity);
 		void select(const std::filesystem::path& path);
+		void unselectAsset();
+		void unselectEntity();
 
 		std::filesystem::path path;
+		bool preventInputPropagation{ false };
 		Selection selection;
 
 		// events
-		event onSelectedAssetChanged;
-		event onSelectedEntityChanged;
-		event onSelectedPathChanged;
+		event_t<AssetPtr> onSelectedAssetChanged;
+		event_t<Entity*> onSelectedEntityChanged;
+		event_t<std::filesystem::path> onSelectedPathChanged;
 
 	private:
 		std::queue<AssetPtr> history;

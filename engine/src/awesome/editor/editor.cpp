@@ -111,12 +111,6 @@ void Editor::registerWindows()
 	}
 }
 
-void Editor::State::select()
-{
-	selection.asset = nullptr;
-	selection.entity = nullptr;
-}
-
 void Editor::State::select(const AssetPtr& asset)
 {
 	if (selection.asset == asset) return;
@@ -130,6 +124,8 @@ void Editor::State::select(const AssetPtr& asset)
 	}
 	history.push(asset);
 	Layout::clear();
+
+	onSelectedAssetChanged.broadcast(asset);
 }
 
 void Editor::State::select(Entity* const entity)
@@ -137,8 +133,9 @@ void Editor::State::select(Entity* const entity)
 	if (selection.entity == entity) return;
 
 	selection.entity = entity;
-	onSelectedEntityChanged.broadcast();
 	Layout::clear();
+
+	onSelectedEntityChanged.broadcast(entity);
 }
 
 void Editor::State::select(const std::filesystem::path& folder)
@@ -146,5 +143,15 @@ void Editor::State::select(const std::filesystem::path& folder)
 	if (folder == path) return;
 
 	path = folder;
-	onSelectedPathChanged.broadcast();
+	onSelectedPathChanged.broadcast(folder);
+}
+
+void Editor::State::unselectAsset()
+{
+	selection.asset = nullptr;
+}
+
+void Editor::State::unselectEntity()
+{
+	selection.entity = nullptr;
 }

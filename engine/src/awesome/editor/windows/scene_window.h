@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/core/uuid.h>
 #include <awesome/editor/window.h>
 
 #include "scene_window_generated.h"

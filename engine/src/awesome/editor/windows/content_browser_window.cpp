@@ -206,7 +206,7 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 		AssetFilesystem::remove(descriptor);
 	}
 
-	Editor::instance().state.select();
+	Editor::instance().state.unselectAsset();
 	m_selectedItem.clear();
 
 	refreshDirectory();
@@ -263,7 +263,7 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 		}
 		else
 		{
-			Editor::instance().state.select();
+			Editor::instance().state.unselectAsset();
 		}
 	}
 }

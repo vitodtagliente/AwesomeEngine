@@ -44,9 +44,10 @@ void SceneWindow::render()
 	Layout::separator();
 
 	ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
-	int i = 0;
-	for (const auto& entity : World::instance().getEntities())
+	World& world = World::instance();
+	for (int i = 0; i < world.getEntities().size(); ++i)
 	{
+		const auto& entity = world.getEntities()[i];
 		const bool isSelected = selectedEntity != nullptr && entity->getId() == selectedEntity->getId();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
@@ -62,11 +63,9 @@ void SceneWindow::render()
 			if (Layout::selectable((entity->getPrefab() != uuid::Invalid ? TextIcon::cube(" " + entity->name) : entity->name) + "##entity" + std::to_string(i), isSelected))
 			{
 				m_state = NavigationState::Navigating;
-				m_tempRename = entity->name;
 				selectEntity(entity.get());
 			}
 		}
-		++i;
 	}
 	ImGui::EndChild();
 }
@@ -80,6 +79,8 @@ void SceneWindow::processInput(Entity* const entity)
 		{
 			m_state = NavigationState::Navigating;
 			renameEntity(entity, m_tempRename);
+			m_tempRename.clear();
+			Editor::instance().state.preventInputPropagation = false;
 		}
 	}
 	else
@@ -87,6 +88,8 @@ void SceneWindow::processInput(Entity* const entity)
 		if (input.isKeyPressed(KeyCode::F2))
 		{
 			m_state = NavigationState::Renaming;
+			m_tempRename = entity->name;
+			Editor::instance().state.preventInputPropagation = true;
 		}
 		else if (input.isKeyPressed(KeyCode::Delete))
 		{
@@ -120,7 +123,7 @@ void SceneWindow::deleteEntity(Entity* const entity)
 			}
 			else
 			{
-				Editor::instance().state.select();
+				Editor::instance().state.unselectEntity();
 			}
 		}
 		else
@@ -130,7 +133,7 @@ void SceneWindow::deleteEntity(Entity* const entity)
 	}
 	else
 	{
-		Editor::instance().state.select();
+		Editor::instance().state.unselectEntity();
 	}
 }
 

@@ -104,7 +104,7 @@ void Menu::menuScene()
 	{
 		if (MenuLayout::item("New Scene..."))
 		{
-			Editor::instance().state.select();
+			Editor::instance().state.unselectEntity();
 			World::instance().clear();
 		}
 		MenuLayout::separator();

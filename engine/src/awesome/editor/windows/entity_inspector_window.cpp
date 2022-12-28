@@ -24,7 +24,7 @@ void EntityInspectorWindow::render()
 
 	if (entity->getState() != Entity::State::Alive)
 	{
-		state.select();
+		state.unselectEntity();
 		return;
 	}
 
