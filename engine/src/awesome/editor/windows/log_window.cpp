@@ -2,9 +2,6 @@
 
 #include <sstream>
 
-#include <imgui.h>
-
-#include <awesome/application/application.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
@@ -16,10 +13,10 @@ std::string LogWindow::getTitle() const
 
 void LogWindow::render()
 {
-	ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration);
+	Layout::beginChild("Header", 0.f, 26.f);
 	const std::string previousFilter = m_filter;
 	Layout::input(TextIcon::search(), m_filter);
-	ImGui::EndChild();
+	Layout::endChild();
 
 	Layout::separator();
 

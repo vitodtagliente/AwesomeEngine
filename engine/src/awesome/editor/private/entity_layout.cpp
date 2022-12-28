@@ -3,20 +3,29 @@
 #include <awesome/component/sprite_renderer_component.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
+#include <awesome/graphics/color.h>
 
 void EntityLayout::input(Entity* const entity)
 {
 	if (entity == nullptr) return;
 
 	Layout::beginContext("entity");
+	Layout::button(static_cast<std::string>(entity->getId()), graphics::Color(0.f, .6f, .6f));
 	Layout::input("Name", entity->name);
 	Layout::input("Tag", entity->tag);
 	Layout::separator();
 	Layout::input("Position", entity->transform.position);
 	Layout::input("Rotation", entity->transform.rotation);
 	Layout::input("Scale", entity->transform.scale);
-	Layout::input("Static", entity->transform.isStatic);
+	Layout::input("Persistent", entity->persistent);
+	Layout::hint("If true, the entity is not destroyed during the loading of a new scene");
+	Layout::sameLine();
+	Layout::input("Transient", entity->transient);
+	Layout::hint("If true, the entity cannot be saved as part of the scene serialization");
 	Layout::input("Replicate", entity->replicate);
+	Layout::hint("If true, the entity can be replicated in multiplayer games");
+	Layout::input("Static", entity->transform.isStatic);
+	Layout::hint("If true, the entity cannot move. It helps optimizing the transform's computation");
 	Layout::endContext();
 
 	Layout::separator();

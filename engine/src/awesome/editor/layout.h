@@ -43,6 +43,7 @@ public:
 	static void endCombo();
 	static void endContext();
 	static void endDrag(const std::string& name, const std::function<void(void*, size_t)>& handler);
+	static void hint(const std::string& text);
 	static void image(const ImageAssetPtr& image);
 	static void image(const ImageAssetPtr& image, float width, float height);
 	static void image(const ImageAssetPtr& image, const graphics::TextureRect& rect);

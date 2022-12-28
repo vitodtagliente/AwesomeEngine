@@ -123,6 +123,18 @@ void Layout::endDrag(const std::string& name, const std::function<void(void*, si
 	}
 }
 
+void Layout::hint(const std::string& text)
+{
+	if (ImGui::IsItemHovered())
+	{
+		ImGui::BeginTooltip();
+		ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+		ImGui::TextUnformatted(text.c_str());
+		ImGui::PopTextWrapPos();
+		ImGui::EndTooltip();
+	}
+}
+
 void Layout::image(const ImageAssetPtr& image)
 {
 	const float size = ImGui::GetContentRegionAvailWidth();
