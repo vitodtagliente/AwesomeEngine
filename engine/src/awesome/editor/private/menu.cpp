@@ -150,6 +150,20 @@ void Menu::menuView()
 {
 	if (MenuLayout::beginMenu("View"))
 	{
+		const auto& windows = Editor::instance().getWindows();
+		for (const auto& window : windows)
+		{
+			if (MenuLayout::item(window->getTitle(), window->visible))
+			{
+				window->visible = !window->visible;
+			}
+		}
+
+		if (!windows.empty())
+		{
+			MenuLayout::separator();
+		}
+
 		EditorSettings& settings = Editor::instance().settings;
 		if (MenuLayout::item(settings.renderWindows ? "Hide windows" : "Show windows"))
 		{

@@ -65,6 +65,8 @@ public:
 		m_windows.push_back(std::make_unique<T>());
 	}
 
+	const std::vector<std::unique_ptr<Window>>& getWindows() const { return m_windows; }
+
 	EditorSettings settings;
 	State state;
 

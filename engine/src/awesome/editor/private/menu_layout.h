@@ -12,5 +12,6 @@ public:
 	static void endMainMenu();
 	static void endMenu();
 	static bool item(const std::string& name);
+	static bool item(const std::string& name, bool& checked);
 	static void separator();
 };

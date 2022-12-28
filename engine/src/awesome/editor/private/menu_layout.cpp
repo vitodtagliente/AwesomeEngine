@@ -27,6 +27,11 @@ bool MenuLayout::item(const std::string& name)
 	return ImGui::MenuItem(name.c_str());
 }
 
+bool MenuLayout::item(const std::string& name, bool& checked)
+{
+	return ImGui::MenuItem(name.c_str(), nullptr, &checked);
+}
+
 void MenuLayout::separator()
 {
 	ImGui::Separator();
