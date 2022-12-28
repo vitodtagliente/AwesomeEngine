@@ -14,7 +14,7 @@ class ContentBrowserWindow : public Window
 public:
 	ContentBrowserWindow() = default;
 
-	std::string getTitle() const override { return "Content Browser"; }
+	virtual std::string getTitle() const override;
 	virtual void init() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;

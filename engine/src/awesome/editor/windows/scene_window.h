@@ -14,8 +14,8 @@ class SceneWindow : public Window
 public:
 	SceneWindow() = default;
 
-	std::string getTitle() const override { return "Scene"; }
-	void render() override;
+	virtual std::string getTitle() const override;
+	virtual void render() override;
 
 	GENERATED_BODY()
 

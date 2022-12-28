@@ -8,6 +8,11 @@
 #include <awesome/editor/private/entity_layout.h>
 #include <awesome/entity/world.h>
 
+std::string EntityInspectorWindow::getTitle() const
+{
+	return "Entity Inspector";
+}
+
 void EntityInspectorWindow::render()
 {
 	Editor::State& state = Editor::instance().state;

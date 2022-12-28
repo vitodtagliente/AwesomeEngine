@@ -24,7 +24,7 @@ public:
 
 	AssetInspectorWindow() = default;
 
-	inline virtual std::string getTitle() const override { return "Asset Inspector"; }
+	virtual std::string getTitle() const override;
 	virtual void init() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;

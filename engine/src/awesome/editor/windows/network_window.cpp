@@ -4,6 +4,11 @@
 #include <awesome/editor/layout.h>
 #include <awesome/net/network_manager.h>
 
+std::string NetworkWindow::getTitle() const
+{
+	return "Network";
+}
+
 void NetworkWindow::render()
 {
 	net::NetworkManager& networkManager = net::NetworkManager::instance();

@@ -11,8 +11,8 @@ class SettingsWindow : public Window
 public:
 	SettingsWindow() = default;
 
-	std::string getTitle() const override { return "Settings"; }
-	void render() override;
+	virtual std::string getTitle() const override;
+	virtual void render() override;
 
 	GENERATED_BODY()
 };

@@ -12,7 +12,7 @@ public:
 	NetworkWindow() = default;
 	virtual ~NetworkWindow() = default;
 
-	std::string getTitle() const override { return "Network"; }
+	std::string getTitle() const override;
 	void render() override;
 
 	GENERATED_BODY()

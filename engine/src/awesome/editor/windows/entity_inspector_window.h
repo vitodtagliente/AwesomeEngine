@@ -11,8 +11,8 @@ class EntityInspectorWindow : public Window
 public:
 	EntityInspectorWindow() = default;
 
-	std::string getTitle() const override { return "Entity Inspector"; }
-	void render() override;
+	virtual std::string getTitle() const override;
+	virtual void render() override;
 
 	GENERATED_BODY()
 };

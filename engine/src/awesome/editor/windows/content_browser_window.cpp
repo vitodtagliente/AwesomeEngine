@@ -11,6 +11,11 @@
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 
+std::string ContentBrowserWindow::getTitle() const
+{
+	return "Content Browser";
+}
+
 void ContentBrowserWindow::init()
 {
 	m_directory = Directory::scan(AssetLibrary::instance().getDirectory(), Directory::ScanSettings(Asset::Extension, false));

@@ -11,8 +11,8 @@ class PerformanceWindow : public Window
 public:
 	PerformanceWindow() = default;
 
-	std::string getTitle() const override { return "Performance"; }
-	void render() override;
+	virtual std::string getTitle() const override;
+	virtual void render() override;
 
 	GENERATED_BODY()
 };

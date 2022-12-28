@@ -9,6 +9,11 @@
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 
+std::string LogWindow::getTitle() const
+{
+	return "Output";
+}
+
 void LogWindow::render()
 {
 	ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration);

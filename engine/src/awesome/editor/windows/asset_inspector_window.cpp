@@ -5,6 +5,11 @@
 #include <awesome/editor/private/asset_inspectors/asset_inspectors.h>
 #include <awesome/graphics/color.h>
 
+std::string AssetInspectorWindow::getTitle() const
+{
+	return "Asset Inspector";
+}
+
 void AssetInspectorWindow::init()
 {
 	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());

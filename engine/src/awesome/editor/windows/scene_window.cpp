@@ -10,6 +10,11 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
+std::string SceneWindow::getTitle() const
+{
+	return "Scene";
+}
+
 void SceneWindow::render()
 {
 	Entity* const selectedEntity = Editor::instance().state.selection.entity;

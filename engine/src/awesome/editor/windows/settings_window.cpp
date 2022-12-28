@@ -4,6 +4,11 @@
 #include <awesome/data/json_file.h>
 #include <awesome/editor/layout.h>
 
+std::string SettingsWindow::getTitle() const
+{
+	return "Settings";
+}
+
 void SettingsWindow::render()
 {
 	ApplicationSettings& settings = Application::instance().settings;

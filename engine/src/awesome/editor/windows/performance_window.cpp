@@ -8,6 +8,11 @@
 #include <awesome/entity/world.h>
 #include <awesome/graphics/context.h>
 
+std::string PerformanceWindow::getTitle() const
+{
+	return "Performance";
+}
+
 void PerformanceWindow::render()
 {
 	// FPS
