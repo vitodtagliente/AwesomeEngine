@@ -80,6 +80,8 @@ void Input::setKeyState(const keycode_t key, const KeyState state)
 		return;
 	}
 
+	if (preventKeyEvents) return;
+
 	const auto it = m_keysState.find(key);
 	if (it != m_keysState.end())
 	{
@@ -133,7 +135,11 @@ void Input::setMouseWheelPosition(const math::vec2& position)
 
 void Input::setMousePositionValid(const bool valid)
 {
-	m_isMousePositionValid = preventMouseEvents ? false : valid;
+	if (!preventMouseEvents)
+	{
+		m_isMousePositionValid = preventMouseEvents ? false : valid;
+
+	}
 }
 
 const math::vec2& Input::getMousePosition() const

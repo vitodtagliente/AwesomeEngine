@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+
+#include <awesome/application/keycode.h>
 #include <awesome/asset/asset.h>
 #include <awesome/asset/image_asset.h>
 #include <awesome/core/reflection.h>
@@ -250,6 +252,9 @@ public:
 	}
 	static void input(const std::string& name, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName);
 	static void input(const std::string& name, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName);
+	static bool isKeyDown(keycode_t keycode);
+	static bool isKeyPressed(keycode_t keycode);
+	static bool isKeyReleased(keycode_t keycode);
 	static bool isWindowFocused();
 	static bool isWindowHovered();
 	static void newLine();

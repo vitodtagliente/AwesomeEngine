@@ -39,7 +39,8 @@ public:
 	// reset the input state
 	void clear();
 
-	bool preventMouseEvents;
+	bool preventKeyEvents{ false };
+	bool preventMouseEvents{ false };
 
 private:
 

@@ -2,7 +2,6 @@
 
 #include <imgui.h>
 
-#include <awesome/application/input.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
@@ -72,26 +71,25 @@ void SceneWindow::render()
 
 void SceneWindow::processInput(Entity* const entity)
 {
-	Input& input = Input::instance();
 	if (m_state == NavigationState::Renaming)
 	{
-		if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
+		if (Layout::isKeyPressed(KeyCode::Enter) || Layout::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameEntity(entity, m_tempRename);
 			m_tempRename.clear();
-			Editor::instance().state.preventInputPropagation = false;
+			Editor::instance().state.preventKeyEvents = false;
 		}
 	}
 	else
 	{
-		if (input.isKeyPressed(KeyCode::F2))
+		if (Layout::isKeyPressed(KeyCode::F2))
 		{
 			m_state = NavigationState::Renaming;
 			m_tempRename = entity->name;
-			Editor::instance().state.preventInputPropagation = true;
+			Editor::instance().state.preventKeyEvents = true;
 		}
-		else if (input.isKeyPressed(KeyCode::Delete))
+		else if (Layout::isKeyPressed(KeyCode::Delete))
 		{
 			deleteEntity(entity);
 		}

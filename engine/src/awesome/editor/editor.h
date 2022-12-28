@@ -39,7 +39,7 @@ public:
 		void unselectEntity();
 
 		std::filesystem::path path;
-		bool preventInputPropagation{ false };
+		bool preventKeyEvents{ false };
 		Selection selection;
 
 		// events

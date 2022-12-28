@@ -600,6 +600,21 @@ void Layout::input(const std::string& name, std::map<std::string, std::unique_pt
 		);
 }
 
+bool Layout::isKeyDown(const keycode_t keycode)
+{
+	return ImGui::IsKeyDown(keycode);
+}
+
+bool Layout::isKeyPressed(const keycode_t keycode)
+{
+	return ImGui::IsKeyPressed(keycode);
+}
+
+bool Layout::isKeyReleased(const keycode_t keycode)
+{
+	return ImGui::IsKeyReleased(keycode);
+}
+
 bool Layout::isWindowFocused()
 {
 	return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
