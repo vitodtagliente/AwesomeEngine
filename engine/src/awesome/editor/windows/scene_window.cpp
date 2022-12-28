@@ -76,7 +76,6 @@ void SceneWindow::processInput(Entity* const entity)
 			m_state = NavigationState::Navigating;
 			renameEntity(entity, m_tempRename);
 			m_tempRename.clear();
-			Editor::instance().state.preventKeyEvents = false;
 		}
 	}
 	else
@@ -85,7 +84,6 @@ void SceneWindow::processInput(Entity* const entity)
 		{
 			m_state = NavigationState::Renaming;
 			m_tempRename = entity->name;
-			Editor::instance().state.preventKeyEvents = true;
 		}
 		else if (Layout::isKeyPressed(KeyCode::Delete))
 		{

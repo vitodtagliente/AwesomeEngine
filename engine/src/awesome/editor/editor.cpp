@@ -91,8 +91,9 @@ void Editor::postRendering()
 void Editor::update(const double deltaTime)
 {
 	Input& input = Input::instance();
-	input.preventMouseEvents = ImGui::GetIO().WantCaptureMouse;
-	input.preventKeyEvents = state.preventKeyEvents;
+	ImGuiIO& io = ImGui::GetIO();
+	input.preventMouseEvents = io.WantCaptureMouse;
+	input.preventKeyEvents = io.WantCaptureKeyboard;
 
 	for (const auto& window : m_windows)
 	{
