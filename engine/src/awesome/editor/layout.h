@@ -261,6 +261,7 @@ public:
 	static bool isKeyReleased(keycode_t keycode);
 	static bool isItemHovered();
 	static bool isMouseClicked();
+	static bool isPopupOpen(const std::string& name);
 	static bool isWindowFocused();
 	static bool isWindowHovered();
 	static void newLine();

@@ -9,7 +9,8 @@
 class AssetBrowserDialog
 {
 public:
-	AssetBrowserDialog();
+	AssetBrowserDialog() = default;
+	virtual ~AssetBrowserDialog() = default;
 
 	inline bool isOpen() const { return m_open; }
 
@@ -21,7 +22,7 @@ private:
 	std::string m_filter;
 	std::function<void(const AssetPtr&)> m_handler;
 	std::string m_id;
-	bool m_open;
-	AssetPtr m_selectedAsset;
-	Asset::Type m_type;
+	bool m_open{ false };
+	AssetPtr m_selectedAsset{ nullptr };
+	Asset::Type m_type{ Asset::Type::None };
 };

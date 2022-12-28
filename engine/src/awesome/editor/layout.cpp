@@ -652,6 +652,11 @@ bool Layout::isMouseClicked()
 	return ImGui::IsMouseClicked(ImGuiMouseButton_Left);
 }
 
+bool Layout::isPopupOpen(const std::string& name)
+{
+	return ImGui::IsPopupOpen(name.c_str());
+}
+
 bool Layout::isWindowFocused()
 {
 	return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);

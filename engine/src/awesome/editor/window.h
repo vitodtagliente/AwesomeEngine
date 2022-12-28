@@ -24,6 +24,8 @@ public:
 
 	virtual void onFocusChange(bool /*focus*/) {}
 
+	PROPERTY() bool visible{ true };
+
 	GENERATED_BODY()
 
 private:

@@ -8,16 +8,6 @@
 #include <awesome/core/string_util.h>
 #include <awesome/editor/layout.h>
 
-AssetBrowserDialog::AssetBrowserDialog()
-	: m_filter()
-	, m_handler()
-	, m_id()
-	, m_open()
-	, m_selectedAsset()
-	, m_type(Asset::Type::None)
-{
-}
-
 void AssetBrowserDialog::close()
 {
 	m_open = false;
@@ -37,7 +27,7 @@ void AssetBrowserDialog::render(const std::string& id)
 
 	if (id != m_id) return;
 
-	if (m_open && !ImGui::IsPopupOpen("Asset Browser Dialog"))
+	if (m_open && !Layout::isPopupOpen("Asset Browser Dialog"))
 	{
 		ImGui::OpenPopup("Asset Browser Dialog");
 	}
@@ -48,9 +38,9 @@ void AssetBrowserDialog::render(const std::string& id)
 	{
 		ImGui::BeginChild("Header", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 		Layout::input(TextIcon::search(), m_filter);
-		ImGui::EndChild();
+		Layout::endChild();
 
-		ImGui::BeginChild("Content", ImVec2(0.f, 240.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+		Layout::beginChild("Content", 0.f, 240.f);
 		const auto descriptors = AssetLibrary::instance().list(m_type);
 		for (const Asset::Descriptor& descriptor : descriptors)
 		{
@@ -76,7 +66,7 @@ void AssetBrowserDialog::render(const std::string& id)
 				break;
 			}
 		}
-		ImGui::EndChild();
+		Layout::endChild();
 
 		if (m_selectedAsset && (m_type == Asset::Type::Image || m_type == Asset::Type::Sprite))
 		{
