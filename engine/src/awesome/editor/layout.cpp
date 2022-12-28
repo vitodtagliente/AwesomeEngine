@@ -18,6 +18,16 @@ void Layout::begin(const std::string& name)
 	ImGui::Begin(id(name).c_str());
 }
 
+void Layout::beginChild(const std::string& name)
+{
+	ImGui::BeginChild(name.c_str(), ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+}
+
+void Layout::beginChild(const std::string& name, const float width, const float height)
+{
+	ImGui::BeginChild(name.c_str(), ImVec2(width, height), false, ImGuiWindowFlags_NoDecoration);
+}
+
 bool Layout::beginCombo(const std::string& name, const std::string& value)
 {
 	return ImGui::BeginCombo(id(name).c_str(), value.c_str());
@@ -81,6 +91,11 @@ bool Layout::collapsingHeader(const std::string& name)
 void Layout::end()
 {
 	ImGui::End();
+}
+
+void Layout::endChild()
+{
+	ImGui::EndChild();
 }
 
 void Layout::endCombo()
@@ -613,6 +628,16 @@ bool Layout::isKeyPressed(const keycode_t keycode)
 bool Layout::isKeyReleased(const keycode_t keycode)
 {
 	return ImGui::IsKeyReleased(keycode);
+}
+
+bool Layout::isItemHovered()
+{
+	return ImGui::IsItemHovered();
+}
+
+bool Layout::isMouseClicked()
+{
+	return ImGui::IsMouseClicked(ImGuiMouseButton_Left);
 }
 
 bool Layout::isWindowFocused()

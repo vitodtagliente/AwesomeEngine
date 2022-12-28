@@ -1,7 +1,5 @@
 #include "scene_window.h"
 
-#include <imgui.h>
-
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
@@ -24,7 +22,7 @@ void SceneWindow::render()
 		processInput(selectedEntity);
 	}
 
-	ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration);
+	Layout::beginChild("Header", 0.f, 26.f);
 	if (Layout::button(TextIcon::plus()))
 	{
 		addEntity();
@@ -38,11 +36,11 @@ void SceneWindow::render()
 	{
 		m_state = NavigationState::Navigating;
 	}
-	ImGui::EndChild();
+	Layout::endChild();
 
 	Layout::separator();
 
-	ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+	Layout::beginChild("Content");
 	World& world = World::instance();
 	for (int i = 0; i < world.getEntities().size(); ++i)
 	{
@@ -66,7 +64,7 @@ void SceneWindow::render()
 			}
 		}
 	}
-	ImGui::EndChild();
+	Layout::endChild();
 }
 
 void SceneWindow::processInput(Entity* const entity)
@@ -92,6 +90,10 @@ void SceneWindow::processInput(Entity* const entity)
 		else if (Layout::isKeyPressed(KeyCode::Delete))
 		{
 			deleteEntity(entity);
+		}
+		else if (Layout::isMouseClicked())
+		{
+			Editor::instance().state.unselectEntity();
 		}
 	}
 }

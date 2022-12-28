@@ -28,6 +28,8 @@ public:
 	Layout() = delete;
 
 	static void begin(const std::string& name);
+	static void beginChild(const std::string& name);
+	static void beginChild(const std::string& name, float width, float height);
 	static bool beginCombo(const std::string& name, const std::string& value);
 	static void beginContext(const std::string context);
 	static void beginDrag(const std::string& name, const std::string& item, void* const data, size_t size);
@@ -37,6 +39,7 @@ public:
 	static bool button(const std::string& name, const graphics::Color& color, int width, int height);
 	static bool collapsingHeader(const std::string& name);
 	static void end();
+	static void endChild();
 	static void endCombo();
 	static void endContext();
 	static void endDrag(const std::string& name, const std::function<void(void*, size_t)>& handler);
@@ -255,6 +258,8 @@ public:
 	static bool isKeyDown(keycode_t keycode);
 	static bool isKeyPressed(keycode_t keycode);
 	static bool isKeyReleased(keycode_t keycode);
+	static bool isItemHovered();
+	static bool isMouseClicked();
 	static bool isWindowFocused();
 	static bool isWindowHovered();
 	static void newLine();
