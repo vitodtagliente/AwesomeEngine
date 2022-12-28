@@ -141,10 +141,10 @@ void Editor::State::select(Entity* const entity)
 	Layout::clear();
 }
 
-void Editor::State::select(const std::filesystem::path& path)
+void Editor::State::select(const std::filesystem::path& folder)
 {
-	if (path == this->path) return;
+	if (folder == path) return;
 
-	this->path = path;
+	path = folder;
 	onSelectedPathChanged.broadcast();
 }

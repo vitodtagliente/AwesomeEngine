@@ -31,6 +31,8 @@ public:
 	static void beginDrag(const std::string& name, const std::string& item, void* const data, size_t size);
 	static bool button(const std::string& name);
 	static bool button(const std::string& name, int width, int height);
+	static bool button(const std::string& name, const graphics::Color& color);
+	static bool button(const std::string& name, const graphics::Color& color, int width, int height);
 	static bool collapsingHeader(const std::string& name);
 	static void end();
 	static void endCombo();

@@ -2,8 +2,8 @@
 
 #include <awesome/editor/editor.h>
 #include <awesome/editor/layout.h>
-
 #include <awesome/editor/private/asset_inspectors/asset_inspectors.h>
+#include <awesome/graphics/color.h>
 
 void AssetInspectorWindow::init()
 {
@@ -21,8 +21,11 @@ void AssetInspectorWindow::render()
 	AssetPtr asset = Editor::instance().state.selection.asset;
 	if (asset != nullptr)
 	{
-		Layout::text(asset->descriptor.path.filename().string());
-		Layout::text(enumToString(asset->descriptor.type));
+		if (Layout::button(asset->descriptor.path.filename().string(), graphics::Color(0.f, 0.6f, 0.6f)))
+		{
+			Editor::instance().state.select(asset->descriptor.path);
+		}
+		Layout::button(enumToString(asset->descriptor.type), graphics::Color(1.f, 0.6f, 0.6f));
 		Layout::separator();
 		for (const auto& inspector : m_inspectors)
 		{
