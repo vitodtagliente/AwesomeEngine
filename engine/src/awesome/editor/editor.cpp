@@ -77,17 +77,20 @@ void Editor::render(graphics::Renderer2D* const)
 {
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	m_menu.render();
-	if (settings.renderWindows)
+	if (!settings.renderWindows)
 	{
-		for (const auto& window : m_windows)
-		{
-			Layout::begin(window->getTitle());
-			window->setFocus(Layout::isWindowFocused());
-			window->render();
-			Layout::end();
-		}
+		return;
 	}
 
+	for (const auto& window : m_windows)
+	{
+		if (!window->visible) continue;
+
+		Layout::begin(window->getTitle());
+		window->setFocus(Layout::isWindowFocused());
+		window->render();
+		Layout::end();
+	}
 	Dialog::instance().render();
 }
 

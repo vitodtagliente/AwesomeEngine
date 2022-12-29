@@ -151,11 +151,11 @@ void Menu::menuView()
 	if (MenuLayout::beginMenu("View"))
 	{
 		const auto& windows = Editor::instance()->getWindows();
-		for (const auto& window : windows)
+		for (auto& window : windows)
 		{
 			if (MenuLayout::item(window->getTitle(), window->visible))
 			{
-				window->visible = !window->visible;
+				window->visible != window->visible;
 			}
 		}
 
