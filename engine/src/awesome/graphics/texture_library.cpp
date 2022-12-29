@@ -5,11 +5,6 @@
 
 namespace graphics
 {
-	TextureLibrary::TextureLibrary()
-		: m_textures()
-	{
-	}
-
 	TexturePtr TextureLibrary::find(const uuid& id)
 	{
 		const auto& it = m_textures.find(id);

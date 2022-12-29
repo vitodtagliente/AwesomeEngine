@@ -17,6 +17,15 @@
 
 #include "windows/windows.h"
 
+Editor* Editor::s_instance{ nullptr };
+
+Editor::Editor()
+	: ApplicationModule()
+{
+	assert(s_instance == nullptr);
+	s_instance = this;
+}
+
 void Editor::startup()
 {
 	ImGui::CreateContext();
@@ -121,11 +130,11 @@ void Editor::State::select(const AssetPtr& asset)
 	static const size_t s_maxHistory{ 10 };
 
 	selection.asset = asset;
-	if (history.size() == s_maxHistory)
+	if (m_history.size() == s_maxHistory)
 	{
-		history.pop();
+		m_history.pop();
 	}
-	history.push(asset);
+	m_history.push(asset);
 	Layout::clear();
 
 	onSelectedAssetChanged.broadcast(asset);

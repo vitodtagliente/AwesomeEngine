@@ -2,9 +2,5 @@
 
 namespace graphics
 {
-	Context::Context()
-		: renderer(640, 480)
-	{
 
-	}
 }

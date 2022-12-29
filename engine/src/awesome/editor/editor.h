@@ -6,7 +6,7 @@
 #include <queue>
 #include <vector>
 
-#include <awesome/application/application.h>
+#include <awesome/application/application_module.h>
 #include <awesome/asset/asset.h>
 #include <awesome/core/event.h>
 
@@ -19,10 +19,9 @@ namespace graphics
 	class Renderer2D;
 }
 
-class Editor : public Application::Module, public Singleton<Editor>
+class Editor : public ApplicationModule
 {
 public:
-
 	class State
 	{
 	public:
@@ -47,10 +46,10 @@ public:
 		event_t<std::filesystem::path> onSelectedPathChanged;
 
 	private:
-		std::queue<AssetPtr> history;
+		std::queue<AssetPtr> m_history;
 	};
 
-	Editor() = default;
+	Editor();
 
 	virtual void startup() override;
 	virtual void shutdown() override;
@@ -58,6 +57,8 @@ public:
 	virtual void render(graphics::Renderer2D* const renderer) override;
 	virtual void postRendering() override;
 	virtual void update(double deltaTime) override;
+
+	static Editor* const instance() { return s_instance; }
 
 	template <typename T = Window>
 	void registerWindow()
@@ -72,6 +73,8 @@ public:
 
 private:
 	void registerWindows();
+
+	static Editor* s_instance;
 
 	Menu m_menu;
 	std::vector<std::unique_ptr<Window>> m_windows;

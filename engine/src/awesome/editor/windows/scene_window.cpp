@@ -14,7 +14,7 @@ std::string SceneWindow::getTitle() const
 
 void SceneWindow::render()
 {
-	Entity* const selectedEntity = Editor::instance().state.selection.entity;
+	Entity* const selectedEntity = Editor::instance()->state.selection.entity;
 
 	const bool hasActiveFocus = hasFocus();
 	if (hasActiveFocus && selectedEntity != nullptr)
@@ -91,7 +91,7 @@ void SceneWindow::processInput(Entity* const entity)
 		}
 		else if (Layout::isMouseClicked())
 		{
-			Editor::instance().state.unselectEntity();
+			Editor::instance()->state.unselectEntity();
 		}
 	}
 }
@@ -101,7 +101,7 @@ void SceneWindow::addEntity()
 	World& world = World::instance();
 	Entity* const newEntity = world.spawn();
 	newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
-	Editor::instance().state.select(newEntity);
+	Editor::instance()->state.select(newEntity);
 	Layout::scrollToBottom();
 }
 
@@ -117,27 +117,27 @@ void SceneWindow::deleteEntity(Entity* const entity)
 		{
 			if (entities.size() > 1)
 			{
-				Editor::instance().state.select(entities[1].get());
+				Editor::instance()->state.select(entities[1].get());
 			}
 			else
 			{
-				Editor::instance().state.unselectEntity();
+				Editor::instance()->state.unselectEntity();
 			}
 		}
 		else
 		{
-			Editor::instance().state.select(entities[0].get());
+			Editor::instance()->state.select(entities[0].get());
 		}
 	}
 	else
 	{
-		Editor::instance().state.unselectEntity();
+		Editor::instance()->state.unselectEntity();
 	}
 }
 
 void SceneWindow::selectEntity(Entity* const entity)
 {
-	Editor::instance().state.select(entity);
+	Editor::instance()->state.select(entity);
 }
 
 void SceneWindow::renameEntity(Entity* const entity, const std::string& name)

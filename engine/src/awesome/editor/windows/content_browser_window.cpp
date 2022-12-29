@@ -112,7 +112,7 @@ void ContentBrowserWindow::render()
 
 			if (changeDirectory && m_directory.directory(file))
 			{
-				Editor::instance().state.select(m_directory.path);
+				Editor::instance()->state.select(m_directory.path);
 				break;
 			}
 		}
@@ -206,7 +206,7 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 		AssetFilesystem::remove(descriptor);
 	}
 
-	Editor::instance().state.unselectAsset();
+	Editor::instance()->state.unselectAsset();
 	m_selectedItem.clear();
 
 	refreshDirectory();
@@ -250,7 +250,7 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	{
 		if (m_directory.parent == file && m_directory.up())
 		{
-			Editor::instance().state.select(m_directory.path);
+			Editor::instance()->state.select(m_directory.path);
 		}
 	}
 	else
@@ -259,11 +259,11 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 		std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
 		if (asset)
 		{
-			Editor::instance().state.select(asset);
+			Editor::instance()->state.select(asset);
 		}
 		else
 		{
-			Editor::instance().state.unselectAsset();
+			Editor::instance()->state.unselectAsset();
 		}
 	}
 }

@@ -1,20 +1,5 @@
 #include "input.h"
 
-Input::Input()
-	: preventMouseEvents()
-	, m_lastKeysState()
-	, m_keysState()
-	, m_lastMousePosition()
-	, m_mousePosition()
-	, m_deltaMousePosition()
-	, m_lastMouseWheelPosition()
-	, m_mouseWheelPosition()
-	, m_deltaMouseWheelPosition()
-	, m_isMousePositionValid(true)
-{
-
-}
-
 void Input::update()
 {
 	auto temp_lastKeysState = std::move(m_lastKeysState);

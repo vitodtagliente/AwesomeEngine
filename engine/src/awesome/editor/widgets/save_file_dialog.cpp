@@ -25,7 +25,7 @@ void SaveFileDialog::close()
 
 void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 {
-	m_directory = Directory::scan(Editor::instance().state.path, Directory::ScanSettings(Asset::Extension, false));
+	m_directory = Directory::scan(Editor::instance()->state.path, Directory::ScanSettings(Asset::Extension, false));
 	m_extension = extension;
 	m_handler = handler;
 	m_open = true;

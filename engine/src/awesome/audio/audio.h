@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include <awesome/application/application.h>
+#include <awesome/application/application_module.h>
 
-class Audio : public Application::Module
+class Audio : public ApplicationModule
 {
 public:
 	Audio() = default;

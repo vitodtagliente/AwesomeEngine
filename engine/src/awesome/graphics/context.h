@@ -13,9 +13,7 @@ namespace graphics
 	public:
 		friend class Module;
 
-		Context();
-
-		Renderer2D renderer;
+		Renderer2D renderer{ 0, 0 };
 		inline int getDrawCalls() const { return m_drawCalls; }
 
 	private:

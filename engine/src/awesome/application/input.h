@@ -11,8 +11,6 @@
 class Input final : public Singleton<Input>
 {
 public:
-	Input();
-
 	// update the input state
 	void update();
 
@@ -61,5 +59,5 @@ private:
 	// delta mouse wheel position
 	math::vec2 m_deltaMouseWheelPosition;
 	// is mouse over window?
-	bool m_isMousePositionValid;
+	bool m_isMousePositionValid{ true };
 };

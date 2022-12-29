@@ -5,14 +5,6 @@
 #include "input.h"
 #include "keycode.h"
 
-Canvas::Canvas()
-	: m_handler()
-	, m_width()
-	, m_height()
-	, m_isOpen(false)
-{
-}
-
 bool Canvas::open(Settings settings)
 {
 	if (!glfwInit())

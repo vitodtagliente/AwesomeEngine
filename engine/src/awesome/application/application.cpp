@@ -22,11 +22,11 @@
 
 using namespace graphics;
 
-void Application::init(const std::initializer_list<Module*>& modules)
+void Application::init(const std::initializer_list<ApplicationModule*>& modules)
 {
-	for (Module* const module : modules)
+	for (ApplicationModule* const module : modules)
 	{
-		m_modules.push_back(std::unique_ptr<Module>(module));
+		m_modules.push_back(std::unique_ptr<ApplicationModule>(module));
 	}
 }
 

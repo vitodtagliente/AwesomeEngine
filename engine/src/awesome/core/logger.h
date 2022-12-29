@@ -10,9 +10,6 @@
 class Logger : public Singleton<Logger>
 {
 public:
-	Logger() = default;
-	virtual ~Logger() = default;
-
 	class IListener
 	{
 	public:

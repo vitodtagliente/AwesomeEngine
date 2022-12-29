@@ -26,12 +26,12 @@ void AssetInspectorWindow::render()
 	static const graphics::Color s_filenameColor(0.f, 0.6f, 0.6f);
 	static const graphics::Color s_assetTypeColor(1.f, 0.6f, 0.6f);
 
-	AssetPtr asset = Editor::instance().state.selection.asset;
+	AssetPtr asset = Editor::instance()->state.selection.asset;
 	if (asset != nullptr)
 	{
 		if (Layout::button(asset->descriptor.path.filename().string(), s_filenameColor))
 		{
-			Editor::instance().state.select(asset->descriptor.path);
+			Editor::instance()->state.select(asset->descriptor.path);
 		}
 		Layout::button(enumToString(asset->descriptor.type), s_assetTypeColor);
 		Layout::separator();
@@ -48,7 +48,7 @@ void AssetInspectorWindow::render()
 
 void AssetInspectorWindow::update(const double deltaTime)
 {
-	AssetPtr asset = Editor::instance().state.selection.asset;
+	AssetPtr asset = Editor::instance()->state.selection.asset;
 	if (asset != nullptr && asset->state == Asset::State::Ready)
 	{
 		for (const auto& inspector : m_inspectors)

@@ -17,9 +17,6 @@ public:
 		bool vSync = true;
 	};
 
-	Canvas();
-	~Canvas() = default;
-
 	bool open(Settings settings = {});
 	void update();
 	void close();
@@ -35,7 +32,7 @@ public:
 
 private:
 	void* m_handler;
-	int m_width;
-	int m_height;
-	bool m_isOpen;
+	int m_width{ 1080 };
+	int m_height{ 720 };
+	bool m_isOpen{ false };
 };

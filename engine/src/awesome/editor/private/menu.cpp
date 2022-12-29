@@ -104,7 +104,7 @@ void Menu::menuScene()
 	{
 		if (MenuLayout::item("New Scene..."))
 		{
-			Editor::instance().state.unselectEntity();
+			Editor::instance()->state.unselectEntity();
 			World::instance().clear();
 		}
 		MenuLayout::separator();
@@ -150,7 +150,7 @@ void Menu::menuView()
 {
 	if (MenuLayout::beginMenu("View"))
 	{
-		const auto& windows = Editor::instance().getWindows();
+		const auto& windows = Editor::instance()->getWindows();
 		for (const auto& window : windows)
 		{
 			if (MenuLayout::item(window->getTitle(), window->visible))
@@ -164,7 +164,7 @@ void Menu::menuView()
 			MenuLayout::separator();
 		}
 
-		EditorSettings& settings = Editor::instance().settings;
+		EditorSettings& settings = Editor::instance()->settings;
 		if (MenuLayout::item(settings.renderWindows ? "Hide windows" : "Show windows"))
 		{
 			settings.renderWindows = !settings.renderWindows;

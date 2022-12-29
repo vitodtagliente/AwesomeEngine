@@ -16,9 +16,6 @@ namespace graphics
 	class TextureLibrary : public Singleton<TextureLibrary>
 	{
 	public:
-		TextureLibrary();
-		~TextureLibrary() = default;
-
 		TexturePtr find(const uuid& id);
 
 	private:

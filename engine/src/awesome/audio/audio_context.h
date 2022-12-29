@@ -11,11 +11,7 @@
 class AudioContext final : public Singleton<AudioContext>
 {
 public:
-
 	friend class Audio;
-
-	AudioContext() = default;
-	~AudioContext() = default;
 
 	bool load(const std::filesystem::path& path, Sound& sound);
 	void play(Sound& sound);

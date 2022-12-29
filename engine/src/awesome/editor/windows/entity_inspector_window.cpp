@@ -15,7 +15,7 @@ std::string EntityInspectorWindow::getTitle() const
 
 void EntityInspectorWindow::render()
 {
-	Editor::State& state = Editor::instance().state;
+	Editor::State& state = Editor::instance()->state;
 	Entity* const entity = state.selection.entity;
 	if (entity == nullptr)
 	{

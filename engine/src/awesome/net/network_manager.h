@@ -23,8 +23,6 @@ namespace net
 			Server
 		};
 
-		NetworkManager() = default;
-
 		bool startClient(const std::string& ip, Address::port_t port);
 		bool startServer(Address::port_t port, unsigned int maxConnections);
 

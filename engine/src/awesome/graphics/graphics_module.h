@@ -3,11 +3,11 @@
 
 #include <vector>
 
-#include <awesome/application/application.h>
+#include <awesome/application/application_module.h>
 
 namespace graphics
 {
-	class Module : public Application::Module
+	class Module : public ApplicationModule
 	{
 	public:
 		Module() = default;

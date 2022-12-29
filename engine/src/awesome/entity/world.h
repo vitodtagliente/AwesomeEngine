@@ -24,9 +24,6 @@ namespace graphics
 class World final : public Singleton<World>, ISerializable
 {
 public:
-	World() = default;
-	~World() = default;
-
 	void update(double deltaTime, int quadspaceBounds);
 	void render(graphics::Renderer2D* const renderer, bool drawWireframes, const graphics::Color& wireframesColor);
 	void flush();
