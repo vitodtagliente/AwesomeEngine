@@ -3,6 +3,7 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
+#include <awesome/graphics/color.h>
 
 void SpawnerComponent::init()
 {
@@ -74,8 +75,7 @@ void SpawnerComponent::update(const double deltaTime)
 void SpawnerComponent::inspect()
 {
 	Component::inspect();
-	Layout::separator();
-	if (Layout::button("Start"))
+	if (Layout::button("Start", graphics::Color(0.f, .6f, .6f)))
 	{
 		start();
 	}
