@@ -88,6 +88,7 @@ void Editor::render(graphics::Renderer2D* const)
 
 		Layout::begin(window->getTitle());
 		window->setFocus(Layout::isWindowFocused());
+		window->setIsHovered(Layout::isWindowHovered());
 		window->render();
 		Layout::end();
 	}

@@ -664,7 +664,7 @@ bool Layout::isWindowFocused()
 
 bool Layout::isWindowHovered()
 {
-	return ImGui::IsWindowHovered();
+	return ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows);
 }
 
 void Layout::newLine()

@@ -13,3 +13,8 @@ void Window::setFocus(const bool focus)
 		onFocusChange(m_hasFocus);
 	}
 }
+
+void Window::setIsHovered(bool isHovered)
+{
+	m_isHovered = isHovered;
+}

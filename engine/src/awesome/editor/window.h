@@ -15,8 +15,10 @@ public:
 
 	virtual std::string getTitle() const;
 	inline bool hasFocus() const { return m_hasFocus; }
+	inline bool isHovered() const { return m_isHovered; }
 
 	void setFocus(bool focus);
+	void setIsHovered(bool isHovered);
 
 	virtual void init() {}
 	virtual void render() {}
@@ -30,6 +32,7 @@ public:
 
 private:
 	bool m_hasFocus{ false };
+	bool m_isHovered{ false };
 };
 
 typedef std::unique_ptr<Window> WindowPtr;

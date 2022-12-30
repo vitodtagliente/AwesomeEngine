@@ -89,7 +89,7 @@ void SceneWindow::processInput(Entity* const entity)
 		{
 			deleteEntity(entity);
 		}
-		else if (Layout::isMouseClicked())
+		else if (isHovered() && Layout::isMouseClicked())
 		{
 			Editor::instance()->state.unselectEntity();
 		}
