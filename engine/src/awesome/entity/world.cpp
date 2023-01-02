@@ -10,7 +10,7 @@
 
 void World::update(const double deltaTime, const int quadspaceBounds)
 {
-	// quadtree update
+	// quadtree update & parenting
 	for (const auto& entity : m_entities)
 	{
 		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();

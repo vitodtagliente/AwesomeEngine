@@ -20,7 +20,6 @@ namespace graphics
 class Entity : public ISerializable
 {
 public:
-
 	enum class State
 	{
 		PendingSpawn,
@@ -119,7 +118,6 @@ public:
 	bool transient{ false };
 
 private:
-
 	std::vector<std::unique_ptr<Entity>> m_children;
 	std::vector<std::unique_ptr<Component>> m_components;
 	uuid m_id;

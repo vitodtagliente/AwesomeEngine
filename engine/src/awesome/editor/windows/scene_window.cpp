@@ -62,6 +62,20 @@ void SceneWindow::render()
 				m_state = NavigationState::Navigating;
 				selectEntity(entity.get());
 			}
+
+			Layout::beginDrag("ENTITY_REPARENT", entity->name, (void*)(&entity->getId()), sizeof(uuid));
+			Layout::endDrag("ENTITY_REPARENT", [this, &entity](void* const data, const size_t) -> void
+				{
+					const uuid id = *(const uuid*)data;
+					if (id == entity->getId()) return;
+
+					Entity* const inEntity = World::instance().findEntityById(id);
+					if (inEntity != nullptr)
+					{
+						inEntity->setParent(entity.get());
+					}
+				}
+			);
 		}
 	}
 	Layout::endChild();

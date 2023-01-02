@@ -155,7 +155,7 @@ void Menu::menuView()
 		{
 			if (MenuLayout::item(window->getTitle(), window->visible))
 			{
-				window->visible != window->visible;
+				window->visible = !window->visible;
 			}
 		}
 
