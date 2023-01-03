@@ -19,6 +19,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/player/player.h>
 #include <awesome/net/net_module.h>
+#include <awesome/ui/ui.h>
 
 using namespace graphics;
 
@@ -162,6 +163,7 @@ void Application::registerDefaultModules()
 	{
 		registerModule<Audio>();
 		registerModule<graphics::Module>();
+		registerModule<UI>();
 	}
 
 	if (settings.mode == Mode::Editor)

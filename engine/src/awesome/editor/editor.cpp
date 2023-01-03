@@ -1,5 +1,7 @@
 #include "editor.h"
 
+#include <assert.h>
+
 #include <imgui.h>
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD 
 #include <backends/imgui_impl_glfw.h>
