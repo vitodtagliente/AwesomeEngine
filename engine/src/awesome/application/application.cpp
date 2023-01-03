@@ -88,11 +88,9 @@ int Application::run()
 				module->preRendering();
 			}
 
-			world.render(renderer, settings.debug->wireframesEnabled, settings.debug->wireframesColor);
-
 			for (const auto& module : m_modules)
 			{
-				module->render(renderer);
+				module->render(&world, renderer);
 			}
 
 			for (const auto& module : m_modules)

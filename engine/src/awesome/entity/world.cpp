@@ -3,7 +3,6 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/component/collider2d_component.h>
 #include <awesome/data/archive.h>
-#include <awesome/graphics/renderer.h>
 #include <awesome/net/network_manager.h>
 
 #include "private/scene_loader.h"
@@ -20,6 +19,13 @@ void World::update(const double deltaTime, const int quadspaceBounds)
 		}
 	}
 
+	// sort the entities by depth
+	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
+		{
+			return a->transform.position.z < b->transform.position.z;
+		}
+	);
+
 	// entities update
 	for (const auto& entity : m_entities)
 	{
@@ -27,26 +33,6 @@ void World::update(const double deltaTime, const int quadspaceBounds)
 	}
 	
 	checkCollisions();
-}
-
-void World::render(graphics::Renderer2D* const renderer, const bool drawWireframes, const graphics::Color& wireframesColor)
-{
-	// sort the entities by z
-	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
-		{
-			return a->transform.position.z < b->transform.position.z;
-		}
-	);
-
-	for (const auto& entity : m_entities)
-	{
-		entity->render(renderer);
-	}
-
-	if (drawWireframes)
-	{
-		m_quadspace.render(renderer, wireframesColor);
-	}
 }
 
 void World::flush()

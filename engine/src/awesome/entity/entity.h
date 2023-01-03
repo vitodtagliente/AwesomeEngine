@@ -12,11 +12,6 @@
 
 #include "component.h"
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
 class Entity : public ISerializable
 {
 public:
@@ -42,7 +37,6 @@ public:
 	virtual void prepareToDestroy();
 	virtual void prepareToSpawn();
 	void setParent(Entity* const entity);
-	void render(graphics::Renderer2D* const renderer);
 	void update(double deltaTime);
 
 	static void duplicate(const Entity& from, Entity& duplicate);
@@ -53,7 +47,7 @@ public:
 	bool operator!= (const Entity& other) const;
 
 	template <typename T = Component>
-	std::vector<T*> getComponents() const
+	std::vector<T*> findComponents() const
 	{
 		std::vector<T*> found_components;
 		for (const auto& component : m_components)

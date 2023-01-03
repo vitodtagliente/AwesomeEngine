@@ -2,7 +2,8 @@
 
 #include <assert.h>
 
-#include <awesome/graphics/graphics_module.h>
+#include <awesome/graphics/renderer.h>
+#include <awesome/entity/world.h>
 
 UI* UI::s_instance{ nullptr };
 
@@ -28,7 +29,7 @@ void UI::preRendering()
 	
 }
 
-void UI::render(graphics::Renderer2D* const)
+void UI::render(World* const world, graphics::Renderer2D* const)
 {
 	
 }

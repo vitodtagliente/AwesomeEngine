@@ -8,6 +8,8 @@ namespace graphics
 	class Renderer2D;
 }
 
+class World;
+
 class UI : public ApplicationModule
 {
 public:
@@ -16,7 +18,7 @@ public:
 	virtual void startup() override;
 	virtual void shutdown() override;
 	virtual void preRendering() override;
-	virtual void render(graphics::Renderer2D* const renderer) override;
+	virtual void render(World* const world, graphics::Renderer2D* const renderer) override;
 	virtual void postRendering() override;
 	virtual void update(double deltaTime) override;
 

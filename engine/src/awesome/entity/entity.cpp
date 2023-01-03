@@ -1,7 +1,5 @@
 #include "entity.h"
 
-#include <awesome/graphics/graphics_component.h>
-#include <awesome/graphics/renderer.h>
 #include <awesome/net/network_manager.h>
 
 void Entity::prepareToSpawn()
@@ -67,20 +65,6 @@ void Entity::duplicate(const PrefabAssetPtr& prefab, Entity& duplicate)
 		duplicate.deserialize(prefab->data.value());
 		duplicate.m_id = id;
 		duplicate.m_prefab = prefab->descriptor.id;
-	}
-}
-
-void Entity::render(graphics::Renderer2D* const renderer)
-{
-	for (const auto& component : m_components)
-	{
-		if (!component->enabled) continue;
-
-
-		if (graphics::IGraphicsComponent* const graphicsComponent = dynamic_cast<graphics::IGraphicsComponent*>(component.get()))
-		{
-			graphicsComponent->render(renderer);
-		}
 	}
 }
 

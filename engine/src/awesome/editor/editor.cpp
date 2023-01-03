@@ -12,6 +12,7 @@
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
 #include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 
 #include "color_scheme.h"
 #include "dialog.h"
@@ -75,7 +76,7 @@ void Editor::preRendering()
 	ImGui::NewFrame();
 }
 
-void Editor::render(graphics::Renderer2D* const)
+void Editor::render(World* const world, graphics::Renderer2D* const)
 {
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	m_menu.render();

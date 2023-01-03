@@ -16,16 +16,10 @@
 #include "entity.h"
 #include "quadspace.h"
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
 class World final : public Singleton<World>, ISerializable
 {
 public:
 	void update(double deltaTime, int quadspaceBounds);
-	void render(graphics::Renderer2D* const renderer, bool drawWireframes, const graphics::Color& wireframesColor);
 	void flush();
 
 	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
