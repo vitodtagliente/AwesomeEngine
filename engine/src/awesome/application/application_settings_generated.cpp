@@ -25,38 +25,122 @@ const enum_values_t& EnumType<FpsMode>::values()
     return s_values;
 }
 
+const meta_t& ApplicationEditorSettings::getTypeMeta() const { return ApplicationEditorSettingsType::type().meta; }
+const std::string& ApplicationEditorSettings::getTypeName() const { return ApplicationEditorSettingsType::type().name; }
+const properties_t ApplicationEditorSettings::getTypeProperties() const {
+    properties_t properties;
+    return properties;
+}
+std::size_t ApplicationEditorSettings::getTypeSize() const { return ApplicationEditorSettingsType::type().size; }
+
+const TypeDefinition& ApplicationEditorSettingsType::type()
+{
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationEditorSettings(); }, "ApplicationEditorSettings", {
+    }, sizeof(ApplicationEditorSettings));
+    return s_typeDefinition;
+}
+const meta_t& ApplicationDebugSettings::getTypeMeta() const { return ApplicationDebugSettingsType::type().meta; }
+const std::string& ApplicationDebugSettings::getTypeName() const { return ApplicationDebugSettingsType::type().name; }
+const properties_t ApplicationDebugSettings::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
+    properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("wireframesEnabled", Property("wireframesEnabled", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(ApplicationDebugSettings, wireframesEnabled), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("wireframesColor", Property("wireframesColor", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ApplicationDebugSettings, wireframesColor), {
+    })));
+    return properties;
+}
+std::size_t ApplicationDebugSettings::getTypeSize() const { return ApplicationDebugSettingsType::type().size; }
+
+const TypeDefinition& ApplicationDebugSettingsType::type()
+{
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationDebugSettings(); }, "ApplicationDebugSettings", {
+    }, sizeof(ApplicationDebugSettings));
+    return s_typeDefinition;
+}
+const meta_t& ApplicationNetworkSettings::getTypeMeta() const { return ApplicationNetworkSettingsType::type().meta; }
+const std::string& ApplicationNetworkSettings::getTypeName() const { return ApplicationNetworkSettingsType::type().name; }
+const properties_t ApplicationNetworkSettings::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
+    properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationNetworkSettings, maxServerConnections), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(ApplicationNetworkSettings, serverIp), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationNetworkSettings, serverPort), {
+    })));
+    return properties;
+}
+std::size_t ApplicationNetworkSettings::getTypeSize() const { return ApplicationNetworkSettingsType::type().size; }
+
+const TypeDefinition& ApplicationNetworkSettingsType::type()
+{
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationNetworkSettings(); }, "ApplicationNetworkSettings", {
+    }, sizeof(ApplicationNetworkSettings));
+    return s_typeDefinition;
+}
+const meta_t& ApplicationPlayerSettings::getTypeMeta() const { return ApplicationPlayerSettingsType::type().meta; }
+const std::string& ApplicationPlayerSettings::getTypeName() const { return ApplicationPlayerSettingsType::type().name; }
+const properties_t ApplicationPlayerSettings::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
+    properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("playerControllerType", Property("playerControllerType", Property::TypeDescriptor("TypeName<PlayerController>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerController", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerController>), origin + offsetof(ApplicationPlayerSettings, playerControllerType), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("playerStateType", Property("playerStateType", Property::TypeDescriptor("TypeName<PlayerState>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerState", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerState>), origin + offsetof(ApplicationPlayerSettings, playerStateType), {
+    })));
+    return properties;
+}
+std::size_t ApplicationPlayerSettings::getTypeSize() const { return ApplicationPlayerSettingsType::type().size; }
+
+const TypeDefinition& ApplicationPlayerSettingsType::type()
+{
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationPlayerSettings(); }, "ApplicationPlayerSettings", {
+    }, sizeof(ApplicationPlayerSettings));
+    return s_typeDefinition;
+}
+const meta_t& ApplicationSceneSettings::getTypeMeta() const { return ApplicationSceneSettingsType::type().meta; }
+const std::string& ApplicationSceneSettings::getTypeName() const { return ApplicationSceneSettingsType::type().name; }
+const properties_t ApplicationSceneSettings::getTypeProperties() const {
+    member_address_t origin = reinterpret_cast<member_address_t>(this);
+    properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSceneSettings, editorScene), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSceneSettings, serverScene), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSceneSettings, standaloneScene), {
+    })));
+    return properties;
+}
+std::size_t ApplicationSceneSettings::getTypeSize() const { return ApplicationSceneSettingsType::type().size; }
+
+const TypeDefinition& ApplicationSceneSettingsType::type()
+{
+    static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationSceneSettings(); }, "ApplicationSceneSettings", {
+    }, sizeof(ApplicationSceneSettings));
+    return s_typeDefinition;
+}
 const meta_t& ApplicationSettings::getTypeMeta() const { return ApplicationSettingsType::type().meta; }
 const std::string& ApplicationSettings::getTypeName() const { return ApplicationSettingsType::type().name; }
 const properties_t ApplicationSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
+    properties.insert(std::make_pair<std::string, Property>("debug", Property("debug", Property::TypeDescriptor("ApplicationDebugSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationDebugSettings>), origin + offsetof(ApplicationSettings, debug), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("editor", Property("editor", Property::TypeDescriptor("ApplicationEditorSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationEditorSettings>), origin + offsetof(ApplicationSettings, editor), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("fps", Property("fps", Property::TypeDescriptor("FpsMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(FpsMode), origin + offsetof(ApplicationSettings, fps), {
     })));
     properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", Property::TypeDescriptor("ApplicationMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(ApplicationMode), origin + offsetof(ApplicationSettings, mode), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", Property::TypeDescriptor("std::filesystem::path", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(std::filesystem::path), origin + offsetof(ApplicationSettings, workspacePath), {
+    properties.insert(std::make_pair<std::string, Property>("network", Property("network", Property::TypeDescriptor("ApplicationNetworkSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationNetworkSettings>), origin + offsetof(ApplicationSettings, network), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("editorScene", Property("editorScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, editorScene), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("serverScene", Property("serverScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, serverScene), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("standaloneScene", Property("standaloneScene", Property::TypeDescriptor("SceneAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SceneAssetPtr), origin + offsetof(ApplicationSettings, standaloneScene), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("serverIp", Property("serverIp", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(ApplicationSettings, serverIp), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("serverPort", Property("serverPort", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, serverPort), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("maxServerConnections", Property("maxServerConnections", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, maxServerConnections), {
+    properties.insert(std::make_pair<std::string, Property>("player", Property("player", Property::TypeDescriptor("ApplicationPlayerSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationPlayerSettings>), origin + offsetof(ApplicationSettings, player), {
     })));
     properties.insert(std::make_pair<std::string, Property>("quadspaceBounds", Property("quadspaceBounds", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(ApplicationSettings, quadspaceBounds), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("wireframesEnabled", Property("wireframesEnabled", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(ApplicationSettings, wireframesEnabled), {
+    properties.insert(std::make_pair<std::string, Property>("scene", Property("scene", Property::TypeDescriptor("ApplicationSceneSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationSceneSettings>), origin + offsetof(ApplicationSettings, scene), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("wireframesColor", Property("wireframesColor", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ApplicationSettings, wireframesColor), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("playerControllerType", Property("playerControllerType", Property::TypeDescriptor("TypeName<PlayerController>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerController", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerController>), origin + offsetof(ApplicationSettings, playerControllerType), {
-    })));
-    properties.insert(std::make_pair<std::string, Property>("playerStateType", Property("playerStateType", Property::TypeDescriptor("TypeName<PlayerState>", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("PlayerState", Property::Type::T_custom_type, Property::DecoratorType::D_normalized, {})}), sizeof(TypeName<PlayerState>), origin + offsetof(ApplicationSettings, playerStateType), {
+    properties.insert(std::make_pair<std::string, Property>("workspacePath", Property("workspacePath", Property::TypeDescriptor("std::filesystem::path", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(std::filesystem::path), origin + offsetof(ApplicationSettings, workspacePath), {
     })));
     return properties;
 }

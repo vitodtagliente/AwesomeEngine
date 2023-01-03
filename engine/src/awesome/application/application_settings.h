@@ -3,6 +3,8 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
+
 #include <awesome/asset/scene_asset.h>
 #include <awesome/core/type_name.h>
 #include <awesome/graphics/color.h>
@@ -28,6 +30,52 @@ enum class FpsMode : int
 };
 
 CLASS()
+struct ApplicationEditorSettings : public Type
+{
+
+
+    GENERATED_BODY()
+};
+
+CLASS()
+struct ApplicationDebugSettings : public Type
+{
+    PROPERTY() bool wireframesEnabled{ true };
+    PROPERTY() graphics::Color wireframesColor{ graphics::Color::White };
+
+    GENERATED_BODY()
+};
+
+CLASS()
+struct ApplicationNetworkSettings : public Type
+{
+    PROPERTY() int maxServerConnections{ 20 };
+    PROPERTY() std::string serverIp;
+    PROPERTY() int serverPort{ 96000 };
+
+    GENERATED_BODY()
+};
+
+CLASS()
+struct ApplicationPlayerSettings : public Type
+{
+    PROPERTY() TypeName<PlayerController> playerControllerType;
+    PROPERTY() TypeName<PlayerState> playerStateType;
+
+    GENERATED_BODY()
+};
+
+CLASS()
+struct ApplicationSceneSettings : public Type
+{
+    PROPERTY() SceneAssetPtr editorScene;
+    PROPERTY() SceneAssetPtr serverScene;
+    PROPERTY() SceneAssetPtr standaloneScene;
+
+    GENERATED_BODY()
+};
+
+CLASS()
 class ApplicationSettings : public Type
 {
 public:
@@ -35,20 +83,15 @@ public:
 
     static constexpr char* filename{ "settings.json" };
 
+    PROPERTY() std::unique_ptr<ApplicationDebugSettings> debug;
+    PROPERTY() std::unique_ptr<ApplicationEditorSettings> editor;
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() ApplicationMode mode { ApplicationMode::Editor };
-    PROPERTY() std::filesystem::path workspacePath { std::filesystem::current_path() / ".." / "assets" };
-    PROPERTY() SceneAssetPtr editorScene;
-    PROPERTY() SceneAssetPtr serverScene;
-    PROPERTY() SceneAssetPtr standaloneScene;
-    PROPERTY() std::string serverIp;
-    PROPERTY() int serverPort { 96000 };
-    PROPERTY() int maxServerConnections { 20 };
+    PROPERTY() std::unique_ptr<ApplicationNetworkSettings> network;
+    PROPERTY() std::unique_ptr<ApplicationPlayerSettings> player;
     PROPERTY() int quadspaceBounds{ 100 };
-    PROPERTY() bool wireframesEnabled{ true };
-    PROPERTY() graphics::Color wireframesColor{ graphics::Color::White };
-    PROPERTY() TypeName<PlayerController> playerControllerType;
-    PROPERTY() TypeName<PlayerState> playerStateType;
+    PROPERTY() std::unique_ptr<ApplicationSceneSettings> scene;
+    PROPERTY() std::filesystem::path workspacePath{ std::filesystem::current_path() / ".." / "assets" };
 
     GENERATED_BODY()
 };

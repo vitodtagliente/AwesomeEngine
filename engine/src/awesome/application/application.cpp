@@ -55,8 +55,8 @@ int Application::run()
 	// there's always a player at index 0
 	Player::initialize(
 		PlayerIndex::Player0,
-		settings.playerControllerType.value.empty() ? "PlayerController" : settings.playerControllerType.value,
-		settings.playerStateType.value.empty() ? "PlayerState" : settings.playerStateType.value
+		settings.player->playerControllerType.value.empty() ? "PlayerController" : settings.player->playerControllerType.value,
+		settings.player->playerStateType.value.empty() ? "PlayerState" : settings.player->playerStateType.value
 	);
 
 	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
@@ -88,7 +88,7 @@ int Application::run()
 				module->preRendering();
 			}
 
-			world.render(renderer, settings.wireframesEnabled, settings.wireframesColor);
+			world.render(renderer, settings.debug->wireframesEnabled, settings.debug->wireframesColor);
 
 			for (const auto& module : m_modules)
 			{
@@ -136,9 +136,9 @@ void Application::initSettings()
 	SceneAssetPtr sceneToLoad;
 	switch (settings.mode)
 	{
-	case Mode::Editor: sceneToLoad = settings.editorScene; break;
-	case Mode::Server: sceneToLoad = settings.serverScene; break;
-	case Mode::Standalone: sceneToLoad = settings.standaloneScene; break;
+	case Mode::Editor: sceneToLoad = settings.scene->editorScene; break;
+	case Mode::Server: sceneToLoad = settings.scene->serverScene; break;
+	case Mode::Standalone: sceneToLoad = settings.scene->standaloneScene; break;
 	}
 
 	if (sceneToLoad)

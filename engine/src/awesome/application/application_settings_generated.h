@@ -28,6 +28,46 @@ struct FpsModeEnum : RegisteredInEnumFactory<enum class FpsMode>
     static bool registered() { return value; };
 };
 
+struct ApplicationEditorSettingsType : RegisteredInTypeFactory<ApplicationEditorSettingsType>
+{
+    ApplicationEditorSettingsType() = delete;
+
+    static const TypeDefinition& type();
+    static bool registered() { return value; };
+};
+
+struct ApplicationDebugSettingsType : RegisteredInTypeFactory<ApplicationDebugSettingsType>
+{
+    ApplicationDebugSettingsType() = delete;
+
+    static const TypeDefinition& type();
+    static bool registered() { return value; };
+};
+
+struct ApplicationNetworkSettingsType : RegisteredInTypeFactory<ApplicationNetworkSettingsType>
+{
+    ApplicationNetworkSettingsType() = delete;
+
+    static const TypeDefinition& type();
+    static bool registered() { return value; };
+};
+
+struct ApplicationPlayerSettingsType : RegisteredInTypeFactory<ApplicationPlayerSettingsType>
+{
+    ApplicationPlayerSettingsType() = delete;
+
+    static const TypeDefinition& type();
+    static bool registered() { return value; };
+};
+
+struct ApplicationSceneSettingsType : RegisteredInTypeFactory<ApplicationSceneSettingsType>
+{
+    ApplicationSceneSettingsType() = delete;
+
+    static const TypeDefinition& type();
+    static bool registered() { return value; };
+};
+
 struct ApplicationSettingsType : RegisteredInTypeFactory<ApplicationSettingsType>
 {
     ApplicationSettingsType() = delete;
