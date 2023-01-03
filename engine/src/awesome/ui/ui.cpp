@@ -33,7 +33,8 @@ void UI::preRendering()
 
 void UI::render(World* const world, graphics::Renderer2D* const renderer)
 {
-	// renderer->setViewMatrix(math::mat4::identity);
+	const auto previousViewMatrix = renderer->getViewMatrix();
+	renderer->setViewMatrix(math::mat4::identity);
 
 	const auto& entities = world->getEntities();
 	for (const auto& entity : entities)
@@ -48,6 +49,8 @@ void UI::render(World* const world, graphics::Renderer2D* const renderer)
 			}
 		}
 	}
+
+	renderer->setViewMatrix(previousViewMatrix);
 }
 
 void UI::postRendering()
