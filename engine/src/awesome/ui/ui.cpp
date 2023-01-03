@@ -5,6 +5,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/world.h>
 
+#include "components/components.h"
 #include "ui_component.h"
 
 UI* UI::s_instance{ nullptr };
