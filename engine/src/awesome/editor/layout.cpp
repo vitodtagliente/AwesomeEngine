@@ -230,13 +230,13 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(id(name).c_str(), &value);
 }
 
-void Layout::input(const std::string& name, AssetPtr& value)
+void Layout::input(const std::string& name, const AssetType type, AssetPtr& value)
 {
 	static AssetBrowserDialog s_assetBrowserDialog;
 
 	if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
 	{
-		s_assetBrowserDialog.open(name, value->descriptor.type, [&value](const AssetPtr& asset) -> void
+		s_assetBrowserDialog.open(name, type, [&value](const AssetPtr& asset) -> void
 			{
 				value = asset;
 			}
@@ -247,7 +247,7 @@ void Layout::input(const std::string& name, AssetPtr& value)
 
 void Layout::input(const std::string& name, ImageAssetPtr& value)
 {
-	input(name, (AssetPtr&)value);
+	input(name, AssetType::Image, (AssetPtr&)value);
 }
 
 void Layout::input(const std::string&, math::transform& value)
@@ -407,7 +407,9 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(backChildTypeName, "AssetPtr"))
 				{
-					input(label, prop.value<std::map<std::string, AssetPtr>>()); break;
+					AssetType type = AssetType::None;
+					stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
+					input(label, type, prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -469,7 +471,9 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(frontChildTypeName, "AssetPtr"))
 				{
-					input(label, prop.value<std::vector<AssetPtr>>()); break;
+					AssetType type = AssetType::None;
+					stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
+					input(label, type, prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -509,7 +513,9 @@ void Layout::input(Type& value)
 			}
 			else if (StringUtil::contains(prop.descriptor.name, "AssetPtr"))
 			{
-				Layout::input(label, prop.value<AssetPtr>());
+				AssetType type = AssetType::None;
+				stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
+				Layout::input(label, type, prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{
@@ -563,6 +569,22 @@ void Layout::input(const std::string& name, std::shared_ptr<Type>& type, const s
 	}
 }
 
+void Layout::input(const std::string& name, const AssetType type, std::vector<AssetPtr>& list)
+{
+	input<AssetPtr>(
+		name,
+		list,
+		[type](AssetPtr& element) -> void
+		{
+			input("Value", type, element);
+		},
+		[]() -> AssetPtr
+		{
+			return AssetPtr();
+		}
+		);
+}
+
 void Layout::input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName)
 {
 	input<std::shared_ptr<Type>>(
@@ -591,6 +613,22 @@ void Layout::input(const std::string& name, std::vector<std::unique_ptr<Type>>& 
 		[typeName]() -> std::unique_ptr<Type>
 		{
 			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+		}
+		);
+}
+
+void Layout::input(const std::string& name, AssetType type, std::map<std::string, AssetPtr>& map)
+{
+	input<std::string, AssetPtr>(
+		name,
+		map,
+		[type](AssetPtr& element) -> void
+		{
+			input("Value", type, element);
+		},
+		[]() -> AssetPtr
+		{
+			return AssetPtr();
 		}
 		);
 }
