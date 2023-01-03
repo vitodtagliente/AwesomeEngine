@@ -1,5 +1,7 @@
 #include "graphics_module.h"
 
+#include <awesome/application/canvas.h>
+#include <awesome/component/camera_component.h>
 #include <awesome/entity/world.h>
 
 #include "context.h"
@@ -24,6 +26,17 @@ namespace graphics
 
 	void Module::render(World* const world, graphics::Renderer2D* const renderer)
 	{
+		const auto& canvas = Canvas::instance();
+		renderer->setViewport(canvas.getWidth(), canvas.getHeight());
+
+		CameraComponent* const camera = CameraComponent::main();
+		if (camera)
+		{
+			renderer->setClearColor(camera->color);
+			renderer->setProjectionMatrix(camera->getData().getProjectionMatrix(canvas.getWidth(), canvas.getHeight()));
+			renderer->setViewMatrix(camera->getData().getViewMatrix());
+		}		
+
 		const auto& entities = world->getEntities();
 		for (const auto& entity : entities)
 		{

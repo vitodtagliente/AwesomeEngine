@@ -4,12 +4,12 @@
 #include <awesome/asset/sprite_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
-#include <awesome/graphics/graphics_component.h>
+#include <awesome/ui/ui_component.h>
 
 #include "image_component_generated.h"
 
 CLASS(Type = Component, Category = UI)
-class ImageComponent : public graphics::IGraphicsComponent, public Component
+class ImageComponent : public IUIComponent, public Component
 {
 public:
 	ImageComponent() = default;

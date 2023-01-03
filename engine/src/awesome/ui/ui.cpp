@@ -5,6 +5,8 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/world.h>
 
+#include "ui_component.h"
+
 UI* UI::s_instance{ nullptr };
 
 UI::UI()
@@ -29,9 +31,23 @@ void UI::preRendering()
 	
 }
 
-void UI::render(World* const world, graphics::Renderer2D* const)
+void UI::render(World* const world, graphics::Renderer2D* const renderer)
 {
-	
+	// renderer->setViewMatrix(math::mat4::identity);
+
+	const auto& entities = world->getEntities();
+	for (const auto& entity : entities)
+	{
+		for (const auto& component : entity->getComponents())
+		{
+			if (!component->enabled) continue;
+
+			if (IUIComponent* const uiComponent = dynamic_cast<IUIComponent*>(component.get()))
+			{
+				uiComponent->render(renderer);
+			}
+		}
+	}
 }
 
 void UI::postRendering()

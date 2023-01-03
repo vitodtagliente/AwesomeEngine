@@ -16,9 +16,10 @@ public:
 	CameraComponent();
 	virtual ~CameraComponent() = default;
 
-	virtual void update(double) override;
-
+	const graphics::Camera& getData() const { return *m_data; }
 	virtual math::vec3 screenToWorldCoords(const math::vec2& point);
+
+	virtual void update(double) override;
 
 	static CameraComponent* const main();
 
