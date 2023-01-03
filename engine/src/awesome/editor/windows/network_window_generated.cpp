@@ -13,7 +13,7 @@ std::size_t NetworkWindow::getTypeSize() const { return NetworkWindowType::type(
 const TypeDefinition& NetworkWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new NetworkWindow(); }, "NetworkWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(NetworkWindow));
     return s_typeDefinition;
 }

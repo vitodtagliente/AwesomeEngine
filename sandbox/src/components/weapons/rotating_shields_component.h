@@ -7,7 +7,7 @@
 
 #include "rotating_shields_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class RotatingShieldsComponent : public WeaponComponent
 {
 public:

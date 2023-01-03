@@ -5,7 +5,7 @@
 
 #include "settings_window_generated.h"
 
-CLASS(Category = Window)
+CLASS(Type = Window)
 class SettingsWindow : public Window
 {
 public:

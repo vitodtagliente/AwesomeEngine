@@ -292,7 +292,7 @@ void Layout::input(const std::string& name, const std::string& category, TypeNam
 {
 	if (Layout::beginCombo(name, type.value))
 	{
-		const std::vector<std::string>& s_types = TypeFactory::list("Category", category);
+		const std::vector<std::string>& s_types = TypeFactory::list("Type", category);
 		for (const std::string& s_type : s_types)
 		{
 			if (Layout::selectable(s_type.c_str(), false))

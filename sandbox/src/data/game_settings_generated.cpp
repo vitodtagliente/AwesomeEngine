@@ -26,7 +26,7 @@ std::size_t WeaponLevel::getTypeSize() const { return WeaponLevelType::type().si
 const TypeDefinition& WeaponLevelType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new WeaponLevel(); }, "WeaponLevel", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(WeaponLevel));
     return s_typeDefinition;
 }
@@ -52,7 +52,7 @@ std::size_t WeaponItem::getTypeSize() const { return WeaponItemType::type().size
 const TypeDefinition& WeaponItemType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new WeaponItem(); }, "WeaponItem", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(WeaponItem));
     return s_typeDefinition;
 }
@@ -74,7 +74,7 @@ std::size_t GameSettings::getTypeSize() const { return GameSettingsType::type().
 const TypeDefinition& GameSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new GameSettings(); }, "GameSettings", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(GameSettings));
     return s_typeDefinition;
 }

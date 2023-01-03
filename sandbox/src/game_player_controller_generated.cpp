@@ -13,7 +13,7 @@ std::size_t GamePlayerController::getTypeSize() const { return GamePlayerControl
 const TypeDefinition& GamePlayerControllerType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new GamePlayerController(); }, "GamePlayerController", {
-        std::make_pair("Category", "PlayerController"),
+        std::make_pair("Type", "PlayerController"),
     }, sizeof(GamePlayerController));
     return s_typeDefinition;
 }

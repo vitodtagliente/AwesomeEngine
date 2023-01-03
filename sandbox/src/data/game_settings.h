@@ -8,7 +8,7 @@
 #include "game_settings_generated.h"
 #include "item.h"
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct WeaponLevel : public Type
 {
 	PROPERTY() float duration{ 0.f };
@@ -21,7 +21,7 @@ struct WeaponLevel : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct WeaponItem : public Type
 {
 	PROPERTY() std::string name;
@@ -33,7 +33,7 @@ struct WeaponItem : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct GameSettings : public Singleton<GameSettings>, public Type
 {
 	void load();

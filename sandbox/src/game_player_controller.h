@@ -5,7 +5,7 @@
 
 #include "game_player_controller_generated.h"
 
-CLASS(Category = PlayerController)
+CLASS(Type = PlayerController)
 class GamePlayerController : public PlayerController
 {
 public:

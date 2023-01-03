@@ -19,7 +19,7 @@ std::size_t GizmosRendererComponent::getTypeSize() const { return GizmosRenderer
 const TypeDefinition& GizmosRendererComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new GizmosRendererComponent(); }, "GizmosRendererComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(GizmosRendererComponent));
     return s_typeDefinition;
 }

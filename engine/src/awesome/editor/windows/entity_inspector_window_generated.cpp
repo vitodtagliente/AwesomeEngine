@@ -13,7 +13,7 @@ std::size_t EntityInspectorWindow::getTypeSize() const { return EntityInspectorW
 const TypeDefinition& EntityInspectorWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new EntityInspectorWindow(); }, "EntityInspectorWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(EntityInspectorWindow));
     return s_typeDefinition;
 }

@@ -8,7 +8,7 @@
 
 #include "log_window_generated.h"
 
-CLASS(Category = Window)
+CLASS(Type = Window)
 class LogWindow : public Logger::IListener, public Window
 {
 public:

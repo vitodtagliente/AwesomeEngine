@@ -16,7 +16,7 @@ std::size_t MinionControllerComponent::getTypeSize() const { return MinionContro
 const TypeDefinition& MinionControllerComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new MinionControllerComponent(); }, "MinionControllerComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(MinionControllerComponent));
     return s_typeDefinition;
 }

@@ -5,7 +5,7 @@
 
 #include "game_settings_window_generated.h"
 
-CLASS(Category = Window)
+CLASS(Type = Window)
 class GameSettingsWindow : public Window
 {
 public:

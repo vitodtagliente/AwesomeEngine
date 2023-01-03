@@ -8,7 +8,7 @@
 #include "gizmos_renderer_component_generated.h"
 #include "shape_type.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class GizmosRendererComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

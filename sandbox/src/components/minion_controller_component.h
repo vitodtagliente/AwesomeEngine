@@ -5,7 +5,7 @@
 
 #include "minion_controller_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class MinionControllerComponent : public Component
 {
 public:

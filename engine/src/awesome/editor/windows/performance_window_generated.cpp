@@ -13,7 +13,7 @@ std::size_t PerformanceWindow::getTypeSize() const { return PerformanceWindowTyp
 const TypeDefinition& PerformanceWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new PerformanceWindow(); }, "PerformanceWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(PerformanceWindow));
     return s_typeDefinition;
 }

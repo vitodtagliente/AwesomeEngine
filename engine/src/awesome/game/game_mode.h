@@ -5,7 +5,7 @@
 
 #include "game_mode_generated.h"
 
-CLASS(Category = GameMode)
+CLASS(Type = GameMode)
 class GameMode : public Type
 {
 public:

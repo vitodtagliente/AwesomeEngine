@@ -13,7 +13,7 @@ std::size_t SettingsWindow::getTypeSize() const { return SettingsWindowType::typ
 const TypeDefinition& SettingsWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SettingsWindow(); }, "SettingsWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(SettingsWindow));
     return s_typeDefinition;
 }

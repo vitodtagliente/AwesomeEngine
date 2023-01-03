@@ -8,7 +8,7 @@
 
 #include "shield_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class ShieldComponent : public graphics::IGraphicsComponent, public WeaponComponent
 {
 public:

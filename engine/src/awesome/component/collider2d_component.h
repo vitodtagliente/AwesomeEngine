@@ -12,7 +12,7 @@
 
 #include "collider2d_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class Collider2dComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

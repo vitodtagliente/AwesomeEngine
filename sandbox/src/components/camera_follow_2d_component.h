@@ -6,7 +6,7 @@
 
 #include "camera_follow_2d_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class CameraFollow2dComponent : public Component
 {
 public:

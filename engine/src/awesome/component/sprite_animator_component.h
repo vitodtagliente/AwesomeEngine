@@ -11,7 +11,7 @@
 
 #include "sprite_animator_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class SpriteAnimatorComponent : public Component
 {
 public:

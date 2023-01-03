@@ -15,7 +15,7 @@ enum class SpawnType
 	AtPosition
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 class Wave : public Type
 {
 public:

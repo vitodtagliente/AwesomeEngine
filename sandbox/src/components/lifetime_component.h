@@ -5,7 +5,7 @@
 
 #include "lifetime_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class LifetimeComponent : public Component
 {
 public:

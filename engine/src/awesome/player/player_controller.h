@@ -7,7 +7,7 @@
 
 #include "player_controller_generated.h"
 
-CLASS(Category = PlayerController)
+CLASS(Type = PlayerController)
 class PlayerController : public Component
 {
 public:

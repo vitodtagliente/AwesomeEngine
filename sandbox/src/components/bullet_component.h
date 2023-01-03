@@ -5,7 +5,7 @@
 
 #include "bullet_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class BulletComponent : public Component
 {
 public:

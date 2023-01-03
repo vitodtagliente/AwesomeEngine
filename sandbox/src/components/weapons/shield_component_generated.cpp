@@ -16,7 +16,7 @@ std::size_t ShieldComponent::getTypeSize() const { return ShieldComponentType::t
 const TypeDefinition& ShieldComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ShieldComponent(); }, "ShieldComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(ShieldComponent));
     return s_typeDefinition;
 }

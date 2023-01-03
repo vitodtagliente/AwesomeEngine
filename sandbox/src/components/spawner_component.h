@@ -9,7 +9,7 @@
 
 #include "spawner_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class SpawnerComponent : public Component
 {
 public:

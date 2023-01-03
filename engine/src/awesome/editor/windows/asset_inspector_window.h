@@ -8,7 +8,7 @@
 
 #include "asset_inspector_window_generated.h"
 
-CLASS(Category = Window)
+CLASS(Type = Window)
 class AssetInspectorWindow : public Window
 {
 public:

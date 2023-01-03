@@ -13,7 +13,7 @@ std::size_t ContentBrowserWindow::getTypeSize() const { return ContentBrowserWin
 const TypeDefinition& ContentBrowserWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ContentBrowserWindow(); }, "ContentBrowserWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(ContentBrowserWindow));
     return s_typeDefinition;
 }

@@ -5,7 +5,7 @@
 
 #include "entity_inspector_window_generated.h"
 
-CLASS(Category = Window)
+CLASS(Type = Window)
 class EntityInspectorWindow : public Window
 {
 public:

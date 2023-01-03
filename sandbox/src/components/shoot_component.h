@@ -6,7 +6,7 @@
 
 #include "shoot_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class ShootComponent : public Component
 {
 public:

@@ -118,7 +118,7 @@ void Editor::update(const double deltaTime)
 
 void Editor::registerWindows()
 {
-	static std::vector<std::string> types = TypeFactory::list("Category", "Window");
+	static std::vector<std::string> types = TypeFactory::list("Type", "Window");
 	for (const std::string& type : types)
 	{
 		Window* const window = TypeFactory::instantiate<Window>(type);

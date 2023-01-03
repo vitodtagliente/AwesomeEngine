@@ -16,7 +16,7 @@ std::size_t GamePlayerState::getTypeSize() const { return GamePlayerStateType::t
 const TypeDefinition& GamePlayerStateType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new GamePlayerState(); }, "GamePlayerState", {
-        std::make_pair("Category", "PlayerState"),
+        std::make_pair("Type", "PlayerState"),
     }, sizeof(GamePlayerState));
     return s_typeDefinition;
 }

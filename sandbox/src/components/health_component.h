@@ -8,7 +8,7 @@
 
 #include "health_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class HealthComponent : public Component
 {
 public:

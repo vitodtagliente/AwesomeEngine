@@ -28,7 +28,7 @@ std::size_t HealthComponent::getTypeSize() const { return HealthComponentType::t
 const TypeDefinition& HealthComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new HealthComponent(); }, "HealthComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(HealthComponent));
     return s_typeDefinition;
 }

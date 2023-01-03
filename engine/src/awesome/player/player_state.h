@@ -5,7 +5,7 @@
 
 #include "player_state_generated.h"
 
-CLASS(Category = PlayerState)
+CLASS(Type = PlayerState)
 class PlayerState : public Component
 {
 public:

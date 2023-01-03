@@ -13,7 +13,7 @@ std::size_t GameMode::getTypeSize() const { return GameModeType::type().size; }
 const TypeDefinition& GameModeType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new GameMode(); }, "GameMode", {
-        std::make_pair("Category", "GameMode"),
+        std::make_pair("Type", "GameMode"),
     }, sizeof(GameMode));
     return s_typeDefinition;
 }

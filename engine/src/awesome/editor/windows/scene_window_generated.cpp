@@ -13,7 +13,7 @@ std::size_t SceneWindow::getTypeSize() const { return SceneWindowType::type().si
 const TypeDefinition& SceneWindowType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SceneWindow(); }, "SceneWindow", {
-        std::make_pair("Category", "Window"),
+        std::make_pair("Type", "Window"),
     }, sizeof(SceneWindow));
     return s_typeDefinition;
 }

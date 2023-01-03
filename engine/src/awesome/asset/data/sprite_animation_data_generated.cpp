@@ -18,7 +18,7 @@ std::size_t SpriteAnimationFrame::getTypeSize() const { return SpriteAnimationFr
 const TypeDefinition& SpriteAnimationFrameType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpriteAnimationFrame(); }, "SpriteAnimationFrame", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(SpriteAnimationFrame));
     return s_typeDefinition;
 }
@@ -41,7 +41,7 @@ const TypeDefinition& SpriteAnimationDataType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpriteAnimationData(); }, "SpriteAnimationData", {
         std::make_pair("AssetType", "SpriteAnimation"),
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(SpriteAnimationData));
     return s_typeDefinition;
 }

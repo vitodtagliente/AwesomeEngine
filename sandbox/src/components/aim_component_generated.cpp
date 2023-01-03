@@ -26,7 +26,7 @@ std::size_t AimComponent::getTypeSize() const { return AimComponentType::type().
 const TypeDefinition& AimComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new AimComponent(); }, "AimComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(AimComponent));
     return s_typeDefinition;
 }

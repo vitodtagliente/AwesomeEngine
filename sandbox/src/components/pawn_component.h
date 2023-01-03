@@ -9,7 +9,7 @@
 
 #include "pawn_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class PawnComponent : public Component
 {
 public:

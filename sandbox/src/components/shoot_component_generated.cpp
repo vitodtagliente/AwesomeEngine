@@ -20,7 +20,7 @@ std::size_t ShootComponent::getTypeSize() const { return ShootComponentType::typ
 const TypeDefinition& ShootComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ShootComponent(); }, "ShootComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(ShootComponent));
     return s_typeDefinition;
 }

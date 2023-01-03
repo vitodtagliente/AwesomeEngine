@@ -16,7 +16,7 @@ std::size_t RotatingShieldsComponent::getTypeSize() const { return RotatingShiel
 const TypeDefinition& RotatingShieldsComponentType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new RotatingShieldsComponent(); }, "RotatingShieldsComponent", {
-        std::make_pair("Category", "Component"),
+        std::make_pair("Type", "Component"),
     }, sizeof(RotatingShieldsComponent));
     return s_typeDefinition;
 }

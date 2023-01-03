@@ -13,7 +13,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class AimComponent : public graphics::IGraphicsComponent, public Component
 {
 public:

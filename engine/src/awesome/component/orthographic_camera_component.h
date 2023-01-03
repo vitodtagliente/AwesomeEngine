@@ -5,7 +5,7 @@
 
 #include "orthographic_camera_component_generated.h"
 
-CLASS(Category = Component)
+CLASS(Type = Component)
 class OrthographicCameraComponent : public CameraComponent
 {
 public:

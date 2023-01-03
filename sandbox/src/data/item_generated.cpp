@@ -52,7 +52,7 @@ std::size_t ConsumableItemData::getTypeSize() const { return ConsumableItemDataT
 const TypeDefinition& ConsumableItemDataType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ConsumableItemData(); }, "ConsumableItemData", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(ConsumableItemData));
     return s_typeDefinition;
 }
@@ -70,7 +70,7 @@ std::size_t EquipmentItemData::getTypeSize() const { return EquipmentItemDataTyp
 const TypeDefinition& EquipmentItemDataType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new EquipmentItemData(); }, "EquipmentItemData", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(EquipmentItemData));
     return s_typeDefinition;
 }
@@ -104,7 +104,7 @@ std::size_t Item::getTypeSize() const { return ItemType::type().size; }
 const TypeDefinition& ItemType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new Item(); }, "Item", {
-        std::make_pair("Category", "Data"),
+        std::make_pair("Type", "Data"),
     }, sizeof(Item));
     return s_typeDefinition;
 }

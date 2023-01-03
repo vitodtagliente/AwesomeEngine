@@ -33,7 +33,7 @@ enum class ConsumableEffectType : int
 	Heal
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct ConsumableItemData : public Type
 {
 	PROPERTY() ConsumableEffectType effectType { ConsumableEffectType::Invalid };
@@ -41,7 +41,7 @@ struct ConsumableItemData : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct EquipmentItemData : public Type
 {
 	PROPERTY() EquipmentPositionType positionType { EquipmentPositionType::Invalid };
@@ -49,7 +49,7 @@ struct EquipmentItemData : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct Item : public Type
 {
 	PROPERTY() uuid id;

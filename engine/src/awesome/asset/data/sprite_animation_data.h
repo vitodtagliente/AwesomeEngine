@@ -10,7 +10,7 @@
 
 #include "sprite_animation_data_generated.h"
 
-CLASS(Category = Data)
+CLASS(Type = Data)
 struct SpriteAnimationFrame : public Type
 {
 	PROPERTY() graphics::TextureRect rect;
@@ -19,7 +19,7 @@ struct SpriteAnimationFrame : public Type
 	GENERATED_BODY()
 };
 
-CLASS(Category = Data, AssetType = SpriteAnimation)
+CLASS(Type = Data, AssetType = SpriteAnimation)
 struct SpriteAnimationData : public Type
 {
 	PROPERTY() ImageAssetPtr image;

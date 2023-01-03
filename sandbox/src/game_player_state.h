@@ -5,7 +5,7 @@
 
 #include "game_player_state_generated.h"
 
-CLASS(Category = PlayerState)
+CLASS(Type = PlayerState)
 class GamePlayerState : public PlayerState
 {
 public:
