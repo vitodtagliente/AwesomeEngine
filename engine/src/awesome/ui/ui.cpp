@@ -32,16 +32,13 @@ void UI::preRendering()
 {
 	static const bool clear = false;
 	m_renderer->begin(clear);
+	const auto& canvas = Canvas::instance();
+	m_renderer->setViewport(canvas.getWidth(), canvas.getHeight());
+	m_renderer->setProjectionMatrix(math::mat4::orthographic(-1, 1, -1, 1, -1, 1000));
 }
 
 void UI::render(World* const world, graphics::Renderer2D* const)
 {
-	const auto& canvas = Canvas::instance();
-	m_renderer->setViewport(canvas.getWidth(), canvas.getHeight());
-	float w = static_cast<float>(canvas.getWidth()) / 2 / 32;
-	float h = static_cast<float>(canvas.getHeight()) / 2 / 32;
-	m_renderer->setProjectionMatrix(math::mat4::orthographic(0, w, 0, h, -1, 1000));
-
 	const auto& entities = world->getEntities();
 	for (const auto& entity : entities)
 	{

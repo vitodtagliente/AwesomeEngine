@@ -1,8 +1,5 @@
 #include "content_browser_window.h"
 
-#include <imgui.h>
-
-#include <awesome/application/input.h>
 #include <awesome/asset/asset_filesystem.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
@@ -26,7 +23,7 @@ void ContentBrowserWindow::render()
 {
 	processInput(m_selectedItem);
 
-	ImGui::BeginChild("Header", ImVec2(0.f, 26.f), false, ImGuiWindowFlags_NoDecoration);
+	Layout::beginChild("Header", 0.f, 26.f);
 	if (Layout::button(TextIcon::plus()))
 	{
 		addFolder();
@@ -36,11 +33,11 @@ void ContentBrowserWindow::render()
 
 	const std::string previousFilter = m_filter;
 	Layout::input(TextIcon::search(), m_filter);
-	ImGui::EndChild();
+	Layout::endChild();
 
 	Layout::separator();
 
-	ImGui::BeginChild("Content", ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+	Layout::beginChild("Content");
 	if (m_directory.path != m_root)
 	{
 		if (Layout::selectable("..", false))
@@ -117,7 +114,7 @@ void ContentBrowserWindow::render()
 			}
 		}
 	}
-	ImGui::EndChild();
+	Layout::endChild();
 }
 
 void ContentBrowserWindow::update(const double)
@@ -130,15 +127,14 @@ void ContentBrowserWindow::update(const double)
 
 void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 {
-	Input& input = Input::instance();
-	if (!hasFocus() || m_selectedItem.empty())
+	if (m_selectedItem.empty())
 	{
 		return;
 	}
 
 	if (m_state == NavigationState::Renaming)
 	{
-		if (input.isKeyPressed(KeyCode::Enter) || input.isKeyPressed(KeyCode::Escape))
+		if (Layout::isKeyPressed(KeyCode::Enter) || Layout::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameFile(file, m_tempRename);
@@ -146,11 +142,11 @@ void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	}
 	else if (m_state == NavigationState::Navigating)
 	{
-		if (input.isKeyPressed(KeyCode::F2))
+		if (Layout::isKeyPressed(KeyCode::F2))
 		{
 			m_state = NavigationState::Renaming;
 		}
-		else if (input.isKeyPressed(KeyCode::Delete))
+		else if (Layout::isKeyPressed(KeyCode::Delete))
 		{
 			deleteFile(file);
 		}
