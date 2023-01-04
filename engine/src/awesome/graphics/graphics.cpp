@@ -1,5 +1,7 @@
 #include "graphics.h"
 
+#include <assert.h>
+
 #include <awesome/application/canvas.h>
 #include <awesome/component/camera_component.h>
 #include <awesome/entity/world.h>

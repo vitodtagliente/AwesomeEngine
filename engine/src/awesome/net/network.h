@@ -5,16 +5,17 @@
 
 #include <awesome/application/application_module.h>
 
-class Audio : public ApplicationModule
+class Network : public ApplicationModule
 {
 public:
-	Audio();
+	Network();
 
 	virtual void startup() override;
+	virtual void update(double deltaTime) override;
 	virtual void shutdown() override;
 
-	static Audio* const instance() { return s_instance; }
+	static Network* const instance() { return s_instance; }
 
 private:
-	static Audio* s_instance;
+	static Network* s_instance;
 };
