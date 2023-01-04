@@ -162,7 +162,7 @@ void Menu::menuView()
 		}
 
 		EditorSettings& settings = Editor::instance()->settings;
-		MenuLayout::item("Hide windows (F5)", settings.renderWindows);
+		MenuLayout::item("Show windows (F5)", settings.renderWindows);
 		MenuLayout::endMenu();
 	}
 }
