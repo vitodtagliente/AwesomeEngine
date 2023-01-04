@@ -16,7 +16,7 @@
 
 void Menu::init()
 {
-	
+
 }
 
 void Menu::render()
@@ -162,10 +162,7 @@ void Menu::menuView()
 		}
 
 		EditorSettings& settings = Editor::instance()->settings;
-		if (MenuLayout::item(settings.renderWindows ? "Hide windows" : "Show windows"))
-		{
-			settings.renderWindows = !settings.renderWindows;
-		}
+		MenuLayout::item("Hide windows (F5)", settings.renderWindows);
 		MenuLayout::endMenu();
 	}
 }

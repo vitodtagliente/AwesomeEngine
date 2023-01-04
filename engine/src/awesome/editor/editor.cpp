@@ -115,6 +115,11 @@ void Editor::update(const double deltaTime)
 	{
 		window->update(deltaTime);
 	}
+
+	if (Layout::isKeyPressed(KeyCode::F5))
+	{
+		settings.renderWindows = !settings.renderWindows;
+	}
 }
 
 void Editor::registerWindows()
