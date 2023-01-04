@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
+
 #include <awesome/application/application_module.h>
 
 namespace graphics
@@ -25,5 +27,6 @@ public:
 	static UI* const instance() { return s_instance; }
 
 private:
+	std::unique_ptr<graphics::Renderer2D> m_renderer;
 	static UI* s_instance;
 };

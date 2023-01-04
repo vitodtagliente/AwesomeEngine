@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <awesome/application/canvas.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/world.h>
 
@@ -19,7 +20,7 @@ UI::UI()
 
 void UI::startup()
 {
-
+	m_renderer = std::make_unique<graphics::Renderer2D>(0, 0);
 }
 
 void UI::shutdown()
@@ -29,13 +30,17 @@ void UI::shutdown()
 
 void UI::preRendering()
 {
-	
+	static const bool clear = false;
+	m_renderer->begin(clear);
 }
 
-void UI::render(World* const world, graphics::Renderer2D* const renderer)
+void UI::render(World* const world, graphics::Renderer2D* const)
 {
-	const auto previousViewMatrix = renderer->getViewMatrix();
-	renderer->setViewMatrix(math::mat4::identity);
+	const auto& canvas = Canvas::instance();
+	m_renderer->setViewport(canvas.getWidth(), canvas.getHeight());
+	float w = static_cast<float>(canvas.getWidth()) / 2 / 32;
+	float h = static_cast<float>(canvas.getHeight()) / 2 / 32;
+	m_renderer->setProjectionMatrix(math::mat4::orthographic(-w, w, -h, h, -1, 1000));
 
 	const auto& entities = world->getEntities();
 	for (const auto& entity : entities)
@@ -46,17 +51,15 @@ void UI::render(World* const world, graphics::Renderer2D* const renderer)
 
 			if (IUIComponent* const uiComponent = dynamic_cast<IUIComponent*>(component.get()))
 			{
-				uiComponent->render(renderer);
+				uiComponent->render(m_renderer.get());
 			}
 		}
 	}
-
-	renderer->setViewMatrix(previousViewMatrix);
 }
 
 void UI::postRendering()
 {
-	
+	m_renderer->flush();
 }
 
 void UI::update(const double)
