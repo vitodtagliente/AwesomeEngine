@@ -49,7 +49,7 @@ void ButtonComponent::update(const double deltaTime)
 
 	m_isHovered = normalizedMousePosition.x >= position.x - size.x && normalizedMousePosition.x <= position.x + size.x
 		&& normalizedMousePosition.y > position.y - size.y && normalizedMousePosition.y < position.y + size.y;
-	if (m_isHovered && input.isKeyPressed(KeyCode::MouseLeftButton))
+	if (m_isHovered && input.consumeKeyPressed(KeyCode::MouseLeftButton))
 	{
 		m_clickTimer.reset();
 	}

@@ -14,10 +14,15 @@ public:
 	// update the input state
 	void update();
 
+	bool consumeKeyDown(keycode_t key);
+	bool consumeKeyPressed(keycode_t key);
+	bool consumeKeyReleased(keycode_t key);
+	bool consumeKeyState(keycode_t key, KeyState state);
+
 	bool isKeyDown(keycode_t key) const;
 	bool isKeyPressed(keycode_t key) const;
 	bool isKeyReleased(keycode_t key) const;
-	bool hasKeyState(keycode_t key, const KeyState state) const;
+	bool hasKeyState(keycode_t key, KeyState state) const;
 
 	float getAxis(keycode_t key1, keycode_t key2) const;
 

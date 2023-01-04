@@ -28,6 +28,32 @@ void Input::update()
 	}
 }
 
+bool Input::consumeKeyDown(const keycode_t key)
+{
+	return hasKeyState(key, KeyState::Down);
+}
+
+bool Input::consumeKeyPressed(const keycode_t key)
+{
+	return hasKeyState(key, KeyState::Pressed);
+}
+
+bool Input::consumeKeyReleased(const keycode_t key)
+{
+	return hasKeyState(key, KeyState::Released);
+}
+
+bool Input::consumeKeyState(const keycode_t key, const KeyState state)
+{
+	const auto it = m_lastKeysState.find(key);
+	if (it != m_lastKeysState.end() && it->second == state)
+	{
+		m_lastKeysState.erase(it);
+		return true;
+	}
+	return false;
+}
+
 bool Input::isKeyDown(const keycode_t key) const
 {
 	return hasKeyState(key, KeyState::Down);
