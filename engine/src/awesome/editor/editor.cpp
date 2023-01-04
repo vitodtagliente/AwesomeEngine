@@ -76,7 +76,7 @@ void Editor::preRendering()
 	ImGui::NewFrame();
 }
 
-void Editor::render(World* const world, graphics::Renderer2D* const)
+void Editor::render()
 {
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	m_menu.render();

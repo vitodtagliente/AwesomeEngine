@@ -2,6 +2,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <awesome/application/application_module.h>
 
@@ -10,7 +11,7 @@ namespace graphics
 	class Renderer2D;
 }
 
-class UI : public ApplicationModule
+class Graphics : public ApplicationModule
 {
 public:
 	struct Performances
@@ -18,20 +19,19 @@ public:
 		int drawCalls{ 0 };
 	};
 
-	UI();
+	Graphics();
 
 	virtual void startup() override;
 	virtual void shutdown() override;
 	virtual void preRendering() override;
 	virtual void render() override;
 	virtual void postRendering() override;
-	virtual void update(double deltaTime) override;
 
-	static UI* const instance() { return s_instance; }
+	static Graphics* const instance() { return s_instance; }
 
 	Performances performances;
+	std::unique_ptr<graphics::Renderer2D> renderer;
 
 private:
-	std::unique_ptr<graphics::Renderer2D> m_renderer;
-	static UI* s_instance;
+	static Graphics* s_instance;
 };

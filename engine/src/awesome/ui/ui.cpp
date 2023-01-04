@@ -37,10 +37,9 @@ void UI::preRendering()
 	m_renderer->setProjectionMatrix(math::mat4::orthographic(-1, 1, -1, 1, -1, 1000));
 }
 
-void UI::render(World* const world, graphics::Renderer2D* const)
+void UI::render()
 {
-	const auto& entities = world->getEntities();
-	for (const auto& entity : entities)
+	for (const auto& entity : World::instance().getEntities())
 	{
 		for (const auto& component : entity->getComponents())
 		{
@@ -56,7 +55,7 @@ void UI::render(World* const world, graphics::Renderer2D* const)
 
 void UI::postRendering()
 {
-	m_renderer->flush();
+	performances.drawCalls = m_renderer->flush();
 }
 
 void UI::update(const double)

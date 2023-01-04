@@ -6,7 +6,8 @@
 
 #include <awesome/editor/layout.h>
 #include <awesome/entity/world.h>
-#include <awesome/graphics/context.h>
+#include <awesome/graphics/graphics.h>
+#include <awesome/ui/ui.h>
 
 std::string PerformanceWindow::getTitle() const
 {
@@ -25,7 +26,14 @@ void PerformanceWindow::render()
 	// Renderer
 	{
 		std::ostringstream s;
-		s << "Draw Calls: " << graphics::Context::instance().getDrawCalls();
+		s << "Graphics::DrawCalls: " << Graphics::instance()->performances.drawCalls;
+		Layout::text(s.str());
+	}
+
+	// UI
+	{
+		std::ostringstream s;
+		s << "UI::DrawCalls: " << UI::instance()->performances.drawCalls;
 		Layout::text(s.str());
 	}
 

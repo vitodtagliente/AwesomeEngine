@@ -14,9 +14,7 @@
 #include <awesome/encoding/json.h>
 #include <awesome/editor/editor.h>
 #include <awesome/entity/world.h>
-#include <awesome/graphics/context.h>
-#include <awesome/graphics/graphics_module.h>
-#include <awesome/graphics/renderer.h>
+#include <awesome/graphics/graphics.h>
 #include <awesome/player/player.h>
 #include <awesome/net/net_module.h>
 #include <awesome/ui/ui.h>
@@ -82,7 +80,6 @@ int Application::run()
 
 		// rendering
 		{
-			graphics::Renderer2D* const renderer = &graphics::Context::instance().renderer;
 			for (const auto& module : m_modules)
 			{
 				module->preRendering();
@@ -90,7 +87,7 @@ int Application::run()
 
 			for (const auto& module : m_modules)
 			{
-				module->render(&world, renderer);
+				module->render();
 			}
 
 			for (const auto& module : m_modules)
@@ -160,7 +157,7 @@ void Application::registerDefaultModules()
 	if (settings.mode != Mode::Server)
 	{
 		registerModule<Audio>();
-		registerModule<graphics::Module>();
+		registerModule<Graphics>();
 		registerModule<UI>();
 	}
 
