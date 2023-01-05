@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/asset/sprite_asset.h>
+#include <awesome/asset/image_asset.h>
 #include <awesome/core/reflection.h>
 
 #include "item_generated.h"
@@ -56,7 +56,7 @@ struct Item : public Type
 	PROPERTY() std::string name;
 	PROPERTY() ItemCategory category { ItemCategory::Valuable };
 	PROPERTY() std::string description;
-	PROPERTY() SpriteAssetPtr icon;
+	PROPERTY() ImageAssetPtr icon;
 	PROPERTY() int quantityLimit{ 999 };
 	PROPERTY() bool stackable{ true };
 	PROPERTY() std::unique_ptr<ConsumableItemData> consumableData;

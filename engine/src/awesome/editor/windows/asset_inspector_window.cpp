@@ -16,7 +16,6 @@ void AssetInspectorWindow::init()
 	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
 	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());
 	m_inspectors.push_back(std::make_unique<SpriteAnimationAssetInspector>());
-	m_inspectors.push_back(std::make_unique<SpriteAssetInspector>());
 	m_inspectors.push_back(std::make_unique<TextAssetInspector>());
 	m_inspectors.push_back(std::make_unique<TilesetAssetInspector>());
 }

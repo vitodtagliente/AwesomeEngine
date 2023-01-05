@@ -10,7 +10,6 @@ const enum_values_t& EnumType<AssetType>::values()
         { "Image", static_cast<int>(AssetType::Image) }, 
         { "Prefab", static_cast<int>(AssetType::Prefab) }, 
         { "Scene", static_cast<int>(AssetType::Scene) }, 
-        { "Sprite", static_cast<int>(AssetType::Sprite) }, 
         { "SpriteAnimation", static_cast<int>(AssetType::SpriteAnimation) }, 
         { "Text", static_cast<int>(AssetType::Text) }, 
         { "Tileset", static_cast<int>(AssetType::Tileset) }, 

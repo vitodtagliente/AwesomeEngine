@@ -1,9 +1,10 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/asset/sprite_asset.h>
+#include <awesome/asset/image_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/graphics_component.h>
+#include <awesome/graphics/texture_rect.h>
 #include <awesome/math/vector3.h>
 
 #include "aim_component_generated.h"
@@ -39,6 +40,7 @@ private:
 	bool m_reduceSize{ true };
 	PROPERTY() float m_resizeSpeed{ .1f };
 	float m_size{ 0.0f };
-	PROPERTY() SpriteAssetPtr m_sprite;
+	PROPERTY() ImageAssetPtr m_image;
+	PROPERTY() graphics::TextureRect m_rect;
 	bool m_visible{ true };
 };

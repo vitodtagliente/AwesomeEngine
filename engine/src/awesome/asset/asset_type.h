@@ -13,7 +13,6 @@ enum class AssetType : int
     Image = 1,
     Prefab = 2,
     Scene = 3,
-    Sprite = 4,
     SpriteAnimation = 5,
     Text = 6,
     Tileset = 7

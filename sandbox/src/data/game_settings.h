@@ -1,7 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/asset/sprite_asset.h>
+#include <awesome/asset/image_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 
@@ -27,7 +27,7 @@ struct WeaponItem : public Type
 	PROPERTY() std::string name;
 	PROPERTY() std::string description;
 	PROPERTY() std::string component;
-	PROPERTY() SpriteAssetPtr icon;
+	PROPERTY() ImageAssetPtr icon;
 	PROPERTY() std::vector<std::unique_ptr<WeaponLevel>> levels;
 
 	GENERATED_BODY()

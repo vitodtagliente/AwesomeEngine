@@ -17,7 +17,9 @@ const properties_t AimComponent::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("m_resizeSpeed", Property("m_resizeSpeed", Property::TypeDescriptor("float", Property::Type::T_float, Property::DecoratorType::D_normalized, {}), sizeof(float), origin + offsetof(AimComponent, m_resizeSpeed), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_sprite", Property("m_sprite", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(AimComponent, m_sprite), {
+    properties.insert(std::make_pair<std::string, Property>("m_image", Property("m_image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(AimComponent, m_image), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_rect", Property("m_rect", Property::TypeDescriptor("graphics::TextureRect", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::TextureRect), origin + offsetof(AimComponent, m_rect), {
     })));
     return properties;
 }

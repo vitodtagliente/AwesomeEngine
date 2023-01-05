@@ -9,26 +9,21 @@
 
 void ButtonComponent::render(graphics::Renderer2D* const renderer)
 {
-	if (m_sprite && m_sprite->data.has_value())
+	if (m_image == nullptr || m_image->state != Asset::State::Ready) return;
+	
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(m_image->descriptor.id);
+	if (texture != nullptr)
 	{
-		const Sprite& data = m_sprite->data.value();
-		if (data.image)
+		graphics::Color currentColor = m_normalColor;
+		if (!m_clickTimer.isExpired())
 		{
-			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
-			if (texture)
-			{
-				graphics::Color currentColor = m_normalColor;
-				if (!m_clickTimer.isExpired())
-				{
-					currentColor = m_clickColor;
-				}
-				else if (m_isHovered)
-				{
-					currentColor = m_hoveredColor;
-				}
-				renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), data.rect, currentColor);
-			}
+			currentColor = m_clickColor;
 		}
+		else if (m_isHovered)
+		{
+			currentColor = m_hoveredColor;
+		}
+		renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), m_rect, currentColor);
 	}
 }
 

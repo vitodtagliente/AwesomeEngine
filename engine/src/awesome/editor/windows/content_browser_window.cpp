@@ -183,7 +183,6 @@ std::string ContentBrowserWindow::decorateFile(const std::filesystem::path& file
 	case Asset::Type::Image: return TextIcon::image(" " + file.string());
 	case Asset::Type::Prefab: return TextIcon::cube(" " + file.string());
 	case Asset::Type::Scene: return TextIcon::tree(" " + file.string());
-	case Asset::Type::Sprite: return TextIcon::horse(" " + file.string());
 	case Asset::Type::SpriteAnimation: return TextIcon::video(" " + file.string());
 	case Asset::Type::Text: return TextIcon::file(" " + file.string());
 	default: return file.string();

@@ -1,10 +1,11 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/asset/sprite_asset.h>
+#include <awesome/asset/image_asset.h>
 #include <awesome/core/timer.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
+#include <awesome/graphics/texture_rect.h>
 #include <awesome/ui/ui_component.h>
 
 #include "button_component_generated.h"
@@ -28,5 +29,6 @@ private:
 	bool m_isHovered{ false };
 	PROPERTY() graphics::Color m_normalColor{ graphics::Color::White };
 	PROPERTY() graphics::Color m_hoveredColor{ graphics::Color::White };
-	PROPERTY() SpriteAssetPtr m_sprite;
+	PROPERTY() ImageAssetPtr m_image;
+	PROPERTY() graphics::TextureRect m_rect;
 };

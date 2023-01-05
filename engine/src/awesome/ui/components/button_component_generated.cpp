@@ -15,7 +15,9 @@ const properties_t ButtonComponent::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("m_hoveredColor", Property("m_hoveredColor", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ButtonComponent, m_hoveredColor), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_sprite", Property("m_sprite", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(ButtonComponent, m_sprite), {
+    properties.insert(std::make_pair<std::string, Property>("m_image", Property("m_image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(ButtonComponent, m_image), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("m_rect", Property("m_rect", Property::TypeDescriptor("graphics::TextureRect", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::TextureRect), origin + offsetof(ButtonComponent, m_rect), {
     })));
     return properties;
 }

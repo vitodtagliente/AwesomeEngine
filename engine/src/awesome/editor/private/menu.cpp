@@ -6,7 +6,6 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/sprite_animation_asset.h>
-#include <awesome/asset/sprite_asset.h>
 #include <awesome/asset/tileset_asset.h>
 #include <awesome/data/json_file.h>
 #include <awesome/editor/dialog.h>
@@ -36,21 +35,6 @@ void Menu::menuAssets()
 {
 	if (MenuLayout::beginMenu("Assets"))
 	{
-		if (MenuLayout::item("Sprite"))
-		{
-			Dialog::instance().save("Save Sprite...", Asset::getExtensionByType(Asset::Type::Sprite), [](const std::filesystem::path& filename) -> void
-				{
-					if (!filename.string().empty())
-					{
-						SpriteAsset::data_t sprite(nullptr, graphics::TextureRect());
-						sprite.save(filename);
-
-						AssetImporter importer;
-						importer.import(filename);
-					}
-				}
-			);
-		}
 		if (MenuLayout::item("SpriteAnimation"))
 		{
 			Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void

@@ -11,7 +11,6 @@
 #include "prefab_asset.h"
 #include "scene_asset.h"
 #include "sprite_animation_asset.h"
-#include "sprite_asset.h"
 #include "text_asset.h"
 #include "tileset_asset.h"
 
@@ -127,19 +126,6 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 				if (asset->onLoad) asset->onLoad();
 			}
 		);		
-		return handler.detach(), asset;
-	}
-	case Asset::Type::Sprite:
-	{
-		SpriteAssetPtr asset = std::make_shared<SpriteAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
-			{
-				asset->data = Sprite::load(path);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
 		return handler.detach(), asset;
 	}
 	case Asset::Type::SpriteAnimation:

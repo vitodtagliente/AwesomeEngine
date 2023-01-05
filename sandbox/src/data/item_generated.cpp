@@ -87,7 +87,7 @@ const properties_t Item::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("description", Property("description", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(Item, description), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("icon", Property("icon", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(Item, icon), {
+    properties.insert(std::make_pair<std::string, Property>("icon", Property("icon", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(Item, icon), {
     })));
     properties.insert(std::make_pair<std::string, Property>("quantityLimit", Property("quantityLimit", Property::TypeDescriptor("int", Property::Type::T_int, Property::DecoratorType::D_normalized, {}), sizeof(int), origin + offsetof(Item, quantityLimit), {
     })));

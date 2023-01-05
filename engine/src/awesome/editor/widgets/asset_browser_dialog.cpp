@@ -4,8 +4,8 @@
 
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/image_asset.h>
-#include <awesome/asset/sprite_asset.h>
 #include <awesome/core/string_util.h>
+#include <awesome/graphics/texture_rect.h>
 #include <awesome/editor/layout.h>
 
 void AssetBrowserDialog::close()
@@ -68,22 +68,13 @@ void AssetBrowserDialog::render(const std::string& id)
 		}
 		Layout::endChild();
 
-		if (m_selectedAsset && (m_type == Asset::Type::Image || m_type == Asset::Type::Sprite))
+		if (m_selectedAsset && m_type == Asset::Type::Image)
 		{
 			float height = m_type == Asset::Type::Image ? 200.f : 128.f;
 			ImGui::BeginChild("Image Preview", ImVec2(0.f, height), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 			switch (m_type)
 			{
 			case Asset::Type::Image: Layout::image(std::static_pointer_cast<ImageAsset>(m_selectedAsset), s_widgetWidth, height); break;
-			case Asset::Type::Sprite:
-			{
-				auto sprite = std::static_pointer_cast<SpriteAsset>(m_selectedAsset);
-				if (sprite && sprite->data.has_value())
-				{
-					Layout::image(sprite->data->image, sprite->data->rect, s_widgetWidth, height);
-				}
-				break;
-			}
 			default:break;
 			}
 			ImGui::EndChild();

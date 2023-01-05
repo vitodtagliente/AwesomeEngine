@@ -7,9 +7,11 @@ const std::string& ImageComponent::getTypeName() const { return ImageComponentTy
 const properties_t ImageComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("sprite", Property("sprite", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(ImageComponent, sprite), {
-    })));
     properties.insert(std::make_pair<std::string, Property>("color", Property("color", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(ImageComponent, color), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("image", Property("image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(ImageComponent, image), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("rect", Property("rect", Property::TypeDescriptor("graphics::TextureRect", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::TextureRect), origin + offsetof(ImageComponent, rect), {
     })));
     return properties;
 }

@@ -11,7 +11,6 @@ std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 	{ Asset::Type::Image, {".png", ".jpg", ".jpeg", ".bmp"} },
 	{ Asset::Type::Prefab, {".prefab"} },
 	{ Asset::Type::Scene, {".scene"} },
-	{ Asset::Type::Sprite, {".sprite"} },
 	{ Asset::Type::SpriteAnimation, {".spriteanim"} },
 	{ Asset::Type::Text, {".txt", ".md", ".shader", ".ini", ".cfg"} },
 	{ Asset::Type::Tileset, {".tileset"} }

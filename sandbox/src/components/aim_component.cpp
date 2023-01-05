@@ -10,23 +10,18 @@
 
 void AimComponent::render(graphics::Renderer2D* const renderer)
 {
-	if (!m_visible) return;
+	if (!m_visible
+		|| m_image == nullptr
+		|| m_image->state != Asset::State::Ready) return;
 
-	if (m_sprite && m_sprite->data.has_value())
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(m_image->descriptor.id);
+	if (texture != nullptr)
 	{
-		const Sprite& data = m_sprite->data.value();
-		if (data.image)
-		{
-			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
-			if (texture)
-			{
-				math::transform transform = getOwner()->transform;
-				transform.position = m_position;
-				transform.scale.x = transform.scale.y = m_size;
-				transform.update();
-				renderer->drawTexture(texture.get(), transform.matrix(), data.rect, graphics::Color::White);
-			}
-		}
+		math::transform transform = getOwner()->transform;
+		transform.position = m_position;
+		transform.scale.x = transform.scale.y = m_size;
+		transform.update();
+		renderer->drawTexture(texture.get(), transform.matrix(), m_rect, graphics::Color::White);
 	}
 }
 

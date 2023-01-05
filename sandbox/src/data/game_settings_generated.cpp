@@ -41,7 +41,7 @@ const properties_t WeaponItem::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("component", Property("component", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(WeaponItem, component), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("icon", Property("icon", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(WeaponItem, icon), {
+    properties.insert(std::make_pair<std::string, Property>("icon", Property("icon", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(WeaponItem, icon), {
     })));
     properties.insert(std::make_pair<std::string, Property>("levels", Property("levels", Property::TypeDescriptor("std::vector<std::unique_ptr<WeaponLevel>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("WeaponLevel", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<WeaponLevel>>), origin + offsetof(WeaponItem, levels), {
     })));
