@@ -63,7 +63,7 @@ void SpriteAnimatorComponent::play(const std::string& name, const bool loop)
 
 	const auto& it = animations.find(name);
 	if (it == animations.end()) return;
-	if (!it->second->data.has_value()) return;
+	if (it->second == nullptr || it->second->state != Asset::State::Ready) return;
 
 	const SpriteAnimationData& animation = it->second->data.value();
 
@@ -116,6 +116,6 @@ void SpriteAnimatorComponent::updateFrame(const SpriteAnimationFrame& frame)
 
 	if (m_spriteRenderer)
 	{
-		m_spriteRenderer->sprite->data.value().rect = frame.rect;
+		m_spriteRenderer->rect = frame.rect;
 	}
 }

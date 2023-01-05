@@ -82,10 +82,10 @@ void EntityLayout::input(Entity* const entity)
 	// preview the sprite
 	{
 		SpriteRendererComponent* const component = entity->findComponent<SpriteRendererComponent>();
-		if (component && component->sprite && component->sprite->state == Asset::State::Ready)
+		if (component && component->image && component->image->state == Asset::State::Ready)
 		{
 			Layout::separator();
-			Layout::image(component->sprite->data.value().image, component->sprite->data.value().rect);
+			Layout::image(component->image, component->rect);
 		}
 	}
 }

@@ -84,9 +84,3 @@ bool Collider2dComponent::collide(const Collider2dComponent& other)
 	}
 	return false;
 }
-
-void Collider2dComponent::inspect()
-{
-	Component::inspect();
-	Layout::input("ShapeType", m_type);
-}

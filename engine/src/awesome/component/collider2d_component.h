@@ -23,8 +23,6 @@ public:
 
 	bool collide(const Collider2dComponent& other);
 
-	virtual void inspect() override;
-
 	PROPERTY() bool isTrigger{ false };
 	event_t<const Collider2dComponent&> onCollision;
 	event_t<const Collider2dComponent&> onTrigger;

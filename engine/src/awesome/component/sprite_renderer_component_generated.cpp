@@ -7,13 +7,15 @@ const std::string& SpriteRendererComponent::getTypeName() const { return SpriteR
 const properties_t SpriteRendererComponent::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties = Component::getTypeProperties();
-    properties.insert(std::make_pair<std::string, Property>("sprite", Property("sprite", Property::TypeDescriptor("SpriteAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(SpriteAssetPtr), origin + offsetof(SpriteRendererComponent, sprite), {
-    })));
     properties.insert(std::make_pair<std::string, Property>("color", Property("color", Property::TypeDescriptor("graphics::Color", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::Color), origin + offsetof(SpriteRendererComponent, color), {
     })));
     properties.insert(std::make_pair<std::string, Property>("flipX", Property("flipX", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(SpriteRendererComponent, flipX), {
     })));
     properties.insert(std::make_pair<std::string, Property>("flipY", Property("flipY", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(SpriteRendererComponent, flipY), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("image", Property("image", Property::TypeDescriptor("ImageAssetPtr", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(ImageAssetPtr), origin + offsetof(SpriteRendererComponent, image), {
+    })));
+    properties.insert(std::make_pair<std::string, Property>("rect", Property("rect", Property::TypeDescriptor("graphics::TextureRect", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(graphics::TextureRect), origin + offsetof(SpriteRendererComponent, rect), {
     })));
     return properties;
 }

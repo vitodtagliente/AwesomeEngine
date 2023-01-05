@@ -7,17 +7,15 @@
 
 void SpriteRendererComponent::render(graphics::Renderer2D* const renderer)
 {
-	if (sprite && sprite->data.has_value())
+	if (image == nullptr || image->state != Asset::State::Ready)
 	{
-		const Sprite& data = sprite->data.value();
-		if (data.image)
-		{
-			std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(data.image->descriptor.id);
-			if (texture)
-			{
-				renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), data.rect, color);
-			}
-		}
+		return;
+	}
+	
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
+	if (texture != nullptr)
+	{
+		renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
 	}
 }
 
