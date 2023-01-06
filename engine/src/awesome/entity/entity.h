@@ -19,8 +19,6 @@ CLASS(Type = Entity)
 class Entity : public Type
 {
 public:
-	friend class World;
-
 	enum class State
 	{
 		PendingSpawn,
@@ -31,6 +29,8 @@ public:
 	Entity() = default;
 	Entity(const Entity& other) = delete;
 	virtual ~Entity() = default;
+
+	static Entity* const load(const PrefabAssetPtr& prefab);
 
 	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
 	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
@@ -43,8 +43,6 @@ public:
 	virtual void prepareToDestroy();
 	virtual void prepareToSpawn();
 	virtual void update(double deltaTime);
-
-	static Entity* const instantiate(const PrefabAssetPtr& prefab);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
 	Entity* const findChildById(const uuid& id) const;

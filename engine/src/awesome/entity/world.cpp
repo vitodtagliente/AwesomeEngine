@@ -254,7 +254,7 @@ Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& posit
 
 Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = Entity::instantiate(prefab);
+	Entity* const entity = Entity::load(prefab);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z;
 	return spawn(entity);

@@ -53,7 +53,7 @@ void Entity::update(const double deltaTime)
 	transform.update();
 }
 
-Entity* const Entity::instantiate(const PrefabAssetPtr& prefab)
+Entity* const Entity::load(const PrefabAssetPtr& prefab)
 {
 	Entity* const entity = new Entity();
 	if (prefab != nullptr && prefab->state == Asset::State::Ready)
@@ -167,7 +167,7 @@ Entity* const Entity::addChild(const PrefabAssetPtr& prefab, const math::vec3& p
 
 Entity* const Entity::addChild(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
 {
-	Entity* const entity = Entity::instantiate(prefab);
+	Entity* const entity = load(prefab);
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z;
 	return addChild(entity);

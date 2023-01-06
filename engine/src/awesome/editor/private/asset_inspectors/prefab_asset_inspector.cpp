@@ -29,7 +29,7 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 		{
 			delete m_entity;
 		}
-		m_entity = Entity::instantiate(prefab);
+		m_entity = Entity::load(prefab);
 	}
 
 	if (Layout::button(TextIcon::upload(" Import Prefab")))
