@@ -1,5 +1,6 @@
 #include "particles2d_component.h"
 
+#include <awesome/core/serialization.h>
 #include <awesome/editor/layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>

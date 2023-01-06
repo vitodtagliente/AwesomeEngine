@@ -2,6 +2,7 @@
 #pragma once
 
 #include <awesome/entity/component.h>
+#include <awesome/math/vector3.h>
 
 #include "bullet_component_generated.h"
 

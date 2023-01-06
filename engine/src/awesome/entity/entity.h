@@ -7,7 +7,7 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/core/reflection.h>
-#include <awesome/core/serialization.h>
+#include <awesome/core/serializable.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/transform.h>
 

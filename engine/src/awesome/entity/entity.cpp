@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include <awesome/core/serialization.h>
+
 void Entity::prepareToSpawn()
 {
 	for (const auto& component : m_components)

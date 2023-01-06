@@ -7,7 +7,7 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/scene_asset.h>
-#include <awesome/core/serialization.h>
+#include <awesome/core/serializable.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/quaternion.h>

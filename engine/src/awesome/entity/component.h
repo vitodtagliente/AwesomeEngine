@@ -1,10 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/core/serialization.h>
+#include <awesome/core/serializable.h>
 #include <awesome/core/uuid.h>
-#include <awesome/encoding/json.h>
-#include <awesome/net/net_mode.h>
 
 #include "component_generated.h"
 
@@ -24,7 +22,6 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
-	inline NetMode getNetMode() const { return m_netMode; }
 	inline bool isAttached() const { return m_owner != nullptr; }
 
 	void attach(Entity* const entity);
@@ -46,6 +43,5 @@ public:
 
 private:
 	PROPERTY() uuid m_id;
-	PROPERTY(IsEnum) NetMode m_netMode{ NetMode::Shared };
 	Entity* m_owner{ nullptr };
 };

@@ -11,9 +11,6 @@ const properties_t Component::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("m_id", Property("m_id", Property::TypeDescriptor("uuid", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(uuid), origin + offsetof(Component, m_id), {
     })));
-    properties.insert(std::make_pair<std::string, Property>("m_netMode", Property("m_netMode", Property::TypeDescriptor("NetMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(NetMode), origin + offsetof(Component, m_netMode), {
-        std::make_pair("IsEnum", ""),
-    })));
     return properties;
 }
 std::size_t Component::getTypeSize() const { return ComponentType::type().size; }

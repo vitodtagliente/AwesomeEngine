@@ -1,5 +1,6 @@
 #include "component.h"
 
+#include <awesome/core/serialization.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 

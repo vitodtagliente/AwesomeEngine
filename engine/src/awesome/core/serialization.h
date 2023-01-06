@@ -3,10 +3,10 @@
 
 #include <awesome/asset/asset.h>
 #include <awesome/core/reflection.h>
+#include <awesome/core/serializable.h>
 #include <awesome/core/sub_type.h>
 #include <awesome/core/type_name.h>
 #include <awesome/core/uuid.h>
-#include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
@@ -15,16 +15,11 @@
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
 
-struct ISerializable
-{
-	virtual json::value serialize() const = 0;
-	virtual void deserialize(const json::value& value) = 0;
-};
-
 struct Serializer
 {
 	Serializer() = delete;
 
+	static json::value serialize(ISerializable* const serializable);
 	static json::value serialize(const Type& type);
 	static json::value serialize(const std::shared_ptr<Type>& type);
 	static json::value serialize(const std::unique_ptr<Type>& type);
@@ -74,6 +69,7 @@ struct Deserializer
 {
 	Deserializer() = delete;
 
+	static bool deserialize(const json::value& value, ISerializable* const serializable);
 	static bool deserialize(const json::value& value, Type& type);
 	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);
 	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type);

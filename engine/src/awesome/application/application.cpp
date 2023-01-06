@@ -16,7 +16,6 @@
 #include <awesome/entity/world.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/player/player.h>
-#include <awesome/net/network.h>
 #include <awesome/ui/ui.h>
 
 using namespace graphics;
@@ -165,7 +164,4 @@ void Application::registerDefaultModules()
 	{
 		registerModule<Editor>();
 	}
-
-	// common modules
-	registerModule<Network>();
 }

@@ -3,6 +3,14 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 
+json::value Serializer::serialize(ISerializable* const serializable)
+{
+	if (serializable == nullptr)
+		return json::value();
+
+	return serializable->serialize();
+}
+
 json::value Serializer::serialize(const Type& type)
 {
 	json::value data = json::object();
@@ -332,6 +340,16 @@ json::value Serializer::serialize(const math::vec4& v)
 json::value Serializer::serialize(const AssetPtr& asset)
 {
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
+}
+
+bool Deserializer::deserialize(const json::value& value, ISerializable* const serializable)
+{
+	if (serializable != nullptr)
+	{
+		serializable->deserialize(value);
+		return true;
+	}
+	return false;
 }
 
 bool Deserializer::deserialize(const json::value& value, Type& type)
