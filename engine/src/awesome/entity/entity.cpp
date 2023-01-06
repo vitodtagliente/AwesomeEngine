@@ -90,7 +90,7 @@ void Entity::removeComponent(const uuid& id)
 
 json::value Entity::serialize() const
 {
-	static const auto& entitiesToJson = [](const std::vector<std::unique_ptr<Entity>>& entities) -> json::value
+	static const auto& serializeChildren = [](const std::vector<std::unique_ptr<Entity>>& entities) -> json::value
 	{
 		json::value data = json::array();
 		for (const auto& entity : entities)
@@ -100,7 +100,7 @@ json::value Entity::serialize() const
 		return data;
 	};
 
-	static const auto& componentsToJson = [](const std::vector<std::unique_ptr<Component>>& components) -> json::value
+	static const auto& serializeComponents = [](const std::vector<std::unique_ptr<Component>>& components) -> json::value
 	{
 		json::value data = json::array();
 		for (const auto& component : components)
@@ -110,15 +110,10 @@ json::value Entity::serialize() const
 		return data;
 	};
 
-	return json::object({
-		{"id", Serializer::serialize(m_id)},
-		{"name", name},
-		{"replicate", replicate},
-		{"tag", tag},
-		{"transform", Serializer::serialize(transform)},
-		{"children", entitiesToJson(m_children)},
-		{"components", componentsToJson(m_components)}
-		});
+	json::value data = Serializer::serialize(*this);
+	data["m_children"] = serializeChildren(m_children);
+	data["m_components"] = serializeComponents(m_components);
+	return data;
 }
 
 void Entity::deserialize(const json::value& value)
@@ -126,23 +121,16 @@ void Entity::deserialize(const json::value& value)
 	if (!value.is_object())
 		return;
 
-	m_children.clear();
-	m_components.clear();
+	Deserializer::deserialize(value, *this);
 
-	Deserializer::deserialize(value.safeAt("id"), m_id);
-	replicate = value.safeAt("replicate").as_bool(false);
-	name = value.safeAt("name").as_string("");
-	tag = value.safeAt("tag").as_string("");
-	Deserializer::deserialize(value.safeAt("transform"), transform);
-
-	const json::value::array_t& components = value.safeAt("components").as_array();
-	for (const json::value& data : components)
+	const json::value::array_t& componentsData = value.safeAt("m_components").as_array();
+	for (const json::value& componentData : componentsData)
 	{
-		const std::string& type = data.safeAt("component_type").as_string("");
+		const std::string& type = componentData.safeAt("type::name").as_string("");
 		Component* const component = TypeFactory::instantiate<Component>(type);
 		if (component != nullptr)
 		{
-			addComponent(component)->deserialize(data);
+			addComponent(component)->deserialize(componentData);
 		}
 	}
 }

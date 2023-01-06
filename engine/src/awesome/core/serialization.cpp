@@ -176,6 +176,10 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_unknown:
 		default:
 		{
+			if (prop.descriptor.name == "uuid")
+			{
+				data[name] = serialize(prop.value<uuid>());
+			}
 			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				data[name] = serialize(prop.value<graphics::Color>());
@@ -522,6 +526,10 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		case Property::Type::T_unknown:
 		default:
 		{
+			if (prop.descriptor.name == "uuid")
+			{
+				deserialize(value.safeAt(name), prop.value<uuid>());
+			}
 			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				deserialize(value.safeAt(name), prop.value<graphics::Color>());

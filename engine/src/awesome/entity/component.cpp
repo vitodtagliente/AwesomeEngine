@@ -28,7 +28,7 @@ void Component::detach()
 json::value Component::serialize() const
 {
 	json::value data = Serializer::serialize(*this);
-	data["component_type"] = this->getTypeName();
+	data["type::name"] = this->getTypeName();
 	return data;
 }
 
