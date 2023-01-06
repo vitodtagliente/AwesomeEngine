@@ -18,6 +18,8 @@ CLASS(Type = Entity)
 class Entity : public Type
 {
 public:
+	friend class World;
+
 	enum class State
 	{
 		PendingSpawn,
@@ -33,16 +35,20 @@ public:
 	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getParent() const { return m_parent; }
-	inline const uuid& getPrefab() const { return m_prefab; }
+	inline const PrefabAssetPtr& getPrefab() const { return m_prefab; }
 	inline State getState() const { return m_state; }
-	inline bool isSpawned() const { return m_state == State::Alive; }
+	inline bool hasParent() const { return m_parent != nullptr; }
 
 	virtual void prepareToDestroy();
 	virtual void prepareToSpawn();
-	void setParent(Entity* const entity);
-	void update(double deltaTime);
+	virtual void update(double deltaTime);
 
 	static Entity* const instantiate(const PrefabAssetPtr& prefab);
+
+	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
+	Entity* const findChildById(const uuid& id) const;
+	Entity* const findChildByName(const std::string& name) const;
+	Entity* const findChildByTag(const std::string& tag) const;
 
 	Entity& operator= (const Entity& other) = delete;
 	bool operator== (const Entity& other) const;
@@ -80,7 +86,7 @@ public:
 	{
 		T* const component = new T();
 		m_components.push_back(std::unique_ptr<Component>(component));
-		if (isSpawned())
+		if (m_state == State::Alive)
 		{
 			component->attach(this);
 			component->init();
@@ -91,7 +97,7 @@ public:
 	Component* const addComponent(Component* const component)
 	{
 		m_components.push_back(std::unique_ptr<Component>(component));
-		if (isSpawned())
+		if (m_state == State::Alive)
 		{
 			component->attach(this);
 			component->init();
@@ -101,6 +107,10 @@ public:
 
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
+
+	void clearChildren();
+	void clearComponents();
+	void clear();
 
 	PROPERTY() std::string name;
 	PROPERTY() bool persistent{ false };
@@ -116,6 +126,6 @@ private:
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	PROPERTY() uuid m_id;
 	Entity* m_parent{ nullptr };
-	uuid m_prefab{ uuid::Invalid };
+	PrefabAssetPtr m_prefab;
 	State m_state{ State::PendingSpawn };
 };
