@@ -19,6 +19,8 @@ const properties_t Entity::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("transient", Property("transient", Property::TypeDescriptor("bool", Property::Type::T_bool, Property::DecoratorType::D_normalized, {}), sizeof(bool), origin + offsetof(Entity, transient), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("m_children", Property("m_children", Property::TypeDescriptor("std::vector<std::unique_ptr<Entity>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Entity", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Entity>>), origin + offsetof(Entity, m_children), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("m_components", Property("m_components", Property::TypeDescriptor("std::vector<std::unique_ptr<Component>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Component", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Component>>), origin + offsetof(Entity, m_components), {
     })));
     properties.insert(std::make_pair<std::string, Property>("m_id", Property("m_id", Property::TypeDescriptor("uuid", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(uuid), origin + offsetof(Entity, m_id), {

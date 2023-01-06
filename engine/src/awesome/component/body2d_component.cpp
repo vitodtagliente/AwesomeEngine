@@ -5,11 +5,6 @@
 
 #include "collider2d_component.h"
 
-Body2dComponent::Body2dComponent()
-	: Component()
-{
-}
-
 void Body2dComponent::init()
 {
 	m_collider = getOwner()->findComponent<Collider2dComponent>();

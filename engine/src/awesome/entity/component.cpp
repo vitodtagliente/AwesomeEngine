@@ -1,13 +1,7 @@
 #include "component.h"
 
-#include <awesome/core/serialization.h>
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
-
-Component::Component()
-	: Type()
-{
-}
 
 bool Component::operator==(const Component& other) const
 {

@@ -16,7 +16,7 @@ CLASS()
 class Component : public Type
 {
 public:
-	Component();
+	Component() = default;
 	Component(const Component& other) = delete;
 	virtual ~Component() = default;
 
