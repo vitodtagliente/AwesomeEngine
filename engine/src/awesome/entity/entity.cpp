@@ -31,23 +31,32 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 	m_children.clear();
-
-	m_state = State::PendingDestroy;
 }
 
 void Entity::update(const double deltaTime)
 {
-	for (const auto& component : m_components)
+	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
+		const auto& component = *it;
 		if (component->enabled)
 		{
 			component->update(deltaTime);
 		}
 	}
 
-	for (const auto& child : m_children)
+	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
-		child->update(deltaTime);
+		const auto& child = *it;
+		if (child->m_state == State::Alive)
+		{
+			child->update(deltaTime);
+		}
+		else if (child->m_state == State::PendingDestroy)
+		{
+			child->prepareToDestroy();
+			m_children.erase(it);
+			break;
+		}
 	}
 
 	transform.update();
@@ -185,8 +194,7 @@ bool Entity::removeChild(const uuid& id)
 		const auto& child = *it;
 		if (child->getId() == id)
 		{
-			child->prepareToDestroy();
-			return m_children.erase(it), true;
+			return child->m_state = State::PendingDestroy, true;
 		}
 
 		if (child->removeChild(id))
@@ -227,31 +235,4 @@ void Entity::removeComponent(const uuid& id)
 		component->detach();
 		m_components.erase(it);
 	}
-}
-
-void Entity::clearChildren()
-{
-	for (auto it = m_children.begin(); it != m_children.end(); ++it)
-	{
-		const auto& child = *it;
-		child->prepareToDestroy();
-		m_children.erase(it);
-	}
-}
-
-void Entity::clearComponents()
-{
-	for (auto it = m_components.begin(); it != m_components.end(); ++it)
-	{
-		const auto& component = *it;
-		component->uninit();
-		component->detach();
-		m_components.erase(it);
-	}
-}
-
-void Entity::clear()
-{
-	clearChildren();
-	clearComponents();
 }

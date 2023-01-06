@@ -141,10 +141,6 @@ public:
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
 
-	void clearChildren();
-	void clearComponents();
-	void clear();
-
 	PROPERTY() std::string name;
 	PROPERTY() bool persistent{ false };
 	PROPERTY() bool replicate{ false };
