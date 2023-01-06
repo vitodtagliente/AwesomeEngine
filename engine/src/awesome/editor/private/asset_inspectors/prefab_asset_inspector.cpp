@@ -1,5 +1,6 @@
 #include "prefab_asset_inspector.h"
 
+#include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
@@ -44,6 +45,7 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(*m_entity, prefab->descriptor.getDataPath());
+		prefab->data = Serializer::serialize(*m_entity);
+		JsonFile::save(prefab->data.value(), prefab->descriptor.getDataPath());
 	}
 }
