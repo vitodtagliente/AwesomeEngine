@@ -40,7 +40,7 @@ void EntityInspectorWindow::render()
 				if (!path.string().empty())
 				{
 					World& world = World::instance();
-					Entity* const entity = world.findEntityById(entityId);
+					Entity* const entity = world.findChildById(entityId);
 					if (entity == nullptr) return;
 
 					JsonFile::save(*entity, path);

@@ -5,10 +5,7 @@
 const meta_t& World::getTypeMeta() const { return WorldType::type().meta; }
 const std::string& World::getTypeName() const { return WorldType::type().name; }
 const properties_t World::getTypeProperties() const {
-    member_address_t origin = reinterpret_cast<member_address_t>(this);
-    properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("m_entities", Property("m_entities", Property::TypeDescriptor("std::vector<std::unique_ptr<Entity>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Entity", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Entity>>), origin + offsetof(World, m_entities), {
-    })));
+    properties_t properties = Entity::getTypeProperties();
     return properties;
 }
 std::size_t World::getTypeSize() const { return WorldType::type().size; }
@@ -16,7 +13,7 @@ std::size_t World::getTypeSize() const { return WorldType::type().size; }
 const TypeDefinition& WorldType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new World(); }, "World", {
-        std::make_pair("type", "World"),
+        std::make_pair("Type", "World"),
     }, sizeof(World));
     return s_typeDefinition;
 }

@@ -94,6 +94,27 @@ public:
 	}
 
 	template <typename T = Component>
+	T* const findComponentInChildren() const
+	{
+		for (const auto& component : m_components)
+		{
+			if (T* const found_component = dynamic_cast<T*>(component.get()))
+			{
+				return found_component;
+			}
+		}
+
+		for (const auto& child : m_children)
+		{
+			if (T* const found_component = child->findComponentInChildren<T>())
+			{
+				return found_component;
+			}
+		}
+		return nullptr;
+	}
+
+	template <typename T = Component>
 	T* const addComponent()
 	{
 		T* const component = new T();
@@ -137,7 +158,6 @@ protected:
 	virtual void prepareToDestroy();
 	virtual void prepareToSpawn();
 
-private:
 	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	PROPERTY() uuid m_id;

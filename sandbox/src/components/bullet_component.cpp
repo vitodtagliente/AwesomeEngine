@@ -27,7 +27,7 @@ void BulletComponent::init()
 					*health -= damage;
 					if (m_destroyOnCollision)
 					{
-						World::instance().destroy(getOwner());
+						World::instance().removeChild(getOwner());
 					}
 				}
 			}
@@ -36,7 +36,7 @@ void BulletComponent::init()
 	else
 	{
 		ERR_LOG("BulletComponent", "Invalid Collider2dComponent, destroying the entity...");
-		World::instance().destroy(getOwner());
+		World::instance().removeChild(getOwner());
 	}
 }
 

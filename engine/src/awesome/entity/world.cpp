@@ -1,119 +1,34 @@
 #include "world.h"
 
-#include <awesome/asset/asset_importer.h>
-#include <awesome/core/serialization.h>
 #include <awesome/component/collider2d_component.h>
-#include <awesome/data/json_file.h>
 
-void World::update(const double deltaTime, const int quadspaceBounds)
+void World::update(const double deltaTime)
 {
 	// quadtree update & parenting
-	for (const auto& entity : m_entities)
+	for (const auto& child : m_children)
 	{
-		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
+		Collider2dComponent* const collider = child->findComponent<Collider2dComponent>();
 		if (collider != nullptr)
 		{
-			m_quadspace.insert(entity.get(), quadspaceBounds);
+			m_quadspace.insert(child.get(), 12);
 		}
 	}
 
 	// sort the entities by depth
-	std::sort(m_entities.begin(), m_entities.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
+	std::sort(m_children.begin(), m_children.end(), [](const std::unique_ptr<Entity>& a, const std::unique_ptr<Entity>& b) -> bool
 		{
 			return a->transform.position.z < b->transform.position.z;
 		}
 	);
 
-	// entities update
-	for (const auto& entity : m_entities)
-	{
-		entity->update(deltaTime);
-	}
+	Entity::update(deltaTime);
 	
 	checkCollisions();
 }
 
 void World::flush()
 {
-	for (const uuid& entityToDestroy : m_pendingDestroyEntities)
-	{
-		const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [entityToDestroy](const std::unique_ptr<Entity>& entity) -> bool
-			{
-				return entity->getId() == entityToDestroy;
-			}
-		);
-
-		if (it != m_entities.end())
-		{
-			m_entities.erase(it);
-		}
-	}
-	m_pendingDestroyEntities.clear();
-
-	for (auto& entityToSpawn : m_pendingSpawnEntities)
-	{
-		m_entities.push_back(std::move(entityToSpawn));
-	}
-	m_pendingSpawnEntities.clear();
 	m_quadspace.clear();
-}
-
-std::vector<Entity*> World::findEntitiesByTag(const std::string& tag) const
-{
-	std::vector<Entity*> entities;
-	for (const auto& entity : m_entities)
-	{
-		if (entity->tag == tag)
-		{
-			entities.push_back(entity.get());
-		}
-	}
-	return entities;
-}
-
-Entity* const World::findEntityById(const uuid& id) const
-{
-	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&id](const std::unique_ptr<Entity>& entity) -> bool
-		{
-			return entity->getId() == id;
-		}
-	);
-
-	if (it != m_entities.end())
-	{
-		return it->get();
-	}
-	return nullptr;
-}
-
-Entity* const World::findEntityByName(const std::string& name) const
-{
-	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&name](const std::unique_ptr<Entity>& entity) -> bool
-		{
-			return entity->name == name;
-		}
-	);
-
-	if (it != m_entities.end())
-	{
-		return it->get();
-	}
-	return nullptr;
-}
-
-Entity* const World::findEntityByTag(const std::string& tag) const
-{
-	const auto& it = std::find_if(m_entities.begin(), m_entities.end(), [&tag](const std::unique_ptr<Entity>& entity) -> bool
-		{
-			return entity->tag == tag;
-		}
-	);
-
-	if (it != m_entities.end())
-	{
-		return it->get();
-	}
-	return nullptr;
 }
 
 Entity* const World::findNearestEntity(Entity* const entity) const
@@ -135,7 +50,7 @@ Entity* const World::findNearestEntity(Entity* const entity) const
 	return entities[nearestIndex];
 }
 
-Entity* const World::findNearestEntityByTag(Entity* const entity, const std::string& tag) const
+Entity* const World::findNearestEntityByTag(Entity* const entity, const std::string& entityTag) const
 {
 	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
 	if (entities.empty()) return nullptr;
@@ -144,7 +59,7 @@ Entity* const World::findNearestEntityByTag(Entity* const entity, const std::str
 	float minDistance = 0;
 	for (int i = 0; i < entities.size(); ++i)
 	{
-		if (entities[i]->tag != tag) continue;
+		if (entities[i]->tag != entityTag) continue;
 
 		const float distance = entity->transform.position.distance(entities[i]->transform.position);
 
@@ -185,13 +100,13 @@ std::vector<Entity*> World::findNearestEntities(Entity* const entity, const floa
 	return entities;
 }
 
-std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const std::string& tag) const
+std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const std::string& entityTag) const
 {
 	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
 
-	entities.erase(std::remove_if(entities.begin(), entities.end(), [tag](Entity* const nearEntity) -> bool
+	entities.erase(std::remove_if(entities.begin(), entities.end(), [entityTag](Entity* const nearEntity) -> bool
 		{
-			return nearEntity->tag != tag;
+			return nearEntity->tag != entityTag;
 		}
 		), entities.end()
 	);
@@ -199,110 +114,49 @@ std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const
 	return entities;
 }
 
-std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const float distance, const std::string& tag) const
+std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const float distance, const std::string& entityTag) const
 {
 	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
 
-	entities.erase(std::remove_if(entities.begin(), entities.end(), [entity, distance, tag](Entity* const nearEntity) -> bool
+	entities.erase(std::remove_if(entities.begin(), entities.end(), [entity, distance, entityTag](Entity* const nearEntity) -> bool
 		{
-			return nearEntity->tag != tag || entity->transform.position.distance(nearEntity->transform.position) > distance;
+			return nearEntity->tag != entityTag || entity->transform.position.distance(nearEntity->transform.position) > distance;
 		}
 		), entities.end()
 	);
 
 	return entities;
-}
-
-Entity* const World::spawn()
-{
-	return spawn(math::vec3::zero, math::quaternion::identity);
-}
-
-Entity* const World::spawn(const math::vec3& position)
-{
-	return spawn(position, math::quaternion::identity);
-}
-
-Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
-{
-	Entity* const entity = new Entity();
-	entity->transform.position = position;
-	entity->transform.rotation.z = quaternion.z; // 2d only
-	return spawn(entity);
-}
-
-Entity* const World::spawn(Entity* const entity)
-{
-	if (entity != nullptr)
-	{
-		m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
-	}
-	return entity;
-}
-
-Entity* const World::spawn(const PrefabAssetPtr& prefab)
-{
-	return spawn(prefab, math::vec3::zero, math::quaternion::identity);
-}
-
-Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position)
-{
-	return spawn(prefab, position, math::quaternion::identity);
-}
-
-Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
-{
-	Entity* const entity = Entity::load(prefab);
-	entity->transform.position = position;
-	entity->transform.rotation.z = quaternion.z;
-	return spawn(entity);
-}
-
-void World::destroy(Entity* const entity)
-{
-	m_pendingDestroyEntities.push_back(entity->getId());
-}
-
-void World::destroy(const uuid& id)
-{
-	m_pendingDestroyEntities.push_back(id);
 }
 
 void World::clear()
 {
-	m_pendingSpawnEntities.clear();
-	m_pendingDestroyEntities.clear();
-	m_entities.clear();
-}
-
-bool World::isLoading(size_t& progress) const
-{
-	return progress = 0, false;
+	m_children.clear();
+	m_scene.reset();
 }
 
 void World::load(const SceneAssetPtr& scene)
 {
-	m_loadedSceneId = scene->descriptor.id;
+	m_scene = scene;
 
 	clear();
 }
 
 void World::save(const std::filesystem::path& path)
 {
-	JsonFile::save(*this, path);
-
-	AssetImporter importer;
-	importer.import(path, m_loadedSceneId);
+	// JsonFile::save(*this, path);
+	// 
+	// AssetImporter importer;
+	// importer.import(path, );
 }
 
 void World::checkCollisions()
 {
-	for (const auto& entity : m_entities)
+	for (const auto& child : m_children)
 	{
-		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
+		Collider2dComponent* const collider = child->findComponent<Collider2dComponent>();
 		if (collider == nullptr) continue;
 
-		for (Entity* const other : findNearestEntities(entity.get()))
+		for (Entity* const other : findNearestEntities(child.get()))
 		{
 			Collider2dComponent* const otherCollider = other->findComponent<Collider2dComponent>();
 			if (otherCollider == nullptr) continue;

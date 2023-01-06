@@ -5,7 +5,6 @@
 #include <imgui.h>
 
 #include <awesome/editor/layout.h>
-#include <awesome/entity/world.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/ui/ui.h>
 
@@ -35,25 +34,5 @@ void PerformanceWindow::render()
 		std::ostringstream s;
 		s << "UI::DrawCalls: " << UI::instance()->performances.drawCalls;
 		Layout::text(s.str());
-	}
-
-	// Scene loading
-	{
-		std::ostringstream s;
-		s << "World: ";
-
-		World& world = World::instance();
-		size_t progress = 0;
-		if (world.isLoading(progress))
-		{
-			s << "loading... " << progress << " %";
-		}
-		else
-		{
-			s << "loaded";
-		}
-
-		Layout::text(s.str());
-		Layout::text("Quadspaces: " + std::to_string(world.getQuadspace().size()));
 	}
 }

@@ -34,7 +34,7 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::upload(" Import Prefab")))
 	{
-		World::instance().spawn(prefab);
+		World::instance().addChild(prefab);
 	}
 
 	Layout::separator();

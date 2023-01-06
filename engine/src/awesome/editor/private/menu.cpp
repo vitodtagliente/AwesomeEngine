@@ -94,26 +94,26 @@ void Menu::menuScene()
 		MenuLayout::separator();
 		if (MenuLayout::item("Save Scene"))
 		{
-			World& world = World::instance();
-			if (world.getLoadedSceneId() != uuid::Invalid)
-			{
-				SceneAssetPtr asset = AssetLibrary::instance().find<SceneAsset>(world.getLoadedSceneId());
-				if (asset)
-				{
-					world.save(asset->descriptor.getDataPath());
-				}
-				else
-				{
-					Dialog::instance().save("Save Scene", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
-						{
-							if (!path.string().empty())
-							{
-								World::instance().save(path);
-							}
-						}
-					);
-				}
-			}
+			// World& world = World::instance();
+			// if (world.getLoadedSceneId() != uuid::Invalid)
+			// {
+			// 	SceneAssetPtr asset = AssetLibrary::instance().find<SceneAsset>(world.getLoadedSceneId());
+			// 	if (asset)
+			// 	{
+			// 		world.save(asset->descriptor.getDataPath());
+			// 	}
+			// 	else
+			// 	{
+			// 		Dialog::instance().save("Save Scene", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+			// 			{
+			// 				if (!path.string().empty())
+			// 				{
+			// 					World::instance().save(path);
+			// 				}
+			// 			}
+			// 		);
+			// 	}
+			// }
 		}
 		if (MenuLayout::item("Save Scene as..."))
 		{

@@ -25,11 +25,5 @@ math::vec3 CameraComponent::screenToWorldCoords(const math::vec2& point)
 
 CameraComponent* const CameraComponent::main()
 {
-	World& world = World::instance();
-	for (const auto& entity : world.getEntities())
-	{
-		CameraComponent* const camera = entity->findComponent<CameraComponent>();
-		if (camera) return camera;
-	}
-	return nullptr;
+	return World::instance().findComponentInChildren<CameraComponent>();
 }

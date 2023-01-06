@@ -32,7 +32,7 @@ void ShootComponent::shoot()
 {
 	World& world = World::instance();
 
-	Entity* const bulletEntity = world.spawn(m_bulletPrefab, m_aim->getPosition());
+	Entity* const bulletEntity = world.addChild(m_bulletPrefab, m_aim->getPosition());
 	BulletComponent* const bulletComponent = bulletEntity->findComponent<BulletComponent>();
 	if (bulletComponent)
 	{
@@ -41,6 +41,6 @@ void ShootComponent::shoot()
 	}
 	else
 	{
-		world.destroy(bulletEntity);
+		world.removeChild(bulletEntity);
 	}
 }

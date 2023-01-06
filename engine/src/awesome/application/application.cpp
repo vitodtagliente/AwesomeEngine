@@ -57,13 +57,13 @@ int Application::run()
 	);
 
 	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
-	double deltatime = 0.0;
+	double deltaTime = 0.0;
 
 	while (canvas.isOpen())
 	{
 		time.tick();
 		fpsTimer.tick(time.getDeltaTime());
-		deltatime += time.getDeltaTime();
+		deltaTime += time.getDeltaTime();
 		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();
@@ -71,11 +71,11 @@ int Application::run()
 
 		for (const auto& module : m_modules)
 		{
-			module->update(deltatime);
+			module->update(deltaTime);
 		}
 
 		input.update();
-		world.update(deltatime, settings.quadspaceBounds);
+		world.update(deltaTime);
 
 		// rendering
 		{
@@ -96,7 +96,7 @@ int Application::run()
 		}
 
 		world.flush();
-		deltatime = 0.0;
+		deltaTime = 0.0;
 	}
 
 	for (const auto& module : m_modules)

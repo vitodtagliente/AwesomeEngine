@@ -43,7 +43,7 @@ void Graphics::preRendering()
 
 void Graphics::render()
 {
-	for (const auto& entity : World::instance().getEntities())
+	for (const auto& entity : World::instance().getChildren())
 	{
 		for (const auto& component : entity->getComponents())
 		{

@@ -32,7 +32,7 @@ Player* const Player::initialize(const PlayerIndex index, const std::string& con
 	player->transient = true;
 	player->addComponent(TypeFactory::instantiate<PlayerState>(state));
 	player->addComponent(TypeFactory::instantiate<PlayerController>(controller));
-	World::instance().spawn(player);
+	World::instance().addChild(player);
 
 	return player;
 }
