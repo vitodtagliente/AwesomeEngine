@@ -45,7 +45,6 @@ void World::flush()
 
 		if (it != m_entities.end())
 		{
-			(*it)->prepareToDestroy();
 			m_entities.erase(it);
 		}
 	}
@@ -236,7 +235,6 @@ Entity* const World::spawn(Entity* const entity)
 {
 	if (entity != nullptr)
 	{
-		entity->prepareToSpawn();
 		m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 	}
 	return entity;

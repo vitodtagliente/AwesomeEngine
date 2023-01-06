@@ -30,6 +30,10 @@ public:
 	Entity(const Entity& other) = delete;
 	virtual ~Entity() = default;
 
+	Entity& operator= (const Entity& other) = delete;
+	bool operator== (const Entity& other) const;
+	bool operator!= (const Entity& other) const;
+
 	static Entity* const load(const PrefabAssetPtr& prefab);
 
 	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
@@ -40,8 +44,6 @@ public:
 	inline State getState() const { return m_state; }
 	inline bool hasParent() const { return m_parent != nullptr; }
 
-	virtual void prepareToDestroy();
-	virtual void prepareToSpawn();
 	virtual void update(double deltaTime);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
@@ -63,10 +65,6 @@ public:
 	Entity* const addChild(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion);
 	bool removeChild(Entity* const entity);
 	bool removeChild(const uuid& id);
-
-	Entity& operator= (const Entity& other) = delete;
-	bool operator== (const Entity& other) const;
-	bool operator!= (const Entity& other) const;
 
 	template <typename T = Component>
 	std::vector<T*> findComponents() const
@@ -134,6 +132,10 @@ public:
 	PROPERTY() bool transient{ false };
 
 	GENERATED_BODY()
+
+protected:
+	virtual void prepareToDestroy();
+	virtual void prepareToSpawn();
 
 private:
 	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
