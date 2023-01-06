@@ -5,6 +5,8 @@
 
 #include <awesome/application/application_module.h>
 
+#include "ui_element.h"
+
 namespace graphics
 {
 	class Renderer2D;

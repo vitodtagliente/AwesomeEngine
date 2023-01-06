@@ -10,6 +10,8 @@ void EntityLayout::input(Entity* const entity)
 	if (entity == nullptr) return;
 
 	Layout::beginContext("entity");
+	Layout::button(entity->getTypeName(), graphics::Color(1.f, .6f, .6f));
+	Layout::sameLine();
 	Layout::button(static_cast<std::string>(entity->getId()), graphics::Color(0.f, .6f, .6f));
 	Layout::input("Name", entity->name);
 	Layout::input("Tag", entity->tag);

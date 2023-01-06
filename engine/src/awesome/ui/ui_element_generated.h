@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct NetworkWindowType : RegisteredInTypeFactory<NetworkWindowType>
+struct UIElementType : RegisteredInTypeFactory<UIElementType>
 {
-    NetworkWindowType() = delete;
+    UIElementType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
