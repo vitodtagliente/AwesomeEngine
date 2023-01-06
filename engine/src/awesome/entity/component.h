@@ -1,18 +1,22 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/core/serializable.h>
 #include <awesome/core/uuid.h>
 
 #include "component_generated.h"
 
+namespace graphics
+{
+	class Renderer2D;
+}
+
 class Entity;
 
 CLASS()
-class Component : public Type, public ISerializable
+class Component : public Type
 {
 public:
-	Component() = default;
+	Component();
 	Component(const Component& other) = delete;
 	virtual ~Component() = default;
 
@@ -29,11 +33,9 @@ public:
 
 	virtual void init() {}
 	virtual void uninit() {}
+	virtual void render(graphics::Renderer2D* const /*renderer*/) {}
 	virtual void update(double /*deltaTime*/) {}
 
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 	// editor
 	virtual void inspect();
 

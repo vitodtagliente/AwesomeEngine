@@ -1,10 +1,9 @@
 #include "world.h"
 
 #include <awesome/asset/asset_importer.h>
+#include <awesome/core/serialization.h>
 #include <awesome/component/collider2d_component.h>
-#include <awesome/data/archive.h>
-
-#include "private/scene_loader.h"
+#include <awesome/data/json_file.h>
 
 void World::update(const double deltaTime, const int quadspaceBounds)
 {
@@ -288,41 +287,14 @@ void World::load(const SceneAssetPtr& scene)
 	m_loadedSceneId = scene->descriptor.id;
 
 	clear();
-
-	SceneLoader::load(scene, [this](std::vector<std::unique_ptr<Entity>>& entities) -> void
-		{
-			for (auto& entity : entities)
-			{
-				entity->prepareToSpawn();
-				m_pendingSpawnEntities.push_back(std::move(entity));
-			}
-		}
-	);
 }
 
 void World::save(const std::filesystem::path& path)
 {
-	Archive archive(path, Archive::Mode::Write);
-	archive << json::Serializer::to_string(serialize());
+	JsonFile::save(*this, path);
 
 	AssetImporter importer;
 	importer.import(path, m_loadedSceneId);
-}
-
-json::value World::serialize() const
-{
-	json::value data = json::object();
-	{
-		json::value entities = json::array();
-		for (const auto& entity : m_entities)
-		{
-			if (entity->transient) continue;
-
-			entities.push_back(entity->serialize());
-		}
-		data["entities"] = entities;
-	}
-	return data;
 }
 
 void World::checkCollisions()

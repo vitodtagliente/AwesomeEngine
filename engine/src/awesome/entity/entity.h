@@ -7,7 +7,6 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/core/reflection.h>
-#include <awesome/core/serializable.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/transform.h>
 
@@ -16,7 +15,7 @@
 #include "entity_generated.h"
 
 CLASS(Type = Entity)
-class Entity : public Type, public ISerializable
+class Entity : public Type
 {
 public:
 	enum class State
@@ -81,9 +80,9 @@ public:
 	{
 		T* const component = new T();
 		m_components.push_back(std::unique_ptr<Component>(component));
-		component->attach(this);
 		if (isSpawned())
 		{
+			component->attach(this);
 			component->init();
 		}
 		return component;
@@ -92,9 +91,9 @@ public:
 	Component* const addComponent(Component* const component)
 	{
 		m_components.push_back(std::unique_ptr<Component>(component));
-		component->attach(this);
 		if (isSpawned())
 		{
+			component->attach(this);
 			component->init();
 		}
 		return component;
@@ -102,10 +101,6 @@ public:
 
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
-
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value& value) override;
 
 	PROPERTY() std::string name;
 	PROPERTY() bool persistent{ false };
@@ -117,8 +112,8 @@ public:
 	GENERATED_BODY()
 
 private:
-	std::vector<std::unique_ptr<Entity>> m_children;
-	std::vector<std::unique_ptr<Component>> m_components;
+	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
+	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	PROPERTY() uuid m_id;
 	Entity* m_parent{ nullptr };
 	uuid m_prefab{ uuid::Invalid };

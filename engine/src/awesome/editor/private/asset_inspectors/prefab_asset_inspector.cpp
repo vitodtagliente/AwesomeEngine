@@ -1,11 +1,16 @@
 #include "prefab_asset_inspector.h"
 
-#include <awesome/data/archive.h>
+#include <awesome/data/json_file.h>
 #include <awesome/editor/layout.h>
 #include <awesome/editor/private/entity_layout.h>
+#include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 #include <awesome/editor/text_icon.h>
-#include <awesome/encoding/json.h>
+
+PrefabAssetInspector::~PrefabAssetInspector()
+{
+	delete m_entity;
+}
 
 bool PrefabAssetInspector::canInspect(const AssetPtr& asset)
 {
@@ -19,7 +24,11 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 	if (prefab != m_previouslySelectedPrefab)
 	{
 		m_previouslySelectedPrefab = prefab;
-		m_entity.deserialize(prefab->data.value());
+		if (m_entity != nullptr)
+		{
+			delete m_entity;
+		}
+		m_entity = Entity::instantiate(prefab);
 	}
 
 	if (Layout::button(TextIcon::upload(" Import Prefab")))
@@ -29,15 +38,12 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 
 	Layout::separator();
 
-	EntityLayout::input(&m_entity);
+	EntityLayout::input(m_entity);
 
 	Layout::separator();
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		const json::value& data = m_entity.serialize();
-		prefab->data = data;
-		Archive archive(prefab->descriptor.getDataPath(), Archive::Mode::Write);
-		archive << json::Serializer::to_string(data);
+		JsonFile::save(*m_entity, prefab->descriptor.getDataPath());
 	}
 }

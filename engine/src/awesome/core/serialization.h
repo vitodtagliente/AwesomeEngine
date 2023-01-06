@@ -3,10 +3,10 @@
 
 #include <awesome/asset/asset.h>
 #include <awesome/core/reflection.h>
-#include <awesome/core/serializable.h>
 #include <awesome/core/sub_type.h>
 #include <awesome/core/type_name.h>
 #include <awesome/core/uuid.h>
+#include <awesome/encoding/json.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
@@ -19,7 +19,6 @@ struct Serializer
 {
 	Serializer() = delete;
 
-	static json::value serialize(ISerializable* const serializable);
 	static json::value serialize(const Type& type);
 	static json::value serialize(const std::shared_ptr<Type>& type);
 	static json::value serialize(const std::unique_ptr<Type>& type);
@@ -69,7 +68,6 @@ struct Deserializer
 {
 	Deserializer() = delete;
 
-	static bool deserialize(const json::value& value, ISerializable* const serializable);
 	static bool deserialize(const json::value& value, Type& type);
 	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);
 	static bool deserialize(const json::value& value, std::unique_ptr<Type>& type);
@@ -96,13 +94,13 @@ struct Deserializer
 		return deserialize(value, type.value);
 	}
 	template <typename T>
-	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T()>& createHandler)
+	static bool deserialize(const json::value& value, std::vector<T>& list, const std::function<T(const json::value&)>& createHandler)
 	{
 		if (!value.is_array()) return false;
 
 		for (const auto& elementValue : value.as_array())
 		{
-			T element = createHandler();
+			T element = createHandler(elementValue);
 			if (deserialize(elementValue, element))
 			{
 				list.push_back(std::move(element));
@@ -116,7 +114,7 @@ struct Deserializer
 		return deserialize<T>(
 			value,
 			list,
-			[]() -> T
+			[](const json::value&) -> T
 			{
 				return T();
 			}
@@ -125,13 +123,13 @@ struct Deserializer
 	static bool deserialize(const json::value& value, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName);
 	static bool deserialize(const json::value& value, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
 	template <typename T>
-	static bool deserialize(const json::value& value, std::map<std::string, T>& map, const std::function<T()>& createHandler)
+	static bool deserialize(const json::value& value, std::map<std::string, T>& map, const std::function<T(const json::value&)>& createHandler)
 	{
 		if (!value.is_object()) return false;
 
 		for (const auto& [name, elementValue] : value.as_object())
 		{
-			T element = createHandler();
+			T element = createHandler(elementValue);
 			if (deserialize(elementValue, element))
 			{
 				map.insert(std::make_pair(name, std::move(element)));
@@ -145,7 +143,7 @@ struct Deserializer
 		return deserialize<T>(
 			value,
 			map,
-			[]() -> T
+			[](const json::value&) -> T
 			{
 				return T();
 			}

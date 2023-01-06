@@ -11,7 +11,7 @@ CLASS(Type = Component)
 class Body2dComponent : public Component
 {
 public:
-	Body2dComponent() = default;
+	Body2dComponent();
 	virtual ~Body2dComponent() = default;
 
 	virtual void init() override;

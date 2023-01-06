@@ -4,13 +4,17 @@
 #include <awesome/asset/image_asset.h>
 #include <awesome/entity/component.h>
 #include <awesome/graphics/color.h>
-#include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/texture_rect.h>
 
 #include "sprite_renderer_component_generated.h"
 
+namespace graphics
+{
+	class Renderer2D;
+}
+
 CLASS(Type = Component)
-class SpriteRendererComponent : public graphics::IGraphicsComponent, public Component
+class SpriteRendererComponent : public Component
 {
 public:
 	SpriteRendererComponent() = default;

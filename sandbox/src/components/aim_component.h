@@ -3,7 +3,6 @@
 
 #include <awesome/asset/image_asset.h>
 #include <awesome/entity/component.h>
-#include <awesome/graphics/graphics_component.h>
 #include <awesome/graphics/texture_rect.h>
 #include <awesome/math/vector3.h>
 
@@ -15,7 +14,7 @@ namespace graphics
 }
 
 CLASS(Type = Component)
-class AimComponent : public graphics::IGraphicsComponent, public Component
+class AimComponent : public Component
 {
 public:
 	AimComponent() = default;

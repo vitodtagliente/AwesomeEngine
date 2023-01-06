@@ -3,17 +3,10 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 
-json::value Serializer::serialize(ISerializable* const serializable)
-{
-	if (serializable == nullptr)
-		return json::value();
-
-	return serializable->serialize();
-}
-
 json::value Serializer::serialize(const Type& type)
 {
 	json::value data = json::object();
+	data["type::name"] = type.getTypeName();
 	for (const auto& [name, prop] : type.getTypeProperties())
 	{
 		if (prop.descriptor.type == Property::Type::T_custom_type)
@@ -346,16 +339,6 @@ json::value Serializer::serialize(const AssetPtr& asset)
 	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
 }
 
-bool Deserializer::deserialize(const json::value& value, ISerializable* const serializable)
-{
-	if (serializable != nullptr)
-	{
-		serializable->deserialize(value);
-		return true;
-	}
-	return false;
-}
-
 bool Deserializer::deserialize(const json::value& value, Type& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
@@ -595,7 +578,8 @@ bool Deserializer::deserialize(const json::value& value, std::shared_ptr<Type>& 
 {
 	if (type == nullptr)
 	{
-		type = std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+		const std::string& t = value.contains("type::name") ? value["type::name"].as_string() : typeName;
+		type = std::shared_ptr<Type>(TypeFactory::instantiate<Type>(t));
 	}
 	return deserialize(value, *type.get());
 }
@@ -604,7 +588,8 @@ bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& 
 {
 	if (type == nullptr)
 	{
-		type = std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+		const std::string& t = value.contains("type::name") ? value["type::name"].as_string() : typeName;
+		type = std::unique_ptr<Type>(TypeFactory::instantiate<Type>(t));
 	}
 	return deserialize(value, *type.get());
 }
@@ -737,9 +722,10 @@ bool Deserializer::deserialize(const json::value& value, std::vector<std::shared
 	return deserialize<std::shared_ptr<Type>>(
 		value,
 		list,
-		[typeName]() -> std::shared_ptr<Type>
+		[typeName](const json::value& data) -> std::shared_ptr<Type>
 		{
-			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+			const std::string& type = data.contains("type::name") ? data["type::name"].as_string() : typeName;
+			return std::shared_ptr<Type>(TypeFactory::instantiate<Type>(type));
 		}
 	);
 }
@@ -749,9 +735,10 @@ bool Deserializer::deserialize(const json::value& value, std::vector<std::unique
 	return deserialize<std::unique_ptr<Type>>(
 		value,
 		list,
-		[typeName]() -> std::unique_ptr<Type>
+		[typeName](const json::value& data) -> std::unique_ptr<Type>
 		{
-			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+			const std::string& type = data.contains("type::name") ? data["type::name"].as_string() : typeName;
+			return std::unique_ptr<Type>(TypeFactory::instantiate<Type>(type));
 		}
 	);
 }
@@ -761,9 +748,10 @@ bool Deserializer::deserialize(const json::value& value, std::map<std::string, s
 	return deserialize<std::shared_ptr<Type>>(
 		value,
 		map,
-		[typeName]() -> std::shared_ptr<Type>
+		[typeName](const json::value& data) -> std::shared_ptr<Type>
 		{
-			return std::shared_ptr<Type>(TypeFactory::instantiate(typeName));
+			const std::string& type = data.contains("type::name") ? data["type::name"].as_string() : typeName;
+			return std::shared_ptr<Type>(TypeFactory::instantiate<Type>(type));
 		}
 	);
 }
@@ -773,9 +761,10 @@ bool Deserializer::deserialize(const json::value& value, std::map<std::string, s
 	return deserialize<std::unique_ptr<Type>>(
 		value,
 		map,
-		[typeName]() -> std::unique_ptr<Type>
+		[typeName](const json::value& data) -> std::unique_ptr<Type>
 		{
-			return std::unique_ptr<Type>(TypeFactory::instantiate(typeName));
+			const std::string& type = data.contains("type::name") ? data["type::name"].as_string() : typeName;
+			return std::unique_ptr<Type>(TypeFactory::instantiate<Type>(type));
 		}
 	);
 }

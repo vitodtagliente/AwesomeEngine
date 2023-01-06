@@ -6,7 +6,6 @@
 #include <awesome/component/camera_component.h>
 #include <awesome/entity/world.h>
 
-#include "graphics_component.h"
 #include "renderer.h"
 
 Graphics* Graphics::s_instance{ nullptr };
@@ -50,11 +49,7 @@ void Graphics::render()
 		{
 			if (!component->enabled) continue;
 
-
-			if (graphics::IGraphicsComponent* const graphicsComponent = dynamic_cast<graphics::IGraphicsComponent*>(component.get()))
-			{
-				graphicsComponent->render(renderer.get());
-			}
+			component->render(renderer.get());
 		}
 	}
 }

@@ -7,7 +7,7 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/scene_asset.h>
-#include <awesome/core/serializable.h>
+#include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/quaternion.h>
@@ -16,7 +16,10 @@
 #include "entity.h"
 #include "quadspace.h"
 
-class World final : public Singleton<World>, ISerializable
+#include "world_generated.h"
+
+CLASS(type = World)
+class World final : public Type, public Singleton<World>
 {
 public:
 	void update(double deltaTime, int quadspaceBounds);
@@ -58,14 +61,12 @@ public:
 	void load(const SceneAssetPtr& scene);
 	void save(const std::filesystem::path& path);
 
-	// serialization
-	virtual json::value serialize() const override;
-	virtual void deserialize(const json::value&) override {};
+	GENERATED_BODY()
 
 private:
 	void checkCollisions();
 
-	std::vector<std::unique_ptr<Entity>> m_entities;
+	PROPERTY() std::vector<std::unique_ptr<Entity>> m_entities;
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	std::vector<uuid> m_pendingDestroyEntities;
 	uuid m_loadedSceneId{ uuid::Invalid };

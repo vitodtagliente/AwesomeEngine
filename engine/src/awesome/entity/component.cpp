@@ -4,6 +4,11 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
+Component::Component()
+	: Type()
+{
+}
+
 bool Component::operator==(const Component& other) const
 {
 	return m_id == other.m_id;
@@ -23,18 +28,6 @@ void Component::detach()
 {
 	uninit();
 	m_owner = nullptr;
-}
-
-json::value Component::serialize() const
-{
-	json::value data = Serializer::serialize(*this);
-	data["type::name"] = this->getTypeName();
-	return data;
-}
-
-void Component::deserialize(const json::value& value)
-{
-	Deserializer::deserialize(value, *this);
 }
 
 void Component::inspect()

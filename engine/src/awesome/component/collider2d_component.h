@@ -5,7 +5,6 @@
 
 #include <awesome/core/event.h>
 #include <awesome/entity/component.h>
-#include <awesome/graphics/graphics_component.h>
 #include <awesome/math/vector2.h>
 
 #include "shape_type.h"
@@ -13,7 +12,7 @@
 #include "collider2d_component_generated.h"
 
 CLASS(Type = Component)
-class Collider2dComponent : public graphics::IGraphicsComponent, public Component
+class Collider2dComponent : public Component
 {
 public:
 	Collider2dComponent() = default;

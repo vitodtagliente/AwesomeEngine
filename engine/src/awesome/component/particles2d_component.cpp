@@ -48,6 +48,7 @@ void Particles2dComponent::update(const double deltaTime)
 	}
 }
 
+/*
 json::value Particles2dComponent::serialize() const
 {
 	json::value data = Component::serialize();
@@ -134,6 +135,7 @@ void Particles2dComponent::inspect()
 	// PolygonType particlePolygonType;
 	// PolygonStyle particlePolygonStyle;
 }
+*/
 
 void Particles2dComponent::play()
 {
