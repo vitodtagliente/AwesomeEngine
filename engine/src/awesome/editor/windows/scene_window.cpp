@@ -22,13 +22,20 @@ void SceneWindow::render()
 		processInput(selectedEntity);
 	}
 
-	Layout::beginChild("Header", 0.f, 26.f);
-	if (Layout::button(TextIcon::plus()))
+	Layout::beginChild("Header", 0.f, 46.f);
+	if (Layout::beginCombo(TextIcon::plus(" Add Entity"), ""))
 	{
-		addEntity();
+		const std::vector<std::string>& types = TypeFactory::list("Type", "Entity");
+		for (const std::string& type : types)
+		{
+			if (Layout::selectable(type.c_str(), false))
+			{
+				addEntity(type);
+				break;
+			}
+		}
+		Layout::endCombo();
 	}
-
-	Layout::sameLine();
 
 	const std::string previousFilter = m_filter;
 	Layout::input(TextIcon::search(), m_filter);
@@ -110,13 +117,16 @@ void SceneWindow::processInput(Entity* const entity)
 	}
 }
 
-void SceneWindow::addEntity()
+void SceneWindow::addEntity(const std::string& type)
 {
 	World& world = World::instance();
-	Entity* const newEntity = world.spawn();
-	newEntity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
-	Editor::instance()->state.select(newEntity);
-	Layout::scrollToBottom();
+	Entity* const entity = world.spawn(TypeFactory::instantiate<Entity>(type));
+	if (entity != nullptr)
+	{
+		entity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
+		Editor::instance()->state.select(entity);
+		Layout::scrollToBottom();
+	}
 }
 
 void SceneWindow::deleteEntity(Entity* const entity)

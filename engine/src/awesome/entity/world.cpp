@@ -3,7 +3,6 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/component/collider2d_component.h>
 #include <awesome/data/archive.h>
-#include <awesome/net/network_manager.h>
 
 #include "private/scene_loader.h"
 
@@ -228,8 +227,6 @@ Entity* const World::spawn(const math::vec3& position)
 
 Entity* const World::spawn(const math::vec3& position, const math::quaternion& quaternion)
 {
-	if (!net::NetworkManager::instance().hasNetworkAuthority()) return nullptr;
-
 	Entity* const entity = new Entity();
 	entity->transform.position = position;
 	entity->transform.rotation.z = quaternion.z; // 2d only
@@ -238,9 +235,11 @@ Entity* const World::spawn(const math::vec3& position, const math::quaternion& q
 
 Entity* const World::spawn(Entity* const entity)
 {
-	entity->prepareToSpawn();
-	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
-
+	if (entity != nullptr)
+	{
+		entity->prepareToSpawn();
+		m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
+	}
 	return entity;
 }
 
@@ -256,16 +255,10 @@ Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& posit
 
 Entity* const World::spawn(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
 {
-	if (!net::NetworkManager::instance().hasNetworkAuthority()) return nullptr;
-
-	Entity* const entity = new Entity();
-	Entity::duplicate(prefab, *entity);
+	Entity* const entity = Entity::instantiate(prefab);
 	entity->transform.position = position;
-	entity->transform.rotation.z = quaternion.z; // 2d only
-	entity->prepareToSpawn();
-	m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
-
-	return entity;
+	entity->transform.rotation.z = quaternion.z;
+	return spawn(entity);
 }
 
 void World::destroy(Entity* const entity)
@@ -330,46 +323,6 @@ json::value World::serialize() const
 		data["entities"] = entities;
 	}
 	return data;
-}
-
-json::value World::netSerialize() const
-{
-	json::value data = json::object();
-	{
-		json::value entities = json::array();
-		for (const auto& entity : m_entities)
-		{
-			if (entity && entity->replicate)
-			{
-				entities.push_back(entity->serialize());
-			}
-		}
-		data["entities"] = entities;
-	}
-	return data;
-}
-
-void World::netDeserialize(const json::value& value)
-{
-	const auto& jsonEntities = value.safeAt("entities").as_array({});
-	for (const json::value& jsonEntity : jsonEntities)
-	{
-		uuid entityId = uuid::Invalid;
-		Deserializer::deserialize(jsonEntity.safeAt("id"), entityId);
-
-		Entity* entity = findEntityById(entityId);
-		if (entity != nullptr)
-		{
-			entity->deserialize(jsonEntity);
-		}
-		else
-		{
-			// net spawn
-			std::unique_ptr<Entity> netEntity = std::make_unique<Entity>();
-			netEntity->deserialize(jsonEntity);
-			m_pendingSpawnEntities.push_back(std::move(netEntity));
-		}
-	}
 }
 
 void World::checkCollisions()

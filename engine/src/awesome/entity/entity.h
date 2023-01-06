@@ -6,13 +6,17 @@
 #include <vector>
 
 #include <awesome/asset/prefab_asset.h>
+#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
 
-class Entity : public ISerializable
+#include "entity_generated.h"
+
+CLASS(Type = Entity)
+class Entity : public Type, public ISerializable
 {
 public:
 	enum class State
@@ -39,8 +43,7 @@ public:
 	void setParent(Entity* const entity);
 	void update(double deltaTime);
 
-	static void duplicate(const Entity& from, Entity& duplicate);
-	static void duplicate(const PrefabAssetPtr& prefab, Entity& duplicate);
+	static Entity* const instantiate(const PrefabAssetPtr& prefab);
 
 	Entity& operator= (const Entity& other) = delete;
 	bool operator== (const Entity& other) const;
@@ -104,17 +107,19 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value& value) override;
 
-	std::string name;
-	bool persistent{ false };
-	bool replicate{ false };
-	std::string tag;
-	math::transform transform;
-	bool transient{ false };
+	PROPERTY() std::string name;
+	PROPERTY() bool persistent{ false };
+	PROPERTY() bool replicate{ false };
+	PROPERTY() std::string tag;
+	PROPERTY() math::transform transform;
+	PROPERTY() bool transient{ false };
+
+	GENERATED_BODY()
 
 private:
 	std::vector<std::unique_ptr<Entity>> m_children;
 	std::vector<std::unique_ptr<Component>> m_components;
-	uuid m_id;
+	PROPERTY() uuid m_id;
 	Entity* m_parent{ nullptr };
 	uuid m_prefab{ uuid::Invalid };
 	State m_state{ State::PendingSpawn };

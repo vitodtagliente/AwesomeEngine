@@ -24,8 +24,7 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::upload(" Import Prefab")))
 	{
-		Entity* const entity = World::instance().spawn();
-		Entity::duplicate(prefab, *entity);
+		World::instance().spawn(prefab);
 	}
 
 	Layout::separator();

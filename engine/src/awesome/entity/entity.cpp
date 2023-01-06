@@ -1,15 +1,10 @@
 #include "entity.h"
 
-#include <awesome/net/network_manager.h>
-
 void Entity::prepareToSpawn()
 {
 	for (const auto& component : m_components)
 	{
-		if (component->enabled)
-		{
-			component->init();
-		}
+		component->init();
 	}
 
 	m_state = State::Alive;
@@ -41,8 +36,7 @@ void Entity::update(const double deltaTime)
 {
 	for (const auto& component : m_components)
 	{
-		if (component->enabled
-			&& (!replicate || net::NetworkManager::instance().hasNetworkAuthority(component->getNetMode())))
+		if (component->enabled)
 		{
 			component->update(deltaTime);
 		}
@@ -50,22 +44,16 @@ void Entity::update(const double deltaTime)
 	transform.update();
 }
 
-void Entity::duplicate(const Entity& from, Entity& duplicate)
+Entity* const Entity::instantiate(const PrefabAssetPtr& prefab)
 {
-	const uuid id = duplicate.m_id;
-	duplicate.deserialize(from.serialize());
-	duplicate.m_id = id;
-}
-
-void Entity::duplicate(const PrefabAssetPtr& prefab, Entity& duplicate)
-{
-	if (prefab->data.has_value())
+	Entity* const entity = new Entity();
+	if (prefab != nullptr && prefab->state == Asset::State::Ready)
 	{
-		const uuid id = duplicate.m_id;
-		duplicate.deserialize(prefab->data.value());
-		duplicate.m_id = id;
-		duplicate.m_prefab = prefab->descriptor.id;
+		entity->deserialize(prefab->data.value());
+		entity->m_prefab = prefab->descriptor.id;
+		entity->m_id = uuid();
 	}
+	return entity;
 }
 
 bool Entity::operator==(const Entity& other) const

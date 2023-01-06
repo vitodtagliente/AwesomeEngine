@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct MagicWandComponentType : RegisteredInTypeFactory<MagicWandComponentType>
+struct EntityType : RegisteredInTypeFactory<EntityType>
 {
-    MagicWandComponentType() = delete;
+    EntityType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

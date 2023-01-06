@@ -21,7 +21,7 @@ public:
 private:
 
 	void processInput(Entity* const entity);
-	void addEntity();
+	void addEntity(const std::string& type);
 	void deleteEntity(Entity* const entity);
 	void selectEntity(Entity* const entity);
 	void renameEntity(Entity* const entity, const std::string& name);

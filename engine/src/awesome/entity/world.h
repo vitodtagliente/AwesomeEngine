@@ -62,9 +62,6 @@ public:
 	virtual json::value serialize() const override;
 	virtual void deserialize(const json::value&) override {};
 
-	json::value netSerialize() const;
-	void netDeserialize(const json::value&);
-
 private:
 	void checkCollisions();
 
