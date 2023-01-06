@@ -84,7 +84,9 @@ void Entity::removeComponent(const uuid& id)
 
 	if (it != m_components.end())
 	{
-		(*it)->detach();
+		const auto& component = *it;
+		component->uninit();
+		component->detach();
 		m_components.erase(it);
 	}
 }
