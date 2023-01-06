@@ -126,6 +126,76 @@ Entity* const Entity::findChildByTag(const std::string& childTag) const
 	return nullptr;
 }
 
+Entity* const Entity::addChild()
+{
+	return addChild(math::vec3::zero, math::quaternion::identity);
+}
+
+Entity* const Entity::addChild(const math::vec3& position)
+{
+	return addChild(position, math::quaternion::identity);
+}
+
+Entity* const Entity::addChild(const math::vec3& position, const math::quaternion& quaternion)
+{
+	Entity* const entity = new Entity();
+	entity->transform.position = position;
+	entity->transform.rotation.z = quaternion.z; // 2d only
+	return addChild(entity);
+}
+
+Entity* const Entity::addChild(Entity* const entity)
+{
+	if (entity != nullptr)
+	{
+		entity->prepareToSpawn();
+		m_children.push_back(std::unique_ptr<Entity>(entity));
+	}
+	return entity;
+}
+
+Entity* const Entity::addChild(const PrefabAssetPtr& prefab)
+{
+	return addChild(prefab, math::vec3::zero, math::quaternion::identity);
+}
+
+Entity* const Entity::addChild(const PrefabAssetPtr& prefab, const math::vec3& position)
+{
+	return addChild(prefab, position, math::quaternion::identity);
+}
+
+Entity* const Entity::addChild(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion)
+{
+	Entity* const entity = Entity::instantiate(prefab);
+	entity->transform.position = position;
+	entity->transform.rotation.z = quaternion.z;
+	return addChild(entity);
+}
+
+bool Entity::removeChild(Entity* const entity)
+{
+	return removeChild(entity->getId());
+}
+
+bool Entity::removeChild(const uuid& id)
+{
+	for (auto it = m_children.begin(); it != m_children.end(); ++it)
+	{
+		const auto& child = *it;
+		if (child->getId() == id)
+		{
+			child->prepareToDestroy();
+			return m_children.erase(it), true;
+		}
+
+		if (child->removeChild(id))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Entity::operator==(const Entity& other) const
 {
 	return m_id == other.m_id;

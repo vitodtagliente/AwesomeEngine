@@ -8,6 +8,7 @@
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
+#include <awesome/math/quaternion.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
@@ -49,6 +50,21 @@ public:
 	Entity* const findChildById(const uuid& id) const;
 	Entity* const findChildByName(const std::string& name) const;
 	Entity* const findChildByTag(const std::string& tag) const;
+
+	Entity* const addChild();
+	Entity* const addChild(const math::vec3& position);
+	Entity* const addChild(const math::vec3& position, const math::quaternion& quaternion);
+	Entity* const addChild(Entity* const entity);
+	template <typename T = Entity>
+	T* const addChild()
+	{
+		return addChild(new T());
+	}
+	Entity* const addChild(const PrefabAssetPtr& prefab);
+	Entity* const addChild(const PrefabAssetPtr& prefab, const math::vec3& position);
+	Entity* const addChild(const PrefabAssetPtr& prefab, const math::vec3& position, const math::quaternion& quaternion);
+	bool removeChild(Entity* const entity);
+	bool removeChild(const uuid& id);
 
 	Entity& operator= (const Entity& other) = delete;
 	bool operator== (const Entity& other) const;
