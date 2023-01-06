@@ -148,6 +148,7 @@ Entity* const Entity::addChild(Entity* const entity)
 {
 	if (entity != nullptr)
 	{
+		entity->m_parent = this;
 		entity->prepareToSpawn();
 		m_children.push_back(std::unique_ptr<Entity>(entity));
 	}
