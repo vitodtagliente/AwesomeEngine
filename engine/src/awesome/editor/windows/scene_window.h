@@ -15,14 +15,14 @@ public:
 
 	virtual std::string getTitle() const override;
 	virtual void render() override;
+	virtual void update(double) override;
 
 	GENERATED_BODY()
 
 private:
-
-	void processInput(Entity* const entity);
-	void addEntity(const std::string& type);
+	void addEntity(const std::string& type, Entity* const parent);
 	void deleteEntity(Entity* const entity);
+	void renderEntity(Entity* const entity, Entity* const selectedEntity);
 	void selectEntity(Entity* const entity);
 	void renameEntity(Entity* const entity, const std::string& name);
 

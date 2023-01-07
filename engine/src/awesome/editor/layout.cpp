@@ -53,6 +53,11 @@ void Layout::beginDrag(const std::string& name, const std::string& item, void* c
 	}
 }
 
+bool Layout::beginTreeNode(const std::string& name, const bool selected)
+{
+	return ImGui::TreeNodeEx(name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow | (selected ? ImGuiTreeNodeFlags_Selected : ImGuiTreeNodeFlags_None));
+}
+
 bool Layout::button(const std::string& name)
 {
 	return ImGui::Button(id(name).c_str());
@@ -121,6 +126,11 @@ void Layout::endDrag(const std::string& name, const std::function<void(void*, si
 		}
 		ImGui::EndDragDropTarget();
 	}
+}
+
+void Layout::endTreeNode()
+{
+	ImGui::TreePop();
 }
 
 void Layout::hint(const std::string& text)
@@ -693,6 +703,11 @@ bool Layout::isMouseClicked()
 bool Layout::isPopupOpen(const std::string& name)
 {
 	return ImGui::IsPopupOpen(name.c_str());
+}
+
+bool Layout::isTreeNodeClicked()
+{
+	return ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen();
 }
 
 bool Layout::isWindowFocused()

@@ -15,13 +15,7 @@ std::string SceneWindow::getTitle() const
 void SceneWindow::render()
 {
 	Entity* const selectedEntity = Editor::instance()->state.selection.entity;
-
-	const bool hasActiveFocus = hasFocus();
-	if (hasActiveFocus && selectedEntity != nullptr)
-	{
-		processInput(selectedEntity);
-	}
-
+	
 	Layout::beginChild("Header", 0.f, 46.f);
 	if (Layout::beginCombo(TextIcon::plus(" Add Entity"), ""))
 	{
@@ -30,7 +24,7 @@ void SceneWindow::render()
 		{
 			if (Layout::selectable(type.c_str(), false))
 			{
-				addEntity(type);
+				addEntity(type, selectedEntity);
 				break;
 			}
 		}
@@ -39,7 +33,7 @@ void SceneWindow::render()
 
 	const std::string previousFilter = m_filter;
 	Layout::input(TextIcon::search(), m_filter);
-	if (previousFilter != m_filter || !hasActiveFocus)
+	if (previousFilter != m_filter || !hasFocus())
 	{
 		m_state = NavigationState::Navigating;
 	}
@@ -64,11 +58,7 @@ void SceneWindow::render()
 				continue;
 			}
 
-			if (Layout::selectable((entity->getPrefab() != nullptr ? TextIcon::cube(" " + entity->name) : entity->name) + "##entity" + std::to_string(i), isSelected))
-			{
-				m_state = NavigationState::Navigating;
-				selectEntity(entity.get());
-			}
+			renderEntity(entity.get(), selectedEntity);
 
 			// Layout::beginDrag("ENTITY_REPARENT", entity->name, (void*)(&entity->getId()), sizeof(uuid));
 			// Layout::endDrag("ENTITY_REPARENT", [this, &entity](void* const data, const size_t) -> void
@@ -86,44 +76,52 @@ void SceneWindow::render()
 		}
 	}
 	Layout::endChild();
+
+	// reset the entity selection once clicked in the entities area
+	if (Layout::isItemHovered() && Layout::isMouseClicked())
+	{
+		Editor::instance()->state.unselectEntity();
+	}
 }
 
-void SceneWindow::processInput(Entity* const entity)
+void SceneWindow::update(double)
 {
+	if (!hasFocus()) return;
+
+	Entity* const selectedEntity = Editor::instance()->state.selection.entity;
+
 	if (m_state == NavigationState::Renaming)
 	{
 		if (Layout::isKeyPressed(KeyCode::Enter) || Layout::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
-			renameEntity(entity, m_tempRename);
+			renameEntity(selectedEntity, m_tempRename);
 			m_tempRename.clear();
 		}
 	}
 	else
 	{
-		if (Layout::isKeyPressed(KeyCode::F2))
+		if (selectedEntity != nullptr)
 		{
-			m_state = NavigationState::Renaming;
-			m_tempRename = entity->name;
-		}
-		else if (Layout::isKeyPressed(KeyCode::Delete))
-		{
-			deleteEntity(entity);
-		}
-		else if (isHovered() && Layout::isMouseClicked())
-		{
-			Editor::instance()->state.unselectEntity();
-		}
+			if (Layout::isKeyPressed(KeyCode::F2))
+			{
+				m_state = NavigationState::Renaming;
+				m_tempRename = selectedEntity->name;
+			}
+			else if (Layout::isKeyPressed(KeyCode::Delete))
+			{
+				deleteEntity(selectedEntity);
+			}
+		}		
 	}
 }
 
-void SceneWindow::addEntity(const std::string& type)
+void SceneWindow::addEntity(const std::string& type, Entity* const parent)
 {
-	World& world = World::instance();
-	Entity* const entity = world.instantiate(TypeFactory::instantiate<Entity>(type));
-	if (entity != nullptr)
+	Entity* const entity = parent ? parent->addChild(TypeFactory::instantiate<Entity>(type)) : World::instance().instantiate(TypeFactory::instantiate<Entity>(type));
+	entity->name = type + "-" + static_cast<std::string>(entity->getId());
+	if (parent == nullptr)
 	{
-		entity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
 		Editor::instance()->state.select(entity);
 		Layout::scrollToBottom();
 	}
@@ -155,6 +153,26 @@ void SceneWindow::deleteEntity(Entity* const entity)
 	else
 	{
 		Editor::instance()->state.unselectEntity();
+	}
+}
+
+void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntity)
+{
+	const std::string name = (entity->getPrefab() != nullptr ? TextIcon::cube(" " + entity->name) : entity->name) + "##entity" + static_cast<std::string>(entity->getId());
+	const bool open = Layout::beginTreeNode(name, entity == selectedEntity);
+	if (Layout::isTreeNodeClicked())
+	{
+		m_state = NavigationState::Navigating;
+		selectEntity(entity);
+	}
+
+	if(open)
+	{
+		for (const auto& child : entity->getChildren())
+		{
+			renderEntity(child.get(), selectedEntity);
+		}
+		Layout::endTreeNode();
 	}
 }
 

@@ -322,7 +322,9 @@ void World::save(const std::filesystem::path& path)
 	JsonFile::save(json::object(
 		{
 			{"entities", entities}
-		}), path);
+		}), 
+		path
+	);
 }
 
 void World::checkCollisions()

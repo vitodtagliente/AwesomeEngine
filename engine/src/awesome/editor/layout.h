@@ -34,6 +34,7 @@ public:
 	static bool beginCombo(const std::string& name, const std::string& value);
 	static void beginContext(const std::string context);
 	static void beginDrag(const std::string& name, const std::string& item, void* const data, size_t size);
+	static bool beginTreeNode(const std::string& name, bool selected);
 	static bool button(const std::string& name);
 	static bool button(const std::string& name, int width, int height);
 	static bool button(const std::string& name, const graphics::Color& color);
@@ -44,6 +45,7 @@ public:
 	static void endCombo();
 	static void endContext();
 	static void endDrag(const std::string& name, const std::function<void(void*, size_t)>& handler);
+	static void endTreeNode();
 	static void hint(const std::string& text);
 	static void image(const ImageAssetPtr& image);
 	static void image(const ImageAssetPtr& image, float width, float height);
@@ -270,6 +272,7 @@ public:
 	static bool isItemHovered();
 	static bool isMouseClicked();
 	static bool isPopupOpen(const std::string& name);
+	static bool isTreeNodeClicked();
 	static bool isWindowFocused();
 	static bool isWindowHovered();
 	static void newLine();

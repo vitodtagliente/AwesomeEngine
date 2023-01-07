@@ -42,6 +42,7 @@ public:
 	inline Entity* const getParent() const { return m_parent; }
 	inline const PrefabAssetPtr& getPrefab() const { return m_prefab; }
 	inline State getState() const { return m_state; }
+	inline bool hasChildren() const { return m_children.empty(); }
 	inline bool hasParent() const { return m_parent != nullptr; }
 
 	void queue_destroy();
