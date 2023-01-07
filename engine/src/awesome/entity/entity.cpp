@@ -62,6 +62,11 @@ void Entity::update(const double deltaTime)
 	transform.update();
 }
 
+void Entity::queue_destroy()
+{
+	m_state = State::PendingDestroy;
+}
+
 Entity* const Entity::load(const PrefabAssetPtr& prefab)
 {
 	Entity* const entity = new Entity();

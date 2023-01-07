@@ -45,6 +45,7 @@ public:
 	inline bool hasParent() const { return m_parent != nullptr; }
 
 	virtual void update(double deltaTime);
+	void queue_destroy();
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
 	Entity* const findChildById(const uuid& id) const;

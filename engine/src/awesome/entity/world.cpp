@@ -2,6 +2,8 @@
 
 #include <awesome/component/collider2d_component.h>
 
+#include "entity.h"
+
 void World::update(const double deltaTime)
 {
 	// quadtree update & parenting

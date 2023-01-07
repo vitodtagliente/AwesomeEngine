@@ -5,18 +5,15 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/asset/prefab_asset.h>
 #include <awesome/asset/scene_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
-#include <awesome/core/uuid.h>
-#include <awesome/math/quaternion.h>
-#include <awesome/math/vector3.h>
 
-#include "entity.h"
 #include "quadspace.h"
 
 #include "world_generated.h"
+
+class Entity;
 
 CLASS(Type = World)
 class World final : public Singleton<World>, public Entity
