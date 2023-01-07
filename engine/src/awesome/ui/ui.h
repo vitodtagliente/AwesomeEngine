@@ -2,8 +2,7 @@
 #pragma once
 
 #include <awesome/application/application_module.h>
-
-#include "ui_element.h"
+#include "control.h"
 
 class UI : public ApplicationModule
 {

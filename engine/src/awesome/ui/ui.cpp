@@ -2,6 +2,8 @@
 
 #include <assert.h>
 
+#include <awesome/entity/entity.h>
+#include <awesome/entity/world.h>
 
 UI* UI::s_instance{ nullptr };
 
@@ -29,7 +31,17 @@ void UI::preRendering()
 
 void UI::render()
 {
-	
+	for (const auto& entity : World::instance().getEntities())
+	{
+		if (entity->getState() != Entity::State::Alive) continue;
+
+		for (const auto& component : entity->getComponents())
+		{
+			if (!component->enabled) continue;
+
+			// component->render(renderer.get());
+		}
+	}
 }
 
 void UI::postRendering()

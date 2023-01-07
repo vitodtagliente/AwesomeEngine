@@ -3,14 +3,14 @@
 
 #include <awesome/entity/entity.h>
 
-#include "ui_element_generated.h"
+#include "control_generated.h"
 
 CLASS(Type = Entity)
-class UIElement : public Entity
+class Control : public Entity
 {
 public:
-	UIElement() = default;
-	virtual ~UIElement() = default;
+	Control() = default;
+	virtual ~Control() = default;
 
 	GENERATED_BODY()
 };

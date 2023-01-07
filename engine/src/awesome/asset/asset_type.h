@@ -10,10 +10,10 @@ ENUM()
 enum class AssetType : int
 {
     None = 0,
-    Image = 1,
-    Prefab = 2,
-    Scene = 3,
-    SpriteAnimation = 5,
-    Text = 6,
-    Tileset = 7
+    Image,
+    Prefab,
+    Scene,
+    SpriteAnimation,
+    Text,
+    Tileset
 };
