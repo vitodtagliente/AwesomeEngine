@@ -556,6 +556,15 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 	return true;
 }
 
+bool Deserializer::deserialize(const json::value& value, Type** type)
+{
+	if (*type == nullptr)
+	{
+		(*type) = new Type();
+	}
+	return deserialize(value, **type);
+}
+
 bool Deserializer::deserialize(const json::value& value, std::shared_ptr<Type>& type)
 {
 	if (type == nullptr)
@@ -592,6 +601,16 @@ bool Deserializer::deserialize(const json::value& value, std::unique_ptr<Type>& 
 		type = std::unique_ptr<Type>(TypeFactory::instantiate<Type>(t));
 	}
 	return deserialize(value, *type.get());
+}
+
+bool Deserializer::deserialize(const json::value& value, Type** type, const std::string& typeName)
+{
+	if (*type == nullptr)
+	{
+		const std::string& t = value.contains("type::name") ? value["type::name"].as_string() : typeName;
+		(*type) = TypeFactory::instantiate<Type>(t);
+	}
+	return deserialize(value, **type);
 }
 
 bool Deserializer::deserialize(const json::value& value, bool& primitive)

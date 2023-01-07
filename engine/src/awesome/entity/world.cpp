@@ -13,6 +13,8 @@ void World::update(const double deltaTime)
 	// quadtree update & parenting
 	for (const auto& entity : m_entities)
 	{
+		if (entity->getState() != Entity::State::Alive) continue;
+
 		Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
 		if (collider != nullptr)
 		{
@@ -282,14 +284,25 @@ Entity* const World::instantiate(const PrefabAssetPtr& prefab, const math::vec3&
 void World::load(const SceneAssetPtr& scene)
 {
 	clear();
+	m_loadingProgress = 0;
 	m_scene = scene;
 
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			Deserializer::deserialize(m_scene->data.value(), *this);
-			m_pendingSpawnEntities = std::move(m_entities);
-			m_entities.clear();
+			if (m_scene->data->contains("entities"))
+			{
+				const auto& list = m_scene->data->at("entities").as_array();
+				const size_t count = list.size();
+				for (int i = 0; i < count; ++i)
+				{
+					Entity* entity = nullptr;
+					Deserializer::deserialize(list[i], (Type**)&entity, "Entity");
+					m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
+
+					m_loadingProgress = static_cast<int>((i + 1) * 100 / count);
+				}
+			}
 			m_state = State::Ready;
 		}
 	);

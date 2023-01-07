@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <awesome/asset/scene_asset.h>
-#include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/quaternion.h>
@@ -15,10 +14,7 @@
 #include "entity.h"
 #include "quadspace.h"
 
-#include "world_generated.h"
-
-CLASS(Type = World)
-class World final : public Type, public Singleton<World>
+class World final : public Singleton<World>
 {
 public:
 	enum class State
@@ -32,6 +28,7 @@ public:
 	void update(double deltaTime);
 
 	inline const std::vector<std::unique_ptr<Entity>>& getEntities() const { return m_entities; }
+	inline int getLoadingProgress() const { return m_loadingProgress; }
 	inline const Quadspace& getQuadspace() const { return m_quadspace; }
 	inline const SceneAssetPtr& getScene() const { return m_scene; }
 	inline State getState() const { return m_state; }
@@ -64,12 +61,11 @@ public:
 	void load(const SceneAssetPtr& scene);
 	void save(const std::filesystem::path& path);
 
-	GENERATED_BODY()
-
 private:
 	void checkCollisions();
 
-	PROPERTY() std::vector<std::unique_ptr<Entity>> m_entities;
+	std::vector<std::unique_ptr<Entity>> m_entities;
+	int m_loadingProgress{ 0 };
 	std::vector<uuid> m_pendingDestroyEntities; 
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	SceneAssetPtr m_scene;
