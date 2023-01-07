@@ -4,6 +4,7 @@
 
 #include <awesome/component/collider2d_component.h>
 #include <awesome/core/serialization.h>
+#include <awesome/data/json_file.h>
 
 void World::update(const double deltaTime)
 {
@@ -282,14 +283,33 @@ void World::load(const SceneAssetPtr& scene)
 {
 	clear();
 	m_scene = scene;
+
+	m_state = State::Loading;
+	std::thread handler([this]()
+		{
+			Deserializer::deserialize(m_scene->data.value(), *this);
+			m_pendingSpawnEntities = std::move(m_entities);
+			m_entities.clear();
+			m_state = State::Ready;
+		}
+	);
+	handler.detach();
 }
 
 void World::save(const std::filesystem::path& path)
 {
-	// JsonFile::save(*this, path);
-	// 
-	// AssetImporter importer;
-	// importer.import(path, );
+	json::value entities = json::array();
+	for (const auto& entity : m_entities)
+	{
+		if (entity->transient) continue;
+
+		entities.push_back(Serializer::serialize(*entity.get()));
+	}
+
+	JsonFile::save(json::object(
+		{
+			{"entities", entities}
+		}), path);
 }
 
 void World::checkCollisions()
