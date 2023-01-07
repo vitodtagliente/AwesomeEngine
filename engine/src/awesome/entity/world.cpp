@@ -229,7 +229,17 @@ std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const
 
 void World::clear()
 {
+	std::vector<std::unique_ptr<Entity>> entitiesToKeep;
+	for (auto& entity : m_entities)
+	{
+		if (entity->persistent)
+		{
+			entitiesToKeep.push_back(std::move(entity));
+		}
+	}
 	m_entities.clear();
+	m_entities = std::move(entitiesToKeep);
+	
 	m_pendingDestroyEntities.clear();
 	m_pendingSpawnEntities.clear();
 	m_quadspace.clear();
