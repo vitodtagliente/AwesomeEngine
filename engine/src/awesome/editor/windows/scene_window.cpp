@@ -49,9 +49,9 @@ void SceneWindow::render()
 
 	Layout::beginChild("Content");
 	World& world = World::instance();
-	for (int i = 0; i < world.getChildren().size(); ++i)
+	for (int i = 0; i < world.getEntities().size(); ++i)
 	{
-		const auto& entity = world.getChildren()[i];
+		const auto& entity = world.getEntities()[i];
 		const bool isSelected = selectedEntity != nullptr && entity->getId() == selectedEntity->getId();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
@@ -120,10 +120,10 @@ void SceneWindow::processInput(Entity* const entity)
 void SceneWindow::addEntity(const std::string& type)
 {
 	World& world = World::instance();
-	Entity* const entity = world.addChild(TypeFactory::instantiate<Entity>(type));
+	Entity* const entity = world.instantiate(TypeFactory::instantiate<Entity>(type));
 	if (entity != nullptr)
 	{
-		entity->name = std::string("Entity ") + std::to_string(world.getChildren().size() + 1);
+		entity->name = std::string("Entity ") + std::to_string(world.getEntities().size() + 1);
 		Editor::instance()->state.select(entity);
 		Layout::scrollToBottom();
 	}
@@ -132,9 +132,8 @@ void SceneWindow::addEntity(const std::string& type)
 void SceneWindow::deleteEntity(Entity* const entity)
 {
 	const uuid id = entity->getId();
-	World& world = World::instance();
-	world.removeChild(entity);
-	const auto& entities = world.getChildren();
+	entity->queue_destroy();
+	const auto& entities = World::instance().getEntities();
 	if (!entities.empty())
 	{
 		if (entities[0]->getId() == id)

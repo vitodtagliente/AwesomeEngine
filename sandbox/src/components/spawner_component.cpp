@@ -57,7 +57,7 @@ void SpawnerComponent::update(const double deltaTime)
 				spawnPosition.x += math::random(-currentWave->spawnRange.x, currentWave->spawnRange.x);
 				spawnPosition.y = math::random(-currentWave->spawnRange.y, currentWave->spawnRange.y);
 			}
-			World::instance().addChild(currentWave->minionPrefab, spawnPosition);
+			World::instance().instantiate(currentWave->minionPrefab, spawnPosition);
 			m_timer = currentWave->perSpawnDelay;
 			break;
 		}

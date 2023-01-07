@@ -15,7 +15,7 @@ void LifetimeComponent::update(double deltaTime)
 		m_timer -= deltaTime;
 		if (m_timer <= 0.0)
 		{
-			World::instance().removeChild(getOwner());
+			getOwner()->queue_destroy();
 		}
 	}
 }

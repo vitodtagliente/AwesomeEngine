@@ -19,6 +19,7 @@ public:
 	const graphics::Camera& getData() const { return *m_data; }
 	virtual math::vec3 screenToWorldCoords(const math::vec2& point);
 
+	virtual void init() override;
 	virtual void update(double) override;
 
 	static CameraComponent* const main();
@@ -29,4 +30,6 @@ public:
 
 protected:
 	std::unique_ptr<graphics::Camera> m_data;
+
+	static CameraComponent* s_instance;
 };

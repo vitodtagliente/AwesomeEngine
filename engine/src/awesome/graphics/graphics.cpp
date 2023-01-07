@@ -43,8 +43,10 @@ void Graphics::preRendering()
 
 void Graphics::render()
 {
-	for (const auto& entity : World::instance().getChildren())
+	for (const auto& entity : World::instance().getEntities())
 	{
+		if (entity->getState() != Entity::State::Alive) continue;
+
 		for (const auto& component : entity->getComponents())
 		{
 			if (!component->enabled) continue;

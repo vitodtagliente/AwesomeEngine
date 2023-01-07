@@ -7,7 +7,7 @@ void CameraFollow2dComponent::update(const double deltaTime)
 {
 	if (m_target == nullptr)
 	{
-		const auto& entities = World::instance().findChildrenByTag("Player");
+		const auto& entities = World::instance().findEntitiesByTag("Player");
 		if (!entities.empty())
 		{
 			m_target = entities.front();

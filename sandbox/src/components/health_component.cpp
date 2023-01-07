@@ -39,7 +39,7 @@ void HealthComponent::setValue(int value)
 	}
 	if (m_destroyOnDeath && lastValue > 0 && m_value == 0)
 	{
-		World::instance().removeChild(getOwner());
+		getOwner()->queue_destroy();
 	}
 }
 

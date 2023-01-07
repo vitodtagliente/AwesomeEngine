@@ -21,7 +21,7 @@ void MinionControllerComponent::update(const double deltaTime)
 	}
 	else
 	{
-		World::instance().removeChild(getOwner());
+		getOwner()->queue_destroy();
 	}
 }
 
@@ -29,6 +29,6 @@ bool MinionControllerComponent::findTarget()
 {
 	if (m_target) return true;
 
-	m_target = World::instance().findChildByTag(m_targetTag);
+	m_target = World::instance().findEntityByTag(m_targetTag);
 	return m_target != nullptr;
 }

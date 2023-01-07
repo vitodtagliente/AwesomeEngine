@@ -44,8 +44,8 @@ public:
 	inline State getState() const { return m_state; }
 	inline bool hasParent() const { return m_parent != nullptr; }
 
-	virtual void update(double deltaTime);
 	void queue_destroy();
+	virtual void update(double deltaTime);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
 	Entity* const findChildById(const uuid& id) const;
@@ -155,6 +155,7 @@ protected:
 	virtual void prepareToDestroy();
 	virtual void prepareToSpawn();
 
+private:
 	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	PROPERTY() uuid m_id;

@@ -35,6 +35,12 @@ void Entity::prepareToDestroy()
 
 void Entity::update(const double deltaTime)
 {
+	if (m_state == State::PendingSpawn)
+	{
+		prepareToSpawn();
+	}
+	if (m_state == State::PendingDestroy) return;
+
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
 		const auto& component = *it;

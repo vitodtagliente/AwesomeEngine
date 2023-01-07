@@ -4,9 +4,16 @@
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
+CameraComponent* CameraComponent::s_instance{ nullptr };
+
 CameraComponent::CameraComponent()
 	: m_data(std::make_unique<graphics::Camera>())
 {
+}
+
+void CameraComponent::init()
+{
+	s_instance = this;
 }
 
 void CameraComponent::update(double)
@@ -25,5 +32,5 @@ math::vec3 CameraComponent::screenToWorldCoords(const math::vec2& point)
 
 CameraComponent* const CameraComponent::main()
 {
-	return World::instance().findComponentInChildren<CameraComponent>();
+	return s_instance;
 }
