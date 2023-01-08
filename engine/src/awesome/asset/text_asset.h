@@ -7,10 +7,8 @@
 
 struct TextAsset : public BaseAsset<Asset::Type::Text, std::string>
 {
-	TextAsset(const Asset::Descriptor& descriptor)
-		: BaseAsset(descriptor)
-	{
+	TextAsset() = default;
 
-	}
+	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<TextAsset> TextAssetPtr;

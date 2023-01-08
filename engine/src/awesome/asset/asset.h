@@ -45,7 +45,6 @@ struct Asset
 	};
 
 	Asset();
-	Asset(const Descriptor& descriptor);
 	Asset(const Asset& other) = delete;
 
 	Asset& operator= (const Descriptor& other) = delete;
@@ -56,6 +55,8 @@ struct Asset
 	static const std::vector<std::string>& getExtensionsByType(Type type);
 	static const std::string& getExtensionByType(Type type);
 	static Type getTypeByExtension(const std::string& extension);
+
+	virtual void load(const std::filesystem::path& path) = 0;
 
 	Descriptor descriptor;
 	std::function<void()> onLoad;

@@ -6,10 +6,8 @@
 
 struct SpriteAnimationAsset : public BaseAsset<Asset::Type::SpriteAnimation, SpriteAnimationData>
 {
-	SpriteAnimationAsset(const Asset::Descriptor& descriptor)
-		: BaseAsset(descriptor)
-	{
+	SpriteAnimationAsset() = default;
 
-	}
+	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<SpriteAnimationAsset> SpriteAnimationAssetPtr;

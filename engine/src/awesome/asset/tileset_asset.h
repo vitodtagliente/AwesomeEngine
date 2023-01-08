@@ -6,10 +6,8 @@
 
 struct TilesetAsset : public BaseAsset<Asset::Type::Tileset, Tileset>
 {
-	TilesetAsset(const Asset::Descriptor& descriptor)
-		: BaseAsset(descriptor)
-	{
+	TilesetAsset() = default;
 
-	}
+	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<TilesetAsset> TilesetAssetPtr;

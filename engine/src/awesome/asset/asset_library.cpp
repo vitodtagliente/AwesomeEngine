@@ -2,6 +2,7 @@
 
 #include <thread>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
 #include <awesome/data/text_file.h>
@@ -79,90 +80,37 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		return nullptr;
 	}
 
+	AssetPtr asset;
+
 	switch (descriptor.type)
 	{
-	case Asset::Type::Image:
+	case AssetType::Custom: 
 	{
-		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor);
+		break;
+	}
+	case AssetType::Image: asset = std::make_shared<ImageAsset>(); break;
+	case AssetType::Prefab: asset = std::make_shared<PrefabAsset>(); break;
+	case AssetType::Scene: asset = std::make_shared<SceneAsset>(); break;
+	case AssetType::SpriteAnimation: asset = std::make_shared<SpriteAnimationAsset>(); break;
+	case AssetType::Text: asset = std::make_shared<TextAsset>(); break;
+	case AssetType::Tileset: asset = std::make_shared<TilesetAsset>(); break;
+	case AssetType::None:
+	default:
+		break;
+	}
+
+	if (asset != nullptr)
+	{
+		asset->descriptor = descriptor;
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
-				asset->data = Image::load(path);
+				asset->load(path);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
 		);
-		return handler.detach(), asset;
+		handler.detach(); 
 	}
-	case Asset::Type::Prefab:
-	{
-		PrefabAssetPtr asset = std::make_shared<PrefabAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
-			{
-				JsonFile::load(path, asset->data);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
-		return handler.detach(), asset;
-	}
-	case Asset::Type::Scene:
-	{
-		SceneAssetPtr asset = std::make_shared<SceneAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
-			{
-				JsonFile::load(path, asset->data);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);		
-		return handler.detach(), asset;
-	}
-	case Asset::Type::SpriteAnimation:
-	{
-		SpriteAnimationAssetPtr asset = std::make_shared<SpriteAnimationAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		asset->data = SpriteAnimationData();
-		std::thread handler(
-			[path, asset]() -> void
-			{
-				JsonFile::load(path, asset->data);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
-		return handler.detach(), asset;
-	}
-	case Asset::Type::Text:
-	{
-		TextAssetPtr asset = std::make_shared<TextAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
-			{
-				TextFile::load(path, asset->data);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
-		return handler.detach(), asset;
-	}
-	case Asset::Type::Tileset:
-	{
-		TilesetAssetPtr asset = std::make_shared<TilesetAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		asset->data = Tileset();
-		std::thread handler(
-			[path, asset]() -> void
-			{
-				JsonFile::load(path, asset->data);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
-		return handler.detach(), asset;
-	}
-	default: return nullptr;
-	}
+	return asset;
 }

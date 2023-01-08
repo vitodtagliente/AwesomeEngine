@@ -1,6 +1,7 @@
 #include "asset.h"
 
 #include <map>
+#include <thread>
 
 #include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
@@ -21,13 +22,6 @@ Asset::Asset()
 	, state(State::None)
 {
 
-}
-
-Asset::Asset(const Descriptor& descriptor)
-	: descriptor(descriptor)
-	, onLoad()
-	, state(State::None)
-{
 }
 
 bool Asset::operator==(const Asset& other) const

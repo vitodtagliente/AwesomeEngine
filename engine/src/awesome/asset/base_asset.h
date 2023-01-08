@@ -9,13 +9,7 @@ struct BaseAsset : public Asset
 public:
 	typedef D data_t;
 
-	BaseAsset(const Asset::Descriptor& descriptor)
-		: Asset(descriptor)
-		, data()
-	{
-
-	}
-
+	BaseAsset() = default;
 	BaseAsset(const BaseAsset& other) = delete;
 
 	BaseAsset& operator= (const BaseAsset& other) = delete;
