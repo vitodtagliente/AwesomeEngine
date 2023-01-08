@@ -86,6 +86,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	{
 	case AssetType::Custom: 
 	{
+		// asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>())
 		break;
 	}
 	case AssetType::Image: asset = std::make_shared<ImageAsset>(); break;

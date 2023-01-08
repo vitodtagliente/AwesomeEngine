@@ -7,8 +7,6 @@
 
 struct PrefabAsset : public BaseAsset<Asset::Type::Prefab, json::value>
 {
-	PrefabAsset() = default;
-
 	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<PrefabAsset> PrefabAssetPtr;

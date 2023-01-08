@@ -7,8 +7,6 @@
 
 struct SceneAsset : public BaseAsset<Asset::Type::Scene, json::value>
 {
-	SceneAsset() = default;
-
 	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<SceneAsset> SceneAssetPtr;

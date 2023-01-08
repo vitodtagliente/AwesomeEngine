@@ -6,8 +6,6 @@
 
 struct ImageAsset : public BaseAsset<Asset::Type::Image, Image>
 {
-	ImageAsset() = default;
-
 	virtual void load(const std::filesystem::path& path) override;
 };
 typedef std::shared_ptr<ImageAsset> ImageAssetPtr;

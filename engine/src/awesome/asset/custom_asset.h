@@ -10,9 +10,5 @@
 template <typename T = Type>
 struct CustomAsset : public BaseAsset<Asset::Type::Custom, std::unique_ptr<T>>
 {
-	CustomAsset(const Asset::Descriptor& descriptor)
-		: BaseAsset(descriptor)
-	{
-
-	}
+	
 };
