@@ -45,6 +45,7 @@ struct Asset
 	};
 
 	Asset() = default;
+	virtual ~Asset() = default;
 	Asset(const Asset& other) = delete;
 
 	Asset& operator= (const Descriptor& other) = delete;
