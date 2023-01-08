@@ -300,9 +300,12 @@ void World::load(const SceneAssetPtr& scene)
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			if (m_scene->data->contains("entities"))
+			const json::value& data = m_scene->data.value();
+			if (data.contains("description")) description = data["description"].as_string();
+			if (data.contains("settings")) Deserializer::deserialize(data["settings"], settings);
+			if (data.contains("entities"))
 			{
-				const auto& list = m_scene->data->at("entities").as_array();
+				const auto& list = data.at("entities").as_array();
 				const size_t count = list.size();
 				for (int i = 0; i < count; ++i)
 				{
@@ -331,7 +334,9 @@ void World::save(const std::filesystem::path& path)
 
 	JsonFile::save(json::object(
 		{
-			{"entities", entities}
+			{"description", description},
+			{"entities", entities},
+			{"settings", Serializer::serialize(settings)}
 		}), 
 		path
 	);

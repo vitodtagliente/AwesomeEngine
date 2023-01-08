@@ -16,6 +16,14 @@ void SceneWindow::render()
 {
 	Entity* const selectedEntity = Editor::instance()->state.selection.entity;
 	
+	if (Layout::collapsingHeader("Settings"))
+	{
+		World& world = World::instance();
+		Layout::input("description", world.description);
+		Layout::input(world.settings);
+		Layout::separator();
+	}
+
 	Layout::beginChild("Header", 0.f, 46.f);
 	if (Layout::beginCombo(TextIcon::plus(" Add Entity"), ""))
 	{

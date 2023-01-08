@@ -3,9 +3,11 @@
 
 #include <filesystem>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include <awesome/asset/scene_asset.h>
+#include <awesome/core/reflection.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/quaternion.h>
@@ -13,6 +15,16 @@
 
 #include "entity.h"
 #include "quadspace.h"
+
+#include "world_generated.h"
+
+CLASS(Type = Data)
+struct SceneSettings : public Type
+{
+	PROPERTY() float quadspaceBounds { 100.f };
+
+	GENERATED_BODY()
+};
 
 class World final : public Singleton<World>
 {
@@ -60,6 +72,9 @@ public:
 
 	void load(const SceneAssetPtr& scene);
 	void save(const std::filesystem::path& path);
+
+	std::string description;
+	SceneSettings settings;
 
 private:
 	void checkCollisions();
