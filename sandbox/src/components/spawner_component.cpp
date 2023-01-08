@@ -40,7 +40,7 @@ void SpawnerComponent::update(const double deltaTime)
 		{
 			const auto& currentWave = m_waves[m_waveIndex];
 			if (currentWave->minionPrefab == nullptr
-				|| !currentWave->minionPrefab->data.has_value())
+				|| currentWave->minionPrefab->state != Asset::State::Ready)
 			{
 				break;
 			}

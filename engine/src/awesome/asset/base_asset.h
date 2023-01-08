@@ -1,8 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <optional>
-
 #include "asset.h"
 
 template <Asset::Type T, typename D>
@@ -13,14 +11,7 @@ public:
 
 	BaseAsset(const Asset::Descriptor& descriptor)
 		: Asset(descriptor)
-		, data(std::nullopt)
-	{
-
-	}
-
-	BaseAsset(const Asset::Descriptor& descriptor, const std::optional<data_t> data)
-		: Asset(descriptor)
-		, data(data)
+		, data()
 	{
 
 	}
@@ -39,5 +30,5 @@ public:
 		return descriptor.id != other.descriptor.id;
 	}
 
-	std::optional<data_t> data;
+	data_t data;
 };

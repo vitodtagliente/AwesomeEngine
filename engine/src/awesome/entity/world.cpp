@@ -300,7 +300,7 @@ void World::load(const SceneAssetPtr& scene)
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			const json::value& data = m_scene->data.value();
+			const json::value& data = m_scene->data;
 			if (data.contains("description")) description = data["description"].as_string();
 			if (data.contains("settings")) Deserializer::deserialize(data["settings"], settings);
 			if (data.contains("entities"))

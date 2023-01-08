@@ -161,8 +161,8 @@ void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect
 	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		const float size = ImGui::GetContentRegionAvailWidth();
-		const float width = std::min(size, image->data->width * rect.width * 2);
-		const float height = std::min(size, image->data->height * rect.height * 2);
+		const float width = std::min(size, image->data.width * rect.width * 2);
+		const float height = std::min(size, image->data.height * rect.height * 2);
 		Layout::image(image, rect, width, height);
 	}
 }
@@ -195,8 +195,8 @@ bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect
 	if (image != nullptr && image->state == Asset::State::Ready)
 	{
 		const float size = ImGui::GetContentRegionAvailWidth();
-		const float width = std::min(size, image->data->width * rect.width * 2);
-		const float height = std::min(size, image->data->height * rect.height * 2);
+		const float width = std::min(size, image->data.width * rect.width * 2);
+		const float height = std::min(size, image->data.height * rect.height * 2);
 		return Layout::imageButton(image, rect, width, height);
 	}
 	return false;

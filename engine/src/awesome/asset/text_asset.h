@@ -1,10 +1,16 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <memory>
 #include <string>
 
 #include "base_asset.h"
 
-typedef BaseAsset<Asset::Type::Text, std::string> TextAsset;
+struct TextAsset : public BaseAsset<Asset::Type::Text, std::string>
+{
+	TextAsset(const Asset::Descriptor& descriptor)
+		: BaseAsset(descriptor)
+	{
+
+	}
+};
 typedef std::shared_ptr<TextAsset> TextAssetPtr;

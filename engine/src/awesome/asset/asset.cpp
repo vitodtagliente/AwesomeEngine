@@ -1,10 +1,9 @@
 #include "asset.h"
 
-#include <fstream>
 #include <map>
 
 #include <awesome/core/serialization.h>
-#include <awesome/data/archive.h>
+#include <awesome/data/json_file.h>
 #include <awesome/encoding/json.h>
 
 std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
@@ -123,21 +122,13 @@ bool Asset::Descriptor::operator!=(const Descriptor& other) const
 
 Asset::Descriptor Asset::Descriptor::load(const std::filesystem::path& filename)
 {
-	static const auto read = [](const std::filesystem::path& filename) -> std::string
-	{
-		std::ostringstream buf;
-		std::ifstream input(filename.c_str());
-		buf << input.rdbuf();
-		return buf.str();
-	};
-
 	Asset::Descriptor descriptor;
 	descriptor.path = filename;
-	std::string content = read(filename);
-	json::value value = json::Deserializer::parse(content);
+	json::value data;
+	JsonFile::load(filename, data);
 	{
-		Deserializer::deserialize(value.safeAt("id"), descriptor.id);
-		stringToEnum(value["type"].as_string(""), descriptor.type);
+		Deserializer::deserialize(data.safeAt("id"), descriptor.id);
+		stringToEnum(data.safeAt("type").as_string(""), descriptor.type);
 	}
 	return descriptor;
 }
@@ -145,13 +136,12 @@ Asset::Descriptor Asset::Descriptor::load(const std::filesystem::path& filename)
 void Asset::Descriptor::save(const std::filesystem::path& filename)
 {
 	const json::value& data = json::object({
-		   {"id", Serializer{}.serialize(id)},
+		   {"id", Serializer::serialize(id)},
 		   {"type", enumToString(type)}
 		});
 
 	path = filename;
-	Archive archive(filename, Archive::Mode::Write);
-	archive << json::Serializer::to_string(data);
+	JsonFile::save(data, filename);
 }
 
 std::filesystem::path Asset::Descriptor::getDataPath() const

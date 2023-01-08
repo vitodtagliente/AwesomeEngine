@@ -21,7 +21,7 @@ void SpriteAnimatorComponent::update(const double deltaTime)
 		m_state.timeLeft -= deltaTime;
 		if (m_state.timeLeft <= 0)
 		{
-			const SpriteAnimationData& animation = m_state.animation->data.value();
+			const SpriteAnimationData& animation = m_state.animation->data;
 			++m_state.frameIndex;
 			if (m_state.frameIndex >= animation.frames.size())
 			{
@@ -65,7 +65,7 @@ void SpriteAnimatorComponent::play(const std::string& name, const bool loop)
 	if (it == animations.end()) return;
 	if (it->second == nullptr || it->second->state != Asset::State::Ready) return;
 
-	const SpriteAnimationData& animation = it->second->data.value();
+	const SpriteAnimationData& animation = it->second->data;
 
 	m_state.name = name;
 	m_state.animation = it->second;

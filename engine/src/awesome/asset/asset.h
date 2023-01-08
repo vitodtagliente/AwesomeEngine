@@ -5,6 +5,7 @@
 #include <functional>
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
 #include "asset_type.h"

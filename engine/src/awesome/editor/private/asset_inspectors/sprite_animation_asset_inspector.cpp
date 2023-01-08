@@ -18,14 +18,14 @@ void SpriteAnimationAssetInspector::inspect(const AssetPtr& asset)
 		return;
 	}
 
-	SpriteAnimationData& data = animation->data.value();
+	SpriteAnimationData& data = animation->data;
 	Layout::input(data);
 
 	Layout::separator();
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(animation->data.value(), animation->descriptor.getDataPath());
+		JsonFile::save(animation->data, animation->descriptor.getDataPath());
 	}
 
 	if (Layout::collapsingHeader("Tool"))
@@ -82,7 +82,7 @@ void SpriteAnimationAssetInspector::inspect(const AssetPtr& asset)
 void SpriteAnimationAssetInspector::update(const AssetPtr& asset, const double deltaTime)
 {
 	SpriteAnimationAssetPtr animation = std::static_pointer_cast<SpriteAnimationAsset>(asset);
-	if (animation == nullptr || !animation->data.has_value())
+	if (animation == nullptr || animation->state != Asset::State::Ready)
 	{
 		return;
 	}
@@ -90,7 +90,7 @@ void SpriteAnimationAssetInspector::update(const AssetPtr& asset, const double d
 	const bool hasChanged = m_previousSelectedAsset != animation.get();
 	m_previousSelectedAsset = animation.get();
 
-	auto& frames = animation->data.value().frames;
+	auto& frames = animation->data.frames;
 
 	if (hasChanged)
 	{

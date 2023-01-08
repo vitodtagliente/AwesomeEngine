@@ -153,9 +153,9 @@ void Application::initSettings()
 	case Mode::Standalone: sceneToLoad = settings.scene->standaloneScene; break;
 	}
 
-	if (sceneToLoad)
+	if (sceneToLoad != nullptr)
 	{
-		if (sceneToLoad->data.has_value())
+		if (sceneToLoad->state == Asset::State::Ready)
 		{
 			World::instance().load(sceneToLoad);
 		}

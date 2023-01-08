@@ -46,6 +46,6 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 	if (Layout::button(TextIcon::save(" Save")))
 	{
 		prefab->data = Serializer::serialize(*m_entity);
-		JsonFile::save(prefab->data.value(), prefab->descriptor.getDataPath());
+		JsonFile::save(prefab->data, prefab->descriptor.getDataPath());
 	}
 }

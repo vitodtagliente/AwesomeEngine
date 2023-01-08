@@ -11,5 +11,5 @@ bool TextAssetInspector::canInspect(const AssetPtr& asset)
 void TextAssetInspector::inspect(const AssetPtr& asset)
 {
 	TextAssetPtr text = std::static_pointer_cast<TextAsset>(asset);
-	Layout::textWrapped(text->data.value());
+	Layout::textWrapped(text->data);
 }

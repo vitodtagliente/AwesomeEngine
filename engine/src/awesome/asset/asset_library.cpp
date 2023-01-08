@@ -81,20 +81,6 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 
 	switch (descriptor.type)
 	{
-	case Asset::Type::Custom:
-	{
-		CustomAssetPtr asset = std::make_shared<CustomAsset>(descriptor);
-		asset->state = Asset::State::Loading;
-		std::thread handler(
-			[path, asset]() -> void
-			{
-				JsonFile::load(path, asset->data.value());
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
-			}
-		);
-		return handler.detach(), asset;
-	}
 	case Asset::Type::Image:
 	{
 		ImageAssetPtr asset = std::make_shared<ImageAsset>(descriptor);
@@ -114,8 +100,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
-				asset->data = json::value();
-				JsonFile::load(path, asset->data.value());
+				JsonFile::load(path, asset->data);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
@@ -128,8 +113,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
-				asset->data = json::value();
-				JsonFile::load(path, asset->data.value());
+				JsonFile::load(path, asset->data);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
@@ -144,9 +128,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler(
 			[path, asset]() -> void
 			{
-				json::value data;
-				JsonFile::load(path, data);
-				Deserializer::deserialize(data, asset->data.value());
+				JsonFile::load(path, asset->data);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
@@ -159,8 +141,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
-				asset->data = "";
-				TextFile::load(path, asset->data.value());
+				TextFile::load(path, asset->data);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}
@@ -175,7 +156,7 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 		std::thread handler(
 			[path, asset]() -> void
 			{
-				JsonFile::load(path, asset->data.value());
+				JsonFile::load(path, asset->data);
 				asset->state = Asset::State::Ready;
 				if (asset->onLoad) asset->onLoad();
 			}

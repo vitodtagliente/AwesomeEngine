@@ -12,7 +12,7 @@ bool TilesetAssetInspector::canInspect(const AssetPtr& asset)
 void TilesetAssetInspector::inspect(const AssetPtr& asset)
 {
 	TilesetAssetPtr tileset = std::static_pointer_cast<TilesetAsset>(asset);
-	TilesetAsset::data_t& data = tileset->data.value();
+	TilesetAsset::data_t& data = tileset->data;
 
 	Layout::input("Image", data.image);
 
@@ -35,11 +35,11 @@ void TilesetAssetInspector::inspect(const AssetPtr& asset)
 	{
 		Layout::image(data.image);
 		Layout::input("Tile Size", data.tileSize);
-		if (Layout::button("Generate") && data.image != nullptr)
+		if (Layout::button("Generate") && data.image != nullptr && data.image->state == Asset::State::Ready)
 		{
 			data.tiles.clear();
-			const int w = data.image->data->width / static_cast<int>(data.tileSize.x);
-			const int h = data.image->data->height / static_cast<int>(data.tileSize.y);
+			const int w = data.image->data.width / static_cast<int>(data.tileSize.x);
+			const int h = data.image->data.height / static_cast<int>(data.tileSize.y);
 			const float size_x = 1.f / static_cast<float>(w);
 			const float size_y = 1.f / static_cast<float>(h);
 			int index = Tile::InvalidIndex;
@@ -65,6 +65,6 @@ void TilesetAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(tileset->data.value(), tileset->descriptor.getDataPath());
+		JsonFile::save(tileset->data, tileset->descriptor.getDataPath());
 	}
 }

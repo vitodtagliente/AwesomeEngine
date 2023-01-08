@@ -1,9 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
+
 #include <awesome/core/reflection.h>
 
 #include "base_asset.h"
 
-typedef BaseAsset<Asset::Type::Custom, std::unique_ptr<Type>> CustomAsset;
-typedef std::shared_ptr<CustomAsset> CustomAssetPtr;
+template <typename T = Type>
+struct CustomAsset : public BaseAsset<Asset::Type::Custom, std::unique_ptr<T>>
+{
+	CustomAsset(const Asset::Descriptor& descriptor)
+		: BaseAsset(descriptor)
+	{
+
+	}
+};
