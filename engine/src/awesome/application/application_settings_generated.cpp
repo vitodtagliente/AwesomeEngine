@@ -132,6 +132,8 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     })));
     properties.insert(std::make_pair<std::string, Property>("mode", Property("mode", Property::TypeDescriptor("ApplicationMode", Property::Type::T_custom_enum, Property::DecoratorType::D_normalized, {}), sizeof(ApplicationMode), origin + offsetof(ApplicationSettings, mode), {
     })));
+    properties.insert(std::make_pair<std::string, Property>("name", Property("name", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(ApplicationSettings, name), {
+    })));
     properties.insert(std::make_pair<std::string, Property>("network", Property("network", Property::TypeDescriptor("ApplicationNetworkSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationNetworkSettings>), origin + offsetof(ApplicationSettings, network), {
     })));
     properties.insert(std::make_pair<std::string, Property>("player", Property("player", Property::TypeDescriptor("ApplicationPlayerSettings", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<ApplicationPlayerSettings>), origin + offsetof(ApplicationSettings, player), {

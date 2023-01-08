@@ -11,6 +11,7 @@
 
 #include <awesome/application/canvas.h>
 #include <awesome/application/input.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/entity/entity.h>
 #include <awesome/entity/world.h>
 
@@ -53,6 +54,7 @@ void Editor::startup()
 	ColorScheme scheme;
 	scheme.apply();
 
+	state.path = AssetLibrary::instance().getDirectory();
 	m_menu.init();
 
 	registerWindows();

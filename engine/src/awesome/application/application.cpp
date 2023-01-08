@@ -41,6 +41,8 @@ int Application::run()
 	}
 
 	initSettings();
+	canvas.setTitle(settings.name);
+
 	registerDefaultModules();
 
 	for (const auto& module : m_modules)
@@ -57,16 +59,24 @@ int Application::run()
 	);
 
 	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
+	Timer statsTimer(1.f);
 	double deltaTime = 0.0;
 
 	while (canvas.isOpen())
 	{
 		time.tick();
 		fpsTimer.tick(time.getDeltaTime());
+		statsTimer.tick(time.getDeltaTime());
 		deltaTime += time.getDeltaTime();
+
 		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
 
 		fpsTimer.reset();
+
+		if (settings.mode == ApplicationMode::Editor)
+		{
+			canvas.setTitle(settings.name + " [AwesomeEngine::Editor " + std::to_string(getStats().framerate) + " FPS]");
+		}
 		canvas.update();
 
 		for (const auto& module : m_modules)
@@ -97,6 +107,14 @@ int Application::run()
 
 		world.flush();
 		deltaTime = 0.0;
+
+		++m_stats.framerate;
+		if (statsTimer.isExpired())
+		{
+			m_previousStats = m_stats;
+			m_stats.clear();
+			statsTimer.reset();
+		}
 	}
 
 	for (const auto& module : m_modules)
@@ -164,4 +182,9 @@ void Application::registerDefaultModules()
 	{
 		registerModule<Editor>();
 	}
+}
+
+void Application::Stats::clear()
+{
+	framerate = 0;
 }

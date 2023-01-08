@@ -87,6 +87,7 @@ public:
     PROPERTY() std::unique_ptr<ApplicationEditorSettings> editor;
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() ApplicationMode mode { ApplicationMode::Editor };
+    PROPERTY() std::string name{ "Awesome" };
     PROPERTY() std::unique_ptr<ApplicationNetworkSettings> network;
     PROPERTY() std::unique_ptr<ApplicationPlayerSettings> player;
     PROPERTY() int quadspaceBounds{ 100 };

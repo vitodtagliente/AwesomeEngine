@@ -4,6 +4,7 @@
 #include <sstream>
 #include <imgui.h>
 
+#include <awesome/application/application.h>
 #include <awesome/editor/layout.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/ui/ui.h>
@@ -17,8 +18,9 @@ void PerformanceWindow::render()
 {
 	// FPS
 	{
+		const Application::Stats& stats = Application::instance().getStats();
 		std::ostringstream s;
-		s << std::round(1000.0f / ImGui::GetIO().Framerate) << " ms/frame (" << std::round(ImGui::GetIO().Framerate) << " FPS)";
+		s << std::round(1000.0f / stats.framerate) << " ms/frame (" << stats.framerate << " FPS)";
 		Layout::text(s.str());
 	}
 

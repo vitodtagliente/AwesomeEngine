@@ -20,9 +20,19 @@ class Application : public Singleton<Application>
 public:
 	typedef ApplicationMode Mode;
 
+	struct Stats
+	{
+		unsigned int framerate{ 0 };
+
+		void clear();
+	};
+
+	void exit();
 	void init(const std::initializer_list<ApplicationModule*>& modules = {});
 	int run();
-	void exit();
+
+	inline const Stats& getStats() const { return m_stats; }
+	inline Stats& getStats() { return m_previousStats; }
 
 	template <typename T = ApplicationModule>
 	T* const registerModule()
@@ -52,4 +62,6 @@ private:
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<ApplicationModule>> m_modules;
+	Stats m_previousStats;
+	Stats m_stats;
 };
