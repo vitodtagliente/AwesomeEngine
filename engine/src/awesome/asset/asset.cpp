@@ -16,14 +16,6 @@ std::map<Asset::Type, std::vector<std::string>> Asset::s_filetypes{
 	{ Asset::Type::Tileset, {".tileset"} }
 };
 
-Asset::Asset()
-	: descriptor()
-	, onLoad()
-	, state(State::None)
-{
-
-}
-
 bool Asset::operator==(const Asset& other) const
 {
 	return descriptor.id == other.descriptor.id;

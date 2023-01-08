@@ -44,7 +44,7 @@ struct Asset
 		Type type;
 	};
 
-	Asset();
+	Asset() = default;
 	Asset(const Asset& other) = delete;
 
 	Asset& operator= (const Descriptor& other) = delete;
@@ -60,7 +60,7 @@ struct Asset
 
 	Descriptor descriptor;
 	std::function<void()> onLoad;
-	State state;
+	State state{ State::None };
 
 	static std::map<Asset::Type, std::vector<std::string>> s_filetypes;
 	static constexpr char* const Extension = ".asset";

@@ -3,9 +3,7 @@
 #include <thread>
 
 #include <awesome/core/reflection.h>
-#include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
-#include <awesome/data/text_file.h>
 
 #include "custom_asset.h"
 #include "image_asset.h"
@@ -86,7 +84,12 @@ std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor,
 	{
 	case AssetType::Custom: 
 	{
-		// asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>())
+		json::value data;
+		JsonFile::load(path, data);
+		if (data.contains("type::name"))
+		{
+			asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(data["type::name"].as_string()));
+		}
 		break;
 	}
 	case AssetType::Image: asset = std::make_shared<ImageAsset>(); break;
