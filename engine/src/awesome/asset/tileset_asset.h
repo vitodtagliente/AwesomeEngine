@@ -9,4 +9,3 @@
 
 typedef BaseAsset<Asset::Type::Text, Tileset> TilesetAsset;
 typedef std::shared_ptr<TilesetAsset> TilesetAssetPtr;
-ASSETTYPEINFO(Tileset, Asset::Type::Tileset)

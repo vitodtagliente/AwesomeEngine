@@ -13,6 +13,16 @@ void JsonFile::save(const Type& type, const std::filesystem::path& path)
 	save(Serializer::serialize(type), path);
 }
 
+void JsonFile::save(std::shared_ptr<Type>& type, const std::filesystem::path& path)
+{
+	save(Serializer::serialize(type), path);
+}
+
+void JsonFile::save(std::unique_ptr<Type>& type, const std::filesystem::path& path)
+{
+	save(Serializer::serialize(type), path);
+}
+
 bool JsonFile::load(const std::filesystem::path& path, json::value& data)
 {
 	if (std::filesystem::exists(path))
@@ -27,6 +37,26 @@ bool JsonFile::load(const std::filesystem::path& path, json::value& data)
 }
 
 bool JsonFile::load(const std::filesystem::path& path, Type& type)
+{
+	json::value data;
+	if (load(path, data))
+	{
+		return Deserializer::deserialize(data, type);
+	}
+	return false;
+}
+
+bool JsonFile::load(const std::filesystem::path& path, std::shared_ptr<Type>& type)
+{
+	json::value data;
+	if (load(path, data))
+	{
+		return Deserializer::deserialize(data, type);
+	}
+	return false;
+}
+
+bool JsonFile::load(const std::filesystem::path& path, std::unique_ptr<Type>& type)
 {
 	json::value data;
 	if (load(path, data))

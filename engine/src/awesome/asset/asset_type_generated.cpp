@@ -7,6 +7,7 @@ const enum_values_t& EnumType<AssetType>::values()
 {
     static enum_values_t s_values{
         { "None", static_cast<int>(AssetType::None) }, 
+        { "Custom", static_cast<int>(AssetType::Custom) }, 
         { "Image", static_cast<int>(AssetType::Image) }, 
         { "Prefab", static_cast<int>(AssetType::Prefab) }, 
         { "Scene", static_cast<int>(AssetType::Scene) }, 

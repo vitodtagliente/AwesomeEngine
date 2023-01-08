@@ -3,8 +3,6 @@
 
 #include <filesystem>
 #include <functional>
-#include <memory>
-#include <string>
 #include <vector>
 
 #include <awesome/core/uuid.h>
@@ -67,22 +65,3 @@ struct Asset
 };
 
 typedef std::shared_ptr<Asset> AssetPtr;
-
-template <typename T>
-struct AssetTypeInfo final
-{
-	static Asset::Type get()
-	{
-		return Asset::Type::None;
-	}
-};
-
-#define ASSETTYPEINFO(A, T) \
-	template <> \
-	struct AssetTypeInfo<A> final \
-	{ \
-		static Asset::Type get() \
-		{ \
-			return T; \
-		}\
-	};

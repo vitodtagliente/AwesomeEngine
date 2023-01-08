@@ -9,7 +9,6 @@ template <Asset::Type T, typename D>
 struct BaseAsset : public Asset
 {
 public:
-
 	typedef D data_t;
 
 	BaseAsset(const Asset::Descriptor& descriptor)

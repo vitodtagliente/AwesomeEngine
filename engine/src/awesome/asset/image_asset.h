@@ -9,4 +9,3 @@
 
 typedef BaseAsset<Asset::Type::Image, Image> ImageAsset;
 typedef std::shared_ptr<ImageAsset> ImageAssetPtr;
-ASSETTYPEINFO(ImageAsset, Asset::Type::Image)

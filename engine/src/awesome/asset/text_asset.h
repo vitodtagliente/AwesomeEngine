@@ -8,4 +8,3 @@
 
 typedef BaseAsset<Asset::Type::Text, std::string> TextAsset;
 typedef std::shared_ptr<TextAsset> TextAssetPtr;
-ASSETTYPEINFO(TextAsset, Asset::Type::Text)

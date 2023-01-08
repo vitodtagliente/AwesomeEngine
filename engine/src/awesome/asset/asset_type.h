@@ -10,6 +10,7 @@ ENUM()
 enum class AssetType : int
 {
     None = 0,
+    Custom,
     Image,
     Prefab,
     Scene,

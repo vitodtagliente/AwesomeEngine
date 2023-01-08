@@ -10,4 +10,3 @@
 
 typedef BaseAsset<Asset::Type::Prefab, json::value> PrefabAsset;
 typedef std::shared_ptr<PrefabAsset> PrefabAssetPtr;
-ASSETTYPEINFO(PrefabAsset, Asset::Type::Prefab)
