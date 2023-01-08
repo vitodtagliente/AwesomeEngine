@@ -75,7 +75,7 @@ int Application::run()
 
 		if (settings.mode == ApplicationMode::Editor)
 		{
-			canvas.setTitle(settings.name + " [AwesomeEngine::Editor " + std::to_string(getStats().framerate) + " FPS]");
+			canvas.setTitle("[AwesomeEngine::Editor " + std::to_string(getStats().framerate) + " FPS] " + settings.name);
 		}
 		canvas.update();
 
