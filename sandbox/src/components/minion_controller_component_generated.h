@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct MinionControllerComponentType : RegisteredInTypeFactory<MinionControllerComponentType>
+struct __MinionControllerComponentType : RegisteredInTypeFactory<__MinionControllerComponentType>
 {
-    MinionControllerComponentType() = delete;
+    __MinionControllerComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

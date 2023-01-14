@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct GamePlayerControllerType : RegisteredInTypeFactory<GamePlayerControllerType>
+struct __GamePlayerControllerType : RegisteredInTypeFactory<__GamePlayerControllerType>
 {
-    GamePlayerControllerType() = delete;
+    __GamePlayerControllerType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

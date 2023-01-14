@@ -11,14 +11,14 @@ struct EnumType<enum class SpawnType>
     static const  enum_values_t& values();
 };
 
-struct SpawnTypeEnum : RegisteredInEnumFactory<enum class SpawnType>
+struct __SpawnTypeEnum : RegisteredInEnumFactory<enum class SpawnType>
 {
     static bool registered() { return value; };
 };
 
-struct WaveType : RegisteredInTypeFactory<WaveType>
+struct __WaveType : RegisteredInTypeFactory<__WaveType>
 {
-    WaveType() = delete;
+    __WaveType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

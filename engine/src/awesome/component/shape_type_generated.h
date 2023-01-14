@@ -11,7 +11,7 @@ struct EnumType<enum class ShapeType>
     static const  enum_values_t& values();
 };
 
-struct ShapeTypeEnum : RegisteredInEnumFactory<enum class ShapeType>
+struct __ShapeTypeEnum : RegisteredInEnumFactory<enum class ShapeType>
 {
     static bool registered() { return value; };
 };

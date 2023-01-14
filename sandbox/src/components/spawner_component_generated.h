@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SpawnerComponentType : RegisteredInTypeFactory<SpawnerComponentType>
+struct __SpawnerComponentType : RegisteredInTypeFactory<__SpawnerComponentType>
 {
-    SpawnerComponentType() = delete;
+    __SpawnerComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

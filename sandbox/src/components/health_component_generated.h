@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct HealthComponentType : RegisteredInTypeFactory<HealthComponentType>
+struct __HealthComponentType : RegisteredInTypeFactory<__HealthComponentType>
 {
-    HealthComponentType() = delete;
+    __HealthComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

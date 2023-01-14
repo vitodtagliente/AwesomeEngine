@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CameraComponentType : RegisteredInTypeFactory<CameraComponentType>
+struct __CameraComponentType : RegisteredInTypeFactory<__CameraComponentType>
 {
-    CameraComponentType() = delete;
+    __CameraComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

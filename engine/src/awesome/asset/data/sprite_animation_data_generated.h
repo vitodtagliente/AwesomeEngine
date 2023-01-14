@@ -4,17 +4,17 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SpriteAnimationFrameType : RegisteredInTypeFactory<SpriteAnimationFrameType>
+struct __SpriteAnimationFrameType : RegisteredInTypeFactory<__SpriteAnimationFrameType>
 {
-    SpriteAnimationFrameType() = delete;
+    __SpriteAnimationFrameType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct SpriteAnimationDataType : RegisteredInTypeFactory<SpriteAnimationDataType>
+struct __SpriteAnimationDataType : RegisteredInTypeFactory<__SpriteAnimationDataType>
 {
-    SpriteAnimationDataType() = delete;
+    __SpriteAnimationDataType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SceneWindowType : RegisteredInTypeFactory<SceneWindowType>
+struct __SceneWindowType : RegisteredInTypeFactory<__SceneWindowType>
 {
-    SceneWindowType() = delete;
+    __SceneWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

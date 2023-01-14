@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct EntityType : RegisteredInTypeFactory<EntityType>
+struct __EntityType : RegisteredInTypeFactory<__EntityType>
 {
-    EntityType() = delete;
+    __EntityType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

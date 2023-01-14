@@ -25,22 +25,22 @@ const enum_values_t& EnumType<FpsMode>::values()
     return s_values;
 }
 
-const meta_t& ApplicationEditorSettings::getTypeMeta() const { return ApplicationEditorSettingsType::type().meta; }
-const std::string& ApplicationEditorSettings::getTypeName() const { return ApplicationEditorSettingsType::type().name; }
+const meta_t& ApplicationEditorSettings::getTypeMeta() const { return __ApplicationEditorSettingsType::type().meta; }
+const std::string& ApplicationEditorSettings::getTypeName() const { return __ApplicationEditorSettingsType::type().name; }
 const properties_t ApplicationEditorSettings::getTypeProperties() const {
     properties_t properties;
     return properties;
 }
-std::size_t ApplicationEditorSettings::getTypeSize() const { return ApplicationEditorSettingsType::type().size; }
+std::size_t ApplicationEditorSettings::getTypeSize() const { return __ApplicationEditorSettingsType::type().size; }
 
-const TypeDefinition& ApplicationEditorSettingsType::type()
+const TypeDefinition& __ApplicationEditorSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationEditorSettings(); }, "ApplicationEditorSettings", {
     }, sizeof(ApplicationEditorSettings));
     return s_typeDefinition;
 }
-const meta_t& ApplicationDebugSettings::getTypeMeta() const { return ApplicationDebugSettingsType::type().meta; }
-const std::string& ApplicationDebugSettings::getTypeName() const { return ApplicationDebugSettingsType::type().name; }
+const meta_t& ApplicationDebugSettings::getTypeMeta() const { return __ApplicationDebugSettingsType::type().meta; }
+const std::string& ApplicationDebugSettings::getTypeName() const { return __ApplicationDebugSettingsType::type().name; }
 const properties_t ApplicationDebugSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -50,16 +50,16 @@ const properties_t ApplicationDebugSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationDebugSettings::getTypeSize() const { return ApplicationDebugSettingsType::type().size; }
+std::size_t ApplicationDebugSettings::getTypeSize() const { return __ApplicationDebugSettingsType::type().size; }
 
-const TypeDefinition& ApplicationDebugSettingsType::type()
+const TypeDefinition& __ApplicationDebugSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationDebugSettings(); }, "ApplicationDebugSettings", {
     }, sizeof(ApplicationDebugSettings));
     return s_typeDefinition;
 }
-const meta_t& ApplicationNetworkSettings::getTypeMeta() const { return ApplicationNetworkSettingsType::type().meta; }
-const std::string& ApplicationNetworkSettings::getTypeName() const { return ApplicationNetworkSettingsType::type().name; }
+const meta_t& ApplicationNetworkSettings::getTypeMeta() const { return __ApplicationNetworkSettingsType::type().meta; }
+const std::string& ApplicationNetworkSettings::getTypeName() const { return __ApplicationNetworkSettingsType::type().name; }
 const properties_t ApplicationNetworkSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -71,16 +71,16 @@ const properties_t ApplicationNetworkSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationNetworkSettings::getTypeSize() const { return ApplicationNetworkSettingsType::type().size; }
+std::size_t ApplicationNetworkSettings::getTypeSize() const { return __ApplicationNetworkSettingsType::type().size; }
 
-const TypeDefinition& ApplicationNetworkSettingsType::type()
+const TypeDefinition& __ApplicationNetworkSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationNetworkSettings(); }, "ApplicationNetworkSettings", {
     }, sizeof(ApplicationNetworkSettings));
     return s_typeDefinition;
 }
-const meta_t& ApplicationPlayerSettings::getTypeMeta() const { return ApplicationPlayerSettingsType::type().meta; }
-const std::string& ApplicationPlayerSettings::getTypeName() const { return ApplicationPlayerSettingsType::type().name; }
+const meta_t& ApplicationPlayerSettings::getTypeMeta() const { return __ApplicationPlayerSettingsType::type().meta; }
+const std::string& ApplicationPlayerSettings::getTypeName() const { return __ApplicationPlayerSettingsType::type().name; }
 const properties_t ApplicationPlayerSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -90,16 +90,16 @@ const properties_t ApplicationPlayerSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationPlayerSettings::getTypeSize() const { return ApplicationPlayerSettingsType::type().size; }
+std::size_t ApplicationPlayerSettings::getTypeSize() const { return __ApplicationPlayerSettingsType::type().size; }
 
-const TypeDefinition& ApplicationPlayerSettingsType::type()
+const TypeDefinition& __ApplicationPlayerSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationPlayerSettings(); }, "ApplicationPlayerSettings", {
     }, sizeof(ApplicationPlayerSettings));
     return s_typeDefinition;
 }
-const meta_t& ApplicationSceneSettings::getTypeMeta() const { return ApplicationSceneSettingsType::type().meta; }
-const std::string& ApplicationSceneSettings::getTypeName() const { return ApplicationSceneSettingsType::type().name; }
+const meta_t& ApplicationSceneSettings::getTypeMeta() const { return __ApplicationSceneSettingsType::type().meta; }
+const std::string& ApplicationSceneSettings::getTypeName() const { return __ApplicationSceneSettingsType::type().name; }
 const properties_t ApplicationSceneSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -111,16 +111,16 @@ const properties_t ApplicationSceneSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationSceneSettings::getTypeSize() const { return ApplicationSceneSettingsType::type().size; }
+std::size_t ApplicationSceneSettings::getTypeSize() const { return __ApplicationSceneSettingsType::type().size; }
 
-const TypeDefinition& ApplicationSceneSettingsType::type()
+const TypeDefinition& __ApplicationSceneSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationSceneSettings(); }, "ApplicationSceneSettings", {
     }, sizeof(ApplicationSceneSettings));
     return s_typeDefinition;
 }
-const meta_t& ApplicationSettings::getTypeMeta() const { return ApplicationSettingsType::type().meta; }
-const std::string& ApplicationSettings::getTypeName() const { return ApplicationSettingsType::type().name; }
+const meta_t& ApplicationSettings::getTypeMeta() const { return __ApplicationSettingsType::type().meta; }
+const std::string& ApplicationSettings::getTypeName() const { return __ApplicationSettingsType::type().name; }
 const properties_t ApplicationSettings::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -146,9 +146,9 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ApplicationSettings::getTypeSize() const { return ApplicationSettingsType::type().size; }
+std::size_t ApplicationSettings::getTypeSize() const { return __ApplicationSettingsType::type().size; }
 
-const TypeDefinition& ApplicationSettingsType::type()
+const TypeDefinition& __ApplicationSettingsType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ApplicationSettings(); }, "ApplicationSettings", {
     }, sizeof(ApplicationSettings));

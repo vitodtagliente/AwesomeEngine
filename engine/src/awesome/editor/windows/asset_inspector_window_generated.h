@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct AssetInspectorWindowType : RegisteredInTypeFactory<AssetInspectorWindowType>
+struct __AssetInspectorWindowType : RegisteredInTypeFactory<__AssetInspectorWindowType>
 {
-    AssetInspectorWindowType() = delete;
+    __AssetInspectorWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

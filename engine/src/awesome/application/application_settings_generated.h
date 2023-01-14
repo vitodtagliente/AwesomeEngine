@@ -11,7 +11,7 @@ struct EnumType<enum class ApplicationMode>
     static const  enum_values_t& values();
 };
 
-struct ApplicationModeEnum : RegisteredInEnumFactory<enum class ApplicationMode>
+struct __ApplicationModeEnum : RegisteredInEnumFactory<enum class ApplicationMode>
 {
     static bool registered() { return value; };
 };
@@ -23,54 +23,54 @@ struct EnumType<enum class FpsMode>
     static const  enum_values_t& values();
 };
 
-struct FpsModeEnum : RegisteredInEnumFactory<enum class FpsMode>
+struct __FpsModeEnum : RegisteredInEnumFactory<enum class FpsMode>
 {
     static bool registered() { return value; };
 };
 
-struct ApplicationEditorSettingsType : RegisteredInTypeFactory<ApplicationEditorSettingsType>
+struct __ApplicationEditorSettingsType : RegisteredInTypeFactory<__ApplicationEditorSettingsType>
 {
-    ApplicationEditorSettingsType() = delete;
+    __ApplicationEditorSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ApplicationDebugSettingsType : RegisteredInTypeFactory<ApplicationDebugSettingsType>
+struct __ApplicationDebugSettingsType : RegisteredInTypeFactory<__ApplicationDebugSettingsType>
 {
-    ApplicationDebugSettingsType() = delete;
+    __ApplicationDebugSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ApplicationNetworkSettingsType : RegisteredInTypeFactory<ApplicationNetworkSettingsType>
+struct __ApplicationNetworkSettingsType : RegisteredInTypeFactory<__ApplicationNetworkSettingsType>
 {
-    ApplicationNetworkSettingsType() = delete;
+    __ApplicationNetworkSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ApplicationPlayerSettingsType : RegisteredInTypeFactory<ApplicationPlayerSettingsType>
+struct __ApplicationPlayerSettingsType : RegisteredInTypeFactory<__ApplicationPlayerSettingsType>
 {
-    ApplicationPlayerSettingsType() = delete;
+    __ApplicationPlayerSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ApplicationSceneSettingsType : RegisteredInTypeFactory<ApplicationSceneSettingsType>
+struct __ApplicationSceneSettingsType : RegisteredInTypeFactory<__ApplicationSceneSettingsType>
 {
-    ApplicationSceneSettingsType() = delete;
+    __ApplicationSceneSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ApplicationSettingsType : RegisteredInTypeFactory<ApplicationSettingsType>
+struct __ApplicationSettingsType : RegisteredInTypeFactory<__ApplicationSettingsType>
 {
-    ApplicationSettingsType() = delete;
+    __ApplicationSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

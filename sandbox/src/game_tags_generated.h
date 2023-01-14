@@ -11,7 +11,7 @@ struct EnumType<enum class GameTags>
     static const  enum_values_t& values();
 };
 
-struct GameTagsEnum : RegisteredInEnumFactory<enum class GameTags>
+struct __GameTagsEnum : RegisteredInEnumFactory<enum class GameTags>
 {
     static bool registered() { return value; };
 };

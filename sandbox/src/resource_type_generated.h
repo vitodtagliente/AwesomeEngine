@@ -11,7 +11,7 @@ struct EnumType<enum class ResourceType>
     static const  enum_values_t& values();
 };
 
-struct ResourceTypeEnum : RegisteredInEnumFactory<enum class ResourceType>
+struct __ResourceTypeEnum : RegisteredInEnumFactory<enum class ResourceType>
 {
     static bool registered() { return value; };
 };

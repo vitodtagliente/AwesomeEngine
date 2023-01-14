@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct GizmosRendererComponentType : RegisteredInTypeFactory<GizmosRendererComponentType>
+struct __GizmosRendererComponentType : RegisteredInTypeFactory<__GizmosRendererComponentType>
 {
-    GizmosRendererComponentType() = delete;
+    __GizmosRendererComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

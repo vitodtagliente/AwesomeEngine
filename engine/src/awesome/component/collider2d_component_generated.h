@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Collider2dComponentType : RegisteredInTypeFactory<Collider2dComponentType>
+struct __Collider2dComponentType : RegisteredInTypeFactory<__Collider2dComponentType>
 {
-    Collider2dComponentType() = delete;
+    __Collider2dComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

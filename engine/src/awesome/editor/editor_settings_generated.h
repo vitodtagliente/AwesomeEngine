@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct EditorSettingsType : RegisteredInTypeFactory<EditorSettingsType>
+struct __EditorSettingsType : RegisteredInTypeFactory<__EditorSettingsType>
 {
-    EditorSettingsType() = delete;
+    __EditorSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

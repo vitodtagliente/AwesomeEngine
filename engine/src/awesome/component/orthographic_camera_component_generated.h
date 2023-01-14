@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct OrthographicCameraComponentType : RegisteredInTypeFactory<OrthographicCameraComponentType>
+struct __OrthographicCameraComponentType : RegisteredInTypeFactory<__OrthographicCameraComponentType>
 {
-    OrthographicCameraComponentType() = delete;
+    __OrthographicCameraComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

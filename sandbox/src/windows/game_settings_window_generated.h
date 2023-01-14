@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct GameSettingsWindowType : RegisteredInTypeFactory<GameSettingsWindowType>
+struct __GameSettingsWindowType : RegisteredInTypeFactory<__GameSettingsWindowType>
 {
-    GameSettingsWindowType() = delete;
+    __GameSettingsWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

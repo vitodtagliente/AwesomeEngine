@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct AimComponentType : RegisteredInTypeFactory<AimComponentType>
+struct __AimComponentType : RegisteredInTypeFactory<__AimComponentType>
 {
-    AimComponentType() = delete;
+    __AimComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

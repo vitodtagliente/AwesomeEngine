@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Particles2dComponentType : RegisteredInTypeFactory<Particles2dComponentType>
+struct __Particles2dComponentType : RegisteredInTypeFactory<__Particles2dComponentType>
 {
-    Particles2dComponentType() = delete;
+    __Particles2dComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

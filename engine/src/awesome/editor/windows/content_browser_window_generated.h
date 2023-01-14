@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ContentBrowserWindowType : RegisteredInTypeFactory<ContentBrowserWindowType>
+struct __ContentBrowserWindowType : RegisteredInTypeFactory<__ContentBrowserWindowType>
 {
-    ContentBrowserWindowType() = delete;
+    __ContentBrowserWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

@@ -11,7 +11,7 @@ struct EnumType<enum class AssetType>
     static const  enum_values_t& values();
 };
 
-struct AssetTypeEnum : RegisteredInEnumFactory<enum class AssetType>
+struct __AssetTypeEnum : RegisteredInEnumFactory<enum class AssetType>
 {
     static bool registered() { return value; };
 };

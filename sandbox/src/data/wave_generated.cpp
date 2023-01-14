@@ -12,8 +12,8 @@ const enum_values_t& EnumType<SpawnType>::values()
     return s_values;
 }
 
-const meta_t& Wave::getTypeMeta() const { return WaveType::type().meta; }
-const std::string& Wave::getTypeName() const { return WaveType::type().name; }
+const meta_t& Wave::getTypeMeta() const { return __WaveType::type().meta; }
+const std::string& Wave::getTypeName() const { return __WaveType::type().name; }
 const properties_t Wave::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -37,9 +37,9 @@ const properties_t Wave::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t Wave::getTypeSize() const { return WaveType::type().size; }
+std::size_t Wave::getTypeSize() const { return __WaveType::type().size; }
 
-const TypeDefinition& WaveType::type()
+const TypeDefinition& __WaveType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new Wave(); }, "Wave", {
         std::make_pair("Type", "Data"),

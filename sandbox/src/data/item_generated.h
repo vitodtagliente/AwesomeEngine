@@ -11,7 +11,7 @@ struct EnumType<enum class ItemCategory>
     static const  enum_values_t& values();
 };
 
-struct ItemCategoryEnum : RegisteredInEnumFactory<enum class ItemCategory>
+struct __ItemCategoryEnum : RegisteredInEnumFactory<enum class ItemCategory>
 {
     static bool registered() { return value; };
 };
@@ -23,7 +23,7 @@ struct EnumType<enum class EquipmentPositionType>
     static const  enum_values_t& values();
 };
 
-struct EquipmentPositionTypeEnum : RegisteredInEnumFactory<enum class EquipmentPositionType>
+struct __EquipmentPositionTypeEnum : RegisteredInEnumFactory<enum class EquipmentPositionType>
 {
     static bool registered() { return value; };
 };
@@ -35,30 +35,30 @@ struct EnumType<enum class ConsumableEffectType>
     static const  enum_values_t& values();
 };
 
-struct ConsumableEffectTypeEnum : RegisteredInEnumFactory<enum class ConsumableEffectType>
+struct __ConsumableEffectTypeEnum : RegisteredInEnumFactory<enum class ConsumableEffectType>
 {
     static bool registered() { return value; };
 };
 
-struct ConsumableItemDataType : RegisteredInTypeFactory<ConsumableItemDataType>
+struct __ConsumableItemDataType : RegisteredInTypeFactory<__ConsumableItemDataType>
 {
-    ConsumableItemDataType() = delete;
+    __ConsumableItemDataType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct EquipmentItemDataType : RegisteredInTypeFactory<EquipmentItemDataType>
+struct __EquipmentItemDataType : RegisteredInTypeFactory<__EquipmentItemDataType>
 {
-    EquipmentItemDataType() = delete;
+    __EquipmentItemDataType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct ItemType : RegisteredInTypeFactory<ItemType>
+struct __ItemType : RegisteredInTypeFactory<__ItemType>
 {
-    ItemType() = delete;
+    __ItemType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

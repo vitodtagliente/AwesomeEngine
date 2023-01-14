@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct CameraFollow2dComponentType : RegisteredInTypeFactory<CameraFollow2dComponentType>
+struct __CameraFollow2dComponentType : RegisteredInTypeFactory<__CameraFollow2dComponentType>
 {
-    CameraFollow2dComponentType() = delete;
+    __CameraFollow2dComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

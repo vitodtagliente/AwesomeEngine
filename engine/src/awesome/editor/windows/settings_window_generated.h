@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SettingsWindowType : RegisteredInTypeFactory<SettingsWindowType>
+struct __SettingsWindowType : RegisteredInTypeFactory<__SettingsWindowType>
 {
-    SettingsWindowType() = delete;
+    __SettingsWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

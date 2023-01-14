@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct PawnComponentType : RegisteredInTypeFactory<PawnComponentType>
+struct __PawnComponentType : RegisteredInTypeFactory<__PawnComponentType>
 {
-    PawnComponentType() = delete;
+    __PawnComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

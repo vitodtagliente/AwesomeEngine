@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct LifetimeComponentType : RegisteredInTypeFactory<LifetimeComponentType>
+struct __LifetimeComponentType : RegisteredInTypeFactory<__LifetimeComponentType>
 {
-    LifetimeComponentType() = delete;
+    __LifetimeComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

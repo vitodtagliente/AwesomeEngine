@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct LogWindowType : RegisteredInTypeFactory<LogWindowType>
+struct __LogWindowType : RegisteredInTypeFactory<__LogWindowType>
 {
-    LogWindowType() = delete;
+    __LogWindowType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

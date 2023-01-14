@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SceneSettingsType : RegisteredInTypeFactory<SceneSettingsType>
+struct __SceneSettingsType : RegisteredInTypeFactory<__SceneSettingsType>
 {
-    SceneSettingsType() = delete;
+    __SceneSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

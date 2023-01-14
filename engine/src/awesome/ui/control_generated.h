@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ControlType : RegisteredInTypeFactory<ControlType>
+struct __ControlType : RegisteredInTypeFactory<__ControlType>
 {
-    ControlType() = delete;
+    __ControlType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

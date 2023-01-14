@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct PlayerStateType : RegisteredInTypeFactory<PlayerStateType>
+struct __PlayerStateType : RegisteredInTypeFactory<__PlayerStateType>
 {
-    PlayerStateType() = delete;
+    __PlayerStateType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

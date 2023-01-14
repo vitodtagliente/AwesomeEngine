@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct Body2dComponentType : RegisteredInTypeFactory<Body2dComponentType>
+struct __Body2dComponentType : RegisteredInTypeFactory<__Body2dComponentType>
 {
-    Body2dComponentType() = delete;
+    __Body2dComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

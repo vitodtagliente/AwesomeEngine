@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct BulletComponentType : RegisteredInTypeFactory<BulletComponentType>
+struct __BulletComponentType : RegisteredInTypeFactory<__BulletComponentType>
 {
-    BulletComponentType() = delete;
+    __BulletComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

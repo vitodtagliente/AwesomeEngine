@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct ShootComponentType : RegisteredInTypeFactory<ShootComponentType>
+struct __ShootComponentType : RegisteredInTypeFactory<__ShootComponentType>
 {
-    ShootComponentType() = delete;
+    __ShootComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

@@ -11,7 +11,7 @@ struct EnumType<enum class PlayerIndex>
     static const  enum_values_t& values();
 };
 
-struct PlayerIndexEnum : RegisteredInEnumFactory<enum class PlayerIndex>
+struct __PlayerIndexEnum : RegisteredInEnumFactory<enum class PlayerIndex>
 {
     static bool registered() { return value; };
 };

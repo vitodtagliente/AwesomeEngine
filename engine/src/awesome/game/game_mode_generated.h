@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct GameModeType : RegisteredInTypeFactory<GameModeType>
+struct __GameModeType : RegisteredInTypeFactory<__GameModeType>
 {
-    GameModeType() = delete;
+    __GameModeType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

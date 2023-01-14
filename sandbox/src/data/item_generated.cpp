@@ -38,8 +38,8 @@ const enum_values_t& EnumType<ConsumableEffectType>::values()
     return s_values;
 }
 
-const meta_t& ConsumableItemData::getTypeMeta() const { return ConsumableItemDataType::type().meta; }
-const std::string& ConsumableItemData::getTypeName() const { return ConsumableItemDataType::type().name; }
+const meta_t& ConsumableItemData::getTypeMeta() const { return __ConsumableItemDataType::type().meta; }
+const std::string& ConsumableItemData::getTypeName() const { return __ConsumableItemDataType::type().name; }
 const properties_t ConsumableItemData::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -47,17 +47,17 @@ const properties_t ConsumableItemData::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t ConsumableItemData::getTypeSize() const { return ConsumableItemDataType::type().size; }
+std::size_t ConsumableItemData::getTypeSize() const { return __ConsumableItemDataType::type().size; }
 
-const TypeDefinition& ConsumableItemDataType::type()
+const TypeDefinition& __ConsumableItemDataType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ConsumableItemData(); }, "ConsumableItemData", {
         std::make_pair("Type", "Data"),
     }, sizeof(ConsumableItemData));
     return s_typeDefinition;
 }
-const meta_t& EquipmentItemData::getTypeMeta() const { return EquipmentItemDataType::type().meta; }
-const std::string& EquipmentItemData::getTypeName() const { return EquipmentItemDataType::type().name; }
+const meta_t& EquipmentItemData::getTypeMeta() const { return __EquipmentItemDataType::type().meta; }
+const std::string& EquipmentItemData::getTypeName() const { return __EquipmentItemDataType::type().name; }
 const properties_t EquipmentItemData::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -65,17 +65,17 @@ const properties_t EquipmentItemData::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t EquipmentItemData::getTypeSize() const { return EquipmentItemDataType::type().size; }
+std::size_t EquipmentItemData::getTypeSize() const { return __EquipmentItemDataType::type().size; }
 
-const TypeDefinition& EquipmentItemDataType::type()
+const TypeDefinition& __EquipmentItemDataType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new EquipmentItemData(); }, "EquipmentItemData", {
         std::make_pair("Type", "Data"),
     }, sizeof(EquipmentItemData));
     return s_typeDefinition;
 }
-const meta_t& Item::getTypeMeta() const { return ItemType::type().meta; }
-const std::string& Item::getTypeName() const { return ItemType::type().name; }
+const meta_t& Item::getTypeMeta() const { return __ItemType::type().meta; }
+const std::string& Item::getTypeName() const { return __ItemType::type().name; }
 const properties_t Item::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
@@ -99,9 +99,9 @@ const properties_t Item::getTypeProperties() const {
     })));
     return properties;
 }
-std::size_t Item::getTypeSize() const { return ItemType::type().size; }
+std::size_t Item::getTypeSize() const { return __ItemType::type().size; }
 
-const TypeDefinition& ItemType::type()
+const TypeDefinition& __ItemType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new Item(); }, "Item", {
         std::make_pair("Type", "Data"),

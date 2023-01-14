@@ -4,25 +4,25 @@
 
 #include <vdtreflect/runtime.h>
 
-struct WeaponLevelType : RegisteredInTypeFactory<WeaponLevelType>
+struct __WeaponLevelType : RegisteredInTypeFactory<__WeaponLevelType>
 {
-    WeaponLevelType() = delete;
+    __WeaponLevelType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct WeaponItemType : RegisteredInTypeFactory<WeaponItemType>
+struct __WeaponItemType : RegisteredInTypeFactory<__WeaponItemType>
 {
-    WeaponItemType() = delete;
+    __WeaponItemType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct GameSettingsType : RegisteredInTypeFactory<GameSettingsType>
+struct __GameSettingsType : RegisteredInTypeFactory<__GameSettingsType>
 {
-    GameSettingsType() = delete;
+    __GameSettingsType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

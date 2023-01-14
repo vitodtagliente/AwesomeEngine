@@ -4,9 +4,9 @@
 
 #include <vdtreflect/runtime.h>
 
-struct SpriteAnimatorComponentType : RegisteredInTypeFactory<SpriteAnimatorComponentType>
+struct __SpriteAnimatorComponentType : RegisteredInTypeFactory<__SpriteAnimatorComponentType>
 {
-    SpriteAnimatorComponentType() = delete;
+    __SpriteAnimatorComponentType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
