@@ -13,7 +13,7 @@ void AssetBrowserDialog::close()
 	m_open = false;
 }
 
-void AssetBrowserDialog::open(const std::string& id, const Asset::Type type, const std::function<void(const AssetPtr&)>& handler)
+void AssetBrowserDialog::open(const std::string& id, const std::string& type, const std::function<void(const AssetPtr&)>& handler)
 {
 	m_handler = handler;
 	m_id = id;
@@ -41,19 +41,20 @@ void AssetBrowserDialog::render(const std::string& id)
 		Layout::endChild();
 
 		Layout::beginChild("Content", 0.f, 240.f);
-		const auto descriptors = AssetLibrary::instance().list(m_type);
-		for (const Asset::Descriptor& descriptor : descriptors)
+		for (const auto& record : AssetLibrary::instance().database.records)
 		{
-			const std::string name = descriptor.path.stem().string();
+			if (record->type != m_type) continue;
+
+			const std::string name = record->path.stem().string();
 			if (!m_filter.empty() && !StringUtil::contains(name, m_filter, StringUtil::CompareMode::IgnoreCase))
 			{
 				continue;
 			}
 
-			const bool isSelected = m_selectedAsset ? m_selectedAsset->descriptor == descriptor : false;
+			const bool isSelected = m_selectedAsset ? m_selectedAsset->id == record->id : false;
 			if (ImGui::Selectable(name.c_str(), isSelected, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 			{
-				m_selectedAsset = AssetLibrary::instance().find(descriptor.id);
+				m_selectedAsset = AssetLibrary::instance().find(record->id);
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
 					if (m_handler)
@@ -68,15 +69,11 @@ void AssetBrowserDialog::render(const std::string& id)
 		}
 		Layout::endChild();
 
-		if (m_selectedAsset && m_type == Asset::Type::Image)
+		ImageAssetPtr imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
+		if (imageAsset != nullptr)
 		{
-			float height = m_type == Asset::Type::Image ? 200.f : 128.f;
-			ImGui::BeginChild("Image Preview", ImVec2(0.f, height), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-			switch (m_type)
-			{
-			case Asset::Type::Image: Layout::image(std::static_pointer_cast<ImageAsset>(m_selectedAsset), s_widgetWidth, height); break;
-			default:break;
-			}
+			ImGui::BeginChild("Image Preview", ImVec2(0.f, 200.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+			Layout::image(imageAsset, s_widgetWidth, 200.f);
 			ImGui::EndChild();
 		}
 

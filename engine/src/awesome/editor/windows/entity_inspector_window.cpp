@@ -35,20 +35,20 @@ void EntityInspectorWindow::render()
 	if (Layout::button(TextIcon::save(" Save Prefab")))
 	{
 		const uuid entityId = entity->getId();
-		Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [entityId](const std::filesystem::path& path) -> void
-			{
-				if (!path.string().empty())
-				{
-					World& world = World::instance();
-					Entity* const entity = world.findEntityById(entityId);
-					if (entity == nullptr) return;
-
-					JsonFile::save(*entity, path);
-
-					AssetImporter importer;
-					importer.import(path);
-				}
-			}
-		);
+		// Dialog::instance().save("Save Prefab...", Asset::getExtensionByType(Asset::Type::Prefab), [entityId](const std::filesystem::path& path) -> void
+		// 	{
+		// 		if (!path.string().empty())
+		// 		{
+		// 			World& world = World::instance();
+		// 			Entity* const entity = world.findEntityById(entityId);
+		// 			if (entity == nullptr) return;
+		// 
+		// 			JsonFile::save(*entity, path);
+		// 
+		// 			AssetImporter importer;
+		// 			importer.import(path);
+		// 		}
+		// 	}
+		// );
 	}
 }

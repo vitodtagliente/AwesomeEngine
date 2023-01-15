@@ -1,6 +1,11 @@
 #include "image_asset.h"
 
-void ImageAsset::load(const std::filesystem::path& path)
+bool ImageAsset::load(const std::filesystem::path& _path)
 {
-	data = Image::load(path);
+	return data = Image::load(_path), true;
+}
+
+bool ImageAsset::save(const std::filesystem::path&) const
+{
+	return false;
 }

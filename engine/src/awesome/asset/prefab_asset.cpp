@@ -2,7 +2,12 @@
 
 #include <awesome/data/json_file.h>
 
-void PrefabAsset::load(const std::filesystem::path& path)
+bool PrefabAsset::load(const std::filesystem::path& _path)
 {
-	JsonFile::load(path, data);
+	return JsonFile::load(_path, data);
+}
+
+bool PrefabAsset::save(const std::filesystem::path& _path) const
+{
+	return JsonFile::save(data, _path), true;
 }

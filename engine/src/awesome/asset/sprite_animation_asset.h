@@ -1,11 +1,20 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "base_asset.h"
+#include "asset.h"
 #include "data/sprite_animation_data.h"
 
-struct SpriteAnimationAsset : public BaseAsset<Asset::Type::SpriteAnimation, SpriteAnimationData>
+#include "sprite_animation_asset_generated.h"
+
+CLASS()
+struct SpriteAnimationAsset : public Asset
 {
-	virtual void load(const std::filesystem::path& path) override;
+	virtual bool load(const std::filesystem::path& path) override;
+	virtual bool save(const std::filesystem::path& path) const override;
+
+	SpriteAnimationData data;
+
+	GENERATED_BODY()
 };
+
 typedef std::shared_ptr<SpriteAnimationAsset> SpriteAnimationAssetPtr;

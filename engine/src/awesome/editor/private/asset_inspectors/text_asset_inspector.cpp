@@ -5,7 +5,7 @@
 
 bool TextAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::Text;
+	return asset->getTypeName() == __TextAssetType::type().name;
 }
 
 void TextAssetInspector::inspect(const AssetPtr& asset)

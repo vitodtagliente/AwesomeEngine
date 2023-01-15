@@ -2,7 +2,12 @@
 
 #include <awesome/data/text_file.h>
 
-void TextAsset::load(const std::filesystem::path& path)
+bool TextAsset::load(const std::filesystem::path& _path)
 {
-	TextFile::load(path, data);
+	return TextFile::load(_path, data);
+}
+
+bool TextAsset::save(const std::filesystem::path& _path) const
+{
+	return TextFile::save(data, _path), true;
 }

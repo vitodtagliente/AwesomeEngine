@@ -30,9 +30,9 @@ void Application::init(const std::initializer_list<ApplicationModule*>& modules)
 
 int Application::run()
 {
-	Time time;
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
+	Time time;
 	World& world = World::instance();
 
 	if (!canvas.open())
@@ -136,9 +136,9 @@ void Application::initSettings()
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / ApplicationSettings::filename;
 	reload = JsonFile::load(settingsPath, settings);
 
+	AssetLibrary::instance().init(settings.workspacePath);
 	AssetImporter importer;
 	importer.import(settings.workspacePath, true);
-	AssetLibrary::instance().m_directory = settings.workspacePath;
 
 	if (reload)
 	{

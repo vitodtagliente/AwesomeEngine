@@ -2,53 +2,36 @@
 
 #include <thread>
 
-#include <awesome/core/reflection.h>
 #include <awesome/data/json_file.h>
 
-#include "custom_asset.h"
-#include "image_asset.h"
-#include "prefab_asset.h"
-#include "scene_asset.h"
-#include "sprite_animation_asset.h"
-#include "text_asset.h"
-#include "tileset_asset.h"
+void AssetLibrary::init(const std::filesystem::path path)
+{
+	m_directory = path;
+	const std::filesystem::path db_path = path / AssetDatabase::Filename;
+	JsonFile::load(db_path, database);
+}
 
-void AssetLibrary::unload(const uuid& id)
+void AssetLibrary::flush()
+{
+	if (database.dirty)
+	{
+		const std::filesystem::path db_path = m_directory / AssetDatabase::Filename;
+		JsonFile::save(database, db_path);
+		database.dirty = false;
+	}
+}
+
+void AssetLibrary::release(const AssetPtr& asset)
+{
+	if (asset != nullptr)
+	{
+		release(asset->id);
+	}
+}
+
+void AssetLibrary::release(const uuid& id)
 {
 	m_cache.erase(id);
-}
-
-void AssetLibrary::insert(const Asset::Descriptor& descriptor)
-{
-	m_register[descriptor.id] = descriptor;
-}
-
-void AssetLibrary::remove(const uuid& id)
-{
-	m_register.erase(id);
-}
-
-std::vector<Asset::Descriptor> AssetLibrary::list() const
-{
-	std::vector<Asset::Descriptor> result;
-	for (const auto& pair : m_register)
-	{
-		result.push_back(pair.second);
-	}
-	return result;
-}
-
-std::vector<Asset::Descriptor> AssetLibrary::list(const Asset::Type type) const
-{
-	std::vector<Asset::Descriptor> result;
-	for (const auto& pair : m_register)
-	{
-		if (pair.second.type == type)
-		{
-			result.push_back(pair.second);
-		}
-	}
-	return result;
 }
 
 std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
@@ -59,62 +42,126 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 		return cacheIt->second.asset.lock();
 	}
 
-	const auto& registerIt = m_register.find(id);
-	if (registerIt == m_register.end())
+	AssetRecord* const record = database.find(id);
+	if (record == nullptr || record->id == uuid::Invalid)
 	{
 		return nullptr;
 	}
 
-	Asset::Descriptor& descriptor = registerIt->second;
-	std::shared_ptr<Asset> asset = create(descriptor, descriptor.getDataPath());
-	m_cache.insert(std::make_pair(descriptor.id, Slot(asset)));
+	std::shared_ptr<Asset> asset = create(record->path);
+	if (asset != nullptr)
+	{
+		m_cache.insert(std::make_pair(asset->id, Slot(asset)));
+	}
 	return asset;
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const Asset::Descriptor& descriptor, const std::filesystem::path& path)
+std::shared_ptr<Asset> AssetLibrary::create(const std::filesystem::path& path)
 {
-	if (!std::filesystem::exists(path))
+	const std::filesystem::path assetPath = path.string() + Asset::Extension;
+	if (!std::filesystem::exists(path)
+		|| !std::filesystem::exists(assetPath))
 	{
 		return nullptr;
 	}
 
 	AssetPtr asset;
-
-	switch (descriptor.type)
-	{
-	case AssetType::Custom: 
-	{
-		json::value data;
-		JsonFile::load(path, data);
-		if (data.contains("type::name"))
-		{
-			asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(data["type::name"].as_string()));
-		}
-		break;
-	}
-	case AssetType::Image: asset = std::make_shared<ImageAsset>(); break;
-	case AssetType::Prefab: asset = std::make_shared<PrefabAsset>(); break;
-	case AssetType::Scene: asset = std::make_shared<SceneAsset>(); break;
-	case AssetType::SpriteAnimation: asset = std::make_shared<SpriteAnimationAsset>(); break;
-	case AssetType::Text: asset = std::make_shared<TextAsset>(); break;
-	case AssetType::Tileset: asset = std::make_shared<TilesetAsset>(); break;
-	case AssetType::None:
-	default:
-		break;
-	}
+	JsonFile::load(assetPath, std::dynamic_pointer_cast<Type>(asset));
 
 	if (asset != nullptr)
 	{
-		asset->descriptor = descriptor;
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
-				asset->load(path);
-				asset->state = Asset::State::Ready;
-				if (asset->onLoad) asset->onLoad();
+				if (asset->load(path))
+				{
+					asset->state = Asset::State::Ready;
+					if (asset->onLoad) asset->onLoad();
+				}
+				else
+				{
+					asset->state = Asset::State::Error;
+				}
 			}
 		);
-		handler.detach(); 
+		handler.detach();
 	}
 	return asset;
+}
+
+bool AssetDatabase::erase(const uuid& id)
+{
+	const auto& it = std::find_if(records.begin(), records.end(),
+		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
+		{
+			return record->id == id;
+		}
+	);
+	dirty = it != records.end();	
+	return records.erase(it), true;
+}
+
+bool AssetDatabase::exists(const uuid& id) const
+{
+	const auto& it = std::find_if(records.begin(), records.end(),
+		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
+		{
+			return record->id == id;
+		}
+	);
+
+	return (it != records.end());
+}
+
+bool AssetDatabase::exists(const std::filesystem::path& path) const
+{
+	const auto& it = std::find_if(records.begin(), records.end(),
+		[&path](const std::unique_ptr<AssetRecord>& record) -> bool
+		{
+			return record->path == path;
+		}
+	);
+
+	return (it != records.end());
+}
+
+AssetRecord* const AssetDatabase::find(const uuid& id) const
+{
+	const auto& it = std::find_if(records.begin(), records.end(),
+		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
+		{
+			return record->id == id;
+		}
+	);
+
+	if (it != records.end())
+	{
+		return (*it).get();
+	}
+	return nullptr;
+}
+
+AssetRecord* const AssetDatabase::find(const std::filesystem::path& path) const
+{
+	const auto& it = std::find_if(records.begin(), records.end(),
+		[&path](const std::unique_ptr<AssetRecord>& record) -> bool
+		{
+			return record->path == path;
+		}
+	);
+
+	if (it != records.end())
+	{
+		return (*it).get();
+	}
+	return nullptr;
+}
+
+bool AssetDatabase::insert(const std::filesystem::path& path, const std::string& type)
+{
+	std::unique_ptr<AssetRecord> record = std::make_unique<AssetRecord>();
+	record->path = path;
+	record->type = type;
+	dirty = true;
+	return records.push_back(std::move(record)), true;
 }

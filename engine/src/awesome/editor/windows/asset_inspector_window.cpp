@@ -28,11 +28,11 @@ void AssetInspectorWindow::render()
 	AssetPtr asset = Editor::instance()->state.selection.asset;
 	if (asset != nullptr)
 	{
-		Layout::button(enumToString(asset->descriptor.type), s_assetTypeColor);
+		Layout::button(asset->getTypeName(), s_assetTypeColor);
 		Layout::sameLine();
-		if (Layout::button(asset->descriptor.path.filename().string(), s_filenameColor))
+		if (Layout::button(asset->path.filename().string(), s_filenameColor))
 		{
-			Editor::instance()->state.select(asset->descriptor.path);
+			Editor::instance()->state.select(asset->path);
 		}
 		for (const auto& inspector : m_inspectors)
 		{

@@ -4,6 +4,7 @@
 
 #include "asset_library.h"
 
+/*
 void AssetFilesystem::move(const Asset::Descriptor& descriptor, const std::filesystem::path& path)
 {
 	static const auto renameAsset = [](const std::filesystem::path& from, const std::filesystem::path& to) -> std::filesystem::path
@@ -97,3 +98,4 @@ void AssetFilesystem::rename(const Asset::Descriptor& descriptor, const std::str
 		library.insert(asset->descriptor);
 	}
 }
+*/

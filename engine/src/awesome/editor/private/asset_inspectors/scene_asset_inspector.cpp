@@ -9,7 +9,7 @@
 
 bool SceneAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::Scene;
+	return asset->getTypeName() == __SceneAssetType::type().name;
 }
 
 void SceneAssetInspector::inspect(const AssetPtr& asset)

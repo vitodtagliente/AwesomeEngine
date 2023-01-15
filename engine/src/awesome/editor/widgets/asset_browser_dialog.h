@@ -15,7 +15,7 @@ public:
 	inline bool isOpen() const { return m_open; }
 
 	void close();
-	void open(const std::string& id, Asset::Type type, const std::function<void(const AssetPtr&)>& handler);
+	void open(const std::string& id, const std::string& type, const std::function<void(const AssetPtr&)>& handler);
 	void render(const std::string& id);
 
 private:
@@ -24,5 +24,5 @@ private:
 	std::string m_id;
 	bool m_open{ false };
 	AssetPtr m_selectedAsset{ nullptr };
-	Asset::Type m_type{ Asset::Type::None };
+	std::string m_type;
 };

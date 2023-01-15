@@ -1,12 +1,21 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include "asset.h"
+
 #include <awesome/encoding/json.h>
 
-#include "base_asset.h"
+#include "prefab_asset_generated.h"
 
-struct PrefabAsset : public BaseAsset<Asset::Type::Prefab, json::value>
+CLASS()
+struct PrefabAsset : public Asset
 {
-	virtual void load(const std::filesystem::path& path) override;
+	virtual bool load(const std::filesystem::path& path) override;
+	virtual bool save(const std::filesystem::path& path) const override;
+
+	json::value data;
+
+	GENERATED_BODY()
 };
+
 typedef std::shared_ptr<PrefabAsset> PrefabAssetPtr;

@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
 #include <functional>
 #include <map>
 #include <memory>
@@ -10,7 +11,6 @@
 
 #include <awesome/application/keycode.h>
 #include <awesome/asset/asset.h>
-#include <awesome/asset/base_asset.h>
 #include <awesome/asset/image_asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/type_name.h>
@@ -60,11 +60,12 @@ public:
 	static void input(const std::string& name, float& value);
 	static void input(const std::string& name, double& value);
 	static void input(const std::string& name, std::string& value);
-	static void input(const std::string& name, AssetType type, AssetPtr& value);
-	template <Asset::Type T, typename D>
-	static void input(const std::string& name, std::shared_ptr<BaseAsset<T, D>>& value)
+	static void input(const std::string& name, std::filesystem::path& value);
+	static void input(const std::string& name, const std::string& type, AssetPtr& value);
+	template <typename T = Asset>
+	static void input(const std::string& name, std::shared_ptr<T>& value)
 	{
-		input(name, T, value);
+		input(name, "", value);
 	}
 	static void input(const std::string& name, ImageAssetPtr& value);
 	static void input(const std::string& name, math::transform& value);
@@ -184,7 +185,7 @@ public:
 			}
 		);
 	}
-	static void input(const std::string& name, AssetType type, std::vector<AssetPtr>& list);
+	static void input(const std::string& name, const std::string& type, std::vector<AssetPtr>& list);
 	static void input(const std::string& name, std::vector<std::shared_ptr<Type>>& list, const std::string& typeName);
 	static void input(const std::string& name, std::vector<std::unique_ptr<Type>>& list, const std::string& typeName);
 	// std::map<K,T> support
@@ -263,7 +264,7 @@ public:
 			}
 		);
 	}
-	static void input(const std::string& name, AssetType type, std::map<std::string, AssetPtr>& map);
+	static void input(const std::string& name, const std::string& type, std::map<std::string, AssetPtr>& map);
 	static void input(const std::string& name, std::map<std::string, std::shared_ptr<Type>>& map, const std::string& typeName);
 	static void input(const std::string& name, std::map<std::string, std::unique_ptr<Type>>& map, const std::string& typeName);
 	static bool isKeyDown(keycode_t keycode);

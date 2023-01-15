@@ -14,7 +14,7 @@ void AimComponent::render(graphics::Renderer2D* const renderer)
 		|| m_image == nullptr
 		|| m_image->state != Asset::State::Ready) return;
 
-	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(m_image->descriptor.id);
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(m_image->id);
 	if (texture != nullptr)
 	{
 		math::transform transform = getOwner()->transform;

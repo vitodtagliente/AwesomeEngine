@@ -173,6 +173,10 @@ json::value Serializer::serialize(const Type& type)
 			{
 				data[name] = serialize(prop.value<uuid>());
 			}
+			if (prop.descriptor.name == "std::filesystem::path")
+			{
+				data[name] = serialize(prop.value<std::filesystem::path>());
+			}
 			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				data[name] = serialize(prop.value<graphics::Color>());
@@ -334,9 +338,14 @@ json::value Serializer::serialize(const math::vec4& v)
 		});
 }
 
+json::value Serializer::serialize(const std::filesystem::path& path)
+{
+	return json::value(path.string());
+}
+
 json::value Serializer::serialize(const AssetPtr& asset)
 {
-	return static_cast<std::string>(asset != nullptr ? asset->descriptor.id : uuid::Invalid);
+	return static_cast<std::string>(asset != nullptr ? asset->id : uuid::Invalid);
 }
 
 bool Deserializer::deserialize(const json::value& value, Type& type)
@@ -513,6 +522,10 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			{
 				deserialize(value.safeAt(name), prop.value<uuid>());
 			}
+			if (prop.descriptor.name == "std::filesystem::path")
+			{
+				deserialize(value.safeAt(name), prop.value<std::filesystem::path>());
+			}
 			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				deserialize(value.safeAt(name), prop.value<graphics::Color>());
@@ -641,6 +654,11 @@ bool Deserializer::deserialize(const json::value& value, char& primitive)
 bool Deserializer::deserialize(const json::value& value, std::string& primitive)
 {
 	return primitive = value.as_string(""), true;
+}
+
+bool Deserializer::deserialize(const json::value& value, std::filesystem::path& path)
+{
+	return path = value.as_string(""), true;
 }
 
 bool Deserializer::deserialize(const json::value& value, uuid& id)

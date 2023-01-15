@@ -32,7 +32,7 @@ void Game::Settings::save(const std::filesystem::path& path)
 {
 	const json::value& data = json::object({
 		   {"mode", mode},
-		   {"scene", scene ? static_cast<std::string>(scene->descriptor.id) : ""}
+		   {"scene", scene ? static_cast<std::string>(scene->id) : ""}
 		});
 
 	Archive archive(path, Archive::Mode::Write);

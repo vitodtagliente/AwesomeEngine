@@ -177,16 +177,17 @@ std::string ContentBrowserWindow::decorateFile(const std::filesystem::path& file
 		return file.string();
 	}
 
-	const Asset::Type type = Asset::getTypeByExtension(file.extension().string());
-	switch (type)
-	{
-	case Asset::Type::Image: return TextIcon::image(" " + file.string());
-	case Asset::Type::Prefab: return TextIcon::cube(" " + file.string());
-	case Asset::Type::Scene: return TextIcon::tree(" " + file.string());
-	case Asset::Type::SpriteAnimation: return TextIcon::video(" " + file.string());
-	case Asset::Type::Text: return TextIcon::file(" " + file.string());
-	default: return file.string();
-	}
+	// const Asset::Type type = Asset::getTypeByExtension(file.extension().string());
+	// switch (type)
+	// {
+	// case Asset::Type::Image: return TextIcon::image(" " + file.string());
+	// case Asset::Type::Prefab: return TextIcon::cube(" " + file.string());
+	// case Asset::Type::Scene: return TextIcon::tree(" " + file.string());
+	// case Asset::Type::SpriteAnimation: return TextIcon::video(" " + file.string());
+	// case Asset::Type::Text: return TextIcon::file(" " + file.string());
+	// default: return file.string();
+	// }
+	return file.string();
 }
 
 void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
@@ -197,8 +198,8 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 	}
 	else
 	{
-		Asset::Descriptor descriptor = Asset::Descriptor::load(path);
-		AssetFilesystem::remove(descriptor);
+		// Asset::Descriptor descriptor = Asset::Descriptor::load(path);
+		// AssetFilesystem::remove(descriptor);
 	}
 
 	Editor::instance()->state.unselectAsset();
@@ -218,22 +219,22 @@ void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std
 		return;
 	}
 
-	if (Asset::isAsset(from))
-	{
-		Asset::Descriptor descriptor = Asset::Descriptor::load(from);
-		AssetFilesystem::move(descriptor, to);
-	}
-	else
-	{
-		auto destination = to / from.filename();
-		int i = 1;
-		while (std::filesystem::exists(destination))
-		{
-			destination += " " + std::to_string(i);
-			++i;
-		}
-		std::filesystem::rename(from, destination);
-	}
+	// if (Asset::isAsset(from))
+	// {
+	// 	Asset::Descriptor descriptor = Asset::Descriptor::load(from);
+	// 	AssetFilesystem::move(descriptor, to);
+	// }
+	// else
+	// {
+	// 	auto destination = to / from.filename();
+	// 	int i = 1;
+	// 	while (std::filesystem::exists(destination))
+	// 	{
+	// 		destination += " " + std::to_string(i);
+	// 		++i;
+	// 	}
+	// 	std::filesystem::rename(from, destination);
+	// }
 
 	refreshDirectory();
 }
@@ -250,16 +251,16 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	}
 	else
 	{
-		Asset::Descriptor descriptor = Asset::Descriptor::load(file);
-		std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
-		if (asset)
-		{
-			Editor::instance()->state.select(asset);
-		}
-		else
-		{
-			Editor::instance()->state.unselectAsset();
-		}
+		// Asset::Descriptor descriptor = Asset::Descriptor::load(file);
+		// std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
+		// if (asset)
+		// {
+		// 	Editor::instance()->state.select(asset);
+		// }
+		// else
+		// {
+		// 	Editor::instance()->state.unselectAsset();
+		// }
 	}
 }
 
@@ -271,8 +272,8 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 	}
 	else
 	{
-		Asset::Descriptor descriptor = Asset::Descriptor::load(path);
-		AssetFilesystem::rename(descriptor, name);
+		// Asset::Descriptor descriptor = Asset::Descriptor::load(path);
+		// AssetFilesystem::rename(descriptor, name);
 	}
 	refreshDirectory();
 }

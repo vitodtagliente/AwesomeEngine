@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <filesystem>
+
 #include <awesome/asset/asset.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/sub_type.h>
@@ -28,6 +30,7 @@ struct Serializer
 	static json::value serialize(const double& primitive);
 	static json::value serialize(const char& primitive);
 	static json::value serialize(const std::string& primitive);
+	static json::value serialize(const std::filesystem::path& path);
 	static json::value serialize(const uuid& id);
 	static json::value serialize(const graphics::Color& color);
 	static json::value serialize(const graphics::TextureCoords& coords);
@@ -81,6 +84,7 @@ struct Deserializer
 	static bool deserialize(const json::value& value, double& primitive);
 	static bool deserialize(const json::value& value, char& primitive);
 	static bool deserialize(const json::value& value, std::string& primitive);
+	static bool deserialize(const json::value& value, std::filesystem::path& path);
 	static bool deserialize(const json::value& value, uuid& id);
 	static bool deserialize(const json::value& value, graphics::Color& color);
 	static bool deserialize(const json::value& value, graphics::TextureCoords& coords);

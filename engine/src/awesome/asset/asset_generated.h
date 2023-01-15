@@ -4,15 +4,11 @@
 
 #include <vdtreflect/runtime.h>
 
-template <>
-struct EnumType<enum class AssetType>
+struct __AssetType : RegisteredInTypeFactory<__AssetType>
 {
-    static const char* name();
-    static const  enum_values_t& values();
-};
+    __AssetType() = delete;
 
-struct __AssetTypeEnum : RegisteredInEnumFactory<enum class AssetType>
-{
+    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

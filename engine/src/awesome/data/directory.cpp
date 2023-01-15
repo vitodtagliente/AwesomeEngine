@@ -7,6 +7,8 @@ Directory Directory::scan(const std::filesystem::path& path, const ScanSettings&
 	directory.path = path;
 	directory.m_settings = settings;
 
+	if (path.empty()) return directory;
+
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		if (entry.is_directory())

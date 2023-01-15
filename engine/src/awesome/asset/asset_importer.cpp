@@ -1,8 +1,12 @@
 #include "asset_importer.h"
 
 #include <string>
+#include <vector>
+
+#include <awesome/data/json_file.h>
 
 #include "asset.h"
+#include "asset_identifier.h"
 #include "asset_library.h"
 
 void AssetImporter::import(const std::filesystem::path& path, const bool recursive)
@@ -15,21 +19,14 @@ void AssetImporter::import(const std::filesystem::path& path, const bool recursi
 		}
 		else
 		{
-			uuid id{ uuid::Invalid };
-			importFile(path, id);
+			importFile(path);
 		}
 	}
 }
 
-bool AssetImporter::import(const std::filesystem::path& path, uuid& id)
-{
-	return importFile(path, id);
-}
-
 bool AssetImporter::import(const std::filesystem::path& path)
 {
-	uuid id{ uuid::Invalid };
-	return importFile(path, id);
+	return importFile(path);
 }
 
 void AssetImporter::importDirectory(const std::filesystem::path& path, const bool recursive)
@@ -38,8 +35,7 @@ void AssetImporter::importDirectory(const std::filesystem::path& path, const boo
 	{
 		if (!entry.is_directory())
 		{
-			uuid id{ uuid::Invalid };
-			importFile(entry.path(), id);
+			importFile(entry.path());
 		}
 		else if (entry.is_directory() && recursive)
 		{
@@ -48,47 +44,54 @@ void AssetImporter::importDirectory(const std::filesystem::path& path, const boo
 	}
 }
 
-bool AssetImporter::importFile(const std::filesystem::path& path, uuid& id)
+bool AssetImporter::importFile(const std::filesystem::path& path)
 {
-	id = uuid::Invalid;
-	AssetLibrary& library = AssetLibrary::instance();
+	AssetDatabase& db = AssetLibrary::instance().database;
 
-	if (Asset::isAsset(path))
+	static const auto& isAsset = [](const std::filesystem::path& path) -> bool
 	{
-		const Asset::Descriptor descriptor = Asset::Descriptor::load(path);
-		if (descriptor)
-		{
-			// The asset is already loaded
-			id = descriptor.id;
-			if (library.find(descriptor.id)) return true;
+		return path.extension().string() == Asset::Extension;
+	};
 
-			library.insert(descriptor);
-			return true;
-		}
-		return false;
-	}
+	if (isAsset(path)) return true;
 
 	const std::filesystem::path assetPath = path.string() + Asset::Extension;
 	if (std::filesystem::exists(assetPath))
 	{
-		const Asset::Descriptor descriptor = Asset::Descriptor::load(assetPath);
-		if (descriptor)
+		// the asset should be already loaded into the database
+		return db.find(path) == nullptr;
+	}
+
+	static std::vector<std::unique_ptr<AssetIdentifier>> s_identifiers;
+	if (s_identifiers.empty())
+	{
+		const auto& types = TypeFactory::list("Type", "AssetIdentifier");
+		for (const auto& type : types)
 		{
-			id = descriptor.id;
+			std::unique_ptr<AssetIdentifier> identifier(TypeFactory::instantiate<AssetIdentifier>(type));
+			if (identifier != nullptr)
+			{
+				s_identifiers.push_back(std::move(identifier));
+			}
 		}
-		return true;
 	}
 
-	const Asset::Type type = Asset::getTypeByExtension(path.extension().string());
-	if (type == Asset::Type::None)
-	{		
-		return false;
+	AssetPtr asset;
+	const auto& it = std::find_if(s_identifiers.begin(), s_identifiers.end(),
+		[&path](const std::unique_ptr<AssetIdentifier>& identifier) -> bool
+		{
+			return identifier->identify(path);
+		}
+	);
+
+	if (it != s_identifiers.end())
+	{
+		asset = (*it)->instatiate(path);
+		if (asset != nullptr)
+		{
+			db.insert(path, asset->getTypeName());
+			return JsonFile::save(std::dynamic_pointer_cast<Type>(asset), assetPath), true;
+		}
 	}
-
-	Asset::Descriptor descriptor(type);
-	descriptor.save(assetPath);
-
-	id = descriptor.id;
-	library.insert(descriptor);
-	return true;
+	return false;
 }

@@ -12,7 +12,7 @@ void SpriteRendererComponent::render(graphics::Renderer2D* const renderer)
 		return;
 	}
 	
-	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
 	if (texture != nullptr)
 	{
 		renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);

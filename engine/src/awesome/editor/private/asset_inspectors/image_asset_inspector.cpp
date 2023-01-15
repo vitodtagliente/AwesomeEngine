@@ -5,7 +5,7 @@
 
 bool ImageAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::Image;
+	return asset->getTypeName() == __ImageAssetType::type().name;
 }
 
 void ImageAssetInspector::inspect(const AssetPtr& asset)

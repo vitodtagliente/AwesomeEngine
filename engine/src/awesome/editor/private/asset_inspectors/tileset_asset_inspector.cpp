@@ -6,13 +6,13 @@
 
 bool TilesetAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::Tileset;
+	return asset->getTypeName() == __TilesetAssetType::type().name;
 }
 
 void TilesetAssetInspector::inspect(const AssetPtr& asset)
 {
-	TilesetAssetPtr tileset = std::static_pointer_cast<TilesetAsset>(asset);
-	TilesetAsset::data_t& data = tileset->data;
+	TilesetAssetPtr tilesetAsset = std::static_pointer_cast<TilesetAsset>(asset);
+	Tileset& data = tilesetAsset->data;
 
 	Layout::input("Image", data.image);
 
@@ -65,6 +65,6 @@ void TilesetAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(tileset->data, tileset->descriptor.getDataPath());
+		tilesetAsset->save(tilesetAsset->path);
 	}
 }

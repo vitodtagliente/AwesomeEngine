@@ -3,10 +3,19 @@
 
 #include <string>
 
-#include "base_asset.h"
+#include "asset.h"
 
-struct TextAsset : public BaseAsset<Asset::Type::Text, std::string>
+#include "text_asset_generated.h"
+
+CLASS()
+struct TextAsset : public Asset
 {
-	virtual void load(const std::filesystem::path& path) override;
+	virtual bool load(const std::filesystem::path& path) override;
+	virtual bool save(const std::filesystem::path& path) const override;
+
+	std::string data;
+
+	GENERATED_BODY()
 };
+
 typedef std::shared_ptr<TextAsset> TextAssetPtr;

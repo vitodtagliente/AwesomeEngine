@@ -171,7 +171,7 @@ void Layout::image(const ImageAssetPtr& image, const graphics::TextureRect& rect
 {
 	if (image != nullptr && image->state == Asset::State::Ready)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
 		if (texture)
 		{
 			ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
@@ -206,7 +206,7 @@ bool Layout::imageButton(const ImageAssetPtr& image, const graphics::TextureRect
 {
 	if (image != nullptr && image->state == Asset::State::Ready)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->descriptor.id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
 		if (texture != nullptr)
 		{
 			return ImGui::ImageButton((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
@@ -240,11 +240,18 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(id(name).c_str(), &value);
 }
 
-void Layout::input(const std::string& name, const AssetType type, AssetPtr& value)
+void Layout::input(const std::string& name, std::filesystem::path& value)
+{
+	std::string temp = value.string();
+	ImGui::InputText(id(name).c_str(), &temp);
+	value = temp;
+}
+
+void Layout::input(const std::string& name, const std::string& type, AssetPtr& value)
 {
 	static AssetBrowserDialog s_assetBrowserDialog;
 
-	if (Layout::selectable(name + ": " + (value ? value->descriptor.path.stem().string() : ""), false))
+	if (Layout::selectable(name + ": " + (value ? value->path.stem().string() : ""), false))
 	{
 		s_assetBrowserDialog.open(name, type, [&value](const AssetPtr& asset) -> void
 			{
@@ -257,7 +264,7 @@ void Layout::input(const std::string& name, const AssetType type, AssetPtr& valu
 
 void Layout::input(const std::string& name, ImageAssetPtr& value)
 {
-	input(name, AssetType::Image, (AssetPtr&)value);
+	input(name, "Image", (AssetPtr&)value);
 }
 
 void Layout::input(const std::string&, math::transform& value)
@@ -417,9 +424,7 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(backChildTypeName, "AssetPtr"))
 				{
-					AssetType type = AssetType::None;
-					stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
-					input(label, type, prop.value<std::map<std::string, AssetPtr>>()); break;
+					input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -481,9 +486,7 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(frontChildTypeName, "AssetPtr"))
 				{
-					AssetType type = AssetType::None;
-					stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
-					input(label, type, prop.value<std::vector<AssetPtr>>()); break;
+					input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -493,6 +496,10 @@ void Layout::input(Type& value)
 		case Property::Type::T_unknown:
 		default:
 		{
+			if (prop.descriptor.name == "std::filesystem::path")
+			{
+				input(label, prop.value<std::filesystem::path>());
+			}
 			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				input(label, prop.value<graphics::Color>());
@@ -523,9 +530,7 @@ void Layout::input(Type& value)
 			}
 			else if (StringUtil::contains(prop.descriptor.name, "AssetPtr"))
 			{
-				AssetType type = AssetType::None;
-				stringToEnum(StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), type);
-				Layout::input(label, type, prop.value<AssetPtr>());
+				Layout::input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{
@@ -579,7 +584,7 @@ void Layout::input(const std::string& name, std::shared_ptr<Type>& type, const s
 	}
 }
 
-void Layout::input(const std::string& name, const AssetType type, std::vector<AssetPtr>& list)
+void Layout::input(const std::string& name, const std::string& type, std::vector<AssetPtr>& list)
 {
 	input<AssetPtr>(
 		name,
@@ -627,7 +632,7 @@ void Layout::input(const std::string& name, std::vector<std::unique_ptr<Type>>& 
 		);
 }
 
-void Layout::input(const std::string& name, AssetType type, std::map<std::string, AssetPtr>& map)
+void Layout::input(const std::string& name, const std::string& type, std::map<std::string, AssetPtr>& map)
 {
 	input<std::string, AssetPtr>(
 		name,

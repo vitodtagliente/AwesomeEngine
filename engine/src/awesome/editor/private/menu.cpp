@@ -35,6 +35,7 @@ void Menu::menuAssets()
 {
 	if (MenuLayout::beginMenu("Assets"))
 	{
+		/*
 		if (MenuLayout::item("SpriteAnimation"))
 		{
 			Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
@@ -65,6 +66,7 @@ void Menu::menuAssets()
 				}
 			);
 		}
+		*/
 		MenuLayout::endMenu();
 	}
 }
@@ -92,43 +94,43 @@ void Menu::menuScene()
 			World::instance().clear();
 		}
 		MenuLayout::separator();
-		if (MenuLayout::item("Save Scene"))
-		{
-			World& world = World::instance();
-			if (world.getScene() != nullptr)
-			{
-				const std::filesystem::path& path = world.getScene()->descriptor.getDataPath();
-				world.save(path);
-
-				AssetImporter importer;
-				importer.import(path);
-			}
-			else
-			{
-				Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
-					{
-						if (!path.string().empty())
-						{
-							World::instance().save(path);
-
-							AssetImporter importer;
-							importer.import(path);
-						}
-					}
-				);
-			}
-		}
-		if (MenuLayout::item("Save Scene as..."))
-		{
-			Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
-				{
-					if (!path.string().empty())
-					{
-						World::instance().save(path);
-					}
-				}
-			);
-		}
+		// if (MenuLayout::item("Save Scene"))
+		// {
+		// 	World& world = World::instance();
+		// 	if (world.getScene() != nullptr)
+		// 	{
+		// 		const std::filesystem::path& path = world.getScene()->descriptor.getDataPath();
+		// 		world.save(path);
+		// 
+		// 		AssetImporter importer;
+		// 		importer.import(path);
+		// 	}
+		// 	else
+		// 	{
+		// 		Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+		// 			{
+		// 				if (!path.string().empty())
+		// 				{
+		// 					World::instance().save(path);
+		// 
+		// 					AssetImporter importer;
+		// 					importer.import(path);
+		// 				}
+		// 			}
+		// 		);
+		// 	}
+		// }
+		// if (MenuLayout::item("Save Scene as..."))
+		// {
+		// 	Dialog::instance().save("Save Scene as...", Asset::getExtensionByType(Asset::Type::Scene), [](const std::filesystem::path& path) -> void
+		// 		{
+		// 			if (!path.string().empty())
+		// 			{
+		// 				World::instance().save(path);
+		// 			}
+		// 		}
+		// 	);
+		// }
 		MenuLayout::endMenu();
 	}
 }

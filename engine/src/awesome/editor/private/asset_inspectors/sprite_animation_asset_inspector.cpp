@@ -6,7 +6,7 @@
 
 bool SpriteAnimationAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::SpriteAnimation;
+	return asset->getTypeName() == __SpriteAnimationAssetType::type().name;
 }
 
 void SpriteAnimationAssetInspector::inspect(const AssetPtr& asset)
@@ -25,7 +25,7 @@ void SpriteAnimationAssetInspector::inspect(const AssetPtr& asset)
 
 	if (Layout::button(TextIcon::save(" Save")))
 	{
-		JsonFile::save(animation->data, animation->descriptor.getDataPath());
+		animation->save(animation->path);
 	}
 
 	if (Layout::collapsingHeader("Tool"))

@@ -1,11 +1,20 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include "base_asset.h"
+#include "asset.h"
 #include "data/image.h"
 
-struct ImageAsset : public BaseAsset<Asset::Type::Image, Image>
+#include "image_asset_generated.h"
+
+CLASS()
+struct ImageAsset : public Asset
 {
-	virtual void load(const std::filesystem::path& path) override;
+	virtual bool load(const std::filesystem::path& path) override;
+	virtual bool save(const std::filesystem::path& path) const override;
+
+	Image data;
+
+	GENERATED_BODY()
 };
+
 typedef std::shared_ptr<ImageAsset> ImageAssetPtr;

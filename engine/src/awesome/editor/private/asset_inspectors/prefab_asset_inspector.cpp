@@ -15,7 +15,7 @@ PrefabAssetInspector::~PrefabAssetInspector()
 
 bool PrefabAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->descriptor.type == Asset::Type::Prefab;
+	return asset->getTypeName() == __PrefabAssetType::type().name;
 }
 
 void PrefabAssetInspector::inspect(const AssetPtr& asset)
@@ -46,6 +46,6 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 	if (Layout::button(TextIcon::save(" Save")))
 	{
 		prefab->data = Serializer::serialize(*m_entity);
-		JsonFile::save(prefab->data, prefab->descriptor.getDataPath());
+		prefab->save(prefab->path);
 	}
 }
