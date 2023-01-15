@@ -251,16 +251,24 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	}
 	else
 	{
-		// Asset::Descriptor descriptor = Asset::Descriptor::load(file);
-		// std::shared_ptr<Asset> asset = AssetLibrary::instance().find(descriptor.id);
-		// if (asset)
-		// {
-		// 	Editor::instance()->state.select(asset);
-		// }
-		// else
-		// {
-		// 	Editor::instance()->state.unselectAsset();
-		// }
+		AssetLibrary& library = AssetLibrary::instance();
+		AssetRecord* const record = library.database.find(file);
+		if (record != nullptr)
+		{
+			AssetPtr asset = AssetLibrary::instance().find(record->id);
+			if (asset != nullptr)
+			{
+				Editor::instance()->state.select(asset);
+			}
+			else
+			{
+				Editor::instance()->state.unselectAsset();
+			}
+		}	
+		else
+		{
+			Editor::instance()->state.unselectAsset();
+		}
 	}
 }
 

@@ -46,6 +46,16 @@ bool JsonFile::load(const std::filesystem::path& path, Type& type)
 	return false;
 }
 
+bool JsonFile::load(const std::filesystem::path& path, Type** type, const std::string& typeName)
+{
+	json::value data;
+	if (load(path, data))
+	{
+		return Deserializer::deserialize(data, type, typeName);
+	}
+	return false;
+}
+
 bool JsonFile::load(const std::filesystem::path& path, std::shared_ptr<Type>& type)
 {
 	json::value data;

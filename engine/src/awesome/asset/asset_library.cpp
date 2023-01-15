@@ -65,11 +65,13 @@ std::shared_ptr<Asset> AssetLibrary::create(const std::filesystem::path& path)
 		return nullptr;
 	}
 
-	AssetPtr asset;
-	JsonFile::load(assetPath, std::dynamic_pointer_cast<Type>(asset));
+	Asset* data = nullptr;
+	JsonFile::load(assetPath, (Type**)&data, "Asset");
 
-	if (asset != nullptr)
+	if (data != nullptr)
 	{
+		AssetPtr asset = std::shared_ptr<Asset>(data);
+		asset->path = path;
 		asset->state = Asset::State::Loading;
 		std::thread handler([path, asset]()
 			{
@@ -85,8 +87,9 @@ std::shared_ptr<Asset> AssetLibrary::create(const std::filesystem::path& path)
 			}
 		);
 		handler.detach();
+		return asset;
 	}
-	return asset;
+	return nullptr;
 }
 
 bool AssetDatabase::erase(const uuid& id)
@@ -97,7 +100,7 @@ bool AssetDatabase::erase(const uuid& id)
 			return record->id == id;
 		}
 	);
-	dirty = it != records.end();	
+	dirty = it != records.end();
 	return records.erase(it), true;
 }
 
@@ -115,10 +118,11 @@ bool AssetDatabase::exists(const uuid& id) const
 
 bool AssetDatabase::exists(const std::filesystem::path& path) const
 {
+	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
 	const auto& it = std::find_if(records.begin(), records.end(),
-		[&path](const std::unique_ptr<AssetRecord>& record) -> bool
+		[&compare](const std::unique_ptr<AssetRecord>& record) -> bool
 		{
-			return record->path == path;
+			return record->path == compare;
 		}
 	);
 
@@ -143,10 +147,11 @@ AssetRecord* const AssetDatabase::find(const uuid& id) const
 
 AssetRecord* const AssetDatabase::find(const std::filesystem::path& path) const
 {
+	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
 	const auto& it = std::find_if(records.begin(), records.end(),
-		[&path](const std::unique_ptr<AssetRecord>& record) -> bool
+		[&compare](const std::unique_ptr<AssetRecord>& record) -> bool
 		{
-			return record->path == path;
+			return record->path == compare;
 		}
 	);
 
