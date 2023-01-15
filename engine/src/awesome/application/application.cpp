@@ -30,6 +30,7 @@ void Application::init(const std::initializer_list<ApplicationModule*>& modules)
 
 int Application::run()
 {
+	AssetLibrary& library = AssetLibrary::instance();
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
 	Time time;
@@ -105,6 +106,7 @@ int Application::run()
 			}
 		}
 
+		library.flush();
 		world.flush();
 		deltaTime = 0.0;
 
