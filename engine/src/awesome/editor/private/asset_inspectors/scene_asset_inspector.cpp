@@ -9,7 +9,7 @@
 
 bool SceneAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->getTypeName() == __SceneAssetType::type().name;
+	return asset->getTypeName() == SceneAsset::staticTypeName();
 }
 
 void SceneAssetInspector::inspect(const AssetPtr& asset)

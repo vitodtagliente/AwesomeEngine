@@ -15,7 +15,7 @@ PrefabAssetInspector::~PrefabAssetInspector()
 
 bool PrefabAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->getTypeName() == __PrefabAssetType::type().name;
+	return asset->getTypeName() == PrefabAsset::staticTypeName();
 }
 
 void PrefabAssetInspector::inspect(const AssetPtr& asset)

@@ -6,7 +6,7 @@
 
 bool SpriteAnimationAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->getTypeName() == __SpriteAnimationAssetType::type().name;
+	return asset->getTypeName() == SpriteAnimationAsset::staticTypeName();
 }
 
 void SpriteAnimationAssetInspector::inspect(const AssetPtr& asset)

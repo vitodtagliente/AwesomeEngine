@@ -424,7 +424,7 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(backChildTypeName, "AssetPtr"))
 				{
-					input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<std::map<std::string, AssetPtr>>()); break;
+					input(label, StringUtil::replace(prop.descriptor.name, "Ptr", ""), prop.value<std::map<std::string, AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -486,7 +486,7 @@ void Layout::input(Type& value)
 				}
 				else if (StringUtil::contains(frontChildTypeName, "AssetPtr"))
 				{
-					input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<std::vector<AssetPtr>>()); break;
+					input(label, StringUtil::replace(prop.descriptor.name, "Ptr", ""), prop.value<std::vector<AssetPtr>>()); break;
 				}
 				break;
 			}
@@ -530,7 +530,7 @@ void Layout::input(Type& value)
 			}
 			else if (StringUtil::contains(prop.descriptor.name, "AssetPtr"))
 			{
-				Layout::input(label, StringUtil::replace(prop.descriptor.name, "AssetPtr", ""), prop.value<AssetPtr>());
+				Layout::input(label, StringUtil::replace(prop.descriptor.name, "Ptr", ""), prop.value<AssetPtr>());
 			}
 			else if (StringUtil::startsWith(prop.descriptor.name, "TypeName"))
 			{

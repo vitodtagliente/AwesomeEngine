@@ -6,7 +6,7 @@
 
 bool TilesetAssetInspector::canInspect(const AssetPtr& asset)
 {
-	return asset->getTypeName() == __TilesetAssetType::type().name;
+	return asset->getTypeName() == TilesetAsset::staticTypeName();
 }
 
 void TilesetAssetInspector::inspect(const AssetPtr& asset)

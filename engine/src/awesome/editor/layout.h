@@ -65,7 +65,7 @@ public:
 	template <typename T = Asset>
 	static void input(const std::string& name, std::shared_ptr<T>& value)
 	{
-		input(name, "", value);
+		input(name, T::staticTypeName(), value);
 	}
 	static void input(const std::string& name, ImageAssetPtr& value);
 	static void input(const std::string& name, math::transform& value);
