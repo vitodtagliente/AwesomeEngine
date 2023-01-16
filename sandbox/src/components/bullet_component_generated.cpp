@@ -18,6 +18,8 @@ const properties_t BulletComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t BulletComponent::getTypeSize() const { return __BulletComponentType::type().size; }
+const meta_t& BulletComponent::staticTypeMeta() { return __BulletComponentType::type().meta; }
+const std::string& BulletComponent::staticTypeName() { return __BulletComponentType::type().name; }
 
 const TypeDefinition& __BulletComponentType::type()
 {

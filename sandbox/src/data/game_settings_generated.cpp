@@ -22,6 +22,8 @@ const properties_t WeaponLevel::getTypeProperties() const {
     return properties;
 }
 std::size_t WeaponLevel::getTypeSize() const { return __WeaponLevelType::type().size; }
+const meta_t& WeaponLevel::staticTypeMeta() { return __WeaponLevelType::type().meta; }
+const std::string& WeaponLevel::staticTypeName() { return __WeaponLevelType::type().name; }
 
 const TypeDefinition& __WeaponLevelType::type()
 {
@@ -48,6 +50,8 @@ const properties_t WeaponItem::getTypeProperties() const {
     return properties;
 }
 std::size_t WeaponItem::getTypeSize() const { return __WeaponItemType::type().size; }
+const meta_t& WeaponItem::staticTypeMeta() { return __WeaponItemType::type().meta; }
+const std::string& WeaponItem::staticTypeName() { return __WeaponItemType::type().name; }
 
 const TypeDefinition& __WeaponItemType::type()
 {
@@ -70,6 +74,8 @@ const properties_t GameSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t GameSettings::getTypeSize() const { return __GameSettingsType::type().size; }
+const meta_t& GameSettings::staticTypeMeta() { return __GameSettingsType::type().meta; }
+const std::string& GameSettings::staticTypeName() { return __GameSettingsType::type().name; }
 
 const TypeDefinition& __GameSettingsType::type()
 {

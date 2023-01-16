@@ -38,6 +38,8 @@ const properties_t Wave::getTypeProperties() const {
     return properties;
 }
 std::size_t Wave::getTypeSize() const { return __WaveType::type().size; }
+const meta_t& Wave::staticTypeMeta() { return __WaveType::type().meta; }
+const std::string& Wave::staticTypeName() { return __WaveType::type().name; }
 
 const TypeDefinition& __WaveType::type()
 {

@@ -18,6 +18,8 @@ const properties_t OrthographicCameraComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t OrthographicCameraComponent::getTypeSize() const { return __OrthographicCameraComponentType::type().size; }
+const meta_t& OrthographicCameraComponent::staticTypeMeta() { return __OrthographicCameraComponentType::type().meta; }
+const std::string& OrthographicCameraComponent::staticTypeName() { return __OrthographicCameraComponentType::type().name; }
 
 const TypeDefinition& __OrthographicCameraComponentType::type()
 {

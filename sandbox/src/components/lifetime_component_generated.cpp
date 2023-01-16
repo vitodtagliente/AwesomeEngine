@@ -12,6 +12,8 @@ const properties_t LifetimeComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t LifetimeComponent::getTypeSize() const { return __LifetimeComponentType::type().size; }
+const meta_t& LifetimeComponent::staticTypeMeta() { return __LifetimeComponentType::type().meta; }
+const std::string& LifetimeComponent::staticTypeName() { return __LifetimeComponentType::type().name; }
 
 const TypeDefinition& __LifetimeComponentType::type()
 {

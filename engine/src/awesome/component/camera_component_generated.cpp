@@ -12,6 +12,8 @@ const properties_t CameraComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t CameraComponent::getTypeSize() const { return __CameraComponentType::type().size; }
+const meta_t& CameraComponent::staticTypeMeta() { return __CameraComponentType::type().meta; }
+const std::string& CameraComponent::staticTypeName() { return __CameraComponentType::type().name; }
 
 const TypeDefinition& __CameraComponentType::type()
 {

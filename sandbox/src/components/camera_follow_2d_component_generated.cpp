@@ -12,6 +12,8 @@ const properties_t CameraFollow2dComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t CameraFollow2dComponent::getTypeSize() const { return __CameraFollow2dComponentType::type().size; }
+const meta_t& CameraFollow2dComponent::staticTypeMeta() { return __CameraFollow2dComponentType::type().meta; }
+const std::string& CameraFollow2dComponent::staticTypeName() { return __CameraFollow2dComponentType::type().name; }
 
 const TypeDefinition& __CameraFollow2dComponentType::type()
 {

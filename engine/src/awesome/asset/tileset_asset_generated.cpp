@@ -9,6 +9,8 @@ const properties_t TilesetAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t TilesetAsset::getTypeSize() const { return __TilesetAssetType::type().size; }
+const meta_t& TilesetAsset::staticTypeMeta() { return __TilesetAssetType::type().meta; }
+const std::string& TilesetAsset::staticTypeName() { return __TilesetAssetType::type().name; }
 
 const TypeDefinition& __TilesetAssetType::type()
 {

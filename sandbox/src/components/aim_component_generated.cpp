@@ -24,6 +24,8 @@ const properties_t AimComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t AimComponent::getTypeSize() const { return __AimComponentType::type().size; }
+const meta_t& AimComponent::staticTypeMeta() { return __AimComponentType::type().meta; }
+const std::string& AimComponent::staticTypeName() { return __AimComponentType::type().name; }
 
 const TypeDefinition& __AimComponentType::type()
 {

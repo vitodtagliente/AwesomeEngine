@@ -9,6 +9,8 @@ const properties_t TextAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t TextAsset::getTypeSize() const { return __TextAssetType::type().size; }
+const meta_t& TextAsset::staticTypeMeta() { return __TextAssetType::type().meta; }
+const std::string& TextAsset::staticTypeName() { return __TextAssetType::type().name; }
 
 const TypeDefinition& __TextAssetType::type()
 {

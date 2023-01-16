@@ -12,6 +12,8 @@ const properties_t PlayerState::getTypeProperties() const {
     return properties;
 }
 std::size_t PlayerState::getTypeSize() const { return __PlayerStateType::type().size; }
+const meta_t& PlayerState::staticTypeMeta() { return __PlayerStateType::type().meta; }
+const std::string& PlayerState::staticTypeName() { return __PlayerStateType::type().name; }
 
 const TypeDefinition& __PlayerStateType::type()
 {

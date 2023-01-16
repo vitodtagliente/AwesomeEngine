@@ -28,6 +28,8 @@ const properties_t Entity::getTypeProperties() const {
     return properties;
 }
 std::size_t Entity::getTypeSize() const { return __EntityType::type().size; }
+const meta_t& Entity::staticTypeMeta() { return __EntityType::type().meta; }
+const std::string& Entity::staticTypeName() { return __EntityType::type().name; }
 
 const TypeDefinition& __EntityType::type()
 {

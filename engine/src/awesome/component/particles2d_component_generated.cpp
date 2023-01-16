@@ -14,6 +14,8 @@ const properties_t Particles2dComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t Particles2dComponent::getTypeSize() const { return __Particles2dComponentType::type().size; }
+const meta_t& Particles2dComponent::staticTypeMeta() { return __Particles2dComponentType::type().meta; }
+const std::string& Particles2dComponent::staticTypeName() { return __Particles2dComponentType::type().name; }
 
 const TypeDefinition& __Particles2dComponentType::type()
 {

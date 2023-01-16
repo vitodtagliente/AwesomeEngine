@@ -9,6 +9,8 @@ const properties_t LogWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t LogWindow::getTypeSize() const { return __LogWindowType::type().size; }
+const meta_t& LogWindow::staticTypeMeta() { return __LogWindowType::type().meta; }
+const std::string& LogWindow::staticTypeName() { return __LogWindowType::type().name; }
 
 const TypeDefinition& __LogWindowType::type()
 {

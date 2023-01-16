@@ -12,6 +12,8 @@ const properties_t Asset::getTypeProperties() const {
     return properties;
 }
 std::size_t Asset::getTypeSize() const { return __AssetType::type().size; }
+const meta_t& Asset::staticTypeMeta() { return __AssetType::type().meta; }
+const std::string& Asset::staticTypeName() { return __AssetType::type().name; }
 
 const TypeDefinition& __AssetType::type()
 {

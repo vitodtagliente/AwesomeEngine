@@ -18,6 +18,8 @@ const properties_t Tile::getTypeProperties() const {
     return properties;
 }
 std::size_t Tile::getTypeSize() const { return __TileType::type().size; }
+const meta_t& Tile::staticTypeMeta() { return __TileType::type().meta; }
+const std::string& Tile::staticTypeName() { return __TileType::type().name; }
 
 const TypeDefinition& __TileType::type()
 {
@@ -42,6 +44,8 @@ const properties_t Tileset::getTypeProperties() const {
     return properties;
 }
 std::size_t Tileset::getTypeSize() const { return __TilesetType::type().size; }
+const meta_t& Tileset::staticTypeMeta() { return __TilesetType::type().meta; }
+const std::string& Tileset::staticTypeName() { return __TilesetType::type().name; }
 
 const TypeDefinition& __TilesetType::type()
 {

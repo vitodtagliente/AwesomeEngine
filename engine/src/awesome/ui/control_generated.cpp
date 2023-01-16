@@ -9,6 +9,8 @@ const properties_t Control::getTypeProperties() const {
     return properties;
 }
 std::size_t Control::getTypeSize() const { return __ControlType::type().size; }
+const meta_t& Control::staticTypeMeta() { return __ControlType::type().meta; }
+const std::string& Control::staticTypeName() { return __ControlType::type().name; }
 
 const TypeDefinition& __ControlType::type()
 {

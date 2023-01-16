@@ -9,6 +9,8 @@ const properties_t SceneAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t SceneAsset::getTypeSize() const { return __SceneAssetType::type().size; }
+const meta_t& SceneAsset::staticTypeMeta() { return __SceneAssetType::type().meta; }
+const std::string& SceneAsset::staticTypeName() { return __SceneAssetType::type().name; }
 
 const TypeDefinition& __SceneAssetType::type()
 {

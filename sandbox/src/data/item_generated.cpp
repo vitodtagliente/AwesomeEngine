@@ -48,6 +48,8 @@ const properties_t ConsumableItemData::getTypeProperties() const {
     return properties;
 }
 std::size_t ConsumableItemData::getTypeSize() const { return __ConsumableItemDataType::type().size; }
+const meta_t& ConsumableItemData::staticTypeMeta() { return __ConsumableItemDataType::type().meta; }
+const std::string& ConsumableItemData::staticTypeName() { return __ConsumableItemDataType::type().name; }
 
 const TypeDefinition& __ConsumableItemDataType::type()
 {
@@ -66,6 +68,8 @@ const properties_t EquipmentItemData::getTypeProperties() const {
     return properties;
 }
 std::size_t EquipmentItemData::getTypeSize() const { return __EquipmentItemDataType::type().size; }
+const meta_t& EquipmentItemData::staticTypeMeta() { return __EquipmentItemDataType::type().meta; }
+const std::string& EquipmentItemData::staticTypeName() { return __EquipmentItemDataType::type().name; }
 
 const TypeDefinition& __EquipmentItemDataType::type()
 {
@@ -100,6 +104,8 @@ const properties_t Item::getTypeProperties() const {
     return properties;
 }
 std::size_t Item::getTypeSize() const { return __ItemType::type().size; }
+const meta_t& Item::staticTypeMeta() { return __ItemType::type().meta; }
+const std::string& Item::staticTypeName() { return __ItemType::type().name; }
 
 const TypeDefinition& __ItemType::type()
 {

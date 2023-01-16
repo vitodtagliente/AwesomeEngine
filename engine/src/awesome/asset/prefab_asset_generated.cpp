@@ -9,6 +9,8 @@ const properties_t PrefabAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t PrefabAsset::getTypeSize() const { return __PrefabAssetType::type().size; }
+const meta_t& PrefabAsset::staticTypeMeta() { return __PrefabAssetType::type().meta; }
+const std::string& PrefabAsset::staticTypeName() { return __PrefabAssetType::type().name; }
 
 const TypeDefinition& __PrefabAssetType::type()
 {

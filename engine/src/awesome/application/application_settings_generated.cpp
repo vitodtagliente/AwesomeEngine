@@ -32,6 +32,8 @@ const properties_t ApplicationEditorSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationEditorSettings::getTypeSize() const { return __ApplicationEditorSettingsType::type().size; }
+const meta_t& ApplicationEditorSettings::staticTypeMeta() { return __ApplicationEditorSettingsType::type().meta; }
+const std::string& ApplicationEditorSettings::staticTypeName() { return __ApplicationEditorSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationEditorSettingsType::type()
 {
@@ -51,6 +53,8 @@ const properties_t ApplicationDebugSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationDebugSettings::getTypeSize() const { return __ApplicationDebugSettingsType::type().size; }
+const meta_t& ApplicationDebugSettings::staticTypeMeta() { return __ApplicationDebugSettingsType::type().meta; }
+const std::string& ApplicationDebugSettings::staticTypeName() { return __ApplicationDebugSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationDebugSettingsType::type()
 {
@@ -72,6 +76,8 @@ const properties_t ApplicationNetworkSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationNetworkSettings::getTypeSize() const { return __ApplicationNetworkSettingsType::type().size; }
+const meta_t& ApplicationNetworkSettings::staticTypeMeta() { return __ApplicationNetworkSettingsType::type().meta; }
+const std::string& ApplicationNetworkSettings::staticTypeName() { return __ApplicationNetworkSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationNetworkSettingsType::type()
 {
@@ -91,6 +97,8 @@ const properties_t ApplicationPlayerSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationPlayerSettings::getTypeSize() const { return __ApplicationPlayerSettingsType::type().size; }
+const meta_t& ApplicationPlayerSettings::staticTypeMeta() { return __ApplicationPlayerSettingsType::type().meta; }
+const std::string& ApplicationPlayerSettings::staticTypeName() { return __ApplicationPlayerSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationPlayerSettingsType::type()
 {
@@ -112,6 +120,8 @@ const properties_t ApplicationSceneSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationSceneSettings::getTypeSize() const { return __ApplicationSceneSettingsType::type().size; }
+const meta_t& ApplicationSceneSettings::staticTypeMeta() { return __ApplicationSceneSettingsType::type().meta; }
+const std::string& ApplicationSceneSettings::staticTypeName() { return __ApplicationSceneSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationSceneSettingsType::type()
 {
@@ -147,6 +157,8 @@ const properties_t ApplicationSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t ApplicationSettings::getTypeSize() const { return __ApplicationSettingsType::type().size; }
+const meta_t& ApplicationSettings::staticTypeMeta() { return __ApplicationSettingsType::type().meta; }
+const std::string& ApplicationSettings::staticTypeName() { return __ApplicationSettingsType::type().name; }
 
 const TypeDefinition& __ApplicationSettingsType::type()
 {

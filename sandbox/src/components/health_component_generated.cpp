@@ -24,6 +24,8 @@ const properties_t HealthComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t HealthComponent::getTypeSize() const { return __HealthComponentType::type().size; }
+const meta_t& HealthComponent::staticTypeMeta() { return __HealthComponentType::type().meta; }
+const std::string& HealthComponent::staticTypeName() { return __HealthComponentType::type().name; }
 
 const TypeDefinition& __HealthComponentType::type()
 {

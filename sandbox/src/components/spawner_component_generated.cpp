@@ -14,6 +14,8 @@ const properties_t SpawnerComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t SpawnerComponent::getTypeSize() const { return __SpawnerComponentType::type().size; }
+const meta_t& SpawnerComponent::staticTypeMeta() { return __SpawnerComponentType::type().meta; }
+const std::string& SpawnerComponent::staticTypeName() { return __SpawnerComponentType::type().name; }
 
 const TypeDefinition& __SpawnerComponentType::type()
 {

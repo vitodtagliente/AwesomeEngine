@@ -16,6 +16,8 @@ const properties_t AssetRecord::getTypeProperties() const {
     return properties;
 }
 std::size_t AssetRecord::getTypeSize() const { return __AssetRecordType::type().size; }
+const meta_t& AssetRecord::staticTypeMeta() { return __AssetRecordType::type().meta; }
+const std::string& AssetRecord::staticTypeName() { return __AssetRecordType::type().name; }
 
 const TypeDefinition& __AssetRecordType::type()
 {
@@ -33,6 +35,8 @@ const properties_t AssetDatabase::getTypeProperties() const {
     return properties;
 }
 std::size_t AssetDatabase::getTypeSize() const { return __AssetDatabaseType::type().size; }
+const meta_t& AssetDatabase::staticTypeMeta() { return __AssetDatabaseType::type().meta; }
+const std::string& AssetDatabase::staticTypeName() { return __AssetDatabaseType::type().name; }
 
 const TypeDefinition& __AssetDatabaseType::type()
 {

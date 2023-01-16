@@ -16,6 +16,8 @@ const properties_t ShootComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t ShootComponent::getTypeSize() const { return __ShootComponentType::type().size; }
+const meta_t& ShootComponent::staticTypeMeta() { return __ShootComponentType::type().meta; }
+const std::string& ShootComponent::staticTypeName() { return __ShootComponentType::type().name; }
 
 const TypeDefinition& __ShootComponentType::type()
 {

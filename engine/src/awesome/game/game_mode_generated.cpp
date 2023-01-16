@@ -9,6 +9,8 @@ const properties_t GameMode::getTypeProperties() const {
     return properties;
 }
 std::size_t GameMode::getTypeSize() const { return __GameModeType::type().size; }
+const meta_t& GameMode::staticTypeMeta() { return __GameModeType::type().meta; }
+const std::string& GameMode::staticTypeName() { return __GameModeType::type().name; }
 
 const TypeDefinition& __GameModeType::type()
 {

@@ -14,6 +14,8 @@ const properties_t CameraController2dComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t CameraController2dComponent::getTypeSize() const { return __CameraController2dComponentType::type().size; }
+const meta_t& CameraController2dComponent::staticTypeMeta() { return __CameraController2dComponentType::type().meta; }
+const std::string& CameraController2dComponent::staticTypeName() { return __CameraController2dComponentType::type().name; }
 
 const TypeDefinition& __CameraController2dComponentType::type()
 {

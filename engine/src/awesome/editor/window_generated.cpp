@@ -12,6 +12,8 @@ const properties_t Window::getTypeProperties() const {
     return properties;
 }
 std::size_t Window::getTypeSize() const { return __WindowType::type().size; }
+const meta_t& Window::staticTypeMeta() { return __WindowType::type().meta; }
+const std::string& Window::staticTypeName() { return __WindowType::type().name; }
 
 const TypeDefinition& __WindowType::type()
 {

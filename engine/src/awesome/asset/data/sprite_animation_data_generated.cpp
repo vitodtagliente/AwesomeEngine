@@ -14,6 +14,8 @@ const properties_t SpriteAnimationFrame::getTypeProperties() const {
     return properties;
 }
 std::size_t SpriteAnimationFrame::getTypeSize() const { return __SpriteAnimationFrameType::type().size; }
+const meta_t& SpriteAnimationFrame::staticTypeMeta() { return __SpriteAnimationFrameType::type().meta; }
+const std::string& SpriteAnimationFrame::staticTypeName() { return __SpriteAnimationFrameType::type().name; }
 
 const TypeDefinition& __SpriteAnimationFrameType::type()
 {
@@ -36,6 +38,8 @@ const properties_t SpriteAnimationData::getTypeProperties() const {
     return properties;
 }
 std::size_t SpriteAnimationData::getTypeSize() const { return __SpriteAnimationDataType::type().size; }
+const meta_t& SpriteAnimationData::staticTypeMeta() { return __SpriteAnimationDataType::type().meta; }
+const std::string& SpriteAnimationData::staticTypeName() { return __SpriteAnimationDataType::type().name; }
 
 const TypeDefinition& __SpriteAnimationDataType::type()
 {

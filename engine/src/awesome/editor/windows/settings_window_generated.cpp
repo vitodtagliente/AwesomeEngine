@@ -9,6 +9,8 @@ const properties_t SettingsWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t SettingsWindow::getTypeSize() const { return __SettingsWindowType::type().size; }
+const meta_t& SettingsWindow::staticTypeMeta() { return __SettingsWindowType::type().meta; }
+const std::string& SettingsWindow::staticTypeName() { return __SettingsWindowType::type().name; }
 
 const TypeDefinition& __SettingsWindowType::type()
 {

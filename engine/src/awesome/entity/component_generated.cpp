@@ -14,6 +14,8 @@ const properties_t Component::getTypeProperties() const {
     return properties;
 }
 std::size_t Component::getTypeSize() const { return __ComponentType::type().size; }
+const meta_t& Component::staticTypeMeta() { return __ComponentType::type().meta; }
+const std::string& Component::staticTypeName() { return __ComponentType::type().name; }
 
 const TypeDefinition& __ComponentType::type()
 {

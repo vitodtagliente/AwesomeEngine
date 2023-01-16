@@ -12,6 +12,8 @@ const properties_t MinionControllerComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t MinionControllerComponent::getTypeSize() const { return __MinionControllerComponentType::type().size; }
+const meta_t& MinionControllerComponent::staticTypeMeta() { return __MinionControllerComponentType::type().meta; }
+const std::string& MinionControllerComponent::staticTypeName() { return __MinionControllerComponentType::type().name; }
 
 const TypeDefinition& __MinionControllerComponentType::type()
 {

@@ -9,6 +9,8 @@ const properties_t ContentBrowserWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t ContentBrowserWindow::getTypeSize() const { return __ContentBrowserWindowType::type().size; }
+const meta_t& ContentBrowserWindow::staticTypeMeta() { return __ContentBrowserWindowType::type().meta; }
+const std::string& ContentBrowserWindow::staticTypeName() { return __ContentBrowserWindowType::type().name; }
 
 const TypeDefinition& __ContentBrowserWindowType::type()
 {

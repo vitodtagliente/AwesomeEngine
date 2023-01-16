@@ -9,6 +9,8 @@ const properties_t EntityInspectorWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t EntityInspectorWindow::getTypeSize() const { return __EntityInspectorWindowType::type().size; }
+const meta_t& EntityInspectorWindow::staticTypeMeta() { return __EntityInspectorWindowType::type().meta; }
+const std::string& EntityInspectorWindow::staticTypeName() { return __EntityInspectorWindowType::type().name; }
 
 const TypeDefinition& __EntityInspectorWindowType::type()
 {

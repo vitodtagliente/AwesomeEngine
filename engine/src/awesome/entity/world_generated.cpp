@@ -12,6 +12,8 @@ const properties_t SceneSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t SceneSettings::getTypeSize() const { return __SceneSettingsType::type().size; }
+const meta_t& SceneSettings::staticTypeMeta() { return __SceneSettingsType::type().meta; }
+const std::string& SceneSettings::staticTypeName() { return __SceneSettingsType::type().name; }
 
 const TypeDefinition& __SceneSettingsType::type()
 {

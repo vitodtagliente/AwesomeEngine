@@ -15,6 +15,8 @@ const properties_t GizmosRendererComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t GizmosRendererComponent::getTypeSize() const { return __GizmosRendererComponentType::type().size; }
+const meta_t& GizmosRendererComponent::staticTypeMeta() { return __GizmosRendererComponentType::type().meta; }
+const std::string& GizmosRendererComponent::staticTypeName() { return __GizmosRendererComponentType::type().name; }
 
 const TypeDefinition& __GizmosRendererComponentType::type()
 {

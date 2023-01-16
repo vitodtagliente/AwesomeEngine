@@ -9,6 +9,8 @@ const properties_t PerformanceWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t PerformanceWindow::getTypeSize() const { return __PerformanceWindowType::type().size; }
+const meta_t& PerformanceWindow::staticTypeMeta() { return __PerformanceWindowType::type().meta; }
+const std::string& PerformanceWindow::staticTypeName() { return __PerformanceWindowType::type().name; }
 
 const TypeDefinition& __PerformanceWindowType::type()
 {

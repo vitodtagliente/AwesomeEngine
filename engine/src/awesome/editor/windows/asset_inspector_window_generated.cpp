@@ -9,6 +9,8 @@ const properties_t AssetInspectorWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t AssetInspectorWindow::getTypeSize() const { return __AssetInspectorWindowType::type().size; }
+const meta_t& AssetInspectorWindow::staticTypeMeta() { return __AssetInspectorWindowType::type().meta; }
+const std::string& AssetInspectorWindow::staticTypeName() { return __AssetInspectorWindowType::type().name; }
 
 const TypeDefinition& __AssetInspectorWindowType::type()
 {

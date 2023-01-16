@@ -14,6 +14,8 @@ const properties_t PawnComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t PawnComponent::getTypeSize() const { return __PawnComponentType::type().size; }
+const meta_t& PawnComponent::staticTypeMeta() { return __PawnComponentType::type().meta; }
+const std::string& PawnComponent::staticTypeName() { return __PawnComponentType::type().name; }
 
 const TypeDefinition& __PawnComponentType::type()
 {

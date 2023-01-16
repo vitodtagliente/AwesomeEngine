@@ -9,6 +9,8 @@ const properties_t SpriteAnimationAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t SpriteAnimationAsset::getTypeSize() const { return __SpriteAnimationAssetType::type().size; }
+const meta_t& SpriteAnimationAsset::staticTypeMeta() { return __SpriteAnimationAssetType::type().meta; }
+const std::string& SpriteAnimationAsset::staticTypeName() { return __SpriteAnimationAssetType::type().name; }
 
 const TypeDefinition& __SpriteAnimationAssetType::type()
 {

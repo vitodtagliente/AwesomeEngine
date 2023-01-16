@@ -16,6 +16,8 @@ const properties_t Collider2dComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t Collider2dComponent::getTypeSize() const { return __Collider2dComponentType::type().size; }
+const meta_t& Collider2dComponent::staticTypeMeta() { return __Collider2dComponentType::type().meta; }
+const std::string& Collider2dComponent::staticTypeName() { return __Collider2dComponentType::type().name; }
 
 const TypeDefinition& __Collider2dComponentType::type()
 {

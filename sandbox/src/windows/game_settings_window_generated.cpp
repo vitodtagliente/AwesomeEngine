@@ -9,6 +9,8 @@ const properties_t GameSettingsWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t GameSettingsWindow::getTypeSize() const { return __GameSettingsWindowType::type().size; }
+const meta_t& GameSettingsWindow::staticTypeMeta() { return __GameSettingsWindowType::type().meta; }
+const std::string& GameSettingsWindow::staticTypeName() { return __GameSettingsWindowType::type().name; }
 
 const TypeDefinition& __GameSettingsWindowType::type()
 {

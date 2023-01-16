@@ -20,6 +20,8 @@ const properties_t SpriteRendererComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t SpriteRendererComponent::getTypeSize() const { return __SpriteRendererComponentType::type().size; }
+const meta_t& SpriteRendererComponent::staticTypeMeta() { return __SpriteRendererComponentType::type().meta; }
+const std::string& SpriteRendererComponent::staticTypeName() { return __SpriteRendererComponentType::type().name; }
 
 const TypeDefinition& __SpriteRendererComponentType::type()
 {

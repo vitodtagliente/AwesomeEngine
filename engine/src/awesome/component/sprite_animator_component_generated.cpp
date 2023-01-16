@@ -14,6 +14,8 @@ const properties_t SpriteAnimatorComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t SpriteAnimatorComponent::getTypeSize() const { return __SpriteAnimatorComponentType::type().size; }
+const meta_t& SpriteAnimatorComponent::staticTypeMeta() { return __SpriteAnimatorComponentType::type().meta; }
+const std::string& SpriteAnimatorComponent::staticTypeName() { return __SpriteAnimatorComponentType::type().name; }
 
 const TypeDefinition& __SpriteAnimatorComponentType::type()
 {

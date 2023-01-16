@@ -9,6 +9,8 @@ const properties_t SceneWindow::getTypeProperties() const {
     return properties;
 }
 std::size_t SceneWindow::getTypeSize() const { return __SceneWindowType::type().size; }
+const meta_t& SceneWindow::staticTypeMeta() { return __SceneWindowType::type().meta; }
+const std::string& SceneWindow::staticTypeName() { return __SceneWindowType::type().name; }
 
 const TypeDefinition& __SceneWindowType::type()
 {

@@ -9,6 +9,8 @@ const properties_t ImageAsset::getTypeProperties() const {
     return properties;
 }
 std::size_t ImageAsset::getTypeSize() const { return __ImageAssetType::type().size; }
+const meta_t& ImageAsset::staticTypeMeta() { return __ImageAssetType::type().meta; }
+const std::string& ImageAsset::staticTypeName() { return __ImageAssetType::type().name; }
 
 const TypeDefinition& __ImageAssetType::type()
 {

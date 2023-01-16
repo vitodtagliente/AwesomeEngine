@@ -9,6 +9,8 @@ const properties_t GamePlayerController::getTypeProperties() const {
     return properties;
 }
 std::size_t GamePlayerController::getTypeSize() const { return __GamePlayerControllerType::type().size; }
+const meta_t& GamePlayerController::staticTypeMeta() { return __GamePlayerControllerType::type().meta; }
+const std::string& GamePlayerController::staticTypeName() { return __GamePlayerControllerType::type().name; }
 
 const TypeDefinition& __GamePlayerControllerType::type()
 {

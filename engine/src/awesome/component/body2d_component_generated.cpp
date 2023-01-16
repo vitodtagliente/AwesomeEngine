@@ -9,6 +9,8 @@ const properties_t Body2dComponent::getTypeProperties() const {
     return properties;
 }
 std::size_t Body2dComponent::getTypeSize() const { return __Body2dComponentType::type().size; }
+const meta_t& Body2dComponent::staticTypeMeta() { return __Body2dComponentType::type().meta; }
+const std::string& Body2dComponent::staticTypeName() { return __Body2dComponentType::type().name; }
 
 const TypeDefinition& __Body2dComponentType::type()
 {

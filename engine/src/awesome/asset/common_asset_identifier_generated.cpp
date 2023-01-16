@@ -9,6 +9,8 @@ const properties_t CommonAssetIdentifier::getTypeProperties() const {
     return properties;
 }
 std::size_t CommonAssetIdentifier::getTypeSize() const { return __CommonAssetIdentifierType::type().size; }
+const meta_t& CommonAssetIdentifier::staticTypeMeta() { return __CommonAssetIdentifierType::type().meta; }
+const std::string& CommonAssetIdentifier::staticTypeName() { return __CommonAssetIdentifierType::type().name; }
 
 const TypeDefinition& __CommonAssetIdentifierType::type()
 {

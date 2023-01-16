@@ -12,6 +12,8 @@ const properties_t EditorSettings::getTypeProperties() const {
     return properties;
 }
 std::size_t EditorSettings::getTypeSize() const { return __EditorSettingsType::type().size; }
+const meta_t& EditorSettings::staticTypeMeta() { return __EditorSettingsType::type().meta; }
+const std::string& EditorSettings::staticTypeName() { return __EditorSettingsType::type().name; }
 
 const TypeDefinition& __EditorSettingsType::type()
 {
