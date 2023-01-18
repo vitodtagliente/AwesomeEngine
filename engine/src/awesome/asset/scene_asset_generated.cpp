@@ -15,6 +15,9 @@ const std::string& SceneAsset::staticTypeName() { return __SceneAssetType::type(
 const TypeDefinition& __SceneAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SceneAsset(); }, "SceneAsset", {
+        std::make_pair("CreateInEditor", "false"),
+        std::make_pair("Extension", ".scene"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(SceneAsset));
     return s_typeDefinition;
 }

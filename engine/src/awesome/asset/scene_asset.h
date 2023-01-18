@@ -7,7 +7,7 @@
 
 #include "scene_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .scene, CreateInEditor = false)
 struct SceneAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

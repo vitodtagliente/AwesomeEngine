@@ -15,6 +15,9 @@ const std::string& TilesetAsset::staticTypeName() { return __TilesetAssetType::t
 const TypeDefinition& __TilesetAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new TilesetAsset(); }, "TilesetAsset", {
+        std::make_pair("CreateInEditor", "true"),
+        std::make_pair("Extension", ".tileset"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(TilesetAsset));
     return s_typeDefinition;
 }

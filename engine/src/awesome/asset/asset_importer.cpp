@@ -3,10 +3,10 @@
 #include <string>
 #include <vector>
 
+#include <awesome/core/string_util.h>
 #include <awesome/data/json_file.h>
 
 #include "asset.h"
-#include "asset_identifier.h"
 #include "asset_library.h"
 
 void AssetImporter::import(const std::filesystem::path& path, const bool recursive)
@@ -62,31 +62,23 @@ bool AssetImporter::importFile(const std::filesystem::path& path)
 		return db.find(path) == nullptr;
 	}
 
-	static std::vector<std::unique_ptr<AssetIdentifier>> s_identifiers;
-	if (s_identifiers.empty())
-	{
-		const auto& types = TypeFactory::list("Type", "AssetIdentifier");
-		for (const auto& type : types)
+	const auto& asset_types = TypeFactory::list("Type", "Asset");
+	const std::string ext = path.extension().string();
+	const auto& it = std::find_if(asset_types.begin(), asset_types.end(),
+		[&ext](const TypeDefinition& type) -> bool
 		{
-			std::unique_ptr<AssetIdentifier> identifier(TypeFactory::instantiate<AssetIdentifier>(type));
-			if (identifier != nullptr)
+			const auto& it = type.meta.find("Extension");
+			if(it != type.meta.end())
 			{
-				s_identifiers.push_back(std::move(identifier));
+				return StringUtil::contains(it->second, ext, StringUtil::CompareMode::IgnoreCase);
 			}
-		}
-	}
-
-	AssetPtr asset;
-	const auto& it = std::find_if(s_identifiers.begin(), s_identifiers.end(),
-		[&path](const std::unique_ptr<AssetIdentifier>& identifier) -> bool
-		{
-			return identifier->identify(path);
+			return false;
 		}
 	);
 
-	if (it != s_identifiers.end())
+	if (it != asset_types.end())
 	{
-		asset = (*it)->instatiate(path);
+		AssetPtr asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(it->name));
 		if (asset != nullptr)
 		{
 			db.insert(path, asset->getTypeName());

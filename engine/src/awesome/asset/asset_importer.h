@@ -3,8 +3,6 @@
 
 #include <filesystem>
 
-#include "asset_identifier.h"
-
 class AssetImporter
 {
 public:

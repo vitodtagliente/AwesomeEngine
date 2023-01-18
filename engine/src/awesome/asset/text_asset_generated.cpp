@@ -15,6 +15,9 @@ const std::string& TextAsset::staticTypeName() { return __TextAssetType::type().
 const TypeDefinition& __TextAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new TextAsset(); }, "TextAsset", {
+        std::make_pair("CreateInEditor", "false"),
+        std::make_pair("Extension", ".txt|.md|.shader|.ini|.cfg"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(TextAsset));
     return s_typeDefinition;
 }

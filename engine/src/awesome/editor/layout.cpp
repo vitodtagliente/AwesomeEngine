@@ -309,12 +309,12 @@ void Layout::input(const std::string& name, const std::string& category, TypeNam
 {
 	if (Layout::beginCombo(name, type.value))
 	{
-		const std::vector<std::string>& s_types = TypeFactory::list("Type", category);
-		for (const std::string& s_type : s_types)
+		const std::vector<TypeDefinition>& s_types = TypeFactory::list("Type", category);
+		for (const TypeDefinition& s_type : s_types)
 		{
-			if (Layout::selectable(s_type.c_str(), false))
+			if (Layout::selectable(s_type.name.c_str(), false))
 			{
-				type.value = s_type;
+				type.value = s_type.name;
 				Layout::endCombo();
 				return; // force the refresh of the inspector
 			}

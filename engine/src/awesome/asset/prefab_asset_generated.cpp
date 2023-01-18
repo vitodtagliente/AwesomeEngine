@@ -15,6 +15,9 @@ const std::string& PrefabAsset::staticTypeName() { return __PrefabAssetType::typ
 const TypeDefinition& __PrefabAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new PrefabAsset(); }, "PrefabAsset", {
+        std::make_pair("CreateInEditor", "false"),
+        std::make_pair("Extension", ".prefab"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(PrefabAsset));
     return s_typeDefinition;
 }

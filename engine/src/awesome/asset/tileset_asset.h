@@ -6,7 +6,7 @@
 
 #include "tileset_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .tileset, CreateInEditor = true)
 struct TilesetAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

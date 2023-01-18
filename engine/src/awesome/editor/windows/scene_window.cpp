@@ -27,12 +27,12 @@ void SceneWindow::render()
 	Layout::beginChild("Header", 0.f, 46.f);
 	if (Layout::beginCombo(TextIcon::plus(" Add Entity"), ""))
 	{
-		const std::vector<std::string>& types = TypeFactory::list("Type", "Entity");
-		for (const std::string& type : types)
+		const std::vector<TypeDefinition>& types = TypeFactory::list("Type", "Entity");
+		for (const TypeDefinition& type : types)
 		{
-			if (Layout::selectable(type.c_str(), false))
+			if (Layout::selectable(type.name.c_str(), false))
 			{
-				addEntity(type, selectedEntity);
+				addEntity(type.name, selectedEntity);
 				break;
 			}
 		}

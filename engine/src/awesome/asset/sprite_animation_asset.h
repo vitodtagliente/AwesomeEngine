@@ -6,7 +6,7 @@
 
 #include "sprite_animation_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .spriteanim, CreateInEditor = true)
 struct SpriteAnimationAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

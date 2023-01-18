@@ -7,7 +7,7 @@
 
 #include "text_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .txt|.md|.shader|.ini|.cfg, CreateInEditor = false)
 struct TextAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

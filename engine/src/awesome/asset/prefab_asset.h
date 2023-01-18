@@ -7,7 +7,7 @@
 
 #include "prefab_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .prefab, CreateInEditor = false)
 struct PrefabAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

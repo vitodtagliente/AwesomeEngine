@@ -15,6 +15,9 @@ const std::string& ImageAsset::staticTypeName() { return __ImageAssetType::type(
 const TypeDefinition& __ImageAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new ImageAsset(); }, "ImageAsset", {
+        std::make_pair("CreateInEditor", "false"),
+        std::make_pair("Extension", ".png|.jpg|.jpeg|.bmp"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(ImageAsset));
     return s_typeDefinition;
 }

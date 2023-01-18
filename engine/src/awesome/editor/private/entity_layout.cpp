@@ -34,12 +34,12 @@ void EntityLayout::input(Entity* const entity)
 
 	if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
 	{
-		const std::vector<std::string>& types = TypeFactory::list("Type", "Component");
-		for (const std::string& type : types)
+		const std::vector<TypeDefinition>& types = TypeFactory::list("Type", "Component");
+		for (const TypeDefinition& type : types)
 		{
 			const auto& it = std::find_if(entity->getComponents().begin(), entity->getComponents().end(), [&type](const std::unique_ptr<Component>& component) -> bool
 				{
-					return component->getTypeName() == type;
+					return component->getTypeName() == type.name;
 				}
 			);
 
@@ -49,7 +49,7 @@ void EntityLayout::input(Entity* const entity)
 				continue;
 			}
 
-			if (Layout::selectable(type.c_str(), false))
+			if (Layout::selectable(type.name.c_str(), false))
 			{
 				Component* const component = TypeFactory::instantiate<Component>(type);
 				if (component)

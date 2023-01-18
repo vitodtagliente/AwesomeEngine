@@ -10,7 +10,6 @@
 #include <awesome/core/singleton.h>
 
 #include "asset.h"
-#include "common_asset_identifier.h"
 
 #include "asset_library_generated.h"
 

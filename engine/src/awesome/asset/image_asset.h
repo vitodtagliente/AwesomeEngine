@@ -6,7 +6,7 @@
 
 #include "image_asset_generated.h"
 
-CLASS()
+CLASS(Type = Asset, Extension = .png|.jpg|.jpeg|.bmp, CreateInEditor = false)
 struct ImageAsset : public Asset
 {
 	virtual bool load(const std::filesystem::path& path) override;

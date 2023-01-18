@@ -15,6 +15,9 @@ const std::string& SpriteAnimationAsset::staticTypeName() { return __SpriteAnima
 const TypeDefinition& __SpriteAnimationAssetType::type()
 {
     static const TypeDefinition s_typeDefinition([]() -> Type* { return new SpriteAnimationAsset(); }, "SpriteAnimationAsset", {
+        std::make_pair("CreateInEditor", "true"),
+        std::make_pair("Extension", ".spriteanim"),
+        std::make_pair("Type", "Asset"),
     }, sizeof(SpriteAnimationAsset));
     return s_typeDefinition;
 }
