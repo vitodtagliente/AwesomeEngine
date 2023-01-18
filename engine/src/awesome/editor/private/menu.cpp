@@ -7,6 +7,7 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/asset/tileset_asset.h>
+#include <awesome/core/string_util.h>
 #include <awesome/data/json_file.h>
 #include <awesome/editor/dialog.h>
 #include <awesome/editor/editor.h>
@@ -35,38 +36,37 @@ void Menu::menuAssets()
 {
 	if (MenuLayout::beginMenu("Assets"))
 	{
-		/*
-		if (MenuLayout::item("SpriteAnimation"))
+		const auto& asset_types = TypeFactory::list("Type", "Asset");
+		for (const TypeDefinition& type : asset_types)
 		{
-			Dialog::instance().save("Save Sprite Animation...", Asset::getExtensionByType(Asset::Type::SpriteAnimation), [](const std::filesystem::path& filename) -> void
-				{
-					if (!filename.string().empty())
-					{
-						SpriteAnimationAsset::data_t tileset;
-						JsonFile::save(tileset, filename);
+			const auto& it = type.meta.find("CreateInEditor");
+			if (it == type.meta.end() || it->second == "false") continue;
 
-						AssetImporter importer;
-						importer.import(filename);
-					}
-				}
-			);
-		}
-		if (MenuLayout::item("Tileset"))
-		{
-			Dialog::instance().save("Save Tileset...", Asset::getExtensionByType(Asset::Type::Tileset), [](const std::filesystem::path& filename) -> void
-				{
-					if (!filename.string().empty())
-					{
-						TilesetAsset::data_t tileset;
-						JsonFile::save(tileset, filename);
+			const auto& extIt = type.meta.find("Extension");
+			if (extIt == type.meta.end()) continue;
 
-						AssetImporter importer;
-						importer.import(filename);
+			const std::vector<std::string> extensions = StringUtil::split(extIt->second, '|');
+			if (extensions.empty()) continue;
+
+			if (MenuLayout::item(type.name))
+			{
+				Dialog::instance().save(type.name + "...", extensions.front(), [type](const std::filesystem::path& filename) -> void
+					{
+						if (!filename.string().empty())
+						{
+							AssetPtr asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(type));
+							if (asset != nullptr)
+							{
+								asset->save(filename);
+
+								AssetImporter importer;
+								importer.import(filename);
+							}
+						}
 					}
-				}
-			);
+				);
+			}
 		}
-		*/
 		MenuLayout::endMenu();
 	}
 }

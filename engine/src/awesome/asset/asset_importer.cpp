@@ -82,7 +82,7 @@ bool AssetImporter::importFile(const std::filesystem::path& path)
 		if (asset != nullptr)
 		{
 			db.insert(path, asset->getTypeName());
-			return JsonFile::save(std::dynamic_pointer_cast<Type>(asset), assetPath), true;
+			return JsonFile::save(*asset, assetPath), true;
 		}
 	}
 	return false;
