@@ -14,8 +14,8 @@ void PawnControllerComponent::update(const double deltaTime)
 	if (!m_pawn) return;
 
 	Input& input = Input::instance();
-	const math::vec3 direction(input.getAxis(KeyCode::A, KeyCode::D), input.getAxis(KeyCode::S, KeyCode::W), 0.0f);
-	m_pawn->move(direction, deltaTime);
+	math::vec3 direction(input.getAxis(KeyCode::A, KeyCode::D), input.getAxis(KeyCode::S, KeyCode::W), 0.0f);
+	m_pawn->move(direction.normalize(), deltaTime);
 
 	if (input.isKeyPressed(KeyCode::Space))
 	{

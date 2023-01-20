@@ -94,7 +94,7 @@ void Menu::menuScene()
 			SceneAssetPtr scene = World::instance().getScene();
 			if (scene != nullptr)
 			{
-				scene->save(scene->path);
+				World::instance().save(scene->path);
 			}
 			else
 			{
