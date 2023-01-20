@@ -44,9 +44,10 @@ void Menu::menuAssets()
 			const std::vector<std::string> extensions = StringUtil::split(extIt->second, '|');
 			if (extensions.empty()) continue;
 
-			if (MenuLayout::item(type.name))
+			const std::string label = StringUtil::replace(type.name, "Asset", "");
+			if (MenuLayout::item(label))
 			{
-				Dialog::instance().save(type.name + "...", extensions.front(), [type](const std::filesystem::path& path) -> void
+				Dialog::instance().save(label, extensions.front(), [type](const std::filesystem::path& path) -> void
 					{
 						AssetPtr asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(type));
 						if (asset != nullptr)
