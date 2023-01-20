@@ -162,9 +162,10 @@ AssetRecord* const AssetDatabase::find(const std::filesystem::path& path) const
 	return nullptr;
 }
 
-bool AssetDatabase::insert(const std::filesystem::path& path, const std::string& type)
+bool AssetDatabase::insert(const uuid& id, const std::filesystem::path& path, const std::string& type)
 {
 	std::unique_ptr<AssetRecord> record = std::make_unique<AssetRecord>();
+	record->id = id;
 	record->path = path;
 	record->type = type;
 	dirty = true;

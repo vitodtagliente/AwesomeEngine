@@ -31,7 +31,7 @@ struct AssetDatabase : public Type
 	bool exists(const std::filesystem::path& path) const;
 	AssetRecord* const find(const uuid& id) const;
 	AssetRecord* const find(const std::filesystem::path& path) const;
-	bool insert(const std::filesystem::path& path, const std::string& type);
+	bool insert(const uuid& id, const std::filesystem::path& path, const std::string& type);
 
 	bool dirty{ false };
 	PROPERTY() std::vector<std::unique_ptr<AssetRecord>> records;

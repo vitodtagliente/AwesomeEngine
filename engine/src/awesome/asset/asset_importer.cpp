@@ -81,7 +81,7 @@ bool AssetImporter::importFile(const std::filesystem::path& path)
 		AssetPtr asset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(it->name));
 		if (asset != nullptr)
 		{
-			db.insert(path, asset->getTypeName());
+			db.insert(asset->id, path, asset->getTypeName());
 			return JsonFile::save(*asset, assetPath), true;
 		}
 	}
