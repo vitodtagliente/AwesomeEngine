@@ -39,7 +39,7 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 
 	Layout::sameLine();
 
-	if (Layout::button(TextIcon::save(" Save"), graphics::Color(1.f, .7f, .4f)))
+	if (Layout::button(TextIcon::save(" Save")))
 	{
 		prefab->data.entity = Serializer::serialize(*m_entity);
 		prefab->save(prefab->path);

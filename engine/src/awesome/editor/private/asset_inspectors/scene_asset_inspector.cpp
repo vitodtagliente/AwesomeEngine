@@ -5,7 +5,6 @@
 #include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/entity/world.h>
-#include <awesome/graphics/color.h>
 
 
 bool SceneAssetInspector::canInspect(const AssetPtr& asset)
@@ -24,7 +23,7 @@ void SceneAssetInspector::inspect(const AssetPtr& asset)
 
 	Layout::sameLine();
 
-	if (Layout::button(TextIcon::save(" Save"), graphics::Color(1.f, .7f, .4f)))
+	if (Layout::button(TextIcon::save(" Save")))
 	{
 		scene->save(scene->path);
 	}
