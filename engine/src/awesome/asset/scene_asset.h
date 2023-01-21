@@ -3,7 +3,7 @@
 
 #include "asset.h"
 
-#include <awesome/encoding/json.h>
+#include "data/scene_data.h"
 
 #include "scene_asset_generated.h"
 

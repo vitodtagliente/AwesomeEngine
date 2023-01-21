@@ -37,15 +37,17 @@ void PrefabAssetInspector::inspect(const AssetPtr& asset)
 		World::instance().instantiate(prefab);
 	}
 
+	Layout::sameLine();
+
+	if (Layout::button(TextIcon::save(" Save"), graphics::Color(1.f, .7f, .4f)))
+	{
+		prefab->data.entity = Serializer::serialize(*m_entity);
+		prefab->save(prefab->path);
+	}
+
 	Layout::separator();
 
 	EntityLayout::input(m_entity);
-
 	Layout::separator();
-
-	if (Layout::button(TextIcon::save(" Save")))
-	{
-		prefab->data = Serializer::serialize(*m_entity);
-		prefab->save(prefab->path);
-	}
+	Layout::inputMultiline("Note", prefab->data.note);
 }

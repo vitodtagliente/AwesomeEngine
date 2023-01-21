@@ -240,6 +240,11 @@ void Layout::input(const std::string& name, std::string& value)
 	ImGui::InputText(id(name).c_str(), &value);
 }
 
+void Layout::inputMultiline(const std::string& name, std::string& value)
+{
+	ImGui::InputTextMultiline(id(name).c_str(), &value);
+}
+
 void Layout::input(const std::string& name, std::filesystem::path& value)
 {
 	std::string temp = value.string();

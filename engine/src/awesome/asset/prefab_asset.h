@@ -3,7 +3,7 @@
 
 #include "asset.h"
 
-#include <awesome/encoding/json.h>
+#include "data/prefab_data.h"
 
 #include "prefab_asset_generated.h"
 
@@ -13,7 +13,7 @@ struct PrefabAsset : public Asset
 	virtual bool load(const std::filesystem::path& path) override;
 	virtual bool save(const std::filesystem::path& path) const override;
 
-	json::value data;
+	PrefabData data;
 
 	GENERATED_BODY()
 };

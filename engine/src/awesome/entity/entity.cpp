@@ -78,7 +78,7 @@ Entity* const Entity::load(const PrefabAssetPtr& prefab)
 	Entity* const entity = new Entity();
 	if (prefab != nullptr && prefab->state == Asset::State::Ready)
 	{
-		Deserializer::deserialize(prefab->data, *entity);
+		Deserializer::deserialize(prefab->data.entity, *entity);
 		entity->m_prefab = prefab;
 		entity->m_id = uuid();
 	}

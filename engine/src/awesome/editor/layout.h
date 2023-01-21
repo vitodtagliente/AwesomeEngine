@@ -60,6 +60,7 @@ public:
 	static void input(const std::string& name, float& value);
 	static void input(const std::string& name, double& value);
 	static void input(const std::string& name, std::string& value);
+	static void inputMultiline(const std::string& name, std::string& value);
 	static void input(const std::string& name, std::filesystem::path& value);
 	static void input(const std::string& name, const std::string& type, AssetPtr& value);
 	template <typename T = Asset>
