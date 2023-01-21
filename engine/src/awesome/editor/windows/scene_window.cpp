@@ -19,7 +19,7 @@ void SceneWindow::render()
 	if (Layout::collapsingHeader("Settings"))
 	{
 		World& world = World::instance();
-		Layout::input("description", world.description);
+		Layout::inputMultiline("note", world.note);
 		Layout::input(world.settings);
 		Layout::separator();
 	}

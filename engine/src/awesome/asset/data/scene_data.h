@@ -19,7 +19,7 @@ struct SceneSettingsData : public Type
 CLASS(Type = Data, AssetType = Scene)
 struct SceneData : public Type
 {
-	PROPERTY() std::vector<json::value> entities;
+	PROPERTY() json::value entities;
 	PROPERTY() std::string note;
 	PROPERTY() std::unique_ptr<SceneSettingsData> settings;
 

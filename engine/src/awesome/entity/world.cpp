@@ -300,21 +300,17 @@ void World::load(const SceneAssetPtr& scene)
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			const json::value& data = m_scene->data;
-			if (data.contains("description")) description = data["description"].as_string();
-			if (data.contains("settings")) Deserializer::deserialize(data["settings"], settings);
-			if (data.contains("entities"))
+			note = m_scene->data.note;
+			settings = *m_scene->data.settings;
+			const json::value& entities = m_scene->data.entities.as_array();
+			const size_t count = entities.size();
+			for (int i = 0; i < count; ++i)
 			{
-				const auto& list = data.at("entities").as_array();
-				const size_t count = list.size();
-				for (int i = 0; i < count; ++i)
-				{
-					Entity* entity = nullptr;
-					Deserializer::deserialize(list[i], (Type**)&entity, "Entity");
-					m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
+				Entity* entity = nullptr;
+				Deserializer::deserialize(entities[i], (Type**)&entity, "Entity");
+				m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
-					m_loadingProgress = static_cast<int>((i + 1) * 100 / count);
-				}
+				m_loadingProgress = static_cast<int>((i + 1) * 100 / count);
 			}
 			m_state = State::Ready;
 		}
@@ -324,22 +320,34 @@ void World::load(const SceneAssetPtr& scene)
 
 void World::save(const std::filesystem::path& path)
 {
-	json::value entities = json::array();
-	for (const auto& entity : m_entities)
+	if (m_scene == nullptr || path != m_scene->path)
 	{
-		if (entity->transient) continue;
-
-		entities.push_back(Serializer::serialize(*entity.get()));
-	}
-
-	JsonFile::save(json::object(
+		SceneAsset scene;
+		scene.data.entities = json::array();
+		for (const auto& entity : m_entities)
 		{
-			{"description", description},
-			{"entities", entities},
-			{"settings", Serializer::serialize(settings)}
-		}), 
-		path
-	);
+			if (entity->transient) continue;
+
+			scene.data.entities.push_back(Serializer::serialize(*entity.get()));
+		}
+		scene.data.note = note;
+		scene.data.settings = std::make_unique<SceneSettingsData>();
+		*scene.data.settings = settings;
+		scene.save(path);
+	}
+	else
+	{
+		m_scene->data.entities = json::array();
+		for (const auto& entity : m_entities)
+		{
+			if (entity->transient) continue;
+
+			m_scene->data.entities.push_back(Serializer::serialize(*entity.get()));
+		}
+		m_scene->data.note = note;
+		*m_scene->data.settings = settings;
+		m_scene->save(path);
+	}
 }
 
 void World::checkCollisions()

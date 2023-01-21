@@ -16,16 +16,6 @@
 #include "entity.h"
 #include "quadspace.h"
 
-#include "world_generated.h"
-
-CLASS(Type = Data)
-struct SceneSettings : public Type
-{
-	PROPERTY() float quadspaceBounds { 100.f };
-
-	GENERATED_BODY()
-};
-
 class World final : public Singleton<World>
 {
 public:
@@ -73,8 +63,8 @@ public:
 	void load(const SceneAssetPtr& scene);
 	void save(const std::filesystem::path& path);
 
-	std::string description;
-	SceneSettings settings;
+	std::string note;
+	SceneSettingsData settings;
 
 private:
 	void checkCollisions();

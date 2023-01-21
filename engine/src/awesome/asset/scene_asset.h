@@ -13,7 +13,7 @@ struct SceneAsset : public Asset
 	virtual bool load(const std::filesystem::path& path) override;
 	virtual bool save(const std::filesystem::path& path) const override;
 
-	json::value data;
+	SceneData data;
 
 	GENERATED_BODY()
 };
