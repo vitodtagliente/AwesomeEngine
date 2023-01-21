@@ -12,7 +12,7 @@ bool TilesetAssetInspector::canInspect(const AssetPtr& asset)
 void TilesetAssetInspector::inspect(const AssetPtr& asset)
 {
 	TilesetAssetPtr tilesetAsset = std::static_pointer_cast<TilesetAsset>(asset);
-	Tileset& data = tilesetAsset->data;
+	TilesetData& data = tilesetAsset->data;
 
 	Layout::input("Image", data.image);
 
@@ -22,7 +22,7 @@ void TilesetAssetInspector::inspect(const AssetPtr& asset)
 		Layout::beginContext(context);
 		if (Layout::collapsingHeader(context))
 		{
-			Tile& tile = *data.tiles[i];
+			TileData& tile = *data.tiles[i];
 			Layout::input("Rect", tile.rect);
 			Layout::image(data.image, tile.rect);
 			Layout::input("Value", tile.value);
@@ -42,12 +42,12 @@ void TilesetAssetInspector::inspect(const AssetPtr& asset)
 			const int h = data.image->data.height / static_cast<int>(data.tileSize.y);
 			const float size_x = 1.f / static_cast<float>(w);
 			const float size_y = 1.f / static_cast<float>(h);
-			int index = Tile::InvalidIndex;
+			int index = TileData::InvalidIndex;
 			for (int j = 0; j < h; ++j)
 			{
 				for (int i = 0; i < w; ++i)
 				{
-					std::unique_ptr<Tile> tile = std::make_unique<Tile>();
+					std::unique_ptr<TileData> tile = std::make_unique<TileData>();
 					tile->index = ++index;
 					tile->rect.x = i * size_x;
 					tile->rect.y = j * size_y;

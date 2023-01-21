@@ -4,17 +4,17 @@
 
 #include <vdtreflect/runtime.h>
 
-struct __TileType : RegisteredInTypeFactory<__TileType>
+struct __TileDataType : RegisteredInTypeFactory<__TileDataType>
 {
-    __TileType() = delete;
+    __TileDataType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 
-struct __TilesetType : RegisteredInTypeFactory<__TilesetType>
+struct __TilesetDataType : RegisteredInTypeFactory<__TilesetDataType>
 {
-    __TilesetType() = delete;
+    __TilesetDataType() = delete;
 
     static const TypeDefinition& type();
     static bool registered() { return value; };

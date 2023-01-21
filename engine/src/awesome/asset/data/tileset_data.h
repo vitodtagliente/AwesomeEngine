@@ -7,10 +7,10 @@
 #include <awesome/graphics/texture_rect.h>
 #include <awesome/math/vector2.h>
 
-#include "tileset_generated.h"
+#include "tileset_data_generated.h"
 
 CLASS(Type = Data)
-struct Tile : public Type
+struct TileData : public Type
 {
 	static constexpr int InvalidIndex = 0;
 
@@ -23,10 +23,10 @@ struct Tile : public Type
 };
 
 CLASS(Type = Data, AssetType = Tileset)
-struct Tileset : public Type
+struct TilesetData : public Type
 {
 	PROPERTY() ImageAssetPtr image;
-	PROPERTY() std::vector<std::unique_ptr<Tile>> tiles;
+	PROPERTY() std::vector<std::unique_ptr<TileData>> tiles;
 	PROPERTY() math::vec2 size{ 1.f, 1.f };
 	PROPERTY() math::vec2 tileSize{ 32.0f, 32.0f };
 

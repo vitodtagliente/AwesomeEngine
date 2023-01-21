@@ -2,7 +2,7 @@
 #pragma once
 
 #include "asset.h"
-#include "data/tileset.h"
+#include "data/tileset_data.h"
 
 #include "tileset_asset_generated.h"
 
@@ -12,7 +12,7 @@ struct TilesetAsset : public Asset
 	virtual bool load(const std::filesystem::path& path) override;
 	virtual bool save(const std::filesystem::path& path) const override;
 
-	Tileset data;
+	TilesetData data;
 
 	GENERATED_BODY()
 };
