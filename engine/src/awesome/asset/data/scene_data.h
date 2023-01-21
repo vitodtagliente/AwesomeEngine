@@ -4,7 +4,7 @@
 #include <string>
 
 #include <awesome/core/reflection.h>
-#include <awesome/entity/entity.h>
+#include <awesome/encoding/json.h>
 
 #include "scene_data_generated.h"
 
@@ -19,7 +19,7 @@ struct SceneSettingsData : public Type
 CLASS(Type = Data, AssetType = Scene)
 struct SceneData : public Type
 {
-	PROPERTY() std::vector<std::unique_ptr<Entity>> entities;
+	PROPERTY() std::vector<json::value> entities;
 	PROPERTY() std::string note;
 	PROPERTY() std::unique_ptr<SceneSettingsData> settings;
 

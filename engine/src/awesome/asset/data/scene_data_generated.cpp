@@ -27,7 +27,7 @@ const std::string& SceneData::getTypeName() const { return __SceneDataType::type
 const properties_t SceneData::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("entities", Property("entities", Property::TypeDescriptor("std::vector<std::unique_ptr<Entity>>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("Entity", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {})}), sizeof(std::vector<std::unique_ptr<Entity>>), origin + offsetof(SceneData, entities), {
+    properties.insert(std::make_pair<std::string, Property>("entities", Property("entities", Property::TypeDescriptor("std::vector<json::value>", Property::Type::T_container_vector, Property::DecoratorType::D_normalized, {Property::TypeDescriptor("json::value", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {})}), sizeof(std::vector<json::value>), origin + offsetof(SceneData, entities), {
     })));
     properties.insert(std::make_pair<std::string, Property>("note", Property("note", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(SceneData, note), {
     })));

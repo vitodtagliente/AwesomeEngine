@@ -21,6 +21,7 @@ struct Serializer
 {
 	Serializer() = delete;
 
+	static json::value serialize(const json::value& value);
 	static json::value serialize(const Type& type);
 	static json::value serialize(const std::shared_ptr<Type>& type);
 	static json::value serialize(const std::unique_ptr<Type>& type);
@@ -71,6 +72,7 @@ struct Deserializer
 {
 	Deserializer() = delete;
 
+	static bool deserialize(const json::value& value, json::value& data);
 	static bool deserialize(const json::value& value, Type& type);
 	static bool deserialize(const json::value& value, Type** type);
 	static bool deserialize(const json::value& value, std::shared_ptr<Type>& type);

@@ -4,14 +4,14 @@
 #include <string>
 
 #include <awesome/core/reflection.h>
-#include <awesome/entity/entity.h>
+#include <awesome/encoding/json.h>
 
 #include "prefab_data_generated.h"
 
 CLASS(Type = Data, AssetType = Prefab)
 struct PrefabData : public Type
 {
-	PROPERTY() std::unique_ptr<Entity> entity;
+	PROPERTY() json::value entity;
 	PROPERTY() std::string note;
 
 	GENERATED_BODY()

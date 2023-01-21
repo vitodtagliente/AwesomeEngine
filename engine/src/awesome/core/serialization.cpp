@@ -3,6 +3,11 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 
+json::value Serializer::serialize(const json::value& value)
+{
+	return value;
+}
+
 json::value Serializer::serialize(const Type& type)
 {
 	json::value data = json::object();
@@ -67,7 +72,15 @@ json::value Serializer::serialize(const Type& type)
 			default:
 			{
 				const std::string& backChildTypeName = prop.descriptor.children.back().name;
-				if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
+				if (backChildTypeName == "json::value")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, json::value>>()); break;
+				}
+				else if (backChildTypeName == "uuid")
+				{
+					data[name] = serialize(prop.value<std::map<std::string, uuid>>()); break;
+				}
+				else if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
 				{
 					data[name] = serialize(prop.value<std::map<std::string, graphics::Color>>()); break;
 				}
@@ -129,7 +142,15 @@ json::value Serializer::serialize(const Type& type)
 			default:
 			{
 				const std::string& frontChildTypeName = prop.descriptor.children.front().name;
-				if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
+				if (frontChildTypeName == "json::value")
+				{
+					data[name] = serialize(prop.value<std::vector<json::value>>()); break;
+				}
+				else if (frontChildTypeName == "uuid")
+				{
+					data[name] = serialize(prop.value<std::vector<uuid>>()); break;
+				}
+				else if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
 				{
 					data[name] = serialize(prop.value<std::vector<graphics::Color>>()); break;
 				}
@@ -169,15 +190,19 @@ json::value Serializer::serialize(const Type& type)
 		case Property::Type::T_unknown:
 		default:
 		{
-			if (prop.descriptor.name == "uuid")
+			if (prop.descriptor.name == "json::value")
+			{
+				data[name] = prop.value<json::value>();
+			}
+			else if (prop.descriptor.name == "uuid")
 			{
 				data[name] = serialize(prop.value<uuid>());
 			}
-			if (prop.descriptor.name == "std::filesystem::path")
+			else if (prop.descriptor.name == "std::filesystem::path")
 			{
 				data[name] = serialize(prop.value<std::filesystem::path>());
 			}
-			if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
+			else if (prop.descriptor.name == "graphics::Color" || prop.descriptor.name == "Color")
 			{
 				data[name] = serialize(prop.value<graphics::Color>());
 			}
@@ -348,6 +373,11 @@ json::value Serializer::serialize(const AssetPtr& asset)
 	return static_cast<std::string>(asset != nullptr ? asset->id : uuid::Invalid);
 }
 
+bool Deserializer::deserialize(const json::value& value, json::value& data)
+{
+	return data = value, true;
+}
+
 bool Deserializer::deserialize(const json::value& value, Type& type)
 {
 	for (const auto& [name, prop] : type.getTypeProperties())
@@ -416,7 +446,15 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			default:
 			{
 				const std::string& backChildTypeName = prop.descriptor.children.back().name;
-				if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
+				if (backChildTypeName == "json::value")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, json::value>>()); break;
+				}
+				else if (backChildTypeName == "uuid")
+				{
+					deserialize(value.safeAt(name), prop.value<std::map<std::string, uuid>>()); break;
+				}
+				else if (backChildTypeName == "graphics::Color" || backChildTypeName == "Color")
 				{
 					deserialize(value.safeAt(name), prop.value<std::map<std::string, graphics::Color>>()); break;
 				}
@@ -478,7 +516,15 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 			default:
 			{
 				const std::string& frontChildTypeName = prop.descriptor.children.front().name;
-				if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
+				if (frontChildTypeName == "json::value")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<json::value>>()); break;
+				}
+				else if (frontChildTypeName == "uuid")
+				{
+					deserialize(value.safeAt(name), prop.value<std::vector<uuid>>()); break;
+				}
+				else if (frontChildTypeName == "graphics::Color" || frontChildTypeName == "Color")
 				{
 					deserialize(value.safeAt(name), prop.value<std::vector<graphics::Color>>()); break;
 				}
@@ -518,6 +564,10 @@ bool Deserializer::deserialize(const json::value& value, Type& type)
 		case Property::Type::T_unknown:
 		default:
 		{
+			if (prop.descriptor.name == "json::value")
+			{
+				prop.value<json::value>() = value.safeAt(name);
+			}
 			if (prop.descriptor.name == "uuid")
 			{
 				deserialize(value.safeAt(name), prop.value<uuid>());

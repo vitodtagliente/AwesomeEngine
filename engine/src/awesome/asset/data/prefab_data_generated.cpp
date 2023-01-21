@@ -7,7 +7,7 @@ const std::string& PrefabData::getTypeName() const { return __PrefabDataType::ty
 const properties_t PrefabData::getTypeProperties() const {
     member_address_t origin = reinterpret_cast<member_address_t>(this);
     properties_t properties;
-    properties.insert(std::make_pair<std::string, Property>("entity", Property("entity", Property::TypeDescriptor("Entity", Property::Type::T_custom_type, Property::DecoratorType::D_unique_ptr, {}), sizeof(std::unique_ptr<Entity>), origin + offsetof(PrefabData, entity), {
+    properties.insert(std::make_pair<std::string, Property>("entity", Property("entity", Property::TypeDescriptor("json::value", Property::Type::T_unknown, Property::DecoratorType::D_normalized, {}), sizeof(json::value), origin + offsetof(PrefabData, entity), {
     })));
     properties.insert(std::make_pair<std::string, Property>("note", Property("note", Property::TypeDescriptor("std::string", Property::Type::T_container_string, Property::DecoratorType::D_normalized, {}), sizeof(std::string), origin + offsetof(PrefabData, note), {
     })));
