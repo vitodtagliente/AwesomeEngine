@@ -4,62 +4,55 @@
 
 #include "asset_library.h"
 
-/*
-void AssetFilesystem::move(const Asset::Descriptor& descriptor, const std::filesystem::path& path)
+bool AssetFilesystem::erase(const std::filesystem::path& path)
 {
-	static const auto renameAsset = [](const std::filesystem::path& from, const std::filesystem::path& to) -> std::filesystem::path
-	{
-		std::filesystem::path path = to / from.filename();
-		int i = 1;
-		while (std::filesystem::exists(path))
-		{
-			path += (" " + std::to_string(i));
-		}
-		return path;
-	};
-
-	if (!std::filesystem::exists(descriptor.path)
-		|| !std::filesystem::is_directory(path))
-	{
-		return;
-	}
-
-	AssetLibrary& library = AssetLibrary::instance();
-	std::shared_ptr<Asset> asset = library.find(descriptor.id);
-	if (asset)
-	{
-		const auto& newPath = renameAsset(descriptor.path, path);
-		if (newPath == descriptor.path) return;
-
-		std::filesystem::rename(descriptor.path, newPath);
-		std::filesystem::rename(descriptor.getDataPath(), renameAsset(descriptor.getDataPath(), path));
-
-		asset->descriptor.path = newPath;
-		library.insert(descriptor);
-	}
-}
-
-bool AssetFilesystem::remove(const Asset::Descriptor& descriptor)
-{
-	if (!std::filesystem::exists(descriptor.path))
+	const std::filesystem::path meta_path = path.string() + Asset::Extension;
+	if (!std::filesystem::exists(path) || !std::filesystem::exists(meta_path))
 	{
 		return false;
 	}
 
 	AssetLibrary& library = AssetLibrary::instance();
-	std::shared_ptr<Asset> asset = library.find(descriptor.id);
-	if (asset)
-	{
-		library.unload(descriptor.id);
-		library.remove(descriptor.id);
+	AssetDatabase& db = library.database;
 
-		return std::filesystem::remove(descriptor.path)
-			&& std::filesystem::remove(descriptor.getDataPath());
-	}
-	return false;
+	AssetRecord* const record = db.find(path);
+	if (record == nullptr) return false;
+
+	library.release(record->id);
+	db.erase(record->id);
+	
+	return std::filesystem::remove(path)
+		&& std::filesystem::remove(meta_path);
 }
 
-void AssetFilesystem::rename(const Asset::Descriptor& descriptor, const std::string& name)
+bool AssetFilesystem::move(const std::filesystem::path& from, const std::filesystem::path& to)
+{
+	const std::filesystem::path meta_path = from.string() + Asset::Extension;
+	if (!std::filesystem::exists(from) || !std::filesystem::exists(meta_path))
+	{
+		return false;
+	}
+
+	AssetLibrary& library = AssetLibrary::instance();
+	AssetDatabase& db = library.database;
+
+	AssetRecord* const record = db.find(from);
+	if (record == nullptr) return false;
+
+	std::filesystem::rename(from, to);
+	std::filesystem::rename(from.string() + Asset::Extension, to.string() + Asset::Extension);
+
+	AssetPtr asset = library.find(record->id);
+	if (asset != nullptr)
+	{
+		asset->path = to;
+	}
+
+	record->path = to;
+	return true;
+}
+
+bool AssetFilesystem::rename(const std::filesystem::path& path, const std::string& name)
 {
 	static const auto renameAsset = [](const std::filesystem::path& filename, const std::string& renaming) -> std::filesystem::path
 	{
@@ -78,24 +71,29 @@ void AssetFilesystem::rename(const Asset::Descriptor& descriptor, const std::str
 		return StringUtil::replace(filename.string(), name.string(), rename.string());
 	};
 
-	if (!std::filesystem::exists(descriptor.path)
-		|| name.empty())
+	const std::filesystem::path meta_path = path.string() + Asset::Extension;
+	if (!std::filesystem::exists(path) || !std::filesystem::exists(meta_path))
 	{
-		return;
+		return false;
 	}
 
 	AssetLibrary& library = AssetLibrary::instance();
-	std::shared_ptr<Asset> asset = library.find(descriptor.id);
-	if (asset)
+	AssetDatabase& db = library.database;
+
+	AssetRecord* const record = db.find(path);
+	if (record == nullptr) return false;
+
+	const std::filesystem::path new_name = renameAsset(path, name);
+
+	std::filesystem::rename(path, new_name);
+	std::filesystem::rename(meta_path, new_name.string() + Asset::Extension);
+
+	AssetPtr asset = library.find(record->id);
+	if (asset != nullptr)
 	{
-		const auto& newPath = renameAsset(descriptor.path, name);
-		if (newPath == descriptor.path) return;
-
-		std::filesystem::rename(descriptor.path, newPath);
-		std::filesystem::rename(descriptor.getDataPath(), renameAsset(descriptor.getDataPath(), name));
-
-		asset->descriptor.path = newPath;
-		library.insert(asset->descriptor);
+		asset->path = new_name;
 	}
+
+	record->path = new_name;
+	return true;
 }
-*/

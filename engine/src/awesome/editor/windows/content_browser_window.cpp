@@ -187,6 +187,7 @@ std::string ContentBrowserWindow::decorateFile(const std::filesystem::path& file
 	// case Asset::Type::Text: return TextIcon::file(" " + file.string());
 	// default: return file.string();
 	// }
+
 	return file.string();
 }
 
@@ -198,8 +199,7 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 	}
 	else
 	{
-		// Asset::Descriptor descriptor = Asset::Descriptor::load(path);
-		// AssetFilesystem::remove(descriptor);
+		AssetFilesystem::erase(path);
 	}
 
 	Editor::instance()->state.unselectAsset();
@@ -219,23 +219,21 @@ void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std
 		return;
 	}
 
-	// if (Asset::isAsset(from))
-	// {
-	// 	Asset::Descriptor descriptor = Asset::Descriptor::load(from);
-	// 	AssetFilesystem::move(descriptor, to);
-	// }
-	// else
-	// {
-	// 	auto destination = to / from.filename();
-	// 	int i = 1;
-	// 	while (std::filesystem::exists(destination))
-	// 	{
-	// 		destination += " " + std::to_string(i);
-	// 		++i;
-	// 	}
-	// 	std::filesystem::rename(from, destination);
-	// }
-
+	if (std::filesystem::is_directory(from))
+	{
+		auto destination = to / from.filename();
+		int i = 1;
+		while (std::filesystem::exists(destination))
+		{
+			destination += " " + std::to_string(i);
+			++i;
+		}
+		std::filesystem::rename(from, destination);
+	}
+	else
+	{
+		AssetFilesystem::move(from, to);
+	}
 	refreshDirectory();
 }
 
@@ -280,8 +278,7 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 	}
 	else
 	{
-		// Asset::Descriptor descriptor = Asset::Descriptor::load(path);
-		// AssetFilesystem::rename(descriptor, name);
+		AssetFilesystem::rename(path, name);
 	}
 	refreshDirectory();
 }
