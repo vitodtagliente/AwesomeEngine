@@ -7,7 +7,7 @@
 
 namespace graphics
 {
-	class Renderer2D;
+	class Renderer;
 }
 
 class Entity;
@@ -33,7 +33,7 @@ public:
 
 	virtual void init() {}
 	virtual void uninit() {}
-	virtual void render(graphics::Renderer2D* const /*renderer*/) {}
+	virtual void render(graphics::Renderer* const /*renderer*/) {}
 	virtual void update(double /*deltaTime*/) {}
 
 	// editor

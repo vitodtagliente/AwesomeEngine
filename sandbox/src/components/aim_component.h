@@ -8,11 +8,6 @@
 
 #include "aim_component_generated.h"
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
 CLASS(Type = Component)
 class AimComponent : public Component
 {
@@ -20,7 +15,7 @@ public:
 	AimComponent() = default;
 	virtual ~AimComponent() = default;
 
-	virtual void render(graphics::Renderer2D* const renderer) override;
+	virtual void render(class graphics::Renderer* const renderer) override;
 	virtual void update(double deltaTime) override;
 
 	const math::vec3& getDirection() const { return m_direction; }

@@ -5,16 +5,14 @@
 #include <awesome/editor/layout.h>
 #include <awesome/entity/entity.h>
 
-void Collider2dComponent::render(graphics::Renderer2D* const renderer)
+void Collider2dComponent::render(graphics::Renderer* const renderer)
 {
-	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (m_type)
 	{
-	case ShapeType::Circle: renderer->drawCircle(getOwner()->transform.position, m_bounds.x, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
-	case ShapeType::Rect: renderer->drawRect(getOwner()->transform.position, m_bounds.x, m_bounds.y, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
+	case ShapeType::Circle: renderer->submitDrawCircle(graphics::ShapeRenderStyle::stroke, getOwner()->transform.position, m_bounds.x, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
+	case ShapeType::Rect: renderer->submitDrawRect(graphics::ShapeRenderStyle::stroke, getOwner()->transform.position, m_bounds.x, m_bounds.y, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
 	default: break;
 	}
-	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 	m_isColliding = false;
 }
 

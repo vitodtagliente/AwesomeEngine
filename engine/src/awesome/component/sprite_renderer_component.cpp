@@ -5,7 +5,7 @@
 #include <awesome/graphics/texture_library.h>
 #include <awesome/entity/entity.h>
 
-void SpriteRendererComponent::render(graphics::Renderer2D* const renderer)
+void SpriteRendererComponent::render(graphics::Renderer* const renderer)
 {
 	if (image == nullptr || image->state != Asset::State::Ready)
 	{
@@ -15,7 +15,7 @@ void SpriteRendererComponent::render(graphics::Renderer2D* const renderer)
 	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
 	if (texture != nullptr)
 	{
-		renderer->drawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
+		renderer->submitDrawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
 	}
 }
 

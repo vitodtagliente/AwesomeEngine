@@ -18,7 +18,7 @@ public:
 	Collider2dComponent() = default;
 	virtual ~Collider2dComponent() = default;
 
-	void render(class graphics::Renderer2D* const renderer) override;
+	void render(class graphics::Renderer* const renderer) override;
 
 	bool collide(const Collider2dComponent& other);
 

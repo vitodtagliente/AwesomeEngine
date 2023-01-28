@@ -8,7 +8,7 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture_library.h>
 
-void AimComponent::render(graphics::Renderer2D* const renderer)
+void AimComponent::render(graphics::Renderer* const renderer)
 {
 	if (!m_visible
 		|| m_image == nullptr
@@ -21,7 +21,7 @@ void AimComponent::render(graphics::Renderer2D* const renderer)
 		transform.position = m_position;
 		transform.scale.x = transform.scale.y = m_size;
 		transform.update();
-		renderer->drawTexture(texture.get(), transform.matrix(), m_rect, graphics::Color::White);
+		renderer->submitDrawTexture(texture.get(), transform.matrix(), m_rect, graphics::Color::White);
 	}
 }
 

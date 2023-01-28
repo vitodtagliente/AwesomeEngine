@@ -3,14 +3,12 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/entity/entity.h>
 
-void GizmosRendererComponent::render(graphics::Renderer2D* const renderer)
+void GizmosRendererComponent::render(graphics::Renderer* const renderer)
 {
-	renderer->setPolygonStyle(graphics::PolygonStyle::stroke);
 	switch (type)
 	{
-	case ShapeType::Rect: renderer->drawRect(getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
-	case ShapeType::Circle: renderer->drawCircle(getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
+	case ShapeType::Circle: renderer->submitDrawCircle(graphics::ShapeRenderStyle::stroke, getOwner()->transform.position, std::max(getOwner()->transform.scale.x, getOwner()->transform.scale.y), color); break;
+	case ShapeType::Rect: renderer->submitDrawRect(graphics::ShapeRenderStyle::stroke, getOwner()->transform.position, getOwner()->transform.scale.x, getOwner()->transform.scale.y, color); break;
 	default: break;
 	}
-	renderer->setPolygonStyle(graphics::PolygonStyle::fill);
 }

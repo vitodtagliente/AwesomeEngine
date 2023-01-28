@@ -8,11 +8,6 @@
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
-namespace graphics
-{
-	class Renderer2D;
-}
-
 class Quadspace
 {
 public:
@@ -29,7 +24,7 @@ public:
 	std::vector<Entity*> retrieve(Entity* const entity) const;
 	std::size_t size() const { return m_spaces.size(); }
 
-	void render(graphics::Renderer2D* const renderer, const graphics::Color& wireframesColor);
+	void render(class graphics::Renderer* const renderer, const graphics::Color& wireframesColor);
 
 	Settings settings;
 

@@ -80,7 +80,7 @@ add_library(
     ${PROJECT_SOURCE_FILES} 
 )
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw EXCLUDE_FROM_ALL)
 
 if(NOT TARGET vdtmath)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtmath)

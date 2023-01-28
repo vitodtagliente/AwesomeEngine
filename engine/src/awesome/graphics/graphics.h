@@ -8,7 +8,8 @@
 
 namespace graphics
 {
-	class Renderer2D;
+	class Context;
+	class Renderer;
 }
 
 class Graphics : public ApplicationModule
@@ -30,8 +31,10 @@ public:
 	static Graphics* const instance() { return s_instance; }
 
 	Performances performances;
-	std::unique_ptr<graphics::Renderer2D> renderer;
+	std::unique_ptr<graphics::Renderer> renderer;
 
 private:
+	std::unique_ptr<graphics::Context> m_context;
+
 	static Graphics* s_instance;
 };
