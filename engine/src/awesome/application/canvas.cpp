@@ -108,7 +108,8 @@ bool Canvas::open(Settings settings)
 		}
 	);
 
-
+	// remove the fps cap
+	glfwSwapInterval(0);
 	m_handler = reinterpret_cast<void*>(handler);
 	return true;
 }
