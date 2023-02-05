@@ -1,6 +1,7 @@
 #include <awesome/editor/windows/entity_inspector_window.h>
 
 #include <awesome/asset/asset_importer.h>
+#include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
 #include <awesome/editor/dialog.h>
 #include <awesome/editor/editor.h>
@@ -41,7 +42,9 @@ void EntityInspectorWindow::render()
 				Entity* const entity = world.findEntityById(entityId);
 				if (entity == nullptr) return;
 
-				JsonFile::save(*entity, path);
+				PrefabData data;
+				data.entity = Serializer::serialize(*entity);
+				JsonFile::save(data, path);
 
 				AssetImporter importer;
 				importer.import(path);
