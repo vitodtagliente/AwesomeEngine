@@ -27,7 +27,7 @@ void BulletComponent::init()
 					*health -= damage;
 					if (m_destroyOnCollision)
 					{
-						World::instance().instantiate(getOwner());
+						getOwner()->queue_destroy();
 					}
 				}
 			}

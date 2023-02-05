@@ -31,13 +31,16 @@ void World::update(const double deltaTime)
 
 	for (const auto& entity : m_entities)
 	{
-		switch (entity->getState())
+		if (entity->getState() == Entity::State::PendingDestroy)
 		{
-		case Entity::State::PendingDestroy: m_pendingDestroyEntities.push_back(entity->getId()); break;
-		default: entity->update(deltaTime); break;
+			m_pendingDestroyEntities.push_back(entity->getId());
+		}
+		else
+		{
+			entity->update(deltaTime);
 		}
 	}
-	
+
 	checkCollisions();
 }
 
@@ -190,11 +193,11 @@ std::vector<Entity*> World::findNearestEntities(Entity* const entity, const floa
 	std::vector<Entity*> entities = m_quadspace.retrieve(entity);
 
 	entities.erase(std::remove_if(entities.begin(), entities.end(), [entity, distance](Entity* const nearEntity) -> bool
-			{
-				return entity->transform.position.distance(nearEntity->transform.position) > distance;
-			}
-		), entities.end()
-	);
+		{
+			return entity->transform.position.distance(nearEntity->transform.position) > distance;
+		}
+	), entities.end()
+			);
 
 	return entities;
 }
@@ -207,8 +210,8 @@ std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const
 		{
 			return nearEntity->tag != entityTag;
 		}
-		), entities.end()
-	);
+	), entities.end()
+			);
 
 	return entities;
 }
@@ -221,8 +224,8 @@ std::vector<Entity*> World::findNearestEntitiesByTag(Entity* const entity, const
 		{
 			return nearEntity->tag != entityTag || entity->transform.position.distance(nearEntity->transform.position) > distance;
 		}
-		), entities.end()
-	);
+	), entities.end()
+			);
 
 	return entities;
 }
@@ -239,7 +242,7 @@ void World::clear()
 	}
 	m_entities.clear();
 	m_entities = std::move(entitiesToKeep);
-	
+
 	m_pendingDestroyEntities.clear();
 	m_pendingSpawnEntities.clear();
 	m_quadspace.clear();
@@ -301,18 +304,18 @@ void World::load(const SceneAssetPtr& scene)
 	std::thread handler([this]()
 		{
 			note = m_scene->data.note;
-			settings = *m_scene->data.settings;
-			const json::value& entities = m_scene->data.entities.as_array();
-			const size_t count = entities.size();
-			for (int i = 0; i < count; ++i)
-			{
-				Entity* entity = nullptr;
-				Deserializer::deserialize(entities[i], (Type**)&entity, "Entity");
-				m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
+	settings = *m_scene->data.settings;
+	const json::value& entities = m_scene->data.entities.as_array();
+	const size_t count = entities.size();
+	for (int i = 0; i < count; ++i)
+	{
+		Entity* entity = nullptr;
+		Deserializer::deserialize(entities[i], (Type**)&entity, "Entity");
+		m_pendingSpawnEntities.push_back(std::unique_ptr<Entity>(entity));
 
-				m_loadingProgress = static_cast<int>((i + 1) * 100 / count);
-			}
-			m_state = State::Ready;
+		m_loadingProgress = static_cast<int>((i + 1) * 100 / count);
+	}
+	m_state = State::Ready;
 		}
 	);
 	handler.detach();
