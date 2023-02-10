@@ -2,23 +2,15 @@
 
 #include <thread>
 
-#include <awesome/data/json_file.h>
-
-void AssetLibrary::init(const std::filesystem::path path)
+void AssetLibrary::add(const AssetHandler& handler)
 {
-	m_directory = path;
-	const std::filesystem::path db_path = path / AssetDatabase::Filename;
-	JsonFile::load(db_path, database);
+	m_handlers.push_back(handler);
 }
 
-void AssetLibrary::flush()
+void AssetLibrary::init(const std::filesystem::path& path)
 {
-	if (database.dirty)
-	{
-		const std::filesystem::path db_path = m_directory / AssetDatabase::Filename;
-		JsonFile::save(database, db_path);
-		database.dirty = false;
-	}
+	m_path = path;
+	const std::filesystem::path db_path = path / AssetDatabase::Filename;
 }
 
 void AssetLibrary::release(const AssetPtr& asset)
@@ -37,18 +29,24 @@ void AssetLibrary::release(const uuid& id)
 std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 {
 	const auto& cacheIt = m_cache.find(id);
-	if (cacheIt != m_cache.end() && !cacheIt->second.isExpired())
+	if (cacheIt != m_cache.end() && !cacheIt->second.expired())
 	{
 		return cacheIt->second.asset.lock();
 	}
 
-	AssetRecord* const record = database.find(id);
+	const AssetRecord* const record = database.find(id);
 	if (record == nullptr || record->id == uuid::Invalid)
 	{
 		return nullptr;
 	}
 
-	std::shared_ptr<Asset> asset = create(record->path);
+	const AssetHandler* const handler = findHandler(record->path);
+	if (handler == nullptr)
+	{
+		return nullptr;
+	}
+
+	AssetPtr asset = create(*handler, *record);
 	if (asset != nullptr)
 	{
 		m_cache.insert(std::make_pair(asset->id, Slot(asset)));
@@ -56,24 +54,39 @@ std::shared_ptr<Asset> AssetLibrary::find(const uuid& id)
 	return asset;
 }
 
-std::shared_ptr<Asset> AssetLibrary::create(const std::filesystem::path& path)
+const AssetHandler* const AssetLibrary::findHandler(const std::filesystem::path& path) const
 {
-	const std::filesystem::path assetPath = path.string() + Asset::Extension;
-	if (!std::filesystem::exists(path)
+	const auto& it = std::find_if(
+		m_handlers.begin(),
+		m_handlers.end(),
+		[extension = path.extension().string()](const AssetHandler& handler) -> bool
+		{
+			return std::find(handler.extensions.begin(), handler.extensions.end(), extension) != handler.extensions.end();
+		}
+	);
+
+	if (it != m_handlers.end())
+	{
+		return &(*it);
+	}
+	return nullptr;
+}
+
+std::shared_ptr<Asset> AssetLibrary::create(const AssetHandler& handler, const AssetRecord& record)
+{
+	const std::filesystem::path assetPath = record.path.string() + Asset::Extension;
+	if (!std::filesystem::exists(record.path)
 		|| !std::filesystem::exists(assetPath))
 	{
 		return nullptr;
 	}
 
-	Asset* data = nullptr;
-	JsonFile::load(assetPath, (Type**)&data, "Asset");
-
-	if (data != nullptr)
+	AssetPtr asset = handler.create();
+	if (asset != nullptr)
 	{
-		AssetPtr asset = std::shared_ptr<Asset>(data);
-		asset->path = path;
+		asset->path = record.path;
 		asset->state = Asset::State::Loading;
-		std::thread handler([path, asset]()
+		std::thread thread([path = record.path, asset]()
 			{
 				if (asset->load(path))
 				{
@@ -86,88 +99,8 @@ std::shared_ptr<Asset> AssetLibrary::create(const std::filesystem::path& path)
 				}
 			}
 		);
-		handler.detach();
+		thread.detach();
 		return asset;
 	}
 	return nullptr;
-}
-
-bool AssetDatabase::erase(const uuid& id)
-{
-	const auto& it = std::find_if(records.begin(), records.end(),
-		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
-		{
-			return record->id == id;
-		}
-	);
-	dirty = it != records.end();
-	return records.erase(it), true;
-}
-
-bool AssetDatabase::exists(const uuid& id) const
-{
-	const auto& it = std::find_if(records.begin(), records.end(),
-		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
-		{
-			return record->id == id;
-		}
-	);
-
-	return (it != records.end());
-}
-
-bool AssetDatabase::exists(const std::filesystem::path& path) const
-{
-	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
-	const auto& it = std::find_if(records.begin(), records.end(),
-		[&compare](const std::unique_ptr<AssetRecord>& record) -> bool
-		{
-			return record->path == compare;
-		}
-	);
-
-	return (it != records.end());
-}
-
-AssetRecord* const AssetDatabase::find(const uuid& id) const
-{
-	const auto& it = std::find_if(records.begin(), records.end(),
-		[&id](const std::unique_ptr<AssetRecord>& record) -> bool
-		{
-			return record->id == id;
-		}
-	);
-
-	if (it != records.end())
-	{
-		return (*it).get();
-	}
-	return nullptr;
-}
-
-AssetRecord* const AssetDatabase::find(const std::filesystem::path& path) const
-{
-	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
-	const auto& it = std::find_if(records.begin(), records.end(),
-		[&compare](const std::unique_ptr<AssetRecord>& record) -> bool
-		{
-			return record->path == compare;
-		}
-	);
-
-	if (it != records.end())
-	{
-		return (*it).get();
-	}
-	return nullptr;
-}
-
-bool AssetDatabase::insert(const uuid& id, const std::filesystem::path& path, const std::string& type)
-{
-	std::unique_ptr<AssetRecord> record = std::make_unique<AssetRecord>();
-	record->id = id;
-	record->path = path;
-	record->type = type;
-	dirty = true;
-	return records.push_back(std::move(record)), true;
 }

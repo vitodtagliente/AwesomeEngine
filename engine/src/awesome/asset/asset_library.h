@@ -2,6 +2,7 @@
 #pragma once
 
 #include <filesystem>
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -10,35 +11,15 @@
 #include <awesome/core/singleton.h>
 
 #include "asset.h"
+#include "asset_database.h"
+#include "asset_type.h"
 
-#include "asset_library_generated.h"
-
-CLASS()
-struct AssetRecord : public Type
+struct AssetHandler
 {
-	PROPERTY() uuid id;
-	PROPERTY() std::filesystem::path path;
-	PROPERTY() std::string type;
-
-	GENERATED_BODY()
-};
-
-CLASS()
-struct AssetDatabase : public Type
-{
-	bool erase(const uuid& id);
-	bool exists(const uuid& id) const;
-	bool exists(const std::filesystem::path& path) const;
-	AssetRecord* const find(const uuid& id) const;
-	AssetRecord* const find(const std::filesystem::path& path) const;
-	bool insert(const uuid& id, const std::filesystem::path& path, const std::string& type);
-
-	bool dirty{ false };
-	PROPERTY() std::vector<std::unique_ptr<AssetRecord>> records;
-
-	static constexpr char* const Filename = "assets.json";
-
-	GENERATED_BODY()
+	std::function<AssetPtr()> create;
+	std::vector<std::string> extensions;
+	std::string name;
+	int type{ AssetType_Invalid };
 };
 
 class AssetLibrary : public Singleton<AssetLibrary>
@@ -47,10 +28,11 @@ public:
 	AssetLibrary() = default;
 	~AssetLibrary() = default;
 
-	void init(const std::filesystem::path path);
-	void flush();
+	inline const std::vector<AssetHandler>& handlers() const { return m_handlers; }
+	inline const std::filesystem::path& path() const { return m_path; }
 
-	inline const std::filesystem::path& getDirectory() const { return m_directory; }
+	void add(const AssetHandler& handler);
+	void init(const std::filesystem::path& path);
 
 	AssetPtr find(const uuid& id);
 	template <typename T>
@@ -64,20 +46,22 @@ public:
 
 	AssetDatabase database;
 
-private:	
+private:
 	struct Slot
 	{
 		Slot(const std::weak_ptr<Asset>& asset)
 			: asset(asset)
 		{}
 
-		inline bool isExpired() const { return asset.expired(); }
+		inline bool expired() const { return asset.expired(); }
 
 		std::weak_ptr<Asset> asset;
 	};
 
-	std::shared_ptr<Asset> create(const std::filesystem::path& path);
+	const AssetHandler* const findHandler(const std::filesystem::path& path) const;
+	std::shared_ptr<Asset> create(const AssetHandler& handler, const AssetRecord& record);
 
 	std::map<uuid, Slot> m_cache;
-	std::filesystem::path m_directory;
+	std::vector<AssetHandler> m_handlers;
+	std::filesystem::path m_path;
 };

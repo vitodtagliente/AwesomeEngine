@@ -6,12 +6,11 @@
 #include <awesome/awesome.h>
 
 #include "game.h"
-#include "windows/game_settings_window.h"
 
 int main()
 {
-	Application& app = Application::instance();
-	app.init({ new Game() });
-	const int result = app.run();
+	Engine& engine = Engine::instance();
+	engine.init({ new Game() });
+	const int result = engine.run();
 	return result;
 }

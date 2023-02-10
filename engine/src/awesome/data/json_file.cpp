@@ -1,26 +1,10 @@
 #include "json_file.h"
 
-#include <awesome/core/serialization.h>
 #include "text_file.h"
 
 void JsonFile::save(const json::value& data, const std::filesystem::path& path)
 {
 	TextFile::save(json::Serializer::to_string(data), path);
-}
-
-void JsonFile::save(const Type& type, const std::filesystem::path& path)
-{
-	save(Serializer::serialize(type), path);
-}
-
-void JsonFile::save(std::shared_ptr<Type>& type, const std::filesystem::path& path)
-{
-	save(Serializer::serialize(type), path);
-}
-
-void JsonFile::save(std::unique_ptr<Type>& type, const std::filesystem::path& path)
-{
-	save(Serializer::serialize(type), path);
 }
 
 bool JsonFile::load(const std::filesystem::path& path, json::value& data)
@@ -32,46 +16,6 @@ bool JsonFile::load(const std::filesystem::path& path, json::value& data)
 		{
 			return data = json::Deserializer::parse(content), true;
 		}		
-	}
-	return false;
-}
-
-bool JsonFile::load(const std::filesystem::path& path, Type& type)
-{
-	json::value data;
-	if (load(path, data))
-	{
-		return Deserializer::deserialize(data, type);
-	}
-	return false;
-}
-
-bool JsonFile::load(const std::filesystem::path& path, Type** type, const std::string& typeName)
-{
-	json::value data;
-	if (load(path, data))
-	{
-		return Deserializer::deserialize(data, type, typeName);
-	}
-	return false;
-}
-
-bool JsonFile::load(const std::filesystem::path& path, std::shared_ptr<Type>& type)
-{
-	json::value data;
-	if (load(path, data))
-	{
-		return Deserializer::deserialize(data, type);
-	}
-	return false;
-}
-
-bool JsonFile::load(const std::filesystem::path& path, std::unique_ptr<Type>& type)
-{
-	json::value data;
-	if (load(path, data))
-	{
-		return Deserializer::deserialize(data, type);
 	}
 	return false;
 }
