@@ -26,7 +26,7 @@ struct Asset
 	bool operator!= (const Asset& other) const;
 
 	virtual bool load(const std::filesystem::path&) = 0;
-	virtual bool save(const std::filesystem::path&) = 0;
+	virtual bool save(const std::filesystem::path&) const = 0;
 	
 	uuid id;
 	std::filesystem::path path;
@@ -35,6 +35,7 @@ struct Asset
 	// events
 	std::function<void()> onLoad;
 
+	static std::shared_ptr<Asset> create(int type);
 	bool static isSupported(const std::filesystem::path& path);
 	bool static isSupported(const std::filesystem::path& path, int& type);
 
