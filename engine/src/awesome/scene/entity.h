@@ -4,15 +4,11 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
 #include "component.h"
 
-#include "entity_generated.h"
-
-CLASS(Type = Entity)
-class Entity : public Type
+class Entity
 {
 public:
 	enum class State
@@ -126,21 +122,19 @@ public:
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
 
-	PROPERTY() std::string name;
-	PROPERTY() bool persistent{ false };
-	PROPERTY() bool replicate{ false };
-	PROPERTY() std::string tag;
-	PROPERTY() bool transient{ false };
-
-	GENERATED_BODY()
+	std::string name;
+	bool persistent{ false };
+	bool replicate{ false };
+	std::string tag;
+	bool transient{ false };
 
 private:
 	void prepareToDestroy();
 	void prepareToSpawn();
 
-	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
-	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
-	PROPERTY() uuid m_id;
+	std::vector<std::unique_ptr<Entity>> m_children;
+	std::vector<std::unique_ptr<Component>> m_components;
+	uuid m_id;
 	Entity* m_parent{ nullptr };
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	State m_state{ State::PendingSpawn };
