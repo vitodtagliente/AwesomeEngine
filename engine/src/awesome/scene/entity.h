@@ -31,11 +31,11 @@ public:
 	bool operator== (const Entity& other) const;
 	bool operator!= (const Entity& other) const;
 
-	inline const std::vector<std::unique_ptr<Entity>>& getChildren() const { return m_children; }
-	inline const std::vector<std::unique_ptr<Component>>& getComponents() const { return m_components; }
-	inline const uuid& getId() const { return m_id; }
-	inline Entity* const getParent() const { return m_parent; }
-	inline State getState() const { return m_state; }
+	inline const std::vector<std::unique_ptr<Entity>>& children() const { return m_children; }
+	inline const std::vector<std::unique_ptr<Component>>& components() const { return m_components; }
+	inline const uuid& id() const { return m_id; }
+	inline Entity* const parent() const { return m_parent; }
+	inline State state() const { return m_state; }
 	inline bool hasChildren() const { return m_children.empty(); }
 	inline bool hasParent() const { return m_parent != nullptr; }
 

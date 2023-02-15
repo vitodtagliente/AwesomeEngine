@@ -28,7 +28,7 @@ void Entity::update(const double deltaTime)
 		m_children.end(),
 		[](const std::unique_ptr<Entity>& child) -> bool
 		{
-			return child->getState() == State::PendingDestroy;
+			return child->m_state == State::PendingDestroy;
 		}
 		), m_children.end()
 	);
@@ -79,7 +79,7 @@ Entity* const Entity::findChildById(const uuid& childId) const
 {
 	for (const auto& child : m_children)
 	{
-		if (child->getId() == childId)
+		if (child->m_id == childId)
 		{
 			return child.get();
 		}
@@ -131,7 +131,7 @@ Entity* const Entity::addChild()
 
 bool Entity::removeChild(Entity* const entity)
 {
-	return removeChild(entity->getId());
+	return removeChild(entity->m_id);
 }
 
 bool Entity::removeChild(const uuid& id)
@@ -139,7 +139,7 @@ bool Entity::removeChild(const uuid& id)
 	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		const auto& child = *it;
-		if (child->getId() == id)
+		if (child->m_id == id)
 		{
 			if (child->persistent) return false;
 			return child->m_state = State::PendingDestroy, true;
