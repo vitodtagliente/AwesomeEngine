@@ -23,6 +23,22 @@ void Entity::update(const double deltaTime)
 	}
 	if (m_state == State::PendingDestroy) return;
 
+	m_children.erase(std::remove_if(
+		m_children.begin(),
+		m_children.end(),
+		[](const std::unique_ptr<Entity>& child) -> bool
+		{
+			return child->getState() == State::PendingDestroy;
+		}
+		), m_children.end()
+	);
+
+	for (auto& entityToSpawn : m_pendingSpawnEntities)
+	{
+		m_children.push_back(std::move(entityToSpawn));
+	}
+	m_pendingSpawnEntities.clear();
+
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
 		const auto& component = *it;
@@ -34,17 +50,7 @@ void Entity::update(const double deltaTime)
 
 	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
-		const auto& child = *it;
-		if (child->m_state == State::Alive)
-		{
-			child->update(deltaTime);
-		}
-		else if (child->m_state == State::PendingDestroy)
-		{
-			child->prepareToDestroy();
-			m_children.erase(it);
-			break;
-		}
+		(*it)->update(deltaTime);
 	}
 }
 
@@ -119,7 +125,7 @@ Entity* const Entity::addChild()
 	std::unique_ptr<Entity> child = std::make_unique<Entity>();
 	child->m_parent = this;
 	child->prepareToSpawn();
-	m_children.push_back(std::move(child));
+	m_pendingSpawnEntities.push_back(std::move(child));
 	return m_children.back().get();
 }
 
@@ -135,6 +141,7 @@ bool Entity::removeChild(const uuid& id)
 		const auto& child = *it;
 		if (child->getId() == id)
 		{
+			if (child->persistent) return false;
 			return child->m_state = State::PendingDestroy, true;
 		}
 

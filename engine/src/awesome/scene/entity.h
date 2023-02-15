@@ -12,7 +12,7 @@
 #include "entity_generated.h"
 
 CLASS(Type = Entity)
-class Entity final : public Type
+class Entity : public Type
 {
 public:
 	enum class State
@@ -142,5 +142,6 @@ private:
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	PROPERTY() uuid m_id;
 	Entity* m_parent{ nullptr };
+	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	State m_state{ State::PendingSpawn };
 };
