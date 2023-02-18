@@ -21,7 +21,7 @@ public:
 
 	Entity() = default;
 	Entity(const uuid& id);
-	Entity(const Entity& other) = delete;
+	Entity(const Entity& other);
 	virtual ~Entity() = default;
 
 	Entity& operator= (const Entity& other) = delete;
@@ -45,6 +45,7 @@ public:
 	Entity* const findChildByTag(const std::string& tag) const;
 
 	Entity* const addChild();
+	Entity* const addChild(std::unique_ptr<Entity> child);
 	bool removeChild(Entity* const entity);
 	bool removeChild(const uuid& id);
 

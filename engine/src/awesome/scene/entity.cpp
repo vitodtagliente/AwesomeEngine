@@ -5,6 +5,25 @@ Entity::Entity(const uuid& id)
 {
 }
 
+Entity::Entity(const Entity& other)
+	: name(other.name)
+	, persistent(other.persistent)
+	, replicate(other.replicate)
+	, tag(other.tag)
+	, transform(other.transform)
+	, transient(other.transient)
+{
+	for (const auto& other_component : other.m_components)
+	{
+
+	}
+
+	for (const auto& other_child : other.m_children)
+	{
+		addChild(std::make_unique<Entity>(*other_child));
+	}
+}
+
 bool Entity::operator==(const Entity& other) const
 {
 	return m_id == other.m_id;
@@ -128,6 +147,19 @@ Entity* const Entity::addChild()
 	child->m_parent = this;
 	child->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(std::move(child));
+	return m_children.back().get();
+}
+
+Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
+{
+	if (entity == nullptr)
+	{
+		return nullptr;
+	}
+
+	entity->m_parent = this;
+	entity->prepareToSpawn();
+	m_pendingSpawnEntities.push_back(std::move(entity));
 	return m_children.back().get();
 }
 
