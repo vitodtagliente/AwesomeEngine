@@ -152,10 +152,7 @@ Entity* const Entity::addChild()
 
 Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
 {
-	if (entity == nullptr)
-	{
-		return nullptr;
-	}
+	if (entity == nullptr) return nullptr;
 
 	entity->m_parent = this;
 	entity->prepareToSpawn();

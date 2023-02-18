@@ -15,6 +15,17 @@ template <>
 json::value serialize(const Entity& entity);
 
 template <>
+json::value serialize(const std::vector<Entity>& list)
+{
+	json::value entities = json::array();
+	for (const auto& element : list)
+	{
+		entities.push_back(serialize(element));
+	}
+	return entities;
+}
+
+template <>
 json::value serialize(const std::vector<std::unique_ptr<Entity>>& list)
 {
 	json::value entities = json::array();

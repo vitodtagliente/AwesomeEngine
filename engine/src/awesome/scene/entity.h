@@ -112,12 +112,14 @@ public:
 
 	Component* const addComponent(std::unique_ptr<Component> component)
 	{
-		m_components.push_back(std::move(component));
+		if (component == nullptr) return nullptr;
+
 		if (m_state == State::Alive)
 		{
 			component->attach(this);
 			component->init();
 		}
+		m_components.push_back(std::move(component));
 		return m_components.back().get();
 	}
 
