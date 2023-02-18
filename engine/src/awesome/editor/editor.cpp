@@ -15,6 +15,10 @@
 #include <awesome/scene/entity.h>
 
 #include "color_scheme.h"
+#include "layout.h"
+
+#include "windows/asset_inspector_window.h"
+#include "windows/entity_inspector_window.h"
 
 Editor* Editor::s_instance{ nullptr };
 
@@ -80,11 +84,11 @@ void Editor::render()
 	{
 		if (!window->visible) continue;
 
-		// Layout::begin(window->getTitle());
-		// window->setFocus(Layout::isWindowFocused());
-		// window->setIsHovered(Layout::isWindowHovered());
-		// window->render();
-		// Layout::end();
+		Layout::begin(window->getTitle());
+		window->setFocus(Layout::isWindowFocused());
+		window->setIsHovered(Layout::isWindowHovered());
+		window->render();
+		Layout::end();
 	}
 }
 
@@ -109,5 +113,6 @@ void Editor::update(const double deltaTime)
 
 void Editor::registerWindows()
 {
-	
+	registerWindow<AssetInspectorWindow>();
+	registerWindow<EntityInspectorWindow>();
 }
