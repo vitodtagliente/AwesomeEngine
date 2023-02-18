@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <awesome/core/uuid.h>
+#include <awesome/math/transform.h>
 
 #include "component.h"
 
@@ -126,6 +127,7 @@ public:
 	bool persistent{ false };
 	bool replicate{ false };
 	std::string tag;
+	math::transform transform;
 	bool transient{ false };
 
 private:

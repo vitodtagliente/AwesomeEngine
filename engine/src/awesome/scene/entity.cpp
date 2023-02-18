@@ -48,6 +48,8 @@ void Entity::update(const double deltaTime)
 		}
 	}
 
+	transform.update();
+
 	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
 		(*it)->update(deltaTime);
