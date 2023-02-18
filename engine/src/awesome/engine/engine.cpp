@@ -7,6 +7,7 @@
 #include <awesome/core/timer.h>
 
 #include <awesome/editor/editor.h>
+#include <awesome/graphics/graphics.h>
 
 void Engine::init(const std::initializer_list<EngineModule*>& modules)
 {
@@ -163,14 +164,12 @@ void Engine::initSettings()
 
 void Engine::registerDefaultModules()
 {
-	/*
 	if (settings.mode != Mode::Server)
 	{
-		registerModule<Audio>();
+		// registerModule<Audio>();
 		registerModule<Graphics>();
-		registerModule<UI>();
+		// registerModule<UI>();
 	}
-	*/
 
 	if (settings.mode == Mode::Editor)
 	{
