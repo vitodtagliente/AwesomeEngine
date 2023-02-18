@@ -110,15 +110,15 @@ public:
 		return component;
 	}
 
-	Component* const addComponent(Component* const component)
+	Component* const addComponent(std::unique_ptr<Component> component)
 	{
-		m_components.push_back(std::unique_ptr<Component>(component));
+		m_components.push_back(std::move(component));
 		if (m_state == State::Alive)
 		{
 			component->attach(this);
 			component->init();
 		}
-		return component;
+		return m_components.back().get();
 	}
 
 	void removeComponent(Component* const component);

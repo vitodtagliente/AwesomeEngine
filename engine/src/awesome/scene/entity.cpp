@@ -15,7 +15,7 @@ Entity::Entity(const Entity& other)
 {
 	for (const auto& other_component : other.m_components)
 	{
-
+		addComponent(std::make_unique<Component>(*other_component));
 	}
 
 	for (const auto& other_child : other.m_children)

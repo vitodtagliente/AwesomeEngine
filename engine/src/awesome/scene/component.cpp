@@ -2,6 +2,12 @@
 
 #include <awesome/scene/entity.h>
 
+Component::Component(const Component& other)
+	: enabled(other.enabled)
+{
+
+}
+
 bool Component::operator==(const Component& other) const
 {
 	return m_id == other.m_id;

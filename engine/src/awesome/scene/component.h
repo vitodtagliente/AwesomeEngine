@@ -13,7 +13,7 @@ class Component : public Type
 {
 public:
 	Component() = default;
-	Component(const Component& other) = delete;
+	Component(const Component& other);
 	virtual ~Component() = default;
 
 	Component& operator= (const Component& other) = delete;
