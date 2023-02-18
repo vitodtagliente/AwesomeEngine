@@ -1,8 +1,8 @@
 #include "game.h"
 
-void Game::startup()
+bool Game::startup()
 {
-
+	return true;
 }
 
 void Game::shutdown()

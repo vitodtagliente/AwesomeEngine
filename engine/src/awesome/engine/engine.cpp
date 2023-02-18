@@ -6,6 +6,8 @@
 #include <awesome/engine/time.h>
 #include <awesome/core/timer.h>
 
+#include <awesome/editor/editor.h>
+
 void Engine::init(const std::initializer_list<EngineModule*>& modules)
 {
 	for (EngineModule* const module : modules)
@@ -168,12 +170,12 @@ void Engine::registerDefaultModules()
 		registerModule<Graphics>();
 		registerModule<UI>();
 	}
+	*/
 
 	if (settings.mode == Mode::Editor)
 	{
 		registerModule<Editor>();
 	}
-	*/
 }
 
 void Engine::Stats::clear()

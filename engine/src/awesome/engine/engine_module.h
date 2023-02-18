@@ -7,7 +7,7 @@ public:
 	EngineModule() = default;
 	virtual ~EngineModule() = default;
 
-	virtual void startup() {}
+	virtual bool startup() { return true; }
 	virtual void shutdown() {}
 	virtual void update(double /*deltaTime*/) {}
 	virtual void preRendering() {}

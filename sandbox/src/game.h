@@ -6,6 +6,6 @@
 class Game : public EngineModule
 {
 public:
-	void startup() override;
+	bool startup() override;
 	void shutdown() override;
 };
