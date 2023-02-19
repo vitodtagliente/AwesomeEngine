@@ -11,11 +11,6 @@
 std::vector<std::string> Layout::s_context;
 std::map<std::string, void*> Layout::s_keyCache{};
 
-void Layout::begin(const std::string& name)
-{
-	ImGui::Begin(id(name).c_str());
-}
-
 void Layout::beginChild(const std::string& name)
 {
 	ImGui::BeginChild(name.c_str(), ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
@@ -69,11 +64,6 @@ bool Layout::button(const std::string& name, const graphics::Color& color, const
 bool Layout::collapsingHeader(const std::string& name)
 {
 	return ImGui::CollapsingHeader(id(name).c_str());
-}
-
-void Layout::end()
-{
-	ImGui::End();
 }
 
 void Layout::endChild()
@@ -230,16 +220,6 @@ bool Layout::isPopupOpen(const std::string& name)
 bool Layout::isTreeNodeClicked()
 {
 	return ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen();
-}
-
-bool Layout::isWindowFocused()
-{
-	return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
-}
-
-bool Layout::isWindowHovered()
-{
-	return ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows);
 }
 
 void Layout::newLine()

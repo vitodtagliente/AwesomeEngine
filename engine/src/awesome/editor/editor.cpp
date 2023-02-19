@@ -15,7 +15,7 @@
 #include <awesome/scene/entity.h>
 
 #include "color_scheme.h"
-#include "layout.h"
+#include "widgets/window_layout.h"
 
 #include "windows/asset_inspector_window.h"
 #include "windows/content_browser_window.h"
@@ -86,11 +86,11 @@ void Editor::render()
 	{
 		if (!window->visible) continue;
 
-		Layout::begin(window->getTitle());
-		window->setFocus(Layout::isWindowFocused());
-		window->setIsHovered(Layout::isWindowHovered());
+		WindowLayout::begin(window->getTitle());
+		window->setFocus(WindowLayout::isFocused());
+		window->setIsHovered(WindowLayout::isHovered());
 		window->render();
-		Layout::end();
+		WindowLayout::end();
 	}
 }
 

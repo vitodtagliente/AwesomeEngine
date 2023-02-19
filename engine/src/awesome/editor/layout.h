@@ -21,7 +21,6 @@ class Layout
 public:
 	Layout() = delete;
 
-	static void begin(const std::string& name);
 	static void beginChild(const std::string& name);
 	static void beginChild(const std::string& name, float width, float height);
 	static void beginContext(const std::string context);
@@ -31,7 +30,6 @@ public:
 	static bool button(const std::string& name, const graphics::Color& color);
 	static bool button(const std::string& name, const graphics::Color& color, int width, int height);
 	static bool collapsingHeader(const std::string& name);
-	static void end();
 	static void endChild();
 	static void endCombo();
 	static void endContext();
@@ -60,8 +58,6 @@ public:
 	static bool isMouseClicked();
 	static bool isPopupOpen(const std::string& name);
 	static bool isTreeNodeClicked();
-	static bool isWindowFocused();
-	static bool isWindowHovered();
 	static void newLine();
 	static void rename(std::string& value);
 	static void sameLine();
