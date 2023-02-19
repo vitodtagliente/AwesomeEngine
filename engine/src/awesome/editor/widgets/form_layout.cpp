@@ -13,6 +13,21 @@ void FormLayout::begin(const char* const name)
 	s_context.push_back(name);
 }
 
+void FormLayout::beginChild(const char* const name)
+{
+	ImGui::BeginChild(name, ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+}
+
+void FormLayout::beginChild(const char* const name, const float width, const float height)
+{
+	ImGui::BeginChild(name, ImVec2(width, height), false, ImGuiWindowFlags_NoDecoration);
+}
+
+bool FormLayout::beginCombo(const char* const name, const char* const value)
+{
+	return ImGui::BeginCombo(id(name).c_str(), value);
+}
+
 bool FormLayout::button(const char* const name)
 {
 	return ImGui::Button(name);
@@ -43,9 +58,24 @@ bool FormLayout::button(const char* const name, const graphics::Color& color, co
 	return result;
 }
 
+bool FormLayout::collapsingHeader(const char* const name)
+{
+	return ImGui::CollapsingHeader(id(name).c_str());
+}
+
 void FormLayout::end()
 {
 	s_context.pop_back();
+}
+
+void FormLayout::endChild()
+{
+	ImGui::EndChild();
+}
+
+void FormLayout::endCombo()
+{
+	ImGui::EndCombo();
 }
 
 void FormLayout::hint(const std::string& text)

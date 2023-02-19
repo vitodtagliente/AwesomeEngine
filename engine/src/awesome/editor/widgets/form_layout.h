@@ -20,11 +20,17 @@ public:
 	FormLayout() = delete;
 
 	static void begin(const char* const name);
+	static void beginChild(const char* const name);
+	static void beginChild(const char* const name, float width, float height);
+	static bool beginCombo(const char* const name, const char* const value);
 	static bool button(const char* const name);
 	static bool button(const char* const name, int width, int height);
 	static bool button(const char* const name, const graphics::Color& color);
 	static bool button(const char* const name, const graphics::Color& color, int width, int height);
+	static bool collapsingHeader(const char* const name);
 	static void end();
+	static void endChild();
+	static void endCombo();
 	static void hint(const std::string& text);
 	static void image(const ImageAssetPtr& image);
 	static void image(const ImageAssetPtr& image, float width, float height);

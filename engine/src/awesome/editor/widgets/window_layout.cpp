@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-void WindowLayout::begin(char* const name)
+void WindowLayout::begin(const char* const name)
 {
 	ImGui::Begin(name);
 }
