@@ -1,33 +1,34 @@
 #include "entity_layout.h"
 
-#include <awesome/editor/layout.h>
 #include <awesome/graphics/color.h>
 #include <awesome/scene/entity.h>
 
+#include "form_layout.h"
+
 void EntityLayout::input(Entity& entity)
 {
-	Layout::beginContext("entity");
-	Layout::button(entity.tag, graphics::Color(1.f, .6f, .6f));
-	Layout::sameLine();
-	Layout::button(static_cast<std::string>(entity.id()), graphics::Color(0.f, .6f, .6f));
-	Layout::input("Name", entity.name);
-	Layout::input("Tag", entity.tag);
-	Layout::separator();
-	Layout::input("Position", entity.transform.position);
-	Layout::input("Rotation", entity.transform.rotation);
-	Layout::input("Scale", entity.transform.scale);
-	Layout::input("Persistent", entity.persistent);
-	Layout::hint("If true, the entity is not destroyed during the loading of a new scene");
-	Layout::sameLine();
-	Layout::input("Transient", entity.transient);
-	Layout::hint("If true, the entity cannot be saved as part of the scene serialization");
-	Layout::input("Replicate", entity.replicate);
-	Layout::hint("If true, the entity can be replicated in multiplayer games");
-	Layout::input("Static", entity.transform.isStatic);
-	Layout::hint("If true, the entity cannot move. It helps optimizing the transform's computation");
-	Layout::endContext();
+	FormLayout::begin("entity");
+	FormLayout::button(entity.tag.c_str(), graphics::Color(1.f, .6f, .6f));
+	FormLayout::sameLine();
+	FormLayout::button(static_cast<std::string>(entity.id()).c_str(), graphics::Color(0.f, .6f, .6f));
+	FormLayout::input("Name", entity.name);
+	FormLayout::input("Tag", entity.tag);
+	FormLayout::separator();
+	FormLayout::input("Position", entity.transform.position);
+	FormLayout::input("Rotation", entity.transform.rotation);
+	FormLayout::input("Scale", entity.transform.scale);
+	FormLayout::input("Persistent", entity.persistent);
+	FormLayout::hint("If true, the entity is not destroyed during the loading of a new scene");
+	FormLayout::sameLine();
+	FormLayout::input("Transient", entity.transient);
+	FormLayout::hint("If true, the entity cannot be saved as part of the scene serialization");
+	FormLayout::input("Replicate", entity.replicate);
+	FormLayout::hint("If true, the entity can be replicated in multiplayer games");
+	FormLayout::input("Static", entity.transform.isStatic);
+	FormLayout::hint("If true, the entity cannot move. It helps optimizing the transform's computation");
+	FormLayout::end();
 
-	Layout::separator();
+	FormLayout::separator();
 
 	/*
 	if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
