@@ -1,15 +1,12 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
-
-#include "component_generated.h"
+#include <awesome/encoding/json.h>
 
 class Entity;
 
-CLASS()
-class Component : public Type
+class Component
 {
 public:
 	Component() = default;
@@ -27,15 +24,19 @@ public:
 	void attach(Entity* const entity);
 	void detach();
 
+	// editor
+	virtual void inspect();
+	// serialization
+	virtual json::value serialize() const;
+	virtual bool deserialize(const json::value& data);
+
 	virtual void init() {}
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 
-	PROPERTY() bool enabled{ true };
-
-	GENERATED_BODY()
+	bool enabled{ true };
 
 private:
-	PROPERTY() uuid m_id;
+	uuid m_id;
 	Entity* m_owner{ nullptr };
 };

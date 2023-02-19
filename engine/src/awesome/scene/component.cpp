@@ -28,3 +28,17 @@ void Component::detach()
 	uninit();
 	m_owner = nullptr;
 }
+
+void Component::inspect()
+{
+}
+
+json::value Component::serialize() const
+{
+	return json::value();
+}
+
+bool Component::deserialize(const json::value&)
+{
+	return true;
+}

@@ -1,5 +1,6 @@
 #include "sprite_renderer_component.h"
 
+#include <awesome/editor/widgets/form_layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -30,4 +31,17 @@ void SpriteRendererComponent::update(const double /*deltaTime*/)
 	{
 		scale.y = -scale.y;
 	}
+}
+
+void SpriteRendererComponent::inspect()
+{
+	FormLayout::input("color", color);
+	FormLayout::input("flipX", flipX);
+	FormLayout::input("flipY", flipY);
+	FormLayout::input("rect", rect);
+}
+
+json::value SpriteRendererComponent::serialize() const
+{
+	return json::value();
 }

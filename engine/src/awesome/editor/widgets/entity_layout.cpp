@@ -1,5 +1,9 @@
 #include "entity_layout.h"
 
+#include <memory>
+
+#include <awesome/components/component_library.h>
+#include <awesome/editor/text_icon.h>
 #include <awesome/graphics/color.h>
 #include <awesome/scene/entity.h>
 
@@ -30,54 +34,52 @@ void EntityLayout::input(Entity& entity)
 
 	FormLayout::separator();
 
-	/*
-	if (Layout::beginCombo(TextIcon::plus(" Add Component"), ""))
-	{
-		const std::vector<TypeDefinition>& types = TypeFactory::list("Type", "Component");
-		for (const TypeDefinition& type : types)
+	if (FormLayout::beginCombo(TextIcon::plus(" Add Component").c_str(), ""))
+	{		
+		ComponentLibrary& library = ComponentLibrary::instance();
+		for (const ComponentRecord& record : library.records())
 		{
-			const auto& it = std::find_if(entity.getComponents().begin(), entity.getComponents().end(), [&type](const std::unique_ptr<Component>& component) . bool
-				{
-					return component.getTypeName() == type.name;
-				}
-			);
+			// const auto& it = std::find_if(entity.getComponents().begin(), entity.getComponents().end(), [&type](const std::unique_ptr<Component>& component) . bool
+			// 	{
+			// 		return component.getTypeName() == type.name;
+			// 	}
+			// );
+			// 
+			// // add one component only per type
+			// if (it != entity.getComponents().end())
+			// {
+			// 	continue;
+			// }
 
-			// add one component only per type
-			if (it != entity.getComponents().end())
+			if (FormLayout::selectable(record.name.c_str(), false))
 			{
-				continue;
-			}
-
-			if (Layout::selectable(type.name.c_str(), false))
-			{
-				Component* const component = TypeFactory::instantiate<Component>(type);
+				std::unique_ptr<Component> component(record.instantiate());
 				if (component)
 				{
-					entity.addComponent(component);
-					Layout::endCombo();
-					return; // force the refresh of the inspector
+					entity.addComponent(std::move(component));
+					FormLayout::endCombo();
+					return;
 				}
 			}
 		}
-		Layout::endCombo();
+		FormLayout::endCombo();
 	}
-	*/
 
 	for (const auto& component : entity.components())
 	{
-		// const std::string& componentName = component.getTypeName();
-		// Layout::beginContext(componentName);
-		// if (Layout::collapsingHeader(componentName))
-		// {
-		// 	component.inspect();
-		// 	Layout::separator();
-		// 	if (Layout::button(TextIcon::minus(" Remove Component")))
-		// 	{
-		// 		entity.removeComponent(component.getId());
-		// 		Layout::endContext();
-		// 		return; // force the refresh of the inspector
-		// 	}
-		// }
-		// Layout::endContext();
+		const std::string componentName = "ff";
+		FormLayout::begin(componentName.c_str());
+		if (FormLayout::collapsingHeader(componentName.c_str()))
+		{
+			component->inspect();
+			FormLayout::separator();
+			if (FormLayout::button(TextIcon::minus(" Remove Component").c_str()))
+			{
+				entity.removeComponent(component->getId());
+				FormLayout::end();
+				return; // force the refresh of the inspector
+			}
+		}
+		FormLayout::end();
 	}
 }
