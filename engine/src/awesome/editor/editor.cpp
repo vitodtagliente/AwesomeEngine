@@ -18,6 +18,7 @@
 #include "layout.h"
 
 #include "windows/asset_inspector_window.h"
+#include "windows/content_browser_window.h"
 #include "windows/entity_inspector_window.h"
 
 Editor* Editor::s_instance{ nullptr };
@@ -114,5 +115,6 @@ void Editor::update(const double deltaTime)
 void Editor::registerWindows()
 {
 	registerWindow<AssetInspectorWindow>();
+	registerWindow<ContentBrowserWindow>();
 	registerWindow<EntityInspectorWindow>();
 }

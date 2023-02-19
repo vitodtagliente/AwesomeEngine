@@ -1,6 +1,7 @@
 #include <iostream>
 #include "engine.h"
 
+#include <awesome/asset/asset_library.h>
 #include <awesome/engine/canvas.h>
 #include <awesome/engine/input.h>
 #include <awesome/engine/time.h>
@@ -123,6 +124,7 @@ void Engine::exit()
 
 void Engine::initSettings()
 {
+	AssetLibrary::instance().init(std::filesystem::current_path() / "../assets");
 	/*
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / ApplicationSettings::filename;
