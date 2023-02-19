@@ -33,7 +33,7 @@ public:
 	inline const uuid& id() const { return m_id; }
 	inline Entity* const parent() const { return m_parent; }
 	inline State state() const { return m_state; }
-	inline bool hasChildren() const { return m_children.empty(); }
+	inline bool hasChildren() const { return !m_children.empty(); }
 	inline bool hasParent() const { return m_parent != nullptr; }
 
 	void queue_destroy();

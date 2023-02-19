@@ -10,6 +10,7 @@
 
 #include <awesome/asset/image_asset.h>
 #include <awesome/engine/keycode.h>
+#include <awesome/graphics/color.h>
 #include <awesome/math/transform.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
@@ -27,6 +28,8 @@ public:
 	static bool beginTreeNode(const std::string& name, bool selected);
 	static bool button(const std::string& name);
 	static bool button(const std::string& name, int width, int height);
+	static bool button(const std::string& name, const graphics::Color& color);
+	static bool button(const std::string& name, const graphics::Color& color, int width, int height);
 	static bool collapsingHeader(const std::string& name);
 	static void end();
 	static void endChild();

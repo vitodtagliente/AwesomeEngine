@@ -8,7 +8,8 @@
 #include <awesome/scene/scene_graph.h>
 
 SceneWindow::SceneWindow()
-	: m_editorState(EditorState::instance())
+	: Window()
+	, m_editorState(EditorState::instance())
 {
 }
 
@@ -153,20 +154,31 @@ void SceneWindow::deleteEntity(Entity* const entity)
 void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntity)
 {
 	const std::string name = entity->name + "##entity" + static_cast<std::string>(entity->id());
-	const bool open = Layout::beginTreeNode(name, entity == selectedEntity);
-	if (Layout::isTreeNodeClicked())
+	if (entity->hasChildren())
 	{
-		m_state = NavigationState::Navigating;
-		selectEntity(entity);
-	}
-
-	if(open)
-	{
-		for (const auto& child : entity->children())
+		const bool open = Layout::beginTreeNode(name, entity == selectedEntity);
+		if (Layout::isTreeNodeClicked())
 		{
-			renderEntity(child.get(), selectedEntity);
+			m_state = NavigationState::Navigating;
+			selectEntity(entity);
 		}
-		Layout::endTreeNode();
+
+		if (open)
+		{
+			for (const auto& child : entity->children())
+			{
+				renderEntity(child.get(), selectedEntity);
+			}
+			Layout::endTreeNode();
+		}
+	}
+	else
+	{
+		if (Layout::selectable(name, entity == selectedEntity))
+		{
+			m_state = NavigationState::Navigating;
+			selectEntity(entity);
+		}
 	}
 }
 

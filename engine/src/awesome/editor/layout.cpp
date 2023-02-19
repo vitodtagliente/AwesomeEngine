@@ -46,6 +46,26 @@ bool Layout::button(const std::string& name, const int width, const int height)
 	return ImGui::Button(id(name).c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
 }
 
+bool Layout::button(const std::string& name, const graphics::Color& color)
+{
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(color.red, color.green, color.blue, color.alpha));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(color.red, color.green, color.blue + 0.1f, color.alpha + 0.1f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(color.red, color.green, color.blue + 0.2f, color.alpha + 0.2f));
+	const bool result = ImGui::Button(id(name).c_str());
+	ImGui::PopStyleColor(3);
+	return result;
+}
+
+bool Layout::button(const std::string& name, const graphics::Color& color, const int width, const int height)
+{
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(color.red, color.green, color.blue, color.alpha));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(color.red, color.green, color.blue + 0.1f, color.alpha + 0.1f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(color.red, color.green, color.blue + 0.2f, color.alpha + 0.2f));
+	const bool result = ImGui::Button(id(name).c_str(), ImVec2(static_cast<float>(width), static_cast<float>(height)));
+	ImGui::PopStyleColor(3);
+	return result;
+}
+
 bool Layout::collapsingHeader(const std::string& name)
 {
 	return ImGui::CollapsingHeader(id(name).c_str());

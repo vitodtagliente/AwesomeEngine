@@ -6,8 +6,11 @@
 class EntityInspectorWindow : public Window
 {
 public:
-	EntityInspectorWindow() = default;
+	EntityInspectorWindow();
 
 	virtual char* const getTitle() const override;
 	virtual void render() override;
+
+private:
+	class EditorState* m_editorState{ nullptr };
 };
