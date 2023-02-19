@@ -6,6 +6,7 @@
 #include <awesome/engine/input.h>
 #include <awesome/engine/time.h>
 #include <awesome/core/timer.h>
+#include <awesome/scene/scene_graph.h>
 
 #include <awesome/editor/editor.h>
 #include <awesome/graphics/graphics.h>
@@ -24,7 +25,7 @@ int Engine::run()
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
 	Time time;
-	// World& world = World::instance();
+	SceneGraph& scenegraph = SceneGraph::instance();
 
 	if (!canvas.open())
 	{
@@ -76,7 +77,7 @@ int Engine::run()
 		}
 
 		input.update();
-		// world.update(deltaTime);
+		scenegraph.root()->update(deltaTime);
 
 		// rendering
 		{
@@ -97,7 +98,6 @@ int Engine::run()
 		}
 
 		// library.flush();
-		// world.flush();
 		deltaTime = 0.0;
 
 		++m_stats.framerate;

@@ -152,7 +152,7 @@ void SceneWindow::deleteEntity(Entity* const entity)
 
 void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntity)
 {
-	const std::string name = "##entity" + static_cast<std::string>(entity->id());
+	const std::string name = entity->name + "##entity" + static_cast<std::string>(entity->id());
 	const bool open = Layout::beginTreeNode(name, entity == selectedEntity);
 	if (Layout::isTreeNodeClicked())
 	{
