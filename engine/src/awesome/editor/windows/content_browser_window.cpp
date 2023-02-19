@@ -3,7 +3,9 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
-#include <awesome/editor/layout.h>
+#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/widgets/interaction_layout.h>
+#include <awesome/editor/widgets/search_layout.h>
 #include <awesome/editor/text_icon.h>
 
 char* const ContentBrowserWindow::getTitle() const
@@ -21,24 +23,19 @@ void ContentBrowserWindow::render()
 {
 	processInput(m_selectedItem);
 
-	Layout::beginChild("Header", 0.f, 26.f);
-	if (Layout::button(TextIcon::plus()))
+	if (FormLayout::button(TextIcon::plus().c_str()))
 	{
 		addFolder();
 	}
+	FormLayout::sameLine();
+	SearchLayout::input(m_filter);
 
-	Layout::sameLine();
+	FormLayout::separator();
 
-	const std::string previousFilter = m_filter;
-	Layout::input(TextIcon::search(), m_filter);
-	Layout::endChild();
-
-	Layout::separator();
-
-	Layout::beginChild("Content");
+	FormLayout::beginChild("Content");
 	if (m_directory.path != m_root)
 	{
-		if (Layout::selectable("..", false))
+		if (FormLayout::selectable("..", false))
 		{
 			m_state = NavigationState::Navigating;
 			selectFile(m_directory.parent);
@@ -58,7 +55,7 @@ void ContentBrowserWindow::render()
 		const bool isSelected = m_selectedItem == file;
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			Layout::rename(m_tempRename);
+			// Layout::rename(m_tempRename);
 		}
 		else
 		{
@@ -73,14 +70,14 @@ void ContentBrowserWindow::render()
 			const bool isCurrentFileADirectory = std::filesystem::is_directory(file);
 			if (isCurrentFileADirectory && name != "..")
 			{
-				if (Layout::selectable(std::string(TextIcon::folder()) + " " + name, isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
+				if (FormLayout::selectable((std::string(TextIcon::folder()) + " " + name).c_str(), isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = name;
 					selectFile(file);
 				}
 			}
-			else if (Layout::selectable(decorateFile(name), isSelected))
+			else if (FormLayout::selectable(decorateFile(name).c_str(), isSelected))
 			{
 				m_state = NavigationState::Navigating;
 				m_tempRename = name;
@@ -112,7 +109,7 @@ void ContentBrowserWindow::render()
 			}
 		}
 	}
-	Layout::endChild();
+	FormLayout::endChild();
 }
 
 void ContentBrowserWindow::update(const double)
@@ -132,7 +129,7 @@ void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 
 	if (m_state == NavigationState::Renaming)
 	{
-		if (Layout::isKeyPressed(KeyCode::Enter) || Layout::isKeyPressed(KeyCode::Escape))
+		if (InteractionLayout::isKeyPressed(KeyCode::Enter) || InteractionLayout::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameFile(file, m_tempRename);
@@ -140,11 +137,11 @@ void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	}
 	else if (m_state == NavigationState::Navigating)
 	{
-		if (Layout::isKeyPressed(KeyCode::F2))
+		if (InteractionLayout::isKeyPressed(KeyCode::F2))
 		{
 			m_state = NavigationState::Renaming;
 		}
-		else if (Layout::isKeyPressed(KeyCode::Delete))
+		else if (InteractionLayout::isKeyPressed(KeyCode::Delete))
 		{
 			deleteFile(file);
 		}

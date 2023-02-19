@@ -2,8 +2,6 @@
 
 #include <assert.h>
 
-#include "layout.h"
-
 EditorState* EditorState::s_instance{ nullptr };
 
 EditorState::EditorState()
@@ -24,7 +22,6 @@ void EditorState::select(const AssetPtr& asset)
 		m_history.pop();
 	}
 	m_history.push(asset);
-	Layout::clear();
 
 	onSelectedAssetChanged.broadcast(asset);
 }
@@ -34,7 +31,6 @@ void EditorState::select(Entity* const entity)
 	if (selection.entity == entity) return;
 
 	selection.entity = entity;
-	Layout::clear();
 
 	onSelectedEntityChanged.broadcast(entity);
 }

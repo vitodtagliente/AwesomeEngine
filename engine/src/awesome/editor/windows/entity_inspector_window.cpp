@@ -1,9 +1,9 @@
 #include <awesome/editor/windows/entity_inspector_window.h>
 
 #include <awesome/editor/editor_state.h>
-#include <awesome/editor/layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/editor/widgets/entity_layout.h>
+#include <awesome/editor/widgets/form_layout.h>
 #include <awesome/scene/entity.h>
 
 EntityInspectorWindow::EntityInspectorWindow()
@@ -33,9 +33,9 @@ void EntityInspectorWindow::render()
 
 	EntityLayout::input(*entity);
 
-	Layout::separator();
+	FormLayout::separator();
 
-	if (Layout::button(TextIcon::save(" Save Prefab")))
+	if (FormLayout::button(TextIcon::save(" Save Prefab").c_str()))
 	{
 		
 	}
