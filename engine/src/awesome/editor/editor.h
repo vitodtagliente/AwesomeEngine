@@ -8,6 +8,7 @@
 
 #include <awesome/engine/engine_module.h>
 
+#include "editor_state.h"
 #include "window.h"
 
 class Editor : public EngineModule
@@ -31,6 +32,8 @@ public:
 	}
 
 	const std::vector<std::unique_ptr<Window>>& getWindows() const { return m_windows; }
+
+	EditorState state;
 
 private:
 	void registerWindows();
