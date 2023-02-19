@@ -147,7 +147,7 @@ Entity* const Entity::addChild()
 	child->m_parent = this;
 	child->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(std::move(child));
-	return m_children.back().get();
+	return m_pendingSpawnEntities.back().get();
 }
 
 Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
@@ -157,7 +157,7 @@ Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
 	entity->m_parent = this;
 	entity->prepareToSpawn();
 	m_pendingSpawnEntities.push_back(std::move(entity));
-	return m_children.back().get();
+	return m_pendingSpawnEntities.back().get();
 }
 
 bool Entity::removeChild(Entity* const entity)

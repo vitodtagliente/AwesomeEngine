@@ -20,6 +20,7 @@
 #include "windows/asset_inspector_window.h"
 #include "windows/content_browser_window.h"
 #include "windows/entity_inspector_window.h"
+#include "windows/scene_window.h"
 
 Editor* Editor::s_instance{ nullptr };
 
@@ -117,4 +118,5 @@ void Editor::registerWindows()
 	registerWindow<AssetInspectorWindow>();
 	registerWindow<ContentBrowserWindow>();
 	registerWindow<EntityInspectorWindow>();
+	registerWindow<SceneWindow>();
 }
