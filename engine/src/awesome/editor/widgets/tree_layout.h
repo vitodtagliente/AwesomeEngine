@@ -7,4 +7,5 @@ struct TreeLayout final
 
 	static bool begin(const char* const name, bool selected);
 	static void end();
+	static bool isClicked();
 };

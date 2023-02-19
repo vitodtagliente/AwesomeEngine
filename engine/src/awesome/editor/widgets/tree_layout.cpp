@@ -11,3 +11,8 @@ void TreeLayout::end()
 {
 	ImGui::TreePop();
 }
+
+bool TreeLayout::isClicked()
+{
+	return ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen();
+}

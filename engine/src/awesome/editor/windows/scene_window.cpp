@@ -1,7 +1,10 @@
 #include "scene_window.h"
 
 #include <awesome/core/string_util.h>
-#include <awesome/editor/layout.h>
+#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/widgets/interaction_layout.h>
+#include <awesome/editor/widgets/search_layout.h>
+#include <awesome/editor/widgets/tree_layout.h>
 #include <awesome/editor/editor_state.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/scene/entity.h>
@@ -22,29 +25,25 @@ void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
 	
-	Layout::beginChild("Header", 0.f, 46.f);
-	if (Layout::button(TextIcon::plus(" Add Entity")))
+	if (FormLayout::button(TextIcon::plus(" Add Entity").c_str()))
 	{
 		addEntity(selectedEntity);
 	}
 
-	const std::string previousFilter = m_filter;
-	Layout::input(TextIcon::search(), m_filter);
-	if (previousFilter != m_filter || !hasFocus())
+	if (SearchLayout::input(m_filter) || !hasFocus())
 	{
 		m_state = NavigationState::Navigating;
 	}
-	Layout::endChild();
 
-	Layout::separator();
+	FormLayout::separator();
 
-	Layout::beginChild("Content");
+	FormLayout::beginChild("Content");
 	for (const auto& entity : SceneGraph::instance().root()->children())
 	{
 		const bool isSelected = selectedEntity != nullptr && entity->id() == selectedEntity->id();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			Layout::rename(m_tempRename);
+			// Layout::rename(m_tempRename);
 		}
 		else
 		{
@@ -70,10 +69,10 @@ void SceneWindow::render()
 			// );
 		}
 	}
-	Layout::endChild();
+	FormLayout::endChild();
 
 	// reset the entity selection once clicked in the entities area
-	if (Layout::isItemHovered() && Layout::isMouseClicked())
+	if (InteractionLayout::isItemHovered() && InteractionLayout::isMouseClicked())
 	{
 		m_editorState->unselectEntity();
 	}
@@ -87,7 +86,7 @@ void SceneWindow::update(double)
 
 	if (m_state == NavigationState::Renaming)
 	{
-		if (Layout::isKeyPressed(KeyCode::Enter) || Layout::isKeyPressed(KeyCode::Escape))
+		if (InteractionLayout::isKeyPressed(KeyCode::Enter) || InteractionLayout::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameEntity(selectedEntity, m_tempRename);
@@ -98,12 +97,12 @@ void SceneWindow::update(double)
 	{
 		if (selectedEntity != nullptr)
 		{
-			if (Layout::isKeyPressed(KeyCode::F2))
+			if (InteractionLayout::isKeyPressed(KeyCode::F2))
 			{
 				m_state = NavigationState::Renaming;
 				m_tempRename = selectedEntity->name;
 			}
-			else if (Layout::isKeyPressed(KeyCode::Delete))
+			else if (InteractionLayout::isKeyPressed(KeyCode::Delete))
 			{
 				deleteEntity(selectedEntity);
 			}
@@ -118,7 +117,7 @@ void SceneWindow::addEntity(Entity* const parent)
 	if (parent == nullptr)
 	{
 		m_editorState->select(entity);
-		Layout::scrollToBottom();
+		InteractionLayout::scrollToBottom();
 	}
 }
 
@@ -156,8 +155,8 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 	const std::string name = entity->name + "##entity" + static_cast<std::string>(entity->id());
 	if (entity->hasChildren())
 	{
-		const bool open = Layout::beginTreeNode(name, entity == selectedEntity);
-		if (Layout::isTreeNodeClicked())
+		const bool open = TreeLayout::begin(name.c_str(), entity == selectedEntity);
+		if (TreeLayout::isClicked())
 		{
 			m_state = NavigationState::Navigating;
 			selectEntity(entity);
@@ -169,12 +168,12 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 			{
 				renderEntity(child.get(), selectedEntity);
 			}
-			Layout::endTreeNode();
+			FormLayout::end();
 		}
 	}
 	else
 	{
-		if (Layout::selectable(name, entity == selectedEntity))
+		if (FormLayout::selectable(name.c_str(), entity == selectedEntity))
 		{
 			m_state = NavigationState::Navigating;
 			selectEntity(entity);
