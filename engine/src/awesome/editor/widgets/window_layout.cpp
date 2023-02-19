@@ -2,9 +2,9 @@
 
 #include <imgui.h>
 
-void WindowLayout::begin(const std::string& name)
+void WindowLayout::begin(char* const name)
 {
-	ImGui::Begin(name.c_str());
+	ImGui::Begin(name);
 }
 
 void WindowLayout::end()
