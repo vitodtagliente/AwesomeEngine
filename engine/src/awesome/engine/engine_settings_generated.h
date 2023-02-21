@@ -5,34 +5,30 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct EnumType<enum class EngineMode>
+struct Enum<enum class EngineMode> : RegisteredInEnumFactory<enum class EngineMode>
 {
-    static const char* name();
-    static const  enum_values_t& values();
-};
-
-struct __EngineModeEnum : RegisteredInEnumFactory<enum class EngineMode>
-{
+    static const char* const name();
+    static const enum_values_t& values();
+    
     static bool registered() { return value; };
 };
 
 template <>
-struct EnumType<enum class FpsMode>
+struct Enum<enum class FpsMode> : RegisteredInEnumFactory<enum class FpsMode>
 {
-    static const char* name();
-    static const  enum_values_t& values();
-};
-
-struct __FpsModeEnum : RegisteredInEnumFactory<enum class FpsMode>
-{
+    static const char* const name();
+    static const enum_values_t& values();
+    
     static bool registered() { return value; };
 };
 
-struct __EngineSettingsType : RegisteredInTypeFactory<__EngineSettingsType>
+template <>
+struct Type<class EngineSettings> : RegisteredInTypeFactory<class EngineSettings>
 {
-    __EngineSettingsType() = delete;
+    static const type_meta_t& meta();
+    static const char* const name();
+    static const type_properties_t& properties();
 
-    static const TypeDefinition& type();
     static bool registered() { return value; };
 };
 

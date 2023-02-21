@@ -27,7 +27,7 @@ enum class FpsMode : int
 };
 
 CLASS()
-class EngineSettings : public Type
+class EngineSettings : public IType
 {
 public:
     EngineSettings() = default;
