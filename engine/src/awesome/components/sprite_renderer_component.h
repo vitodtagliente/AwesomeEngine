@@ -19,9 +19,4 @@ public:
 	graphics::TextureRect rect;
 
 	virtual void update(double deltaTime) override;
-
-	virtual void inspect();
-	virtual json::value serialize() const override;
-
-	static constexpr char* const id = "SpriteRenderer";
 };

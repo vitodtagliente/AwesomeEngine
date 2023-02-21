@@ -71,7 +71,7 @@ void EntityLayout::input(Entity& entity)
 		FormLayout::begin(componentName.c_str());
 		if (FormLayout::collapsingHeader(componentName.c_str()))
 		{
-			component->inspect();
+			// component->inspect();
 			FormLayout::separator();
 			if (FormLayout::button(TextIcon::minus(" Remove Component").c_str()))
 			{

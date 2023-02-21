@@ -32,16 +32,3 @@ void SpriteRendererComponent::update(const double /*deltaTime*/)
 		scale.y = -scale.y;
 	}
 }
-
-void SpriteRendererComponent::inspect()
-{
-	FormLayout::input("color", color);
-	FormLayout::input("flipX", flipX);
-	FormLayout::input("flipY", flipY);
-	FormLayout::input("rect", rect);
-}
-
-json::value SpriteRendererComponent::serialize() const
-{
-	return json::value();
-}
