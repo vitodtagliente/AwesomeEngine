@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include <awesome/asset/asset.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
 #include <awesome/editor/text_icon.h>
@@ -32,6 +33,7 @@ void SaveFileDialog::open(const std::string& title, const std::string& extension
 	m_handler = handler;
 	m_title = title;
 	m_open = true;
+	m_root = AssetLibrary::instance().path();
 }
 
 void SaveFileDialog::render()
