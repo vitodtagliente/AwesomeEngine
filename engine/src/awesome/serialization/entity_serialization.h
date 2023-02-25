@@ -4,12 +4,7 @@
 #include <awesome/scene/entity.h>
 
 #include "serialization.h"
-
-template <>
-json::value serialize(const Component& component)
-{
-	return json::value();
-}
+#include "type_serialization.h"
 
 template <>
 json::value serialize(const Entity& entity);
@@ -42,7 +37,7 @@ json::value serialize(const Entity& entity)
 	json::value components = json::array();
 	for (const auto& component : entity.components())
 	{
-		components.push_back(serialize(*component));
+		components.push_back(Serializer<IType>::serialize((IType*)component.get()));
 	}
 
 	return json::object({

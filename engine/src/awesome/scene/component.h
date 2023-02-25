@@ -31,11 +31,11 @@ public:
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 
-	bool enabled{ true };
+	PROPERTY() bool enabled{ true };
 
 	GENERATED_BODY()
 
 private:
-	uuid m_id;
+	PROPERTY() uuid m_id;
 	Entity* m_owner{ nullptr };
 };

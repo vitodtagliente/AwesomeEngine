@@ -13,6 +13,8 @@ const char* const Type<Component>::name() { return "Component"; }
 const type_properties_t& Type<Component>::properties()
 {
     static type_properties_t s_properties {
+        { "enabled", Property{ offsetof(Component, enabled), type_meta_t { }, "enabled", NativeType{ "bool", {  }, NativeType::DecoratorType::D_raw, sizeof(bool), NativeType::Type::T_bool } } },
+        { "m_id", Property{ offsetof(Component, m_id), type_meta_t { }, "m_id", NativeType{ "uuid", {  }, NativeType::DecoratorType::D_raw, sizeof(uuid), NativeType::Type::T_unknown } } },
     };
     return s_properties;
 }
