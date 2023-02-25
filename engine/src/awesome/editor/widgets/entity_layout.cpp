@@ -68,7 +68,7 @@ void EntityLayout::input(Entity& entity)
 
 	for (const auto& component : entity.components())
 	{
-		const std::string componentName = "ff";
+		const std::string componentName = component->type_name();
 		FormLayout::begin(componentName.c_str());
 		if (FormLayout::collapsingHeader(componentName.c_str()))
 		{
