@@ -1,5 +1,6 @@
 #include <awesome/editor/windows/entity_inspector_window.h>
 
+#include <awesome/asset/prefab_asset.h>
 #include <awesome/editor/editor_state.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/editor/widgets/dialog_layout.h>
@@ -38,10 +39,11 @@ void EntityInspectorWindow::render()
 
 	if (FormLayout::button(TextIcon::save(" Save Prefab").c_str()))
 	{
-		const uuid entityId = entity->id();
-		DialogLayout::save("Save Prefab...", ".prefab", [entityId](const std::filesystem::path& path) -> void
+		DialogLayout::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
 			{
-				
+				PrefabAsset prefab;
+				prefab.data.entity = *entity;
+				prefab.save(path);
 			}
 		);
 	}

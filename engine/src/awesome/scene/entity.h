@@ -24,7 +24,7 @@ public:
 	Entity(const Entity& other);
 	virtual ~Entity() = default;
 
-	Entity& operator= (const Entity& other) = delete;
+	Entity& operator= (const Entity& other);
 	bool operator== (const Entity& other) const;
 	bool operator!= (const Entity& other) const;
 

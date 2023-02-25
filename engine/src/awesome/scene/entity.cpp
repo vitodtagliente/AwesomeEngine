@@ -24,6 +24,27 @@ Entity::Entity(const Entity& other)
 	}
 }
 
+Entity& Entity::operator=(const Entity& other)
+{
+	name = other.name;
+	persistent = other.persistent;
+	replicate = other.replicate;
+	tag = other.tag;
+	transform = other.transform;
+	transient = other.transient;
+	for (const auto& other_component : other.m_components)
+	{
+		addComponent(std::make_unique<Component>(*other_component));
+	}
+
+	for (const auto& other_child : other.m_children)
+	{
+		addChild(std::make_unique<Entity>(*other_child));
+	}
+
+	return *this;
+}
+
 bool Entity::operator==(const Entity& other) const
 {
 	return m_id == other.m_id;
