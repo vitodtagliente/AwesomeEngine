@@ -8,6 +8,7 @@
 #include <awesome/scene/entity.h>
 
 #include "form_layout.h"
+#include "type_layout.h"
 
 void EntityLayout::input(Entity& entity)
 {
@@ -71,7 +72,7 @@ void EntityLayout::input(Entity& entity)
 		FormLayout::begin(componentName.c_str());
 		if (FormLayout::collapsingHeader(componentName.c_str()))
 		{
-			// component->inspect();
+			TypeLayout::input(*component);
 			FormLayout::separator();
 			if (FormLayout::button(TextIcon::minus(" Remove Component").c_str()))
 			{
