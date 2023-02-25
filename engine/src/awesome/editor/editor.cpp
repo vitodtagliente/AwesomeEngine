@@ -15,6 +15,7 @@
 #include <awesome/scene/entity.h>
 
 #include "color_scheme.h"
+#include "widgets/dialog_layout.h"
 #include "widgets/window_layout.h"
 
 #include "windows/asset_inspector_window.h"
@@ -92,6 +93,7 @@ void Editor::render()
 		window->render();
 		WindowLayout::end();
 	}
+	DialogLayout::render();
 }
 
 void Editor::postRendering()
