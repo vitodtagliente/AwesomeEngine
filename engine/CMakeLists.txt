@@ -47,9 +47,9 @@ function(generate_reflection EXECUTABLE SRC_DIR)
 		OUTPUT_FILE CMD_OUTPUT
 	)
 	if(${CMD_ERROR} EQUAL 0)
-		message(STATUS "Generated C++ code for ${SRC_DIR}")
+		message(STATUS "Generated C++ code for ${SRC_DIR}\n ${CMD_OUTPUT}")
 	else()
-		message(STATUS "`${SRC_DIR}` failed to generate C++ code with error: ${CMD_ERROR}")
+		message(STATUS "`${SRC_DIR}` failed to generate C++ code with error: ${CMD_ERROR}\n ${CMD_OUTPUT}")
 	endif()
 endfunction()
 
