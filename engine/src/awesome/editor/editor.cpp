@@ -56,6 +56,8 @@ bool Editor::startup()
 	ColorScheme scheme;
 	scheme.apply();
 
+	state.path = AssetLibrary::instance().path();
+
 	registerWindows();
 	for (const auto& window : m_windows)
 	{
