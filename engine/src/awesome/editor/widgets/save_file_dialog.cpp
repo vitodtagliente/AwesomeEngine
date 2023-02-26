@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include <awesome/asset/asset.h>
+#include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
@@ -95,6 +96,15 @@ void SaveFileDialog::render()
 		{
 			const std::filesystem::path fileToSave = m_directory.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 			m_handler(fileToSave);
+
+			// detect changes in the files of the project
+			bool fileAdded = false;
+			AssetImporter::import(fileToSave, fileAdded);
+			if (fileAdded)
+			{
+				AssetLibrary::instance().database.save();
+			}
+
 			m_filename.clear();
 			ImGui::CloseCurrentPopup();
 			m_open = false;
