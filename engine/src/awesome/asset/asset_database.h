@@ -11,6 +11,8 @@ struct AssetRecord
 	uuid id;
 	std::filesystem::path path;
 	int type;
+
+	void save(const std::filesystem::path& path);
 };
 
 struct AssetDatabase
