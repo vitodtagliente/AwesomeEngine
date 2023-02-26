@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
+#include <vector>
 
 #include <awesome/core/uuid.h>
 
@@ -39,8 +40,9 @@ struct Asset
 	std::function<void()> onLoad;
 
 	static std::shared_ptr<Asset> create(int type);
-	bool static isSupported(const std::filesystem::path& path);
-	bool static isSupported(const std::filesystem::path& path, int& type);
+	static const std::vector<std::string>& extensions(int type);
+	static bool isSupported(const std::filesystem::path& path);
+	static bool isSupported(const std::filesystem::path& path, int& type);
 
 	static constexpr char* const Extension = ".asset";
 };

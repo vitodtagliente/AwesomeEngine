@@ -127,7 +127,6 @@ void AssetRecord::save(const std::filesystem::path& _path)
 {
 	JsonFile::save(json::object({
 			{"id", static_cast<std::string>(id)},
-			{"path", path.string()},
 			{"type", type}
 		}),
 		_path
