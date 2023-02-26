@@ -127,8 +127,17 @@ void Engine::exit()
 void Engine::initSettings()
 {
 	const std::filesystem::path workspace = std::filesystem::current_path() / "../assets";
-	AssetLibrary::instance().init(workspace);
-	AssetImporter::import(workspace, true);
+	AssetLibrary& library = AssetLibrary::instance();
+	library.init(workspace);
+	{
+		bool newFilesFound = false;
+		const bool recursiveSearch = true;
+		AssetImporter::import(workspace, recursiveSearch, newFilesFound);
+		if (newFilesFound)
+		{
+			library.database.save();
+		}
+	}
 	ComponentRegister::execute();
 
 	/*

@@ -1,7 +1,6 @@
 #include "asset_importer.h"
 
 #include <string>
-#include <vector>
 
 #include <awesome/core/string_util.h>
 #include <awesome/data/json_file.h>
@@ -9,42 +8,48 @@
 #include "asset.h"
 #include "asset_library.h"
 
-void AssetImporter::import(const std::filesystem::path& path, const bool recursive)
+bool AssetImporter::import(const std::filesystem::path& path, const bool recursive, bool& newFilesFound)
 {
+	newFilesFound = false;
+
+	bool result = true;
 	if (std::filesystem::exists(path))
 	{
 		if (std::filesystem::is_directory(path))
 		{
-			importDirectory(path, recursive);
+			result &= importDirectory(path, recursive, newFilesFound);
 		}
 		else
 		{
-			importFile(path);
+			result &= importFile(path, newFilesFound);
 		}
 	}
+	return result;
 }
 
-bool AssetImporter::import(const std::filesystem::path& path)
+bool AssetImporter::import(const std::filesystem::path& path, bool& newFilesFound)
 {
-	return importFile(path);
+	return importFile(path, newFilesFound);
 }
 
-void AssetImporter::importDirectory(const std::filesystem::path& path, const bool recursive)
+bool AssetImporter::importDirectory(const std::filesystem::path& path, const bool recursive, bool& newFilesFound)
 {
+	bool result = true;
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		if (!entry.is_directory())
 		{
-			importFile(entry.path());
+			result &= importFile(entry.path(), newFilesFound);
 		}
 		else if (entry.is_directory() && recursive)
 		{
-			importDirectory(entry.path(), recursive);
+			result &= importDirectory(entry.path(), recursive, newFilesFound);
 		}
 	}
+	return result;
 }
 
-bool AssetImporter::importFile(const std::filesystem::path& path)
+bool AssetImporter::importFile(const std::filesystem::path& path, bool& newFilesFound)
 {
 	AssetDatabase& db = AssetLibrary::instance().database;
 
@@ -74,6 +79,7 @@ bool AssetImporter::importFile(const std::filesystem::path& path)
 	record.save(assetPath);
 
 	db.insert(record);
+	newFilesFound = true;
 
 	return true;
 }

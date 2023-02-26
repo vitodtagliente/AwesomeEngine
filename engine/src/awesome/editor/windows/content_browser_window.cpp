@@ -8,6 +8,12 @@
 #include <awesome/editor/widgets/search_layout.h>
 #include <awesome/editor/text_icon.h>
 
+ContentBrowserWindow::ContentBrowserWindow()
+	: Window()
+	, m_editorState(EditorState::instance())
+{
+}
+
 char* const ContentBrowserWindow::getTitle() const
 {
 	return "Content Browser";
@@ -104,7 +110,7 @@ void ContentBrowserWindow::render()
 
 			if (changeDirectory && m_directory.directory(file))
 			{
-				// Editor::instance()->state.select(m_directory.path);
+				m_editorState->select(m_directory.path);
 				break;
 			}
 		}
@@ -197,7 +203,7 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 		// AssetFilesystem::erase(path);
 	}
 
-	// Editor::instance()->state.unselectAsset();
+	m_editorState->unselectAsset();
 	m_selectedItem.clear();
 
 	refreshDirectory();
@@ -239,7 +245,7 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 	{
 		if (m_directory.parent == file && m_directory.up())
 		{
-			// Editor::instance()->state.select(m_directory.path);
+			m_editorState->select(m_directory.path);
 		}
 	}
 	else
@@ -251,16 +257,16 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 			AssetPtr asset = AssetLibrary::instance().find(record->id);
 			if (asset != nullptr)
 			{
-				// Editor::instance()->state.select(asset);
+				m_editorState->select(asset);
 			}
 			else
 			{
-				// Editor::instance()->state.unselectAsset();
+				m_editorState->unselectAsset();
 			}
 		}
 		else
 		{
-			// Editor::instance()->state.unselectAsset();
+			m_editorState->unselectAsset();
 		}
 	}
 }

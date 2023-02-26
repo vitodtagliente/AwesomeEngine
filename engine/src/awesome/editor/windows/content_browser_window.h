@@ -9,7 +9,7 @@
 class ContentBrowserWindow : public Window
 {
 public:
-	ContentBrowserWindow() = default;
+	ContentBrowserWindow();
 
 	virtual char* const getTitle() const override;
 	virtual void init() override;
@@ -36,6 +36,7 @@ private:
 	};
 
 	Directory m_directory;
+	class EditorState* m_editorState;
 	std::string m_filter;
 	std::filesystem::path m_root;
 	std::filesystem::path m_selectedItem;

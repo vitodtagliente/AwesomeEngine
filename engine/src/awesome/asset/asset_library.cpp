@@ -9,6 +9,7 @@ void AssetLibrary::init(const std::filesystem::path& path)
 {
 	m_path = path;
 	const std::filesystem::path db_path = path / AssetDatabase::Filename;
+	database.load(db_path);
 
 	// register the handlers
 	m_handlers.push_back(AssetHandler{

@@ -24,9 +24,10 @@ struct AssetDatabase
 	const AssetRecord* const find(const std::filesystem::path& path) const;
 	bool insert(const AssetRecord& record);
 
-	void save(const std::filesystem::path& path) const;
+	void save() const;
 	bool load(const std::filesystem::path& path);
 
+	std::filesystem::path path;
 	std::vector<AssetRecord> records;
 
 	static constexpr char* const Filename = "assets.json";

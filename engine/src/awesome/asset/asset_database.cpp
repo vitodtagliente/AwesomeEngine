@@ -32,9 +32,9 @@ bool AssetDatabase::exists(const uuid& id) const
 	return (it != records.end());
 }
 
-bool AssetDatabase::exists(const std::filesystem::path& path) const
+bool AssetDatabase::exists(const std::filesystem::path& _path) const
 {
-	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
+	const std::filesystem::path compare = _path.extension().string() == Asset::Extension ? _path.parent_path() / _path.stem() : _path;
 	const auto& it = std::find_if(
 		records.begin(),
 		records.end(),
@@ -65,9 +65,9 @@ const AssetRecord* const AssetDatabase::find(const uuid& id) const
 	return nullptr;
 }
 
-const AssetRecord* const AssetDatabase::find(const std::filesystem::path& path) const
+const AssetRecord* const AssetDatabase::find(const std::filesystem::path& _path) const
 {
-	const std::filesystem::path compare = path.extension().string() == Asset::Extension ? path.parent_path() / path.stem() : path;
+	const std::filesystem::path compare = _path.extension().string() == Asset::Extension ? _path.parent_path() / _path.stem() : _path;
 	const auto& it = std::find_if(
 		records.begin(),
 		records.end(),
@@ -89,7 +89,7 @@ bool AssetDatabase::insert(const AssetRecord& record)
 	return records.push_back(record), true;
 }
 
-void AssetDatabase::save(const std::filesystem::path& path) const
+void AssetDatabase::save() const
 {
 	json::value data = json::array();
 	for (const AssetRecord& record : records)
@@ -104,9 +104,10 @@ void AssetDatabase::save(const std::filesystem::path& path) const
 	JsonFile::save(data, path);
 }
 
-bool AssetDatabase::load(const std::filesystem::path& path)
+bool AssetDatabase::load(const std::filesystem::path& _path)
 {
-	if (!std::filesystem::exists(path)) return false;
+	path = _path;
+	if (!std::filesystem::exists(_path)) return false;
 
 	json::value data;
 	if (!JsonFile::load(path, data)) return false;
