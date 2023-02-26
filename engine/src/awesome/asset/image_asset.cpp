@@ -1,5 +1,11 @@
 #include "image_asset.h"
 
+ImageAsset::ImageAsset()
+	: Asset()
+{
+	type = AssetType_Image;
+}
+
 bool ImageAsset::load(const std::filesystem::path& _path)
 {
 	return data = Image::load(_path), true;

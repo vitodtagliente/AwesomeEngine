@@ -6,6 +6,8 @@
 
 struct PrefabAsset : public Asset
 {
+	PrefabAsset();
+
 	virtual bool load(const std::filesystem::path& path) override;
 	virtual bool save(const std::filesystem::path& path) const override;
 

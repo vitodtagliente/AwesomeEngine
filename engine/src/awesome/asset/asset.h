@@ -7,6 +7,8 @@
 
 #include <awesome/core/uuid.h>
 
+#include "asset_type.h"
+
 struct Asset
 {
 	enum class State
@@ -31,6 +33,7 @@ struct Asset
 	uuid id;
 	std::filesystem::path path;
 	State state{ State::None };
+	int type{ AssetType_Invalid };
 
 	// events
 	std::function<void()> onLoad;

@@ -3,6 +3,12 @@
 #include <awesome/data/json_file.h>
 #include <awesome/serialization/entity_serialization.h>
 
+PrefabAsset::PrefabAsset()
+	: Asset()
+{
+	type = AssetType_Prefab;
+}
+
 bool PrefabAsset::load(const std::filesystem::path& _path)
 {
 	return false;

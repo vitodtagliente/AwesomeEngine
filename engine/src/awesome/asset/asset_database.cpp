@@ -122,13 +122,13 @@ bool AssetDatabase::load(const std::filesystem::path& path)
 	return true;
 }
 
-void AssetRecord::save(const std::filesystem::path& path)
+void AssetRecord::save(const std::filesystem::path& _path)
 {
 	JsonFile::save(json::object({
 			{"id", static_cast<std::string>(id)},
 			{"path", path.string()},
 			{"type", type}
 		}),
-		path
+		_path
 	);
 }

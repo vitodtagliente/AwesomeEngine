@@ -19,7 +19,7 @@ public:
 		virtual void inspect(const AssetPtr& /*asset*/) = 0;
 	};
 
-	AssetInspectorWindow() = default;
+	AssetInspectorWindow();
 
 	virtual char* const getTitle() const override;
 	virtual void init() override;
@@ -27,5 +27,6 @@ public:
 	virtual void update(double deltaTime) override;
 
 private:
+	class EditorState* m_editorState{ nullptr };
 	std::vector<std::unique_ptr<AssetInspector>> m_inspectors;
 };

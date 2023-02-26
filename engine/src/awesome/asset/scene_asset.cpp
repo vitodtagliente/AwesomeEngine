@@ -3,6 +3,12 @@
 #include <awesome/data/json_file.h>
 #include <awesome/serialization/entity_serialization.h>
 
+SceneAsset::SceneAsset()
+	: Asset()
+{
+	type = AssetType_Scene;
+}
+
 bool SceneAsset::load(const std::filesystem::path& _path)
 {
 	return false;
