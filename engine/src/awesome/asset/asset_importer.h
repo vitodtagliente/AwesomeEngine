@@ -6,12 +6,12 @@
 class AssetImporter
 {
 public:
-	AssetImporter() = default;
+	AssetImporter() = delete;
 
-	void import(const std::filesystem::path& path, bool recursive);
-	bool import(const std::filesystem::path& path);
+	static void import(const std::filesystem::path& path, bool recursive);
+	static bool import(const std::filesystem::path& path);
 
 private:
-	void importDirectory(const std::filesystem::path& path, bool recursive);
-	bool importFile(const std::filesystem::path& path);
+	static void importDirectory(const std::filesystem::path& path, bool recursive);
+	static bool importFile(const std::filesystem::path& path);
 };

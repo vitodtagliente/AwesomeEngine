@@ -61,6 +61,7 @@ bool Asset::isSupported(const std::filesystem::path& path, int& type)
 	if (it != handlers.end())
 	{
 		type = it->type;
+		return true;
 	}
 	return false;
 }

@@ -2,15 +2,27 @@
 
 #include <thread>
 
-void AssetLibrary::add(const AssetHandler& handler)
-{
-	m_handlers.push_back(handler);
-}
+#include "image_asset.h"
+#include "prefab_asset.h"
 
 void AssetLibrary::init(const std::filesystem::path& path)
 {
 	m_path = path;
 	const std::filesystem::path db_path = path / AssetDatabase::Filename;
+
+	// register the handlers
+	m_handlers.push_back(AssetHandler{
+		[]() ->AssetPtr { return std::make_shared<ImageAsset>(); },
+		{ ".png", ".bmp", ".jpg", ".jpeg" },
+		"ImageAsset",
+		AssetType_Image
+	});
+	m_handlers.push_back(AssetHandler{
+		[]() ->AssetPtr { return std::make_shared<PrefabAsset>(); },
+		{ ".prefab" },
+		"PrefabAsset",
+		AssetType_Prefab
+	});
 }
 
 void AssetLibrary::release(const AssetPtr& asset)

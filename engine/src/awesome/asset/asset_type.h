@@ -4,6 +4,11 @@
 enum AssetType : int
 {
 	AssetType_Invalid = 0,
-	AssetType_Image = 1,
-	AssetType_Prefab = 2
+	AssetType_Audio,
+	AssetType_Image,
+	AssetType_Prefab,
+	AssetType_Scene,
+	AssetType_SpriteAnimation,
+	AssetType_Text,
+	AssetType_Tileset
 };

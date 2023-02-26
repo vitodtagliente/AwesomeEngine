@@ -63,7 +63,7 @@ bool AssetImporter::importFile(const std::filesystem::path& path)
 	}
 
 	int assetType = AssetType_Invalid;
-	if (Asset::isSupported(path, assetType))
+	if (!Asset::isSupported(path, assetType))
 	{
 		return false;
 	}

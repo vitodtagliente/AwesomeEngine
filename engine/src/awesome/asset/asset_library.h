@@ -25,13 +25,13 @@ struct AssetHandler
 class AssetLibrary : public Singleton<AssetLibrary>
 {
 public:
+	friend struct Asset;
+
 	AssetLibrary() = default;
 	~AssetLibrary() = default;
 
-	inline const std::vector<AssetHandler>& handlers() const { return m_handlers; }
 	inline const std::filesystem::path& path() const { return m_path; }
 
-	void add(const AssetHandler& handler);
 	void init(const std::filesystem::path& path);
 
 	AssetPtr find(const uuid& id);
@@ -57,6 +57,8 @@ private:
 
 		std::weak_ptr<Asset> asset;
 	};
+
+	inline const std::vector<AssetHandler>& handlers() const { return m_handlers; }
 
 	const AssetHandler* const findHandler(const std::filesystem::path& path) const;
 	std::shared_ptr<Asset> create(const AssetHandler& handler, const AssetRecord& record);

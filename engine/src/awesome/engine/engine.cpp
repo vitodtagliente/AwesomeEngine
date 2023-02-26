@@ -1,6 +1,7 @@
 #include <iostream>
 #include "engine.h"
 
+#include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/components/component_register.h>
 #include <awesome/engine/canvas.h>
@@ -125,8 +126,11 @@ void Engine::exit()
 
 void Engine::initSettings()
 {
-	AssetLibrary::instance().init(std::filesystem::current_path() / "../assets");
-	ComponentRegister{}.execute();
+	const std::filesystem::path workspace = std::filesystem::current_path() / "../assets";
+	AssetLibrary::instance().init(workspace);
+	AssetImporter::import(workspace, true);
+	ComponentRegister::execute();
+
 	/*
 	bool reload = false;
 	const std::filesystem::path settingsPath = std::filesystem::current_path() / ApplicationSettings::filename;

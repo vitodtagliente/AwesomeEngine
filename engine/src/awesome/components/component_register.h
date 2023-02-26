@@ -3,5 +3,7 @@
 
 struct ComponentRegister
 {
-	void execute();
+	ComponentRegister() = delete;
+
+	static void execute();
 };
