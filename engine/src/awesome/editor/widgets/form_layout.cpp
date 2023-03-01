@@ -65,7 +65,8 @@ bool FormLayout::collapsingHeader(const char* const name)
 
 void FormLayout::end()
 {
-	s_context.pop_back();
+	if (!s_context.empty())
+		s_context.pop_back();
 }
 
 void FormLayout::endChild()

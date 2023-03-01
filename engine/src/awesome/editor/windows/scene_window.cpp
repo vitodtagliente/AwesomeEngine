@@ -168,7 +168,7 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 			{
 				renderEntity(child.get(), selectedEntity);
 			}
-			FormLayout::end();
+			TreeLayout::end();
 		}
 	}
 	else
