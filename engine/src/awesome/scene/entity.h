@@ -133,6 +133,9 @@ public:
 	math::transform transform;
 	bool transient{ false };
 
+	template <typename T>
+	friend struct Serializer;
+
 private:
 	void prepareToDestroy();
 	void prepareToSpawn();
