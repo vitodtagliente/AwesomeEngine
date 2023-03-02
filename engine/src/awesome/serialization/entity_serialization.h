@@ -6,49 +6,22 @@
 #include "serialization.h"
 
 template <>
-json::value serialize(const Entity& entity);
+struct Serializer<Entity>
+{
+	static json::value serialize(const Entity& value);
+	static bool deserialize(const json::value& data, Entity& value);
+};
 
 template <>
-json::value serialize(const std::vector<Entity>& list)
+struct Serializer<std::vector<Entity>>
 {
-	json::value entities = json::array();
-	for (const auto& element : list)
-	{
-		entities.push_back(serialize(element));
-	}
-	return entities;
-}
+	static json::value serialize(const std::vector<Entity>& value);
+	static bool deserialize(const json::value& data, std::vector<Entity>& value);
+};
 
 template <>
-json::value serialize(const std::vector<std::unique_ptr<Entity>>& list)
+struct Serializer<std::vector<std::unique_ptr<Entity>>>
 {
-	json::value entities = json::array();
-	for (const auto& element : list)
-	{
-		entities.push_back(serialize(*element));
-	}
-	return entities;
-}
-
-template <>
-json::value serialize(const Entity& entity)
-{
-	json::value components = json::array();
-	for (const auto& component : entity.components())
-	{
-		// components.push_back(Serializer<IType>::serialize((IType*)component.get()));
-	}
-
-	return json::object({
-		{"children", serialize(entity.children())},
-		{"components", components},
-		{"id", serialize(entity.id())},
-		{"name", entity.name},
-		{"parent", entity.hasParent() ? serialize(entity.parent()->id()) : ""},
-		{"persistent", entity.persistent},
-		{"replicate", entity.replicate},
-		{"tag", entity.tag},
-		{"transform", serialize(entity.transform)},
-		{"transient", entity.transient}
-		});
-}
+	static json::value serialize(const std::vector<std::unique_ptr<Entity>>& value);
+	static bool deserialize(const json::value& data, std::vector<std::unique_ptr<Entity>>& value);
+};

@@ -18,73 +18,51 @@ struct Serializer
 	static bool deserialize(const json::value& data, T& value) { return false; }
 };
 
-template <typename T>
-json::value serialize(const T& data) 
+template <>
+struct Serializer<std::string>
 {
-	return json::value();
-}
+	static json::value serialize(const std::string& value);
+	static bool deserialize(const json::value& data, std::string& value);
+};
 
-template <> 
-json::value serialize(const std::string& primitive)
+template <>
+struct Serializer<std::filesystem::path>
 {
-	return json::value(primitive);
-}
+	static json::value serialize(const std::filesystem::path& value);
+	static bool deserialize(const json::value& data, std::filesystem::path& value);
+};
 
-template <> 
-json::value serialize(const std::filesystem::path& path)
+template <>
+struct Serializer<uuid>
 {
-	return json::value(path.string());
-}
+	static json::value serialize(const uuid& value);
+	static bool deserialize(const json::value& data, uuid& value);
+};
 
-template <> 
-json::value serialize(const uuid& id)
+template <>
+struct Serializer<math::vec2>
 {
-	return json::value(static_cast<std::string>(id));
-}
+	static json::value serialize(const math::vec2& value);
+	static bool deserialize(const json::value& data, math::vec2& value);
+};
 
-template<>
-json::value serialize(const math::vec2& v)
+template <>
+struct Serializer<math::vec3>
 {
-	return json::object({
-		{"x", v.x},
-		{"y", v.y}
-		});
-}
+	static json::value serialize(const math::vec3& value);
+	static bool deserialize(const json::value& data, math::vec3& value);
+};
 
-template<>
-json::value serialize(const math::vec3& v)
+template <>
+struct Serializer<math::vec4>
 {
-	return json::object({
-		{"x", v.x},
-		{"y", v.y},
-		{"z", v.z}
-		});
-}
+	static json::value serialize(const math::vec4& value);
+	static bool deserialize(const json::value& data, math::vec4& value);
+};
 
-template<>
-json::value serialize(const math::vec4& v)
+template <>
+struct Serializer<math::transform>
 {
-	return json::object({
-		{"x", v.x},
-		{"y", v.y},
-		{"z", v.z},
-		{"w", v.w}
-		});
-}
-
-template<>
-json::value serialize(const math::transform& t)
-{
-	return json::object({
-		{"position", serialize(t.position)},
-		{"rotation", serialize(t.rotation)},
-		{"scale", serialize(t.scale)},
-		{"isStatic", t.isStatic}
-		});
-}
-
-template <typename T>
-bool deserialize(const json::value& value, T& data)
-{
-	return false;
-}
+	static json::value serialize(const math::transform& value);
+	static bool deserialize(const json::value& data, math::transform& value);
+};

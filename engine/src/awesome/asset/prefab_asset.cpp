@@ -16,5 +16,5 @@ bool PrefabAsset::load(const std::filesystem::path& _path)
 
 bool PrefabAsset::save(const std::filesystem::path& _path) const
 {
-	return JsonFile::save(serialize(data.entity), _path), true;
+	return JsonFile::save(Serializer<Entity>::serialize(data.entity), _path), true;
 }
