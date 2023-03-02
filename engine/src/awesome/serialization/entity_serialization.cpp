@@ -2,15 +2,9 @@
 
 json::value Serializer<Entity>::serialize(const Entity& value)
 {
-	json::value components = json::array();
-	for (const auto& component : value.components())
-	{
-		// components.push_back(Serializer<IType>::serialize((IType*)component.get()));
-	}
-
 	return json::object({
 		{"children", Serializer<std::vector<std::unique_ptr<Entity>>>::serialize(value.children())},
-		{"components", components},
+		// {"components", Serializer<std::vector<std::unique_ptr<Component>>>::serialize(value.components())},
 		{"id", serialize(value.id())},
 		{"name", value.name},
 		{"parent", value.hasParent() ? serialize(value.parent()->id()) : ""},
@@ -28,7 +22,7 @@ bool Serializer<Entity>::deserialize(const json::value& data, Entity& value)
 
 	bool result = true;
 	if (data.contains("children")) result &= Serializer<std::vector<std::unique_ptr<Entity>>>::deserialize(data["children"], value.m_children);
-	// components
+	// if (data.contains("components")) result &= Serializer<std::vector<std::unique_ptr<Component>>>::deserialize(data["components"], value.m_components);
 	if (data.contains("id")) result &= Serializer<uuid>::deserialize(data["id"], value.m_id);
 	if (data.contains("name")) result &= Serializer<std::string>::deserialize(data["name"], value.name);
 	// parent
