@@ -1,10 +1,12 @@
 #include "entity_serialization.h"
 
+#include "type_serialization.h"
+
 json::value Serializer<Entity>::serialize(const Entity& value)
 {
 	return json::object({
 		{"children", Serializer<std::vector<std::unique_ptr<Entity>>>::serialize(value.children())},
-		// {"components", Serializer<std::vector<std::unique_ptr<Component>>>::serialize(value.components())},
+		// {"components", Serializer<std::vector<std::unique_ptr<IType>>>::serialize(std::dynamic_pointer_cast<std::vector<std::unique_ptr<IType>>>(value.components()))},
 		{"id", serialize(value.id())},
 		{"name", value.name},
 		{"parent", value.hasParent() ? serialize(value.parent()->id()) : ""},
