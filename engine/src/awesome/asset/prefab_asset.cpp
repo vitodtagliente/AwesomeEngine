@@ -11,6 +11,11 @@ PrefabAsset::PrefabAsset()
 
 bool PrefabAsset::load(const std::filesystem::path& _path)
 {
+	json::value file;
+	if (JsonFile::load(_path, file))
+	{
+		return Serializer<Entity>::deserialize(file, data.entity);
+	}
 	return false;
 }
 
