@@ -54,7 +54,9 @@ json::value operator>> (json::value& data, std::vector<std::unique_ptr<T>>& valu
 	{
 		for (auto& element : data.as_array())
 		{
-			std::unique_ptr<T> type = std::make_unique<T>();
+			if (!element.contains("type_id")) continue;
+
+			std::unique_ptr<T> type(TypeFactory::instantiate<T>(element["type_id"].as_string()));
 			element >> *type;
 			value.push_back(std::move(type));
 		}

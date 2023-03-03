@@ -4,6 +4,7 @@
  */
 
 #include <awesome/awesome.h>
+#include <awesome/components/sprite_renderer_component.h>
 
 #include "game.h"
 
