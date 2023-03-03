@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <awesome/core/uuid.h>
+#include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
@@ -133,8 +134,8 @@ public:
 	math::transform transform;
 	bool transient{ false };
 
-	template <typename T>
-	friend struct Serializer;
+	friend json::value& operator<<(json::value& data, const Entity& value);
+	friend json::value& operator>>(json::value& data, Entity& value);
 
 private:
 	void prepareToDestroy();

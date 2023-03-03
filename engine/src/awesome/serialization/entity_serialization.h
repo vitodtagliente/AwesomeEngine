@@ -5,8 +5,6 @@
 
 #include "serialization.h"
 
-json::value operator<< (json::value& data, const Entity& value);
-json::value operator>> (json::value& data, Entity& value);
 json::value operator<< (json::value& data, const std::vector<Entity>& value);
 json::value operator>> (json::value& data, std::vector<Entity>& value);
 json::value operator<< (json::value& data, const std::vector<std::unique_ptr<Entity>>& value);

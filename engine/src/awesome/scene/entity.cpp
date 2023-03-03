@@ -1,5 +1,9 @@
 #include "entity.h"
 
+#include <awesome/serialization/entity_serialization.h>
+#include <awesome/serialization/serialization.h>
+#include <awesome/serialization/type_serialization.h>
+
 Entity::Entity(const uuid& id)
 	: m_id(id)
 {
@@ -256,4 +260,41 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 	m_children.clear();
+}
+
+json::value& operator<<(json::value& data, const Entity& value)
+{
+	data = json::object({
+		{"name", value.name},
+		{"persistent", value.persistent},
+		{"replicate", value.replicate},
+		{"tag", value.tag},
+		{"transient", value.transient}
+		});
+	data["children"] << value.children();
+	// data["components"] << value.components();
+	data["id"] << value.id();
+	if (value.hasParent())
+	{
+		data["parent"] << value.parent()->id();
+	}
+	data["transform"] << value.transform;
+	return data;
+}
+
+json::value& operator>>(json::value& data, Entity& value)
+{
+	if (data.is_object())
+	{
+		if (data.contains("children")) data["children"] >> value.m_children;
+		// if (data.contains("components")) data["components"] >> value.m_components;
+		if (data.contains("id")) data["id"] >> value.m_id;
+		if (data.contains("name")) value.name = data["name"].as_string();
+		if (data.contains("persistent")) value.persistent = data["persistent"].as_bool(false);
+		if (data.contains("replicate")) value.replicate = data["replicate"].as_bool(false);
+		if (data.contains("tag")) value.tag = data["tag"].as_string();
+		if (data.contains("transform")) data["transform"] >> value.transform;
+		if (data.contains("transient")) value.transient = data["transient"].as_bool(false);
+	}
+	return data;
 }

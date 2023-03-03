@@ -1,30 +1,5 @@
 #include "entity_serialization.h"
 
-json::value operator<<(json::value& data, const Entity& value)
-{
-	data =  json::object({
-		{"name", value.name},
-		{"persistent", value.persistent},
-		{"replicate", value.replicate},
-		{"tag", value.tag},
-		{"transient", value.transient}
-		});
-	data["children"] << value.children();
-	// data["components"] 
-	data["id"] << value.id();
-	if (value.hasParent())
-	{
-		data["parent"] << value.parent()->id();
-	}
-	data["transform"] << value.transform;
-	return data;
-}
-
-json::value operator>>(json::value& data, Entity& value)
-{
-	return json::value();
-}
-
 json::value operator<<(json::value& data, const std::vector<Entity>& value)
 {
 	data = json::array();
