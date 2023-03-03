@@ -272,7 +272,7 @@ json::value& operator<<(json::value& data, const Entity& value)
 		{"transient", value.transient}
 		});
 	data["children"] << value.children();
-	// data["components"] << value.components();
+	data["components"] << value.components();
 	data["id"] << value.id();
 	if (value.hasParent())
 	{
@@ -287,7 +287,7 @@ json::value& operator>>(json::value& data, Entity& value)
 	if (data.is_object())
 	{
 		if (data.contains("children")) data["children"] >> value.m_children;
-		// if (data.contains("components")) data["components"] >> value.m_components;
+		if (data.contains("components")) data["components"] >> value.m_components;
 		if (data.contains("id")) data["id"] >> value.m_id;
 		if (data.contains("name")) value.name = data["name"].as_string();
 		if (data.contains("persistent")) value.persistent = data["persistent"].as_bool(false);
