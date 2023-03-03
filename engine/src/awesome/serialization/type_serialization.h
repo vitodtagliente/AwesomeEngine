@@ -1,6 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
+#include <vector>
+
 #include <awesome/core/reflection.h>
 #include <awesome/encoding/json.h>
 
