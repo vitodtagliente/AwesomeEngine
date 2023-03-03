@@ -6,7 +6,7 @@
 json::value operator<<(json::value& data, const IType& value)
 {
 	data = json::object();
-	data["type_id"] = value.type_name();
+	data["type_id"] = std::string(value.type_name());
 	for (const auto& [name, property] : value.type_properties())
 	{
 		switch (property.type.type)
