@@ -5,23 +5,9 @@
 
 #include "serialization.h"
 
-template <>
-struct Serializer<Entity>
-{
-	static json::value serialize(const Entity& value);
-	static bool deserialize(const json::value& data, Entity& value);
-};
-
-template <>
-struct Serializer<std::vector<Entity>>
-{
-	static json::value serialize(const std::vector<Entity>& value);
-	static bool deserialize(const json::value& data, std::vector<Entity>& value);
-};
-
-template <>
-struct Serializer<std::vector<std::unique_ptr<Entity>>>
-{
-	static json::value serialize(const std::vector<std::unique_ptr<Entity>>& value);
-	static bool deserialize(const json::value& data, std::vector<std::unique_ptr<Entity>>& value);
-};
+json::value operator<< (json::value& data, const Entity& value);
+json::value operator>> (json::value& data, Entity& value);
+json::value operator<< (json::value& data, const std::vector<Entity>& value);
+json::value operator>> (json::value& data, std::vector<Entity>& value);
+json::value operator<< (json::value& data, const std::vector<std::unique_ptr<Entity>>& value);
+json::value operator>> (json::value& data, std::vector<std::unique_ptr<Entity>>& value);

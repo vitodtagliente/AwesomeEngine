@@ -14,12 +14,14 @@ bool PrefabAsset::load(const std::filesystem::path& _path)
 	json::value file;
 	if (JsonFile::load(_path, file))
 	{
-		return Serializer<Entity>::deserialize(file, data.entity);
+		return file >> data.entity, true;
 	}
 	return false;
 }
 
 bool PrefabAsset::save(const std::filesystem::path& _path) const
 {
-	return JsonFile::save(Serializer<Entity>::serialize(data.entity), _path), true;
+	json::value file;
+	file << data.entity;
+	return JsonFile::save(file, _path), true;
 }

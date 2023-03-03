@@ -16,5 +16,7 @@ bool SceneAsset::load(const std::filesystem::path& _path)
 
 bool SceneAsset::save(const std::filesystem::path& _path) const
 {
-	return JsonFile::save(Serializer<std::vector<Entity>>::serialize(data.entities), _path), true;
+	json::value file;
+	file << data.entities;
+	return JsonFile::save(file, _path), true;
 }
