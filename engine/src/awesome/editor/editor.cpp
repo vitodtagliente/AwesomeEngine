@@ -55,6 +55,7 @@ bool Editor::startup()
 
 	ColorScheme scheme;
 	scheme.apply();
+	m_menu.init();
 
 	state.path = AssetLibrary::instance().path();
 
@@ -95,6 +96,7 @@ void Editor::render()
 		window->render();
 		WindowLayout::end();
 	}
+	m_menu.render();
 	DialogLayout::render();
 }
 
