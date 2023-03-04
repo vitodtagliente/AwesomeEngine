@@ -45,11 +45,17 @@ void AssetInspectorWindow::render()
 		}
 		for (const auto& inspector : m_inspectors)
 		{
-			if (inspector->canInspect(asset))
+			if (!inspector->canInspect(asset)) continue;
+
+			if(asset->state == Asset::State::Ready)
 			{
 				inspector->inspect(asset);
-				break;
 			}
+			else
+			{
+				FormLayout::text("Asset loading...");
+			}
+			break;
 		}
 	}
 }
