@@ -12,6 +12,11 @@ bool Asset::operator!=(const Asset& other) const
 	return id != other.id;
 }
 
+bool Asset::save() const
+{
+	return save(path);
+}
+
 std::shared_ptr<Asset> Asset::create(const int type)
 {
 	const auto& handlers = AssetLibrary::instance().handlers();

@@ -29,6 +29,7 @@ struct Asset
 	bool operator!= (const Asset& other) const;
 
 	virtual bool load(const std::filesystem::path&) = 0;
+	bool save() const;
 	virtual bool save(const std::filesystem::path&) const = 0;
 	
 	uuid id;
