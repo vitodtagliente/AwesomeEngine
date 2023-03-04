@@ -11,6 +11,11 @@ SceneAsset::SceneAsset()
 
 bool SceneAsset::load(const std::filesystem::path& _path)
 {
+	json::value file;
+	if (JsonFile::load(_path, file))
+	{
+		return file >> data.entities, true;
+	}
 	return false;
 }
 

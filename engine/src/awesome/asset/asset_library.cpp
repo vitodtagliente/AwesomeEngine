@@ -4,6 +4,7 @@
 
 #include "image_asset.h"
 #include "prefab_asset.h"
+#include "scene_asset.h"
 
 void AssetLibrary::init(const std::filesystem::path& path)
 {
@@ -23,6 +24,12 @@ void AssetLibrary::init(const std::filesystem::path& path)
 		{ ".prefab" },
 		"PrefabAsset",
 		AssetType_Prefab
+	});
+	m_handlers.push_back(AssetHandler{
+		[]() ->AssetPtr { return std::make_shared<SceneAsset>(); },
+		{ ".scene" },
+		"SceneAsset",
+		AssetType_Scene
 	});
 }
 

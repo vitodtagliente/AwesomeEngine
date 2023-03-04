@@ -59,15 +59,15 @@ void Menu::menuScene()
 		bool save_as = false;
 		if (MenuLayout::item("Save Scene"))
 		{
-			// SceneAssetPtr scene = World::instance().getScene();
-			// if (scene != nullptr)
-			// {
-			// 	World::instance().save(scene->path);
-			// }
-			// else
-			// {
-			// 	save_as = true;
-			// }
+			SceneGraph& sceneGraph = SceneGraph::instance();
+			if (sceneGraph.scene() != nullptr)
+			{
+				sceneGraph.save(sceneGraph.scene()->path);
+			}
+			else
+			{
+				save_as = true;
+			}
 		}
 		if (MenuLayout::item("Save Scene as..."))
 		{
@@ -76,9 +76,9 @@ void Menu::menuScene()
 
 		if (save_as)
 		{
-			DialogLayout::save("Save Scene as...", ".prefab", [](const std::filesystem::path& path) -> void
+			DialogLayout::save("Save Scene as...", ".scene", [](const std::filesystem::path& path) -> void
 				{
-					
+					SceneGraph::instance().save(path);
 				}
 			);
 		}
