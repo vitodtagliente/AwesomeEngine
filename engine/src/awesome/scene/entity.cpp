@@ -26,6 +26,10 @@ Entity::Entity(const Entity& other)
 	{
 		addChild(std::make_unique<Entity>(*other_child));
 	}
+	for (const auto& other_child : other.m_pendingSpawnEntities)
+	{
+		addChild(std::make_unique<Entity>(*other_child));
+	}
 }
 
 Entity& Entity::operator=(const Entity& other)
@@ -74,8 +78,8 @@ void Entity::update(const double deltaTime)
 		{
 			return child->m_state == State::PendingDestroy;
 		}
-		), m_children.end()
-	);
+	), m_children.end()
+			);
 
 	for (auto& entityToSpawn : m_pendingSpawnEntities)
 	{
@@ -271,12 +275,13 @@ json::value& operator<<(json::value& data, const Entity& value)
 		{"tag", value.tag},
 		{"transient", value.transient}
 		});
-	data["children"] << value.children();
-	data["components"] << value.components();
-	data["id"] << value.id();
+	data["children"] << value.m_children;
+	data["pendingSpawnChildren"] << value.m_pendingSpawnEntities;
+	data["components"] << value.m_components;
+	data["id"] << value.m_id;
 	if (value.hasParent())
 	{
-		data["parent"] << value.parent()->id();
+		data["parent"] << value.m_parent->m_id;
 	}
 	data["transform"] << value.transform;
 	return data;
@@ -288,6 +293,7 @@ json::value& operator>>(json::value& data, Entity& value)
 	{
 		if (data.contains("children")) data["children"] >> value.m_children;
 		if (data.contains("components")) data["components"] >> value.m_components;
+		if (data.contains("pendingSpawnChildren")) data["pendingSpawnChildren"] >> value.m_pendingSpawnEntities;
 		if (data.contains("id")) data["id"] >> value.m_id;
 		if (data.contains("name")) value.name = data["name"].as_string();
 		if (data.contains("persistent")) value.persistent = data["persistent"].as_bool(false);
