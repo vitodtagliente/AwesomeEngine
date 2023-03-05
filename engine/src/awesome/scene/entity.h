@@ -145,6 +145,5 @@ private:
 	std::vector<std::unique_ptr<Component>> m_components;
 	uuid m_id;
 	Entity* m_parent{ nullptr };
-	std::vector<std::unique_ptr<Entity>> m_pendingSpawnEntities;
 	State m_state{ State::PendingSpawn };
 };

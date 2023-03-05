@@ -26,10 +26,6 @@ Entity::Entity(const Entity& other)
 	{
 		addChild(std::make_unique<Entity>(*other_child));
 	}
-	for (const auto& other_child : other.m_pendingSpawnEntities)
-	{
-		addChild(std::make_unique<Entity>(*other_child));
-	}
 }
 
 Entity& Entity::operator=(const Entity& other)
@@ -78,14 +74,9 @@ void Entity::update(const double deltaTime)
 		{
 			return child->m_state == State::PendingDestroy;
 		}
-	), m_children.end()
-			);
-
-	for (auto& entityToSpawn : m_pendingSpawnEntities)
-	{
-		m_children.push_back(std::move(entityToSpawn));
-	}
-	m_pendingSpawnEntities.clear();
+		), 
+		m_children.end()
+	);
 
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
@@ -175,8 +166,8 @@ Entity* const Entity::addChild()
 	std::unique_ptr<Entity> child = std::make_unique<Entity>();
 	child->m_parent = this;
 	child->prepareToSpawn();
-	m_pendingSpawnEntities.push_back(std::move(child));
-	return m_pendingSpawnEntities.back().get();
+	m_children.push_back(std::move(child));
+	return m_children.back().get();
 }
 
 Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
@@ -185,8 +176,8 @@ Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
 
 	entity->m_parent = this;
 	entity->prepareToSpawn();
-	m_pendingSpawnEntities.push_back(std::move(entity));
-	return m_pendingSpawnEntities.back().get();
+	m_children.push_back(std::move(entity));
+	return m_children.back().get();
 }
 
 bool Entity::removeChild(Entity* const entity)
@@ -276,7 +267,6 @@ json::value& operator<<(json::value& data, const Entity& value)
 		{"transient", value.transient}
 		});
 	data["children"] << value.m_children;
-	data["pendingSpawnChildren"] << value.m_pendingSpawnEntities;
 	data["components"] << value.m_components;
 	data["id"] << value.m_id;
 	if (value.hasParent())
@@ -293,7 +283,6 @@ json::value& operator>>(json::value& data, Entity& value)
 	{
 		if (data.contains("children")) data["children"] >> value.m_children;
 		if (data.contains("components")) data["components"] >> value.m_components;
-		if (data.contains("pendingSpawnChildren")) data["pendingSpawnChildren"] >> value.m_pendingSpawnEntities;
 		if (data.contains("id")) data["id"] >> value.m_id;
 		if (data.contains("name")) value.name = data["name"].as_string();
 		if (data.contains("persistent")) value.persistent = data["persistent"].as_bool(false);
