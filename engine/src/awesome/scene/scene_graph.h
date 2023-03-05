@@ -22,6 +22,8 @@ public:
 
 	Entity* const root() { return &m_root; }
 
+	void clear();
+
 	bool load(const SceneAssetPtr& scene);
 	inline const SceneAssetPtr& scene() const { return m_scene; }
 	bool save(const std::filesystem::path& path);

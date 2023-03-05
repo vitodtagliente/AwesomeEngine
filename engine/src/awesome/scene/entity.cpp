@@ -204,6 +204,14 @@ bool Entity::removeChild(const uuid& id)
 	return false;
 }
 
+void Entity::removeChildren()
+{
+	for (const auto& child : m_children)
+	{
+		child->m_state = State::PendingDestroy;
+	}
+}
+
 void Entity::removeComponent(Component* const component)
 {
 	removeComponent(component->getId());

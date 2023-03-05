@@ -2,6 +2,11 @@
 
 #include <thread>
 
+void SceneGraph::clear()
+{
+	m_root.removeChildren();
+}
+
 bool SceneGraph::load(const SceneAssetPtr& scene)
 {
 	if (m_state == State::Loading || scene->state != Asset::State::Ready)
@@ -9,6 +14,7 @@ bool SceneGraph::load(const SceneAssetPtr& scene)
 		return false;
 	}
 
+	clear();
 	m_scene = scene;
 	m_state = State::Loading;
 	std::thread handler([this]()

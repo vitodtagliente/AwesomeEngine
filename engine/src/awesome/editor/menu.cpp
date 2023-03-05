@@ -54,7 +54,9 @@ void Menu::menuScene()
 		if (MenuLayout::item("New Scene..."))
 		{
 			m_editorState->unselectEntity();
+			SceneGraph::instance().clear();
 		}
+
 		MenuLayout::separator();
 		bool save_as = false;
 		if (MenuLayout::item("Save Scene"))

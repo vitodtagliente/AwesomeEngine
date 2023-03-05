@@ -49,6 +49,7 @@ public:
 	Entity* const addChild(std::unique_ptr<Entity> child);
 	bool removeChild(Entity* const entity);
 	bool removeChild(const uuid& id);
+	void removeChildren();
 
 	template <typename T = Component>
 	std::vector<T*> findComponents() const
