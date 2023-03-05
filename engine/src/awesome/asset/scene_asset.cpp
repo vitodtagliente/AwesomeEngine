@@ -1,7 +1,7 @@
 #include "scene_asset.h"
 
+#include <awesome/core/serialization.h>
 #include <awesome/data/json_file.h>
-#include <awesome/serialization/entity_serialization.h>
 
 SceneAsset::SceneAsset()
 	: Asset()

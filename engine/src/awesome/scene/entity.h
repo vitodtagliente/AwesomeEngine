@@ -4,13 +4,16 @@
 #include <memory>
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
-#include <awesome/encoding/json.h>
 #include <awesome/math/transform.h>
 
 #include "component.h"
 
-class Entity
+#include "entity_generated.h"
+
+CLASS()
+class Entity : public IType
 {
 public:
 	enum class State
@@ -128,23 +131,22 @@ public:
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
 
-	std::string name;
-	bool persistent{ false };
-	bool replicate{ false };
-	std::string tag;
-	math::transform transform;
-	bool transient{ false };
+	PROPERTY() std::string name;
+	PROPERTY() bool persistent{ false };
+	PROPERTY() bool replicate{ false };
+	PROPERTY() std::string tag;
+	PROPERTY() math::transform transform;
+	PROPERTY() bool transient{ false };
 
-	friend json::value& operator<<(json::value& data, const Entity& value);
-	friend json::value& operator>>(json::value& data, Entity& value);
+	GENERATED_BODY()
 
 private:
 	void prepareToDestroy();
 	void prepareToSpawn();
 
-	std::vector<std::unique_ptr<Entity>> m_children;
-	std::vector<std::unique_ptr<Component>> m_components;
-	uuid m_id;
+	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
+	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
+	PROPERTY() uuid m_id;
 	Entity* m_parent{ nullptr };
 	State m_state{ State::PendingSpawn };
 };
