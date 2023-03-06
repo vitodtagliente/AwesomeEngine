@@ -34,10 +34,11 @@ Entity& Entity::operator=(const Entity& other)
 	tag = other.tag;
 	transform = other.transform;
 	transient = other.transient;
-	for (const auto& other_component : other.m_components)
-	{
-		addComponent(std::make_unique<Component>(*other_component));
-	}
+
+	// restore the components using the serialization
+	json::value components;
+	components << other.m_components;
+	components >> m_components;
 
 	for (const auto& other_child : other.m_children)
 	{
