@@ -2,6 +2,63 @@
 
 #include <awesome/core/string_util.h>
 
+json::value operator<<(json::value& data, const bool& value)
+{
+	return json::value(value);
+}
+
+json::value operator>>(json::value& data, bool& value)
+{
+	if (data.is_bool())
+	{
+		value = data.as_bool();
+	}
+	return data;
+}
+
+json::value operator<<(json::value& data, const double& value)
+{
+	return json::value(value);
+}
+
+json::value operator>>(json::value& data, double& value)
+{
+	if (data.is_number())
+	{
+		value = data.as_number(0).as_double();
+	}
+	return data;
+}
+
+json::value operator<<(json::value& data, const int& value)
+{
+	return json::value(value);
+}
+
+json::value operator>>(json::value& data, int& value)
+{
+	if (data.is_number())
+	{
+		value = data.as_number(0).as_int();
+	}
+	return data;
+}
+
+json::value operator<<(json::value& data, const float& value)
+{
+	return json::value(value);
+}
+
+json::value operator>>(json::value& data, float& value)
+{
+	if (data.is_number())
+	{
+		value = data.as_number(0.f).as_float();
+	}
+	return data;
+}
+
+
 json::value operator<<(json::value& data, const std::string& value)
 {
 	data = json::value(value);
@@ -52,7 +109,7 @@ json::value operator<<(json::value& data, const math::vec2& value)
 	data = json::object({
 		{"x", value.x},
 		{"y", value.y}
-	});
+		});
 	return data;
 }
 
@@ -72,7 +129,7 @@ json::value operator<<(json::value& data, const math::vec3& value)
 		{"x", value.x},
 		{"y", value.y},
 		{"z", value.z}
-	});
+		});
 	return data;
 }
 
@@ -94,7 +151,7 @@ json::value operator<<(json::value& data, const math::vec4& value)
 		{"y", value.y},
 		{"z", value.z},
 		{"w", value.w}
-	});
+		});
 	return data;
 }
 
@@ -144,59 +201,143 @@ json::value operator>>(json::value& data, math::transform& value)
 	return data;
 }
 
+void serializeVector(const IType& value, const Property& property, const NativeType type, json::value& data);
+void serialize(const IType& value, const Property& property, json::value& data)
+{
+	switch (property.type.type)
+	{
+	case NativeType::Type::T_bool: data = property.value<bool>(&value); break;
+	case NativeType::Type::T_double: data = property.value<double>(&value); break;
+	case NativeType::Type::T_enum: data = property.value<int>(&value); break;
+	case NativeType::Type::T_float: data = property.value<float>(&value); break;
+	case NativeType::Type::T_int: data = property.value<int>(&value); break;
+	case NativeType::Type::T_string: data = property.value<std::string>(&value); break;
+	case NativeType::Type::T_template:
+	{
+		if (StringUtil::contains(property.type.name, "map", StringUtil::CompareMode::IgnoreCase))
+		{
+
+		}
+		else if (StringUtil::contains(property.type.name, "shared_ptr", StringUtil::CompareMode::IgnoreCase))
+		{
+			if (property.type.children.front().type == NativeType::Type::T_type)
+			{
+				data << property.value<std::shared_ptr<IType>>(&value);
+			}
+		}
+		else if (StringUtil::contains(property.type.name, "vector", StringUtil::CompareMode::IgnoreCase))
+		{
+			serializeVector(value, property, property.type.children.front(), data);
+		}
+		else if (StringUtil::contains(property.type.name, "unique_ptr", StringUtil::CompareMode::IgnoreCase))
+		{
+			if (property.type.children.front().type == NativeType::Type::T_type)
+			{
+				data << property.value<std::unique_ptr<IType>>(&value);
+			}
+		}
+		break;
+	}
+	case NativeType::Type::T_type: 
+	{
+
+		break;
+	}
+	case NativeType::Type::T_unknown:
+	{
+		if (StringUtil::contains(property.type.name, "transform", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<math::transform>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "uuid", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<uuid>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec2", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<math::vec2>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec3", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<math::vec3>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec4", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<math::vec4>(&value);
+		}
+		break;
+	}
+	default: break;
+	}
+}
+void serializeVector(const IType& value, const Property& property, const NativeType type, json::value& data)
+{
+	switch (type.type)
+	{
+	case NativeType::Type::T_bool: data << property.value<std::vector<bool>>(&value); break;
+	case NativeType::Type::T_double: data << property.value<std::vector<double>>(&value); break;
+	case NativeType::Type::T_enum: data << property.value<std::vector<int>>(&value); break;
+	case NativeType::Type::T_float: data << property.value<std::vector<float>>(&value); break;
+	case NativeType::Type::T_int: data << property.value<std::vector<int>>(&value); break;
+	case NativeType::Type::T_string: data << property.value<std::vector<std::string>>(&value); break;
+	case NativeType::Type::T_template:
+	{
+		if (StringUtil::contains(type.name, "shared_ptr", StringUtil::CompareMode::IgnoreCase))
+		{
+			if (type.children.front().type == NativeType::Type::T_type)
+			{
+				data << property.value<std::vector<std::shared_ptr<IType>>>(&value);
+			}
+		}
+		else if (StringUtil::contains(type.name, "unique_ptr", StringUtil::CompareMode::IgnoreCase))
+		{
+			if (type.children.front().type == NativeType::Type::T_type)
+			{
+				data << property.value<std::vector<std::unique_ptr<IType>>>(&value);
+			}
+		}
+		break;
+	}
+	case NativeType::Type::T_type: 
+	{
+
+		break;
+	}
+	case NativeType::Type::T_unknown:
+	{
+		if (StringUtil::contains(property.type.name, "transform", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<std::vector<math::transform>>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "uuid", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<std::vector<uuid>>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec2", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<std::vector<math::vec2>>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec3", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<std::vector<math::vec3>>(&value);
+		}
+		else if (StringUtil::contains(property.type.name, "vec4", StringUtil::CompareMode::IgnoreCase))
+		{
+			data << property.value<std::vector<math::vec4>>(&value);
+		}
+		break;
+	}
+	default: break;
+	}
+}
+
 json::value operator<<(json::value& data, const IType& value)
 {
 	data = json::object();
 	data["type_id"] = std::string(value.type_name());
 	for (const auto& [name, property] : value.type_properties())
 	{
-		switch (property.type.type)
-		{
-		case NativeType::Type::T_bool: data[name] = property.value<bool>(&value); break;
-		case NativeType::Type::T_double: data[name] = property.value<double>(&value); break;
-		case NativeType::Type::T_enum: data[name] = property.value<int>(&value); break;
-		case NativeType::Type::T_float: data[name] = property.value<float>(&value); break;
-		case NativeType::Type::T_int: data[name] = property.value<int>(&value); break;
-		case NativeType::Type::T_string: data[name] = property.value<std::string>(&value); break;
-		case NativeType::Type::T_template: 
-		{
-			if (StringUtil::contains(property.type.name, "vector", StringUtil::CompareMode::IgnoreCase))
-			{
-
-			}
-			break;
-		}
-		case NativeType::Type::T_type: break;
-		case NativeType::Type::T_unknown: 
-		{
-			if (StringUtil::contains(property.type.name, "transform", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<math::transform>(&value);
-			}
-			else if (StringUtil::contains(property.type.name, "transform", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<math::transform>(&value);
-			}
-			else if (StringUtil::contains(property.type.name, "uuid", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<uuid>(&value);
-			}
-			else if (StringUtil::contains(property.type.name, "vec2", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<math::vec2>(&value);
-			}
-			else if (StringUtil::contains(property.type.name, "vec3", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<math::vec3>(&value);
-			}
-			else if (StringUtil::contains(property.type.name, "vec4", StringUtil::CompareMode::IgnoreCase))
-			{
-				data[name] << property.value<math::vec4>(&value);
-			}
-			break;
-		}
-		default: break;
-		}
+		serialize(value, property, data[name]);
 	}
 	return data;
 }
@@ -225,6 +366,70 @@ json::value operator>>(json::value& data, IType& value)
 			default: break;
 			}
 		}
+	}
+	return data;
+}
+
+json::value operator<<(json::value& data, const std::shared_ptr<IType>& value)
+{
+	if (value != nullptr)
+	{
+		data << *value;
+	}
+	return data;
+}
+
+json::value operator>>(json::value& data, std::shared_ptr<IType>& value)
+{
+	if (data.is_object())
+	{
+		if (!data.contains("type_id"))
+		{
+			return data;
+		}
+
+		if (value == nullptr)
+		{
+			value = std::shared_ptr<IType>(TypeFactory::instantiate<IType>(data["type_id"].as_string()));
+		}
+		else if (data["type_id"].as_string("") != value->type_name())
+		{
+			return data;
+		}
+
+		data >> *value;
+	}
+	return data;
+}
+
+json::value operator<<(json::value& data, const std::unique_ptr<IType>& value)
+{
+	if (value != nullptr)
+	{
+		data << *value;
+	}
+	return data;
+}
+
+json::value operator>>(json::value& data, std::unique_ptr<IType>& value)
+{
+	if (data.is_object())
+	{
+		if (!data.contains("type_id"))
+		{
+			return data;
+		}
+
+		if (value == nullptr)
+		{
+			value = std::unique_ptr<IType>(TypeFactory::instantiate<IType>(data["type_id"].as_string()));
+		}
+		else if (data["type_id"].as_string("") != value->type_name())
+		{
+			return data;
+		}
+
+		data >> *value;
 	}
 	return data;
 }

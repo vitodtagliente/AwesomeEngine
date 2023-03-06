@@ -12,6 +12,14 @@
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
 
+json::value operator<< (json::value& data, const bool& value);
+json::value operator>> (json::value& data, bool& value);
+json::value operator<< (json::value& data, const double& value);
+json::value operator>> (json::value& data, double& value);
+json::value operator<< (json::value& data, const int& value);
+json::value operator>> (json::value& data, int& value);
+json::value operator<< (json::value& data, const float& value);
+json::value operator>> (json::value& data, float& value);
 json::value operator<< (json::value& data, const std::string& value);
 json::value operator>> (json::value& data, std::string& value);
 json::value operator<< (json::value& data, const std::filesystem::path& value);
@@ -28,19 +36,23 @@ json::value operator<< (json::value& data, const math::transform& value);
 json::value operator>> (json::value& data, math::transform& value);
 json::value operator<< (json::value& data, const IType& value);
 json::value operator>> (json::value& data, IType& value);
-template <typename T = IType>
+json::value operator<< (json::value& data, const std::shared_ptr<IType>& value);
+json::value operator>> (json::value& data, std::shared_ptr<IType>& value);
+json::value operator<< (json::value& data, const std::unique_ptr<IType>& value);
+json::value operator>> (json::value& data, std::unique_ptr<IType>& value);
+template <typename T>
 json::value operator<< (json::value& data, const std::vector<T>& value)
 {
 	data = json::array();
 	for (const auto& element : value)
 	{
-		json::value element_data;
+		json::value element_data; 
 		element_data << element;
 		data.push_back(element_data);
 	}
 	return data;
 }
-template <typename T = IType>
+template <typename T>
 json::value operator>> (json::value& data, std::vector<T>& value)
 {
 	if (data.is_array())
