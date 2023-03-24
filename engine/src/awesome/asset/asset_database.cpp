@@ -112,14 +112,14 @@ bool AssetDatabase::load(const std::filesystem::path& _path)
 	json::value data;
 	if (!JsonFile::load(path, data)) return false;
 
-	for (const auto& elem : data.as_array())
-	{
-		AssetRecord record;
-		record.id = elem["id"].as_string();
-		record.path = elem["path"].as_string();
-		record.type = elem["type"].as_number().as_int();
-		records.push_back(record);
-	}
+	// for (const auto& elem : data.as_array())
+	// {
+	// 	AssetRecord record;
+	// 	// record.id = elem["id"].as_string();
+	// 	record.path = elem["path"].as_string();
+	// 	record.type = elem["type"].as_number().as_int();
+	// 	records.push_back(record);
+	// }
 	return true;
 }
 

@@ -29,7 +29,7 @@ const reflect::properties_t& Type<Entity>::properties()
                 reflect::PropertyType{ "Component", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Component), reflect::PropertyType::Type::T_type },
             }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::unique_ptr<Component>), reflect::PropertyType::Type::T_template },
         }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::vector<std::unique_ptr<Component>>), reflect::PropertyType::Type::T_template } } },
-        { "m_id", reflect::Property{ offsetof(Entity, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_unknown } } },
+        { "m_id", reflect::Property{ offsetof(Entity, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
     };
     return s_properties;
 }
@@ -99,6 +99,11 @@ void reflect::Type<Entity>::from_string(const std::string& str, Entity& type)
             type.m_components.push_back(std::move(element));
         }
     }
+    {
+        std::string pack;
+        stream >> pack;
+        type.m_id.from_string(pack);
+    }
 }
 
 std::string reflect::Type<Entity>::to_string(const Entity& type)
@@ -127,6 +132,7 @@ std::string reflect::Type<Entity>::to_string(const Entity& type)
             if(element) stream << static_cast<std::string>(*element);
         }
     }
+    stream << static_cast<std::string>(type.m_id);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -153,6 +159,7 @@ void reflect::Type<Entity>::from_json(const std::string& json, Entity& type)
             if (key == "transient") reflect::encoding::json::Deserializer::parse(value, type.transient);
             if (key == "m_children") reflect::encoding::json::Deserializer::parse(value, type.m_children);
             if (key == "m_components") reflect::encoding::json::Deserializer::parse(value, type.m_components);
+            if (key == "m_id") type.m_id.from_json(value);
             src = src.substr(index + 1);
         }
         else break;
@@ -172,6 +179,7 @@ std::string reflect::Type<Entity>::to_json(const Entity& type, const std::string
     stream << offset << "    " << "\"transient\": " << reflect::encoding::json::Serializer::to_string(type.transient) << "," << std::endl;
     stream << offset << "    " << "\"m_children\": " << reflect::encoding::json::Serializer::to_string(type.m_children) << "," << std::endl;
     stream << offset << "    " << "\"m_components\": " << reflect::encoding::json::Serializer::to_string(type.m_components) << "," << std::endl;
+    stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

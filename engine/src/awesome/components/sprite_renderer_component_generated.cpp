@@ -15,13 +15,13 @@ const reflect::properties_t& Type<SpriteRendererComponent>::properties()
     static reflect::properties_t s_properties {
         // Parent class Component properties
         { "enabled", reflect::Property{ offsetof(SpriteRendererComponent, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "m_id", reflect::Property{ offsetof(SpriteRendererComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_unknown } } },
+        { "m_id", reflect::Property{ offsetof(SpriteRendererComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
         // Properties
-        { "color", reflect::Property{ offsetof(SpriteRendererComponent, color), reflect::meta_t { }, "color", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_unknown } } },
+        { "color", reflect::Property{ offsetof(SpriteRendererComponent, color), reflect::meta_t { }, "color", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
         { "flipX", reflect::Property{ offsetof(SpriteRendererComponent, flipX), reflect::meta_t { }, "flipX", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "flipY", reflect::Property{ offsetof(SpriteRendererComponent, flipY), reflect::meta_t { }, "flipY", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "image", reflect::Property{ offsetof(SpriteRendererComponent, image), reflect::meta_t { }, "image", reflect::PropertyType{ "ImageAssetPtr", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(ImageAssetPtr), reflect::PropertyType::Type::T_unknown } } },
-        { "rect", reflect::Property{ offsetof(SpriteRendererComponent, rect), reflect::meta_t { }, "rect", reflect::PropertyType{ "graphics::TextureRect", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::TextureRect), reflect::PropertyType::Type::T_unknown } } },
+        { "rect", reflect::Property{ offsetof(SpriteRendererComponent, rect), reflect::meta_t { }, "rect", reflect::PropertyType{ "graphics::TextureRect", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::TextureRect), reflect::PropertyType::Type::T_native } } },
     };
     return s_properties;
 }
@@ -51,9 +51,24 @@ void reflect::Type<SpriteRendererComponent>::from_string(const std::string& str,
     
     // Parent class Component properties
     stream >> type.enabled;
+    {
+        std::string pack;
+        stream >> pack;
+        type.m_id.from_string(pack);
+    }
     // Properties
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<graphics::Color>::from_string(pack, type.color);
+    }
     stream >> type.flipX;
     stream >> type.flipY;
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<graphics::TextureRect>::from_string(pack, type.rect);
+    }
 }
 
 std::string reflect::Type<SpriteRendererComponent>::to_string(const SpriteRendererComponent& type)
@@ -64,9 +79,12 @@ std::string reflect::Type<SpriteRendererComponent>::to_string(const SpriteRender
     
     // Parent class Component properties
     stream << type.enabled;
+    stream << static_cast<std::string>(type.m_id);
     // Properties
+    stream << reflect::Type<graphics::Color>::to_string(type.color);
     stream << type.flipX;
     stream << type.flipY;
+    stream << reflect::Type<graphics::TextureRect>::to_string(type.rect);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -87,9 +105,12 @@ void reflect::Type<SpriteRendererComponent>::from_json(const std::string& json, 
         {
             // Parent class Component properties
             if (key == "enabled") reflect::encoding::json::Deserializer::parse(value, type.enabled);
+            if (key == "m_id") type.m_id.from_json(value);
             // Properties
+            if (key == "color") reflect::Type<graphics::Color>::from_json(value, type.color);
             if (key == "flipX") reflect::encoding::json::Deserializer::parse(value, type.flipX);
             if (key == "flipY") reflect::encoding::json::Deserializer::parse(value, type.flipY);
+            if (key == "rect") reflect::Type<graphics::TextureRect>::from_json(value, type.rect);
             src = src.substr(index + 1);
         }
         else break;
@@ -103,9 +124,12 @@ std::string reflect::Type<SpriteRendererComponent>::to_json(const SpriteRenderer
     stream << offset << "    " << "\"type_id\": " << "SpriteRendererComponent" << "," << std::endl;
     // Parent class Component properties
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
+    stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     // Properties
+    stream << offset << "    " << "\"color\": " << reflect::Type<graphics::Color>::to_json(type.color, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"flipX\": " << reflect::encoding::json::Serializer::to_string(type.flipX) << "," << std::endl;
     stream << offset << "    " << "\"flipY\": " << reflect::encoding::json::Serializer::to_string(type.flipY) << "," << std::endl;
+    stream << offset << "    " << "\"rect\": " << reflect::Type<graphics::TextureRect>::to_json(type.rect, offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

@@ -6,43 +6,13 @@ Entity::Entity(const uuid& id)
 }
 
 Entity::Entity(const Entity& other)
-	: name(other.name)
-	, persistent(other.persistent)
-	, replicate(other.replicate)
-	, tag(other.tag)
-	, transform(other.transform)
-	, transient(other.transient)
 {
-	// // restore the components using the serialization
-	// json::value components;
-	// components << other.m_components;
-	// components >> m_components;
-	// 
-	// for (const auto& other_child : other.m_children)
-	// {
-	// 	addChild(std::make_unique<Entity>(*other_child));
-	// }
+	from_string(other.to_string());
 }
 
 Entity& Entity::operator=(const Entity& other)
 {
-	name = other.name;
-	persistent = other.persistent;
-	replicate = other.replicate;
-	tag = other.tag;
-	transform = other.transform;
-	transient = other.transient;
-
-	// restore the components using the serialization
-	// json::value components;
-	// components << other.m_components;
-	// components >> m_components;
-	// 
-	// for (const auto& other_child : other.m_children)
-	// {
-	// 	addChild(std::make_unique<Entity>(*other_child));
-	// }
-
+	from_string(other.to_string());
 	return *this;
 }
 

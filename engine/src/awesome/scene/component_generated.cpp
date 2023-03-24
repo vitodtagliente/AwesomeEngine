@@ -14,7 +14,7 @@ const reflect::properties_t& Type<Component>::properties()
 {
     static reflect::properties_t s_properties {
         { "enabled", reflect::Property{ offsetof(Component, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "m_id", reflect::Property{ offsetof(Component, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_unknown } } },
+        { "m_id", reflect::Property{ offsetof(Component, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
     };
     return s_properties;
 }
@@ -43,6 +43,11 @@ void reflect::Type<Component>::from_string(const std::string& str, Component& ty
     if (_name != name()) return;
     
     stream >> type.enabled;
+    {
+        std::string pack;
+        stream >> pack;
+        type.m_id.from_string(pack);
+    }
 }
 
 std::string reflect::Type<Component>::to_string(const Component& type)
@@ -52,6 +57,7 @@ std::string reflect::Type<Component>::to_string(const Component& type)
     stream << name();
     
     stream << type.enabled;
+    stream << static_cast<std::string>(type.m_id);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -71,6 +77,7 @@ void reflect::Type<Component>::from_json(const std::string& json, Component& typ
         if (index != std::string::npos)
         {
             if (key == "enabled") reflect::encoding::json::Deserializer::parse(value, type.enabled);
+            if (key == "m_id") type.m_id.from_json(value);
             src = src.substr(index + 1);
         }
         else break;
@@ -83,6 +90,7 @@ std::string reflect::Type<Component>::to_json(const Component& type, const std::
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "Component" << "," << std::endl;
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
+    stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

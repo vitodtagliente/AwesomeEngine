@@ -3,9 +3,13 @@
 
 #include <string>
 
-class uuid final
+#include "reflection.h"
+
+#include "uuid_generated.h"
+
+CLASS()
+struct uuid final : public IType
 {
-public:
 	uuid();
 	uuid(const std::string& value);
 	uuid(const uuid& other);
@@ -15,10 +19,9 @@ public:
 	bool operator!= (const uuid& other) const;
 	bool operator< (const uuid& other) const;
 
-	operator std::string() const { return m_value; }
-
 	static const uuid Invalid;
 
-private:
-	std::string m_value;
+	PROPERTY() std::string value;
+
+	GENERATED_BODY()
 };
