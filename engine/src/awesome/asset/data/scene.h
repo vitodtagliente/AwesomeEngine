@@ -3,9 +3,15 @@
 
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/scene/entity.h>
 
-struct Scene
+#include "scene_generated.h"
+
+CLASS()
+struct Scene : public IType
 {
-	std::vector<Entity> entities;
+	PROPERTY() std::vector<Entity> entities;
+
+	GENERATED_BODY()
 };

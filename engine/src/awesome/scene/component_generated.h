@@ -5,12 +5,17 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct Type<class Component> : RegisteredInTypeFactory<class Component>
+struct reflect::Type<class Component> : reflect::RegisteredInTypeFactory<class Component>
 {
-    static const type_meta_t& meta();
+    static const reflect::meta_t& meta();
     static const char* const name();
-    static const type_properties_t& properties();
+    static const reflect::properties_t& properties();
+    static std::size_t size();
 
-    static bool registered() { return value; };
+    static void from_string(const std::string& str, Component& type);
+    static std::string to_string(const Component& type);
+    static void from_json(const std::string& json, Component& type);
+    static std::string to_json(const Component& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
 };
-

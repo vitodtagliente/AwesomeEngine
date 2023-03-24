@@ -1,9 +1,15 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/reflection.h>
 #include <awesome/scene/entity.h>
 
-struct Prefab
+#include "prefab_generated.h"
+
+CLASS()
+struct Prefab : public IType
 {
-	Entity entity;
+	PROPERTY() Entity entity;
+
+	GENERATED_BODY()
 };

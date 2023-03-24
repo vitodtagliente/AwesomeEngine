@@ -1,7 +1,6 @@
 #include "scene_asset.h"
 
-#include <awesome/core/serialization.h>
-#include <awesome/data/json_file.h>
+#include <awesome/data/text_file.h>
 
 SceneAsset::SceneAsset()
 	: Asset()
@@ -11,17 +10,17 @@ SceneAsset::SceneAsset()
 
 bool SceneAsset::load(const std::filesystem::path& _path)
 {
-	json::value file;
-	if (JsonFile::load(_path, file))
+	std::string content;
+	if (TextFile::load(_path, content))
 	{
-		return file >> data.entities, true;
+		data.from_json(content);
+		return true;
 	}
 	return false;
 }
 
 bool SceneAsset::save(const std::filesystem::path& _path) const
 {
-	json::value file;
-	file << data.entities;
-	return JsonFile::save(file, _path), true;
+	TextFile::save(data.to_json(), _path);
+	return true;
 }

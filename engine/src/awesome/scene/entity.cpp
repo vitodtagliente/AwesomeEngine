@@ -1,7 +1,5 @@
 #include "entity.h"
 
-#include <awesome/core/serialization.h>
-
 Entity::Entity(const uuid& id)
 	: m_id(id)
 {
@@ -15,15 +13,15 @@ Entity::Entity(const Entity& other)
 	, transform(other.transform)
 	, transient(other.transient)
 {
-	// restore the components using the serialization
-	json::value components;
-	components << other.m_components;
-	components >> m_components;
-
-	for (const auto& other_child : other.m_children)
-	{
-		addChild(std::make_unique<Entity>(*other_child));
-	}
+	// // restore the components using the serialization
+	// json::value components;
+	// components << other.m_components;
+	// components >> m_components;
+	// 
+	// for (const auto& other_child : other.m_children)
+	// {
+	// 	addChild(std::make_unique<Entity>(*other_child));
+	// }
 }
 
 Entity& Entity::operator=(const Entity& other)
@@ -36,14 +34,14 @@ Entity& Entity::operator=(const Entity& other)
 	transient = other.transient;
 
 	// restore the components using the serialization
-	json::value components;
-	components << other.m_components;
-	components >> m_components;
-
-	for (const auto& other_child : other.m_children)
-	{
-		addChild(std::make_unique<Entity>(*other_child));
-	}
+	// json::value components;
+	// components << other.m_components;
+	// components >> m_components;
+	// 
+	// for (const auto& other_child : other.m_children)
+	// {
+	// 	addChild(std::make_unique<Entity>(*other_child));
+	// }
 
 	return *this;
 }

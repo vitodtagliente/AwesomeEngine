@@ -1,7 +1,6 @@
 #include "prefab_asset.h"
 
-#include <awesome/core/serialization.h>
-#include <awesome/data/json_file.h>
+#include <awesome/data/text_file.h>
 
 PrefabAsset::PrefabAsset()
 	: Asset()
@@ -11,17 +10,17 @@ PrefabAsset::PrefabAsset()
 
 bool PrefabAsset::load(const std::filesystem::path& _path)
 {
-	json::value file;
-	if (JsonFile::load(_path, file))
+	std::string content;
+	if (TextFile::load(_path, content))
 	{
-		return file >> data.entity, true;
+		data.from_json(content);
+		return true;
 	}
 	return false;
 }
 
 bool PrefabAsset::save(const std::filesystem::path& _path) const
 {
-	json::value file;
-	file << data.entity;
-	return JsonFile::save(file, _path), true;
+	TextFile::save(data.to_json(), _path);
+	return true;
 }

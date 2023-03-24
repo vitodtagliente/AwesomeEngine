@@ -2,3 +2,5 @@
 #pragma once
 
 #include <vdtreflect/runtime.h>
+
+using namespace reflect;

@@ -5,30 +5,35 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct Enum<enum class EngineMode> : RegisteredInEnumFactory<enum class EngineMode>
+struct reflect::Enum<enum class EngineMode> : reflect::RegisteredInEnumFactory<enum class EngineMode>
 {
     static const char* const name();
-    static const enum_values_t& values();
+    static const reflect::enum_values_t& values();
     
     static bool registered() { return value; };
 };
 
 template <>
-struct Enum<enum class FpsMode> : RegisteredInEnumFactory<enum class FpsMode>
+struct reflect::Enum<enum class FpsMode> : reflect::RegisteredInEnumFactory<enum class FpsMode>
 {
     static const char* const name();
-    static const enum_values_t& values();
+    static const reflect::enum_values_t& values();
     
     static bool registered() { return value; };
 };
 
 template <>
-struct Type<class EngineSettings> : RegisteredInTypeFactory<class EngineSettings>
+struct reflect::Type<class EngineSettings> : reflect::RegisteredInTypeFactory<class EngineSettings>
 {
-    static const type_meta_t& meta();
+    static const reflect::meta_t& meta();
     static const char* const name();
-    static const type_properties_t& properties();
+    static const reflect::properties_t& properties();
+    static std::size_t size();
 
-    static bool registered() { return value; };
+    static void from_string(const std::string& str, EngineSettings& type);
+    static std::string to_string(const EngineSettings& type);
+    static void from_json(const std::string& json, EngineSettings& type);
+    static std::string to_json(const EngineSettings& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
 };
-

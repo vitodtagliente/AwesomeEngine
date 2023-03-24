@@ -5,17 +5,17 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct reflect::Type<class Entity> : reflect::RegisteredInTypeFactory<class Entity>
+struct reflect::Type<struct Scene> : reflect::RegisteredInTypeFactory<struct Scene>
 {
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
     static std::size_t size();
 
-    static void from_string(const std::string& str, Entity& type);
-    static std::string to_string(const Entity& type);
-    static void from_json(const std::string& json, Entity& type);
-    static std::string to_json(const Entity& type, const std::string& offset = "");
+    static void from_string(const std::string& str, Scene& type);
+    static std::string to_string(const Scene& type);
+    static void from_json(const std::string& json, Scene& type);
+    static std::string to_json(const Scene& type, const std::string& offset = "");
 
     static bool registered() { return type_registered; };
 };
