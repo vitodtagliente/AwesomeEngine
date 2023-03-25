@@ -75,7 +75,7 @@ endforeach()
 
 add_library(
     ${PROJECT_NAME} 
-    STATIC
+    SHARED
     ${VENDORS_SOURCES}
     ${PROJECT_SOURCE_FILES} 
 )
@@ -101,7 +101,7 @@ endif()
 target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE ${GLAD_LIBRARIES}
-	PRIVATE glfw
+	PUBLIC glfw
 	PRIVATE ${GLFW_LIBRARIES}
 	PUBLIC vdtgraphics
 	PUBLIC vdtjson

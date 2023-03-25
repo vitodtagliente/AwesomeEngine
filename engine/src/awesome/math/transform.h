@@ -4,6 +4,8 @@
 #include <vdtmath/transform.h>
 #include <awesome/core/reflection.h>
 
+#include "vector3.h"
+
 #include "transform_generated.h"
 
 NATIVE_CLASS(math::transform)
