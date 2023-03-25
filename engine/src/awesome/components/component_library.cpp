@@ -1,10 +1,16 @@
 #include "component_library.h"
 
-ComponentRecord::ComponentRecord(const std::string& name, const std::string& category, const std::function<Component* ()>& handler)
+#include <awesome/core/reflection.h>
+
+ComponentRecord::ComponentRecord(const std::string& name, const std::string& category)
 	: name(name)
 	, category(category)
-	, handler(handler)
 {
+}
+
+Component* const ComponentRecord::instantiate() const
+{
+	return TypeFactory::instantiate<Component>(name);
 }
 
 const ComponentRecord* const ComponentLibrary::find(const std::string& name) const

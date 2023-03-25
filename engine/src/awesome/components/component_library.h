@@ -10,25 +10,18 @@
 
 struct ComponentRecord final
 {
-	ComponentRecord() = default;
-	ComponentRecord(const std::string& name,
-		const std::string& category,
-		const std::function<Component* ()>& handler);
+	ComponentRecord(const std::string& name, const std::string& category);
 	
-	Component* const instantiate() const
-	{
-		return handler();
-	}
+	Component* const instantiate() const;
 
 	template <typename T = Component>
 	T* const instantiate() const
 	{
-		return reinterpret_cast<T*>(handler());
+		return reinterpret_cast<T*>(instantiate());
 	}
 
 	std::string name;
 	std::string category;
-	std::function<Component* ()> handler;
 };
 
 class ComponentLibrary final : public Singleton<ComponentLibrary>

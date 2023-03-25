@@ -5,6 +5,8 @@
 const reflect::meta_t& reflect::Type<SpriteRendererComponent>::meta()
 {
     static reflect::meta_t s_meta {
+        { "Category", "Graphics" },
+        { "Type", "Component" },
     };
     return s_meta;
 }

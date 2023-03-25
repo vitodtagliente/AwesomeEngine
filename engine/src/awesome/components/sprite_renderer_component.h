@@ -8,7 +8,7 @@
 
 #include "sprite_renderer_component_generated.h"
 
-CLASS()
+CLASS(Type = Component, Category = Graphics)
 class SpriteRendererComponent : public Component
 {
 public:
