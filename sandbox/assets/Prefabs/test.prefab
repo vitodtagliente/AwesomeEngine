@@ -2,8 +2,8 @@
     "type_id": "Prefab",
     "entity": {
         "type_id": "Entity",
-        "name": "",
-        "persistent": false,
+        "name": "106847841723100",
+        "persistent": true,
         "replicate": false,
         "tag": "",
         "transform": {
@@ -26,14 +26,14 @@
                 "y": 1.000000,
                 "z": 1.000000,
             },
-            "isStatic": false,
+            "isStatic": true,
         },
         "transient": false,
         "m_children": [],
         "m_components": [],
         "m_id": {
             "type_id": "uuid",
-            "value": "105966134135700",
+            "value": "106847841723100",
         },
     },
 }
