@@ -1,1 +1,8 @@
-{"id":"228556868579600","path":"C:\Users\vitod\Desktop\AwesomeEngine\sandbox\solution\../assets\Textures\spritesheet.png","type":2}
+{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751374237100",
+    },
+    "type": 2,
+}

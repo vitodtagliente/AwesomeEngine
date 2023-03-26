@@ -1,1 +1,39 @@
-{"tag":"","type_id":"Entity","m_children":[],"m_components":[{"type_id":"SpriteRendererComponent","color":null,"m_id":"160009295454300","enabled":true,"flipX":false,"image":null,"flipY":false,"rect":null}],"persistent":false,"m_id":"160015395523400","name":"160007012151900","replicate":false,"transform":{"position":{"x":0.000000,"y":0.000000,"z":0.000000},"rotation":{"x":0.000000,"y":0.000000,"z":0.000000},"scale":{"x":1.000000,"y":1.000000,"z":1.000000},"isStatic":false},"transient":false}
+{
+    "type_id": "Prefab",
+    "entity": {
+        "type_id": "Entity",
+        "name": "",
+        "persistent": false,
+        "replicate": false,
+        "tag": "",
+        "transform": {
+            "type_id": "math::transform",
+            "position": {
+                "type_id": "math::vec3",
+                "x": 0.000000,
+                "y": 0.000000,
+                "z": 0.000000,
+            },
+            "rotation": {
+                "type_id": "math::vec3",
+                "x": 0.000000,
+                "y": 0.000000,
+                "z": 0.000000,
+            },
+            "scale": {
+                "type_id": "math::vec3",
+                "x": 1.000000,
+                "y": 1.000000,
+                "z": 1.000000,
+            },
+            "isStatic": false,
+        },
+        "transient": false,
+        "m_children": [],
+        "m_components": [],
+        "m_id": {
+            "type_id": "uuid",
+            "value": "104702030412000",
+        },
+    },
+}
