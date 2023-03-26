@@ -1,6 +1,6 @@
 #include "scene_asset.h"
 
-#include <awesome/data/text_file.h>
+#include <awesome/data/type_file.h>
 
 SceneAsset::SceneAsset()
 	: Asset()
@@ -10,17 +10,10 @@ SceneAsset::SceneAsset()
 
 bool SceneAsset::load(const std::filesystem::path& _path)
 {
-	std::string content;
-	if (TextFile::load(_path, content))
-	{
-		data.from_json(content);
-		return true;
-	}
-	return false;
+	return TypeFile::load(_path, data);
 }
 
 bool SceneAsset::save(const std::filesystem::path& _path) const
 {
-	TextFile::save(data.to_json(), _path);
-	return true;
+	return TypeFile::save(data, _path), true;
 }

@@ -6,16 +6,22 @@
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
-struct AssetRecord
+#include "asset_database_generated.h"
+
+CLASS()
+struct AssetRecord : public IType
 {
-	uuid id;
+	PROPERTY() uuid id;
 	std::filesystem::path path;
-	int type;
+	PROPERTY() int type;
 
 	void save(const std::filesystem::path& path);
+
+	GENERATED_BODY()
 };
 
-struct AssetDatabase
+CLASS()
+struct AssetDatabase : public IType
 {
 	bool erase(const uuid& id);
 	bool exists(const uuid& id) const;
@@ -27,8 +33,10 @@ struct AssetDatabase
 	void save() const;
 	bool load(const std::filesystem::path& path);
 
-	std::filesystem::path path;
-	std::vector<AssetRecord> records;
+	PROPERTY() std::filesystem::path path;
+	PROPERTY() std::vector<AssetRecord> records;
 
 	static constexpr char* const Filename = "assets.json";
+
+	GENERATED_BODY()
 };

@@ -1,9 +1,8 @@
 #include "asset_database.h"
 
-#include "asset.h"
+#include <awesome/data/type_file.h>
 
-#include <awesome/data/json_file.h>
-#include <awesome/encoding/json.h>
+#include "asset.h"
 
 bool AssetDatabase::erase(const uuid& id)
 {
@@ -91,17 +90,7 @@ bool AssetDatabase::insert(const AssetRecord& record)
 
 void AssetDatabase::save() const
 {
-	json::value data = json::array();
-	for (const AssetRecord& record : records)
-	{
-		data.push_back(json::object({
-			{"id", static_cast<std::string>(record.id)},
-			{"path", record.path.string()},
-			{"type", record.type}
-			})
-		);
-	}
-	JsonFile::save(data, path);
+	TypeFile::save(*this, path);
 }
 
 bool AssetDatabase::load(const std::filesystem::path& _path)
@@ -109,26 +98,10 @@ bool AssetDatabase::load(const std::filesystem::path& _path)
 	path = _path;
 	if (!std::filesystem::exists(_path)) return false;
 
-	json::value data;
-	if (!JsonFile::load(path, data)) return false;
-
-	// for (const auto& elem : data.as_array())
-	// {
-	// 	AssetRecord record;
-	// 	// record.id = elem["id"].as_string();
-	// 	record.path = elem["path"].as_string();
-	// 	record.type = elem["type"].as_number().as_int();
-	// 	records.push_back(record);
-	// }
-	return true;
+	return TypeFile::load(_path, *this);
 }
 
 void AssetRecord::save(const std::filesystem::path& _path)
 {
-	JsonFile::save(json::object({
-			{"id", static_cast<std::string>(id)},
-			{"type", type}
-		}),
-		_path
-	);
+	TypeFile::save(*this, _path);
 }

@@ -2,7 +2,6 @@
 #pragma once
 
 #include <filesystem>
-#include <memory>
 
 #include <awesome/encoding/json.h>
 
