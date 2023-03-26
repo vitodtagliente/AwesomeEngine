@@ -1,0 +1,74 @@
+{
+    "type_id": "Scene",
+    "entities": [{
+    "type_id": "Entity",
+    "name": "",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [],
+    "m_id": {
+        "type_id": "uuid",
+        "value": "104299744074100",
+    },
+},{
+    "type_id": "Entity",
+    "name": "",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [],
+    "m_id": {
+        "type_id": "uuid",
+        "value": "104299744482400",
+    },
+},],
+}

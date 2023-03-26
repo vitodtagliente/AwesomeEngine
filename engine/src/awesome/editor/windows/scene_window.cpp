@@ -113,7 +113,7 @@ void SceneWindow::update(double)
 void SceneWindow::addEntity(Entity* const parent)
 {
 	Entity* const entity = parent ? parent->addChild() : SceneGraph::instance().root()->addChild();
-	entity->name = static_cast<std::string>(entity->id());
+	entity->name = entity->id().value;
 	if (parent == nullptr)
 	{
 		m_editorState->select(entity);
@@ -152,7 +152,7 @@ void SceneWindow::deleteEntity(Entity* const entity)
 
 void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntity)
 {
-	const std::string name = entity->name + "##entity" + static_cast<std::string>(entity->id());
+	const std::string name = entity->name + "##entity" + entity->id().value;
 	if (entity->hasChildren())
 	{
 		const bool open = TreeLayout::begin(name.c_str(), entity == selectedEntity);

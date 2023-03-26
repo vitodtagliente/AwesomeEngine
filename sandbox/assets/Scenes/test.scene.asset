@@ -1,11 +1,8 @@
 {
-    "type_id": "AssetDatabase",
-    "records": [{
     "type_id": "AssetRecord",
     "id": {
         "type_id": "uuid",
         "value": "104299745121600",
     },
     "type": 4,
-},],
 }

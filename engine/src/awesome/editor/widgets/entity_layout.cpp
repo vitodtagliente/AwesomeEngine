@@ -13,9 +13,9 @@
 void EntityLayout::input(Entity& entity)
 {
 	FormLayout::begin("entity");
-	FormLayout::button(entity.tag.c_str(), graphics::Color(1.f, .6f, .6f));
+	FormLayout::button(entity.type_name(), graphics::Color(1.f, .6f, .6f));
 	FormLayout::sameLine();
-	FormLayout::button(static_cast<std::string>(entity.id()).c_str(), graphics::Color(0.f, .6f, .6f));
+	FormLayout::button(entity.id().value.c_str(), graphics::Color(0.f, .6f, .6f));
 	FormLayout::input("Name", entity.name);
 	FormLayout::input("Tag", entity.tag);
 	FormLayout::separator();
