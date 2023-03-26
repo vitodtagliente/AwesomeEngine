@@ -2,11 +2,14 @@
 
 #include <thread>
 
-void AssetLibrary::init(const std::filesystem::path& path)
+void AssetLibrary::init(const EngineMode mode, const std::filesystem::path& path)
 {
 	m_path = path;
-	const std::filesystem::path db_path = path / AssetDatabase::Filename;
-	database.load(db_path);
+	database.path = path / AssetDatabase::Filename;
+	if (mode != EngineMode::Editor)
+	{
+		database.load(database.path);
+	}
 
 	// register the handlers
 	for (const auto& [name, options] : TypeFactory::list("Type", "AssetHandler"))

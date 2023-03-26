@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
+#include <awesome/engine/engine_settings.h>
 
 #include "asset.h"
 #include "asset_database.h"
@@ -25,7 +26,7 @@ public:
 
 	inline const std::filesystem::path& path() const { return m_path; }
 
-	void init(const std::filesystem::path& path);
+	void init(EngineMode mode, const std::filesystem::path& path);
 
 	AssetPtr find(const uuid& id);
 	template <typename T>

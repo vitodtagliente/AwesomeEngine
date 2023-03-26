@@ -128,7 +128,9 @@ void Engine::initSettings()
 {
 	const std::filesystem::path workspace = std::filesystem::current_path() / "../assets";
 	AssetLibrary& library = AssetLibrary::instance();
-	library.init(workspace);
+	const EngineMode mode = settings.mode;
+	library.init(mode, workspace);
+	if (mode == EngineMode::Editor)
 	{
 		bool newFilesFound = false;
 		const bool recursiveSearch = true;

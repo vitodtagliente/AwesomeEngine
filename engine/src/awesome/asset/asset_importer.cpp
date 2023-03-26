@@ -3,7 +3,7 @@
 #include <string>
 
 #include <awesome/core/string_util.h>
-#include <awesome/data/json_file.h>
+#include <awesome/data/type_file.h>
 
 #include "asset.h"
 #include "asset_library.h"
@@ -63,8 +63,13 @@ bool AssetImporter::importFile(const std::filesystem::path& path, bool& newFiles
 	const std::filesystem::path assetPath = path.string() + Asset::Extension;
 	if (std::filesystem::exists(assetPath))
 	{
-		// the asset should be already loaded into the database
-		return db.find(path) == nullptr;
+		AssetRecord record;
+		if (TypeFile::load(assetPath, record))
+		{
+			record.path = path;
+			db.insert(std::move(record));
+			return true;
+		}
 	}
 
 	int assetType = AssetType_Invalid;
