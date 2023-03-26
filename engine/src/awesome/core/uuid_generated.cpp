@@ -80,7 +80,7 @@ std::string reflect::Type<uuid>::to_json(const uuid& type, const std::string& of
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "uuid" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"uuid\"" << "," << std::endl;
     stream << offset << "    " << "\"value\": " << reflect::encoding::json::Serializer::to_string(type.value) << "," << std::endl;
     stream << offset << "}";
     return stream.str();

@@ -123,7 +123,7 @@ std::string reflect::Type<SpriteRendererComponent>::to_json(const SpriteRenderer
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "SpriteRendererComponent" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"SpriteRendererComponent\"" << "," << std::endl;
     // Parent class Component properties
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
     stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;

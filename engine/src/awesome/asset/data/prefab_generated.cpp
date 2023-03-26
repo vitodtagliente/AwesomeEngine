@@ -84,7 +84,7 @@ std::string reflect::Type<Prefab>::to_json(const Prefab& type, const std::string
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "Prefab" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"Prefab\"" << "," << std::endl;
     stream << offset << "    " << "\"entity\": " << type.entity.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();

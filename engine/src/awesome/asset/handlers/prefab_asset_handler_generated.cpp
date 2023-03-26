@@ -85,7 +85,7 @@ std::string reflect::Type<PrefabAssetHandler>::to_json(const PrefabAssetHandler&
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "PrefabAssetHandler" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"PrefabAssetHandler\"" << "," << std::endl;
     // Parent class AssetHandler properties
     // Properties
     stream << offset << "}";

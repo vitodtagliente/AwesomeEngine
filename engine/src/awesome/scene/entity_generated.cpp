@@ -170,7 +170,7 @@ std::string reflect::Type<Entity>::to_json(const Entity& type, const std::string
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "Entity" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"Entity\"" << "," << std::endl;
     stream << offset << "    " << "\"name\": " << reflect::encoding::json::Serializer::to_string(type.name) << "," << std::endl;
     stream << offset << "    " << "\"persistent\": " << reflect::encoding::json::Serializer::to_string(type.persistent) << "," << std::endl;
     stream << offset << "    " << "\"replicate\": " << reflect::encoding::json::Serializer::to_string(type.replicate) << "," << std::endl;

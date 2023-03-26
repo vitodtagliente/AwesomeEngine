@@ -85,7 +85,7 @@ std::string reflect::Type<ImageAssetHandler>::to_json(const ImageAssetHandler& t
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "ImageAssetHandler" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"ImageAssetHandler\"" << "," << std::endl;
     // Parent class AssetHandler properties
     // Properties
     stream << offset << "}";

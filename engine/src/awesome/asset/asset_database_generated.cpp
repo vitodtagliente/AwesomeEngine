@@ -88,7 +88,7 @@ std::string reflect::Type<AssetRecord>::to_json(const AssetRecord& type, const s
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "AssetRecord" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"AssetRecord\"" << "," << std::endl;
     stream << offset << "    " << "\"id\": " << type.id.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"type\": " << reflect::encoding::json::Serializer::to_string(type.type) << "," << std::endl;
     stream << offset << "}";
@@ -204,7 +204,7 @@ std::string reflect::Type<AssetDatabase>::to_json(const AssetDatabase& type, con
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "AssetDatabase" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"AssetDatabase\"" << "," << std::endl;
     stream << offset << "    " << "\"records\": " << reflect::encoding::json::Serializer::to_string(type.records) << "," << std::endl;
     stream << offset << "}";
     return stream.str();

@@ -126,7 +126,7 @@ std::string reflect::Type<EngineSettings>::to_json(const EngineSettings& type, c
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "EngineSettings" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"EngineSettings\"" << "," << std::endl;
     stream << offset << "    " << "\"fps\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.fps)) << "," << std::endl;
     stream << offset << "    " << "\"mode\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.mode)) << "," << std::endl;
     stream << offset << "}";

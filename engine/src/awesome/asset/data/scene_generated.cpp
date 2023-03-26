@@ -102,7 +102,7 @@ std::string reflect::Type<Scene>::to_json(const Scene& type, const std::string& 
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "Scene" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"Scene\"" << "," << std::endl;
     stream << offset << "    " << "\"entities\": " << reflect::encoding::json::Serializer::to_string(type.entities) << "," << std::endl;
     stream << offset << "}";
     return stream.str();

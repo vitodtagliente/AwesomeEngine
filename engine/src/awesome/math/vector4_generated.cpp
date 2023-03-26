@@ -93,7 +93,7 @@ std::string reflect::Type<math::vec4>::to_json(const math::vec4& type, const std
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "math::vec4" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"math::vec4\"" << "," << std::endl;
     stream << offset << "    " << "\"x\": " << reflect::encoding::json::Serializer::to_string(type.x) << "," << std::endl;
     stream << offset << "    " << "\"y\": " << reflect::encoding::json::Serializer::to_string(type.y) << "," << std::endl;
     stream << offset << "    " << "\"z\": " << reflect::encoding::json::Serializer::to_string(type.z) << "," << std::endl;

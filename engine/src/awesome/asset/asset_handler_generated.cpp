@@ -76,7 +76,7 @@ std::string reflect::Type<AssetHandler>::to_json(const AssetHandler& type, const
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "AssetHandler" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"AssetHandler\"" << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

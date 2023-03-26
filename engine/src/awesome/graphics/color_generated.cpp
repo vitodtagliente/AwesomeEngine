@@ -92,7 +92,7 @@ std::string reflect::Type<graphics::Color>::to_json(const graphics::Color& type,
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "graphics::Color" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"graphics::Color\"" << "," << std::endl;
     stream << offset << "    " << "\"red\": " << reflect::encoding::json::Serializer::to_string(type.red) << "," << std::endl;
     stream << offset << "    " << "\"green\": " << reflect::encoding::json::Serializer::to_string(type.green) << "," << std::endl;
     stream << offset << "    " << "\"blue\": " << reflect::encoding::json::Serializer::to_string(type.blue) << "," << std::endl;

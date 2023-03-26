@@ -88,7 +88,7 @@ std::string reflect::Type<Component>::to_json(const Component& type, const std::
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "Component" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"Component\"" << "," << std::endl;
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
     stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";

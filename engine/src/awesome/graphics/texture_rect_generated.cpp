@@ -92,7 +92,7 @@ std::string reflect::Type<graphics::TextureRect>::to_json(const graphics::Textur
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "graphics::TextureRect" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"graphics::TextureRect\"" << "," << std::endl;
     stream << offset << "    " << "\"x\": " << reflect::encoding::json::Serializer::to_string(type.x) << "," << std::endl;
     stream << offset << "    " << "\"y\": " << reflect::encoding::json::Serializer::to_string(type.y) << "," << std::endl;
     stream << offset << "    " << "\"width\": " << reflect::encoding::json::Serializer::to_string(type.width) << "," << std::endl;

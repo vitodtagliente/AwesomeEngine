@@ -104,7 +104,7 @@ std::string reflect::Type<math::transform>::to_json(const math::transform& type,
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "math::transform" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"math::transform\"" << "," << std::endl;
     stream << offset << "    " << "\"position\": " << reflect::Type<math::vec3>::to_json(type.position, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"rotation\": " << reflect::Type<math::vec3>::to_json(type.rotation, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"scale\": " << reflect::Type<math::vec3>::to_json(type.scale, offset + "    ") << "," << std::endl;

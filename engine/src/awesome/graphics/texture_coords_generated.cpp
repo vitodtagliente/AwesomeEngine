@@ -84,7 +84,7 @@ std::string reflect::Type<graphics::TextureCoords>::to_json(const graphics::Text
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "graphics::TextureCoords" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"graphics::TextureCoords\"" << "," << std::endl;
     stream << offset << "    " << "\"u\": " << reflect::encoding::json::Serializer::to_string(type.u) << "," << std::endl;
     stream << offset << "    " << "\"v\": " << reflect::encoding::json::Serializer::to_string(type.v) << "," << std::endl;
     stream << offset << "}";
