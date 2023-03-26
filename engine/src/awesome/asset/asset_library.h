@@ -12,15 +12,8 @@
 
 #include "asset.h"
 #include "asset_database.h"
+#include "asset_handler.h"
 #include "asset_type.h"
-
-struct AssetHandler
-{
-	std::function<AssetPtr()> create;
-	std::vector<std::string> extensions;
-	std::string name;
-	int type{ AssetType_Invalid };
-};
 
 class AssetLibrary : public Singleton<AssetLibrary>
 {

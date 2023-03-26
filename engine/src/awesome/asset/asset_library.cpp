@@ -2,10 +2,6 @@
 
 #include <thread>
 
-#include "image_asset.h"
-#include "prefab_asset.h"
-#include "scene_asset.h"
-
 void AssetLibrary::init(const std::filesystem::path& path)
 {
 	m_path = path;
@@ -13,24 +9,14 @@ void AssetLibrary::init(const std::filesystem::path& path)
 	database.load(db_path);
 
 	// register the handlers
-	m_handlers.push_back(AssetHandler{
-		[]() ->AssetPtr { return std::make_shared<ImageAsset>(); },
-		{ ".png", ".bmp", ".jpg", ".jpeg" },
-		"ImageAsset",
-		AssetType_Image
-	});
-	m_handlers.push_back(AssetHandler{
-		[]() ->AssetPtr { return std::make_shared<PrefabAsset>(); },
-		{ ".prefab" },
-		"PrefabAsset",
-		AssetType_Prefab
-	});
-	m_handlers.push_back(AssetHandler{
-		[]() ->AssetPtr { return std::make_shared<SceneAsset>(); },
-		{ ".scene" },
-		"SceneAsset",
-		AssetType_Scene
-	});
+	for (const auto& [name, options] : TypeFactory::list("Type", "AssetHandler"))
+	{
+		std::unique_ptr<AssetHandler> handler = std::unique_ptr<AssetHandler>(TypeFactory::instantiate<AssetHandler>(name));
+		if (handler != nullptr)
+		{
+			m_handlers.push_back(*handler);
+		}
+	}
 }
 
 void AssetLibrary::release(const AssetPtr& asset)
