@@ -7,6 +7,9 @@
 #include <awesome/asset/asset.h>
 #include <awesome/editor/window.h>
 
+#include "asset_inspector_window_generated.h"
+
+CLASS(Type = Window)
 class AssetInspectorWindow : public Window
 {
 public:
@@ -25,6 +28,8 @@ public:
 	virtual void init() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;
+
+	GENERATED_BODY()
 
 private:
 	class EditorState* m_editorState{ nullptr };

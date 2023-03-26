@@ -6,6 +6,9 @@
 #include <awesome/data/directory.h>
 #include <awesome/editor/window.h>
 
+#include "content_browser_window_generated.h"
+
+CLASS(Type = Window)
 class ContentBrowserWindow : public Window
 {
 public:
@@ -15,6 +18,8 @@ public:
 	virtual void init() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;
+
+	GENERATED_BODY()
 
 private:
 

@@ -1,13 +1,18 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class Window
+#include <awesome/core/reflection.h>
+
+#include "window_generated.h"
+
+CLASS()
+class Window : public IType
 {
 public:
 	Window() = default;
 	virtual ~Window() = default;
 
-	virtual char* const getTitle() const = 0;
+	virtual char* const getTitle() const { return ""; }
 
 	inline bool hasFocus() const { return m_hasFocus; }
 	inline bool isHovered() const { return m_isHovered; }
@@ -22,6 +27,8 @@ public:
 	virtual void onFocusChange(bool /*focus*/) {}
 
 	bool visible{ true };
+
+	GENERATED_BODY()
 
 private:
 	bool m_hasFocus{ false };
