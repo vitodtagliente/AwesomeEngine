@@ -44,10 +44,10 @@ void reflect::Type<Scene>::from_string(const std::string& str, Scene& type)
     if (_name != name()) return;
     
     {
+        type.entities.clear();
         std::size_t size;
         stream >> size;
-        type.entities.resize(size);
-        for (int i = 0; i < type.entities.size(); ++i)
+        for (int i = 0; i < size; ++i)
         {
             Entity element;
             {

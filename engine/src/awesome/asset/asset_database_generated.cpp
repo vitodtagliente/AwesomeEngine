@@ -146,10 +146,10 @@ void reflect::Type<AssetDatabase>::from_string(const std::string& str, AssetData
     if (_name != name()) return;
     
     {
+        type.records.clear();
         std::size_t size;
         stream >> size;
-        type.records.resize(size);
-        for (int i = 0; i < type.records.size(); ++i)
+        for (int i = 0; i < size; ++i)
         {
             AssetRecord element;
             {

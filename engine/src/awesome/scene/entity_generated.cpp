@@ -68,33 +68,71 @@ void reflect::Type<Entity>::from_string(const std::string& str, Entity& type)
     }
     stream >> type.transient;
     {
+        type.m_children.clear();
         std::size_t size;
         stream >> size;
-        type.m_children.resize(size);
-        for (int i = 0; i < type.m_children.size(); ++i)
+        for (int i = 0; i < size; ++i)
         {
             std::unique_ptr<Entity> element;
-            element = std::make_unique<Entity>();
             {
-                std::string pack;
-                stream >> pack;
-                element->from_string(pack);
+                bool valid = false;
+                stream >> valid;
+                if (valid)
+                {
+                    reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+                    std::size_t temp_element_size;
+                    temp_stream >> temp_element_size;
+                    std::string type_id;
+                    temp_stream >> type_id;
+                    if (type_id == Type<Entity>::name())
+                    {
+                        element = std::make_unique<Entity>();
+                    }
+                    else
+                    {
+                        element = std::unique_ptr<Entity>(TypeFactory::instantiate<Entity>(type_id));
+                    }
+                    {
+                        std::string pack;
+                        stream >> pack;
+                        element->from_string(pack);
+                    }
+                }
             }
             type.m_children.push_back(std::move(element));
         }
     }
     {
+        type.m_components.clear();
         std::size_t size;
         stream >> size;
-        type.m_components.resize(size);
-        for (int i = 0; i < type.m_components.size(); ++i)
+        for (int i = 0; i < size; ++i)
         {
             std::unique_ptr<Component> element;
-            element = std::make_unique<Component>();
             {
-                std::string pack;
-                stream >> pack;
-                element->from_string(pack);
+                bool valid = false;
+                stream >> valid;
+                if (valid)
+                {
+                    reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+                    std::size_t temp_element_size;
+                    temp_stream >> temp_element_size;
+                    std::string type_id;
+                    temp_stream >> type_id;
+                    if (type_id == Type<Component>::name())
+                    {
+                        element = std::make_unique<Component>();
+                    }
+                    else
+                    {
+                        element = std::unique_ptr<Component>(TypeFactory::instantiate<Component>(type_id));
+                    }
+                    {
+                        std::string pack;
+                        stream >> pack;
+                        element->from_string(pack);
+                    }
+                }
             }
             type.m_components.push_back(std::move(element));
         }
@@ -122,6 +160,7 @@ std::string reflect::Type<Entity>::to_string(const Entity& type)
         stream << type.m_children.size();
         for (const auto& element : type.m_children)
         {
+            stream << (element ? true : false); 
             if(element) stream << static_cast<std::string>(*element);
         }
     }
@@ -129,6 +168,7 @@ std::string reflect::Type<Entity>::to_string(const Entity& type)
         stream << type.m_components.size();
         for (const auto& element : type.m_components)
         {
+            stream << (element ? true : false); 
             if(element) stream << static_cast<std::string>(*element);
         }
     }
