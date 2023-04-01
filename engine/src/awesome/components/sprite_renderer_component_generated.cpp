@@ -22,7 +22,9 @@ const reflect::properties_t& Type<SpriteRendererComponent>::properties()
         { "color", reflect::Property{ offsetof(SpriteRendererComponent, color), reflect::meta_t { }, "color", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
         { "flipX", reflect::Property{ offsetof(SpriteRendererComponent, flipX), reflect::meta_t { }, "flipX", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "flipY", reflect::Property{ offsetof(SpriteRendererComponent, flipY), reflect::meta_t { }, "flipY", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "image", reflect::Property{ offsetof(SpriteRendererComponent, image), reflect::meta_t { }, "image", reflect::PropertyType{ "ImageAssetPtr", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(ImageAssetPtr), reflect::PropertyType::Type::T_unknown } } },
+        { "image", reflect::Property{ offsetof(SpriteRendererComponent, image), reflect::meta_t { }, "image", reflect::PropertyType{ "std::shared_ptr<ImageAsset>", { 
+            reflect::PropertyType{ "ImageAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(ImageAsset), reflect::PropertyType::Type::T_type },
+        }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::shared_ptr<ImageAsset>), reflect::PropertyType::Type::T_template } } },
         { "rect", reflect::Property{ offsetof(SpriteRendererComponent, rect), reflect::meta_t { }, "rect", reflect::PropertyType{ "graphics::TextureRect", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::TextureRect), reflect::PropertyType::Type::T_native } } },
     };
     return s_properties;
@@ -67,6 +69,31 @@ void reflect::Type<SpriteRendererComponent>::from_string(const std::string& str,
     stream >> type.flipX;
     stream >> type.flipY;
     {
+        bool valid = false;
+        stream >> valid;
+        if (valid)
+        {
+            reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+            std::size_t temp_element_size;
+            temp_stream >> temp_element_size;
+            std::string type_id;
+            temp_stream >> type_id;
+            if (type_id == Type<ImageAsset>::name())
+            {
+                type.image = std::make_shared<ImageAsset>();
+            }
+            else
+            {
+                type.image = std::shared_ptr<ImageAsset>(TypeFactory::instantiate<ImageAsset>(type_id));
+            }
+            {
+                std::string pack;
+                stream >> pack;
+                type.image->from_string(pack);
+            }
+        }
+    }
+    {
         std::string pack;
         stream >> pack;
         reflect::Type<graphics::TextureRect>::from_string(pack, type.rect);
@@ -86,6 +113,8 @@ std::string reflect::Type<SpriteRendererComponent>::to_string(const SpriteRender
     stream << reflect::Type<graphics::Color>::to_string(type.color);
     stream << type.flipX;
     stream << type.flipY;
+    stream << (type.image ? true : false); 
+    if(type.image) stream << static_cast<std::string>(*type.image);
     stream << reflect::Type<graphics::TextureRect>::to_string(type.rect);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
@@ -112,6 +141,7 @@ void reflect::Type<SpriteRendererComponent>::from_json(const std::string& json, 
             if (key == "color") reflect::Type<graphics::Color>::from_json(value, type.color);
             if (key == "flipX") reflect::encoding::json::Deserializer::parse(value, type.flipX);
             if (key == "flipY") reflect::encoding::json::Deserializer::parse(value, type.flipY);
+            if (key == "image") reflect::encoding::json::Deserializer::parse(value, type.image);
             if (key == "rect") reflect::Type<graphics::TextureRect>::from_json(value, type.rect);
             src = src.substr(index + 1);
         }
@@ -131,6 +161,7 @@ std::string reflect::Type<SpriteRendererComponent>::to_json(const SpriteRenderer
     stream << offset << "    " << "\"color\": " << reflect::Type<graphics::Color>::to_json(type.color, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"flipX\": " << reflect::encoding::json::Serializer::to_string(type.flipX) << "," << std::endl;
     stream << offset << "    " << "\"flipY\": " << reflect::encoding::json::Serializer::to_string(type.flipY) << "," << std::endl;
+    stream << offset << "    " << "\"image\": " << reflect::encoding::json::Serializer::to_string(type.image) << "," << std::endl;
     stream << offset << "    " << "\"rect\": " << reflect::Type<graphics::TextureRect>::to_json(type.rect, offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();

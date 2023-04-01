@@ -7,7 +7,7 @@ void SceneGraph::clear()
 	m_root.removeChildren();
 }
 
-bool SceneGraph::load(const SceneAssetPtr& scene)
+bool SceneGraph::load(const std::shared_ptr<SceneAsset>& scene)
 {
 	if (m_state == State::Loading || scene->state != Asset::State::Ready)
 	{

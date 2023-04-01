@@ -4,6 +4,9 @@
 #include "asset.h"
 #include "data/prefab.h"
 
+#include "prefab_asset_generated.h"
+
+CLASS()
 struct PrefabAsset : public Asset
 {
 	PrefabAsset();
@@ -12,6 +15,6 @@ struct PrefabAsset : public Asset
 	virtual bool save(const std::filesystem::path& path) const override;
 
 	Prefab data;
-};
 
-typedef std::shared_ptr<PrefabAsset> PrefabAssetPtr;
+	GENERATED_BODY()
+};

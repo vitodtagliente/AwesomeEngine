@@ -69,7 +69,7 @@ void AssetBrowserDialog::render(const std::string& id)
 		}
 		FormLayout::endChild();
 
-		ImageAssetPtr imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
+		std::shared_ptr<ImageAsset> imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
 		if (imageAsset != nullptr)
 		{
 			ImGui::BeginChild("Image Preview", ImVec2(0.f, 200.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);

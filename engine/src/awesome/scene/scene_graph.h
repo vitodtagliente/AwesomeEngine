@@ -24,13 +24,13 @@ public:
 
 	void clear();
 
-	bool load(const SceneAssetPtr& scene);
-	inline const SceneAssetPtr& scene() const { return m_scene; }
+	bool load(const std::shared_ptr<SceneAsset>& scene);
+	inline const std::shared_ptr<SceneAsset>& scene() const { return m_scene; }
 	bool save(const std::filesystem::path& path);
 	inline State state() const { return m_state; }
 
 private:
 	Entity m_root;
-	SceneAssetPtr m_scene;
+	std::shared_ptr<SceneAsset> m_scene;
 	State m_state{ State::Ready };
 };

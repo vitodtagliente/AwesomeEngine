@@ -4,6 +4,9 @@
 #include "asset.h"
 #include "data/image.h"
 
+#include "image_asset_generated.h"
+
+CLASS()
 struct ImageAsset : public Asset
 {
 	ImageAsset();
@@ -12,6 +15,6 @@ struct ImageAsset : public Asset
 	virtual bool save(const std::filesystem::path& path) const override;
 
 	Image data;
-};
 
-typedef std::shared_ptr<ImageAsset> ImageAssetPtr;
+	GENERATED_BODY()
+};

@@ -4,6 +4,9 @@
 #include "asset.h"
 #include "data/scene.h"
 
+#include "scene_asset_generated.h"
+
+CLASS()
 struct SceneAsset : public Asset
 {
 	SceneAsset();
@@ -12,6 +15,6 @@ struct SceneAsset : public Asset
 	virtual bool save(const std::filesystem::path& path) const override;
 
 	Scene data;
-};
 
-typedef std::shared_ptr<SceneAsset> SceneAssetPtr;
+	GENERATED_BODY()
+};

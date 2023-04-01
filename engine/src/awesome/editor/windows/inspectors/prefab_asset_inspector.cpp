@@ -14,7 +14,7 @@ bool PrefabAssetInspector::canInspect(const AssetPtr& asset)
 
 void PrefabAssetInspector::inspect(const AssetPtr& asset)
 {
-	PrefabAssetPtr prefab = std::static_pointer_cast<PrefabAsset>(asset);
+	std::shared_ptr<PrefabAsset> prefab = std::static_pointer_cast<PrefabAsset>(asset);
 	
 	if (FormLayout::button(TextIcon::upload(" Import Prefab").c_str()))
 	{

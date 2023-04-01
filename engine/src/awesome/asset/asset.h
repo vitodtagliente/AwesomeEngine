@@ -6,11 +6,15 @@
 #include <memory>
 #include <vector>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
 #include "asset_type.h"
 
-struct Asset
+#include "asset_generated.h"
+
+CLASS()
+struct Asset : public IType
 {
 	enum class State
 	{
@@ -28,11 +32,11 @@ struct Asset
 	bool operator== (const Asset& other) const;
 	bool operator!= (const Asset& other) const;
 
-	virtual bool load(const std::filesystem::path&) = 0;
+	virtual bool load(const std::filesystem::path&) { return true; };
 	bool save() const;
-	virtual bool save(const std::filesystem::path&) const = 0;
-	
-	uuid id;
+	virtual bool save(const std::filesystem::path&) const { return true; };
+
+	PROPERTY() uuid id;
 	std::filesystem::path path;
 	State state{ State::None };
 	int type{ AssetType_Invalid };
@@ -46,6 +50,8 @@ struct Asset
 	static bool isSupported(const std::filesystem::path& path, int& type);
 
 	static constexpr char* const Extension = ".asset";
+
+	GENERATED_BODY()
 };
 
 typedef std::shared_ptr<Asset> AssetPtr;

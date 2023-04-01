@@ -10,6 +10,6 @@ bool ImageAssetInspector::canInspect(const AssetPtr& asset)
 
 void ImageAssetInspector::inspect(const AssetPtr& asset)
 {
-	ImageAssetPtr image = std::static_pointer_cast<ImageAsset>(asset);
+	std::shared_ptr<ImageAsset> image = std::static_pointer_cast<ImageAsset>(asset);
 	FormLayout::image(image);
 }

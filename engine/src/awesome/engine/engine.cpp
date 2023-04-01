@@ -156,7 +156,7 @@ void Engine::initSettings()
 		JsonFile::load(settingsPath, settings);
 	}
 
-	SceneAssetPtr sceneToLoad;
+	std::shared_ptr<SceneAsset> sceneToLoad;
 	switch (settings.mode)
 	{
 	case Mode::Editor: sceneToLoad = settings.scene->editorScene; break;
