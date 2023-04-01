@@ -17,6 +17,11 @@ std::string TextIcon::eraser(const std::string& name)
     return std::string(ICON_FA_ERASER) + name;
 }
 
+std::string TextIcon::eye(const std::string& name)
+{
+    return std::string(ICON_FA_EYE) + name;
+}
+
 std::string TextIcon::file(const std::string& name)
 {
     return std::string(ICON_FA_FILE_CODE) + name;

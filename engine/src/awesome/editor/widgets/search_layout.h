@@ -8,4 +8,7 @@ struct SearchLayout final
 	SearchLayout() = delete;
 
 	static bool input(std::string& value);
+
+private:
+
 };

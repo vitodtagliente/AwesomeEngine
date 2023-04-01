@@ -12,6 +12,7 @@ public:
 	Window() = default;
 	virtual ~Window() = default;
 
+	virtual char* const getIcon() const { return ""; }
 	virtual char* const getTitle() const { return ""; }
 
 	inline bool hasFocus() const { return m_hasFocus; }

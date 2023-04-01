@@ -10,6 +10,7 @@ struct TextIcon final
 	static std::string copy(const std::string& name = "");
 	static std::string cube(const std::string& name = "");
 	static std::string eraser(const std::string& name = "");
+	static std::string eye(const std::string& name = "");
 	static std::string file(const std::string& name = "");
 	static std::string folder(const std::string& name = "");
 	static std::string horse(const std::string& name = "");

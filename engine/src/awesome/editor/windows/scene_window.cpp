@@ -25,17 +25,14 @@ void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
 	
-	if (FormLayout::button(TextIcon::plus(" Add Entity").c_str()))
+	if (FormLayout::button(TextIcon::plus(" Add").c_str()))
 	{
-		addEntity(selectedEntity);
+		addEntity(nullptr);
 	}
 
-	if (SearchLayout::input(m_filter) || !hasFocus())
-	{
-		m_state = NavigationState::Navigating;
-	}
+	FormLayout::sameLine();
 
-	FormLayout::separator();
+	SearchLayout::input(m_filter);
 
 	FormLayout::beginChild("Content");
 	for (const auto& entity : SceneGraph::instance().root()->children())

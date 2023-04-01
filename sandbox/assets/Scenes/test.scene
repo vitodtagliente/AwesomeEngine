@@ -2,9 +2,9 @@
     "type_id": "Scene",
     "entities": [{
     "type_id": "Entity",
-    "name": "",
-    "persistent": false,
-    "replicate": false,
+    "name": "181756059572700",
+    "persistent": true,
+    "replicate": true,
     "tag": "",
     "transform": {
         "type_id": "math::transform",
@@ -33,11 +33,11 @@
     "m_components": [],
     "m_id": {
         "type_id": "uuid",
-        "value": "104299744074100",
+        "value": "181756059572700",
     },
 },{
     "type_id": "Entity",
-    "name": "",
+    "name": "181758942958000",
     "persistent": false,
     "replicate": false,
     "tag": "",
@@ -61,14 +61,14 @@
             "y": 1.000000,
             "z": 1.000000,
         },
-        "isStatic": false,
+        "isStatic": true,
     },
     "transient": false,
     "m_children": [],
     "m_components": [],
     "m_id": {
         "type_id": "uuid",
-        "value": "104299744482400",
+        "value": "181758942958000",
     },
 },],
 }

@@ -1,6 +1,7 @@
 #include "search_layout.h"
 
 #include <imgui.h>
+#include <imgui_stdlib.h>
 
 #include <awesome/editor/text_icon.h>
 
@@ -8,9 +9,9 @@
 
 bool SearchLayout::input(std::string& value)
 {
-	FormLayout::beginChild("Header", 0.f, 26.f);
 	const std::string previousFilter = value;
-	FormLayout::input(TextIcon::search().c_str(), value);
-	FormLayout::endChild();
+	ImGui::PushItemWidth(-1);
+	ImGui::InputTextWithHint("filter", TextIcon::search(" Search...").c_str(), &value);
+	ImGui::PopItemWidth();
 	return previousFilter != value;
 }
