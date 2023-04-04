@@ -19,6 +19,7 @@ class FormLayout final
 public:
 	FormLayout() = delete;
 
+	static void asset(const char* const name, std::shared_ptr<Asset>& asset, const char* const assetTypeName);
 	static void begin(const char* const name);
 	static void beginChild(const char* const name);
 	static void beginChild(const char* const name, float width, float height);

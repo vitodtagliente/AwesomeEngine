@@ -24,5 +24,5 @@ private:
 	std::string m_id;
 	bool m_open{ false };
 	AssetPtr m_selectedAsset{ nullptr };
-	int m_type;
+	int m_type{ AssetType_Invalid };
 };

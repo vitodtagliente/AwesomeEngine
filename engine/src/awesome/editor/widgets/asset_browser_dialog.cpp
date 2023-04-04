@@ -17,10 +17,13 @@ void AssetBrowserDialog::close()
 
 void AssetBrowserDialog::open(const std::string& id, const int type, const std::function<void(const AssetPtr&)>& handler)
 {
-	m_handler = handler;
-	m_id = id;
-	m_open = true;
-	m_type = type;
+	if (type != AssetType_Invalid)
+	{
+		m_handler = handler;
+		m_id = id;
+		m_open = true;
+		m_type = type;
+	}
 }
 
 void AssetBrowserDialog::render(const std::string& id)

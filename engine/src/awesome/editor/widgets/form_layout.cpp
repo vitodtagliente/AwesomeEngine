@@ -3,10 +3,34 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
+#include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
 std::vector<std::string> FormLayout::s_context;
+
+void FormLayout::asset(const char* const name, std::shared_ptr<Asset>& asset, const char* const assetTypeName)
+{
+	static AssetBrowserDialog s_assetBrowserDialog;
+
+	std::string label(name);
+	label.append(":");
+	if (asset != nullptr)
+	{
+		label.append(asset->path.stem().string());
+	}
+
+	if (selectable(label.c_str(), false))
+	{
+		std::shared_ptr<Asset> newAsset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(assetTypeName));
+		s_assetBrowserDialog.open(name, newAsset ? newAsset->type : AssetType_Invalid, [&asset](const AssetPtr& newAsset) -> void
+			{
+				asset = newAsset;
+			}
+		);
+	}
+	s_assetBrowserDialog.render(name);
+}
 
 void FormLayout::begin(const char* const name)
 {
