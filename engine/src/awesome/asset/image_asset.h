@@ -4,6 +4,8 @@
 #include "asset.h"
 #include "data/image.h"
 
+#include "resource.h"
+
 #include "image_asset_generated.h"
 
 CLASS()
@@ -18,3 +20,5 @@ struct ImageAsset : public Asset
 
 	GENERATED_BODY()
 };
+
+typedef Resource<Image, ResourceLoader<Image>> ImageResource;
