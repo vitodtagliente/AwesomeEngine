@@ -6,6 +6,7 @@
 #include <memory>
 #include <thread>
 
+#include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
 #include "resource_loader.h"
@@ -98,6 +99,9 @@ public:
 		m_resource = nullptr;
 		m_state = State::None;
 	}
+
+	template <typename T>
+	friend struct Type;
 
 private:
 	uuid m_id;

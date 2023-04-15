@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/core/reflection.h>
+
 #include "asset.h"
 #include "data/image.h"
 
@@ -21,4 +23,22 @@ struct ImageAsset : public Asset
 	GENERATED_BODY()
 };
 
-typedef Resource<Image, ResourceLoader<Image>> ImageResource;
+template <>
+struct ResourceLoader<Image>
+{
+	using result_type = std::shared_ptr<Image>;
+
+	template <typename... Args>
+	result_type operator()(const std::filesystem::path& path, Args&&... args)
+	{
+		return std::make_shared<T>(Image::load(path));
+	};
+};
+
+typedef FAsset<Image, ResourceLoader<Image>> FImageAsset;
+
+NATIVE_CLASS(FImageAsset, typedef FAsset<Image, ResourceLoader<Image>> FImageAsset;)
+struct native_FImageAsset
+{
+	PROPERTY() uuid m_id;
+};
