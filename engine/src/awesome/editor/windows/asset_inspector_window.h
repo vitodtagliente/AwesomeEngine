@@ -17,9 +17,9 @@ public:
 	{
 		AssetInspector() = default;
 		virtual ~AssetInspector() = default;
-		virtual bool canInspect(const AssetRecord* const /*asset*/) { return false; }
-		virtual void update(const AssetRecord* const, double /*deltaTime*/) {}
-		virtual void inspect(const AssetRecord* const /*asset*/) = 0;
+		virtual bool canInspect(const AssetRecord& /*asset*/) { return false; }
+		virtual void update(const AssetRecord&, double /*deltaTime*/) {}
+		virtual void inspect(const AssetRecord& /*asset*/) = 0;
 	};
 
 	AssetInspectorWindow();

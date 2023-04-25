@@ -16,16 +16,20 @@ struct ResourceLoader<Scene>
 	template <typename... Args>
 	result_type operator()(const std::filesystem::path& path, Args&&... args)
 	{
-		result_type result = std::shared_ptr<Scene>();
-		return TypeFile::load(path, *result);
+		result_type result = std::make_shared<Scene>();
+		if (TypeFile::load(path, *result))
+		{
+			return result;
+		}
+		return nullptr;
 	};
 };
 
-constexpr int AssetType_Scene = 8;
+constexpr int AssetType_Scene = 4;
 
 typedef AssetHandle<AssetType_Scene, Scene, ResourceLoader<Scene>> SceneAsset;
 
-NATIVE_CLASS(SceneAsset, typedef AssetHandle<8, Scene, ResourceLoader<Scene>> SceneAsset;)
+NATIVE_CLASS(SceneAsset, typedef AssetHandle<4, Scene, ResourceLoader<Scene>> SceneAsset;)
 struct native_SceneAsset
 {
 	PROPERTY() uuid id;

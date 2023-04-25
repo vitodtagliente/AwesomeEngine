@@ -4,7 +4,7 @@
 
 #include <vdtreflect/runtime.h>
 
-typedef AssetHandle<4 , Prefab , ResourceLoader<Prefab>> PrefabAsset;
+typedef AssetHandle<3 , Prefab , ResourceLoader<Prefab>> PrefabAsset;
 
 template <>
 struct reflect::Type<PrefabAsset>

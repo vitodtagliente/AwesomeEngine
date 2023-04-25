@@ -5,7 +5,7 @@
 const reflect::meta_t& reflect::Type<PrefabAsset>::meta()
 {
     static reflect::meta_t s_meta {
-        { "forward_declaration", "typedef AssetHandle<4 , Prefab , ResourceLoader<Prefab>> PrefabAsset;" },
+        { "forward_declaration", "typedef AssetHandle<3 , Prefab , ResourceLoader<Prefab>> PrefabAsset;" },
     };
     return s_meta;
 }

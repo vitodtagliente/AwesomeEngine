@@ -17,6 +17,10 @@ struct AssetRecord : public IType
 
 	void save(const std::filesystem::path& path);
 
+	AssetRecord& operator= (const AssetRecord& other);
+	bool operator== (const AssetRecord& other) const;
+	bool operator!= (const AssetRecord& other) const;
+
 	GENERATED_BODY()
 };
 

@@ -2,9 +2,11 @@
 #pragma once
 
 #include <filesystem>
+#include <optional>
+
+#include <awesome/asset/asset_database.h>
 #include <awesome/core/event.h>
 
-struct AssetRecord;
 class Entity;
 
 class EditorState
@@ -12,7 +14,7 @@ class EditorState
 public:
 	struct Selection
 	{
-		AssetRecord* asset{ nullptr };
+		std::optional<AssetRecord> asset;
 		Entity* entity{ nullptr };
 	};
 
@@ -20,7 +22,7 @@ public:
 
 	static EditorState* const instance() { return s_instance; }
 
-	void select(AssetRecord* const asset);
+	void select(const AssetRecord& asset);
 	void select(Entity* const entity);
 	void select(const std::filesystem::path& path);
 	void unselectAsset();
@@ -31,7 +33,7 @@ public:
 	Selection selection;
 
 	// events
-	event_t<AssetRecord*> onSelectedAssetChanged;
+	event_t<const AssetRecord&> onSelectedAssetChanged;
 	event_t<Entity*> onSelectedEntityChanged;
 	event_t<std::filesystem::path> onSelectedPathChanged;
 

@@ -154,6 +154,8 @@ struct AssetHandle : public Asset
 		return asset;
 	}
 
+	bool ready() const { return state == State::Ready; }
+
 	std::shared_ptr<T> resource;
 
 	static constexpr int Type = Type;

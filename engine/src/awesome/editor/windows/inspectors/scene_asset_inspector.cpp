@@ -5,17 +5,23 @@
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/scene/scene_graph.h>
 
-bool SceneAssetInspector::canInspect(const AssetRecord* const record)
+bool SceneAssetInspector::canInspect(const AssetRecord& const record)
 {
-	return record->type == AssetType_Scene;
+	return record.type == AssetType_Scene;
 }
 
-void SceneAssetInspector::inspect(const AssetRecord* const record)
+void SceneAssetInspector::inspect(const AssetRecord& const record)
 {
-	// SceneAsset& scene = static_cast<SceneAsset&>(asset);
-	// 
-	// if (FormLayout::button(TextIcon::upload(" Load Scene").c_str()))
-	// {
-	// 	SceneGraph::instance().load(scene);
-	// }
+	if (m_asset.id != record.id)
+	{
+		m_asset = SceneAsset(record.id);
+		m_asset.load();
+	}
+
+	if (!m_asset.ready()) return;
+
+	if (FormLayout::button(TextIcon::upload(" Load Scene").c_str()))
+	{
+		SceneGraph::instance().load(m_asset);
+	}
 }

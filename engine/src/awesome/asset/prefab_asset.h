@@ -16,16 +16,20 @@ struct ResourceLoader<Prefab>
 	template <typename... Args>
 	result_type operator()(const std::filesystem::path& path, Args&&... args)
 	{
-		result_type result = std::shared_ptr<Prefab>();
-		return TypeFile::load(path, *result);
+		result_type result = std::make_shared<Prefab>();
+		if (TypeFile::load(path, *result))
+		{
+			return result;
+		}
+		return nullptr;
 	};
 };
 
-constexpr int AssetType_Prefab = 4;
+constexpr int AssetType_Prefab = 3;
 
 typedef AssetHandle<AssetType_Prefab, Prefab, ResourceLoader<Prefab>> PrefabAsset;
 
-NATIVE_CLASS(PrefabAsset, typedef AssetHandle<4, Prefab, ResourceLoader<Prefab>> PrefabAsset;)
+NATIVE_CLASS(PrefabAsset, typedef AssetHandle<3, Prefab, ResourceLoader<Prefab>> PrefabAsset;)
 struct native_PrefabAsset
 {
 	PROPERTY() uuid id;

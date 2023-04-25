@@ -3,18 +3,18 @@
 #include <awesome/asset/image_asset.h>
 #include <awesome/editor/widgets/form_layout.h>
 
-bool ImageAssetInspector::canInspect(const AssetRecord* const record)
+bool ImageAssetInspector::canInspect(const AssetRecord& record)
 {
-	return record->type == ImageAsset::Type;
+	return record.type == ImageAsset::Type;
 }
 
-void ImageAssetInspector::inspect(const AssetRecord* const record)
+void ImageAssetInspector::inspect(const AssetRecord& record)
 {
-	if (m_imageAsset.id != record->id)
+	if (m_asset.id != record.id)
 	{
-		m_imageAsset = ImageAsset(record->id);
-		m_imageAsset.load();
+		m_asset = ImageAsset(record.id);
+		m_asset.load();
 	}
 
-	FormLayout::image(m_imageAsset);
+	FormLayout::image(m_asset);
 }

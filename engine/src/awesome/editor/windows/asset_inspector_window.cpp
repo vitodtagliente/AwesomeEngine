@@ -34,14 +34,15 @@ void AssetInspectorWindow::render()
 	static const graphics::Color s_filenameColor(0.f, 0.6f, 0.6f);
 	static const graphics::Color s_assetTypeColor(1.f, 0.6f, 0.6f);
 
-	const AssetRecord* const asset = m_editorState->selection.asset;
-	if (asset)
+	if (m_editorState->selection.asset.has_value())
 	{
+		const AssetRecord& asset = m_editorState->selection.asset.value();
+
 		FormLayout::button("", s_assetTypeColor);
 		FormLayout::sameLine();
-		if (FormLayout::button(asset->path.filename().string().c_str(), s_filenameColor))
+		if (FormLayout::button(asset.path.filename().string().c_str(), s_filenameColor))
 		{
-			m_editorState->select(asset->path);
+			m_editorState->select(asset.path);
 		}
 
 		for (const auto& inspector : m_inspectors)
@@ -57,9 +58,10 @@ void AssetInspectorWindow::render()
 
 void AssetInspectorWindow::update(const double deltaTime)
 {
-	const AssetRecord* const asset = m_editorState->selection.asset;
-	if (asset)
+	if (m_editorState->selection.asset.has_value())
 	{
+		const AssetRecord& asset = m_editorState->selection.asset.value();
+
 		for (const auto& inspector : m_inspectors)
 		{
 			if (inspector->canInspect(asset))

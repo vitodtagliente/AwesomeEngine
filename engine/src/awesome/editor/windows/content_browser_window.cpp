@@ -254,7 +254,7 @@ void ContentBrowserWindow::selectFile(const std::filesystem::path& file)
 		const AssetRecord* const record = library.database.find(file);
 		if (record != nullptr)
 		{
-			m_editorState->select(const_cast<AssetRecord* const>(record));
+			m_editorState->select(*record);
 		}
 		else
 		{

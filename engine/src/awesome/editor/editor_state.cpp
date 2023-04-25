@@ -13,9 +13,10 @@ EditorState::EditorState()
 	s_instance = this;
 }
 
-void EditorState::select(AssetRecord* const asset)
+void EditorState::select(const AssetRecord& asset)
 {
-	if (selection.asset == asset) return;
+	if (selection.asset.has_value() 
+		&& *selection.asset == asset) return;
 
 	selection.asset = asset;
 	onSelectedAssetChanged.broadcast(asset);
@@ -39,7 +40,7 @@ void EditorState::select(const std::filesystem::path& folder)
 
 void EditorState::unselectAsset()
 {
-	selection.asset = nullptr;
+	selection.asset.reset();
 }
 
 void EditorState::unselectEntity()
@@ -49,6 +50,6 @@ void EditorState::unselectEntity()
 
 void EditorState::reset()
 {
-	selection.asset = nullptr;
+	selection.asset.reset();
 	selection.entity = nullptr;
 }

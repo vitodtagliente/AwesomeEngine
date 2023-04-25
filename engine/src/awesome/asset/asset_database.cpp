@@ -4,6 +4,24 @@
 
 #include "asset.h"
 
+AssetRecord& AssetRecord::operator= (const AssetRecord& other)
+{
+	id = other.id;
+	path = other.path;
+	type = other.type;
+	return *this;
+}
+
+bool AssetRecord::operator== (const AssetRecord& other) const
+{
+	return id == other.id;
+}
+
+bool AssetRecord::operator!= (const AssetRecord& other) const
+{
+	return id != other.id;
+}
+
 bool AssetDatabase::erase(const uuid& id)
 {
 	const auto& it = std::find_if(
