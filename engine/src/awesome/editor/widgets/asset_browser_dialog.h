@@ -24,6 +24,6 @@ private:
 	std::function<void(const AssetRecord&)> m_handler;
 	std::string m_id;
 	bool m_open{ false };
-	AssetRecord* m_selectedAsset{ nullptr };
+	const AssetRecord* m_selectedAsset{ nullptr };
 	int m_type{ AssetType_Invalid };
 };

@@ -15,7 +15,7 @@ void FormLayout::asset(const char* const name, Asset& asset)
 	static AssetBrowserDialog s_assetBrowserDialog;
 
 	std::string label(name);
-	label.append(":");
+	label.append(": ");
 	if (asset)
 	{
 		label.append(asset.path.stem().string());

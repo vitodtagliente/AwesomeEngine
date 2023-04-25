@@ -3,7 +3,6 @@
 #include <imgui.h>
 
 #include <awesome/asset/asset_library.h>
-#include <awesome/asset/image_asset.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/text_icon.h>
 
@@ -57,7 +56,7 @@ void AssetBrowserDialog::render(const std::string& id)
 			const bool isSelected = m_selectedAsset ? m_selectedAsset->id == record.id : false;
 			if (ImGui::Selectable(name.c_str(), isSelected, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 			{
-				m_selectedAsset = const_cast<AssetRecord*>(AssetLibrary::instance().database.find(record.id));
+				m_selectedAsset = AssetLibrary::instance().database.find(record.id);
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
 					if (m_handler)
@@ -71,14 +70,6 @@ void AssetBrowserDialog::render(const std::string& id)
 			}
 		}
 		FormLayout::endChild();
-
-		// std::shared_ptr<ImageAsset> imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
-		// if (imageAsset != nullptr)
-		// {
-		// 	ImGui::BeginChild("Image Preview", ImVec2(0.f, 200.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-		// 	FormLayout::image(imageAsset, s_widgetWidth, 200.f);
-		// 	ImGui::EndChild();
-		// }
 
 		ImGui::BeginChild("BottomBar", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 
