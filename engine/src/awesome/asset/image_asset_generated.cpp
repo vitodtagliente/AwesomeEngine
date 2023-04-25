@@ -5,6 +5,7 @@
 const reflect::meta_t& reflect::Type<ImageAsset>::meta()
 {
     static reflect::meta_t s_meta {
+        { "forward_declaration", "typedef AssetHandle<2 , Image , ResourceLoader<Image>> ImageAsset;" },
     };
     return s_meta;
 }
@@ -13,9 +14,7 @@ const char* const reflect::Type<ImageAsset>::name() { return "ImageAsset"; }
 const reflect::properties_t& Type<ImageAsset>::properties()
 {
     static reflect::properties_t s_properties {
-        // Parent class Asset properties
         { "id", reflect::Property{ offsetof(ImageAsset, id), reflect::meta_t { }, "id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
-        // Properties
     };
     return s_properties;
 }
@@ -43,13 +42,11 @@ void reflect::Type<ImageAsset>::from_string(const std::string& str, ImageAsset& 
     stream >> _name;
     if (_name != name()) return;
     
-    // Parent class Asset properties
     {
         std::string pack;
         stream >> pack;
         type.id.from_string(pack);
     }
-    // Properties
 }
 
 std::string reflect::Type<ImageAsset>::to_string(const ImageAsset& type)
@@ -58,9 +55,7 @@ std::string reflect::Type<ImageAsset>::to_string(const ImageAsset& type)
     reflect::encoding::OutputByteStream stream(buffer);
     stream << name();
     
-    // Parent class Asset properties
     stream << static_cast<std::string>(type.id);
-    // Properties
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -79,9 +74,7 @@ void reflect::Type<ImageAsset>::from_json(const std::string& json, ImageAsset& t
         index = reflect::encoding::json::Deserializer::next_value(src, value);
         if (index != std::string::npos)
         {
-            // Parent class Asset properties
             if (key == "id") type.id.from_json(value);
-            // Properties
             src = src.substr(index + 1);
         }
         else break;
@@ -93,106 +86,7 @@ std::string reflect::Type<ImageAsset>::to_json(const ImageAsset& type, const std
     std::stringstream stream;
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "\"ImageAsset\"" << "," << std::endl;
-    // Parent class Asset properties
     stream << offset << "    " << "\"id\": " << type.id.to_json(offset + "    ") << "," << std::endl;
-    // Properties
-    stream << offset << "}";
-    return stream.str();
-}
-
-const reflect::meta_t& ImageAsset::type_meta() const { return reflect::Type<ImageAsset>::meta(); }
-const char* const ImageAsset::type_name() const { return reflect::Type<ImageAsset>::name(); }
-const reflect::properties_t& ImageAsset::type_properties() const { return reflect::Type<ImageAsset>::properties(); }
-ImageAsset::operator std::string() const { return reflect::Type<ImageAsset>::to_string(*this); }
-void ImageAsset::from_string(const std::string& str) { reflect::Type<ImageAsset>::from_string(str, *this); }
-void ImageAsset::from_json(const std::string& json) { reflect::Type<ImageAsset>::from_json(json, *this); }
-std::string ImageAsset::to_json(const std::string& offset) const { return reflect::Type<ImageAsset>::to_json(*this, offset); }
-
-const reflect::meta_t& reflect::Type<FImageAsset>::meta()
-{
-    static reflect::meta_t s_meta {
-        { "forward_declaration", "typedef FAsset<Image , ResourceLoader<Image>> FImageAsset;" },
-    };
-    return s_meta;
-}
-const char* const reflect::Type<FImageAsset>::name() { return "FImageAsset"; }
-
-const reflect::properties_t& Type<FImageAsset>::properties()
-{
-    static reflect::properties_t s_properties {
-        { "m_id", reflect::Property{ offsetof(FImageAsset, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
-    };
-    return s_properties;
-}
-
-std::size_t reflect::Type<FImageAsset>::size()
-{
-    return sizeof(FImageAsset);
-}
-
-void reflect::Type<FImageAsset>::from_string(const std::string& str, FImageAsset& type)
-{
-    reflect::encoding::ByteBuffer buffer;
-    std::transform(
-        std::begin(str),
-        std::end(str),
-        std::back_inserter(buffer),
-        [](const char c)
-        {
-            return std::byte(c);
-        }
-    );
-    
-    reflect::encoding::InputByteStream stream(buffer);
-    std::string _name;
-    stream >> _name;
-    if (_name != name()) return;
-    
-    {
-        std::string pack;
-        stream >> pack;
-        type.m_id.from_string(pack);
-    }
-}
-
-std::string reflect::Type<FImageAsset>::to_string(const FImageAsset& type)
-{
-    reflect::encoding::ByteBuffer buffer;
-    reflect::encoding::OutputByteStream stream(buffer);
-    stream << name();
-    
-    stream << static_cast<std::string>(type.m_id);
-    
-    return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
-}
-
-void reflect::Type<FImageAsset>::from_json(const std::string& json, FImageAsset& type)
-{
-    std::string src{ reflect::encoding::json::Deserializer::trim(json, reflect::encoding::json::Deserializer::space) };
-    
-    size_t index = 0;
-    std::string key;
-    while ((index = reflect::encoding::json::Deserializer::next_key(src, key)) != std::string::npos)
-    {
-        src = src.substr(index + 2);
-        src = reflect::encoding::json::Deserializer::ltrim(src, reflect::encoding::json::Deserializer::space);
-        std::string value;
-        index = reflect::encoding::json::Deserializer::next_value(src, value);
-        if (index != std::string::npos)
-        {
-            if (key == "m_id") type.m_id.from_json(value);
-            src = src.substr(index + 1);
-        }
-        else break;
-    };
-}
-
-std::string reflect::Type<FImageAsset>::to_json(const FImageAsset& type, const std::string& offset)
-{
-    std::stringstream stream;
-    stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "\"FImageAsset\"" << "," << std::endl;
-    stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

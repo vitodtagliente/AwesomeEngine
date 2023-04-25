@@ -3,29 +3,30 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
+#include <awesome/asset/asset_database.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
 std::vector<std::string> FormLayout::s_context;
 
-void FormLayout::asset(const char* const name, std::shared_ptr<Asset>& asset, const char* const assetTypeName)
+void FormLayout::asset(const char* const name, Asset& asset)
 {
 	static AssetBrowserDialog s_assetBrowserDialog;
 
 	std::string label(name);
 	label.append(":");
-	if (asset != nullptr)
+	if (asset)
 	{
-		label.append(asset->path.stem().string());
+		label.append(asset.path.stem().string());
 	}
 
 	if (selectable(label.c_str(), false))
 	{
-		std::shared_ptr<Asset> newAsset = std::shared_ptr<Asset>(TypeFactory::instantiate<Asset>(assetTypeName));
-		s_assetBrowserDialog.open(name, newAsset ? newAsset->type : AssetType_Invalid, [&asset](const AssetPtr& newAsset) -> void
+		s_assetBrowserDialog.open(name, asset.type, [&asset](const AssetRecord& newAsset) -> void
 			{
-				asset = newAsset;
+				asset = newAsset.id;
+				asset.path = newAsset.path;
 			}
 		);
 	}
@@ -115,33 +116,34 @@ void FormLayout::hint(const std::string& text)
 	}
 }
 
-void FormLayout::image(const std::shared_ptr<ImageAsset>& image)
+void FormLayout::image(const ImageAsset& image)
 {
 	const float size = ImGui::GetContentRegionAvailWidth();
 	FormLayout::image(image, graphics::TextureRect(), size, size);
 }
 
-void FormLayout::image(const std::shared_ptr<ImageAsset>& image, const float width, const float height)
+void FormLayout::image(const ImageAsset& image, const float width, const float height)
 {
 	FormLayout::image(image, graphics::TextureRect(), width, height);
 }
 
-void FormLayout::image(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect)
+void FormLayout::image(const ImageAsset& image, const graphics::TextureRect& rect)
 {
-	if (image != nullptr && image->state == Asset::State::Ready)
+	if (image && image.state == Asset::State::Ready)
 	{
+		const Image& data = *image.resource;
 		const float size = ImGui::GetContentRegionAvailWidth();
-		const float width = std::min(size, image->data.width * rect.width * 2);
-		const float height = std::min(size, image->data.height * rect.height * 2);
+		const float width = std::min(size, data.width * rect.width * 2);
+		const float height = std::min(size, data.height * rect.height * 2);
 		FormLayout::image(image, rect, width, height);
 	}
 }
 
-void FormLayout::image(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect, const float width, const float height)
+void FormLayout::image(const ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image != nullptr && image->state == Asset::State::Ready)
+	if (image && image.state == Asset::State::Ready)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(const_cast<ImageAsset&>(image));
 		if (texture)
 		{
 			ImGui::Image((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));
@@ -149,34 +151,35 @@ void FormLayout::image(const std::shared_ptr<ImageAsset>& image, const graphics:
 	}
 }
 
-bool FormLayout::imageButton(const std::shared_ptr<ImageAsset>& image)
+bool FormLayout::imageButton(const ImageAsset& image)
 {
 	const float size = ImGui::GetContentRegionAvailWidth();
 	return FormLayout::imageButton(image, graphics::TextureRect(), size, size);
 }
 
-bool FormLayout::imageButton(const std::shared_ptr<ImageAsset>& image, const float width, const float height)
+bool FormLayout::imageButton(const ImageAsset& image, const float width, const float height)
 {
 	return FormLayout::imageButton(image, graphics::TextureRect(), width, height);
 }
 
-bool FormLayout::imageButton(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect)
+bool FormLayout::imageButton(const ImageAsset& image, const graphics::TextureRect& rect)
 {
-	if (image != nullptr && image->state == Asset::State::Ready)
+	if (image && image.state == Asset::State::Ready)
 	{
+		const Image& data = *image.resource;
 		const float size = ImGui::GetContentRegionAvailWidth();
-		const float width = std::min(size, image->data.width * rect.width * 2);
-		const float height = std::min(size, image->data.height * rect.height * 2);
+		const float width = std::min(size, data.width * rect.width * 2);
+		const float height = std::min(size, data.height * rect.height * 2);
 		return FormLayout::imageButton(image, rect, width, height);
 	}
 	return false;
 }
 
-bool FormLayout::imageButton(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect, const float width, const float height)
+bool FormLayout::imageButton(const ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image != nullptr && image->state == Asset::State::Ready)
+	if (image && image.state == Asset::State::Ready)
 	{
-		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
+		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(const_cast<ImageAsset&>(image));
 		if (texture != nullptr)
 		{
 			return ImGui::ImageButton((void*)(intptr_t)texture->id(), ImVec2(width, height), ImVec2(rect.x, rect.y), ImVec2(rect.x + rect.width, rect.y + rect.height));

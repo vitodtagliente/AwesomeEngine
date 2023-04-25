@@ -7,9 +7,9 @@ void SceneGraph::clear()
 	m_root.removeChildren();
 }
 
-bool SceneGraph::load(const std::shared_ptr<SceneAsset>& scene)
+bool SceneGraph::load(const SceneAsset& scene)
 {
-	if (m_state == State::Loading || scene->state != Asset::State::Ready)
+	if (m_state == State::Loading || scene.state != Asset::State::Ready)
 	{
 		return false;
 	}
@@ -19,7 +19,7 @@ bool SceneGraph::load(const std::shared_ptr<SceneAsset>& scene)
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			for (const Entity& entity : m_scene->data.entities)
+			for (const Entity& entity : m_scene.resource->entities)
 			{
 				m_root.addChild(std::make_unique<Entity>(entity));
 			}
@@ -37,7 +37,8 @@ bool SceneGraph::save(const std::filesystem::path& path)
 	{
 		if (entity->transient) continue;
 
-		asset.data.entities.push_back(*entity);
+		asset.resource->entities.push_back(*entity);
 	}
-	return asset.save(path);
+	// return asset.save(path);
+	return true;
 }

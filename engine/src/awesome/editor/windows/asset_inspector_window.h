@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/asset/asset.h>
+#include <awesome/asset/asset_database.h>
 #include <awesome/editor/window.h>
 
 #include "asset_inspector_window_generated.h"
@@ -17,9 +17,9 @@ public:
 	{
 		AssetInspector() = default;
 		virtual ~AssetInspector() = default;
-		virtual bool canInspect(const AssetPtr& /*asset*/) { return false; }
-		virtual void update(const AssetPtr&, double /*deltaTime*/) {}
-		virtual void inspect(const AssetPtr& /*asset*/) = 0;
+		virtual bool canInspect(const AssetRecord* const /*asset*/) { return false; }
+		virtual void update(const AssetRecord* const, double /*deltaTime*/) {}
+		virtual void inspect(const AssetRecord* const /*asset*/) = 0;
 	};
 
 	AssetInspectorWindow();

@@ -3,6 +3,7 @@
 
 #include <map>
 
+#include <awesome/asset/image_asset.h>
 #include <awesome/core/singleton.h>
 #include <awesome/core/uuid.h>
 
@@ -13,11 +14,9 @@ namespace graphics
 	class TextureLibrary : public Singleton<TextureLibrary>
 	{
 	public:
-		TexturePtr find(const uuid& id);
+		TexturePtr find(ImageAsset& image);
 
 	private:
-		TexturePtr create(const uuid& id);
-
 		std::map<uuid, TexturePtr> m_textures;
 	};
 }

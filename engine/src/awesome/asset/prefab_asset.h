@@ -1,20 +1,32 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/data/type_file.h>
+
 #include "asset.h"
 #include "data/prefab.h"
 
 #include "prefab_asset_generated.h"
 
-CLASS()
-struct PrefabAsset : public Asset
+template <>
+struct ResourceLoader<Prefab>
 {
-	PrefabAsset();
+	using result_type = std::shared_ptr<Prefab>;
 
-	virtual bool load(const std::filesystem::path& path) override;
-	virtual bool save(const std::filesystem::path& path) const override;
+	template <typename... Args>
+	result_type operator()(const std::filesystem::path& path, Args&&... args)
+	{
+		result_type result = std::shared_ptr<Prefab>();
+		return TypeFile::load(path, *result);
+	};
+};
 
-	Prefab data;
+constexpr int AssetType_Prefab = 4;
 
-	GENERATED_BODY()
+typedef AssetHandle<AssetType_Prefab, Prefab, ResourceLoader<Prefab>> PrefabAsset;
+
+NATIVE_CLASS(PrefabAsset, typedef AssetHandle<4, Prefab, ResourceLoader<Prefab>> PrefabAsset;)
+struct native_PrefabAsset
+{
+	PROPERTY() uuid id;
 };

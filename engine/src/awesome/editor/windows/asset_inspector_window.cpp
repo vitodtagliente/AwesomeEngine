@@ -34,8 +34,8 @@ void AssetInspectorWindow::render()
 	static const graphics::Color s_filenameColor(0.f, 0.6f, 0.6f);
 	static const graphics::Color s_assetTypeColor(1.f, 0.6f, 0.6f);
 
-	AssetPtr asset = m_editorState->selection.asset;
-	if (asset != nullptr)
+	const AssetRecord* const asset = m_editorState->selection.asset;
+	if (asset)
 	{
 		FormLayout::button("", s_assetTypeColor);
 		FormLayout::sameLine();
@@ -43,27 +43,22 @@ void AssetInspectorWindow::render()
 		{
 			m_editorState->select(asset->path);
 		}
+
 		for (const auto& inspector : m_inspectors)
 		{
-			if (!inspector->canInspect(asset)) continue;
-
-			if(asset->state == Asset::State::Ready)
+			if (inspector->canInspect(asset))
 			{
 				inspector->inspect(asset);
+				break;
 			}
-			else
-			{
-				FormLayout::text("Asset loading...");
-			}
-			break;
 		}
 	}
 }
 
 void AssetInspectorWindow::update(const double deltaTime)
 {
-	AssetPtr asset = m_editorState->selection.asset;
-	if (asset != nullptr && asset->state == Asset::State::Ready)
+	const AssetRecord* const asset = m_editorState->selection.asset;
+	if (asset)
 	{
 		for (const auto& inspector : m_inspectors)
 		{

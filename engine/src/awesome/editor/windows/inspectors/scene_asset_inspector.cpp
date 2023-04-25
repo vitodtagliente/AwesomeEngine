@@ -5,17 +5,17 @@
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/scene/scene_graph.h>
 
-bool SceneAssetInspector::canInspect(const AssetPtr& asset)
+bool SceneAssetInspector::canInspect(const AssetRecord* const record)
 {
-	return asset->type == AssetType_Scene;
+	return record->type == AssetType_Scene;
 }
 
-void SceneAssetInspector::inspect(const AssetPtr& asset)
+void SceneAssetInspector::inspect(const AssetRecord* const record)
 {
-	std::shared_ptr<SceneAsset> scene = std::static_pointer_cast<SceneAsset>(asset);
-	
-	if (FormLayout::button(TextIcon::upload(" Load Scene").c_str()))
-	{
-		SceneGraph::instance().load(scene);
-	}
+	// SceneAsset& scene = static_cast<SceneAsset&>(asset);
+	// 
+	// if (FormLayout::button(TextIcon::upload(" Load Scene").c_str()))
+	// {
+	// 	SceneGraph::instance().load(scene);
+	// }
 }

@@ -11,9 +11,9 @@
 CLASS()
 struct AssetRecord : public IType
 {
-	PROPERTY() uuid id;
+	PROPERTY() uuid id { uuid::Invalid };
 	std::filesystem::path path;
-	PROPERTY() int type;
+	PROPERTY() int type{ 0 };
 
 	void save(const std::filesystem::path& path);
 

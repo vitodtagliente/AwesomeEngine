@@ -18,7 +18,7 @@ public:
 	PROPERTY() graphics::Color color{ graphics::Color::White };
 	PROPERTY() bool flipX{ false };
 	PROPERTY() bool flipY{ false };
-	PROPERTY() std::shared_ptr<ImageAsset> image;
+	PROPERTY() ImageAsset image;
 	PROPERTY() graphics::TextureRect rect;
 
 	virtual void update(double deltaTime) override;

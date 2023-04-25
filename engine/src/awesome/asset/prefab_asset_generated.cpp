@@ -5,6 +5,7 @@
 const reflect::meta_t& reflect::Type<PrefabAsset>::meta()
 {
     static reflect::meta_t s_meta {
+        { "forward_declaration", "typedef AssetHandle<4 , Prefab , ResourceLoader<Prefab>> PrefabAsset;" },
     };
     return s_meta;
 }
@@ -13,9 +14,7 @@ const char* const reflect::Type<PrefabAsset>::name() { return "PrefabAsset"; }
 const reflect::properties_t& Type<PrefabAsset>::properties()
 {
     static reflect::properties_t s_properties {
-        // Parent class Asset properties
         { "id", reflect::Property{ offsetof(PrefabAsset, id), reflect::meta_t { }, "id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
-        // Properties
     };
     return s_properties;
 }
@@ -43,13 +42,11 @@ void reflect::Type<PrefabAsset>::from_string(const std::string& str, PrefabAsset
     stream >> _name;
     if (_name != name()) return;
     
-    // Parent class Asset properties
     {
         std::string pack;
         stream >> pack;
         type.id.from_string(pack);
     }
-    // Properties
 }
 
 std::string reflect::Type<PrefabAsset>::to_string(const PrefabAsset& type)
@@ -58,9 +55,7 @@ std::string reflect::Type<PrefabAsset>::to_string(const PrefabAsset& type)
     reflect::encoding::OutputByteStream stream(buffer);
     stream << name();
     
-    // Parent class Asset properties
     stream << static_cast<std::string>(type.id);
-    // Properties
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -79,9 +74,7 @@ void reflect::Type<PrefabAsset>::from_json(const std::string& json, PrefabAsset&
         index = reflect::encoding::json::Deserializer::next_value(src, value);
         if (index != std::string::npos)
         {
-            // Parent class Asset properties
             if (key == "id") type.id.from_json(value);
-            // Properties
             src = src.substr(index + 1);
         }
         else break;
@@ -93,17 +86,7 @@ std::string reflect::Type<PrefabAsset>::to_json(const PrefabAsset& type, const s
     std::stringstream stream;
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "\"PrefabAsset\"" << "," << std::endl;
-    // Parent class Asset properties
     stream << offset << "    " << "\"id\": " << type.id.to_json(offset + "    ") << "," << std::endl;
-    // Properties
     stream << offset << "}";
     return stream.str();
 }
-
-const reflect::meta_t& PrefabAsset::type_meta() const { return reflect::Type<PrefabAsset>::meta(); }
-const char* const PrefabAsset::type_name() const { return reflect::Type<PrefabAsset>::name(); }
-const reflect::properties_t& PrefabAsset::type_properties() const { return reflect::Type<PrefabAsset>::properties(); }
-PrefabAsset::operator std::string() const { return reflect::Type<PrefabAsset>::to_string(*this); }
-void PrefabAsset::from_string(const std::string& str) { reflect::Type<PrefabAsset>::from_string(str, *this); }
-void PrefabAsset::from_json(const std::string& json) { reflect::Type<PrefabAsset>::from_json(json, *this); }
-std::string PrefabAsset::to_json(const std::string& offset) const { return reflect::Type<PrefabAsset>::to_json(*this, offset); }

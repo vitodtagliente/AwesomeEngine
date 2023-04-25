@@ -6,15 +6,14 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/core/reflection.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/core/uuid.h>
 
-#include "asset_type.h"
+#include "resource.h"
 
-#include "asset_generated.h"
+constexpr int AssetType_Invalid = 0;
 
-CLASS()
-struct Asset : public IType
+struct Asset
 {
 	enum class State
 	{
@@ -24,34 +23,138 @@ struct Asset : public IType
 		Ready
 	};
 
-	Asset() = default;
-	virtual ~Asset() = default;
-	Asset(const Asset& other) = delete;
+	Asset()
+		: id(uuid::Invalid)
+		, path()
+		, state(State::None)
+		, type(AssetType_Invalid)
+	{
 
-	Asset& operator= (const Asset& other) = delete;
+	}
+
+	Asset(const int _type)
+		: id(uuid::Invalid)
+		, path()
+		, state(State::None)
+		, type(_type)
+	{
+
+	}
+
+	Asset& operator= (const uuid& _id)
+	{
+		if (id != _id)
+		{
+			reset();
+			id = _id;
+		}
+		return *this;
+	}
+
 	bool operator== (const Asset& other) const;
 	bool operator!= (const Asset& other) const;
 
-	virtual bool load(const std::filesystem::path&) { return true; };
-	bool save() const;
-	virtual bool save(const std::filesystem::path&) const { return true; };
+	operator bool() const
+	{
+		return id != uuid::Invalid;
+	}
 
-	PROPERTY() uuid id;
-	std::filesystem::path path;
-	State state{ State::None };
-	int type{ AssetType_Invalid };
+	virtual void reset()
+	{
+		id = uuid::Invalid;
+		state = State::None;
+	}
 
-	// events
 	std::function<void()> onLoad;
 
-	static std::shared_ptr<Asset> create(int type);
 	static const std::vector<std::string>& extensions(int type);
 	static bool isSupported(const std::filesystem::path& path);
 	static bool isSupported(const std::filesystem::path& path, int& type);
 
 	static constexpr char* const Extension = ".asset";
 
-	GENERATED_BODY()
+	uuid id;
+	std::filesystem::path path;
+	State state{ State::None };
+	int type{ AssetType_Invalid };
 };
 
-typedef std::shared_ptr<Asset> AssetPtr;
+template <int Type, typename T, typename L = ResourceLoader<T>>
+struct AssetHandle : public Asset
+{
+	AssetHandle()
+		: Asset(Type)
+		, resource(nullptr)
+	{
+
+	}
+
+	AssetHandle(const uuid& _id)
+		: Asset(Type)
+		, resource(nullptr)
+	{
+		const AssetRecord* const record = AssetLibrary::instance().database.find(_id);
+		if (record && type == record->type)
+		{
+			id = _id;
+			path = record->path;
+		}
+	}
+
+	void load()
+	{
+		if (id != uuid::Invalid && resource == nullptr && state == State::None)
+		{
+			state = State::Loading;
+			std::thread thread([this]()
+				{
+					if (path.empty())
+					{
+						const AssetRecord* const record = AssetLibrary::instance().database.find(id);
+						if (record && type == record->type)
+						{
+							path = record->path;
+						}
+					}
+
+					if (!path.empty())
+					{
+						resource = Resource<T, L>::load(path);
+						if (resource != nullptr)
+						{
+							state = State::Ready;
+							if (onLoad) onLoad();
+						}
+						else
+						{
+							state = State::Error;
+						}
+					}
+					else
+					{
+						state = State::Error;
+					}
+				}
+			);
+			thread.detach();
+		}
+	}
+
+	virtual void reset() override
+	{
+		Asset::reset();
+		resource = nullptr;
+	}
+
+	static AssetHandle get(const AssetRecord& record)
+	{
+		if (record.type != Type) return {};
+
+		AssetHandle asset(record.id);
+		return asset;
+	}
+
+	std::shared_ptr<T> resource;
+
+	static constexpr int Type = Type;
+};

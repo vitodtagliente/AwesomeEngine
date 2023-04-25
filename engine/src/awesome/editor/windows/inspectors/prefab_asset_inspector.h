@@ -6,6 +6,6 @@
 class PrefabAssetInspector : public AssetInspectorWindow::AssetInspector
 {
 public:
-	virtual bool canInspect(const AssetPtr& asset) override;
-	virtual void inspect(const AssetPtr& asset) override;
+	virtual bool canInspect(const AssetRecord* const record) override;
+	virtual void inspect(const AssetRecord* const record) override;
 };

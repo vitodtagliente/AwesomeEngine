@@ -5,6 +5,7 @@
 #include <string>
 
 #include <awesome/asset/asset.h>
+#include <awesome/asset/asset_database.h>
 
 class AssetBrowserDialog
 {
@@ -15,14 +16,14 @@ public:
 	inline bool isOpen() const { return m_open; }
 
 	void close();
-	void open(const std::string& id, int type, const std::function<void(const AssetPtr&)>& handler);
+	void open(const std::string& id, int type, const std::function<void(const AssetRecord&)>& handler);
 	void render(const std::string& id);
 
 private:
 	std::string m_filter;
-	std::function<void(const AssetPtr&)> m_handler;
+	std::function<void(const AssetRecord&)> m_handler;
 	std::string m_id;
 	bool m_open{ false };
-	AssetPtr m_selectedAsset{ nullptr };
+	AssetRecord* m_selectedAsset{ nullptr };
 	int m_type{ AssetType_Invalid };
 };

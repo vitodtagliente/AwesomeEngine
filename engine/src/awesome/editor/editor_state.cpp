@@ -2,6 +2,9 @@
 
 #include <assert.h>
 
+#include <awesome/asset/asset_database.h>
+#include <awesome/scene/entity.h>
+
 EditorState* EditorState::s_instance{ nullptr };
 
 EditorState::EditorState()
@@ -10,19 +13,11 @@ EditorState::EditorState()
 	s_instance = this;
 }
 
-void EditorState::select(const AssetPtr& asset)
+void EditorState::select(AssetRecord* const asset)
 {
 	if (selection.asset == asset) return;
 
-	static const size_t s_maxHistory{ 10 };
-
 	selection.asset = asset;
-	if (m_history.size() == s_maxHistory)
-	{
-		m_history.pop();
-	}
-	m_history.push(asset);
-
 	onSelectedAssetChanged.broadcast(asset);
 }
 
@@ -31,7 +26,6 @@ void EditorState::select(Entity* const entity)
 	if (selection.entity == entity) return;
 
 	selection.entity = entity;
-
 	onSelectedEntityChanged.broadcast(entity);
 }
 
@@ -50,5 +44,11 @@ void EditorState::unselectAsset()
 
 void EditorState::unselectEntity()
 {
+	selection.entity = nullptr;
+}
+
+void EditorState::reset()
+{
+	selection.asset = nullptr;
 	selection.entity = nullptr;
 }

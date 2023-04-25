@@ -7,28 +7,28 @@
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
 
-bool PrefabAssetInspector::canInspect(const AssetPtr& asset)
+bool PrefabAssetInspector::canInspect(const AssetRecord* const record)
 {
-	return asset->type == AssetType_Prefab;
+	return record->type == AssetType_Prefab;
 }
 
-void PrefabAssetInspector::inspect(const AssetPtr& asset)
+void PrefabAssetInspector::inspect(const AssetRecord* const record)
 {
-	std::shared_ptr<PrefabAsset> prefab = std::static_pointer_cast<PrefabAsset>(asset);
-	
-	if (FormLayout::button(TextIcon::upload(" Import Prefab").c_str()))
-	{
-		SceneGraph::instance().root()->addChild(std::make_unique<Entity>(prefab->data.entity));
-	}
-
-	FormLayout::sameLine();
-
-	if (FormLayout::button(TextIcon::save(" Save").c_str()))
-	{
-		prefab->save(prefab->path);
-	}
-
-	FormLayout::separator();
-
-	EntityLayout::input(prefab->data.entity);
+	// PrefabAsset& prefab = static_cast<PrefabAsset&>(asset);
+	// 
+	// if (FormLayout::button(TextIcon::upload(" Import Prefab").c_str()))
+	// {
+	// 	SceneGraph::instance().root()->addChild(std::make_unique<Entity>(prefab.resource->entity));
+	// }
+	// 
+	// FormLayout::sameLine();
+	// 
+	// if (FormLayout::button(TextIcon::save(" Save").c_str()))
+	// {
+	// 	// prefab->save(prefab->path);
+	// }
+	// 
+	// FormLayout::separator();
+	// 
+	// EntityLayout::input(prefab.resource->entity);
 }

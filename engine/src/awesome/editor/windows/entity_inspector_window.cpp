@@ -42,8 +42,8 @@ void EntityInspectorWindow::render()
 		DialogLayout::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
 			{
 				PrefabAsset prefab;
-				prefab.data.entity = *entity;
-				prefab.save(path);
+				prefab.resource->entity = *entity;
+				// prefab.save(path);
 			}
 		);
 	}

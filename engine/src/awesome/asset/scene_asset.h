@@ -1,20 +1,32 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/data/type_file.h>
+
 #include "asset.h"
 #include "data/scene.h"
 
 #include "scene_asset_generated.h"
 
-CLASS()
-struct SceneAsset : public Asset
+template <>
+struct ResourceLoader<Scene>
 {
-	SceneAsset();
+	using result_type = std::shared_ptr<Scene>;
 
-	virtual bool load(const std::filesystem::path& path) override;
-	virtual bool save(const std::filesystem::path& path) const override;
+	template <typename... Args>
+	result_type operator()(const std::filesystem::path& path, Args&&... args)
+	{
+		result_type result = std::shared_ptr<Scene>();
+		return TypeFile::load(path, *result);
+	};
+};
 
-	Scene data;
+constexpr int AssetType_Scene = 8;
 
-	GENERATED_BODY()
+typedef AssetHandle<AssetType_Scene, Scene, ResourceLoader<Scene>> SceneAsset;
+
+NATIVE_CLASS(SceneAsset, typedef AssetHandle<8, Scene, ResourceLoader<Scene>> SceneAsset;)
+struct native_SceneAsset
+{
+	PROPERTY() uuid id;
 };

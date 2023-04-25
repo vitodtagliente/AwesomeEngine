@@ -15,7 +15,7 @@ void AssetBrowserDialog::close()
 	m_open = false;
 }
 
-void AssetBrowserDialog::open(const std::string& id, const int type, const std::function<void(const AssetPtr&)>& handler)
+void AssetBrowserDialog::open(const std::string& id, const int type, const std::function<void(const AssetRecord&)>& handler)
 {
 	if (type != AssetType_Invalid)
 	{
@@ -57,12 +57,12 @@ void AssetBrowserDialog::render(const std::string& id)
 			const bool isSelected = m_selectedAsset ? m_selectedAsset->id == record.id : false;
 			if (ImGui::Selectable(name.c_str(), isSelected, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 			{
-				m_selectedAsset = AssetLibrary::instance().find(record.id);
+				m_selectedAsset = const_cast<AssetRecord*>(AssetLibrary::instance().database.find(record.id));
 				if (ImGui::IsMouseDoubleClicked(0))
 				{
 					if (m_handler)
 					{
-						m_handler(m_selectedAsset);
+						m_handler(*m_selectedAsset);
 					}
 					m_open = false;
 					ImGui::CloseCurrentPopup();
@@ -72,13 +72,13 @@ void AssetBrowserDialog::render(const std::string& id)
 		}
 		FormLayout::endChild();
 
-		std::shared_ptr<ImageAsset> imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
-		if (imageAsset != nullptr)
-		{
-			ImGui::BeginChild("Image Preview", ImVec2(0.f, 200.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-			FormLayout::image(imageAsset, s_widgetWidth, 200.f);
-			ImGui::EndChild();
-		}
+		// std::shared_ptr<ImageAsset> imageAsset = std::dynamic_pointer_cast<ImageAsset>(m_selectedAsset);
+		// if (imageAsset != nullptr)
+		// {
+		// 	ImGui::BeginChild("Image Preview", ImVec2(0.f, 200.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+		// 	FormLayout::image(imageAsset, s_widgetWidth, 200.f);
+		// 	ImGui::EndChild();
+		// }
 
 		ImGui::BeginChild("BottomBar", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 
@@ -92,9 +92,9 @@ void AssetBrowserDialog::render(const std::string& id)
 
 		if (FormLayout::button(TextIcon::save(" Select").c_str()))
 		{
-			if (m_selectedAsset != nullptr && m_handler)
+			if (m_selectedAsset && m_handler)
 			{
-				m_handler(m_selectedAsset);
+				m_handler(*m_selectedAsset);
 			}
 			ImGui::CloseCurrentPopup();
 			m_open = false;

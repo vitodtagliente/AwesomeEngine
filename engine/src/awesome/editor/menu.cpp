@@ -62,9 +62,9 @@ void Menu::menuScene()
 		if (MenuLayout::item("Save Scene"))
 		{
 			SceneGraph& sceneGraph = SceneGraph::instance();
-			if (sceneGraph.scene() != nullptr)
+			if (sceneGraph.scene())
 			{
-				sceneGraph.save(sceneGraph.scene()->path);
+				sceneGraph.save(sceneGraph.scene().path);
 			}
 			else
 			{

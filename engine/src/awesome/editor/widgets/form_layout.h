@@ -19,7 +19,7 @@ class FormLayout final
 public:
 	FormLayout() = delete;
 
-	static void asset(const char* const name, std::shared_ptr<Asset>& asset, const char* const assetTypeName);
+	static void asset(const char* const name, Asset& asset);
 	static void begin(const char* const name);
 	static void beginChild(const char* const name);
 	static void beginChild(const char* const name, float width, float height);
@@ -33,14 +33,14 @@ public:
 	static void endChild();
 	static void endCombo();
 	static void hint(const std::string& text);
-	static void image(const std::shared_ptr<ImageAsset>& image);
-	static void image(const std::shared_ptr<ImageAsset>& image, float width, float height);
-	static void image(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect);
-	static void image(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect, float width, float height);
-	static bool imageButton(const std::shared_ptr<ImageAsset>& image);
-	static bool imageButton(const std::shared_ptr<ImageAsset>& image, float width, float height);
-	static bool imageButton(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect);
-	static bool imageButton(const std::shared_ptr<ImageAsset>& image, const graphics::TextureRect& rect, float width, float height);
+	static void image(const ImageAsset& image);
+	static void image(const ImageAsset& image, float width, float height);
+	static void image(const ImageAsset& image, const graphics::TextureRect& rect);
+	static void image(const ImageAsset& image, const graphics::TextureRect& rect, float width, float height);
+	static bool imageButton(const ImageAsset& image);
+	static bool imageButton(const ImageAsset& image, float width, float height);
+	static bool imageButton(const ImageAsset& image, const graphics::TextureRect& rect);
+	static bool imageButton(const ImageAsset& image, const graphics::TextureRect& rect, float width, float height);
 	static void input(const char* const name, int& value);
 	static void input(const char* const name, bool& value);
 	static void input(const char* const name, float& value);

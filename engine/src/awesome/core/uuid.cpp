@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-const uuid uuid::Invalid = {};
+const uuid uuid::Invalid = { "" };
 
 uuid::uuid()
 	: value()

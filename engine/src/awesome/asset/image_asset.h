@@ -6,22 +6,7 @@
 #include "asset.h"
 #include "data/image.h"
 
-#include "resource.h"
-
 #include "image_asset_generated.h"
-
-CLASS()
-struct ImageAsset : public Asset
-{
-	ImageAsset();
-
-	virtual bool load(const std::filesystem::path& path) override;
-	virtual bool save(const std::filesystem::path& path) const override;
-
-	Image data;
-
-	GENERATED_BODY()
-};
 
 template <>
 struct ResourceLoader<Image>
@@ -31,14 +16,16 @@ struct ResourceLoader<Image>
 	template <typename... Args>
 	result_type operator()(const std::filesystem::path& path, Args&&... args)
 	{
-		return std::make_shared<T>(Image::load(path));
+		return std::make_shared<Image>(Image::load(path));
 	};
 };
 
-typedef FAsset<Image, ResourceLoader<Image>> FImageAsset;
+constexpr int AssetType_Image = 2;
 
-NATIVE_CLASS(FImageAsset, typedef FAsset<Image, ResourceLoader<Image>> FImageAsset;)
-struct native_FImageAsset
+typedef AssetHandle<AssetType_Image, Image, ResourceLoader<Image>> ImageAsset;
+
+NATIVE_CLASS(ImageAsset, typedef AssetHandle<2, Image, ResourceLoader<Image>> ImageAsset;)
+struct native_ImageAsset
 {
-	PROPERTY() uuid m_id;
+	PROPERTY() uuid id;
 };
