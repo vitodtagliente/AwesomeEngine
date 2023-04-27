@@ -2,10 +2,8 @@
 #pragma once
 
 #include <filesystem>
-#include <vector>
 
 #include <awesome/core/singleton.h>
-#include <awesome/core/uuid.h>
 #include <awesome/engine/engine_settings.h>
 
 #include "asset_database.h"

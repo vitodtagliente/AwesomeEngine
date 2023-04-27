@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
+#include <thread>
 #include <vector>
 
 #include <awesome/asset/asset_library.h>

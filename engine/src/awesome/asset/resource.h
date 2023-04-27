@@ -4,10 +4,6 @@
 #include <filesystem>
 #include <map>
 #include <memory>
-#include <thread>
-
-#include <awesome/core/reflection.h>
-#include <awesome/core/uuid.h>
 
 template <typename T>
 struct ResourceReader
