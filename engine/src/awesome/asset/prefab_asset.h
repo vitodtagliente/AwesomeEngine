@@ -25,6 +25,15 @@ struct ResourceReader<Prefab>
 	};
 };
 
+template <>
+struct ResourcerWriter<Prefab>
+{
+	static bool write(const Prefab& data, const std::filesystem::path& path)
+	{
+		return TypeFile::save(data, path), true;
+	}
+};
+
 constexpr int AssetType_Prefab = 3;
 
 typedef AssetHandle<AssetType_Prefab, Prefab> PrefabAsset;

@@ -5,12 +5,12 @@
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/scene/scene_graph.h>
 
-bool SceneAssetInspector::canInspect(const AssetRecord& const record)
+bool SceneAssetInspector::canInspect(const AssetRecord& record)
 {
 	return record.type == AssetType_Scene;
 }
 
-void SceneAssetInspector::inspect(const AssetRecord& const record)
+void SceneAssetInspector::inspect(const AssetRecord& record)
 {
 	if (m_asset.id != record.id)
 	{

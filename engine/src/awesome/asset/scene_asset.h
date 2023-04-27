@@ -25,6 +25,15 @@ struct ResourceReader<Scene>
 	};
 };
 
+template <>
+struct ResourcerWriter<Scene>
+{
+	static bool write(const Scene& data, const std::filesystem::path& path)
+	{
+		return TypeFile::save(data, path), true;
+	}
+};
+
 constexpr int AssetType_Scene = 4;
 
 typedef AssetHandle<AssetType_Scene, Scene> SceneAsset;
