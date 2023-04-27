@@ -140,6 +140,20 @@ struct AssetHandle : public Asset
 		}
 	}
 
+	bool save(const std::filesystem::path& _path)
+	{
+		if (state != State::Ready) return false;
+
+		return ResourcerWriter<T>::write(*resource, _path);
+	}
+
+	bool save()
+	{
+		if (path.string().empty()) return false;
+
+		return save(path);
+	}
+
 	virtual void reset() override
 	{
 		Asset::reset();

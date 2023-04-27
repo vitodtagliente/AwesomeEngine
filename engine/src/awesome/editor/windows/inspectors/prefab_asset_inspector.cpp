@@ -31,7 +31,7 @@ void PrefabAssetInspector::inspect(const AssetRecord& record)
 	
 	if (FormLayout::button(TextIcon::save(" Save").c_str()))
 	{
-		// prefab->save(prefab->path);
+		m_asset.save();
 	}
 	
 	FormLayout::separator();

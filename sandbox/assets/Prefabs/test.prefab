@@ -3,7 +3,7 @@
     "entity": {
         "type_id": "Entity",
         "name": "Circle",
-        "persistent": false,
+        "persistent": true,
         "replicate": false,
         "tag": "Test",
         "transform": {
@@ -26,7 +26,7 @@
                 "y": 1.000000,
                 "z": 1.000000,
             },
-            "isStatic": false,
+            "isStatic": true,
         },
         "transient": false,
         "m_children": [],
@@ -45,8 +45,14 @@
         "alpha": 1.000000,
     },
     "flipX": false,
-    "flipY": false,
-    "image": null,
+    "flipY": true,
+    "image": {
+        "type_id": "ImageAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "",
+        },
+    },
     "rect": {
         "type_id": "graphics::TextureRect",
         "x": 0.000000,

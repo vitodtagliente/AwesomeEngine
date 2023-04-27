@@ -32,13 +32,12 @@ bool SceneGraph::load(const SceneAsset& scene)
 
 bool SceneGraph::save(const std::filesystem::path& path)
 {
-	SceneAsset asset;
+	Scene scene;
 	for (const auto& entity : m_root.children())
 	{
 		if (entity->transient) continue;
 
-		asset.resource->entities.push_back(*entity);
+		scene.entities.push_back(*entity);
 	}
-	// return asset.save(path);
-	return true;
+	return ResourcerWriter<Scene>::write(scene, path);
 }
