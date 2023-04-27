@@ -9,12 +9,12 @@
 #include "image_asset_generated.h"
 
 template <>
-struct ResourceLoader<Image>
+struct ResourceReader<Image>
 {
 	using result_type = std::shared_ptr<Image>;
 
 	template <typename... Args>
-	result_type operator()(const std::filesystem::path& path, Args&&... args)
+	static result_type read(const std::filesystem::path& path, Args&&... args)
 	{
 		return std::make_shared<Image>(Image::load(path));
 	};
@@ -22,9 +22,9 @@ struct ResourceLoader<Image>
 
 constexpr int AssetType_Image = 2;
 
-typedef AssetHandle<AssetType_Image, Image, ResourceLoader<Image>> ImageAsset;
+typedef AssetHandle<AssetType_Image, Image> ImageAsset;
 
-NATIVE_CLASS(ImageAsset, typedef AssetHandle<2, Image, ResourceLoader<Image>> ImageAsset;)
+NATIVE_CLASS(ImageAsset, typedef AssetHandle<2, Image> ImageAsset;)
 struct native_ImageAsset
 {
 	PROPERTY() uuid id;

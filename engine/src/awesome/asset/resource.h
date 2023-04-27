@@ -9,13 +9,31 @@
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
-#include "resource_loader.h"
+template <typename T>
+struct ResourceReader
+{
+	using result_type = std::shared_ptr<T>;
 
-template <typename T, typename L = ResourceLoader<T>>
+	template <typename... Args>
+	static result_type read(const std::filesystem::path&, Args&&... args)
+	{
+		return std::make_shared<T>(std::forward<Args>(args)...);
+	};
+};
+
+template <typename T>
+struct ResourcerWriter
+{
+	static bool write(const T&, const std::filesystem::path&)
+	{
+		return false;
+	}
+};
+
+template <typename T>
 class Resource
 {
 public:
-	using loader_t = L;
 	using resource_t = T;
 	using cache_t = std::map<std::filesystem::path, std::weak_ptr<T>>;
 
@@ -27,12 +45,11 @@ public:
 			return it->second.lock();
 		}
 
-		std::shared_ptr<T> resource = s_loader(path);
+		std::shared_ptr<T> resource = ResourceReader<T>::read(path);
 		s_cache.insert(std::make_pair(path, resource));
 		return resource;
 	}
 
 private:
-	static inline loader_t s_loader;
 	static inline cache_t s_cache;
 };

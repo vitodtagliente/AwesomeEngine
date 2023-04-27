@@ -5,7 +5,7 @@
 const reflect::meta_t& reflect::Type<SceneAsset>::meta()
 {
     static reflect::meta_t s_meta {
-        { "forward_declaration", "typedef AssetHandle<4 , Scene , ResourceLoader<Scene>> SceneAsset;" },
+        { "forward_declaration", "typedef AssetHandle<4 , Scene> SceneAsset;" },
     };
     return s_meta;
 }

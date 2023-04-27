@@ -79,7 +79,7 @@ struct Asset
 	int type{ AssetType_Invalid };
 };
 
-template <int Type, typename T, typename L = ResourceLoader<T>>
+template <int Type, typename T>
 struct AssetHandle : public Asset
 {
 	AssetHandle()
@@ -119,7 +119,7 @@ struct AssetHandle : public Asset
 
 					if (!path.empty())
 					{
-						resource = Resource<T, L>::load(path);
+						resource = Resource<T>::load(path);
 						if (resource != nullptr)
 						{
 							state = State::Ready;

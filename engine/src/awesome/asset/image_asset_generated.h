@@ -4,7 +4,7 @@
 
 #include <vdtreflect/runtime.h>
 
-typedef AssetHandle<2 , Image , ResourceLoader<Image>> ImageAsset;
+typedef AssetHandle<2 , Image> ImageAsset;
 
 template <>
 struct reflect::Type<ImageAsset>

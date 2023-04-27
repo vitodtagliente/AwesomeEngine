@@ -9,12 +9,12 @@
 #include "prefab_asset_generated.h"
 
 template <>
-struct ResourceLoader<Prefab>
+struct ResourceReader<Prefab>
 {
 	using result_type = std::shared_ptr<Prefab>;
 
 	template <typename... Args>
-	result_type operator()(const std::filesystem::path& path, Args&&... args)
+	static result_type read(const std::filesystem::path& path, Args&&... args)
 	{
 		result_type result = std::make_shared<Prefab>();
 		if (TypeFile::load(path, *result))
@@ -27,9 +27,9 @@ struct ResourceLoader<Prefab>
 
 constexpr int AssetType_Prefab = 3;
 
-typedef AssetHandle<AssetType_Prefab, Prefab, ResourceLoader<Prefab>> PrefabAsset;
+typedef AssetHandle<AssetType_Prefab, Prefab> PrefabAsset;
 
-NATIVE_CLASS(PrefabAsset, typedef AssetHandle<3, Prefab, ResourceLoader<Prefab>> PrefabAsset;)
+NATIVE_CLASS(PrefabAsset, typedef AssetHandle<3, Prefab> PrefabAsset;)
 struct native_PrefabAsset
 {
 	PROPERTY() uuid id;

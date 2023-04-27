@@ -5,7 +5,7 @@
 const reflect::meta_t& reflect::Type<ImageAsset>::meta()
 {
     static reflect::meta_t s_meta {
-        { "forward_declaration", "typedef AssetHandle<2 , Image , ResourceLoader<Image>> ImageAsset;" },
+        { "forward_declaration", "typedef AssetHandle<2 , Image> ImageAsset;" },
     };
     return s_meta;
 }

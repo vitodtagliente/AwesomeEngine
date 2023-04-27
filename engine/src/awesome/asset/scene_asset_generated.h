@@ -4,7 +4,7 @@
 
 #include <vdtreflect/runtime.h>
 
-typedef AssetHandle<4 , Scene , ResourceLoader<Scene>> SceneAsset;
+typedef AssetHandle<4 , Scene> SceneAsset;
 
 template <>
 struct reflect::Type<SceneAsset>
