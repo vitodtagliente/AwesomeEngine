@@ -47,7 +47,7 @@ void AssetInspectorWindow::render()
 				{
 					m_editorState->select(record.path);
 				}
-
+				FormLayout::separator();
 				inspector->inspect(record);
 				return;
 			}
@@ -60,5 +60,7 @@ void AssetInspectorWindow::render()
 		{
 			m_editorState->select(record.path);
 		}
+		FormLayout::separator();
+		FormLayout::text("Cannot inspect the selected asset");
 	}
 }
