@@ -13,7 +13,7 @@ constexpr int AssetType_Invalid = 0;
 CLASS()
 struct AssetRecord : public IType
 {
-	PROPERTY() uuid id { uuid::Invalid };
+	PROPERTY() uuid id;
 	std::filesystem::path path;
 	PROPERTY() int type{ AssetType_Invalid };
 
