@@ -96,6 +96,14 @@ const reflect::meta_t& SceneWindow::type_meta() const { return reflect::Type<Sce
 const char* const SceneWindow::type_name() const { return reflect::Type<SceneWindow>::name(); }
 const reflect::properties_t& SceneWindow::type_properties() const { return reflect::Type<SceneWindow>::properties(); }
 SceneWindow::operator std::string() const { return reflect::Type<SceneWindow>::to_string(*this); }
-void SceneWindow::from_string(const std::string& str) { reflect::Type<SceneWindow>::from_string(str, *this); }
-void SceneWindow::from_json(const std::string& json) { reflect::Type<SceneWindow>::from_json(json, *this); }
+void SceneWindow::from_string(const std::string& str)
+{
+    reflect::Type<SceneWindow>::from_string(str, *this);
+    type_initialize();
+}
+void SceneWindow::from_json(const std::string& json)
+{
+    reflect::Type<SceneWindow>::from_json(json, *this);
+    type_initialize();
+}
 std::string SceneWindow::to_json(const std::string& offset) const { return reflect::Type<SceneWindow>::to_json(*this, offset); }

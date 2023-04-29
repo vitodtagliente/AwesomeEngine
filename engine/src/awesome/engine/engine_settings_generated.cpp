@@ -137,6 +137,14 @@ const reflect::meta_t& EngineSettings::type_meta() const { return reflect::Type<
 const char* const EngineSettings::type_name() const { return reflect::Type<EngineSettings>::name(); }
 const reflect::properties_t& EngineSettings::type_properties() const { return reflect::Type<EngineSettings>::properties(); }
 EngineSettings::operator std::string() const { return reflect::Type<EngineSettings>::to_string(*this); }
-void EngineSettings::from_string(const std::string& str) { reflect::Type<EngineSettings>::from_string(str, *this); }
-void EngineSettings::from_json(const std::string& json) { reflect::Type<EngineSettings>::from_json(json, *this); }
+void EngineSettings::from_string(const std::string& str)
+{
+    reflect::Type<EngineSettings>::from_string(str, *this);
+    type_initialize();
+}
+void EngineSettings::from_json(const std::string& json)
+{
+    reflect::Type<EngineSettings>::from_json(json, *this);
+    type_initialize();
+}
 std::string EngineSettings::to_json(const std::string& offset) const { return reflect::Type<EngineSettings>::to_json(*this, offset); }

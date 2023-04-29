@@ -99,6 +99,14 @@ const reflect::meta_t& Component::type_meta() const { return reflect::Type<Compo
 const char* const Component::type_name() const { return reflect::Type<Component>::name(); }
 const reflect::properties_t& Component::type_properties() const { return reflect::Type<Component>::properties(); }
 Component::operator std::string() const { return reflect::Type<Component>::to_string(*this); }
-void Component::from_string(const std::string& str) { reflect::Type<Component>::from_string(str, *this); }
-void Component::from_json(const std::string& json) { reflect::Type<Component>::from_json(json, *this); }
+void Component::from_string(const std::string& str)
+{
+    reflect::Type<Component>::from_string(str, *this);
+    type_initialize();
+}
+void Component::from_json(const std::string& json)
+{
+    reflect::Type<Component>::from_json(json, *this);
+    type_initialize();
+}
 std::string Component::to_json(const std::string& offset) const { return reflect::Type<Component>::to_json(*this, offset); }

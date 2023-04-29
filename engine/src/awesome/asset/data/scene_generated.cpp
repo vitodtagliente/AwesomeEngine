@@ -112,6 +112,14 @@ const reflect::meta_t& Scene::type_meta() const { return reflect::Type<Scene>::m
 const char* const Scene::type_name() const { return reflect::Type<Scene>::name(); }
 const reflect::properties_t& Scene::type_properties() const { return reflect::Type<Scene>::properties(); }
 Scene::operator std::string() const { return reflect::Type<Scene>::to_string(*this); }
-void Scene::from_string(const std::string& str) { reflect::Type<Scene>::from_string(str, *this); }
-void Scene::from_json(const std::string& json) { reflect::Type<Scene>::from_json(json, *this); }
+void Scene::from_string(const std::string& str)
+{
+    reflect::Type<Scene>::from_string(str, *this);
+    type_initialize();
+}
+void Scene::from_json(const std::string& json)
+{
+    reflect::Type<Scene>::from_json(json, *this);
+    type_initialize();
+}
 std::string Scene::to_json(const std::string& offset) const { return reflect::Type<Scene>::to_json(*this, offset); }

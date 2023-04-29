@@ -90,6 +90,14 @@ const reflect::meta_t& uuid::type_meta() const { return reflect::Type<uuid>::met
 const char* const uuid::type_name() const { return reflect::Type<uuid>::name(); }
 const reflect::properties_t& uuid::type_properties() const { return reflect::Type<uuid>::properties(); }
 uuid::operator std::string() const { return reflect::Type<uuid>::to_string(*this); }
-void uuid::from_string(const std::string& str) { reflect::Type<uuid>::from_string(str, *this); }
-void uuid::from_json(const std::string& json) { reflect::Type<uuid>::from_json(json, *this); }
+void uuid::from_string(const std::string& str)
+{
+    reflect::Type<uuid>::from_string(str, *this);
+    type_initialize();
+}
+void uuid::from_json(const std::string& json)
+{
+    reflect::Type<uuid>::from_json(json, *this);
+    type_initialize();
+}
 std::string uuid::to_json(const std::string& offset) const { return reflect::Type<uuid>::to_json(*this, offset); }

@@ -99,8 +99,16 @@ const reflect::meta_t& AssetRecord::type_meta() const { return reflect::Type<Ass
 const char* const AssetRecord::type_name() const { return reflect::Type<AssetRecord>::name(); }
 const reflect::properties_t& AssetRecord::type_properties() const { return reflect::Type<AssetRecord>::properties(); }
 AssetRecord::operator std::string() const { return reflect::Type<AssetRecord>::to_string(*this); }
-void AssetRecord::from_string(const std::string& str) { reflect::Type<AssetRecord>::from_string(str, *this); }
-void AssetRecord::from_json(const std::string& json) { reflect::Type<AssetRecord>::from_json(json, *this); }
+void AssetRecord::from_string(const std::string& str)
+{
+    reflect::Type<AssetRecord>::from_string(str, *this);
+    type_initialize();
+}
+void AssetRecord::from_json(const std::string& json)
+{
+    reflect::Type<AssetRecord>::from_json(json, *this);
+    type_initialize();
+}
 std::string AssetRecord::to_json(const std::string& offset) const { return reflect::Type<AssetRecord>::to_json(*this, offset); }
 
 const reflect::meta_t& reflect::Type<AssetDatabase>::meta()
@@ -214,6 +222,14 @@ const reflect::meta_t& AssetDatabase::type_meta() const { return reflect::Type<A
 const char* const AssetDatabase::type_name() const { return reflect::Type<AssetDatabase>::name(); }
 const reflect::properties_t& AssetDatabase::type_properties() const { return reflect::Type<AssetDatabase>::properties(); }
 AssetDatabase::operator std::string() const { return reflect::Type<AssetDatabase>::to_string(*this); }
-void AssetDatabase::from_string(const std::string& str) { reflect::Type<AssetDatabase>::from_string(str, *this); }
-void AssetDatabase::from_json(const std::string& json) { reflect::Type<AssetDatabase>::from_json(json, *this); }
+void AssetDatabase::from_string(const std::string& str)
+{
+    reflect::Type<AssetDatabase>::from_string(str, *this);
+    type_initialize();
+}
+void AssetDatabase::from_json(const std::string& json)
+{
+    reflect::Type<AssetDatabase>::from_json(json, *this);
+    type_initialize();
+}
 std::string AssetDatabase::to_json(const std::string& offset) const { return reflect::Type<AssetDatabase>::to_json(*this, offset); }

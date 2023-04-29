@@ -228,6 +228,14 @@ const reflect::meta_t& Entity::type_meta() const { return reflect::Type<Entity>:
 const char* const Entity::type_name() const { return reflect::Type<Entity>::name(); }
 const reflect::properties_t& Entity::type_properties() const { return reflect::Type<Entity>::properties(); }
 Entity::operator std::string() const { return reflect::Type<Entity>::to_string(*this); }
-void Entity::from_string(const std::string& str) { reflect::Type<Entity>::from_string(str, *this); }
-void Entity::from_json(const std::string& json) { reflect::Type<Entity>::from_json(json, *this); }
+void Entity::from_string(const std::string& str)
+{
+    reflect::Type<Entity>::from_string(str, *this);
+    type_initialize();
+}
+void Entity::from_json(const std::string& json)
+{
+    reflect::Type<Entity>::from_json(json, *this);
+    type_initialize();
+}
 std::string Entity::to_json(const std::string& offset) const { return reflect::Type<Entity>::to_json(*this, offset); }

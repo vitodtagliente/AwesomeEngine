@@ -96,6 +96,14 @@ const reflect::meta_t& AssetInspectorWindow::type_meta() const { return reflect:
 const char* const AssetInspectorWindow::type_name() const { return reflect::Type<AssetInspectorWindow>::name(); }
 const reflect::properties_t& AssetInspectorWindow::type_properties() const { return reflect::Type<AssetInspectorWindow>::properties(); }
 AssetInspectorWindow::operator std::string() const { return reflect::Type<AssetInspectorWindow>::to_string(*this); }
-void AssetInspectorWindow::from_string(const std::string& str) { reflect::Type<AssetInspectorWindow>::from_string(str, *this); }
-void AssetInspectorWindow::from_json(const std::string& json) { reflect::Type<AssetInspectorWindow>::from_json(json, *this); }
+void AssetInspectorWindow::from_string(const std::string& str)
+{
+    reflect::Type<AssetInspectorWindow>::from_string(str, *this);
+    type_initialize();
+}
+void AssetInspectorWindow::from_json(const std::string& json)
+{
+    reflect::Type<AssetInspectorWindow>::from_json(json, *this);
+    type_initialize();
+}
 std::string AssetInspectorWindow::to_json(const std::string& offset) const { return reflect::Type<AssetInspectorWindow>::to_json(*this, offset); }

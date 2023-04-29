@@ -85,6 +85,14 @@ const reflect::meta_t& Window::type_meta() const { return reflect::Type<Window>:
 const char* const Window::type_name() const { return reflect::Type<Window>::name(); }
 const reflect::properties_t& Window::type_properties() const { return reflect::Type<Window>::properties(); }
 Window::operator std::string() const { return reflect::Type<Window>::to_string(*this); }
-void Window::from_string(const std::string& str) { reflect::Type<Window>::from_string(str, *this); }
-void Window::from_json(const std::string& json) { reflect::Type<Window>::from_json(json, *this); }
+void Window::from_string(const std::string& str)
+{
+    reflect::Type<Window>::from_string(str, *this);
+    type_initialize();
+}
+void Window::from_json(const std::string& json)
+{
+    reflect::Type<Window>::from_json(json, *this);
+    type_initialize();
+}
 std::string Window::to_json(const std::string& offset) const { return reflect::Type<Window>::to_json(*this, offset); }

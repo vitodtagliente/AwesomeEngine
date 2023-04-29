@@ -94,6 +94,14 @@ const reflect::meta_t& Prefab::type_meta() const { return reflect::Type<Prefab>:
 const char* const Prefab::type_name() const { return reflect::Type<Prefab>::name(); }
 const reflect::properties_t& Prefab::type_properties() const { return reflect::Type<Prefab>::properties(); }
 Prefab::operator std::string() const { return reflect::Type<Prefab>::to_string(*this); }
-void Prefab::from_string(const std::string& str) { reflect::Type<Prefab>::from_string(str, *this); }
-void Prefab::from_json(const std::string& json) { reflect::Type<Prefab>::from_json(json, *this); }
+void Prefab::from_string(const std::string& str)
+{
+    reflect::Type<Prefab>::from_string(str, *this);
+    type_initialize();
+}
+void Prefab::from_json(const std::string& json)
+{
+    reflect::Type<Prefab>::from_json(json, *this);
+    type_initialize();
+}
 std::string Prefab::to_json(const std::string& offset) const { return reflect::Type<Prefab>::to_json(*this, offset); }

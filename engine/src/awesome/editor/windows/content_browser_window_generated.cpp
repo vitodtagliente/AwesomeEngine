@@ -96,6 +96,14 @@ const reflect::meta_t& ContentBrowserWindow::type_meta() const { return reflect:
 const char* const ContentBrowserWindow::type_name() const { return reflect::Type<ContentBrowserWindow>::name(); }
 const reflect::properties_t& ContentBrowserWindow::type_properties() const { return reflect::Type<ContentBrowserWindow>::properties(); }
 ContentBrowserWindow::operator std::string() const { return reflect::Type<ContentBrowserWindow>::to_string(*this); }
-void ContentBrowserWindow::from_string(const std::string& str) { reflect::Type<ContentBrowserWindow>::from_string(str, *this); }
-void ContentBrowserWindow::from_json(const std::string& json) { reflect::Type<ContentBrowserWindow>::from_json(json, *this); }
+void ContentBrowserWindow::from_string(const std::string& str)
+{
+    reflect::Type<ContentBrowserWindow>::from_string(str, *this);
+    type_initialize();
+}
+void ContentBrowserWindow::from_json(const std::string& json)
+{
+    reflect::Type<ContentBrowserWindow>::from_json(json, *this);
+    type_initialize();
+}
 std::string ContentBrowserWindow::to_json(const std::string& offset) const { return reflect::Type<ContentBrowserWindow>::to_json(*this, offset); }

@@ -96,6 +96,14 @@ const reflect::meta_t& EntityInspectorWindow::type_meta() const { return reflect
 const char* const EntityInspectorWindow::type_name() const { return reflect::Type<EntityInspectorWindow>::name(); }
 const reflect::properties_t& EntityInspectorWindow::type_properties() const { return reflect::Type<EntityInspectorWindow>::properties(); }
 EntityInspectorWindow::operator std::string() const { return reflect::Type<EntityInspectorWindow>::to_string(*this); }
-void EntityInspectorWindow::from_string(const std::string& str) { reflect::Type<EntityInspectorWindow>::from_string(str, *this); }
-void EntityInspectorWindow::from_json(const std::string& json) { reflect::Type<EntityInspectorWindow>::from_json(json, *this); }
+void EntityInspectorWindow::from_string(const std::string& str)
+{
+    reflect::Type<EntityInspectorWindow>::from_string(str, *this);
+    type_initialize();
+}
+void EntityInspectorWindow::from_json(const std::string& json)
+{
+    reflect::Type<EntityInspectorWindow>::from_json(json, *this);
+    type_initialize();
+}
 std::string EntityInspectorWindow::to_json(const std::string& offset) const { return reflect::Type<EntityInspectorWindow>::to_json(*this, offset); }

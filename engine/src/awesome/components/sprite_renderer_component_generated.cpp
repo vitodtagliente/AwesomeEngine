@@ -148,6 +148,14 @@ const reflect::meta_t& SpriteRendererComponent::type_meta() const { return refle
 const char* const SpriteRendererComponent::type_name() const { return reflect::Type<SpriteRendererComponent>::name(); }
 const reflect::properties_t& SpriteRendererComponent::type_properties() const { return reflect::Type<SpriteRendererComponent>::properties(); }
 SpriteRendererComponent::operator std::string() const { return reflect::Type<SpriteRendererComponent>::to_string(*this); }
-void SpriteRendererComponent::from_string(const std::string& str) { reflect::Type<SpriteRendererComponent>::from_string(str, *this); }
-void SpriteRendererComponent::from_json(const std::string& json) { reflect::Type<SpriteRendererComponent>::from_json(json, *this); }
+void SpriteRendererComponent::from_string(const std::string& str)
+{
+    reflect::Type<SpriteRendererComponent>::from_string(str, *this);
+    type_initialize();
+}
+void SpriteRendererComponent::from_json(const std::string& json)
+{
+    reflect::Type<SpriteRendererComponent>::from_json(json, *this);
+    type_initialize();
+}
 std::string SpriteRendererComponent::to_json(const std::string& offset) const { return reflect::Type<SpriteRendererComponent>::to_json(*this, offset); }
