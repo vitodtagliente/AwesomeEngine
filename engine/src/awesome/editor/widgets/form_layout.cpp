@@ -115,18 +115,18 @@ void FormLayout::hint(const std::string& text)
 	}
 }
 
-void FormLayout::image(ImageAsset& image)
+void FormLayout::image(const ImageAsset& image)
 {
 	const float size = ImGui::GetContentRegionAvailWidth();
 	FormLayout::image(image, graphics::TextureRect(), size, size);
 }
 
-void FormLayout::image(ImageAsset& image, const float width, const float height)
+void FormLayout::image(const ImageAsset& image, const float width, const float height)
 {
 	FormLayout::image(image, graphics::TextureRect(), width, height);
 }
 
-void FormLayout::image(ImageAsset& image, const graphics::TextureRect& rect)
+void FormLayout::image(const ImageAsset& image, const graphics::TextureRect& rect)
 {
 	if (image && image.state == Asset::State::Ready)
 	{
@@ -138,9 +138,9 @@ void FormLayout::image(ImageAsset& image, const graphics::TextureRect& rect)
 	}
 }
 
-void FormLayout::image(ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
+void FormLayout::image(const ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image && image.state == Asset::State::Ready)
+	if (image.ready())
 	{
 		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image);
 		if (texture)
@@ -150,20 +150,20 @@ void FormLayout::image(ImageAsset& image, const graphics::TextureRect& rect, con
 	}
 }
 
-bool FormLayout::imageButton(ImageAsset& image)
+bool FormLayout::imageButton(const ImageAsset& image)
 {
 	const float size = ImGui::GetContentRegionAvailWidth();
 	return FormLayout::imageButton(image, graphics::TextureRect(), size, size);
 }
 
-bool FormLayout::imageButton(ImageAsset& image, const float width, const float height)
+bool FormLayout::imageButton(const ImageAsset& image, const float width, const float height)
 {
 	return FormLayout::imageButton(image, graphics::TextureRect(), width, height);
 }
 
-bool FormLayout::imageButton(ImageAsset& image, const graphics::TextureRect& rect)
+bool FormLayout::imageButton(const ImageAsset& image, const graphics::TextureRect& rect)
 {
-	if (image && image.state == Asset::State::Ready)
+	if (image.ready())
 	{
 		const Image& data = *image.resource;
 		const float size = ImGui::GetContentRegionAvailWidth();
@@ -174,9 +174,9 @@ bool FormLayout::imageButton(ImageAsset& image, const graphics::TextureRect& rec
 	return false;
 }
 
-bool FormLayout::imageButton(ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
+bool FormLayout::imageButton(const ImageAsset& image, const graphics::TextureRect& rect, const float width, const float height)
 {
-	if (image && image.state == Asset::State::Ready)
+	if (image.ready())
 	{
 		std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image);
 		if (texture != nullptr)

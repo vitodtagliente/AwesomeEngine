@@ -14,7 +14,7 @@ namespace graphics
 	class TextureLibrary : public Singleton<TextureLibrary>
 	{
 	public:
-		TexturePtr find(ImageAsset& image);
+		TexturePtr find(const ImageAsset& image);
 
 	private:
 		std::map<uuid, TexturePtr> m_textures;
