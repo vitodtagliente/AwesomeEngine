@@ -1,15 +1,19 @@
 #include "prefab_asset_inspector.h"
 
-#include <awesome/asset/prefab_asset.h>
 #include <awesome/editor/widgets/entity_layout.h>
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/editor/text_icon.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
 
-bool PrefabAssetInspector::canInspect(const AssetRecord& record)
+bool PrefabAssetInspector::canInspect(int type) const
 {
-	return record.type == AssetType_Prefab;
+	return type == AssetType_Prefab;
+}
+
+char* const PrefabAssetInspector::getTitle() const
+{
+	return "Prefab";
 }
 
 void PrefabAssetInspector::inspect(const AssetRecord& record)

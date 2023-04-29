@@ -4,10 +4,6 @@
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/graphics/color.h>
 
-#include "inspectors/image_asset_inspector.h"
-#include "inspectors/prefab_asset_inspector.h"
-#include "inspectors/scene_asset_inspector.h"
-
 AssetInspectorWindow::AssetInspectorWindow()
 	: Window()
 	, m_editorState(EditorState::instance())
@@ -21,12 +17,14 @@ char* const AssetInspectorWindow::getTitle() const
 
 void AssetInspectorWindow::init()
 {
-	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());
-	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
-	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());
-	// m_inspectors.push_back(std::make_unique<SpriteAnimationAssetInspector>());
-	// m_inspectors.push_back(std::make_unique<TextAssetInspector>());
-	// m_inspectors.push_back(std::make_unique<TilesetAssetInspector>());
+	for (const auto& [name, options] : TypeFactory::list("Type", "AssetInspector"))
+	{
+		std::unique_ptr<AssetInspector> inspector = std::unique_ptr<AssetInspector>(TypeFactory::instantiate<AssetInspector>(name));
+		if (inspector != nullptr)
+		{
+			m_inspectors.push_back(std::move(inspector));
+		}
+	}
 }
 
 void AssetInspectorWindow::render()
@@ -36,39 +34,31 @@ void AssetInspectorWindow::render()
 
 	if (m_editorState->selection.asset.has_value())
 	{
-		const AssetRecord& asset = m_editorState->selection.asset.value();
+		const AssetRecord& record = m_editorState->selection.asset.value();
 
-		FormLayout::button("", s_assetTypeColor);
+		for (const auto& inspector : m_inspectors)
+		{
+			if (inspector->canInspect(record.type))
+			{
+				const std::string title = inspector->getTitle();
+				FormLayout::button(title.empty() ? "Asset" : title.c_str(), s_assetTypeColor);
+				FormLayout::sameLine();
+				if (FormLayout::button(record.path.filename().string().c_str(), s_filenameColor))
+				{
+					m_editorState->select(record.path);
+				}
+
+				inspector->inspect(record);
+				return;
+			}
+		}
+
+		// no inspector found
+		FormLayout::button("Asset", s_assetTypeColor);
 		FormLayout::sameLine();
-		if (FormLayout::button(asset.path.filename().string().c_str(), s_filenameColor))
+		if (FormLayout::button(record.path.filename().string().c_str(), s_filenameColor))
 		{
-			m_editorState->select(asset.path);
-		}
-
-		for (const auto& inspector : m_inspectors)
-		{
-			if (inspector->canInspect(asset))
-			{
-				inspector->inspect(asset);
-				break;
-			}
-		}
-	}
-}
-
-void AssetInspectorWindow::update(const double deltaTime)
-{
-	if (m_editorState->selection.asset.has_value())
-	{
-		const AssetRecord& asset = m_editorState->selection.asset.value();
-
-		for (const auto& inspector : m_inspectors)
-		{
-			if (inspector->canInspect(asset))
-			{
-				inspector->update(asset, deltaTime);
-				break;
-			}
+			m_editorState->select(record.path);
 		}
 	}
 }

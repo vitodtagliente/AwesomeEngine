@@ -1,11 +1,15 @@
 #include "image_asset_inspector.h"
 
-#include <awesome/asset/image_asset.h>
 #include <awesome/editor/widgets/form_layout.h>
 
-bool ImageAssetInspector::canInspect(const AssetRecord& record)
+bool ImageAssetInspector::canInspect(int type) const
 {
-	return record.type == ImageAsset::Type;
+	return type == ImageAsset::Type;
+}
+
+char* const ImageAssetInspector::getTitle() const
+{
+	return "Image";
 }
 
 void ImageAssetInspector::inspect(const AssetRecord& record)

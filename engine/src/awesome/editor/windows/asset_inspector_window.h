@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <awesome/asset/asset_database.h>
+#include <awesome/editor/asset_inspector.h>
 #include <awesome/editor/window.h>
 
 #include "asset_inspector_window_generated.h"
@@ -13,21 +14,12 @@ CLASS(Type = Window)
 class AssetInspectorWindow : public Window
 {
 public:
-	struct AssetInspector
-	{
-		AssetInspector() = default;
-		virtual ~AssetInspector() = default;
-		virtual bool canInspect(const AssetRecord& /*asset*/) { return false; }
-		virtual void update(const AssetRecord&, double /*deltaTime*/) {}
-		virtual void inspect(const AssetRecord& /*asset*/) = 0;
-	};
-
 	AssetInspectorWindow();
 
 	virtual char* const getTitle() const override;
+
 	virtual void init() override;
 	virtual void render() override;
-	virtual void update(double deltaTime) override;
 
 	GENERATED_BODY()
 
