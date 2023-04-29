@@ -8,12 +8,14 @@
 
 #include "asset_database_generated.h"
 
+constexpr int AssetType_Invalid = 0;
+
 CLASS()
 struct AssetRecord : public IType
 {
 	PROPERTY() uuid id { uuid::Invalid };
 	std::filesystem::path path;
-	PROPERTY() int type{ 0 };
+	PROPERTY() int type{ AssetType_Invalid };
 
 	void save(const std::filesystem::path& path);
 
@@ -41,6 +43,17 @@ struct AssetDatabase : public IType
 	PROPERTY() std::vector<AssetRecord> records;
 
 	static constexpr char* const Filename = "assets.json";
+
+	GENERATED_BODY()
+};
+
+CLASS()
+struct AssetLoader : public IType
+{
+	virtual void load(const std::filesystem::path&) { }
+
+	std::vector<std::string> extensions;
+	int type{ AssetType_Invalid };
 
 	GENERATED_BODY()
 };

@@ -1,5 +1,7 @@
 #include "asset.h"
 
+#include "asset_library.h"
+
 Asset& Asset::operator=(const Asset& other)
 {
 	if (type == other.type)
@@ -32,22 +34,27 @@ bool Asset::operator!=(const Asset& other) const
 	return id != other.id;
 }
 
+const AssetRecord* const Asset::find(const uuid& id)
+{
+	return AssetLibrary::instance().database.find(id);
+}
+
 const std::vector<std::string>& Asset::extensions(const int type)
 {
-	// const auto& handlers = AssetLibrary::instance().handlers();
-	// const auto& it = std::find_if(
-	// 	handlers.begin(),
-	// 	handlers.end(),
-	// 	[type](const AssetHandler& handler) -> bool
-	// 	{
-	// 		return handler.type == type;
-	// 	}
-	// );
-	// 
-	// if (it != handlers.end())
-	// {
-	// 	return it->extensions;
-	// }
+	const auto& loaders = AssetLibrary::instance().loaders();
+	const auto& it = std::find_if(
+		loaders.begin(),
+		loaders.end(),
+		[type](const std::unique_ptr<AssetLoader>& loader) -> bool
+		{
+			return loader->type == type;
+		}
+	);
+	
+	if (it != loaders.end())
+	{
+		return (*it)->extensions;
+	}
 
 	static std::vector<std::string> s_extensions;
 	return s_extensions;
@@ -55,36 +62,37 @@ const std::vector<std::string>& Asset::extensions(const int type)
 
 bool Asset::isSupported(const std::filesystem::path& path)
 {
-	// const auto& handlers = AssetLibrary::instance().handlers();
-	// const auto& it = std::find_if(
-	// 	handlers.begin(),
-	// 	handlers.end(),
-	// 	[extension = path.extension().string()](const AssetHandler& handler) -> bool
-	// 	{
-	// 		return std::find(handler.extensions.begin(), handler.extensions.end(), extension) != handler.extensions.end();
-	// 	}
-	// );
-	// return it != handlers.end();
-	return false;
+	const auto& loaders = AssetLibrary::instance().loaders();
+	const auto& it = std::find_if(
+		loaders.begin(),
+		loaders.end(),
+		[extension = path.extension().string()](const std::unique_ptr<AssetLoader>& loader) -> bool
+		{
+			const auto& extensions = loader->extensions;
+			return std::find(extensions.begin(), extensions.end(), extension) != extensions.end();
+		}
+	);
+	return it != loaders.end();
 }
 
 bool Asset::isSupported(const std::filesystem::path& path, int& type)
 {
-	// const auto& handlers = AssetLibrary::instance().handlers();
-	// const auto& it = std::find_if(
-	// 	handlers.begin(),
-	// 	handlers.end(),
-	// 	[extension = path.extension().string()](const AssetHandler& handler) -> bool
-	// 	{
-	// 		return std::find(handler.extensions.begin(), handler.extensions.end(), extension) != handler.extensions.end();
-	// 	}
-	// );
-	// 
-	// type = AssetType_Invalid;
-	// if (it != handlers.end())
-	// {
-	// 	type = it->type;
-	// 	return true;
-	// }
+	const auto& loaders = AssetLibrary::instance().loaders();
+	const auto& it = std::find_if(
+		loaders.begin(),
+		loaders.end(),
+		[extension = path.extension().string()](const std::unique_ptr<AssetLoader>& loader) -> bool
+		{
+			const auto& extensions = loader->extensions;
+			return std::find(extensions.begin(), extensions.end(), extension) != extensions.end();
+		}
+	);
+	
+	type = AssetType_Invalid;
+	if (it != loaders.end())
+	{
+		type = (*it)->type;
+		return true;
+	}
 	return false;
 }

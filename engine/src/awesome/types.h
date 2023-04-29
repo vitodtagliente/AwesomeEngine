@@ -3,6 +3,10 @@
 
 // Force the types registration from a static library
 
+// assets
+#include "asset/image_asset.h"
+#include "asset/prefab_asset.h"
+#include "asset/scene_asset.h"
 // components
 #include "components/sprite_renderer_component.h"
 // editor

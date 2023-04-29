@@ -19,19 +19,3 @@ struct reflect::Type<struct Asset> : reflect::RegisteredInTypeFactory<struct Ass
 
     static bool registered() { return type_registered; };
 };
-
-template <>
-struct reflect::Type<struct AssetLoader> : reflect::RegisteredInTypeFactory<struct AssetLoader>
-{
-    static const reflect::meta_t& meta();
-    static const char* const name();
-    static const reflect::properties_t& properties();
-    static std::size_t size();
-
-    static void from_string(const std::string& str, AssetLoader& type);
-    static std::string to_string(const AssetLoader& type);
-    static void from_json(const std::string& json, AssetLoader& type);
-    static std::string to_json(const AssetLoader& type, const std::string& offset = "");
-
-    static bool registered() { return type_registered; };
-};

@@ -6,15 +6,13 @@
 #include <memory>
 #include <vector>
 
-#include <awesome/asset/asset_library.h>
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
 
+#include "asset_database.h"
 #include "resource.h"
 
 #include "asset_generated.h"
-
-constexpr int AssetType_Invalid = 0;
 
 CLASS()
 struct Asset : public IType
@@ -69,6 +67,8 @@ struct Asset : public IType
 		return state == State::Ready;
 	}
 
+	static const AssetRecord* const find(const uuid& id);
+
 	static const std::vector<std::string>& extensions(int type);
 	static bool isSupported(const std::filesystem::path& path);
 	static bool isSupported(const std::filesystem::path& path, int& type);
@@ -79,17 +79,6 @@ struct Asset : public IType
 	PROPERTY() int type{ AssetType_Invalid };
 
 	static constexpr char* const Extension = ".asset";
-
-	GENERATED_BODY()
-};
-
-CLASS()
-struct AssetLoader : public IType
-{
-	virtual void load(const std::filesystem::path&) { }
-
-	std::vector<std::string> extensions;
-	int type{ AssetType_Invalid };
 
 	GENERATED_BODY()
 };
@@ -107,7 +96,7 @@ struct AssetLoader : public IType
 			state = State::Loading; \
 			if (path.empty()) \
 			{ \
-				const AssetRecord* const record = AssetLibrary::instance().database.find(id); \
+				const AssetRecord* const record = Asset::find(id); \
 				if (record && type == record->type) \
 				{ \
 					path = record->path; \

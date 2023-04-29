@@ -2,6 +2,8 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
+#include <vector>
 
 #include <awesome/core/singleton.h>
 #include <awesome/engine/engine_settings.h>
@@ -16,6 +18,7 @@ public:
 	AssetLibrary() = default;
 	~AssetLibrary() = default;
 
+	inline const std::vector<std::unique_ptr<AssetLoader>>& loaders() const { return m_loaders; }
 	inline const std::filesystem::path& path() const { return m_path; }
 
 	void init(EngineMode mode, const std::filesystem::path& path);
@@ -23,5 +26,6 @@ public:
 	AssetDatabase database;
 
 private:
+	std::vector<std::unique_ptr<AssetLoader>> m_loaders;
 	std::filesystem::path m_path;
 };
