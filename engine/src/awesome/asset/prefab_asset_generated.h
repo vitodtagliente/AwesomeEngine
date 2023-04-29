@@ -19,3 +19,19 @@ struct reflect::Type<struct PrefabAsset> : reflect::RegisteredInTypeFactory<stru
 
     static bool registered() { return type_registered; };
 };
+
+template <>
+struct reflect::Type<struct PrefabAssetLoader> : reflect::RegisteredInTypeFactory<struct PrefabAssetLoader>
+{
+    static const reflect::meta_t& meta();
+    static const char* const name();
+    static const reflect::properties_t& properties();
+    static std::size_t size();
+
+    static void from_string(const std::string& str, PrefabAssetLoader& type);
+    static std::string to_string(const PrefabAssetLoader& type);
+    static void from_json(const std::string& json, PrefabAssetLoader& type);
+    static std::string to_json(const PrefabAssetLoader& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
+};

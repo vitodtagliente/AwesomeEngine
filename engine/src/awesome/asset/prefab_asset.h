@@ -50,3 +50,21 @@ struct PrefabAsset : public Asset
 	ASSET_GENERATED_BODY(AssetType_Prefab, Prefab)
 	GENERATED_BODY()
 };
+
+CLASS(Type = AssetLoader)
+struct PrefabAssetLoader : public AssetLoader
+{
+	PrefabAssetLoader()
+		: AssetLoader()
+	{
+		extensions = { ".prefab" };
+		type = AssetType_Prefab;
+	}
+
+	virtual void load(const std::filesystem::path& path) override
+	{
+		Resource<Prefab>::load(path);
+	}
+
+	GENERATED_BODY()
+};

@@ -36,3 +36,21 @@ struct ImageAsset : public Asset
 	ASSET_GENERATED_BODY(AssetType_Image, Image)
 	GENERATED_BODY()
 };
+
+CLASS(Type = AssetLoader)
+struct ImageAssetLoader : public AssetLoader
+{
+	ImageAssetLoader()
+		: AssetLoader()
+	{
+		extensions = { ".png", ".bmp", ".jpg", ".jpeg" };
+		type = AssetType_Image;
+	}
+
+	virtual void load(const std::filesystem::path& path) override
+	{
+		Resource<Image>::load(path);
+	}
+
+	GENERATED_BODY()
+};

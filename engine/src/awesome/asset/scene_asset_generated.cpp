@@ -122,3 +122,109 @@ void SceneAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string SceneAsset::to_json(const std::string& offset) const { return reflect::Type<SceneAsset>::to_json(*this, offset); }
+
+const reflect::meta_t& reflect::Type<SceneAssetLoader>::meta()
+{
+    static reflect::meta_t s_meta {
+        { "Type", "AssetLoader" },
+    };
+    return s_meta;
+}
+const char* const reflect::Type<SceneAssetLoader>::name() { return "SceneAssetLoader"; }
+
+const reflect::properties_t& Type<SceneAssetLoader>::properties()
+{
+    static reflect::properties_t s_properties {
+        // Parent class AssetLoader properties
+        // Properties
+    };
+    return s_properties;
+}
+
+std::size_t reflect::Type<SceneAssetLoader>::size()
+{
+    return sizeof(SceneAssetLoader);
+}
+
+void reflect::Type<SceneAssetLoader>::from_string(const std::string& str, SceneAssetLoader& type)
+{
+    reflect::encoding::ByteBuffer buffer;
+    std::transform(
+        std::begin(str),
+        std::end(str),
+        std::back_inserter(buffer),
+        [](const char c)
+        {
+            return std::byte(c);
+        }
+    );
+    
+    reflect::encoding::InputByteStream stream(buffer);
+    std::string _name;
+    stream >> _name;
+    if (_name != name()) return;
+    
+    // Parent class AssetLoader properties
+    // Properties
+}
+
+std::string reflect::Type<SceneAssetLoader>::to_string(const SceneAssetLoader& type)
+{
+    reflect::encoding::ByteBuffer buffer;
+    reflect::encoding::OutputByteStream stream(buffer);
+    stream << name();
+    
+    // Parent class AssetLoader properties
+    // Properties
+    
+    return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
+}
+
+void reflect::Type<SceneAssetLoader>::from_json(const std::string& json, SceneAssetLoader& type)
+{
+    std::string src{ reflect::encoding::json::Deserializer::trim(json, reflect::encoding::json::Deserializer::space) };
+    
+    size_t index = 0;
+    std::string key;
+    while ((index = reflect::encoding::json::Deserializer::next_key(src, key)) != std::string::npos)
+    {
+        src = src.substr(index + 2);
+        src = reflect::encoding::json::Deserializer::ltrim(src, reflect::encoding::json::Deserializer::space);
+        std::string value;
+        index = reflect::encoding::json::Deserializer::next_value(src, value);
+        if (index != std::string::npos)
+        {
+            // Parent class AssetLoader properties
+            // Properties
+            src = src.substr(index + 1);
+        }
+        else break;
+    };
+}
+
+std::string reflect::Type<SceneAssetLoader>::to_json(const SceneAssetLoader& type, const std::string& offset)
+{
+    std::stringstream stream;
+    stream << "{" << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"SceneAssetLoader\"" << "," << std::endl;
+    // Parent class AssetLoader properties
+    // Properties
+    stream << offset << "}";
+    return stream.str();
+}
+
+const reflect::meta_t& SceneAssetLoader::type_meta() const { return reflect::Type<SceneAssetLoader>::meta(); }
+const char* const SceneAssetLoader::type_name() const { return reflect::Type<SceneAssetLoader>::name(); }
+const reflect::properties_t& SceneAssetLoader::type_properties() const { return reflect::Type<SceneAssetLoader>::properties(); }
+SceneAssetLoader::operator std::string() const { return reflect::Type<SceneAssetLoader>::to_string(*this); }
+void SceneAssetLoader::from_string(const std::string& str)
+{
+    reflect::Type<SceneAssetLoader>::from_string(str, *this);
+    type_initialize();
+}
+void SceneAssetLoader::from_json(const std::string& json)
+{
+    reflect::Type<SceneAssetLoader>::from_json(json, *this);
+    type_initialize();
+}
+std::string SceneAssetLoader::to_json(const std::string& offset) const { return reflect::Type<SceneAssetLoader>::to_json(*this, offset); }

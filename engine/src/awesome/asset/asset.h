@@ -64,7 +64,7 @@ struct Asset : public IType
 		return id != uuid::Invalid;
 	}
 
-	bool ready() const 
+	bool ready() const
 	{
 		return state == State::Ready;
 	}
@@ -79,6 +79,17 @@ struct Asset : public IType
 	PROPERTY() int type{ AssetType_Invalid };
 
 	static constexpr char* const Extension = ".asset";
+
+	GENERATED_BODY()
+};
+
+CLASS()
+struct AssetLoader : public IType
+{
+	virtual void load(const std::filesystem::path&) { }
+
+	std::vector<std::string> extensions;
+	int type{ AssetType_Invalid };
 
 	GENERATED_BODY()
 };

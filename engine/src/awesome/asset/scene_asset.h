@@ -50,3 +50,21 @@ struct SceneAsset : public Asset
 	ASSET_GENERATED_BODY(AssetType_Scene, Scene)
 	GENERATED_BODY()
 };
+
+CLASS(Type = AssetLoader)
+struct SceneAssetLoader : public AssetLoader
+{
+	SceneAssetLoader()
+		: AssetLoader()
+	{
+		extensions = { ".scene" };
+		type = AssetType_Scene;
+	}
+
+	virtual void load(const std::filesystem::path& path) override
+	{
+		Resource<Scene>::load(path);
+	}
+
+	GENERATED_BODY()
+};
