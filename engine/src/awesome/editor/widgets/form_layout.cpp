@@ -23,10 +23,9 @@ void FormLayout::asset(const char* const name, Asset& asset)
 
 	if (selectable(label.c_str(), false))
 	{
-		s_assetBrowserDialog.open(name, asset.type, [&asset](const AssetRecord& newAsset) -> void
+		s_assetBrowserDialog.open(name, asset.type, [&asset](const AssetRecord& record) -> void
 			{
-				asset = newAsset.id;
-				asset.path = newAsset.path;
+				asset = record;
 			}
 		);
 	}

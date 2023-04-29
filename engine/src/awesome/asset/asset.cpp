@@ -1,5 +1,27 @@
 #include "asset.h"
 
+Asset& Asset::operator=(const Asset& other)
+{
+	if (type == other.type)
+	{
+		id = other.id;
+		path = other.path;
+		state = State::None;
+	}
+	return *this;
+}
+
+Asset& Asset::operator=(const AssetRecord& other)
+{
+	if (type == other.type)
+	{
+		id = other.id;
+		path = other.path;
+		state = State::None;
+	}
+	return *this;
+}
+
 bool Asset::operator==(const Asset& other) const
 {
 	return id == other.id;

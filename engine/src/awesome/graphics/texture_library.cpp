@@ -21,12 +21,12 @@ namespace graphics
 			}
 			else
 			{
-				image.onLoad = [&texture, &image]() -> void
-				{
-					const Image& image_data = *image.resource;
-					texture = std::make_shared<Texture>(image_data.data.get(), image_data.width, image_data.height, image_data.channels);
-				};
-				image.load();
+				image.load([&image, &texture]() -> void
+					{
+						const Image& image_data = *image.resource;
+						texture = std::make_shared<Texture>(image_data.data.get(), image_data.width, image_data.height, image_data.channels);
+					}
+				);
 			}
 			m_textures.insert(std::make_pair(image.id, texture));
 			return texture;

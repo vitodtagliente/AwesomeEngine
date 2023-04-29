@@ -36,10 +36,17 @@ struct ResourcerWriter<Scene>
 
 constexpr int AssetType_Scene = 4;
 
-typedef AssetHandle<AssetType_Scene, Scene> SceneAsset;
-
-NATIVE_CLASS(SceneAsset, typedef AssetHandle<4, Scene> SceneAsset;)
-struct native_SceneAsset
+CLASS(Type = Asset)
+struct SceneAsset : public Asset
 {
-	PROPERTY() uuid id;
+	SceneAsset()
+		: Asset(AssetType_Scene)
+	{}
+
+	SceneAsset(const uuid& _id)
+		: Asset(_id, AssetType_Scene)
+	{}
+
+	ASSET_GENERATED_BODY(AssetType_Scene, Scene)
+	GENERATED_BODY()
 };

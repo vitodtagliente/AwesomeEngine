@@ -4,10 +4,8 @@
 
 #include <vdtreflect/runtime.h>
 
-typedef AssetHandle<4 , Scene> SceneAsset;
-
 template <>
-struct reflect::Type<SceneAsset>
+struct reflect::Type<struct SceneAsset> : reflect::RegisteredInTypeFactory<struct SceneAsset>
 {
     static const reflect::meta_t& meta();
     static const char* const name();
@@ -18,4 +16,6 @@ struct reflect::Type<SceneAsset>
     static std::string to_string(const SceneAsset& type);
     static void from_json(const std::string& json, SceneAsset& type);
     static std::string to_json(const SceneAsset& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
 };

@@ -4,10 +4,8 @@
 
 #include <vdtreflect/runtime.h>
 
-typedef AssetHandle<3 , Prefab> PrefabAsset;
-
 template <>
-struct reflect::Type<PrefabAsset>
+struct reflect::Type<struct PrefabAsset> : reflect::RegisteredInTypeFactory<struct PrefabAsset>
 {
     static const reflect::meta_t& meta();
     static const char* const name();
@@ -18,4 +16,6 @@ struct reflect::Type<PrefabAsset>
     static std::string to_string(const PrefabAsset& type);
     static void from_json(const std::string& json, PrefabAsset& type);
     static std::string to_json(const PrefabAsset& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
 };

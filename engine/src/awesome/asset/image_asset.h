@@ -22,10 +22,17 @@ struct ResourceReader<Image>
 
 constexpr int AssetType_Image = 2;
 
-typedef AssetHandle<AssetType_Image, Image> ImageAsset;
-
-NATIVE_CLASS(ImageAsset, typedef AssetHandle<2, Image> ImageAsset;)
-struct native_ImageAsset
+CLASS(Type = Asset)
+struct ImageAsset : public Asset
 {
-	PROPERTY() uuid id;
+	ImageAsset()
+		: Asset(AssetType_Image)
+	{}
+
+	ImageAsset(const uuid& _id)
+		: Asset(_id, AssetType_Image)
+	{}
+
+	ASSET_GENERATED_BODY(AssetType_Image, Image)
+	GENERATED_BODY()
 };

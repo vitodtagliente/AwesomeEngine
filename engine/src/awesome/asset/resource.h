@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <map>
 #include <memory>
+#include <thread>
 
 template <typename T>
 struct ResourceReader
@@ -42,6 +43,25 @@ public:
 		}
 
 		std::shared_ptr<T> resource = ResourceReader<T>::read(path);
+		s_cache.insert(std::make_pair(path, resource));
+		return resource;
+	}
+
+	static std::shared_ptr<T> loadAsync(const std::filesystem::path& path)
+	{
+		const auto& it = s_cache.find(path);
+		if (it != s_cache.end() && !it->second.expired())
+		{
+			return it->second.lock();
+		}
+
+		std::shared_ptr<T> resource;
+		std::thread thread([&resource, &path]() -> void
+			{
+				resource = ResourceReader<T>::read(path);
+			}
+		);
+		thread.detach();
 		s_cache.insert(std::make_pair(path, resource));
 		return resource;
 	}

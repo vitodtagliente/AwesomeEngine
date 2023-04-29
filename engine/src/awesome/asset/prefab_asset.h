@@ -36,10 +36,17 @@ struct ResourcerWriter<Prefab>
 
 constexpr int AssetType_Prefab = 3;
 
-typedef AssetHandle<AssetType_Prefab, Prefab> PrefabAsset;
-
-NATIVE_CLASS(PrefabAsset, typedef AssetHandle<3, Prefab> PrefabAsset;)
-struct native_PrefabAsset
+CLASS(Type = Asset)
+struct PrefabAsset : public Asset
 {
-	PROPERTY() uuid id;
+	PrefabAsset()
+		: Asset(AssetType_Prefab)
+	{}
+
+	PrefabAsset(const uuid& _id)
+		: Asset(_id, AssetType_Prefab)
+	{}
+
+	ASSET_GENERATED_BODY(AssetType_Prefab, Prefab)
+	GENERATED_BODY()
 };
