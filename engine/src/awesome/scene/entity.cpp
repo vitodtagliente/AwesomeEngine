@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include <awesome/graphics/renderer.h>
+
 Entity::Entity(const uuid& id)
 	: m_id(id)
 {
@@ -26,6 +28,30 @@ bool Entity::operator!=(const Entity& other) const
 	return m_id != other.m_id;
 }
 
+void Entity::queue_destroy()
+{
+	m_state = State::PendingDestroy;
+}
+
+void Entity::render(class graphics::Renderer& renderer)
+{
+	if (m_state != State::Alive) return;
+
+	for (auto it = m_components.begin(); it != m_components.end(); ++it)
+	{
+		const auto& component = *it;
+		if (component->enabled)
+		{
+			component->render(renderer);
+		}
+	}
+
+	for (auto it = m_children.begin(); it != m_children.end(); ++it)
+	{
+		(*it)->render(renderer);
+	}
+}
+
 void Entity::update(const double deltaTime)
 {
 	if (m_state == State::PendingSpawn)
@@ -41,9 +67,9 @@ void Entity::update(const double deltaTime)
 		{
 			return child->m_state == State::PendingDestroy;
 		}
-		), 
+	),
 		m_children.end()
-	);
+			);
 
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
@@ -60,11 +86,6 @@ void Entity::update(const double deltaTime)
 	{
 		(*it)->update(deltaTime);
 	}
-}
-
-void Entity::queue_destroy()
-{
-	m_state = State::PendingDestroy;
 }
 
 std::vector<Entity*> Entity::findChildrenByTag(const std::string& childTag) const

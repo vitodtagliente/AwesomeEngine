@@ -8,6 +8,11 @@
 
 #include "sprite_renderer_component_generated.h"
 
+namespace graphics
+{
+	class Renderer;
+}
+
 CLASS(Type = Component, Category = Graphics)
 class SpriteRendererComponent : public Component
 {
@@ -21,6 +26,7 @@ public:
 	PROPERTY() ImageAsset image;
 	PROPERTY() graphics::TextureRect rect;
 
+	virtual void render(graphics::Renderer& renderer) override;
 	virtual void update(double deltaTime) override;
 
 	GENERATED_BODY()

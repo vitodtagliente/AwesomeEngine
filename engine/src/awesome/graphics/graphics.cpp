@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include <awesome/engine/canvas.h>
+#include <awesome/scene/scene_graph.h>
 
 #include "context.h"
 #include "renderer.h"
@@ -46,7 +47,7 @@ void Graphics::preRendering()
 
 void Graphics::render()
 {
-	
+	SceneGraph::instance().root()->render(*renderer);
 }
 
 void Graphics::postRendering()

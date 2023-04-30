@@ -12,6 +12,11 @@
 
 #include "entity_generated.h"
 
+namespace graphics
+{
+	class Renderer;
+}
+
 CLASS()
 class Entity : public IType
 {
@@ -41,6 +46,7 @@ public:
 	inline bool hasParent() const { return m_parent != nullptr; }
 
 	void queue_destroy();
+	void render(graphics::Renderer& renderer);
 	void update(double deltaTime);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;

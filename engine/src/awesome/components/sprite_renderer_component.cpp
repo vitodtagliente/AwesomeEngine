@@ -6,19 +6,20 @@
 #include <awesome/graphics/texture_library.h>
 #include <awesome/scene/entity.h>
 
-// void SpriteRendererComponent::render(graphics::Renderer* const renderer)
-// {
-// 	if (image == nullptr || image->state != Asset::State::Ready)
-// 	{
-// 		return;
-// 	}
-// 
-// 	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image->id);
-// 	if (texture != nullptr)
-// 	{
-// 		renderer->submitDrawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
-// 	}
-// }
+void SpriteRendererComponent::render(graphics::Renderer& renderer)
+{
+	if (!image.ready())
+	{
+		image.load();
+		return;
+	}
+	
+	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image);
+	if (texture != nullptr)
+	{
+		renderer.submitDrawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
+	}
+}
 
 void SpriteRendererComponent::update(const double /*deltaTime*/)
 {

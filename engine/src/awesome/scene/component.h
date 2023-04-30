@@ -8,6 +8,11 @@
 
 class Entity;
 
+namespace graphics
+{
+	class Renderer;
+}
+
 CLASS()
 class Component : public IType
 {
@@ -28,6 +33,7 @@ public:
 	void detach();
 
 	virtual void init() {}
+	virtual void render(graphics::Renderer& /*renderer*/) {};
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 
