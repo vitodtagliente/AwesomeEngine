@@ -4,6 +4,10 @@
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/graphics/color.h>
 
+#include <awesome/editor/asset_inspectors/image_asset_inspector.h>
+#include <awesome/editor/asset_inspectors/prefab_asset_inspector.h>
+#include <awesome/editor/asset_inspectors/scene_asset_inspector.h>
+
 AssetInspectorWindow::AssetInspectorWindow()
 	: Window()
 	, m_editorState(EditorState::instance())
@@ -17,6 +21,10 @@ char* const AssetInspectorWindow::getTitle() const
 
 void AssetInspectorWindow::init()
 {
+	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());
+	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
+	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());
+
 	for (const auto& [name, options] : TypeFactory::list("Type", "AssetInspector"))
 	{
 		std::unique_ptr<AssetInspector> inspector = std::unique_ptr<AssetInspector>(TypeFactory::instantiate<AssetInspector>(name));

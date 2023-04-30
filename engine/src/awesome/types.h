@@ -10,9 +10,6 @@
 // components
 #include "components/sprite_renderer_component.h"
 // editor
-#include "editor/asset_inspectors/image_asset_inspector.h"
-#include "editor/asset_inspectors/prefab_asset_inspector.h"
-#include "editor/asset_inspectors/scene_asset_inspector.h"
 #include "editor/windows/asset_inspector_window.h"
 #include "editor/windows/content_browser_window.h"
 #include "editor/windows/entity_inspector_window.h"
