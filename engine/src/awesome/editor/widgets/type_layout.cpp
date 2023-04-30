@@ -16,31 +16,31 @@ void TypeLayout::input(IType& type)
 		case PropertyType::Type::T_int: FormLayout::input(name.c_str(), property.value<int>(&type)); break;
 		case PropertyType::Type::T_native: 
 		{
-			if (property.type.name == "graphics::Color")
+			if (property.type.name == reflect::Type<graphics::Color>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<graphics::Color>(&type));
 			}
-			else if (property.type.name == "graphics::TextureCoords")
+			else if (property.type.name == reflect::Type<graphics::TextureCoords>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<graphics::TextureCoords>(&type));
 			}
-			else if (property.type.name == "graphics::TextureRect")
+			else if (property.type.name == reflect::Type<graphics::TextureRect>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<graphics::TextureRect>(&type));
 			}
-			else if (property.type.name == "math::transform")
+			else if (property.type.name == reflect::Type<math::transform>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<math::transform>(&type));
 			}
-			else if (property.type.name == "math::vec2")
+			else if (property.type.name == reflect::Type<math::vec2>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<math::vec2>(&type));
 			}
-			else if (property.type.name == "math::vec3")
+			else if (property.type.name == reflect::Type<math::vec3>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<math::vec3>(&type));
 			}
-			else if (property.type.name == "math::vec4")
+			else if (property.type.name == reflect::Type<math::vec4>::name())
 			{
 				FormLayout::input(name.c_str(), property.value<math::vec4>(&type));
 			}
