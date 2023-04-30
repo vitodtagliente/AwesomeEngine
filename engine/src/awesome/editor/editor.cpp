@@ -18,6 +18,11 @@
 #include "widgets/dialog_layout.h"
 #include "widgets/window_layout.h"
 
+#include "windows/asset_inspector_window.h"
+#include "windows/content_browser_window.h"
+#include "windows/entity_inspector_window.h"
+#include "windows/scene_window.h"
+
 Editor* Editor::s_instance{ nullptr };
 
 Editor::Editor()
@@ -116,6 +121,11 @@ void Editor::update(const double deltaTime)
 
 void Editor::registerWindows()
 {
+	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
+	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
+	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
+	m_windows.push_back(std::make_unique<SceneWindow>());
+
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
 	{
 		std::unique_ptr<Window> window = std::unique_ptr<Window>(TypeFactory::instantiate<Window>(name));

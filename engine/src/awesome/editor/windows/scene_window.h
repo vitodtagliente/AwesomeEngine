@@ -5,11 +5,8 @@
 
 #include <awesome/editor/window.h>
 
-#include "scene_window_generated.h"
-
 class Entity;
 
-CLASS(Type = Window)
 class SceneWindow : public Window
 {
 public:
@@ -18,8 +15,6 @@ public:
 	virtual char* const getTitle() const override;
 	virtual void render() override;
 	virtual void update(double) override;
-
-	GENERATED_BODY()
 
 private:
 	void addEntity(Entity* const parent);
