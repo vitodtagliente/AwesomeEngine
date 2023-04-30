@@ -14,7 +14,38 @@ void TypeLayout::input(IType& type)
 		case PropertyType::Type::T_enum: FormLayout::input(name.c_str(), property.value<bool>(&type)); break;
 		case PropertyType::Type::T_float: FormLayout::input(name.c_str(), property.value<float>(&type)); break;
 		case PropertyType::Type::T_int: FormLayout::input(name.c_str(), property.value<int>(&type)); break;
-		case PropertyType::Type::T_native: break;
+		case PropertyType::Type::T_native: 
+		{
+			if (property.type.name == "graphics::Color")
+			{
+				FormLayout::input(name.c_str(), property.value<graphics::Color>(&type));
+			}
+			else if (property.type.name == "graphics::TextureCoords")
+			{
+				FormLayout::input(name.c_str(), property.value<graphics::TextureCoords>(&type));
+			}
+			else if (property.type.name == "graphics::TextureRect")
+			{
+				FormLayout::input(name.c_str(), property.value<graphics::TextureRect>(&type));
+			}
+			else if (property.type.name == "math::transform")
+			{
+				FormLayout::input(name.c_str(), property.value<math::transform>(&type));
+			}
+			else if (property.type.name == "math::vec2")
+			{
+				FormLayout::input(name.c_str(), property.value<math::vec2>(&type));
+			}
+			else if (property.type.name == "math::vec3")
+			{
+				FormLayout::input(name.c_str(), property.value<math::vec3>(&type));
+			}
+			else if (property.type.name == "math::vec4")
+			{
+				FormLayout::input(name.c_str(), property.value<math::vec4>(&type));
+			}
+			break;
+		}
 		case PropertyType::Type::T_string: FormLayout::input(name.c_str(), property.value<std::string>(&type)); break;
 		case PropertyType::Type::T_template: break;
 		case PropertyType::Type::T_type: 
