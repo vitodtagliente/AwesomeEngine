@@ -45,6 +45,8 @@ public:
 	inline bool hasChildren() const { return !m_children.empty(); }
 	inline bool hasParent() const { return m_parent != nullptr; }
 
+	std::size_t countChildren() const;
+
 	void queue_destroy();
 	void render(graphics::Renderer& renderer);
 	void update(double deltaTime);

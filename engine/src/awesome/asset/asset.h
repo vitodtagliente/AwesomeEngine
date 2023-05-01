@@ -67,6 +67,8 @@ struct Asset : public IType
 		return state == State::Ready;
 	}
 
+	virtual void load(const std::function<void()>& = {}) {}
+
 	static const AssetRecord* const find(const uuid& id);
 
 	static const std::vector<std::string>& extensions(int type);
@@ -89,7 +91,7 @@ struct Asset : public IType
 		load(); \
 	} \
 	\
-	void load(const std::function<void()>& callback = {}) \
+	virtual void load(const std::function<void()>& callback = {}) override \
 	{ \
 		if (id != uuid::Invalid && resource == nullptr && state == State::None) \
 		{ \

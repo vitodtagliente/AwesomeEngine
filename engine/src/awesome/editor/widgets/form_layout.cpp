@@ -26,6 +26,7 @@ void FormLayout::asset(const char* const name, Asset& asset)
 		s_assetBrowserDialog.open(name, asset.type, [&asset](const AssetRecord& record) -> void
 			{
 				asset = record;
+				asset.load();
 			}
 		);
 	}

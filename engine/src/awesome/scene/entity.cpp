@@ -28,6 +28,16 @@ bool Entity::operator!=(const Entity& other) const
 	return m_id != other.m_id;
 }
 
+std::size_t Entity::countChildren() const
+{
+	std::size_t size{ m_children.size() };
+	for (const auto& child : m_children)
+	{
+		size += child->countChildren();
+	}
+	return size;
+}
+
 void Entity::queue_destroy()
 {
 	m_state = State::PendingDestroy;
