@@ -1,6 +1,7 @@
 #include "scene_window.h"
 
 #include <awesome/core/string_util.h>
+#include <awesome/editor/widgets/drag_layout.h>
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/editor/widgets/interaction_layout.h>
 #include <awesome/editor/widgets/search_layout.h>
@@ -40,7 +41,7 @@ void SceneWindow::render()
 		const bool isSelected = selectedEntity != nullptr && entity->id() == selectedEntity->id();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			// Layout::rename(m_tempRename);
+			FormLayout::rename(m_tempRename);
 		}
 		else
 		{
@@ -51,19 +52,19 @@ void SceneWindow::render()
 
 			renderEntity(entity.get(), selectedEntity);
 
-			// Layout::beginDrag("ENTITY_REPARENT", entity->name, (void*)(&entity->getId()), sizeof(uuid));
-			// Layout::endDrag("ENTITY_REPARENT", [this, &entity](void* const data, const size_t) -> void
-			// 	{
-			// 		const uuid id = *(const uuid*)data;
-			// 		if (id == entity->getId()) return;
-			// 
-			// 		Entity* const inEntity = World::instance().findEntityById(id);
-			// 		if (inEntity != nullptr)
-			// 		{
-			// 			inEntity->setParent(entity.get());
-			// 		}
-			// 	}
-			// );
+			DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+			DragLayout::end("ENTITY_REPARENT", [this, &entity](void* const data, const size_t) -> void
+				{
+					const uuid id = *(const uuid*)data;
+					if (id == entity->id()) return;
+			
+					Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
+					if (draggingEntity != nullptr)
+					{
+
+					}
+				}
+			);
 		}
 	}
 	FormLayout::endChild();

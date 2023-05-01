@@ -56,6 +56,7 @@ public:
 	static void input(const char* const name, graphics::TextureCoords& value);
 	static void input(const char* const name, graphics::TextureRect& value);
 	static void newLine();
+	static void rename(std::string& value);
 	static void sameLine();
 	static bool selectable(const char* const name, bool selected);
 	static bool selectable(const char* const name, bool selected, const std::function<void()>& handler);

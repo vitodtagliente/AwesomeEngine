@@ -17,7 +17,7 @@ void DragLayout::begin(const char* const name, const char* const item, void* con
 	}
 }
 
-void DragLayout::endDrag(const char* const name, const std::function<void(void*, size_t)>& handler)
+void DragLayout::end(const char* const name, const std::function<void(void*, size_t)>& handler)
 {
 	if (ImGui::BeginDragDropTarget())
 	{

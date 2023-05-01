@@ -268,6 +268,14 @@ void FormLayout::newLine()
 	ImGui::NewLine();
 }
 
+void FormLayout::rename(std::string& value)
+{
+	ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 0);
+	ImGui::SetKeyboardFocusHere(0);
+	ImGui::InputText("##rename", &value, ImGuiInputTextFlags_EnterReturnsTrue);
+	ImGui::PopStyleVar();
+}
+
 void FormLayout::sameLine()
 {
 	ImGui::SameLine();
