@@ -21,6 +21,7 @@
 #include "windows/asset_inspector_window.h"
 #include "windows/content_browser_window.h"
 #include "windows/entity_inspector_window.h"
+#include "windows/performance_window.h"
 #include "windows/scene_window.h"
 
 Editor* Editor::s_instance{ nullptr };
@@ -124,6 +125,7 @@ void Editor::registerWindows()
 	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
 	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
 	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
+	m_windows.push_back(std::make_unique<PerformanceWindow>());
 	m_windows.push_back(std::make_unique<SceneWindow>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
