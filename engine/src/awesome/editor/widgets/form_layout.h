@@ -6,6 +6,7 @@
 #include <string>
 
 #include <awesome/asset/image_asset.h>
+#include <awesome/editor/text_icon.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
@@ -55,6 +56,62 @@ public:
 	static void input(const char* const name, graphics::Color& value);
 	static void input(const char* const name, graphics::TextureCoords& value);
 	static void input(const char* const name, graphics::TextureRect& value);
+	// std::vector<T> input
+	template <typename T>
+	static void input(const char* const name, std::vector<T>& list, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
+	{
+		begin(name);
+
+		text(name);
+		for (size_t i = 0; i < list.size(); ++i)
+		{
+			std::string context(name);
+			context += "[" + std::to_string(i) + "]";
+			begin(context.c_str());
+			if (collapsingHeader(context.c_str()))
+			{
+				handler(list.at(i));
+				if (button(TextIcon::minus().c_str()))
+				{
+					list.erase(list.begin() + i);
+
+					end();
+					break;
+				}
+			}
+			end();
+		}
+		if (button(TextIcon::plus().c_str()))
+		{
+			list.push_back(std::move(createHandler()));
+		}
+		if (!list.empty())
+		{
+			sameLine();
+			if (button(TextIcon::eraser().c_str()))
+			{
+				list.clear();
+			}
+		}
+
+		end();
+	}
+	template<typename T>
+	static void input(const char* const name, std::vector<T>& list)
+	{
+		input<T>(
+			name,
+			list,
+			[](T& element) -> void
+			{
+				input("Value", element);
+			},
+			[]() -> T
+			{
+				return T();
+			}
+		);
+	}
 	static void newLine();
 	static void rename(std::string& value);
 	static void sameLine();

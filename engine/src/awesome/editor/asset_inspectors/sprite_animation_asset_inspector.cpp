@@ -27,7 +27,21 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 	SpriteAnimation& spriteAnimation = *m_asset.resource;
 	auto& frames = spriteAnimation.frames;
 
-	TypeLayout::input(spriteAnimation);
+	FormLayout::asset("Image", spriteAnimation.image);
+	FormLayout::input("Starting Frame", spriteAnimation.startingFrame);
+	FormLayout::input<SpriteAnimationFrame>(
+		"Frames",
+		spriteAnimation.frames,
+		[](SpriteAnimationFrame& frame) -> void
+		{
+			FormLayout::input("Rect", frame.rect);
+			FormLayout::input("Duration", frame.duration);
+		},
+		[]() -> SpriteAnimationFrame
+		{
+			return SpriteAnimationFrame();
+		}
+	);
 
 	FormLayout::separator();
 

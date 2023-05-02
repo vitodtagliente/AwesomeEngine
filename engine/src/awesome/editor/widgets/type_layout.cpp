@@ -49,7 +49,12 @@ void TypeLayout::input(IType& type)
 		case PropertyType::Type::T_string: FormLayout::input(name.c_str(), property.value<std::string>(&type)); break;
 		case PropertyType::Type::T_template: 
 		{
-
+			if ((property.type.name == "std::vector" || property.type.name == "vector") && property.type.children.front().type == PropertyType::Type::T_type)
+			{
+				// const std::string& typeName = property.type.children.front().name;
+				// auto& list = property.value<std::vector<IType>&>(&type);
+				
+			}
 			break;
 		}
 		case PropertyType::Type::T_type: 
