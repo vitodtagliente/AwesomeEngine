@@ -8,8 +8,6 @@
 class StressWindow : public Window
 {
 public:
-	StressWindow() = default;
-
 	virtual char* const getTitle() const override;
 	virtual void render() override;
 

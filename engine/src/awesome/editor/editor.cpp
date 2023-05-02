@@ -23,6 +23,7 @@
 #include "windows/entity_inspector_window.h"
 #include "windows/performance_window.h"
 #include "windows/scene_window.h"
+#include "windows/settings_window.h"
 #include "windows/stress_window.h"
 
 #include "private/menu.h"
@@ -132,6 +133,7 @@ void Editor::registerWindows()
 	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
 	m_windows.push_back(std::make_unique<PerformanceWindow>());
 	m_windows.push_back(std::make_unique<SceneWindow>());
+	m_windows.push_back(std::make_unique<SettingsWindow>());
 	m_windows.push_back(std::make_unique<StressWindow>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
