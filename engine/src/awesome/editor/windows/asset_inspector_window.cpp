@@ -7,6 +7,7 @@
 #include <awesome/editor/asset_inspectors/image_asset_inspector.h>
 #include <awesome/editor/asset_inspectors/prefab_asset_inspector.h>
 #include <awesome/editor/asset_inspectors/scene_asset_inspector.h>
+#include <awesome/editor/asset_inspectors/sprite_animation_asset_inspector.h>
 
 AssetInspectorWindow::AssetInspectorWindow()
 	: Window()
@@ -24,6 +25,7 @@ void AssetInspectorWindow::init()
 	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());
 	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
 	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());
+	m_inspectors.push_back(std::make_unique<SpriteAnimationAssetInspector>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "AssetInspector"))
 	{
