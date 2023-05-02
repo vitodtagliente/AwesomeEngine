@@ -30,6 +30,8 @@ public:
 	inline Entity* const getOwner() const { return m_owner; }
 	const math::transform& getOwnerTransform() const;
 	math::transform& getOwnerTransform();
+	void queueOwnerDestroy();
+
 	inline bool isAttached() const { return m_owner != nullptr; }
 
 	void attach(Entity* const entity);

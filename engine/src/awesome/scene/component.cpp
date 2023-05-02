@@ -28,6 +28,11 @@ math::transform& Component::getOwnerTransform()
 	return m_owner->transform;
 }
 
+void Component::queueOwnerDestroy()
+{
+	m_owner->queue_destroy();
+}
+
 void Component::attach(Entity* const entity)
 {
 	m_owner = entity;
