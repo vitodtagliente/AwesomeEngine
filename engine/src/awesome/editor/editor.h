@@ -1,15 +1,9 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <filesystem>
-#include <memory>
-#include <queue>
-#include <vector>
-
 #include <awesome/engine/engine_module.h>
 
 #include "editor_state.h"
-#include "window.h"
 
 class Editor : public EngineModule
 {
@@ -25,14 +19,8 @@ public:
 
 	static Editor* const instance() { return s_instance; }
 
-	const std::vector<std::unique_ptr<Window>>& getWindows() const { return m_windows; }
-
 	EditorState state;
 
-private:
-	void registerWindows();
-
-	std::vector<std::unique_ptr<Window>> m_windows;
-	
+private:	
 	static Editor* s_instance;
 };

@@ -5,12 +5,45 @@
 #include <awesome/asset/asset_database.h>
 #include <awesome/scene/entity.h>
 
+#include "windows/asset_inspector_window.h"
+#include "windows/content_browser_window.h"
+#include "windows/entity_inspector_window.h"
+#include "windows/performance_window.h"
+#include "windows/scene_window.h"
+#include "windows/settings_window.h"
+#include "windows/stress_window.h"
+
 EditorState* EditorState::s_instance{ nullptr };
 
 EditorState::EditorState()
 {
 	assert(s_instance == nullptr);
 	s_instance = this;
+}
+
+void EditorState::init()
+{
+	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
+	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
+	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
+	m_windows.push_back(std::make_unique<PerformanceWindow>());
+	m_windows.push_back(std::make_unique<SceneWindow>());
+	m_windows.push_back(std::make_unique<SettingsWindow>());
+	m_windows.push_back(std::make_unique<StressWindow>());
+
+	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
+	{
+		std::unique_ptr<Window> window = std::unique_ptr<Window>(TypeFactory::instantiate<Window>(name));
+		if (window != nullptr)
+		{
+			m_windows.push_back(std::move(window));
+		}
+	}
+
+	for (const auto& window : m_windows)
+	{
+		window->init();
+	}
 }
 
 void EditorState::select(const AssetRecord& asset)

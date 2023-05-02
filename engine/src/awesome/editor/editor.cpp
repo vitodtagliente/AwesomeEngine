@@ -18,14 +18,6 @@
 #include "widgets/dialog_layout.h"
 #include "widgets/window_layout.h"
 
-#include "windows/asset_inspector_window.h"
-#include "windows/content_browser_window.h"
-#include "windows/entity_inspector_window.h"
-#include "windows/performance_window.h"
-#include "windows/scene_window.h"
-#include "windows/settings_window.h"
-#include "windows/stress_window.h"
-
 #include "private/menu.h"
 
 Editor* Editor::s_instance{ nullptr };
@@ -65,12 +57,7 @@ bool Editor::startup()
 	menu.init();
 
 	state.path = AssetLibrary::instance().path();
-
-	registerWindows();
-	for (const auto& window : m_windows)
-	{
-		window->init();
-	}
+	state.init();
 
 	return true;
 }
@@ -93,7 +80,7 @@ void Editor::render()
 {
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 
-	for (const auto& window : m_windows)
+	for (const auto& window : state.getWindows())
 	{
 		if (!window->visible) continue;
 
@@ -120,28 +107,8 @@ void Editor::update(const double deltaTime)
 	input.preventMouseEvents = io.WantCaptureMouse;
 	input.preventKeyEvents = io.WantCaptureKeyboard;
 
-	for (const auto& window : m_windows)
+	for (const auto& window : state.getWindows())
 	{
 		window->update(deltaTime);
-	}
-}
-
-void Editor::registerWindows()
-{
-	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
-	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
-	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
-	m_windows.push_back(std::make_unique<PerformanceWindow>());
-	m_windows.push_back(std::make_unique<SceneWindow>());
-	m_windows.push_back(std::make_unique<SettingsWindow>());
-	m_windows.push_back(std::make_unique<StressWindow>());
-
-	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
-	{
-		std::unique_ptr<Window> window = std::unique_ptr<Window>(TypeFactory::instantiate<Window>(name));
-		if (window != nullptr)
-		{
-			m_windows.push_back(std::move(window));
-		}
 	}
 }
