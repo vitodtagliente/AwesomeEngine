@@ -17,6 +17,7 @@ public:
 
 	virtual void init() override;
 	virtual void render() override;
+	virtual void update(double deltaTime) override;
 
 private:
 	class EditorState* m_editorState{ nullptr };

@@ -10,6 +10,7 @@ public:
 	virtual bool canInspect(int type) const override;
 	virtual char* const getTitle() const override;
 	virtual void inspect(const AssetRecord& record) override;
+	virtual void update(double deltaTime) override;
 
 private:
 	SpriteAnimationAsset m_asset;

@@ -15,6 +15,7 @@ struct AssetInspector : public IType
 	virtual bool canInspect(int /*asset_type*/) const { return false; }
 	virtual char* const getTitle() const { return ""; }
 	virtual void inspect(const AssetRecord& /*record*/) {}
+	virtual void update(const double /*deltaTime*/) {}
 
 	GENERATED_BODY()
 };

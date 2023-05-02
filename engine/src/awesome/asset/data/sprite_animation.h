@@ -9,6 +9,7 @@
 
 #include "sprite_animation_generated.h"
 
+CLASS()
 struct SpriteAnimationFrame : public IType
 {
 	PROPERTY() graphics::TextureRect rect;

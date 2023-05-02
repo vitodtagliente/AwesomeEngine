@@ -47,7 +47,11 @@ void TypeLayout::input(IType& type)
 			break;
 		}
 		case PropertyType::Type::T_string: FormLayout::input(name.c_str(), property.value<std::string>(&type)); break;
-		case PropertyType::Type::T_template: break;
+		case PropertyType::Type::T_template: 
+		{
+
+			break;
+		}
 		case PropertyType::Type::T_type: 
 		{
 			for (const auto& [type_name, options] : TypeFactory::list("Type", "Asset"))

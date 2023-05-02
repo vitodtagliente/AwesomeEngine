@@ -74,3 +74,20 @@ void AssetInspectorWindow::render()
 		FormLayout::text("Cannot inspect the selected asset");
 	}
 }
+
+void AssetInspectorWindow::update(const double deltaTime)
+{
+	if (m_editorState->selection.asset.has_value())
+	{
+		const AssetRecord& record = m_editorState->selection.asset.value();
+
+		for (const auto& inspector : m_inspectors)
+		{
+			if (inspector->canInspect(record.type))
+			{				
+				inspector->update(deltaTime);
+				return;
+			}
+		}
+	}
+}

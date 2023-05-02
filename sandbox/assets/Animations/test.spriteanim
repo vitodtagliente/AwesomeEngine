@@ -1,0 +1,12 @@
+{
+    "type_id": "SpriteAnimation",
+    "image": {
+        "type_id": "ImageAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "",
+        },
+        "type": 2,
+    },
+    "startingFrame": 0,
+}
