@@ -13,11 +13,14 @@
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
 
-class EditorUI final
+struct EditorUI final
 {
-public:
+	EditorUI() = delete;
+
 	struct Icon final
 	{
+		Icon() = delete;
+
 		static const std::string copy;
 		static const std::string cube;
 		static const std::string eraser;
@@ -38,6 +41,25 @@ public:
 		static const std::string tree;
 		static const std::string upload;
 		static const std::string video;
+	};
+
+	struct Tree final
+	{
+		Tree() = delete;
+
+		static bool begin(const char* const name, bool selected);
+		static void end();
+		static bool isClicked();
+	};
+
+	struct Window final
+	{
+		Window() = delete;
+
+		static void begin(const char* const name);
+		static void end();
+		static bool isFocused();
+		static bool isHovered();
 	};
 
 	static void begin(const char* const name);
@@ -64,6 +86,7 @@ public:
 	static void newLine();
 	static void rename(std::string& value);
 	static void sameLine();
+	static bool search(std::string& value);
 	static bool selectable(const char* const name, bool selected);
 	static bool selectable(const char* const name, bool selected, const std::function<void()>& handler);
 	static void separator();
@@ -88,7 +111,4 @@ public:
 	static void input(const char* const name, graphics::TextureCoords& value);
 	static void input(const char* const name, graphics::TextureRect& value);
 	static void inputMultilineText(const char* const name, std::string& value);
-
-private:
-	static std::string id(const char* const name);
 };

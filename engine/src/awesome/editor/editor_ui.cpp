@@ -30,7 +30,58 @@ const std::string EditorUI::Icon::tree{ ICON_FA_TREE };
 const std::string EditorUI::Icon::upload{ ICON_FA_UPLOAD };
 const std::string EditorUI::Icon::video{ ICON_FA_VIDEO };
 
+bool EditorUI::Tree::begin(const char* const name, const bool selected)
+{
+	return ImGui::TreeNodeEx(name, ImGuiTreeNodeFlags_OpenOnArrow | (selected ? ImGuiTreeNodeFlags_Selected : ImGuiTreeNodeFlags_None));
+}
+
+void EditorUI::Tree::end()
+{
+	ImGui::TreePop();
+}
+
+bool EditorUI::Tree::isClicked()
+{
+	return ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen();
+}
+
+void EditorUI::Window::begin(const char* const name)
+{
+	ImGui::Begin(name);
+}
+
+void EditorUI::Window::end()
+{
+	ImGui::End();
+}
+
+bool EditorUI::Window::isFocused()
+{
+	return ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
+}
+
+bool EditorUI::Window::isHovered()
+{
+	return ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows);
+}
+
 std::vector<std::string> context;
+
+std::string id(const char* const name)
+{
+	if (context.empty())
+	{
+		return name;
+	}
+
+	std::string context_id = "";
+	for (const std::string& c : context)
+	{
+		context_id += (context.empty() ? "" : "_") + c;
+	}
+
+	return std::string(name) + "###" + context_id + "_" + name;
+}
 
 void EditorUI::begin(const char* const name)
 {
@@ -205,6 +256,15 @@ void EditorUI::sameLine()
 	ImGui::SameLine();
 }
 
+bool EditorUI::search(std::string& value)
+{
+	const std::string previousFilter = value;
+	ImGui::PushItemWidth(-1);
+	ImGui::InputTextWithHint("filter", Icon::search.c_str(), &value);
+	ImGui::PopItemWidth();
+	return previousFilter != value;
+}
+
 bool EditorUI::selectable(const char* const name, const bool selected)
 {
 	return ImGui::Selectable(id(name).c_str(), selected);
@@ -350,20 +410,4 @@ void EditorUI::input(const char* const name, graphics::TextureRect& value)
 void EditorUI::inputMultilineText(const char* const name, std::string& value)
 {
 	ImGui::InputTextMultiline(id(name).c_str(), &value);
-}
-
-std::string EditorUI::id(const char* const name)
-{
-	if (context.empty())
-	{
-		return name;
-	}
-
-	std::string context_id = "";
-	for (const std::string& c : context)
-	{
-		context_id += (context.empty() ? "" : "_") + c;
-	}
-
-	return std::string(name) + "###" + context_id + "_" + name;
 }
