@@ -21,7 +21,6 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
 
-	const math::mat4& view() const { return m_view; }
 	virtual math::vec3 screenToWorldCoords(const math::vec2& point);
 
 	static CameraComponent* const main();
@@ -31,8 +30,10 @@ public:
 	GENERATED_BODY()
 
 protected:
+	virtual math::mat4 computeProjectionMatrix() const;
+
 	graphics::Renderer* m_renderer{ nullptr };
-	math::mat4 m_view{ math::mat4::identity };
+	math::mat4 m_projection{ math::mat4::identity };
 
 	static CameraComponent* s_instance;
 };

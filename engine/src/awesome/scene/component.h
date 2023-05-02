@@ -28,6 +28,7 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
+	const math::transform& getOwnerTransform() const;
 	math::transform& getOwnerTransform();
 	inline bool isAttached() const { return m_owner != nullptr; }
 

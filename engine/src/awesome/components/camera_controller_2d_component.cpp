@@ -33,6 +33,6 @@ void CameraController2dComponent::update(double deltaTime)
 	if (wheelPosition.y != 0.f)
 	{
 		math::vec3& scale = getOwnerTransform().scale;
-		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * +wheelPosition.y, 0.1f, 3.0f);
+		scale.x = scale.y = math::clamp(scale.x + zoomSpeed * static_cast<float>(deltaTime) * -wheelPosition.y, 0.1f, 3.0f);
 	}
 }

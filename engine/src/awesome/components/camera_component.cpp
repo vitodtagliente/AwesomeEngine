@@ -13,9 +13,13 @@ void CameraComponent::init()
 	m_renderer = Graphics::instance()->renderer.get();
 }
 
-void CameraComponent::update(double)
+void CameraComponent::update(const double)
 {
-	m_view = graphics::Camera::view(getOwnerTransform());
+	// apply only if this is the main camera
+	if (this != s_instance) return;
+
+	m_renderer->setViewMatrix(getOwnerTransform().matrix());
+	m_renderer->setProjectionMatrix(computeProjectionMatrix());
 }
 
 math::vec3 CameraComponent::screenToWorldCoords(const math::vec2& point)
@@ -25,10 +29,15 @@ math::vec3 CameraComponent::screenToWorldCoords(const math::vec2& point)
 
 	const math::vec4 viewport{ 0, 0, screenSize.x, screenSize.y };
 	const math::vec3 screencoords{ point.x, screenSize.y - point.y - 1, 0.0f };
-	return math::mat4::unproject(screencoords, m_view, m_renderer->getProjectionMatrix(), viewport);
+	return math::mat4::unproject(screencoords, m_renderer->getViewMatrix(), m_renderer->getProjectionMatrix(), viewport);
 }
 
 CameraComponent* const CameraComponent::main()
 {
 	return s_instance;
+}
+
+math::mat4 CameraComponent::computeProjectionMatrix() const
+{
+	return graphics::Camera::view(getOwnerTransform());
 }
