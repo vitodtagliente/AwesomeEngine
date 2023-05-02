@@ -12,7 +12,7 @@ public:
 	virtual void init() override;
 	virtual void update(double deltaTime) override;
 	
-	PROPERTY() double lifetime;
+	PROPERTY() double lifetime{ 1.0 };
 
 	GENERATED_BODY()
 private:
