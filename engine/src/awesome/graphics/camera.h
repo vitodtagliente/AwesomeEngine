@@ -2,4 +2,3 @@
 #pragma once
 
 #include <vdtgraphics/camera.h>
-#include <vdtgraphics/orthographic_camera.h>

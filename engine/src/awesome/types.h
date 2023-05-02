@@ -8,6 +8,8 @@
 #include "asset/prefab_asset.h"
 #include "asset/scene_asset.h"
 // components
+#include "components/camera_component.h"
+#include "components/camera_controller_2d_component.h"
 #include "components/sprite_renderer_component.h"
 // editor
 #include "editor/windows/asset_inspector_window.h"

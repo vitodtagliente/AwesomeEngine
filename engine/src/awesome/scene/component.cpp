@@ -18,6 +18,11 @@ bool Component::operator!=(const Component& other) const
 	return m_id != other.m_id;
 }
 
+math::transform& Component::getOwnerTransform()
+{
+	return m_owner->transform;
+}
+
 void Component::attach(Entity* const entity)
 {
 	m_owner = entity;

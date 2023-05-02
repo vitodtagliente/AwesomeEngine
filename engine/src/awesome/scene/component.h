@@ -3,6 +3,7 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
+#include <awesome/math/transform.h>
 
 #include "component_generated.h"
 
@@ -27,6 +28,7 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
+	math::transform& getOwnerTransform();
 	inline bool isAttached() const { return m_owner != nullptr; }
 
 	void attach(Entity* const entity);

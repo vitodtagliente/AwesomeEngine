@@ -4,7 +4,6 @@
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
-#include <awesome/scene/entity.h>
 
 void SpriteRendererComponent::render(graphics::Renderer& renderer)
 {
@@ -17,13 +16,13 @@ void SpriteRendererComponent::render(graphics::Renderer& renderer)
 	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image);
 	if (texture != nullptr)
 	{
-		renderer.submitDrawTexture(texture.get(), getOwner()->transform.matrix(), rect, color);
+		renderer.submitDrawTexture(texture.get(), getOwnerTransform().matrix(), rect, color);
 	}
 }
 
 void SpriteRendererComponent::update(const double /*deltaTime*/)
 {
-	math::vec3& scale = getOwner()->transform.scale;
+	math::vec3& scale = getOwnerTransform().scale;
 	if ((flipX && scale.x > 0) || (!flipX && scale.x < 0))
 	{
 		scale.x = -scale.x;

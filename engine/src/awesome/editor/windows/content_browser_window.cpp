@@ -3,6 +3,7 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
+#include <awesome/editor/widgets/drag_layout.h>
 #include <awesome/editor/widgets/form_layout.h>
 #include <awesome/editor/widgets/interaction_layout.h>
 #include <awesome/editor/widgets/search_layout.h>
@@ -41,19 +42,20 @@ void ContentBrowserWindow::render()
 	FormLayout::beginChild("Content");
 	if (m_directory.path != m_root)
 	{
-		if (FormLayout::selectable("..", false))
-		{
-			m_state = NavigationState::Navigating;
-			selectFile(m_directory.parent);
-		}
+		FormLayout::selectable("..", false, [this]() -> void
+			{
+				m_state = NavigationState::Navigating;
+				selectFile(m_directory.parent);
+			}
+		);
 
-		// Layout::endDrag("FILE_MOVE", [this, file = m_directory.parent](void* const data, const size_t) -> void
-		// 	{
-		// 		const std::filesystem::path from = *(const std::filesystem::path*)data;
-		// 		moveFile(from, file);
-		// 		refreshDirectory();
-		// 	}
-		// );
+		DragLayout::end("FILE_MOVE", [this, file = m_directory.parent](void* const data, const size_t) -> void
+			{
+				const std::filesystem::path from = *(const std::filesystem::path*)data;
+				moveFile(from, file);
+				refreshDirectory();
+			}
+		);
 	}
 
 	for (const auto& file : m_directory.files)
@@ -61,7 +63,7 @@ void ContentBrowserWindow::render()
 		const bool isSelected = m_selectedItem == file;
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			// Layout::rename(m_tempRename);
+			FormLayout::rename(m_tempRename);
 		}
 		else
 		{
@@ -90,17 +92,17 @@ void ContentBrowserWindow::render()
 				selectFile(file);
 			}
 
-			// Layout::beginDrag("FILE_MOVE", name, (void*)(&file), sizeof(std::filesystem::path));
-			// if (isCurrentFileADirectory)
-			// {
-			// 	Layout::endDrag("FILE_MOVE", [this, file, &shouldRefresh](void* const data, const size_t) -> void
-			// 		{
-			// 			const std::filesystem::path from = *(const std::filesystem::path*)data;
-			// 	moveFile(from, file);
-			// 	shouldRefresh = true;
-			// 		}
-			// 	);
-			// }
+			DragLayout::begin("FILE_MOVE", name.c_str(), (void*)(&file), sizeof(std::filesystem::path));
+			if (isCurrentFileADirectory)
+			{
+				DragLayout::end("FILE_MOVE", [this, file, &shouldRefresh](void* const data, const size_t) -> void
+					{
+						const std::filesystem::path from = *(const std::filesystem::path*)data;
+						moveFile(from, file);
+						shouldRefresh = true;
+					}
+				);
+			}
 
 			if (shouldRefresh)
 			{
