@@ -25,7 +25,11 @@
 #include "windows/scene_window.h"
 #include "windows/stress_window.h"
 
+#include "private/menu.h"
+
 Editor* Editor::s_instance{ nullptr };
+
+Menu menu;
 
 Editor::Editor()
 	: EngineModule()
@@ -57,7 +61,7 @@ bool Editor::startup()
 
 	ColorScheme scheme;
 	scheme.apply();
-	m_menu.init();
+	menu.init();
 
 	state.path = AssetLibrary::instance().path();
 
@@ -98,7 +102,7 @@ void Editor::render()
 		window->render();
 		WindowLayout::end();
 	}
-	m_menu.render();
+	menu.render();
 	DialogLayout::render();
 }
 

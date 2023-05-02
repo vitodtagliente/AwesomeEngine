@@ -9,7 +9,6 @@
 #include <awesome/engine/engine_module.h>
 
 #include "editor_state.h"
-#include "menu.h"
 #include "window.h"
 
 class Editor : public EngineModule
@@ -33,7 +32,6 @@ public:
 private:
 	void registerWindows();
 
-	Menu m_menu;
 	std::vector<std::unique_ptr<Window>> m_windows;
 	
 	static Editor* s_instance;
