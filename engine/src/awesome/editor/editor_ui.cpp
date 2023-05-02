@@ -1,11 +1,16 @@
 #include "editor_ui.h"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 #include <imgui_stdlib.h>
+#define IMGUI_IMPL_OPENGL_LOADER_GLAD 
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+
+#include <IconsFontAwesome5.h>
 
 #include <awesome/asset/asset_database.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
+#include <awesome/engine/input.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
@@ -29,6 +34,58 @@ const std::string EditorUI::Icon::stop{ ICON_FA_STOP };
 const std::string EditorUI::Icon::tree{ ICON_FA_TREE };
 const std::string EditorUI::Icon::upload{ ICON_FA_UPLOAD };
 const std::string EditorUI::Icon::video{ ICON_FA_VIDEO };
+
+void EditorUI::Runtime::startup(void* const windowHandler)
+{
+	ImGui::CreateContext();
+	ImGui::StyleColorsDark();
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(windowHandler), true);
+	ImGui_ImplOpenGL3_Init("#version 330 core");
+
+	// icons setup
+	{
+		io.Fonts->AddFontDefault();
+
+		// merge in icons from Font Awesome
+		static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+		ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+		io.Fonts->AddFontFromFileTTF((std::string("../fonts/") + FONT_ICON_FILE_NAME_FAS).c_str(), 12.0f, &icons_config, icons_ranges);
+		// use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
+	}
+}
+
+void EditorUI::Runtime::preRendering()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+}
+
+void EditorUI::Runtime::postRendering()
+{
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void EditorUI::Runtime::update()
+{
+	Input& input = Input::instance();
+	ImGuiIO& io = ImGui::GetIO();
+	input.preventMouseEvents = io.WantCaptureMouse;
+	input.preventKeyEvents = io.WantCaptureKeyboard;
+}
+
+void EditorUI::Runtime::shutdown()
+{
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+}
 
 bool EditorUI::Tree::begin(const char* const name, const bool selected)
 {

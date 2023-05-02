@@ -43,6 +43,17 @@ struct EditorUI final
 		static const std::string video;
 	};
 
+	struct Runtime final
+	{
+		Runtime() = delete;
+
+		static void startup(void* const windowHandler);
+		static void preRendering();
+		static void postRendering();
+		static void update();
+		static void shutdown();
+	};
+
 	struct Tree final
 	{
 		Tree() = delete;

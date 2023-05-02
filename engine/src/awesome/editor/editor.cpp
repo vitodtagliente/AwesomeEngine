@@ -2,23 +2,13 @@
 
 #include <assert.h>
 
-#include <imgui.h>
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD 
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
-
-#include <IconsFontAwesome5.h>
-
 #include <awesome/asset/asset_library.h>
 #include <awesome/engine/canvas.h>
-#include <awesome/engine/input.h>
-#include <awesome/scene/entity.h>
 
 #include "color_scheme.h"
-#include "widgets/dialog_layout.h"
-#include "widgets/window_layout.h"
-
+#include "editor_ui.h"
 #include "private/menu.h"
+#include "widgets/dialog_layout.h"
 
 Editor* Editor::s_instance{ nullptr };
 
@@ -33,24 +23,7 @@ Editor::Editor()
 
 bool Editor::startup()
 {
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(Canvas::instance().getHandler()), true);
-	ImGui_ImplOpenGL3_Init("#version 330 core");
-
-	// icons setup
-	{
-		io.Fonts->AddFontDefault();
-
-		// merge in icons from Font Awesome
-		static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-		ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-		io.Fonts->AddFontFromFileTTF((std::string("../fonts/") + FONT_ICON_FILE_NAME_FAS).c_str(), 12.0f, &icons_config, icons_ranges);
-		// use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
-	}
+	EditorUI::Runtime::startup(Canvas::instance().getHandler());
 
 	ColorScheme scheme;
 	scheme.apply();
@@ -64,31 +37,25 @@ bool Editor::startup()
 
 void Editor::shutdown()
 {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	EditorUI::Runtime::shutdown();
 }
 
 void Editor::preRendering()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
+	EditorUI::Runtime::preRendering();
 }
 
 void Editor::render()
 {
-	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
-
 	for (const auto& window : state.getWindows())
 	{
 		if (!window->visible) continue;
 
-		WindowLayout::begin(window->getTitle());
-		window->setFocus(WindowLayout::isFocused());
-		window->setIsHovered(WindowLayout::isHovered());
+		EditorUI::Window::begin(window->getTitle());
+		window->setFocus(EditorUI::Window::isFocused());
+		window->setIsHovered(EditorUI::Window::isHovered());
 		window->render();
-		WindowLayout::end();
+		EditorUI::Window::end();
 	}
 	menu.render();
 	DialogLayout::render();
@@ -96,16 +63,12 @@ void Editor::render()
 
 void Editor::postRendering()
 {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	EditorUI::Runtime::postRendering();
 }
 
 void Editor::update(const double deltaTime)
 {
-	Input& input = Input::instance();
-	ImGuiIO& io = ImGui::GetIO();
-	input.preventMouseEvents = io.WantCaptureMouse;
-	input.preventKeyEvents = io.WantCaptureKeyboard;
+	EditorUI::Runtime::update();
 
 	for (const auto& window : state.getWindows())
 	{
