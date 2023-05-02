@@ -77,10 +77,9 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 	}
 
 	// Live preview
-	FormLayout::separator();
-
 	if (!frames.empty() && m_frameIndex < frames.size())
 	{
+		FormLayout::separator();
 		FormLayout::image(spriteAnimation.image, frames[m_frameIndex].rect);
 		FormLayout::slider("Playing Frame", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
 	}
