@@ -23,7 +23,7 @@ void DragLayout::end(const char* const name, const std::function<void(void*, siz
 	{
 		ImGuiDragDropFlags target_flags = 0;
 		// target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
-		target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+		// target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(name, target_flags))
 		{
 			handler(payload->Data, payload->DataSize);

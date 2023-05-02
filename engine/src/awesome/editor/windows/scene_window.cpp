@@ -26,6 +26,19 @@ void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
 	
+	DragLayout::end("ENTITY_REPARENT", [this](void* const data, const size_t) -> void
+		{
+			const uuid id = *(const uuid*)data;
+
+			Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
+			if (draggingEntity != nullptr)
+			{
+				draggingEntity->parent()->moveChild(SceneGraph::instance().root(), id);
+				m_editorState->unselectEntity();
+			}
+		}
+	);
+
 	if (FormLayout::button(TextIcon::plus(" Add").c_str()))
 	{
 		addEntity(nullptr);
@@ -36,8 +49,10 @@ void SceneWindow::render()
 	SearchLayout::input(m_filter);
 
 	FormLayout::beginChild("Content");
-	for (const auto& entity : SceneGraph::instance().root()->children())
+	const auto& children = SceneGraph::instance().root()->children();
+	for (auto it = children.begin(); it != children.end(); ++it)
 	{
+		const auto& entity = *it;
 		const bool isSelected = selectedEntity != nullptr && entity->id() == selectedEntity->id();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
@@ -52,8 +67,8 @@ void SceneWindow::render()
 
 			renderEntity(entity.get(), selectedEntity);
 
-			DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
-			DragLayout::end("ENTITY_REPARENT", [this, &entity](void* const data, const size_t) -> void
+			bool dragCompleted{ false };
+			DragLayout::end("ENTITY_REPARENT", [this, &entity, &dragCompleted](void* const data, const size_t) -> void
 				{
 					const uuid id = *(const uuid*)data;
 					if (id == entity->id()) return;
@@ -61,10 +76,17 @@ void SceneWindow::render()
 					Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
 					if (draggingEntity != nullptr)
 					{
-
+						draggingEntity->parent()->moveChild(entity.get(), id);
+						m_editorState->unselectEntity();
+						dragCompleted = true;
 					}
 				}
 			);
+
+			if (dragCompleted)
+			{
+				break;
+			}
 		}
 	}
 	FormLayout::endChild();
@@ -160,6 +182,8 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 			selectEntity(entity);
 		}
 
+		DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+
 		if (open)
 		{
 			for (const auto& child : entity->children())
@@ -176,6 +200,8 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 			m_state = NavigationState::Navigating;
 			selectEntity(entity);
 		}
+
+		DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
 	}
 }
 

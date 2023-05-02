@@ -46,6 +46,7 @@ public:
 	inline bool hasParent() const { return m_parent != nullptr; }
 
 	std::size_t countChildren() const;
+	void moveChild(Entity* const parent, const uuid& childId);
 
 	void queue_destroy();
 	void render(graphics::Renderer& renderer);

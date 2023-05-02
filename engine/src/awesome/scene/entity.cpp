@@ -38,6 +38,20 @@ std::size_t Entity::countChildren() const
 	return size;
 }
 
+void Entity::moveChild(Entity* const parent, const uuid& childId)
+{
+	for (auto it = m_children.begin(); it != m_children.end(); ++it)
+	{
+		const auto& child = *it;
+		if (child->m_id == childId)
+		{
+			parent->addChild(std::move(*it));
+			m_children.erase(it);
+			return;
+		}
+	}
+}
+
 void Entity::queue_destroy()
 {
 	m_state = State::PendingDestroy;
