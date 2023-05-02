@@ -7,6 +7,7 @@
 #include "asset/image_asset.h"
 #include "asset/prefab_asset.h"
 #include "asset/scene_asset.h"
+#include "asset/sprite_animation_asset.h"
 // components
 #include "components/camera_component.h"
 #include "components/camera_controller_2d_component.h"

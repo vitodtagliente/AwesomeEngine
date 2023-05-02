@@ -1,0 +1,46 @@
+{
+    "type_id": "AssetDatabase",
+    "records": [{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "57183242326900",
+    },
+    "type": 5,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751372963000",
+    },
+    "type": 3,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751373499400",
+    },
+    "type": 4,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751373935900",
+    },
+    "type": 2,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751374237100",
+    },
+    "type": 2,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "104751374565300",
+    },
+    "type": 2,
+},],
+}
