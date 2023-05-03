@@ -1,65 +1,65 @@
-#include "menu.h"
+#include "editor_menu.h"
 
 #include <awesome/editor/editor_state.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/editor/widgets/dialog_layout.h>
-#include <awesome/editor/widgets/menu_layout.h>
 #include <awesome/engine/engine.h>
 #include <awesome/scene/scene_graph.h>
 
-Menu::Menu()
+EditorMenu::EditorMenu()
 	: m_editorState(EditorState::instance())
 {
 
 }
 
-void Menu::init()
+void EditorMenu::init()
 {
 
 }
 
-void Menu::render()
+void EditorMenu::render()
 {
-	if (MenuLayout::beginMainMenu())
+	if (EditorUI::Menu::beginBar())
 	{
 		menuFile();
 		menuScene();
 		menuAssets();
 		menuView();
 
-		MenuLayout::endMainMenu();
+		EditorUI::Menu::endBar();
 	}
 }
 
-void Menu::menuAssets()
+void EditorMenu::menuAssets()
 {
 }
 
-void Menu::menuFile()
+void EditorMenu::menuFile()
 {
-	if (MenuLayout::beginMenu("File"))
+	if (EditorUI::Menu::begin("File"))
 	{
-		if (MenuLayout::item("Exit"))
+		if (EditorUI::Menu::item("Exit"))
 		{
 			Engine::instance().exit();
 		}
 
-		MenuLayout::endMenu();
+		EditorUI::Menu::end();
 	}
 }
 
-void Menu::menuScene()
+void EditorMenu::menuScene()
 {
-	if (MenuLayout::beginMenu("Scene"))
+	if (EditorUI::Menu::begin("Scene"))
 	{
-		if (MenuLayout::item("New Scene..."))
+		if (EditorUI::Menu::item("New Scene..."))
 		{
 			m_editorState->unselectEntity();
 			SceneGraph::instance().clear();
 		}
 
-		MenuLayout::separator();
+		EditorUI::separator();
 		bool save_as = false;
-		if (MenuLayout::item("Save Scene"))
+		if (EditorUI::Menu::item("Save Scene"))
 		{
 			SceneGraph& sceneGraph = SceneGraph::instance();
 			if (sceneGraph.scene())
@@ -71,7 +71,7 @@ void Menu::menuScene()
 				save_as = true;
 			}
 		}
-		if (MenuLayout::item("Save Scene as..."))
+		if (EditorUI::Menu::item("Save Scene as..."))
 		{
 			save_as = true;
 		}
@@ -85,11 +85,18 @@ void Menu::menuScene()
 			);
 		}
 
-		MenuLayout::endMenu();
+		EditorUI::Menu::end();
 	}
 }
 
-void Menu::menuView()
+void EditorMenu::menuView()
 {
-	
+	if (EditorUI::Menu::begin("View"))
+	{
+		for (const auto& window : m_editorState->getWindows())
+		{
+			EditorUI::Menu::item(window->getTitle(), window->visible);
+		}
+		EditorUI::Menu::end();
+	}
 }

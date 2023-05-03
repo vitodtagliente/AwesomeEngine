@@ -64,6 +64,19 @@ struct EditorUI final
 		static const std::string video;
 	};
 
+	struct Menu final
+	{
+		Menu() = delete;
+
+		static bool beginBar();
+		static void endBar();
+
+		static bool begin(const char* const name);
+		static void end();
+		static bool item(const char* const name);
+		static bool item(const char* const name, bool& checked);
+	};
+
 	struct Runtime final
 	{
 		Runtime() = delete;

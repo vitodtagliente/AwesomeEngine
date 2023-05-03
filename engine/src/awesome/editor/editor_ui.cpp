@@ -78,6 +78,36 @@ void EditorUI::Combo::end()
 	ImGui::EndCombo();
 }
 
+bool EditorUI::Menu::beginBar()
+{
+	return ImGui::BeginMainMenuBar();
+}
+
+void EditorUI::Menu::endBar()
+{
+	ImGui::EndMainMenuBar();
+}
+
+bool EditorUI::Menu::begin(const char* const name)
+{
+	return ImGui::BeginMenu(name);
+}
+
+void EditorUI::Menu::end()
+{
+	ImGui::EndMenu();
+}
+
+bool EditorUI::Menu::item(const char* const name)
+{
+	return ImGui::MenuItem(name);
+}
+
+bool EditorUI::Menu::item(const char* const name, bool& checked)
+{
+	return ImGui::MenuItem(name, nullptr, &checked);
+}
+
 void EditorUI::Runtime::startup(void* const windowHandler)
 {
 	ImGui::CreateContext();

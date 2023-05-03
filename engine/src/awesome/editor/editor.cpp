@@ -8,12 +8,11 @@
 #include "editor_style.h"
 #include "editor_ui.h"
 
-#include "private/menu.h"
+#include "private/editor_menu.h"
 #include "widgets/dialog_layout.h"
 
 Editor* Editor::s_instance{ nullptr };
-
-Menu menu;
+EditorMenu* menu{ nullptr };
 
 Editor::Editor()
 	: EngineModule()
@@ -26,9 +25,10 @@ bool Editor::startup()
 {
 	EditorUI::Runtime::startup(Canvas::instance().getHandler());
 
-	menu.init();
-
 	EditorUI::Style::apply(EditorStyle{});
+
+	menu = new EditorMenu();
+	menu->init();
 
 	state.path = AssetLibrary::instance().path();
 	state.init();
@@ -39,6 +39,7 @@ bool Editor::startup()
 void Editor::shutdown()
 {
 	EditorUI::Runtime::shutdown();
+	delete menu;
 }
 
 void Editor::preRendering()
@@ -58,7 +59,7 @@ void Editor::render()
 		window->render();
 		EditorUI::Window::end();
 	}
-	menu.render();
+	menu->render();
 	DialogLayout::render();
 }
 

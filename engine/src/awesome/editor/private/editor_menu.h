@@ -1,10 +1,10 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-class Menu
+class EditorMenu
 {
 public:
-	Menu();
+	EditorMenu();
 
 	void init();
 	void render();
