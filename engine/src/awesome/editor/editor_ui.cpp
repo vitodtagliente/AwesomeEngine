@@ -11,6 +11,7 @@
 #include <awesome/asset/asset_database.h>
 #include <awesome/components/component_library.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
+#include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/engine/input.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
@@ -32,6 +33,8 @@ std::string id(const char* const name)
 
 	return std::string(name) + "###" + context_id + "_" + name;
 }
+
+SaveFileDialog saveFileDialog;
 
 const std::string EditorUI::Icon::copy{ ICON_FA_COPY };
 const std::string EditorUI::Icon::cube{ ICON_FA_CUBE };
@@ -77,6 +80,78 @@ bool EditorUI::Combo::begin(const char* const name, const char* const value)
 void EditorUI::Combo::end()
 {
 	ImGui::EndCombo();
+}
+
+void EditorUI::Dialog::save(const char* const name, const char* const extension, const std::function<void(const std::filesystem::path&)>& handler)
+{
+	if (saveFileDialog.isOpen()) return;
+
+	saveFileDialog.open(name, extension, handler);
+}
+
+void EditorUI::DragDrop::begin(const char* const name, const char* const item, void* const data, const size_t size)
+{
+	ImGuiDragDropFlags src_flags = 0;
+	src_flags |= ImGuiDragDropFlags_SourceNoDisableHover;     // Keep the source displayed as hovered
+	src_flags |= ImGuiDragDropFlags_SourceNoHoldToOpenOthers; // Because our dragging is local, we disable the feature of opening foreign treenodes/tabs while dragging
+	//src_flags |= ImGuiDragDropFlags_SourceNoPreviewTooltip; // Hide the tooltip
+	if (ImGui::BeginDragDropSource(src_flags))
+	{
+		if (!(src_flags & ImGuiDragDropFlags_SourceNoPreviewTooltip) && item != nullptr)
+			ImGui::Text(item);
+		ImGui::SetDragDropPayload(name, data, size);
+		ImGui::EndDragDropSource();
+	}
+}
+
+void EditorUI::DragDrop::end(const char* const name, const std::function<void(void*, size_t)>& handler)
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		ImGuiDragDropFlags target_flags = 0;
+		// target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
+		// target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(name, target_flags))
+		{
+			handler(payload->Data, payload->DataSize);
+		}
+		ImGui::EndDragDropTarget();
+	}
+}
+
+bool EditorUI::Input::isKeyDown(const keycode_t keycode)
+{
+	return ImGui::IsKeyDown(keycode);
+}
+
+bool EditorUI::Input::isKeyPressed(const keycode_t keycode)
+{
+	return ImGui::IsKeyPressed(keycode);
+}
+
+bool EditorUI::Input::isKeyReleased(const keycode_t keycode)
+{
+	return ImGui::IsKeyReleased(keycode);
+}
+
+bool EditorUI::Input::isItemHovered()
+{
+	return ImGui::IsItemHovered();
+}
+
+bool EditorUI::Input::isMouseClicked()
+{
+	return ImGui::IsMouseClicked(ImGuiMouseButton_Left);
+}
+
+void EditorUI::Input::scroll(const float position)
+{
+	ImGui::SetScrollHereY(position);
+}
+
+void EditorUI::Input::scrollToBottom()
+{
+	scroll(1.f);
 }
 
 bool EditorUI::Menu::beginBar()
@@ -142,13 +217,15 @@ void EditorUI::Runtime::preRendering()
 
 void EditorUI::Runtime::postRendering()
 {
+	saveFileDialog.render();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void EditorUI::Runtime::update()
 {
-	Input& input = Input::instance();
+	::Input& input = ::Input::instance();
 	ImGuiIO& io = ImGui::GetIO();
 	input.preventMouseEvents = io.WantCaptureMouse;
 	input.preventKeyEvents = io.WantCaptureKeyboard;

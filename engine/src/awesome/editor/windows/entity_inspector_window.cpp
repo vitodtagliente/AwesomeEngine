@@ -3,7 +3,6 @@
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
-#include <awesome/editor/widgets/dialog_layout.h>
 #include <awesome/scene/entity.h>
 
 EntityInspectorWindow::EntityInspectorWindow()
@@ -37,7 +36,7 @@ void EntityInspectorWindow::render()
 
 	if (EditorUI::button((EditorUI::Icon::save + " Save Prefab").c_str()))
 	{
-		DialogLayout::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
+		EditorUI::Dialog::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
 			{
 				Prefab prefab;
 				prefab.entity = *entity;

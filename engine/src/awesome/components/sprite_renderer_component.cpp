@@ -1,6 +1,5 @@
 #include "sprite_renderer_component.h"
 
-#include <awesome/editor/widgets/form_layout.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>

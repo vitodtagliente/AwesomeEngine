@@ -1,13 +1,8 @@
 #include "scene_window.h"
 
 #include <awesome/core/string_util.h>
-#include <awesome/editor/widgets/drag_layout.h>
-#include <awesome/editor/widgets/form_layout.h>
-#include <awesome/editor/widgets/interaction_layout.h>
-#include <awesome/editor/widgets/search_layout.h>
-#include <awesome/editor/widgets/tree_layout.h>
 #include <awesome/editor/editor_state.h>
-#include <awesome/editor/text_icon.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
 
@@ -26,7 +21,7 @@ void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
 	
-	DragLayout::end("ENTITY_REPARENT", [this](void* const data, const size_t) -> void
+	EditorUI::DragDrop::end("ENTITY_REPARENT", [this](void* const data, const size_t) -> void
 		{
 			const uuid id = *(const uuid*)data;
 
@@ -39,16 +34,15 @@ void SceneWindow::render()
 		}
 	);
 
-	if (FormLayout::button(TextIcon::plus(" Add").c_str()))
+	if (EditorUI::button(EditorUI::Icon::plus.c_str()))
 	{
 		addEntity(nullptr);
 	}
 
-	FormLayout::sameLine();
+	EditorUI::sameLine();
+	EditorUI::search(m_filter);
 
-	SearchLayout::input(m_filter);
-
-	FormLayout::beginChild("Content");
+	EditorUI::Child::begin("Content");
 	const auto& children = SceneGraph::instance().root()->children();
 	for (auto it = children.begin(); it != children.end(); ++it)
 	{
@@ -56,7 +50,7 @@ void SceneWindow::render()
 		const bool isSelected = selectedEntity != nullptr && entity->id() == selectedEntity->id();
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			FormLayout::rename(m_tempRename);
+			EditorUI::rename(m_tempRename);
 		}
 		else
 		{
@@ -68,7 +62,7 @@ void SceneWindow::render()
 			renderEntity(entity.get(), selectedEntity);
 
 			bool dragCompleted{ false };
-			DragLayout::end("ENTITY_REPARENT", [this, &entity, &dragCompleted](void* const data, const size_t) -> void
+			EditorUI::DragDrop::end("ENTITY_REPARENT", [this, &entity, &dragCompleted](void* const data, const size_t) -> void
 				{
 					const uuid id = *(const uuid*)data;
 					if (id == entity->id()) return;
@@ -89,10 +83,10 @@ void SceneWindow::render()
 			}
 		}
 	}
-	FormLayout::endChild();
+	EditorUI::Child::end();
 
 	// reset the entity selection once clicked in the entities area
-	if (InteractionLayout::isItemHovered() && InteractionLayout::isMouseClicked())
+	if (EditorUI::Input::isItemHovered() && EditorUI::Input::isMouseClicked())
 	{
 		m_editorState->unselectEntity();
 	}
@@ -106,7 +100,7 @@ void SceneWindow::update(double)
 
 	if (m_state == NavigationState::Renaming)
 	{
-		if (InteractionLayout::isKeyPressed(KeyCode::Enter) || InteractionLayout::isKeyPressed(KeyCode::Escape))
+		if (EditorUI::Input::isKeyPressed(KeyCode::Enter) || EditorUI::Input::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameEntity(selectedEntity, m_tempRename);
@@ -117,12 +111,12 @@ void SceneWindow::update(double)
 	{
 		if (selectedEntity != nullptr)
 		{
-			if (InteractionLayout::isKeyPressed(KeyCode::F2))
+			if (EditorUI::Input::isKeyPressed(KeyCode::F2))
 			{
 				m_state = NavigationState::Renaming;
 				m_tempRename = selectedEntity->name;
 			}
-			else if (InteractionLayout::isKeyPressed(KeyCode::Delete))
+			else if (EditorUI::Input::isKeyPressed(KeyCode::Delete))
 			{
 				deleteEntity(selectedEntity);
 			}
@@ -137,7 +131,7 @@ void SceneWindow::addEntity(Entity* const parent)
 	if (parent == nullptr)
 	{
 		m_editorState->select(entity);
-		InteractionLayout::scrollToBottom();
+		EditorUI::Input::scrollToBottom();
 	}
 }
 
@@ -175,14 +169,14 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 	const std::string name = entity->name + "##entity" + entity->id().value;
 	if (entity->hasChildren())
 	{
-		const bool open = TreeLayout::begin(name.c_str(), entity == selectedEntity);
-		if (TreeLayout::isClicked())
+		const bool open = EditorUI::Tree::begin(name.c_str(), entity == selectedEntity);
+		if (EditorUI::Tree::isClicked())
 		{
 			m_state = NavigationState::Navigating;
 			selectEntity(entity);
 		}
 
-		DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
 
 		if (open)
 		{
@@ -190,18 +184,18 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 			{
 				renderEntity(child.get(), selectedEntity);
 			}
-			TreeLayout::end();
+			EditorUI::Tree::end();
 		}
 	}
 	else
 	{
-		if (FormLayout::selectable(name.c_str(), entity == selectedEntity))
+		if (EditorUI::selectable(name.c_str(), entity == selectedEntity))
 		{
 			m_state = NavigationState::Navigating;
 			selectEntity(entity);
 		}
 
-		DragLayout::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
 	}
 }
 

@@ -2,7 +2,6 @@
 
 #include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
-#include <awesome/editor/widgets/dialog_layout.h>
 #include <awesome/engine/engine.h>
 #include <awesome/scene/scene_graph.h>
 
@@ -78,7 +77,7 @@ void EditorMenu::menuScene()
 
 		if (save_as)
 		{
-			DialogLayout::save("Save Scene as...", ".scene", [](const std::filesystem::path& path) -> void
+			EditorUI::Dialog::save("Save Scene as...", ".scene", [](const std::filesystem::path& path) -> void
 				{
 					SceneGraph::instance().save(path);
 				}

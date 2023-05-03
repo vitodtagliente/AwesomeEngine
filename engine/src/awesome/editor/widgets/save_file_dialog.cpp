@@ -7,9 +7,7 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
-#include <awesome/editor/text_icon.h>
-
-#include "form_layout.h"
+#include <awesome/editor/editor_ui.h>
 
 SaveFileDialog::SaveFileDialog()
 	: m_directory()
@@ -58,7 +56,7 @@ void SaveFileDialog::render()
 			bool changeDirectory = false;
 			if (std::filesystem::is_directory(file) && filename != "..")
 			{
-				if (ImGui::Selectable(TextIcon::folder(" " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
+				if (ImGui::Selectable((EditorUI::Icon::folder + " " + filename).c_str(), false, ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_DontClosePopups))
 				{
 					if (ImGui::IsMouseDoubleClicked(0))
 					{
@@ -81,18 +79,18 @@ void SaveFileDialog::render()
 			}
 		}
 
-		FormLayout::separator();
+		EditorUI::separator();
 
-		FormLayout::input("Filename", m_filename);
-		if (FormLayout::button("Cancel"))
+		EditorUI::input("Filename", m_filename);
+		if (EditorUI::button("Cancel"))
 		{
 			m_open = false;
 			ImGui::CloseCurrentPopup();
 		}
 
-		FormLayout::sameLine();
+		EditorUI::sameLine();
 
-		if (FormLayout::button(TextIcon::save(" Save").c_str()))
+		if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
 		{
 			const std::filesystem::path fileToSave = m_directory.path / (StringUtil::endsWith(m_filename, m_extension) ? m_filename : m_filename + m_extension);
 			m_handler(fileToSave);

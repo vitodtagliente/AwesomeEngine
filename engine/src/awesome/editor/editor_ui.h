@@ -7,6 +7,7 @@
 #include <awesome/core/reflection.h>
 
 #include <awesome/asset/image_asset.h>
+#include <awesome/engine/keycode.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
 #include <awesome/graphics/texture_rect.h>
@@ -39,6 +40,21 @@ struct EditorUI final
 		static void end();
 	};
 
+	struct Dialog final
+	{
+		Dialog() = delete;
+
+		static void save(const char* const name, const char* const extension, const std::function<void(const std::filesystem::path&)>& handler);
+	};
+
+	struct DragDrop final
+	{
+		DragDrop() = delete;
+
+		static void begin(const char* const name, const char* const item, void* const data, size_t size);
+		static void end(const char* const name, const std::function<void(void*, size_t)>& handler);
+	};
+
 	struct Icon final
 	{
 		Icon() = delete;
@@ -63,6 +79,19 @@ struct EditorUI final
 		static const std::string tree;
 		static const std::string upload;
 		static const std::string video;
+	};
+
+	struct Input final
+	{
+		Input() = delete;
+
+		static bool isKeyDown(keycode_t keycode);
+		static bool isKeyPressed(keycode_t keycode);
+		static bool isKeyReleased(keycode_t keycode);
+		static bool isItemHovered();
+		static bool isMouseClicked();
+		static void scroll(float position);
+		static void scrollToBottom();
 	};
 
 	struct Menu final

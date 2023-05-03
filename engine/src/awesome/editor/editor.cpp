@@ -9,7 +9,6 @@
 #include "editor_ui.h"
 
 #include "private/editor_menu.h"
-#include "widgets/dialog_layout.h"
 
 Editor* Editor::s_instance{ nullptr };
 EditorMenu* menu{ nullptr };
@@ -60,7 +59,6 @@ void Editor::render()
 		EditorUI::Window::end();
 	}
 	menu->render();
-	DialogLayout::render();
 }
 
 void Editor::postRendering()

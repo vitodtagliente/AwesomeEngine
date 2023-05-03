@@ -4,10 +4,7 @@
 
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
-#include <awesome/editor/text_icon.h>
-
-#include "form_layout.h"
-#include "search_layout.h"
+#include <awesome/editor/editor_ui.h>
 
 void AssetBrowserDialog::close()
 {
@@ -40,9 +37,9 @@ void AssetBrowserDialog::render(const std::string& id)
 	ImGui::SetNextWindowSize(ImVec2(s_widgetWidth, 0.f));
 	if (ImGui::BeginPopupModal("Asset Browser Dialog", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		SearchLayout::input(m_filter);
+		EditorUI::search(m_filter);
 
-		FormLayout::beginChild("Content", 0.f, 240.f);
+		EditorUI::Child::begin("Content", 0.f, 240.f);
 		for (const AssetRecord& record : AssetLibrary::instance().database.records)
 		{
 			if (record.type != m_type) continue;
@@ -69,19 +66,19 @@ void AssetBrowserDialog::render(const std::string& id)
 				break;
 			}
 		}
-		FormLayout::endChild();
+		EditorUI::Child::end();
 
 		ImGui::BeginChild("BottomBar", ImVec2(0.f, 22.f), false, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 
-		if (FormLayout::button("Cancel"))
+		if (EditorUI::button("Cancel"))
 		{
 			ImGui::CloseCurrentPopup();
 			m_open = false;
 		}
 
-		FormLayout::sameLine();
+		EditorUI::sameLine();
 
-		if (FormLayout::button(TextIcon::save(" Select").c_str()))
+		if (EditorUI::button((EditorUI::Icon::save + " Select").c_str()))
 		{
 			if (m_selectedAsset && m_handler)
 			{

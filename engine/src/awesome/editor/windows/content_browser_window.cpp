@@ -3,11 +3,7 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
-#include <awesome/editor/widgets/drag_layout.h>
-#include <awesome/editor/widgets/form_layout.h>
-#include <awesome/editor/widgets/interaction_layout.h>
-#include <awesome/editor/widgets/search_layout.h>
-#include <awesome/editor/text_icon.h>
+#include <awesome/editor/editor_ui.h>
 
 ContentBrowserWindow::ContentBrowserWindow()
 	: Window()
@@ -30,26 +26,26 @@ void ContentBrowserWindow::render()
 {
 	processInput(m_selectedItem);
 
-	if (FormLayout::button(TextIcon::plus().c_str()))
+	if (EditorUI::button(EditorUI::Icon::plus.c_str()))
 	{
 		addFolder();
 	}
-	FormLayout::sameLine();
-	SearchLayout::input(m_filter);
+	EditorUI::sameLine();
+	EditorUI::search(m_filter);
 
-	FormLayout::separator();
+	EditorUI::separator();
 
-	FormLayout::beginChild("Content");
+	EditorUI::Child::begin("Content");
 	if (m_directory.path != m_root)
 	{
-		FormLayout::selectable("..", false, [this]() -> void
+		EditorUI::selectable("..", false, [this]() -> void
 			{
 				m_state = NavigationState::Navigating;
 				selectFile(m_directory.parent);
 			}
 		);
 
-		DragLayout::end("FILE_MOVE", [this, file = m_directory.parent](void* const data, const size_t) -> void
+		EditorUI::DragDrop::end("FILE_MOVE", [this, file = m_directory.parent](void* const data, const size_t) -> void
 			{
 				const std::filesystem::path from = *(const std::filesystem::path*)data;
 				moveFile(from, file);
@@ -63,7 +59,7 @@ void ContentBrowserWindow::render()
 		const bool isSelected = m_selectedItem == file;
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
-			FormLayout::rename(m_tempRename);
+			EditorUI::rename(m_tempRename);
 		}
 		else
 		{
@@ -78,24 +74,24 @@ void ContentBrowserWindow::render()
 			const bool isCurrentFileADirectory = std::filesystem::is_directory(file);
 			if (isCurrentFileADirectory && name != "..")
 			{
-				if (FormLayout::selectable((std::string(TextIcon::folder()) + " " + name).c_str(), isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
+				if (EditorUI::selectable((EditorUI::Icon::folder + " " + name).c_str(), isSelected, [&changeDirectory]() -> void { changeDirectory = true; }))
 				{
 					m_state = NavigationState::Navigating;
 					m_tempRename = name;
 					selectFile(file);
 				}
 			}
-			else if (FormLayout::selectable(decorateFile(name).c_str(), isSelected))
+			else if (EditorUI::selectable(decorateFile(name).c_str(), isSelected))
 			{
 				m_state = NavigationState::Navigating;
 				m_tempRename = name;
 				selectFile(file);
 			}
 
-			DragLayout::begin("FILE_MOVE", name.c_str(), (void*)(&file), sizeof(std::filesystem::path));
+			EditorUI::DragDrop::begin("FILE_MOVE", name.c_str(), (void*)(&file), sizeof(std::filesystem::path));
 			if (isCurrentFileADirectory)
 			{
-				DragLayout::end("FILE_MOVE", [this, file, &shouldRefresh](void* const data, const size_t) -> void
+				EditorUI::DragDrop::end("FILE_MOVE", [this, file, &shouldRefresh](void* const data, const size_t) -> void
 					{
 						const std::filesystem::path from = *(const std::filesystem::path*)data;
 						moveFile(from, file);
@@ -117,7 +113,7 @@ void ContentBrowserWindow::render()
 			}
 		}
 	}
-	FormLayout::endChild();
+	EditorUI::Child::end();
 }
 
 void ContentBrowserWindow::update(const double)
@@ -137,7 +133,7 @@ void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 
 	if (m_state == NavigationState::Renaming)
 	{
-		if (InteractionLayout::isKeyPressed(KeyCode::Enter) || InteractionLayout::isKeyPressed(KeyCode::Escape))
+		if (EditorUI::Input::isKeyPressed(KeyCode::Enter) || EditorUI::Input::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
 			renameFile(file, m_tempRename);
@@ -145,11 +141,11 @@ void ContentBrowserWindow::processInput(const std::filesystem::path& file)
 	}
 	else if (m_state == NavigationState::Navigating)
 	{
-		if (InteractionLayout::isKeyPressed(KeyCode::F2))
+		if (EditorUI::Input::isKeyPressed(KeyCode::F2))
 		{
 			m_state = NavigationState::Renaming;
 		}
-		else if (InteractionLayout::isKeyPressed(KeyCode::Delete))
+		else if (EditorUI::Input::isKeyPressed(KeyCode::Delete))
 		{
 			deleteFile(file);
 		}
