@@ -15,6 +15,8 @@
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
 
+#include "editor_style.h"
+
 struct EditorUI final
 {
 	EditorUI() = delete;
@@ -71,6 +73,13 @@ struct EditorUI final
 		static void postRendering();
 		static void update();
 		static void shutdown();
+	};
+
+	struct Style final
+	{
+		Style() = delete;
+
+		static void apply(const EditorStyle& style);
 	};
 
 	struct Tree final

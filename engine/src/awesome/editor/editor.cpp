@@ -5,8 +5,9 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/engine/canvas.h>
 
-#include "color_scheme.h"
+#include "editor_style.h"
 #include "editor_ui.h"
+
 #include "private/menu.h"
 #include "widgets/dialog_layout.h"
 
@@ -25,9 +26,9 @@ bool Editor::startup()
 {
 	EditorUI::Runtime::startup(Canvas::instance().getHandler());
 
-	ColorScheme scheme;
-	scheme.apply();
 	menu.init();
+
+	EditorUI::Style::apply(EditorStyle{});
 
 	state.path = AssetLibrary::instance().path();
 	state.init();
