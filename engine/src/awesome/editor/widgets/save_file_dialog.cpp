@@ -42,7 +42,7 @@ void SaveFileDialog::render()
 		ImGui::OpenPopup(m_title.c_str());
 	}
 
-	ImGui::SetNextWindowPos(ImGui::GetWindowViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+	ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 	if (ImGui::BeginPopupModal(m_title.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		if (m_directory.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))

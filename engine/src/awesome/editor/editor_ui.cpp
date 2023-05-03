@@ -121,17 +121,17 @@ void EditorUI::DragDrop::end(const char* const name, const std::function<void(vo
 
 bool EditorUI::Input::isKeyDown(const keycode_t keycode)
 {
-	return ImGui::IsKeyDown(keycode);
+	return ImGui::IsKeyDown(static_cast<ImGuiKey>(keycode));
 }
 
 bool EditorUI::Input::isKeyPressed(const keycode_t keycode)
 {
-	return ImGui::IsKeyPressed(keycode);
+	return ImGui::IsKeyPressed(static_cast<ImGuiKey>(keycode));
 }
 
 bool EditorUI::Input::isKeyReleased(const keycode_t keycode)
 {
-	return ImGui::IsKeyReleased(keycode);
+	return ImGui::IsKeyReleased(static_cast<ImGuiKey>(keycode));
 }
 
 bool EditorUI::Input::isItemHovered()
@@ -189,7 +189,7 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	// io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(windowHandler), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
@@ -212,7 +212,7 @@ void EditorUI::Runtime::preRendering()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+	// ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 }
 
 void EditorUI::Runtime::postRendering()
@@ -333,7 +333,7 @@ void EditorUI::hint(const std::string& text)
 
 void EditorUI::image(const ImageAsset& image)
 {
-	const float size = ImGui::GetContentRegionAvailWidth();
+	const float size = ImGui::GetContentRegionAvail().x;
 	EditorUI::image(image, graphics::TextureRect(), size, size);
 }
 
@@ -347,7 +347,7 @@ void EditorUI::image(const ImageAsset& image, const graphics::TextureRect& rect)
 	if (image && image.state == Asset::State::Ready)
 	{
 		const Image& data = *image.resource;
-		const float size = ImGui::GetContentRegionAvailWidth();
+		const float size = ImGui::GetContentRegionAvail().x;
 		const float width = std::min(size, data.width * rect.width * 2);
 		const float height = std::min(size, data.height * rect.height * 2);
 		EditorUI::image(image, rect, width, height);
@@ -368,7 +368,7 @@ void EditorUI::image(const ImageAsset& image, const graphics::TextureRect& rect,
 
 bool EditorUI::imageButton(const ImageAsset& image)
 {
-	const float size = ImGui::GetContentRegionAvailWidth();
+	const float size = ImGui::GetContentRegionAvail().x;
 	return EditorUI::imageButton(image, graphics::TextureRect(), size, size);
 }
 
@@ -382,7 +382,7 @@ bool EditorUI::imageButton(const ImageAsset& image, const graphics::TextureRect&
 	if (image.ready())
 	{
 		const Image& data = *image.resource;
-		const float size = ImGui::GetContentRegionAvailWidth();
+		const float size = ImGui::GetContentRegionAvail().x;
 		const float width = std::min(size, data.width * rect.width * 2);
 		const float height = std::min(size, data.height * rect.height * 2);
 		return EditorUI::imageButton(image, rect, width, height);
