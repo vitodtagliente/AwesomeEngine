@@ -453,6 +453,11 @@ void EditorUI::separator()
 	ImGui::Separator();
 }
 
+void EditorUI::separatorText(const char* const)
+{
+	ImGui::Separator();
+}
+
 void EditorUI::slider(const char* const name, const int min, const int max, int& value)
 {
 	ImGui::SliderInt(name, &value, min, max);
