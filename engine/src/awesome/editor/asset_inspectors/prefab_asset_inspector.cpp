@@ -1,9 +1,6 @@
 #include "prefab_asset_inspector.h"
 
-#include <awesome/editor/widgets/entity_layout.h>
-#include <awesome/editor/widgets/form_layout.h>
-#include <awesome/editor/text_icon.h>
-#include <awesome/scene/entity.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/scene/scene_graph.h>
 
 bool PrefabAssetInspector::canInspect(int type) const
@@ -26,19 +23,18 @@ void PrefabAssetInspector::inspect(const AssetRecord& record)
 
 	if (!m_asset.ready()) return;
 
-	if (FormLayout::button(TextIcon::upload(" Import Prefab").c_str()))
+	if (EditorUI::button((EditorUI::Icon::upload + " Import Prefab").c_str()))
 	{
 		SceneGraph::instance().root()->addChild(std::make_unique<Entity>(m_asset.resource->entity));
 	}
 	
-	FormLayout::sameLine();
+	EditorUI::sameLine();
 	
-	if (FormLayout::button(TextIcon::save(" Save").c_str()))
+	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
 	{
 		m_asset.save();
 	}
 	
-	FormLayout::separator();
-	
-	EntityLayout::input(m_asset.resource->entity);
+	EditorUI::separator();
+	EditorUI::input(m_asset.resource->entity);
 }

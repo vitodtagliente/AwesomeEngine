@@ -14,6 +14,7 @@
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 #include <awesome/math/vector4.h>
+#include <awesome/scene/entity.h>
 
 #include "editor_style.h"
 
@@ -159,6 +160,7 @@ struct EditorUI final
 	static void input(const char* const name, graphics::TextureRect& value);
 	static void inputMultilineText(const char* const name, std::string& value);
 
+	static void input(Entity& entity);
 	static void input(IType& type);
 
 	// Enum input
@@ -178,5 +180,63 @@ struct EditorUI final
 			}
 			Combo::end();
 		}
+	}
+
+	// vectors
+	// std::vector<T> input
+	template <typename T>
+	static void input(const char* const name, std::vector<T>& list, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
+	{
+		begin(name);
+
+		text(name);
+		for (size_t i = 0; i < list.size(); ++i)
+		{
+			std::string context(name);
+			context += "[" + std::to_string(i) + "]";
+			begin(context.c_str());
+			if (collapsingHeader(context.c_str()))
+			{
+				handler(list.at(i));
+				if (button(Icon::minus.c_str()))
+				{
+					list.erase(list.begin() + i);
+
+					end();
+					break;
+				}
+			}
+			end();
+		}
+		if (button(Icon::plus.c_str()))
+		{
+			list.push_back(std::move(createHandler()));
+		}
+		if (!list.empty())
+		{
+			sameLine();
+			if (button(Icon::eraser.c_str()))
+			{
+				list.clear();
+			}
+		}
+
+		end();
+	}
+	template<typename T>
+	static void input(const char* const name, std::vector<T>& list)
+	{
+		input<T>(
+			name,
+			list,
+			[](T& element) -> void
+			{
+				input("Value", element);
+			},
+			[]() -> T
+			{
+				return T();
+			}
+			);
 	}
 };

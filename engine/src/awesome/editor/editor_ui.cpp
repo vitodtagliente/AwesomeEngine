@@ -9,6 +9,7 @@
 #include <IconsFontAwesome5.h>
 
 #include <awesome/asset/asset_database.h>
+#include <awesome/components/component_library.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/engine/input.h>
 #include <awesome/graphics/texture.h>
@@ -497,6 +498,81 @@ void EditorUI::input(const char* const name, graphics::TextureRect& value)
 void EditorUI::inputMultilineText(const char* const name, std::string& value)
 {
 	ImGui::InputTextMultiline(id(name).c_str(), &value);
+}
+
+void EditorUI::input(Entity& entity)
+{
+	begin("entity");
+	button(entity.type_name(), graphics::Color(1.f, .6f, .6f));
+	sameLine();
+	button(entity.id().value.c_str(), graphics::Color(0.f, .6f, .6f));
+	input("Name", entity.name);
+	input("Tag", entity.tag);
+	separator();
+	input("Position", entity.transform.position);
+	input("Rotation", entity.transform.rotation);
+	input("Scale", entity.transform.scale);
+	input("Persistent", entity.persistent);
+	hint("If true, the entity is not destroyed during the loading of a new scene");
+	sameLine();
+	input("Transient", entity.transient);
+	hint("If true, the entity cannot be saved as part of the scene serialization");
+	input("Replicate", entity.replicate);
+	hint("If true, the entity can be replicated in multiplayer games");
+	input("Static", entity.transform.isStatic);
+	hint("If true, the entity cannot move. It helps optimizing the transform's computation");
+	end();
+
+	separator();
+
+	if (Combo::begin((Icon::plus + " Add Component").c_str(), ""))
+	{
+		ComponentLibrary& library = ComponentLibrary::instance();
+		for (const ComponentRecord& record : library.records())
+		{
+			// const auto& it = std::find_if(entity.getComponents().begin(), entity.getComponents().end(), [&type](const std::unique_ptr<Component>& component) . bool
+			// 	{
+			// 		return component.getTypeName() == type.name;
+			// 	}
+			// );
+			// 
+			// // add one component only per type
+			// if (it != entity.getComponents().end())
+			// {
+			// 	continue;
+			// }
+
+			if (selectable(record.name.c_str(), false))
+			{
+				std::unique_ptr<Component> component(record.instantiate());
+				if (component)
+				{
+					entity.addComponent(std::move(component));
+					Combo::end();
+					return;
+				}
+			}
+		}
+		Combo::end();
+	}
+
+	for (const auto& component : entity.components())
+	{
+		const std::string componentName = component->type_name();
+		begin(componentName.c_str());
+		if (collapsingHeader(componentName.c_str()))
+		{
+			input(*component);
+			separator();
+			if (button((Icon::minus + " Remove Component").c_str()))
+			{
+				entity.removeComponent(component->getId());
+				end();
+				return; // force the refresh of the inspector
+			}
+		}
+		end();
+	}
 }
 
 void EditorUI::input(IType& type)

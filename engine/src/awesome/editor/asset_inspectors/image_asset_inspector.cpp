@@ -1,6 +1,6 @@
 #include "image_asset_inspector.h"
 
-#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/editor_ui.h>
 
 bool ImageAssetInspector::canInspect(int type) const
 {
@@ -20,5 +20,5 @@ void ImageAssetInspector::inspect(const AssetRecord& record)
 		m_asset.load();
 	}
 
-	FormLayout::image(m_asset);
+	EditorUI::image(m_asset);
 }

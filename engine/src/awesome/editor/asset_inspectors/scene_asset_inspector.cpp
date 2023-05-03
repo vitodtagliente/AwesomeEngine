@@ -1,7 +1,6 @@
 #include "scene_asset_inspector.h"
 
-#include <awesome/editor/text_icon.h>
-#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/scene/scene_graph.h>
 
 bool SceneAssetInspector::canInspect(int type) const
@@ -24,7 +23,7 @@ void SceneAssetInspector::inspect(const AssetRecord& record)
 
 	if (!m_asset.ready()) return;
 
-	if (FormLayout::button(TextIcon::upload(" Load Scene").c_str()))
+	if (EditorUI::button((EditorUI::Icon::upload + " Load Scene").c_str()))
 	{
 		SceneGraph::instance().load(m_asset);
 	}

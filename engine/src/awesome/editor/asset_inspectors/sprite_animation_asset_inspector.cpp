@@ -1,8 +1,6 @@
 #include "sprite_animation_asset_inspector.h"
 
-#include <awesome/editor/text_icon.h>
-#include <awesome/editor/widgets/form_layout.h>
-#include <awesome/editor/widgets/type_layout.h>
+#include <awesome/editor/editor_ui.h>
 
 bool SpriteAnimationAssetInspector::canInspect(int type) const
 {
@@ -27,15 +25,15 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 	SpriteAnimation& spriteAnimation = *m_asset.resource;
 	auto& frames = spriteAnimation.frames;
 
-	FormLayout::asset("Image", spriteAnimation.image);
-	FormLayout::input("Starting Frame", spriteAnimation.startingFrame);
-	FormLayout::input<SpriteAnimationFrame>(
+	EditorUI::input("Image", spriteAnimation.image);
+	EditorUI::input("Starting Frame", spriteAnimation.startingFrame);
+	EditorUI::input<SpriteAnimationFrame>(
 		"Frames",
 		spriteAnimation.frames,
 		[](SpriteAnimationFrame& frame) -> void
 		{
-			FormLayout::input("Rect", frame.rect);
-			FormLayout::input("Duration", frame.duration);
+			EditorUI::input("Rect", frame.rect);
+			EditorUI::input("Duration", frame.duration);
 		},
 		[]() -> SpriteAnimationFrame
 		{
@@ -43,36 +41,36 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 		}
 	);
 
-	FormLayout::separator();
+	EditorUI::separator();
 
-	if (FormLayout::button(TextIcon::save(" Save").c_str()))
+	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
 	{
 		m_asset.save();
 	}
 
-	if (FormLayout::collapsingHeader("Tool"))
+	if (EditorUI::collapsingHeader("Tool"))
 	{
-		FormLayout::input("Rect", m_frameRect);
-		FormLayout::input("Duration", m_frameDuration);
-		if (FormLayout::collapsingHeader("Frame Helper Tool"))
+		EditorUI::input("Rect", m_frameRect);
+		EditorUI::input("Duration", m_frameDuration);
+		if (EditorUI::collapsingHeader("Frame Helper Tool"))
 		{
-			FormLayout::input("Columns", m_cols);
-			FormLayout::input("Rows", m_rows);
-			FormLayout::input("Column Index", m_columnIndex);
-			FormLayout::input("Row Index", m_rowIndex);
-			if (FormLayout::button(TextIcon::search(" Preview size").c_str()))
+			EditorUI::input("Columns", m_cols);
+			EditorUI::input("Rows", m_rows);
+			EditorUI::input("Column Index", m_columnIndex);
+			EditorUI::input("Row Index", m_rowIndex);
+			if (EditorUI::button((EditorUI::Icon::search + " Preview size").c_str()))
 			{
 				m_frameRect.width = static_cast<float>(1.0 / m_cols);
 				m_frameRect.height = static_cast<float>(1.0 / m_rows);
 			}
-			FormLayout::sameLine();
-			if (FormLayout::button(TextIcon::search(" Preview index").c_str()))
+			EditorUI::sameLine();
+			if (EditorUI::button((EditorUI::Icon::search + " Preview index").c_str()))
 			{
 				m_frameRect.x = static_cast<float>(m_columnIndex) * static_cast<float>(1.0 / m_cols);
 				m_frameRect.y = static_cast<float>(m_rowIndex) * static_cast<float>(1.0 / m_rows);
 			}
-			FormLayout::sameLine();
-			if (FormLayout::button(TextIcon::eraser(" Reset").c_str()))
+			EditorUI::sameLine();
+			if (EditorUI::button((EditorUI::Icon::eraser + " Reset").c_str()))
 			{
 				m_frameRect.width = m_frameRect.height = 1.f;
 				m_cols = m_rows = 1;
@@ -80,8 +78,8 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 				m_columnIndex = m_rowIndex = 0;
 			}
 		}
-		FormLayout::image(spriteAnimation.image, m_frameRect);
-		if (FormLayout::button(TextIcon::plus(" Add").c_str()))
+		EditorUI::image(spriteAnimation.image, m_frameRect);
+		if (EditorUI::button((EditorUI::Icon::plus + " Add").c_str()))
 		{
 			SpriteAnimationFrame frame;
 			frame.duration = m_frameDuration;
@@ -93,9 +91,9 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 	// Live preview
 	if (!frames.empty() && m_frameIndex < frames.size())
 	{
-		FormLayout::separator();
-		FormLayout::image(spriteAnimation.image, frames[m_frameIndex].rect);
-		FormLayout::slider("Playing Frame", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
+		EditorUI::separator();
+		EditorUI::image(spriteAnimation.image, frames[m_frameIndex].rect);
+		EditorUI::slider("Playing Frame", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
 	}
 }
 
