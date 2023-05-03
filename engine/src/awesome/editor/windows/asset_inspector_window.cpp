@@ -4,10 +4,10 @@
 #include <awesome/editor/editor_ui.h>
 #include <awesome/graphics/color.h>
 
-#include <awesome/editor/asset_inspectors/image_asset_inspector.h>
-#include <awesome/editor/asset_inspectors/prefab_asset_inspector.h>
-#include <awesome/editor/asset_inspectors/scene_asset_inspector.h>
-#include <awesome/editor/asset_inspectors/sprite_animation_asset_inspector.h>
+#include <awesome/editor/private/asset_inspectors/image_asset_inspector.h>
+#include <awesome/editor/private/asset_inspectors/prefab_asset_inspector.h>
+#include <awesome/editor/private/asset_inspectors/scene_asset_inspector.h>
+#include <awesome/editor/private/asset_inspectors/sprite_animation_asset_inspector.h>
 
 AssetInspectorWindow::AssetInspectorWindow()
 	: Window()
