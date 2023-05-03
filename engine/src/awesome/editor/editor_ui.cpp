@@ -468,3 +468,75 @@ void EditorUI::inputMultilineText(const char* const name, std::string& value)
 {
 	ImGui::InputTextMultiline(id(name).c_str(), &value);
 }
+
+void EditorUI::input(IType& type)
+{
+	for (const auto& [name, property] : type.type_properties())
+	{
+		switch (property.type.type)
+		{
+		case PropertyType::Type::T_bool: input(name.c_str(), property.value<bool>(&type)); break;
+		case PropertyType::Type::T_char: break;
+		case PropertyType::Type::T_double: input(name.c_str(), property.value<double>(&type)); break;
+		case PropertyType::Type::T_enum: input(name.c_str(), property.value<bool>(&type)); break;
+		case PropertyType::Type::T_float: input(name.c_str(), property.value<float>(&type)); break;
+		case PropertyType::Type::T_int: input(name.c_str(), property.value<int>(&type)); break;
+		case PropertyType::Type::T_native:
+		{
+			if (property.type.name == reflect::Type<graphics::Color>::name())
+			{
+				input(name.c_str(), property.value<graphics::Color>(&type));
+			}
+			else if (property.type.name == reflect::Type<graphics::TextureCoords>::name())
+			{
+				input(name.c_str(), property.value<graphics::TextureCoords>(&type));
+			}
+			else if (property.type.name == reflect::Type<graphics::TextureRect>::name())
+			{
+				input(name.c_str(), property.value<graphics::TextureRect>(&type));
+			}
+			else if (property.type.name == reflect::Type<math::transform>::name())
+			{
+				input(name.c_str(), property.value<math::transform>(&type));
+			}
+			else if (property.type.name == reflect::Type<math::vec2>::name())
+			{
+				input(name.c_str(), property.value<math::vec2>(&type));
+			}
+			else if (property.type.name == reflect::Type<math::vec3>::name())
+			{
+				input(name.c_str(), property.value<math::vec3>(&type));
+			}
+			else if (property.type.name == reflect::Type<math::vec4>::name())
+			{
+				input(name.c_str(), property.value<math::vec4>(&type));
+			}
+			break;
+		}
+		case PropertyType::Type::T_string: input(name.c_str(), property.value<std::string>(&type)); break;
+		case PropertyType::Type::T_template:
+		{
+			if ((property.type.name == "std::vector" || property.type.name == "vector") && property.type.children.front().type == PropertyType::Type::T_type)
+			{
+				// const std::string& typeName = property.type.children.front().name;
+				// auto& list = property.value<std::vector<IType>&>(&type);
+
+			}
+			break;
+		}
+		case PropertyType::Type::T_type:
+		{
+			for (const auto& [type_name, options] : TypeFactory::list("Type", "Asset"))
+			{
+				if (type_name == property.type.name)
+				{
+					input(name.c_str(), property.value<Asset>(&type));
+					break;
+				}
+			}
+			break;
+		}
+		default:break;
+		}
+	}
+}

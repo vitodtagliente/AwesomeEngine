@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <awesome/components/camera_component.h>
 #include <awesome/engine/canvas.h>
 #include <awesome/scene/scene_graph.h>
 
@@ -42,7 +43,8 @@ void Graphics::preRendering()
 	const auto& canvas = Canvas::instance();
 	renderer->setViewport(canvas.getWidth(), canvas.getHeight());
 
-	renderer->clear(graphics::Color::Black);
+	CameraComponent* const camera = CameraComponent::main();
+	renderer->clear(camera ? camera->color : graphics::Color::Black);
 }
 
 void Graphics::render()

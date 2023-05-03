@@ -137,6 +137,8 @@ struct EditorUI final
 	static void input(const char* const name, graphics::TextureRect& value);
 	static void inputMultilineText(const char* const name, std::string& value);
 
+	static void input(IType& type);
+
 	// Enum input
 	template <typename T, typename std::enable_if<std::is_enum<T>::value>::type* = nullptr>
 	static void input(const char* const name, T& value)

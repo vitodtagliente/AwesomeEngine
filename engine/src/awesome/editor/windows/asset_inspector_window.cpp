@@ -1,7 +1,7 @@
 #include <awesome/editor/windows/asset_inspector_window.h>
 
 #include <awesome/editor/editor.h>
-#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/graphics/color.h>
 
 #include <awesome/editor/asset_inspectors/image_asset_inspector.h>
@@ -51,27 +51,27 @@ void AssetInspectorWindow::render()
 			if (inspector->canInspect(record.type))
 			{
 				const std::string title = inspector->getTitle();
-				FormLayout::button(title.empty() ? "Asset" : title.c_str(), s_assetTypeColor);
-				FormLayout::sameLine();
-				if (FormLayout::button(record.path.filename().string().c_str(), s_filenameColor))
+				EditorUI::button(title.empty() ? "Asset" : title.c_str(), s_assetTypeColor);
+				EditorUI::sameLine();
+				if (EditorUI::button(record.path.filename().string().c_str(), s_filenameColor))
 				{
 					m_editorState->select(record.path);
 				}
-				FormLayout::separator();
+				EditorUI::separator();
 				inspector->inspect(record);
 				return;
 			}
 		}
 
 		// no inspector found
-		FormLayout::button("Asset", s_assetTypeColor);
-		FormLayout::sameLine();
-		if (FormLayout::button(record.path.filename().string().c_str(), s_filenameColor))
+		EditorUI::button("Asset", s_assetTypeColor);
+		EditorUI::sameLine();
+		if (EditorUI::button(record.path.filename().string().c_str(), s_filenameColor))
 		{
 			m_editorState->select(record.path);
 		}
-		FormLayout::separator();
-		FormLayout::text("Cannot inspect the selected asset");
+		EditorUI::separator();
+		EditorUI::text("Cannot inspect the selected asset");
 	}
 }
 
