@@ -23,7 +23,7 @@ struct reflect::Enum<enum class FpsMode> : reflect::RegisteredInEnumFactory<enum
 };
 
 template <>
-struct reflect::Type<class EngineSettings> : reflect::RegisteredInTypeFactory<class EngineSettings>
+struct reflect::Type<struct EngineSettings> : reflect::RegisteredInTypeFactory<struct EngineSettings>
 {
     static const reflect::meta_t& meta();
     static const char* const name();

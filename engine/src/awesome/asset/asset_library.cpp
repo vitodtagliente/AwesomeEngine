@@ -2,14 +2,11 @@
 
 #include "asset.h"
 
-void AssetLibrary::init(const EngineMode mode, const std::filesystem::path& path)
+void AssetLibrary::init(const std::filesystem::path& path)
 {
 	m_path = path;
 	database.path = path / AssetDatabase::Filename;
-	if (mode != EngineMode::Editor)
-	{
-		database.load(database.path);
-	}
+	// database.load(path / AssetDatabase::Filename);
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "AssetLoader"))
 	{

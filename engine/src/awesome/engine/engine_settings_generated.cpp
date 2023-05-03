@@ -39,10 +39,9 @@ const reflect::properties_t& Type<EngineSettings>::properties()
     static reflect::properties_t s_properties {
         { "fps", reflect::Property{ offsetof(EngineSettings, fps), reflect::meta_t { }, "fps", reflect::PropertyType{ "FpsMode", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(FpsMode), reflect::PropertyType::Type::T_enum } } },
         { "mode", reflect::Property{ offsetof(EngineSettings, mode), reflect::meta_t { }, "mode", reflect::PropertyType{ "EngineMode", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(EngineMode), reflect::PropertyType::Type::T_enum } } },
-        { "workspace", reflect::Property{ offsetof(EngineSettings, workspace), reflect::meta_t { }, "workspace", reflect::PropertyType{ "std::filesystem::path", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::filesystem::path), reflect::PropertyType::Type::T_unknown } } },
         { "editorStartingScene", reflect::Property{ offsetof(EngineSettings, editorStartingScene), reflect::meta_t { }, "editorStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
-        { "standaloneStartingScene", reflect::Property{ offsetof(EngineSettings, standaloneStartingScene), reflect::meta_t { }, "standaloneStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
         { "serverStartingScene", reflect::Property{ offsetof(EngineSettings, serverStartingScene), reflect::meta_t { }, "serverStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
+        { "standaloneStartingScene", reflect::Property{ offsetof(EngineSettings, standaloneStartingScene), reflect::meta_t { }, "standaloneStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
     };
     return s_properties;
 }
@@ -88,12 +87,12 @@ void reflect::Type<EngineSettings>::from_string(const std::string& str, EngineSe
     {
         std::string pack;
         stream >> pack;
-        type.standaloneStartingScene.from_string(pack);
+        type.serverStartingScene.from_string(pack);
     }
     {
         std::string pack;
         stream >> pack;
-        type.serverStartingScene.from_string(pack);
+        type.standaloneStartingScene.from_string(pack);
     }
 }
 
@@ -106,8 +105,8 @@ std::string reflect::Type<EngineSettings>::to_string(const EngineSettings& type)
     stream << static_cast<int>(type.fps);
     stream << static_cast<int>(type.mode);
     stream << static_cast<std::string>(type.editorStartingScene);
-    stream << static_cast<std::string>(type.standaloneStartingScene);
     stream << static_cast<std::string>(type.serverStartingScene);
+    stream << static_cast<std::string>(type.standaloneStartingScene);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -139,8 +138,8 @@ void reflect::Type<EngineSettings>::from_json(const std::string& json, EngineSet
                 stringToEnum(value, type.mode);
             }
             if (key == "editorStartingScene") type.editorStartingScene.from_json(value);
-            if (key == "standaloneStartingScene") type.standaloneStartingScene.from_json(value);
             if (key == "serverStartingScene") type.serverStartingScene.from_json(value);
+            if (key == "standaloneStartingScene") type.standaloneStartingScene.from_json(value);
             src = src.substr(index + 1);
         }
         else break;
@@ -155,8 +154,8 @@ std::string reflect::Type<EngineSettings>::to_json(const EngineSettings& type, c
     stream << offset << "    " << "\"fps\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.fps)) << "," << std::endl;
     stream << offset << "    " << "\"mode\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.mode)) << "," << std::endl;
     stream << offset << "    " << "\"editorStartingScene\": " << type.editorStartingScene.to_json(offset + "    ") << "," << std::endl;
-    stream << offset << "    " << "\"standaloneStartingScene\": " << type.standaloneStartingScene.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"serverStartingScene\": " << type.serverStartingScene.to_json(offset + "    ") << "," << std::endl;
+    stream << offset << "    " << "\"standaloneStartingScene\": " << type.standaloneStartingScene.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

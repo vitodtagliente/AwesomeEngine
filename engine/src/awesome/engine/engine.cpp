@@ -3,6 +3,7 @@
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
+#include <awesome/asset/scene_asset.h>
 #include <awesome/components/component_register.h>
 #include <awesome/engine/canvas.h>
 #include <awesome/engine/input.h>
@@ -127,10 +128,10 @@ void Engine::exit()
 void Engine::initSettings()
 {
 	const std::filesystem::path workspace = std::filesystem::current_path() / "../assets";
+
 	AssetLibrary& library = AssetLibrary::instance();
-	const EngineMode mode = settings.mode;
-	library.init(mode, workspace);
-	if (mode == EngineMode::Editor)
+	library.init(workspace);
+
 	{
 		bool newFilesFound = false;
 		const bool recursiveSearch = true;
@@ -140,45 +141,18 @@ void Engine::initSettings()
 			library.database.save();
 		}
 	}
+
 	ComponentRegister::execute();
 
-	/*
-	bool reload = false;
-	const std::filesystem::path settingsPath = std::filesystem::current_path() / ApplicationSettings::filename;
-	reload = JsonFile::load(settingsPath, settings);
+	settings.load(workspace / EngineSettings::Filename);
+	const EngineMode mode = settings.mode;
 
-	AssetLibrary::instance().init(settings.workspacePath);
-	AssetImporter importer;
-	importer.import(settings.workspacePath, true);
-
-	if (reload)
-	{
-		JsonFile::load(settingsPath, settings);
-	}
-
-	std::shared_ptr<SceneAsset> sceneToLoad;
-	switch (settings.mode)
-	{
-	case Mode::Editor: sceneToLoad = settings.scene->editorScene; break;
-	case Mode::Server: sceneToLoad = settings.scene->serverScene; break;
-	case Mode::Standalone: sceneToLoad = settings.scene->standaloneScene; break;
-	}
-
-	if (sceneToLoad != nullptr)
-	{
-		if (sceneToLoad->state == Asset::State::Ready)
-		{
-			World::instance().load(sceneToLoad);
-		}
-		else
-		{
-			sceneToLoad->onLoad = [sceneToLoad]() -> void
-			{
-				World::instance().load(sceneToLoad);
-			};
-		}
-	}
-	*/
+	// load the default scene
+	SceneGraph::instance().load(
+		mode == EngineMode::Editor
+		? settings.editorStartingScene
+		: mode == EngineMode::Standalone ? settings.standaloneStartingScene : settings.serverStartingScene
+	);
 }
 
 void Engine::registerDefaultModules()

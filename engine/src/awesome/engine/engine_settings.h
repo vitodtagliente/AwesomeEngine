@@ -28,20 +28,21 @@ enum class FpsMode : int
 };
 
 CLASS()
-class EngineSettings : public IType
+struct EngineSettings : public IType
 {
-public:
-    EngineSettings() = default;
-
-    static constexpr char* filename{ "settings.json" };
+    void save() const;
+    bool load(const std::filesystem::path& _path);
 
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() EngineMode mode { EngineMode::Editor };
-    PROPERTY() std::filesystem::path workspace{ std::filesystem::current_path() / ".." / "assets" };
 
     PROPERTY() SceneAsset editorStartingScene;
     PROPERTY() SceneAsset serverStartingScene;
     PROPERTY() SceneAsset standaloneStartingScene;
+
+    std::filesystem::path path;
+
+    static constexpr char* Filename{ "settings.json" };
 
     GENERATED_BODY()
 };

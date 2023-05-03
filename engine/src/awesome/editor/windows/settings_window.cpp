@@ -1,6 +1,5 @@
 #include "settings_window.h"
 
-#include <awesome/data/type_file.h>
 #include <awesome/editor/editor_ui.h>
 #include <awesome/engine/engine.h>
 
@@ -17,7 +16,6 @@ void SettingsWindow::render()
 	{
 		EditorUI::input("FPS", settings.fps);
 		EditorUI::input("Mode", settings.mode);
-		EditorUI::input("Workspace", settings.workspace);
 	}
 	if (EditorUI::collapsingHeader("Scene"))
 	{
@@ -30,6 +28,6 @@ void SettingsWindow::render()
 
 	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
 	{
-		TypeFile::save(settings, settings.workspace / EngineSettings::filename);
+		settings.save();
 	}
 }

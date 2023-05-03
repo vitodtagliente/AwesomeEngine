@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
-#include <awesome/engine/engine_settings.h>
 
 #include "asset_database.h"
 
@@ -21,7 +20,7 @@ public:
 	inline const std::vector<std::unique_ptr<AssetLoader>>& loaders() const { return m_loaders; }
 	inline const std::filesystem::path& path() const { return m_path; }
 
-	void init(EngineMode mode, const std::filesystem::path& path);
+	void init(const std::filesystem::path& path);
 
 	AssetDatabase database;
 
