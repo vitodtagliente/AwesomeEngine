@@ -16,6 +16,3 @@
 [submodule "engine/vendor/vdtreflect"]
 	path = engine/vendor/vdtreflect
 	url = https://github.com/vitodtagliente/vdtreflect
-[submodule "engine/vendor/imgui"]
-	path = engine/vendor/imgui
-	url = https://github.com/ocornut/imgui
