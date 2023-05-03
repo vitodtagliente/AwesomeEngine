@@ -1,6 +1,6 @@
 #include "stress_window.h"
 
-#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/math/algorithm.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
@@ -12,21 +12,21 @@ char* const StressWindow::getTitle() const
 
 void StressWindow::render()
 {
-	FormLayout::asset("Prefab", m_prefab);
+	EditorUI::input("Prefab", m_prefab);
 
 	if (!m_prefab.ready()) return;
 
-	FormLayout::separator();
-	FormLayout::input("Quantity", m_quantity);
-	FormLayout::input("Random Position", m_randomPosition);
-	FormLayout::hint("True to spawn the prefabs in random positions");
+	EditorUI::separator();
+	EditorUI::input("Quantity", m_quantity);
+	EditorUI::input("Random Position", m_randomPosition);
+	EditorUI::hint("True to spawn the prefabs in random positions");
 	if (m_randomPosition)
 	{
-		FormLayout::input("Min Position", m_minPosition);
-		FormLayout::input("Max Position", m_maxPosition);
+		EditorUI::input("Min Position", m_minPosition);
+		EditorUI::input("Max Position", m_maxPosition);
 	}
-	FormLayout::newLine();
-	if (FormLayout::button("Spawn"))
+	EditorUI::newLine();
+	if (EditorUI::button("Spawn"))
 	{
 		Entity* const root = SceneGraph::instance().root();
 		for (int i = 0; i < m_quantity; ++i)

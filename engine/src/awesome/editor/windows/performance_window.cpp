@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-#include <awesome/editor/widgets/form_layout.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/engine/engine.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/scene/entity.h>
@@ -22,7 +22,7 @@ void PerformanceWindow::render()
 
 		std::ostringstream s;
 		s << "Engine::FPS: " << stats.framerate << " (" << std::round(1000.0f / stats.framerate) << " ms/frame)";
-		FormLayout::text(s.str().c_str());
+		EditorUI::text(s.str().c_str());
 	}
 
 	// Entities
@@ -32,13 +32,13 @@ void PerformanceWindow::render()
 
 		std::ostringstream s;
 		s << "SceneGraph::Entities: " << size;
-		FormLayout::text(s.str().c_str());
+		EditorUI::text(s.str().c_str());
 	}
 
 	// Renderer
 	{
 		std::ostringstream s;
 		s << "Graphics::DrawCalls: " << Graphics::instance()->performances.drawCalls;
-		FormLayout::text(s.str().c_str());
+		EditorUI::text(s.str().c_str());
 	}
 }

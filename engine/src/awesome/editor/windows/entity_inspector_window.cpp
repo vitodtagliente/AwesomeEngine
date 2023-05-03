@@ -2,10 +2,8 @@
 
 #include <awesome/asset/prefab_asset.h>
 #include <awesome/editor/editor_state.h>
-#include <awesome/editor/text_icon.h>
+#include <awesome/editor/editor_ui.h>
 #include <awesome/editor/widgets/dialog_layout.h>
-#include <awesome/editor/widgets/entity_layout.h>
-#include <awesome/editor/widgets/form_layout.h>
 #include <awesome/scene/entity.h>
 
 EntityInspectorWindow::EntityInspectorWindow()
@@ -33,11 +31,11 @@ void EntityInspectorWindow::render()
 		return;
 	}
 
-	EntityLayout::input(*entity);
+	EditorUI::input(*entity);
 
-	FormLayout::separator();
+	EditorUI::separator();
 
-	if (FormLayout::button(TextIcon::save(" Save Prefab").c_str()))
+	if (EditorUI::button((EditorUI::Icon::save + " Save Prefab").c_str()))
 	{
 		DialogLayout::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
 			{
