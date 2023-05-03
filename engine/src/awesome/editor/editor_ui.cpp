@@ -14,6 +14,24 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
+std::vector<std::string> context;
+
+std::string id(const char* const name)
+{
+	if (context.empty())
+	{
+		return name;
+	}
+
+	std::string context_id = "";
+	for (const std::string& c : context)
+	{
+		context_id += (context.empty() ? "" : "_") + c;
+	}
+
+	return std::string(name) + "###" + context_id + "_" + name;
+}
+
 const std::string EditorUI::Icon::copy{ ICON_FA_COPY };
 const std::string EditorUI::Icon::cube{ ICON_FA_CUBE };
 const std::string EditorUI::Icon::eraser{ ICON_FA_ERASER };
@@ -34,6 +52,31 @@ const std::string EditorUI::Icon::stop{ ICON_FA_STOP };
 const std::string EditorUI::Icon::tree{ ICON_FA_TREE };
 const std::string EditorUI::Icon::upload{ ICON_FA_UPLOAD };
 const std::string EditorUI::Icon::video{ ICON_FA_VIDEO };
+
+void EditorUI::Child::begin(const char* const name)
+{
+	ImGui::BeginChild(name, ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+}
+
+void EditorUI::Child::begin(const char* const name, const float width, const float height)
+{
+	ImGui::BeginChild(name, ImVec2(width, height), false, ImGuiWindowFlags_NoDecoration);
+}
+
+void EditorUI::Child::end()
+{
+	ImGui::EndChild();
+}
+
+bool EditorUI::Combo::begin(const char* const name, const char* const value)
+{
+	return ImGui::BeginCombo(id(name).c_str(), value);
+}
+
+void EditorUI::Combo::end()
+{
+	ImGui::EndCombo();
+}
 
 void EditorUI::Runtime::startup(void* const windowHandler)
 {
@@ -122,42 +165,9 @@ bool EditorUI::Window::isHovered()
 	return ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows);
 }
 
-std::vector<std::string> context;
-
-std::string id(const char* const name)
-{
-	if (context.empty())
-	{
-		return name;
-	}
-
-	std::string context_id = "";
-	for (const std::string& c : context)
-	{
-		context_id += (context.empty() ? "" : "_") + c;
-	}
-
-	return std::string(name) + "###" + context_id + "_" + name;
-}
-
 void EditorUI::begin(const char* const name)
 {
 	context.push_back(name);
-}
-
-void EditorUI::beginChild(const char* const name)
-{
-	ImGui::BeginChild(name, ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
-}
-
-void EditorUI::beginChild(const char* const name, const float width, const float height)
-{
-	ImGui::BeginChild(name, ImVec2(width, height), false, ImGuiWindowFlags_NoDecoration);
-}
-
-bool EditorUI::beginCombo(const char* const name, const char* const value)
-{
-	return ImGui::BeginCombo(id(name).c_str(), value);
 }
 
 bool EditorUI::button(const char* const name)
@@ -199,16 +209,6 @@ void EditorUI::end()
 {
 	if (!context.empty())
 		context.pop_back();
-}
-
-void EditorUI::endChild()
-{
-	ImGui::EndChild();
-}
-
-void EditorUI::endCombo()
-{
-	ImGui::EndCombo();
 }
 
 void EditorUI::hint(const std::string& text)

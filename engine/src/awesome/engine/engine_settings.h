@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <memory>
 
+#include <awesome/asset/scene_asset.h>
 #include <awesome/core/reflection.h>
 
 #include "engine_settings_generated.h"
@@ -36,7 +37,11 @@ public:
 
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() EngineMode mode { EngineMode::Editor };
-    PROPERTY() std::filesystem::path workspacePath{ std::filesystem::current_path() / ".." / "assets" };
+    PROPERTY() std::filesystem::path workspace{ std::filesystem::current_path() / ".." / "assets" };
+
+    PROPERTY() SceneAsset editorStartingScene;
+    PROPERTY() SceneAsset serverStartingScene;
+    PROPERTY() SceneAsset standaloneStartingScene;
 
     GENERATED_BODY()
 };

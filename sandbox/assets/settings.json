@@ -1,0 +1,29 @@
+{
+    "type_id": "EngineSettings",
+    "fps": "Fps60",
+    "mode": "Editor",
+    "editorStartingScene": {
+        "type_id": "SceneAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "104751373499400",
+        },
+        "type": 4,
+    },
+    "standaloneStartingScene": {
+        "type_id": "SceneAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "",
+        },
+        "type": 4,
+    },
+    "serverStartingScene": {
+        "type_id": "SceneAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "",
+        },
+        "type": 4,
+    },
+}

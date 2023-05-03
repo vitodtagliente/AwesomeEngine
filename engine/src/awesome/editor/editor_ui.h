@@ -4,6 +4,8 @@
 #include <functional>
 #include <string>
 
+#include <awesome/core/reflection.h>
+
 #include <awesome/asset/image_asset.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
@@ -16,6 +18,23 @@
 struct EditorUI final
 {
 	EditorUI() = delete;
+
+	struct Child final
+	{
+		Child() = delete;
+
+		static void begin(const char* const name);
+		static void begin(const char* const name, float width, float height);
+		static void end();
+	};
+
+	struct Combo final
+	{
+		Combo() = delete;
+
+		static bool begin(const char* const name, const char* const value);
+		static void end();
+	};
 
 	struct Icon final
 	{
@@ -74,17 +93,12 @@ struct EditorUI final
 	};
 
 	static void begin(const char* const name);
-	static void beginChild(const char* const name);
-	static void beginChild(const char* const name, float width, float height);
-	static bool beginCombo(const char* const name, const char* const value);
 	static bool button(const char* const name);
 	static bool button(const char* const name, int width, int height);
 	static bool button(const char* const name, const graphics::Color& color);
 	static bool button(const char* const name, const graphics::Color& color, int width, int height);
 	static bool collapsingHeader(const char* const name);
 	static void end();
-	static void endChild();
-	static void endCombo();
 	static void hint(const std::string& text);
 	static void image(const ImageAsset& image);
 	static void image(const ImageAsset& image, float width, float height);
@@ -122,4 +136,23 @@ struct EditorUI final
 	static void input(const char* const name, graphics::TextureCoords& value);
 	static void input(const char* const name, graphics::TextureRect& value);
 	static void inputMultilineText(const char* const name, std::string& value);
+
+	// Enum input
+	template <typename T, typename std::enable_if<std::is_enum<T>::value>::type* = nullptr>
+	static void input(const char* const name, T& value)
+	{
+		const std::string strValue = enumToString(value);
+		if (Combo::begin(name, strValue.c_str()))
+		{
+			for (const auto& [option_name, option_value] : reflect::Enum<T>::values())
+			{
+				if (selectable(option_name.c_str(), strValue == option_name))
+				{
+					value = static_cast<T>(option_value);
+					break;
+				}
+			}
+			Combo::end();
+		}
+	}
 };
