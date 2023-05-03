@@ -189,7 +189,7 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGuiIO& io = ImGui::GetIO();
-	// io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	ImGui_ImplGlfw_InitForOpenGL(reinterpret_cast<GLFWwindow*>(windowHandler), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
@@ -212,7 +212,7 @@ void EditorUI::Runtime::preRendering()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	// ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 }
 
 void EditorUI::Runtime::postRendering()
