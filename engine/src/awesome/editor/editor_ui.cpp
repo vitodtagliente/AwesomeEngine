@@ -269,6 +269,11 @@ bool EditorUI::Tree::isClicked()
 	return ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen();
 }
 
+void EditorUI::Tree::openNextItem()
+{
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+}
+
 void EditorUI::Window::begin(const char* const name)
 {
 	ImGui::Begin(name);

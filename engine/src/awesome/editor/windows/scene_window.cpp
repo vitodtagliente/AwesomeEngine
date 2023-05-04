@@ -45,6 +45,7 @@ void SceneWindow::render()
 
 	EditorUI::Child::begin("SceneContent");
 
+	EditorUI::Tree::openNextItem();
 	const bool open = EditorUI::Tree::begin("root", false);
 	EditorUI::DragDrop::end("Entity::ChangeParent", [this, root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, root); });
 
@@ -117,6 +118,12 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 	const std::string name = entity->name + "##entity" + entity->id().value;
 	if (entity->hasChildren())
 	{
+		const bool forceOpen = selectedEntity && entity->findChildById(selectedEntity->id());
+		if (forceOpen)
+		{
+			EditorUI::Tree::openNextItem();
+		}
+
 		const bool open = EditorUI::Tree::begin(name.c_str(), entity == selectedEntity);
 		if (EditorUI::Tree::isClicked())
 		{

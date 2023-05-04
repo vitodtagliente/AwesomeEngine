@@ -141,6 +141,7 @@ struct EditorUI final
 		static bool begin(const char* const name, bool selected);
 		static void end();
 		static bool isClicked();
+		static void openNextItem();
 	};
 
 	struct Window final
