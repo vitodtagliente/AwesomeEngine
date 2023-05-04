@@ -41,7 +41,10 @@ void SceneWindow::render()
 	}
 
 	EditorUI::sameLine();
-	EditorUI::search(m_filter);
+	if (EditorUI::search(m_filter))
+	{
+		m_editorState->unselectEntity();
+	}
 
 	EditorUI::Child::begin("SceneContent");
 
