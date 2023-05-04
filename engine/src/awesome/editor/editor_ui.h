@@ -107,6 +107,15 @@ struct EditorUI final
 		static bool item(const char* const name, bool& checked);
 	};
 
+	struct Popup final
+	{
+		Popup() = delete;
+
+		static bool begin(const char* const name);
+		static void end();
+		static void open(const char* const name);
+	};
+
 	struct Runtime final
 	{
 		Runtime() = delete;

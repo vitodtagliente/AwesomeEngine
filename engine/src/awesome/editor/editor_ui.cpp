@@ -184,6 +184,21 @@ bool EditorUI::Menu::item(const char* const name, bool& checked)
 	return ImGui::MenuItem(name, nullptr, &checked);
 }
 
+bool EditorUI::Popup::begin(const char* const name)
+{
+	return ImGui::BeginPopup(name);
+}
+
+void EditorUI::Popup::end()
+{
+	ImGui::EndPopup();
+}
+
+void EditorUI::Popup::open(const char* const name)
+{
+	ImGui::OpenPopup(name);
+}
+
 void EditorUI::Runtime::startup(void* const windowHandler)
 {
 	ImGui::CreateContext();
@@ -618,39 +633,6 @@ void EditorUI::input(Entity& entity)
 	hint("If true, the entity cannot move. It helps optimizing the transform's computation");
 	end();
 
-	separator();
-
-	if (Combo::begin((Icon::plus + " Add Component").c_str(), ""))
-	{
-		ComponentLibrary& library = ComponentLibrary::instance();
-		for (const ComponentRecord& record : library.records())
-		{
-			// const auto& it = std::find_if(entity.getComponents().begin(), entity.getComponents().end(), [&type](const std::unique_ptr<Component>& component) . bool
-			// 	{
-			// 		return component.getTypeName() == type.name;
-			// 	}
-			// );
-			// 
-			// // add one component only per type
-			// if (it != entity.getComponents().end())
-			// {
-			// 	continue;
-			// }
-
-			if (selectable(record.name.c_str(), false))
-			{
-				std::unique_ptr<Component> component(record.instantiate());
-				if (component)
-				{
-					entity.addComponent(std::move(component));
-					Combo::end();
-					return;
-				}
-			}
-		}
-		Combo::end();
-	}
-
 	for (const auto& component : entity.components())
 	{
 		const std::string componentName = component->type_name();
@@ -663,16 +645,37 @@ void EditorUI::input(Entity& entity)
 			{
 				entity.removeComponent(component->getId());
 				end();
-				return; // force the refresh of the inspector
+				break;
 			}
 		}
 		end();
 	}
 
+	static std::string component_filter;
+
 	align(HorizontalAlignment::Middle, 120.f);
 	if (button("Add Component", 120.f))
 	{
+		Popup::open("Component_Selection_Widget");
+		component_filter.clear();
+	}
 
+	if (Popup::begin("Component_Selection_Widget"))
+	{
+		ComponentLibrary& library = ComponentLibrary::instance();
+		for (const ComponentRecord& record : library.records())
+		{
+			if (selectable(record.name.c_str(), false))
+			{
+				std::unique_ptr<Component> component(record.instantiate());
+				if (component)
+				{
+					entity.addComponent(std::move(component));
+					break;
+				}
+			}
+		}
+		Popup::end();
 	}
 }
 
