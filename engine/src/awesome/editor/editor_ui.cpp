@@ -10,6 +10,7 @@
 
 #include <awesome/asset/asset_database.h>
 #include <awesome/components/component_library.h>
+#include <awesome/core/string_util.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/engine/input.h>
@@ -633,11 +634,16 @@ void EditorUI::input(Entity& entity)
 	hint("If true, the entity cannot move. It helps optimizing the transform's computation");
 	end();
 
+	static const auto& decorateComponentName = [](const std::string& name) -> std::string
+	{
+		return StringUtil::replace(name, "Component", "");
+	};
+
 	for (const auto& component : entity.components())
 	{
 		const std::string componentName = component->type_name();
 		begin(componentName.c_str());
-		if (collapsingHeader(componentName.c_str()))
+		if (collapsingHeader(decorateComponentName(componentName).c_str()))
 		{
 			input(*component);
 			separator();
@@ -650,6 +656,19 @@ void EditorUI::input(Entity& entity)
 		}
 		end();
 	}
+
+	static const auto& hasComponent = [](const Entity& entity, const std::string& name) -> bool
+	{
+		const auto& it = std::find_if(
+			entity.components().begin(),
+			entity.components().end(),
+			[&name](const std::unique_ptr<Component>& component) -> bool
+			{
+				return component->type_name() == name;
+			}
+		);
+		return it != entity.components().end();
+	};
 
 	static std::string component_filter;
 
@@ -665,7 +684,9 @@ void EditorUI::input(Entity& entity)
 		ComponentLibrary& library = ComponentLibrary::instance();
 		for (const ComponentRecord& record : library.records())
 		{
-			if (selectable(record.name.c_str(), false))
+			if (hasComponent(entity, record.name)) continue;
+
+			if (selectable(decorateComponentName(record.name).c_str(), false))
 			{
 				std::unique_ptr<Component> component(record.instantiate());
 				if (component)
