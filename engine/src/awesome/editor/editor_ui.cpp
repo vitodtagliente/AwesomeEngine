@@ -482,9 +482,9 @@ void EditorUI::separator()
 	ImGui::Separator();
 }
 
-void EditorUI::separatorText(const char* const)
+void EditorUI::separatorText(const char* const name)
 {
-	ImGui::Separator();
+	ImGui::SeparatorText(name);
 }
 
 void EditorUI::slider(const char* const name, const int min, const int max, int& value)
@@ -680,6 +680,7 @@ void EditorUI::input(Entity& entity)
 
 	if (Popup::begin("Component_Selection_Widget"))
 	{
+		separatorText("Component Browser");
 		ComponentLibrary& library = ComponentLibrary::instance();
 		for (const ComponentRecord& record : library.records())
 		{

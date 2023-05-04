@@ -128,7 +128,7 @@ std::vector<Entity*> Entity::findChildrenByTag(const std::string& childTag) cons
 	return children;
 }
 
-Entity* const Entity::findChildById(const uuid& childId) const
+Entity* const Entity::findChildById(const uuid& childId, const bool recursive) const
 {
 	for (const auto& child : m_children)
 	{
@@ -137,8 +137,11 @@ Entity* const Entity::findChildById(const uuid& childId) const
 			return child.get();
 		}
 
-		Entity* const entity = child->findChildById(childId);
-		if (entity != nullptr) return entity;
+		if (recursive)
+		{
+			Entity* const entity = child->findChildById(childId, recursive);
+			if (entity != nullptr) return entity;
+		}
 	}
 	return nullptr;
 }

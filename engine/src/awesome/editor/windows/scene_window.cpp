@@ -17,72 +17,52 @@ char* const SceneWindow::getTitle() const
 	return "Scene";
 }
 
+void reparentEntity(const uuid& id, Entity* parent)
+{
+	if (id == parent->id()) return;
+
+	Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
+	if (draggingEntity == nullptr
+		|| parent->findChildById(id, false) != nullptr)
+		return;
+
+	draggingEntity->parent()->moveChild(parent, id);
+}
+
 void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
-	
-	EditorUI::DragDrop::end("ENTITY_REPARENT", [this](void* const data, const size_t) -> void
-		{
-			const uuid id = *(const uuid*)data;
-
-			Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
-			if (draggingEntity != nullptr)
-			{
-				draggingEntity->parent()->moveChild(SceneGraph::instance().root(), id);
-				m_editorState->unselectEntity();
-			}
-		}
-	);
+	Entity* const root = SceneGraph::instance().root();
 
 	if (EditorUI::button(EditorUI::Icon::plus.c_str()))
 	{
-		addEntity(nullptr);
+		Entity* const entity = root->addChild();
+		entity->name = entity->id().value;
 	}
 
 	EditorUI::sameLine();
 	EditorUI::search(m_filter);
 
-	EditorUI::Child::begin("Content");
-	const auto& children = SceneGraph::instance().root()->children();
-	for (auto it = children.begin(); it != children.end(); ++it)
+	EditorUI::Child::begin("SceneContent");
+
+	const bool open = EditorUI::Tree::begin("root", false);
+	EditorUI::DragDrop::end("Entity::ChangeParent", [this, root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, root); });
+
+	if (open)
 	{
-		const auto& entity = *it;
-		const bool isSelected = selectedEntity != nullptr && entity->id() == selectedEntity->id();
-		if (isSelected && m_state == NavigationState::Renaming)
+		for (auto it = root->children().begin(); it != root->children().end(); ++it)
 		{
-			EditorUI::rename(m_tempRename);
-		}
-		else
-		{
+			const auto& entity = *it;
 			if (!m_filter.empty() && !StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
 			{
 				continue;
 			}
 
 			renderEntity(entity.get(), selectedEntity);
-
-			bool dragCompleted{ false };
-			EditorUI::DragDrop::end("ENTITY_REPARENT", [this, &entity, &dragCompleted](void* const data, const size_t) -> void
-				{
-					const uuid id = *(const uuid*)data;
-					if (id == entity->id()) return;
-			
-					Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
-					if (draggingEntity != nullptr)
-					{
-						draggingEntity->parent()->moveChild(entity.get(), id);
-						m_editorState->unselectEntity();
-						dragCompleted = true;
-					}
-				}
-			);
-
-			if (dragCompleted)
-			{
-				break;
-			}
 		}
+		EditorUI::Tree::end();
 	}
+
 	EditorUI::Child::end();
 
 	// reset the entity selection once clicked in the entities area
@@ -97,41 +77,9 @@ void SceneWindow::update(double)
 	if (!hasFocus()) return;
 
 	Entity* const selectedEntity = m_editorState->selection.entity;
-
-	if (m_state == NavigationState::Renaming)
+	if (selectedEntity != nullptr && EditorUI::Input::isKeyPressed(KeyCode::Delete))
 	{
-		if (EditorUI::Input::isKeyPressed(KeyCode::Enter) || EditorUI::Input::isKeyPressed(KeyCode::Escape))
-		{
-			m_state = NavigationState::Navigating;
-			renameEntity(selectedEntity, m_tempRename);
-			m_tempRename.clear();
-		}
-	}
-	else
-	{
-		if (selectedEntity != nullptr)
-		{
-			if (EditorUI::Input::isKeyPressed(KeyCode::F2))
-			{
-				m_state = NavigationState::Renaming;
-				m_tempRename = selectedEntity->name;
-			}
-			else if (EditorUI::Input::isKeyPressed(KeyCode::Delete))
-			{
-				deleteEntity(selectedEntity);
-			}
-		}		
-	}
-}
-
-void SceneWindow::addEntity(Entity* const parent)
-{
-	Entity* const entity = parent ? parent->addChild() : SceneGraph::instance().root()->addChild();
-	entity->name = entity->id().value;
-	if (parent == nullptr)
-	{
-		m_editorState->select(entity);
-		EditorUI::Input::scrollToBottom();
+		deleteEntity(selectedEntity);
 	}
 }
 
@@ -172,16 +120,21 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 		const bool open = EditorUI::Tree::begin(name.c_str(), entity == selectedEntity);
 		if (EditorUI::Tree::isClicked())
 		{
-			m_state = NavigationState::Navigating;
-			selectEntity(entity);
+			m_editorState->select(entity);
 		}
 
-		EditorUI::DragDrop::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::begin("Entity::ChangeParent", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::end("Entity::ChangeParent", [this, entity](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, entity); });
 
 		if (open)
 		{
 			for (const auto& child : entity->children())
 			{
+				if (!m_filter.empty() && !StringUtil::contains(child->name, m_filter, StringUtil::CompareMode::IgnoreCase))
+				{
+					continue;
+				}
+
 				renderEntity(child.get(), selectedEntity);
 			}
 			EditorUI::Tree::end();
@@ -191,20 +144,10 @@ void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntit
 	{
 		if (EditorUI::selectable(name.c_str(), entity == selectedEntity))
 		{
-			m_state = NavigationState::Navigating;
-			selectEntity(entity);
+			m_editorState->select(entity);
 		}
 
-		EditorUI::DragDrop::begin("ENTITY_REPARENT", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::begin("Entity::ChangeParent", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+		EditorUI::DragDrop::end("Entity::ChangeParent", [this, entity](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, entity); });
 	}
-}
-
-void SceneWindow::selectEntity(Entity* const entity)
-{
-	m_editorState->select(entity);
-}
-
-void SceneWindow::renameEntity(Entity* const entity, const std::string& name)
-{
-	entity->name = name;
 }

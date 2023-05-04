@@ -53,7 +53,7 @@ public:
 	void update(double deltaTime);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
-	Entity* const findChildById(const uuid& id) const;
+	Entity* const findChildById(const uuid& id, bool recursive = true) const;
 	Entity* const findChildByName(const std::string& name) const;
 	Entity* const findChildByTag(const std::string& tag) const;
 
