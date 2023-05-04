@@ -54,11 +54,6 @@ void SceneWindow::render()
 		for (auto it = root->children().begin(); it != root->children().end(); ++it)
 		{
 			const auto& entity = *it;
-			if (!m_filter.empty() && !StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
-			{
-				continue;
-			}
-
 			renderEntity(entity.get(), selectedEntity);
 		}
 		EditorUI::Tree::end();
@@ -115,40 +110,60 @@ void SceneWindow::deleteEntity(Entity* const entity)
 
 void SceneWindow::renderEntity(Entity* const entity, Entity* const selectedEntity)
 {
+	if (entity == nullptr) return;
+	
 	const std::string name = entity->name + "##entity" + entity->id().value;
 	if (entity->hasChildren())
 	{
-		const bool forceOpen = selectedEntity && entity->findChildById(selectedEntity->id());
-		if (forceOpen)
+		if (m_filter.empty())
 		{
-			EditorUI::Tree::openNextItem();
-		}
-
-		const bool open = EditorUI::Tree::begin(name.c_str(), entity == selectedEntity);
-		if (EditorUI::Tree::isClicked())
-		{
-			m_editorState->select(entity);
-		}
-
-		EditorUI::DragDrop::begin("Entity::ChangeParent", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
-		EditorUI::DragDrop::end("Entity::ChangeParent", [this, entity](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, entity); });
-
-		if (open)
-		{
-			for (const auto& child : entity->children())
+			const bool forceOpen = selectedEntity && entity->findChildById(selectedEntity->id());
+			if (forceOpen)
 			{
-				if (!m_filter.empty() && !StringUtil::contains(child->name, m_filter, StringUtil::CompareMode::IgnoreCase))
+				EditorUI::Tree::openNextItem();
+			}
+
+			const bool open = EditorUI::Tree::begin(name.c_str(), entity == selectedEntity);
+			if (EditorUI::Tree::isClicked())
+			{
+				m_editorState->select(entity);
+			}
+
+			EditorUI::DragDrop::begin("Entity::ChangeParent", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+			EditorUI::DragDrop::end("Entity::ChangeParent", [this, entity](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, entity); });
+
+			if (open)
+			{
+				for (const auto& child : entity->children())
 				{
-					continue;
+					renderEntity(child.get(), selectedEntity);
+				}
+				EditorUI::Tree::end();
+			}
+		}
+		else
+		{
+			if (StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase))
+			{
+				if (EditorUI::selectable(name.c_str(), entity == selectedEntity))
+				{
+					m_editorState->select(entity);
 				}
 
+				EditorUI::DragDrop::begin("Entity::ChangeParent", entity->name.c_str(), (void*)(&entity->id()), sizeof(uuid));
+				EditorUI::DragDrop::end("Entity::ChangeParent", [this, entity](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, entity); });
+			}
+
+			for (const auto& child : entity->children())
+			{
 				renderEntity(child.get(), selectedEntity);
 			}
-			EditorUI::Tree::end();
-		}
+		}		
 	}
 	else
 	{
+		if (!m_filter.empty() && !StringUtil::contains(entity->name, m_filter, StringUtil::CompareMode::IgnoreCase)) return;
+
 		if (EditorUI::selectable(name.c_str(), entity == selectedEntity))
 		{
 			m_editorState->select(entity);
