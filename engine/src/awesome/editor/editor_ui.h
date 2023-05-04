@@ -144,11 +144,19 @@ struct EditorUI final
 		static bool isHovered();
 	};
 
+	enum class HorizontalAlignment
+	{
+		Left,
+		Middle,
+		Right
+	};
+
+	static void align(HorizontalAlignment alignment, float widthNextElement = 0.f);
 	static void begin(const char* const name);
 	static bool button(const char* const name);
-	static bool button(const char* const name, int width, int height);
+	static bool button(const char* const name, float width, float height = 0.f);
 	static bool button(const char* const name, const graphics::Color& color);
-	static bool button(const char* const name, const graphics::Color& color, int width, int height);
+	static bool button(const char* const name, const graphics::Color& color, float width, float height = 0.f);
 	static bool collapsingHeader(const char* const name);
 	static void end();
 	static void hint(const std::string& text);

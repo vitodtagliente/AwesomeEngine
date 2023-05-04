@@ -273,6 +273,19 @@ bool EditorUI::Window::isHovered()
 	return ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows);
 }
 
+void EditorUI::align(const HorizontalAlignment alignment, const float widthNextElement)
+{
+	const float regionWidth = ImGui::GetWindowSize().x;
+
+	switch (alignment)
+	{
+	case HorizontalAlignment::Middle:  ImGui::SetCursorPosX((regionWidth - widthNextElement) / 2); break;
+	case HorizontalAlignment::Right: ImGui::SetCursorPosX(regionWidth - widthNextElement); break;
+	default:
+		break;
+	}
+}
+
 void EditorUI::begin(const char* const name)
 {
 	context.push_back(name);
@@ -283,9 +296,9 @@ bool EditorUI::button(const char* const name)
 	return ImGui::Button(name);
 }
 
-bool EditorUI::button(const char* const name, const int width, const int height)
+bool EditorUI::button(const char* const name, const float width, const float height)
 {
-	return ImGui::Button(name, ImVec2(static_cast<float>(width), static_cast<float>(height)));
+	return ImGui::Button(name, ImVec2(width, height));
 }
 
 bool EditorUI::button(const char* const name, const graphics::Color& color)
@@ -298,12 +311,12 @@ bool EditorUI::button(const char* const name, const graphics::Color& color)
 	return result;
 }
 
-bool EditorUI::button(const char* const name, const graphics::Color& color, const int width, const int height)
+bool EditorUI::button(const char* const name, const graphics::Color& color, const float width, const float height)
 {
 	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(color.red, color.green, color.blue, color.alpha));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(color.red, color.green, color.blue + 0.1f, color.alpha + 0.1f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(color.red, color.green, color.blue + 0.2f, color.alpha + 0.2f));
-	const bool result = ImGui::Button(name, ImVec2(static_cast<float>(width), static_cast<float>(height)));
+	const bool result = ImGui::Button(name, ImVec2(width, height));
 	ImGui::PopStyleColor(3);
 	return result;
 }
@@ -654,6 +667,12 @@ void EditorUI::input(Entity& entity)
 			}
 		}
 		end();
+	}
+
+	align(HorizontalAlignment::Middle, 120.f);
+	if (button("Add Component", 120.f))
+	{
+
 	}
 }
 
