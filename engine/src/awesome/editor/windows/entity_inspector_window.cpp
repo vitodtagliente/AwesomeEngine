@@ -30,10 +30,6 @@ void EntityInspectorWindow::render()
 		return;
 	}
 
-	EditorUI::input(*entity);
-
-	EditorUI::separator();
-
 	if (EditorUI::button((EditorUI::Icon::save + " Save Prefab").c_str()))
 	{
 		EditorUI::Dialog::save("Save Prefab...", ".prefab", [entity](const std::filesystem::path& path) -> void
@@ -44,4 +40,6 @@ void EntityInspectorWindow::render()
 			}
 		);
 	}
+	EditorUI::separator();
+	EditorUI::input(*entity);
 }

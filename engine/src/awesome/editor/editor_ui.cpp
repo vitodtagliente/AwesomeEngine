@@ -619,7 +619,6 @@ void EditorUI::input(Entity& entity)
 	button(entity.id().value.c_str(), graphics::Color(0.f, .6f, .6f));
 	input("Name", entity.name);
 	input("Tag", entity.tag);
-	separator();
 	input("Position", entity.transform.position);
 	input("Rotation", entity.transform.rotation);
 	input("Scale", entity.transform.scale);
