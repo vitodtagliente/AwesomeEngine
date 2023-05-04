@@ -155,7 +155,7 @@ private:
 
 	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
-	PROPERTY() uuid m_id;
+	uuid m_id;
 	Entity* m_parent{ nullptr };
 	State m_state{ State::PendingSpawn };
 };
