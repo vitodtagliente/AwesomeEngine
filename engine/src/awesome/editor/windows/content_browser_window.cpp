@@ -57,10 +57,9 @@ void ContentBrowserWindow::render()
 	}
 
 	bool refresh = false;
-	const std::optional<AssetRecord>& selectedAsset = m_editorState->selection.asset;
 	for (const auto& file : m_directory.files)
 	{
-		const bool isSelected = selectedAsset.has_value() && selectedAsset->path == file;
+		const bool isSelected = m_selectedItem.has_value() && m_selectedItem.value() == file;
 		if (isSelected && m_state == NavigationState::Renaming)
 		{
 			EditorUI::rename(m_tempRename);
@@ -70,22 +69,32 @@ void ContentBrowserWindow::render()
 			const std::string name = file.stem().string();
 			if (std::filesystem::is_directory(file))
 			{
-				if (EditorUI::selectableDoubleClick((EditorUI::Icon::folder + " " + name).c_str(), isSelected))
+				bool changeFolder = false;
+				if (EditorUI::selectable((EditorUI::Icon::folder + " " + name).c_str(), isSelected, [&changeFolder]() -> void
+					{
+						changeFolder = true;
+					}
+				))
 				{
-					m_state = NavigationState::Navigating;
-					m_directory.move(file);
-					m_editorState->path = m_directory.path;
-					refresh = true;
-					break;
+					m_selectedItem = file;
 				}
 
-				EditorUI::DragDrop::end("File::Move", [this, to = file, &refresh](void* const data, const size_t) -> void
+					if (changeFolder)
 					{
-						const std::filesystem::path file = *(const std::filesystem::path*)data;
-						moveFile(file, to);
+						m_state = NavigationState::Navigating;
+						m_directory.move(file);
+						m_editorState->path = m_directory.path;
 						refresh = true;
+						break;
 					}
-				);
+
+					EditorUI::DragDrop::end("File::Move", [this, to = file, &refresh](void* const data, const size_t) -> void
+						{
+							const std::filesystem::path file = *(const std::filesystem::path*)data;
+							moveFile(file, to);
+							refresh = true;
+						}
+					);
 			}
 			else if (EditorUI::selectable(decorateFile(name).c_str(), isSelected))
 			{
@@ -95,11 +104,13 @@ void ContentBrowserWindow::render()
 				if (record != nullptr)
 				{
 					m_editorState->select(*record);
+					m_selectedItem = file;
 					m_tempRename = name;
 				}
 				else
 				{
 					m_editorState->unselectAsset();
+					m_selectedItem.reset();
 				}
 			}
 			EditorUI::DragDrop::begin("File::Move", name.c_str(), (void*)(&file), sizeof(std::filesystem::path));
@@ -115,8 +126,9 @@ void ContentBrowserWindow::render()
 
 void ContentBrowserWindow::update(const double)
 {
-	/*
-	if (m_selectedItem.empty())
+	if (!hasFocus()) return;
+
+	if (!m_selectedItem.has_value())
 	{
 		return;
 	}
@@ -126,7 +138,11 @@ void ContentBrowserWindow::update(const double)
 		if (EditorUI::Input::isKeyPressed(KeyCode::Enter) || EditorUI::Input::isKeyPressed(KeyCode::Escape))
 		{
 			m_state = NavigationState::Navigating;
-			renameFile(m_selectedItem, m_tempRename);
+			if (!std::filesystem::is_directory(m_selectedItem.value()))
+				m_editorState->unselectAsset();
+			renameFile(m_selectedItem.value(), m_tempRename);
+			m_selectedItem.reset();
+			m_directory.refresh();
 		}
 	}
 	else if (m_state == NavigationState::Navigating)
@@ -137,10 +153,13 @@ void ContentBrowserWindow::update(const double)
 		}
 		else if (EditorUI::Input::isKeyPressed(KeyCode::Delete))
 		{
-			deleteFile(m_selectedItem);
+			if (!std::filesystem::is_directory(m_selectedItem.value()))
+				m_editorState->unselectAsset();
+			deleteFile(m_selectedItem.value());
+			m_selectedItem.reset();
+			m_directory.refresh();
 		}
 	}
-	*/
 }
 
 void ContentBrowserWindow::addNewFolder(const std::string& name)
@@ -189,12 +208,16 @@ void ContentBrowserWindow::deleteFile(const std::filesystem::path& path)
 	}
 	else
 	{
+		const std::filesystem::path resourcePath = path.parent_path() / path.stem();
+		if (!std::filesystem::exists(resourcePath)) return;
+
 		AssetDatabase& database = AssetLibrary::instance().database;
-		database.erase(path);
+		database.erase(resourcePath);
+
 		std::filesystem::remove(path);
+		std::filesystem::remove(resourcePath);
 		m_editorState->unselectAsset();
 	}
-	m_directory.refresh();
 }
 
 void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std::filesystem::path& to)
@@ -240,9 +263,9 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 		AssetDatabase& database = AssetLibrary::instance().database;
 		database.erase(resourcePath);
 
-		const std::filesystem::path newAssetPath = path.parent_path() / name / path.extension();
+		const std::filesystem::path newAssetPath = resourcePath.parent_path() / (name + resourcePath.extension().string() + path.extension().string());
 		std::filesystem::rename(path, newAssetPath);
-		const std::filesystem::path newResourcePath = resourcePath.parent_path() / name / resourcePath.filename();
+		const std::filesystem::path newResourcePath = resourcePath.parent_path() / (name + resourcePath.extension().string());
 		std::filesystem::rename(resourcePath, newResourcePath);
 
 		bool newFilesFound = false;

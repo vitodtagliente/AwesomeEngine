@@ -2,6 +2,7 @@
 #pragma once
 
 #include <filesystem>
+#include <optional>
 
 #include <awesome/data/directory.h>
 #include <awesome/editor/window.h>
@@ -33,7 +34,7 @@ private:
 	class EditorState* m_editorState;
 	std::string m_filter;
 	std::filesystem::path m_root;
-	std::filesystem::path m_selectedItem;
+	std::optional<std::filesystem::path> m_selectedItem;
 	NavigationState m_state{ NavigationState::Navigating };
 	std::string m_tempRename;
 };
