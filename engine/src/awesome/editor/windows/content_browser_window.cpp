@@ -10,6 +10,7 @@ ContentBrowserWindow::ContentBrowserWindow()
 	: Window()
 	, m_editorState(EditorState::instance())
 {
+	s_instance = this;
 }
 
 char* const ContentBrowserWindow::getTitle() const
@@ -61,7 +62,6 @@ void ContentBrowserWindow::render()
 			);
 		}
 
-		bool refresh = false;
 		for (const auto& file : m_directory.files)
 		{
 			const bool isSelected = m_selectedItem.has_value() && m_selectedItem.value() == file;
@@ -89,15 +89,15 @@ void ContentBrowserWindow::render()
 							m_state = NavigationState::Navigating;
 							m_directory.move(file);
 							m_editorState->path = m_directory.path;
-							refresh = true;
+							m_refresh = true;
 							break;
 						}
 
-						EditorUI::DragDrop::end("File::Move", [this, to = file, &refresh](void* const data, const size_t) -> void
+						EditorUI::DragDrop::end("File::Move", [this, to = file](void* const data, const size_t) -> void
 							{
 								const std::filesystem::path file = *(const std::filesystem::path*)data;
 								moveFile(file, to);
-								refresh = true;
+								m_refresh = true;
 							}
 						);
 				}
@@ -121,9 +121,10 @@ void ContentBrowserWindow::render()
 				EditorUI::DragDrop::begin("File::Move", name.c_str(), (void*)(&file), sizeof(std::filesystem::path));
 			}
 		}
-		if (refresh)
+		if (m_refresh)
 		{
 			m_directory.refresh();
+			m_refresh = false;
 		}
 	}
 	else
@@ -189,6 +190,11 @@ void ContentBrowserWindow::update(const double)
 			m_directory.refresh();
 		}
 	}
+}
+
+void ContentBrowserWindow::queue_refresh()
+{
+	m_refresh = true;
 }
 
 void ContentBrowserWindow::addNewFolder(const std::string& name)

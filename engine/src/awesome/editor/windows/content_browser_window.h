@@ -17,6 +17,10 @@ public:
 	virtual void render() override;
 	virtual void update(double deltaTime) override;
 
+	void queue_refresh();
+
+	static ContentBrowserWindow* const instance() { return s_instance; }
+
 private:
 	void addNewFolder(const std::string& name);
 	std::string decorateFile(const std::filesystem::path& file);
@@ -33,8 +37,11 @@ private:
 	Directory m_directory;
 	class EditorState* m_editorState;
 	std::string m_filter;
+	bool m_refresh{ false };
 	std::filesystem::path m_root;
 	std::optional<std::filesystem::path> m_selectedItem;
 	NavigationState m_state{ NavigationState::Navigating };
 	std::string m_tempRename;
+
+	static inline ContentBrowserWindow* s_instance{ nullptr };
 };

@@ -8,6 +8,7 @@
 #include <awesome/core/string_util.h>
 #include <awesome/editor/editor.h>
 #include <awesome/editor/editor_ui.h>
+#include <awesome/editor/windows/content_browser_window.h>
 
 SaveFileDialog::SaveFileDialog()
 	: m_directory()
@@ -100,6 +101,11 @@ void SaveFileDialog::render()
 			AssetImporter::import(fileToSave, fileAdded);
 			if (fileAdded)
 			{
+				ContentBrowserWindow* const contentBrowser = ContentBrowserWindow::instance();
+				if (contentBrowser)
+				{
+					contentBrowser->queue_refresh();
+				}
 				AssetLibrary::instance().database.save();
 			}
 
