@@ -184,6 +184,7 @@ struct EditorUI final
 	static bool search(std::string& value);
 	static bool selectable(const char* const name, bool selected);
 	static bool selectable(const char* const name, bool selected, const std::function<void()>& handler);
+	static bool selectableDoubleClick(const char* const name, bool selected);
 	static void separator();
 	static void separatorText(const char* const name);
 	static void slider(const char* const name, int min, int max, int& value);

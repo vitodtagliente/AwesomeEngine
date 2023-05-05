@@ -12,14 +12,14 @@ public:
 		ScanSettings(const std::string& allowedExtension, bool ignoreDirectories);
 
 		std::string allowedExtension;
-		bool ignoreDirectories;
+		bool ignoreDirectories{ false };
 	};
 
 	static Directory scan(const std::filesystem::path& path, const ScanSettings& settings = {});
 
-	bool directory(const std::filesystem::path& directory);
+	bool move(const std::filesystem::path& directory);
+	bool moveUp();
 	void refresh();
-	bool up();
 
 	std::vector<std::filesystem::path> files;
 	std::filesystem::path parent;

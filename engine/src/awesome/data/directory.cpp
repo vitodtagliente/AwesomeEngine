@@ -30,7 +30,7 @@ Directory Directory::scan(const std::filesystem::path& path, const ScanSettings&
 
 	return directory;
 }
-bool Directory::directory(const std::filesystem::path& directory)
+bool Directory::move(const std::filesystem::path& directory)
 {
 	const auto& it = std::find(files.begin(), files.end(), directory);
 	if (it != files.end())
@@ -46,7 +46,7 @@ void Directory::refresh()
 	*this = scan(path, m_settings);
 }
 
-bool Directory::up()
+bool Directory::moveUp()
 {
 	if (!parent.empty())
 	{

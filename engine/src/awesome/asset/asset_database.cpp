@@ -32,7 +32,30 @@ bool AssetDatabase::erase(const uuid& id)
 			return record.id == id;
 		}
 	);
-	return records.erase(it), true;
+	if (it != records.end())
+	{
+		records.erase(it);
+		return true;
+	}
+	return false;
+}
+
+bool AssetDatabase::erase(const std::filesystem::path& _path)
+{
+	const auto& it = std::find_if(
+		records.begin(),
+		records.end(),
+		[&_path](const AssetRecord& record) -> bool
+		{
+			return record.path == _path;
+		}
+	); 
+	if (it != records.end())
+	{
+		records.erase(it);
+		return true;
+	}
+	return false;
 }
 
 bool AssetDatabase::exists(const uuid& id) const

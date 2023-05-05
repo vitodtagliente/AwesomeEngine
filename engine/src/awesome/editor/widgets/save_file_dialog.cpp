@@ -47,7 +47,7 @@ void SaveFileDialog::render()
 	{
 		if (m_directory.path != m_root && ImGui::Selectable("..", false, ImGuiSelectableFlags_DontClosePopups))
 		{
-			m_directory.up();
+			m_directory.moveUp();
 		}
 
 		for (const auto& file : m_directory.files)
@@ -74,7 +74,7 @@ void SaveFileDialog::render()
 
 			if (changeDirectory)
 			{
-				m_directory.directory(file);
+				m_directory.move(file);
 				break;
 			}
 		}

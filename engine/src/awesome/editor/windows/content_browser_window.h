@@ -17,17 +17,11 @@ public:
 	virtual void update(double deltaTime) override;
 
 private:
-
-	void processInput(const std::filesystem::path& path);
-
-	void addFolder();
+	void addNewFolder(const std::string& name);
 	std::string decorateFile(const std::filesystem::path& file);
 	void deleteFile(const std::filesystem::path& path);
-	void importFile(const std::filesystem::path& file);
 	void moveFile(const std::filesystem::path& from, const std::filesystem::path& to);
-	void refreshDirectory();
 	void renameFile(const std::filesystem::path& path, const std::string& name);
-	void selectFile(const std::filesystem::path& file);
 
 	enum class NavigationState
 	{

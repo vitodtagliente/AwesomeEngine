@@ -469,7 +469,7 @@ bool EditorUI::selectable(const char* const name, const bool selected)
 	return ImGui::Selectable(id(name).c_str(), selected);
 }
 
-bool EditorUI::selectable(const char* const name, bool selected, const std::function<void()>& handler)
+bool EditorUI::selectable(const char* const name, const bool selected, const std::function<void()>& handler)
 {
 	if (ImGui::Selectable(id(name).c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick))
 	{
@@ -478,6 +478,18 @@ bool EditorUI::selectable(const char* const name, bool selected, const std::func
 			handler();
 		}
 		return true;
+	}
+	return false;
+}
+
+bool EditorUI::selectableDoubleClick(const char* const name, const bool selected)
+{
+	if (ImGui::Selectable(id(name).c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick))
+	{
+		if (ImGui::IsMouseDoubleClicked(0))
+		{
+			return true;
+		}
 	}
 	return false;
 }

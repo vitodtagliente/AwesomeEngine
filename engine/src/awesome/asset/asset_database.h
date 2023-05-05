@@ -30,6 +30,7 @@ CLASS()
 struct AssetDatabase : public IType
 {
 	bool erase(const uuid& id);
+	bool erase(const std::filesystem::path& path);
 	bool exists(const uuid& id) const;
 	bool exists(const std::filesystem::path& path) const;
 	const AssetRecord* const find(const uuid& id) const;
