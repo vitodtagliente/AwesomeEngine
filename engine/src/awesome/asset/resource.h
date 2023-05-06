@@ -39,8 +39,12 @@ public:
 		const auto& it = s_cache.find(path);
 		if (it != s_cache.end() && !it->second.expired())
 		{
-			return it->second.lock();
+			std::shared_ptr<T> resource = it->second.lock();
+			clearExpiredEntries();
+			return resource;
 		}
+
+		clearExpiredEntries();
 
 		std::shared_ptr<T> resource = ResourceReader<T>::read(path);
 		s_cache.insert(std::make_pair(path, resource));
@@ -52,8 +56,12 @@ public:
 		const auto& it = s_cache.find(path);
 		if (it != s_cache.end() && !it->second.expired())
 		{
-			return it->second.lock();
+			std::shared_ptr<T> resource = it->second.lock();
+			clearExpiredEntries();
+			return resource;
 		}
+
+		clearExpiredEntries();
 
 		std::shared_ptr<T> resource;
 		std::thread thread([&resource, &path]() -> void
@@ -67,5 +75,17 @@ public:
 	}
 
 private:
+	static void clearExpiredEntries()
+	{
+		for (auto it = s_cache.begin(); it != s_cache.end(); ) 
+		{
+			if (it->second.expired())
+			{
+				it = s_cache.erase(it);
+			}
+			else ++it;
+		}
+	}
+
 	static inline cache_t s_cache;
 };
