@@ -12,6 +12,7 @@
 #include "windows/performance_window.h"
 #include "windows/scene_window.h"
 #include "windows/settings_window.h"
+#include "windows/sprite_editor_window.h"
 #include "windows/stress_window.h"
 
 EditorState* EditorState::s_instance{ nullptr };
@@ -32,6 +33,7 @@ void EditorState::init()
 	m_windows.push_back(std::make_unique<PerformanceWindow>());
 	m_windows.push_back(std::make_unique<SceneWindow>());
 	m_windows.push_back(std::make_unique<SettingsWindow>());
+	m_windows.push_back(std::make_unique<SpriteEditorWindow>());
 	m_windows.push_back(std::make_unique<StressWindow>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
