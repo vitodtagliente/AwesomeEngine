@@ -1,6 +1,7 @@
 #include "editor_ui.h"
 
 #include <memory>
+#include <sstream>
 
 #include <imgui.h>
 #include <imgui_stdlib.h>
@@ -639,6 +640,15 @@ void EditorUI::input(const char* const name, graphics::TextureCoords& value)
 void EditorUI::input(const char* const name, graphics::TextureRect& value)
 {
 	ImGui::InputFloat4(id(name).c_str(), value.data);
+	sameLine();
+	begin(name);
+	button(Icon::copy.c_str());
+	end();
+
+	std::ostringstream s;
+	s << std::fixed << std::setprecision(4) << "(" << value.x << "," << value.y << "," << value.width << "," << value.height << ")";
+	EditorUI::DragDrop::begin("graphics::TextureRect", s.str().c_str(), (void*)(&value), sizeof(uuid));
+	EditorUI::DragDrop::end("graphics::TextureRect", [&value](void* const data, const size_t) -> void { value = *(const graphics::TextureRect*)data; });
 }
 
 void EditorUI::inputMultilineText(const char* const name, std::string& value)

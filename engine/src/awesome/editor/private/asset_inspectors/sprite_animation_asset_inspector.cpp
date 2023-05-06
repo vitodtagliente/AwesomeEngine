@@ -25,6 +25,12 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 	SpriteAnimation& spriteAnimation = *m_asset.resource;
 	auto& frames = spriteAnimation.frames;
 
+	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
+	{
+		m_asset.save();
+	}
+	EditorUI::separator();
+
 	EditorUI::input("Image", spriteAnimation.image);
 	EditorUI::input("Starting Frame", spriteAnimation.startingFrame);
 	EditorUI::input<SpriteAnimationFrame>(
@@ -41,57 +47,9 @@ void SpriteAnimationAssetInspector::inspect(const AssetRecord& record)
 		}
 	);
 
-	EditorUI::separator();
-
-	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
-	{
-		m_asset.save();
-	}
-
-	if (EditorUI::collapsingHeader("Tool"))
-	{
-		EditorUI::input("Rect", m_frameRect);
-		EditorUI::input("Duration", m_frameDuration);
-		if (EditorUI::collapsingHeader("Frame Helper Tool"))
-		{
-			EditorUI::input("Columns", m_cols);
-			EditorUI::input("Rows", m_rows);
-			EditorUI::input("Column Index", m_columnIndex);
-			EditorUI::input("Row Index", m_rowIndex);
-			if (EditorUI::button((EditorUI::Icon::search + " Preview size").c_str()))
-			{
-				m_frameRect.width = static_cast<float>(1.0 / m_cols);
-				m_frameRect.height = static_cast<float>(1.0 / m_rows);
-			}
-			EditorUI::sameLine();
-			if (EditorUI::button((EditorUI::Icon::search + " Preview index").c_str()))
-			{
-				m_frameRect.x = static_cast<float>(m_columnIndex) * static_cast<float>(1.0 / m_cols);
-				m_frameRect.y = static_cast<float>(m_rowIndex) * static_cast<float>(1.0 / m_rows);
-			}
-			EditorUI::sameLine();
-			if (EditorUI::button((EditorUI::Icon::eraser + " Reset").c_str()))
-			{
-				m_frameRect.width = m_frameRect.height = 1.f;
-				m_cols = m_rows = 1;
-				m_frameRect.x = m_frameRect.y = 0.f;
-				m_columnIndex = m_rowIndex = 0;
-			}
-		}
-		EditorUI::image(spriteAnimation.image, m_frameRect);
-		if (EditorUI::button((EditorUI::Icon::plus + " Add").c_str()))
-		{
-			SpriteAnimationFrame frame;
-			frame.duration = m_frameDuration;
-			frame.rect = m_frameRect;
-			frames.push_back(frame);
-		}
-	}
-
-	// Live preview
 	if (!frames.empty() && m_frameIndex < frames.size())
 	{
-		EditorUI::separator();
+		EditorUI::separatorText("Preview");
 		EditorUI::image(spriteAnimation.image, frames[m_frameIndex].rect);
 		EditorUI::slider("Playing Frame", 0, static_cast<int>(frames.size()) - 1, m_frameIndex);
 	}

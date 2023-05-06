@@ -4,6 +4,7 @@
 #include <awesome/asset/image_asset.h>
 #include <awesome/editor/window.h>
 #include <awesome/graphics/texture_rect.h>
+#include <awesome/math/vector2.h>
 
 class SpriteEditorWindow : public Window
 {

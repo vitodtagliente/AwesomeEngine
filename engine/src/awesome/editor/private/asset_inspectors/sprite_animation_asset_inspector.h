@@ -14,13 +14,6 @@ public:
 
 private:
 	SpriteAnimationAsset m_asset;
-
-	int m_cols{ 1 };
-	int m_columnIndex{ 0 };
-	double m_frameDuration{ 1.0 };
 	int m_frameIndex;
-	graphics::TextureRect m_frameRect;
-	int m_rowIndex{ 0 };
-	int m_rows{ 1 };
 	double m_timeLeft;
 };
