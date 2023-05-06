@@ -82,6 +82,7 @@ void ContentBrowserWindow::render()
 					))
 					{
 						m_selectedItem = file;
+						m_tempRename = name;
 					}
 
 						if (changeFolder)
@@ -264,7 +265,10 @@ void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std
 
 	if (std::filesystem::is_directory(from))
 	{
-		std::filesystem::rename(from, to / from.filename());
+		const std::filesystem::path newPath = to / from.filename();
+		if (std::filesystem::exists(newPath)) return;
+
+		std::filesystem::rename(from, newPath);
 	}
 	else
 	{
@@ -275,9 +279,11 @@ void ContentBrowserWindow::moveFile(const std::filesystem::path& from, const std
 		database.erase(resourcePath);
 
 		const std::filesystem::path newAssetPath = to / from.filename();
-		std::filesystem::rename(from, newAssetPath);
 		const std::filesystem::path newResourcePath = to / resourcePath.filename();
+
+		std::filesystem::rename(from, newAssetPath);
 		std::filesystem::rename(resourcePath, newResourcePath);
+		if (std::filesystem::exists(newAssetPath) || std::filesystem::exists(newResourcePath)) return;
 
 		bool newFilesFound = false;
 		AssetImporter::import(newResourcePath, newFilesFound);
@@ -288,7 +294,10 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 {
 	if (std::filesystem::is_directory(path))
 	{
-		std::filesystem::rename(path, path.parent_path() / name);
+		const std::filesystem::path newPath = path.parent_path() / name;
+		if (std::filesystem::exists(newPath)) return;
+
+		std::filesystem::rename(path, newPath);
 	}
 	else
 	{
@@ -299,8 +308,10 @@ void ContentBrowserWindow::renameFile(const std::filesystem::path& path, const s
 		database.erase(resourcePath);
 
 		const std::filesystem::path newAssetPath = resourcePath.parent_path() / (name + resourcePath.extension().string() + path.extension().string());
-		std::filesystem::rename(path, newAssetPath);
 		const std::filesystem::path newResourcePath = resourcePath.parent_path() / (name + resourcePath.extension().string());
+		if (std::filesystem::exists(newAssetPath) || std::filesystem::exists(newResourcePath)) return;
+
+		std::filesystem::rename(path, newAssetPath);
 		std::filesystem::rename(resourcePath, newResourcePath);
 
 		bool newFilesFound = false;
