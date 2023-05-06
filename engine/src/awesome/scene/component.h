@@ -18,6 +18,12 @@ CLASS()
 class Component : public IType
 {
 public:
+	struct Metrics
+	{
+		std::size_t count{ 0 };
+		std::size_t size{ 0 };
+	};
+
 	Component() = default;
 	Component(const Component& other);
 	virtual ~Component() = default;
@@ -42,6 +48,11 @@ public:
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 
+	static const Metrics& metrics() { return s_metrics; }
+
+	static void* operator new(std::size_t size);
+	static void operator delete(void* const ptr, std::size_t size);
+
 	PROPERTY() bool enabled{ true };
 
 	GENERATED_BODY()
@@ -49,4 +60,6 @@ public:
 private:
 	PROPERTY() uuid m_id;
 	Entity* m_owner{ nullptr };
+
+	static inline Metrics s_metrics;
 };

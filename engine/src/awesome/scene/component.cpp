@@ -43,3 +43,17 @@ void Component::detach()
 	uninit();
 	m_owner = nullptr;
 }
+
+void* Component::operator new(const std::size_t size)
+{
+	++s_metrics.count;
+	s_metrics.size += size;
+	return ::operator new(size);
+}
+
+void Component::operator delete(void* const ptr, const std::size_t size)
+{
+	--s_metrics.count;
+	s_metrics.size -= size;
+	return ::operator delete(ptr, size);
+}
