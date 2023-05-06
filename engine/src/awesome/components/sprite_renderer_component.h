@@ -19,7 +19,6 @@ class SpriteRendererComponent : public Component
 public:
 	SpriteRendererComponent() = default;
 	virtual ~SpriteRendererComponent() = default;
-	PROPERTY() graphics::TextureRect rect;
 
 	virtual void render(graphics::Renderer& renderer) override;
 	virtual void update(double deltaTime) override;
@@ -28,6 +27,7 @@ public:
 	PROPERTY() bool flipX{ false };
 	PROPERTY() bool flipY{ false };
 	PROPERTY() ImageAsset image;
+	PROPERTY() graphics::TextureRect rect;
 
 	GENERATED_BODY()
 };

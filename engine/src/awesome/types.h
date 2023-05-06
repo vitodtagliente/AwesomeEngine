@@ -13,6 +13,7 @@
 #include "components/camera_controller_2d_component.h"
 #include "components/lifetime_component.h"
 #include "components/orthographic_camera_component.h"
+#include "components/sprite_animator_component.h"
 #include "components/sprite_renderer_component.h"
 // editor
 #include "editor/windows/asset_inspector_window.h"

@@ -231,8 +231,7 @@ struct EditorUI final
 		}
 	}
 
-	// vectors
-	// std::vector<T> input
+	// std::vector<T> support
 	template <typename T>
 	static void input(const char* const name, std::vector<T>& list, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
 	{
@@ -278,6 +277,68 @@ struct EditorUI final
 		input<T>(
 			name,
 			list,
+			[](T& element) -> void
+			{
+				input("Value", element);
+			},
+			[]() -> T
+			{
+				return T();
+			}
+			);
+	}
+
+	// std::map<K,T> support
+	template <typename K, typename T>
+	static void input(const char* const name, std::map<K, T>& map, const std::function<void(T&)>& handler, const std::function<T()>& createHandler)
+	{
+		static std::string s_key;
+
+		begin(name);
+
+		text(name);
+		for (auto& pair : map)
+		{
+			std::string context(name);
+			context += "[" + pair.first + "]";
+			begin(context.c_str());
+			if (collapsingHeader(context.c_str()))
+			{
+				handler(pair.second);
+				if (button(Icon::minus.c_str()))
+				{
+					map.erase(pair.first);
+
+					end();
+					break;
+				}
+			}
+			end();
+		}
+
+		input("Key", s_key);
+		sameLine();
+		if (button(Icon::plus.c_str()))
+		{
+			map.insert(std::make_pair(s_key, std::move(createHandler())));
+			s_key.clear();
+		}
+		if (!map.empty())
+		{
+			sameLine();
+			if (button(Icon::eraser.c_str()))
+			{
+				map.clear();
+			}
+		}
+		end();
+	}
+	template<typename K, typename T>
+	static void input(const char* const name, std::map<K, T>& map)
+	{
+		input<K, T>(
+			name,
+			map,
 			[](T& element) -> void
 			{
 				input("Value", element);

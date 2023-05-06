@@ -3,7 +3,7 @@
     "entity": {
         "type_id": "Entity",
         "name": "Circle",
-        "persistent": true,
+        "persistent": false,
         "replicate": false,
         "tag": "Test",
         "transform": {
@@ -37,6 +37,23 @@
         "type_id": "uuid",
         "value": "58892738961400",
     },
+    "color": {
+        "type_id": "graphics::Color",
+        "red": 1.000000,
+        "green": 1.000000,
+        "blue": 1.000000,
+        "alpha": 1.000000,
+    },
+    "flipX": false,
+    "flipY": false,
+    "image": {
+        "type_id": "ImageAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "104751374237100",
+        },
+        "type": 2,
+    },
     "rect": {
         "type_id": "graphics::TextureRect",
         "x": 0.000000,
@@ -44,35 +61,22 @@
         "width": 1.000000,
         "height": 1.000000,
     },
-    "color": {
-        "type_id": "graphics::Color",
-        "red": 0.216840,
-        "green": 0.921569,
-        "blue": 0.693568,
-        "alpha": 1.000000,
-    },
-    "flipX": false,
-    "flipY": true,
-    "image": {
-        "type_id": "ImageAsset",
-        "id": {
-            "type_id": "uuid",
-            "value": "104751374565300",
-        },
-        "type": 2,
-    },
 },{
-    "type_id": "LifetimeComponent",
+    "type_id": "SpriteAnimatorComponent",
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "74775303581600",
+        "value": "177770058120200",
     },
-    "lifetime": 5.000000,
+    "animations": {"Idle":{
+    "type_id": "SpriteAnimationAsset",
+    "id": {
+        "type_id": "uuid",
+        "value": "57183242326900",
+    },
+    "type": 5,
+}},
+    "autoplay": true,
 },],
-        "m_id": {
-            "type_id": "uuid",
-            "value": "58877655570500",
-        },
     },
 }

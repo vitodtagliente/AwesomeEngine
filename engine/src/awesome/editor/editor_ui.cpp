@@ -20,6 +20,8 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
+#include "private/component_inspectors/sprite_animator_component_inspector.h"
+
 std::vector<std::string> context;
 
 std::string id(const char* const name)
@@ -226,6 +228,8 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	}
 
 	// component inspectors setup
+	componentInspectors.push_back(std::make_unique<SpriteAnimatorComponentInspector>());
+
 	for (const auto& [name, options] : TypeFactory::list("Type", "ComponentInspector"))
 	{
 		std::unique_ptr<ComponentInspector> inspector = std::unique_ptr<ComponentInspector>(TypeFactory::instantiate<ComponentInspector>(name));

@@ -13,7 +13,7 @@ struct ComponentInspector : public IType
 	virtual ~ComponentInspector() = default;
 
 	virtual bool canInspect(Component&) const { return false; }
-	virtual void inspect(Component&) {}
+	virtual void inspect(Component& component);
 
 	GENERATED_BODY()
 };
