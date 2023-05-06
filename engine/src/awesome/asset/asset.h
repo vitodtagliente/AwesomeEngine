@@ -93,7 +93,7 @@ struct Asset : public IType
 	\
 	virtual void load(const std::function<void()>& callback = {}) override \
 	{ \
-		if (id != uuid::Invalid && resource == nullptr && state == State::None) \
+		if (id != uuid::Invalid && state == State::None) \
 		{ \
 			state = State::Loading; \
 			if (path.empty()) \
