@@ -5,7 +5,7 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct reflect::Type<class ComponentInspector> : reflect::RegisteredInTypeFactory<class ComponentInspector>
+struct reflect::Type<struct ComponentInspector> : reflect::RegisteredInTypeFactory<struct ComponentInspector>
 {
     static const reflect::meta_t& meta();
     static const char* const name();

@@ -1,5 +1,7 @@
 #include "editor_ui.h"
 
+#include <memory>
+
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD 
@@ -11,6 +13,7 @@
 #include <awesome/asset/asset_database.h>
 #include <awesome/components/component_library.h>
 #include <awesome/core/string_util.h>
+#include <awesome/editor/component_inspector.h>
 #include <awesome/editor/widgets/asset_browser_dialog.h>
 #include <awesome/editor/widgets/save_file_dialog.h>
 #include <awesome/engine/input.h>
@@ -36,6 +39,7 @@ std::string id(const char* const name)
 }
 
 SaveFileDialog saveFileDialog;
+std::vector<std::unique_ptr<ComponentInspector>> componentInspectors;
 
 const std::string EditorUI::Icon::copy{ ICON_FA_COPY };
 const std::string EditorUI::Icon::cube{ ICON_FA_CUBE };
@@ -219,6 +223,16 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 		ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
 		io.Fonts->AddFontFromFileTTF((std::string("../fonts/") + FONT_ICON_FILE_NAME_FAS).c_str(), 12.0f, &icons_config, icons_ranges);
 		// use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
+	}
+
+	// component inspectors setup
+	for (const auto& [name, options] : TypeFactory::list("Type", "ComponentInspector"))
+	{
+		std::unique_ptr<ComponentInspector> inspector = std::unique_ptr<ComponentInspector>(TypeFactory::instantiate<ComponentInspector>(name));
+		if (inspector != nullptr)
+		{
+			componentInspectors.push_back(std::move(inspector));
+		}
 	}
 }
 
@@ -661,7 +675,22 @@ void EditorUI::input(Entity& entity)
 		begin(componentName.c_str());
 		if (collapsingHeader(decorateComponentName(componentName).c_str()))
 		{
-			input(*component);
+			bool inspected = false;
+			for (const std::unique_ptr<ComponentInspector>& inspector : componentInspectors)
+			{
+				if (inspector->canInspect(*component))
+				{
+					inspector->inspect(*component);
+					inspected = true;
+					break;
+				}
+			}
+
+			if (!inspected)
+			{
+				input(*component);
+			}
+
 			separator();
 			if (button((Icon::minus + " Remove Component").c_str()))
 			{
