@@ -95,6 +95,13 @@ void EditorMenu::menuView()
 		for (const auto& window : m_editorState->getWindows())
 		{
 			EditorUI::Menu::item(window->getTitle(), window->visible);
+
+			const auto& it = m_editorState->settings.windowsVisibility.find(window->getTitle());
+			if (it != m_editorState->settings.windowsVisibility.end())
+			{
+				it->second = window->visible;
+				m_editorState->settings.save();
+			}
 		}
 		EditorUI::Menu::end();
 	}

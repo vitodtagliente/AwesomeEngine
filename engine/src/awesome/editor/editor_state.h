@@ -7,6 +7,7 @@
 #include <awesome/asset/asset_database.h>
 #include <awesome/core/event.h>
 
+#include "editor_settings.h"
 #include "window.h"
 
 class Entity;
@@ -37,6 +38,7 @@ public:
 
 	std::filesystem::path path;
 	Selection selection;
+	EditorSettings settings;
 
 	// events
 	event_t<const AssetRecord&> onSelectedAssetChanged;

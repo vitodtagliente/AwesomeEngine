@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include <awesome/asset/asset_database.h>
+#include <awesome/asset/asset_library.h>
 #include <awesome/scene/entity.h>
 
 #include "windows/asset_inspector_window.h"
@@ -23,6 +24,8 @@ EditorState::EditorState()
 
 void EditorState::init()
 {
+	settings.load(AssetLibrary::instance().path() / EditorSettings::Filename);
+
 	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
 	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
 	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
@@ -40,15 +43,32 @@ void EditorState::init()
 		}
 	}
 
+	std::map<std::string, bool>visibility;
 	for (const auto& window : m_windows)
 	{
 		window->init();
+
+		const std::string& title = window->getTitle();
+		const auto& it = settings.windowsVisibility.find(title);
+		if (it != settings.windowsVisibility.end())
+		{
+			window->visible = it->second;
+			visibility.insert(std::make_pair(title, window->visible));
+		}
+		else
+		{
+			visibility.insert(std::make_pair(title, true));
+		}
 	}
+
+	// clean up deprecated windows
+	settings.windowsVisibility = visibility;
+	settings.save();
 }
 
 void EditorState::select(const AssetRecord& asset)
 {
-	if (selection.asset.has_value() 
+	if (selection.asset.has_value()
 		&& *selection.asset == asset) return;
 
 	selection.asset = asset;
