@@ -356,7 +356,7 @@ struct EditorUI final
 
 		input("Key", s_key);
 		sameLine();
-		if (button(Icon::plus.c_str()))
+		if (button(Icon::plus.c_str()) && !s_key.empty())
 		{
 			map.insert(std::make_pair(s_key, std::move(createHandler())));
 			s_key.clear();

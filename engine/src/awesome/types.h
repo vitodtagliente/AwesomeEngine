@@ -9,8 +9,10 @@
 #include "asset/scene_asset.h"
 #include "asset/sprite_animation_asset.h"
 // components
+#include "components/body2d_component.h"
 #include "components/camera_component.h"
 #include "components/camera_controller_2d_component.h"
+#include "components/collider2d_component.h"
 #include "components/lifetime_component.h"
 #include "components/orthographic_camera_component.h"
 #include "components/sprite_animator_component.h"
