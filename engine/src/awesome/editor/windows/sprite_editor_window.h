@@ -13,10 +13,8 @@ public:
 	virtual void render() override;
 
 private:
-	int m_cols{ 1 };
-	int m_columnIndex{ 0 };
-	graphics::TextureRect m_rect; 
+	math::vec2i m_cellCount{ 1,1 };
+	math::vec2i m_cellSize{ 32,32 };
 	ImageAsset m_image;
-	int m_rowIndex{ 0 };
-	int m_rows{ 1 };
+	graphics::TextureRect m_rect;
 };

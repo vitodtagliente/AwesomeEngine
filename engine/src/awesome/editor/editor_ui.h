@@ -81,6 +81,14 @@ struct EditorUI final
 		static const std::string video;
 	};
 
+	struct Id final
+	{
+		Id() = delete;
+
+		static void push(const char* const id);
+		static void pop();
+	};
+
 	struct Input final
 	{
 		Input() = delete;
@@ -192,6 +200,7 @@ struct EditorUI final
 	static void text(const char* const str);
 	static void textWrapped(const char* const str);
 	static void title(const char* const title);
+	static math::vec2 windowSize();
 
 	static void input(const char* const name, Asset& asset);
 	static void input(const char* const name, int& value);
@@ -202,8 +211,11 @@ struct EditorUI final
 	static void input(const char* const name, std::filesystem::path& value);
 	static void input(const char* const name, math::transform& value);
 	static void input(const char* const name, math::vec2& value);
+	static void input(const char* const name, math::vec2i& value);
 	static void input(const char* const name, math::vec3& value);
+	static void input(const char* const name, math::vec3i& value);
 	static void input(const char* const name, math::vec4& value);
+	static void input(const char* const name, math::vec4i& value);
 	static void input(const char* const name, graphics::Color& value);
 	static void input(const char* const name, graphics::TextureCoords& value);
 	static void input(const char* const name, graphics::TextureRect& value);
@@ -213,6 +225,32 @@ struct EditorUI final
 	static void input(IType& type);
 
 	// Enum input
+	template <typename T>
+	static void input(const char* const name, T& value, const std::map<std::string, T>& values)
+	{
+		const auto& it = std::find_if(
+			values.begin(), 
+			values.end(), 
+			[&value](const auto& pair) -> bool 
+			{
+				return pair.second == value;
+			}
+		);
+
+		if (Combo::begin(name, it != values.end() ? it->first.c_str() : ""))
+		{
+			for (const auto& pair : values)
+			{
+				if (selectable(pair.first.c_str(), value == pair.second))
+				{
+					value = pair.second;
+					break;
+				}
+			}
+			Combo::end();
+		}
+	}
+
 	template <typename T, typename std::enable_if<std::is_enum<T>::value>::type* = nullptr>
 	static void input(const char* const name, T& value)
 	{

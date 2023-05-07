@@ -127,6 +127,16 @@ void EditorUI::DragDrop::end(const char* const name, const std::function<void(vo
 	}
 }
 
+void EditorUI::Id::push(const char* const id)
+{
+	ImGui::PushID(id);
+}
+
+void EditorUI::Id::pop()
+{
+	ImGui::PopID();
+}
+
 bool EditorUI::Input::isKeyDown(const keycode_t keycode)
 {
 	return ImGui::IsKeyDown(static_cast<ImGuiKey>(keycode));
@@ -548,6 +558,12 @@ void EditorUI::title(const char* const title)
 	ImGui::Text(title);
 }
 
+math::vec2 EditorUI::windowSize()
+{
+	const ImVec2 size = ImGui::GetWindowSize();
+	return math::vec2(size.x, size.y);
+}
+
 void EditorUI::input(const char* const name, Asset& asset)
 {
 	static AssetBrowserDialog s_assetBrowserDialog;
@@ -617,14 +633,29 @@ void EditorUI::input(const char* const name, math::vec2& value)
 	ImGui::InputFloat2(id(name).c_str(), value.data);
 }
 
+void EditorUI::input(const char* const name, math::vec2i& value)
+{
+	ImGui::InputInt2(id(name).c_str(), value.data);
+}
+
 void EditorUI::input(const char* const name, math::vec3& value)
 {
 	ImGui::InputFloat3(id(name).c_str(), value.data);
 }
 
+void EditorUI::input(const char* const name, math::vec3i& value)
+{
+	ImGui::InputInt3(id(name).c_str(), value.data);
+}
+
 void EditorUI::input(const char* const name, math::vec4& value)
 {
 	ImGui::InputFloat4(id(name).c_str(), value.data);
+}
+
+void EditorUI::input(const char* const name, math::vec4i& value)
+{
+	ImGui::InputInt4(id(name).c_str(), value.data);
 }
 
 void EditorUI::input(const char* const name, graphics::Color& value)
@@ -647,7 +678,7 @@ void EditorUI::input(const char* const name, graphics::TextureRect& value)
 
 	std::ostringstream s;
 	s << std::fixed << std::setprecision(4) << "(" << value.x << "," << value.y << "," << value.width << "," << value.height << ")";
-	EditorUI::DragDrop::begin("graphics::TextureRect", s.str().c_str(), (void*)(&value), sizeof(uuid));
+	EditorUI::DragDrop::begin("graphics::TextureRect", s.str().c_str(), (void*)(&value), sizeof(graphics::TextureRect));
 	EditorUI::DragDrop::end("graphics::TextureRect", [&value](void* const data, const size_t) -> void { value = *(const graphics::TextureRect*)data; });
 }
 
