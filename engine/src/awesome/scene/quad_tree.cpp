@@ -1,5 +1,7 @@
 #include "quad_tree.h"
 
+#include <awesome/graphics/renderer.h>
+
 #include "entity.h"
 
 enum Direction : int
@@ -89,6 +91,19 @@ std::vector<Entity*> QuadTreeNode::query(const math::vec3& position, const math:
 	return result;
 }
 
+void QuadTreeNode::render(graphics::Renderer& renderer) const
+{
+	for (const QuadTreeNode& child : m_children)
+	{
+		child.render(renderer);
+	}
+	for (Entity* const entity : m_entities)
+	{
+		renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, entity->transform.position, 1.f, graphics::Color::Black);
+	}
+	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, m_position, m_boundary.x, m_boundary.y, graphics::Color::Black);
+}
+
 /**
  * Retrieve the list of entities near to the specified one
  * @param entity The entity to surround
@@ -122,12 +137,13 @@ void QuadTreeNode::subdivide()
 {
 	m_children.reserve(4);
 	const math::vec2 new_boundary = m_boundary / 2;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary.x, m_position.y - new_boundary.y, 0.f), new_boundary));
+	const math::vec2 new_boundary2 = new_boundary / 2;
+	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary2.x, m_position.y - new_boundary2.y, 0.f), new_boundary));
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary.x, m_position.y - new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary2.x, m_position.y - new_boundary2.y, 0.f), new_boundary));
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary.x, m_position.y + new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary2.x, m_position.y + new_boundary2.y, 0.f), new_boundary));
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary.x, m_position.y + new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary2.x, m_position.y + new_boundary2.y, 0.f), new_boundary));
 	m_children.back().threshold = threshold;
 }

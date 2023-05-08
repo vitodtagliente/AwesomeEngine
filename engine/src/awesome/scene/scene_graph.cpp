@@ -2,15 +2,23 @@
 
 #include <thread>
 
-void SceneGraph::update(const double deltaTime)
-{
-	m_quadtree.clear(math::vec3::zero, {10.f, 10.f});
-	m_root.update(m_quadtree, deltaTime);
-}
+#include <awesome/graphics/renderer.h>
 
 void SceneGraph::clear()
 {
 	m_root.removeChildren();
+}
+
+void SceneGraph::render(graphics::Renderer& renderer)
+{
+	m_root.render(renderer);
+	m_quadtree.render(renderer);
+}
+
+void SceneGraph::update(const double deltaTime)
+{
+	m_quadtree.clear(math::vec3::zero, { 100.f, 100.f });
+	m_root.update(m_quadtree, deltaTime);
 }
 
 bool SceneGraph::load(const SceneAsset& scene)

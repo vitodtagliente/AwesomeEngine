@@ -49,7 +49,7 @@ void Graphics::preRendering()
 
 void Graphics::render()
 {
-	SceneGraph::instance().root().render(*renderer);
+	SceneGraph::instance().render(*renderer);
 }
 
 void Graphics::postRendering()

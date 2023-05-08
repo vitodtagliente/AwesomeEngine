@@ -10,6 +10,11 @@
 #include "entity.h"
 #include "quad_tree.h"
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class SceneGraph final : public Singleton<SceneGraph>
 {
 public:
@@ -26,8 +31,9 @@ public:
 	inline const SceneAsset& scene() const { return m_scene; }
 	inline State state() const { return m_state; }
 
-	void update(double deltaTime);
 	void clear();
+	void render(graphics::Renderer& renderer);
+	void update(double deltaTime);
 
 	bool load(const SceneAsset& scene);
 	bool save(const std::filesystem::path& path);

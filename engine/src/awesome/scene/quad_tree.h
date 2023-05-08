@@ -8,6 +8,11 @@
 
 class Entity;
 
+namespace graphics
+{
+	class Renderer;
+}
+
 class QuadTreeNode
 {
 public:
@@ -20,6 +25,7 @@ public:
 	void clear(const math::vec3& position, const math::vec2& boundary);
 	bool insert(Entity* const entity);
 	std::vector<Entity*> query(const math::vec3& position, const math::vec2& boundary) const;
+	void render(graphics::Renderer& renderer) const;
 
 	int threshold{ 20 };
 
