@@ -8,6 +8,7 @@
 #include <awesome/core/singleton.h>
 
 #include "entity.h"
+#include "quad_tree.h"
 
 class SceneGraph final : public Singleton<SceneGraph>
 {
@@ -20,17 +21,20 @@ public:
 
 	SceneGraph() = default;
 
-	Entity* const root() { return &m_root; }
+	inline const QuadTree& quadtree() const { return m_quadtree; }
+	Entity& root() { return m_root; }
+	inline const SceneAsset& scene() const { return m_scene; }
+	inline State state() const { return m_state; }
 
+	void update(double deltaTime);
 	void clear();
 
 	bool load(const SceneAsset& scene);
-	inline const SceneAsset& scene() const { return m_scene; }
 	bool save(const std::filesystem::path& path);
-	inline State state() const { return m_state; }
 
 private:
 	Entity m_root;
+	QuadTree m_quadtree;
 	SceneAsset m_scene;
 	State m_state{ State::Ready };
 };

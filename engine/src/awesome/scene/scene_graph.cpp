@@ -2,6 +2,17 @@
 
 #include <thread>
 
+void SceneGraph::update(const double deltaTime)
+{
+	m_quadtree.clear();
+
+	for (const auto& entity : m_root.children())
+	{
+		m_quadtree.insert(entity.get(), 100);
+	}
+	m_root.update(deltaTime);
+}
+
 void SceneGraph::clear()
 {
 	m_root.removeChildren();

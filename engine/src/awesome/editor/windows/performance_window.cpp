@@ -51,8 +51,8 @@ void PerformanceWindow::render()
 
 	// Entities
 	{
-		Entity* const root = SceneGraph::instance().root();
-		std::size_t size{ root->countChildren() };
+		Entity& root = SceneGraph::instance().root();
+		std::size_t size{ root.countChildren() };
 
 		std::ostringstream s;
 		s << "SceneGraph::Entities: " << size;

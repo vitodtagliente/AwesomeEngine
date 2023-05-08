@@ -25,7 +25,7 @@ void PrefabAssetInspector::inspect(const AssetRecord& record)
 
 	if (EditorUI::button((EditorUI::Icon::upload + " Import Prefab").c_str()))
 	{
-		SceneGraph::instance().root()->addChild(std::make_unique<Entity>(m_asset.resource->entity));
+		SceneGraph::instance().root().addChild(std::make_unique<Entity>(m_asset.resource->entity));
 	}
 	
 	EditorUI::sameLine();

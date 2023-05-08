@@ -21,7 +21,7 @@ void reparentEntity(const uuid& id, Entity* parent)
 {
 	if (id == parent->id()) return;
 
-	Entity* const draggingEntity = SceneGraph::instance().root()->findChildById(id);
+	Entity* const draggingEntity = SceneGraph::instance().root().findChildById(id);
 	if (draggingEntity == nullptr
 		|| parent->findChildById(id, false) != nullptr)
 		return;
@@ -32,11 +32,11 @@ void reparentEntity(const uuid& id, Entity* parent)
 void SceneWindow::render()
 {
 	Entity* const selectedEntity = m_editorState->selection.entity;
-	Entity* const root = SceneGraph::instance().root();
+	Entity& root = SceneGraph::instance().root();
 
 	if (EditorUI::button(EditorUI::Icon::plus.c_str()))
 	{
-		Entity* const entity = root->addChild();
+		Entity* const entity = root.addChild();
 		entity->name = entity->id().value;
 	}
 
@@ -50,11 +50,11 @@ void SceneWindow::render()
 
 	EditorUI::Tree::openNextItem();
 	const bool open = EditorUI::Tree::begin("root", false);
-	EditorUI::DragDrop::end("Entity::ChangeParent", [this, root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, root); });
+	EditorUI::DragDrop::end("Entity::ChangeParent", [this, &root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, &root); });
 
 	if (open)
 	{
-		for (auto it = root->children().begin(); it != root->children().end(); ++it)
+		for (auto it = root.children().begin(); it != root.children().end(); ++it)
 		{
 			const auto& entity = *it;
 			renderEntity(entity.get(), selectedEntity);
@@ -86,7 +86,7 @@ void SceneWindow::deleteEntity(Entity* const entity)
 {
 	const uuid id = entity->id();
 	entity->queue_destroy();
-	const auto& entities = SceneGraph::instance().root()->children();
+	const auto& entities = SceneGraph::instance().root().children();
 	if (!entities.empty())
 	{
 		if (entities[0]->id() == id)

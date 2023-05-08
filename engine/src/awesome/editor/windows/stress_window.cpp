@@ -28,7 +28,7 @@ void StressWindow::render()
 	EditorUI::newLine();
 	if (EditorUI::button("Spawn"))
 	{
-		Entity* const root = SceneGraph::instance().root();
+		Entity& root = SceneGraph::instance().root();
 		for (int i = 0; i < m_quantity; ++i)
 		{
 			std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_prefab.resource->entity);
@@ -40,7 +40,7 @@ void StressWindow::render()
 					math::random(m_minPosition.z, m_maxPosition.z)
 				);
 			}
-			root->addChild(std::move(entity));
+			root.addChild(std::move(entity));
 		}
 	}
 }

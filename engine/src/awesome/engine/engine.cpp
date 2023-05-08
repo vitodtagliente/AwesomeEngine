@@ -80,7 +80,7 @@ int Engine::run()
 		}
 
 		input.update();
-		scenegraph.root()->update(deltaTime);
+		scenegraph.update(deltaTime);
 
 		// rendering
 		{
