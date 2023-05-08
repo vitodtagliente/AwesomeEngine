@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
 class Entity;
@@ -12,32 +13,30 @@ class QuadTree
 public:
 	struct Settings
 	{
-		int bounds{ 100 };
+		int maxDepth{ 4 };
+		int threshold{ 20 };
 	};
 
 	QuadTree() = default;
+	QuadTree(const math::vec3& position, const math::vec2& boundary);
+
+	bool isLeaf()const { return m_children.empty(); }
 
 	void clear();
-	void insert(Entity* const entity, int bounds);
-	std::vector<Entity*> retrieve(Entity* const entity) const;
-	std::size_t size() const { return m_spaces.size(); }
+	bool insert(Entity* const entity);
+	std::vector<Entity*> query(const math::vec3& position, const math::vec2& boundary) const;
 
 	Settings settings;
 
 private:
-	void insertNewSpace(Entity* const entity, int bounds);
-	int getIndex(const math::vec3& position) const;
+	bool query(const math::vec3& position, const math::vec2& boundary, std::vector<Entity*>& entities) const;
+	void subdivide();
+	void updatePosition();
 
-	struct Space
-	{
-		Space() = default;
-
-		std::vector<Entity*> entities;
-		math::vec3 position;
-		int bounds{ 0 };
-
-		void clear();
-	};
-
-	std::vector<Space> m_spaces;
+	math::vec2 m_boundary{ 1.f, 1.f };
+	int m_capacity{ 1 };
+	std::vector<QuadTree> m_children;
+	int m_depth{ 0 };
+	std::vector<Entity*> m_entities;
+	math::vec3 m_position{ 0.f, 0.f, 0.f };
 };

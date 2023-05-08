@@ -2,30 +2,38 @@
 
 #include "entity.h"
 
-void QuadTree::Space::clear()
+enum Direction : int
 {
-	entities.clear();
+	First = 0,
+	NorthWest = 0,
+	NorthEast = 1,
+	SouthWest = 2,
+	SouthEast = 3,
+	Count
+};
+
+bool contains( const math::vec3& position, const math::vec2& boundary, Entity* const entity)
+{
+	const math::vec3& entity_position = entity->transform.position;
+	return entity_position.x >= position.x - boundary.x
+		&& entity_position.x <= position.x + boundary.x
+		&& entity_position.y >= position.y - boundary.y
+		&& entity_position.y <= position.y + boundary.y;
 }
 
-/**
- * Retrieve the list of entities near to the specified one
- * @param entity The entity to surround
- */
-std::vector<Entity*> QuadTree::retrieve(Entity* const entity) const
+bool intersects(const math::vec3& pos1, const math::vec2& boundary1,
+	const math::vec3& pos2, const math::vec2& boundary2)
 {
-	std::vector<Entity*> result;
-	const int index = getIndex(entity->transform.position);
-	if (index >= 0)
-	{
-		for (Entity* const e : m_spaces[index].entities)
-		{
-			if (e->id() != entity->id())
-			{
-				result.push_back(e);
-			}
-		}
-	}
-	return result;
+	return !(pos2.x - boundary2.x > pos1.x + boundary1.x
+		|| pos2.x + boundary2.x < pos1.x - boundary1.x
+		|| pos2.y - boundary2.y > pos1.y + boundary1.y
+		|| pos2.y + boundary2.y > pos1.y - boundary1.y);
+}
+
+QuadTree::QuadTree(const math::vec3& position, const math::vec2& boundary)
+	: m_boundary(boundary)
+	, m_position(position)
+{
 }
 
 /**
@@ -33,51 +41,89 @@ std::vector<Entity*> QuadTree::retrieve(Entity* const entity) const
  */
 void QuadTree::clear()
 {
-	m_spaces.clear();
+
 }
 
 /**
  * Insert the entity into the quadtree
  * @param entity The entity
  */
-void QuadTree::insert(Entity* const entity, const int bounds)
+bool QuadTree::insert(Entity* const entity)
 {
-	const int index = getIndex(entity->transform.position);
-	if (index >= 0)
+	if (!contains(m_position, m_boundary, entity))
+		return false;
+
+	if (m_entities.size() < m_capacity)
 	{
-		m_spaces[index].entities.push_back(entity);
+		m_entities.push_back(entity);
+		return true;
 	}
 	else
 	{
-		insertNewSpace(entity, bounds);
+		if (m_children.empty())
+		{
+			subdivide();
+		}
+
+		return m_children[Direction::NorthEast].insert(entity)
+			|| m_children[Direction::NorthWest].insert(entity)
+			|| m_children[Direction::SouthEast].insert(entity)
+			|| m_children[Direction::SouthWest].insert(entity);
 	}
 }
 
-/**
- * Insert a new space and entity
- * @param entity The entity
- */
-void QuadTree::insertNewSpace(Entity* const entity, const int bounds)
+std::vector<Entity*> QuadTree::query(const math::vec3& position, const math::vec2& boundary) const
 {
-	Space space;
-	space.entities.push_back(entity);
-	space.position = entity->transform.position;
-	space.bounds = bounds;
-	m_spaces.push_back(space);
+	std::vector<Entity*> result;
+	query(position, boundary, result);
+	return result;
 }
 
 /**
- * Find the space for the entity
+ * Retrieve the list of entities near to the specified one
+ * @param entity The entity to surround
  */
-int QuadTree::getIndex(const math::vec3& position) const
+bool QuadTree::query(const math::vec3& position, const math::vec2& boundary, std::vector<Entity*>& entities) const
 {
-	for (int i = 0; i < m_spaces.size(); ++i)
+	std::vector<Entity*> result;
+	if (!intersects(m_position, m_boundary, position, boundary))
+		return false;
+
+	for (Entity* const entity : m_entities)
 	{
-		const Space& space = m_spaces[i];
-		if (position.distance(space.position) <= space.bounds)
+		if (contains(m_position, m_boundary, entity))
 		{
-			return i;
+			entities.push_back(entity);
 		}
 	}
-	return -1;
+
+	if (!m_children.empty())
+	{
+		m_children[Direction::NorthEast].query(position, boundary, entities);
+		m_children[Direction::NorthWest].query(position, boundary, entities);
+		m_children[Direction::SouthEast].query(position, boundary, entities);
+		m_children[Direction::SouthWest].query(position, boundary, entities);
+	}
+
+	return true;
+}
+
+void QuadTree::subdivide()
+{
+	m_children.reserve(4);
+	const math::vec2 new_boundary = m_boundary / 2;
+	m_children.push_back(QuadTree(math::vec3(m_position.x + new_boundary.x, m_position.y - new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTree(math::vec3(m_position.x - new_boundary.x, m_position.y - new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTree(math::vec3(m_position.x + new_boundary.x, m_position.y + new_boundary.y, 0.f), new_boundary));
+	m_children.push_back(QuadTree(math::vec3(m_position.x - new_boundary.x, m_position.y + new_boundary.y, 0.f), new_boundary));
+}
+
+void QuadTree::updatePosition()
+{
+	m_position = math::vec3::zero;
+	for (const Entity* entity : m_entities)
+	{
+		m_position += entity->transform.position;
+	}
+	m_position /= m_entities.size();
 }

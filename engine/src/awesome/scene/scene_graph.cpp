@@ -8,7 +8,7 @@ void SceneGraph::update(const double deltaTime)
 
 	for (const auto& entity : m_root.children())
 	{
-		m_quadtree.insert(entity.get(), 100);
+		m_quadtree.insert(entity.get());
 	}
 	m_root.update(deltaTime);
 }
