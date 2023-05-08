@@ -76,7 +76,7 @@ void Entity::render(class graphics::Renderer& renderer)
 	}
 }
 
-void Entity::update(const double deltaTime)
+void Entity::update(QuadTree& quadtree, const double deltaTime)
 {
 	if (m_state == State::PendingSpawn)
 	{
@@ -91,9 +91,9 @@ void Entity::update(const double deltaTime)
 		{
 			return child->m_state == State::PendingDestroy;
 		}
-	),
+		),
 		m_children.end()
-			);
+	);
 
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
@@ -105,10 +105,11 @@ void Entity::update(const double deltaTime)
 	}
 
 	transform.update();
+	quadtree.insert(this);
 
 	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
-		(*it)->update(deltaTime);
+		(*it)->update(quadtree, deltaTime);
 	}
 }
 

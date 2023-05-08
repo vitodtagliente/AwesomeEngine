@@ -11,6 +11,7 @@
 #include "component.h"
 
 #include "entity_generated.h"
+#include "quad_tree.h"
 
 namespace graphics
 {
@@ -50,7 +51,7 @@ public:
 
 	void queue_destroy();
 	void render(graphics::Renderer& renderer);
-	void update(double deltaTime);
+	void update(QuadTree& quadtree, double deltaTime);
 
 	std::vector<Entity*> findChildrenByTag(const std::string& tag) const;
 	Entity* const findChildById(const uuid& id, bool recursive = true) const;

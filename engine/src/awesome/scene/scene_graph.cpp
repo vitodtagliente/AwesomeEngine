@@ -4,13 +4,8 @@
 
 void SceneGraph::update(const double deltaTime)
 {
-	m_quadtree.clear();
-
-	for (const auto& entity : m_root.children())
-	{
-		m_quadtree.insert(entity.get());
-	}
-	m_root.update(deltaTime);
+	m_quadtree.clear(math::vec3::zero, {10.f, 10.f});
+	m_root.update(m_quadtree, deltaTime);
 }
 
 void SceneGraph::clear()
