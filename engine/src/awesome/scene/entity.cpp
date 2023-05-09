@@ -55,6 +55,7 @@ void Entity::moveChild(Entity* const parent, const uuid& childId)
 void Entity::queue_destroy()
 {
 	m_state = State::PendingDestroy;
+	prepareToDestroy();
 }
 
 void Entity::render(class graphics::Renderer& renderer)
@@ -208,7 +209,7 @@ bool Entity::removeChild(const uuid& id)
 		if (child->m_id == id)
 		{
 			if (child->persistent) return false;
-			return child->m_state = State::PendingDestroy, true;
+			return child->queue_destroy(), true;
 		}
 
 		if (child->removeChild(id))
@@ -223,7 +224,7 @@ void Entity::removeChildren()
 {
 	for (const auto& child : m_children)
 	{
-		child->m_state = State::PendingDestroy;
+		child->queue_destroy();
 	}
 }
 
@@ -267,15 +268,13 @@ void Entity::prepareToSpawn()
 
 void Entity::prepareToDestroy()
 {
-	for (const auto& component : m_components)
-	{
-		component->uninit();
-	}
-	m_components.clear();
-
 	for (const auto& child : m_children)
 	{
 		child->prepareToDestroy();
 	}
-	m_children.clear();
+
+	for (const auto& component : m_components)
+	{
+		component->uninit();
+	}	
 }

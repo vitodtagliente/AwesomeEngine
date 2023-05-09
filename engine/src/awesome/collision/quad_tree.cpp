@@ -73,10 +73,6 @@ void QuadTreeNode::render(graphics::Renderer& renderer) const
 	{
 		child.render(renderer);
 	}
-	for (Entity* const entity : m_entities)
-	{
-		renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, entity->transform.position, 1.f, graphics::Color::Black);
-	}
 	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(m_aabb.x, m_aabb.y, 0.f), m_aabb.width * 2, m_aabb.height * 2, graphics::Color::Black);
 }
 
@@ -113,16 +109,16 @@ void QuadTreeNode::subdivide()
 {
 	m_children.reserve(4);
 	const math::vec2& bounds{ m_aabb.width / 2, m_aabb.height / 2 };
-	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x + bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
-	m_children.back().capacity = capacity;
-	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x - bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
-	m_children.back().capacity = capacity;
-	m_children.back().threshold = threshold;
 	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x + bounds.x, m_aabb.y + bounds.y, bounds.x, bounds.y)));
 	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
 	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x - bounds.x, m_aabb.y + bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
+	m_children.back().threshold = threshold;
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x + bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
+	m_children.back().threshold = threshold;
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x - bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
 	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
 }
