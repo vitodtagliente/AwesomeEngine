@@ -11,6 +11,7 @@
 #include <awesome/core/timer.h>
 #include <awesome/scene/scene_graph.h>
 
+#include <awesome/collision/collision.h>
 #include <awesome/editor/editor.h>
 #include <awesome/graphics/graphics.h>
 
@@ -157,6 +158,7 @@ void Engine::initSettings()
 
 void Engine::registerDefaultModules()
 {
+	registerModule<Collision>();
 	if (settings.mode != Mode::Server)
 	{
 		// registerModule<Audio>();
