@@ -2,10 +2,15 @@
 #pragma once
 #pragma warning(disable : 4201)
 
+#include <vdtmath/rectangle.h>
 #include <awesome/core/reflection.h>
 
-#include "rectangle_t.h"
 #include "rectangle_generated.h"
+
+namespace math
+{
+	typedef rectangle_t<int> recti;
+}
 
 NATIVE_CLASS(math::rect, namespace math { typedef struct rectangle_t<float> rect; })
 struct Rect
