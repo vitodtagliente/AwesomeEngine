@@ -4,8 +4,8 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
+#include <awesome/math/rectangle.h>
 #include <awesome/math/vector2.h>
-#include <awesome/math/vector3.h>
 
 class Entity;
 
@@ -18,28 +18,26 @@ class QuadTreeNode
 {
 public:
 	QuadTreeNode() = default;
-	QuadTreeNode(const math::vec3& position, const math::vec2& boundary);
+	QuadTreeNode(const math::rect& aabb);
 
 	bool isLeaf() const { return m_children.empty(); }
 
 	void clear();
-	void clear(const math::vec3& position, const math::vec2& boundary);
 	bool insert(Entity* const entity);
-	std::vector<Entity*> query(const math::vec3& position, const math::vec2& boundary) const;
+	std::vector<Entity*> query(const math::rect& aabb) const;
 	void render(graphics::Renderer& renderer) const;
 
+	int capacity{ 4 };
 	int threshold{ 20 };
 
 private:
-	bool query(const math::vec3& position, const math::vec2& boundary, std::vector<Entity*>& entities) const;
+	bool query(const math::rect& aabb, std::vector<Entity*>& entities) const;
 	void subdivide();
 
-	math::vec2 m_boundary{ 100.f, 100.f };
-	int m_capacity{ 1 };
+	math::rect m_aabb{ 0.f, 0.f, 50.f, 50.f };
 	std::vector<QuadTreeNode> m_children;
 	int m_depth{ 0 };
 	std::vector<Entity*> m_entities;
-	math::vec3 m_position{ 0.f, 0.f, 0.f };
 };
 
 class QuadTree : public QuadTreeNode, public Singleton<QuadTree>

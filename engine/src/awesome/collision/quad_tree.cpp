@@ -13,27 +13,13 @@ enum Direction : int
 	Count
 };
 
-bool contains( const math::vec3& position, const math::vec2& boundary, Entity* const entity)
+math::vec2 to_vec2(const math::vec3& v)
 {
-	const math::vec3& entity_position = entity->transform.position;
-	return entity_position.x >= position.x - boundary.x
-		&& entity_position.x <= position.x + boundary.x
-		&& entity_position.y >= position.y - boundary.y
-		&& entity_position.y <= position.y + boundary.y;
+	return math::vec2(v.x, v.y);
 }
 
-bool intersects(const math::vec3& pos1, const math::vec2& boundary1,
-	const math::vec3& pos2, const math::vec2& boundary2)
-{
-	return !(pos2.x - boundary2.x > pos1.x + boundary1.x
-		|| pos2.x + boundary2.x < pos1.x - boundary1.x
-		|| pos2.y - boundary2.y > pos1.y + boundary1.y
-		|| pos2.y + boundary2.y > pos1.y - boundary1.y);
-}
-
-QuadTreeNode::QuadTreeNode(const math::vec3& position, const math::vec2& boundary)
-	: m_boundary(boundary)
-	, m_position(position)
+QuadTreeNode::QuadTreeNode(const math::rect& aabb)
+	: m_aabb(aabb)
 {
 }
 
@@ -46,25 +32,16 @@ void QuadTreeNode::clear()
 	m_entities.clear();
 }
 
-void QuadTreeNode::clear(const math::vec3& position, const math::vec2& boundary)
-{
-	m_children.clear();
-	m_entities.clear();
-
-	m_position = position;
-	m_boundary = boundary;
-}
-
 /**
  * Insert the entity into the quadtree
  * @param entity The entity
  */
 bool QuadTreeNode::insert(Entity* const entity)
 {
-	if (!contains(m_position, m_boundary, entity))
+	if (!m_aabb.contains(to_vec2(entity->transform.position)))
 		return false;
 
-	if (m_entities.size() < m_capacity)
+	if (m_entities.size() < capacity)
 	{
 		m_entities.push_back(entity);
 		return true;
@@ -83,10 +60,10 @@ bool QuadTreeNode::insert(Entity* const entity)
 	}
 }
 
-std::vector<Entity*> QuadTreeNode::query(const math::vec3& position, const math::vec2& boundary) const
+std::vector<Entity*> QuadTreeNode::query(const math::rect& aabb) const
 {
 	std::vector<Entity*> result;
-	query(position, boundary, result);
+	query(aabb, result);
 	return result;
 }
 
@@ -100,22 +77,22 @@ void QuadTreeNode::render(graphics::Renderer& renderer) const
 	{
 		renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, entity->transform.position, 1.f, graphics::Color::Black);
 	}
-	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, m_position, m_boundary.x, m_boundary.y, graphics::Color::Black);
+	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(m_aabb.x, m_aabb.y, 0.f), m_aabb.width * 2, m_aabb.height * 2, graphics::Color::Black);
 }
 
 /**
  * Retrieve the list of entities near to the specified one
  * @param entity The entity to surround
  */
-bool QuadTreeNode::query(const math::vec3& position, const math::vec2& boundary, std::vector<Entity*>& entities) const
+bool QuadTreeNode::query(const math::rect& aabb, std::vector<Entity*>& entities) const
 {
 	std::vector<Entity*> result;
-	if (!intersects(m_position, m_boundary, position, boundary))
+	if (!m_aabb.intersects(aabb))
 		return false;
 
 	for (Entity* const entity : m_entities)
 	{
-		if (contains(m_position, m_boundary, entity))
+		if (m_aabb.contains(to_vec2(entity->transform.position)))
 		{
 			entities.push_back(entity);
 		}
@@ -123,10 +100,10 @@ bool QuadTreeNode::query(const math::vec3& position, const math::vec2& boundary,
 
 	if (!m_children.empty())
 	{
-		m_children[Direction::NorthEast].query(position, boundary, entities);
-		m_children[Direction::NorthWest].query(position, boundary, entities);
-		m_children[Direction::SouthEast].query(position, boundary, entities);
-		m_children[Direction::SouthWest].query(position, boundary, entities);
+		m_children[Direction::NorthEast].query(aabb, entities);
+		m_children[Direction::NorthWest].query(aabb, entities);
+		m_children[Direction::SouthEast].query(aabb, entities);
+		m_children[Direction::SouthWest].query(aabb, entities);
 	}
 
 	return true;
@@ -135,14 +112,17 @@ bool QuadTreeNode::query(const math::vec3& position, const math::vec2& boundary,
 void QuadTreeNode::subdivide()
 {
 	m_children.reserve(4);
-	const math::vec2 new_boundary = m_boundary / 2;
-	const math::vec2 new_boundary2 = new_boundary / 2;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary2.x, m_position.y - new_boundary2.y, 0.f), new_boundary));
+	const math::vec2& bounds{ m_aabb.width / 2, m_aabb.height / 2 };
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x + bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary2.x, m_position.y - new_boundary2.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x - bounds.x, m_aabb.y - bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x + new_boundary2.x, m_position.y + new_boundary2.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x + bounds.x, m_aabb.y + bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
-	m_children.push_back(QuadTreeNode(math::vec3(m_position.x - new_boundary2.x, m_position.y + new_boundary2.y, 0.f), new_boundary));
+	m_children.push_back(QuadTreeNode(math::rect(m_aabb.x - bounds.x, m_aabb.y + bounds.y, bounds.x, bounds.y)));
+	m_children.back().capacity = capacity;
 	m_children.back().threshold = threshold;
 }

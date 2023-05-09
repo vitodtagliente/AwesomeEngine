@@ -77,6 +77,20 @@
     "type": 5,
 }},
     "autoplay": true,
+},{
+    "type_id": "Collider2dComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "81870910186900",
+    },
+    "isTrigger": false,
+    "m_type": "Rect",
+    "m_bounds": {
+        "type_id": "math::vec2",
+        "x": 1.000000,
+        "y": 1.000000,
+    },
 },],
     },
 }
