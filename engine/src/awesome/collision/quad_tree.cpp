@@ -1,8 +1,7 @@
 #include "quad_tree.h"
 
 #include <awesome/graphics/renderer.h>
-
-#include "entity.h"
+#include <awesome/scene/entity.h>
 
 enum Direction : int
 {

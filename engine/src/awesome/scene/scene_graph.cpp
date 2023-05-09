@@ -12,13 +12,11 @@ void SceneGraph::clear()
 void SceneGraph::render(graphics::Renderer& renderer)
 {
 	m_root.render(renderer);
-	m_quadtree.render(renderer);
 }
 
 void SceneGraph::update(const double deltaTime)
 {
-	m_quadtree.clear(math::vec3::zero, { 100.f, 100.f });
-	m_root.update(m_quadtree, deltaTime);
+	m_root.update(deltaTime);
 }
 
 bool SceneGraph::load(const SceneAsset& scene)

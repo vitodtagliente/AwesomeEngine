@@ -1,6 +1,10 @@
 #include "collision.h"
 
+#include <awesome/components/collider2d_component.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/scene/entity.h>
+
+#include "quad_tree.h"
 
 bool Collision::startup()
 {
@@ -14,4 +18,17 @@ void Collision::shutdown()
 void Collision::render()
 {
 
+}
+
+void Collision::update(const double)
+{
+	QuadTree& qt = QuadTree::instance();
+	for (Collider2dComponent* const collider : Collider2dComponent::components())
+	{
+		Entity* const entity = collider->getOwner();
+		if (entity->state() == Entity::State::Alive)
+		{
+			qt.insert(entity);
+		}
+	}
 }

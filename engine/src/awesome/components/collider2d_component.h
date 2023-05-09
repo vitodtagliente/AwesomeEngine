@@ -1,6 +1,8 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <vector>
+
 #include <awesome/math/vector2.h>
 #include <awesome/scene/component.h>
 
@@ -22,14 +24,15 @@ CLASS(Type = Component)
 class Collider2dComponent : public Component
 {
 public:
-	Collider2dComponent() = default;
-	virtual ~Collider2dComponent() = default;
-
-	void render(graphics::Renderer& renderer) override;
+	virtual void init() override;
+	virtual void render(graphics::Renderer& renderer) override;
+	virtual void uninit() override;
 
 	bool collide(const Collider2dComponent& other);
 
 	PROPERTY() bool isTrigger{ false };
+
+	static const std::vector<Collider2dComponent*>& components() { return s_components; }
 
 	GENERATED_BODY()
 
@@ -37,4 +40,6 @@ private:
 	PROPERTY() Collision2DShapeType m_type{ Collision2DShapeType::Rect };
 	PROPERTY() math::vec2 m_bounds{ 1.0f, 1.0f };
 	bool m_isColliding{ false };
+
+	static inline std::vector<Collider2dComponent*> s_components;
 };

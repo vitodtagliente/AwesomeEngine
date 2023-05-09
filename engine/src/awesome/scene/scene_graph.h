@@ -8,7 +8,6 @@
 #include <awesome/core/singleton.h>
 
 #include "entity.h"
-#include "quad_tree.h"
 
 namespace graphics
 {
@@ -26,7 +25,6 @@ public:
 
 	SceneGraph() = default;
 
-	inline const QuadTree& quadtree() const { return m_quadtree; }
 	Entity& root() { return m_root; }
 	inline const SceneAsset& scene() const { return m_scene; }
 	inline State state() const { return m_state; }
@@ -40,7 +38,6 @@ public:
 
 private:
 	Entity m_root;
-	QuadTree m_quadtree;
 	SceneAsset m_scene;
 	State m_state{ State::Ready };
 };

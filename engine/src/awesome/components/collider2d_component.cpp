@@ -3,6 +3,11 @@
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
 
+void Collider2dComponent::init()
+{
+	s_components.push_back(this);
+}
+
 void Collider2dComponent::render(graphics::Renderer& renderer)
 {
 	switch (m_type)
@@ -12,6 +17,15 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 	default: break;
 	}
 	m_isColliding = false;
+}
+
+void Collider2dComponent::uninit()
+{
+	const auto& it = std::find(s_components.begin(), s_components.end(), this);
+	if (it != s_components.end())
+	{
+		s_components.erase(it);
+	}
 }
 
 bool Collider2dComponent::collide(const Collider2dComponent& other)
