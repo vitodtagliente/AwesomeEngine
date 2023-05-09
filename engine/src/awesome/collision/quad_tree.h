@@ -34,10 +34,11 @@ private:
 	bool query(const math::rect& aabb, std::vector<Entity*>& entities) const;
 	void subdivide();
 
-	math::rect m_aabb{ 0.f, 0.f, 50.f, 50.f };
+	math::rect m_aabb{ 0.f, 0.f, 0.f, 0.f };
 	std::vector<QuadTreeNode> m_children;
 	int m_depth{ 0 };
 	std::vector<Entity*> m_entities;
+	math::vec2 m_maxBounds{ 0.f, 0.f };
 };
 
 class QuadTree : public QuadTreeNode, public Singleton<QuadTree>

@@ -30,6 +30,8 @@ void QuadTreeNode::clear()
 {
 	m_children.clear();
 	m_entities.clear();
+	m_aabb.width = m_maxBounds.x;
+	m_aabb.height = m_maxBounds.y;
 }
 
 /**
@@ -39,7 +41,11 @@ void QuadTreeNode::clear()
 bool QuadTreeNode::insert(Entity* const entity)
 {
 	if (!m_aabb.contains(to_vec2(entity->transform.position)))
+	{
+		m_maxBounds.x = std::max(m_maxBounds.x, std::abs(entity->transform.position.x) + 1.f);
+		m_maxBounds.y = std::max(m_maxBounds.y, std::abs(entity->transform.position.y) + 1.f);
 		return false;
+	}
 
 	if (m_entities.size() < capacity)
 	{
