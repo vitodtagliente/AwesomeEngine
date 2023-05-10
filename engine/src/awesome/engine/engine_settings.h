@@ -7,6 +7,7 @@
 
 #include <awesome/asset/scene_asset.h>
 #include <awesome/core/reflection.h>
+#include <awesome/graphics/color.h>
 
 #include "engine_settings_generated.h"
 
@@ -28,6 +29,17 @@ enum class FpsMode : int
 };
 
 CLASS()
+struct RenderingSettings : public IType
+{
+    PROPERTY() bool renderCollisions{ true };
+    PROPERTY() graphics::Color collisionWireColor{ graphics::Color::Green };
+    PROPERTY() bool renderQuadtree{ true };
+    PROPERTY() graphics::Color quadtreeWireColor{ graphics::Color::Black };
+
+    GENERATED_BODY()
+};
+
+CLASS()
 struct EngineSettings : public IType
 {
     void save() const;
@@ -39,6 +51,8 @@ struct EngineSettings : public IType
     PROPERTY() SceneAsset editorStartingScene;
     PROPERTY() SceneAsset serverStartingScene;
     PROPERTY() SceneAsset standaloneStartingScene;
+
+    PROPERTY() RenderingSettings renderingSettings;
 
     std::filesystem::path path;
 

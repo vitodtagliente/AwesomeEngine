@@ -26,6 +26,129 @@ const reflect::enum_values_t& reflect::Enum<FpsMode>::values()
     return s_values;
 }
 
+const reflect::meta_t& reflect::Type<RenderingSettings>::meta()
+{
+    static reflect::meta_t s_meta {
+    };
+    return s_meta;
+}
+const char* const reflect::Type<RenderingSettings>::name() { return "RenderingSettings"; }
+
+const reflect::properties_t& Type<RenderingSettings>::properties()
+{
+    static reflect::properties_t s_properties {
+        { "renderCollisions", reflect::Property{ offsetof(RenderingSettings, renderCollisions), reflect::meta_t { }, "renderCollisions", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "collisionWireColor", reflect::Property{ offsetof(RenderingSettings, collisionWireColor), reflect::meta_t { }, "collisionWireColor", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
+        { "renderQuadtree", reflect::Property{ offsetof(RenderingSettings, renderQuadtree), reflect::meta_t { }, "renderQuadtree", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "quadtreeWireColor", reflect::Property{ offsetof(RenderingSettings, quadtreeWireColor), reflect::meta_t { }, "quadtreeWireColor", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
+    };
+    return s_properties;
+}
+
+std::size_t reflect::Type<RenderingSettings>::size()
+{
+    return sizeof(RenderingSettings);
+}
+
+void reflect::Type<RenderingSettings>::from_string(const std::string& str, RenderingSettings& type)
+{
+    reflect::encoding::ByteBuffer buffer;
+    std::transform(
+        std::begin(str),
+        std::end(str),
+        std::back_inserter(buffer),
+        [](const char c)
+        {
+            return std::byte(c);
+        }
+    );
+    
+    reflect::encoding::InputByteStream stream(buffer);
+    std::string _name;
+    stream >> _name;
+    if (_name != name()) return;
+    
+    stream >> type.renderCollisions;
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<graphics::Color>::from_string(pack, type.collisionWireColor);
+    }
+    stream >> type.renderQuadtree;
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<graphics::Color>::from_string(pack, type.quadtreeWireColor);
+    }
+}
+
+std::string reflect::Type<RenderingSettings>::to_string(const RenderingSettings& type)
+{
+    reflect::encoding::ByteBuffer buffer;
+    reflect::encoding::OutputByteStream stream(buffer);
+    stream << name();
+    
+    stream << type.renderCollisions;
+    stream << reflect::Type<graphics::Color>::to_string(type.collisionWireColor);
+    stream << type.renderQuadtree;
+    stream << reflect::Type<graphics::Color>::to_string(type.quadtreeWireColor);
+    
+    return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
+}
+
+void reflect::Type<RenderingSettings>::from_json(const std::string& json, RenderingSettings& type)
+{
+    std::string src{ reflect::encoding::json::Deserializer::trim(json, reflect::encoding::json::Deserializer::space) };
+    
+    size_t index = 0;
+    std::string key;
+    while ((index = reflect::encoding::json::Deserializer::next_key(src, key)) != std::string::npos)
+    {
+        src = src.substr(index + 2);
+        src = reflect::encoding::json::Deserializer::ltrim(src, reflect::encoding::json::Deserializer::space);
+        std::string value;
+        index = reflect::encoding::json::Deserializer::next_value(src, value);
+        if (index != std::string::npos)
+        {
+            if (key == "renderCollisions") reflect::encoding::json::Deserializer::parse(value, type.renderCollisions);
+            if (key == "collisionWireColor") reflect::Type<graphics::Color>::from_json(value, type.collisionWireColor);
+            if (key == "renderQuadtree") reflect::encoding::json::Deserializer::parse(value, type.renderQuadtree);
+            if (key == "quadtreeWireColor") reflect::Type<graphics::Color>::from_json(value, type.quadtreeWireColor);
+            src = src.substr(index + 1);
+        }
+        else break;
+    };
+}
+
+std::string reflect::Type<RenderingSettings>::to_json(const RenderingSettings& type, const std::string& offset)
+{
+    std::stringstream stream;
+    stream << "{" << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"RenderingSettings\"" << "," << std::endl;
+    stream << offset << "    " << "\"renderCollisions\": " << reflect::encoding::json::Serializer::to_string(type.renderCollisions) << "," << std::endl;
+    stream << offset << "    " << "\"collisionWireColor\": " << reflect::Type<graphics::Color>::to_json(type.collisionWireColor, offset + "    ") << "," << std::endl;
+    stream << offset << "    " << "\"renderQuadtree\": " << reflect::encoding::json::Serializer::to_string(type.renderQuadtree) << "," << std::endl;
+    stream << offset << "    " << "\"quadtreeWireColor\": " << reflect::Type<graphics::Color>::to_json(type.quadtreeWireColor, offset + "    ") << "," << std::endl;
+    stream << offset << "}";
+    return stream.str();
+}
+
+const reflect::meta_t& RenderingSettings::type_meta() const { return reflect::Type<RenderingSettings>::meta(); }
+const char* const RenderingSettings::type_name() const { return reflect::Type<RenderingSettings>::name(); }
+const reflect::properties_t& RenderingSettings::type_properties() const { return reflect::Type<RenderingSettings>::properties(); }
+RenderingSettings::operator std::string() const { return reflect::Type<RenderingSettings>::to_string(*this); }
+void RenderingSettings::from_string(const std::string& str)
+{
+    reflect::Type<RenderingSettings>::from_string(str, *this);
+    type_initialize();
+}
+void RenderingSettings::from_json(const std::string& json)
+{
+    reflect::Type<RenderingSettings>::from_json(json, *this);
+    type_initialize();
+}
+std::string RenderingSettings::to_json(const std::string& offset) const { return reflect::Type<RenderingSettings>::to_json(*this, offset); }
+
 const reflect::meta_t& reflect::Type<EngineSettings>::meta()
 {
     static reflect::meta_t s_meta {
@@ -42,6 +165,7 @@ const reflect::properties_t& Type<EngineSettings>::properties()
         { "editorStartingScene", reflect::Property{ offsetof(EngineSettings, editorStartingScene), reflect::meta_t { }, "editorStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
         { "serverStartingScene", reflect::Property{ offsetof(EngineSettings, serverStartingScene), reflect::meta_t { }, "serverStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
         { "standaloneStartingScene", reflect::Property{ offsetof(EngineSettings, standaloneStartingScene), reflect::meta_t { }, "standaloneStartingScene", reflect::PropertyType{ "SceneAsset", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(SceneAsset), reflect::PropertyType::Type::T_type } } },
+        { "renderingSettings", reflect::Property{ offsetof(EngineSettings, renderingSettings), reflect::meta_t { }, "renderingSettings", reflect::PropertyType{ "RenderingSettings", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(RenderingSettings), reflect::PropertyType::Type::T_type } } },
     };
     return s_properties;
 }
@@ -94,6 +218,11 @@ void reflect::Type<EngineSettings>::from_string(const std::string& str, EngineSe
         stream >> pack;
         type.standaloneStartingScene.from_string(pack);
     }
+    {
+        std::string pack;
+        stream >> pack;
+        type.renderingSettings.from_string(pack);
+    }
 }
 
 std::string reflect::Type<EngineSettings>::to_string(const EngineSettings& type)
@@ -107,6 +236,7 @@ std::string reflect::Type<EngineSettings>::to_string(const EngineSettings& type)
     stream << static_cast<std::string>(type.editorStartingScene);
     stream << static_cast<std::string>(type.serverStartingScene);
     stream << static_cast<std::string>(type.standaloneStartingScene);
+    stream << static_cast<std::string>(type.renderingSettings);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -140,6 +270,7 @@ void reflect::Type<EngineSettings>::from_json(const std::string& json, EngineSet
             if (key == "editorStartingScene") type.editorStartingScene.from_json(value);
             if (key == "serverStartingScene") type.serverStartingScene.from_json(value);
             if (key == "standaloneStartingScene") type.standaloneStartingScene.from_json(value);
+            if (key == "renderingSettings") type.renderingSettings.from_json(value);
             src = src.substr(index + 1);
         }
         else break;
@@ -156,6 +287,7 @@ std::string reflect::Type<EngineSettings>::to_json(const EngineSettings& type, c
     stream << offset << "    " << "\"editorStartingScene\": " << type.editorStartingScene.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"serverStartingScene\": " << type.serverStartingScene.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"standaloneStartingScene\": " << type.standaloneStartingScene.to_json(offset + "    ") << "," << std::endl;
+    stream << offset << "    " << "\"renderingSettings\": " << type.renderingSettings.to_json(offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

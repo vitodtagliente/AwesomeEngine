@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <awesome/core/singleton.h>
+#include <awesome/graphics/color.h>
 #include <awesome/math/rectangle.h>
 #include <awesome/math/vector2.h>
 
@@ -25,7 +26,7 @@ public:
 	void clear();
 	bool insert(Entity* const entity);
 	std::vector<Entity*> query(const math::rect& aabb) const;
-	void render(graphics::Renderer& renderer) const;
+	void render(graphics::Renderer& renderer, const graphics::Color& color = graphics::Color::Black) const;
 
 	int capacity{ 4 };
 	int threshold{ 20 };

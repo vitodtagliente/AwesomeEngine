@@ -23,6 +23,22 @@ struct reflect::Enum<enum class FpsMode> : reflect::RegisteredInEnumFactory<enum
 };
 
 template <>
+struct reflect::Type<struct RenderingSettings> : reflect::RegisteredInTypeFactory<struct RenderingSettings>
+{
+    static const reflect::meta_t& meta();
+    static const char* const name();
+    static const reflect::properties_t& properties();
+    static std::size_t size();
+
+    static void from_string(const std::string& str, RenderingSettings& type);
+    static std::string to_string(const RenderingSettings& type);
+    static void from_json(const std::string& json, RenderingSettings& type);
+    static std::string to_json(const RenderingSettings& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
+};
+
+template <>
 struct reflect::Type<struct EngineSettings> : reflect::RegisteredInTypeFactory<struct EngineSettings>
 {
     static const reflect::meta_t& meta();

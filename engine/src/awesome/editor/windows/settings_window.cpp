@@ -17,6 +17,14 @@ void SettingsWindow::render()
 		EditorUI::input("FPS", settings.fps);
 		EditorUI::input("Mode", settings.mode);
 	}
+	if (EditorUI::collapsingHeader("Rendering"))
+	{
+		RenderingSettings& rsettings = settings.renderingSettings;
+		EditorUI::input("Render Collisions", rsettings.renderCollisions);
+		EditorUI::input("Collision Wire Color", rsettings.collisionWireColor);
+		EditorUI::input("Render QuadTree", rsettings.renderQuadtree);
+		EditorUI::input("QuadTree Wire Color", rsettings.quadtreeWireColor);
+	}
 	if (EditorUI::collapsingHeader("Scene"))
 	{
 		EditorUI::input("Editor Starting Scene", settings.editorStartingScene);

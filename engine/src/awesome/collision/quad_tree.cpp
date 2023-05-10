@@ -73,13 +73,13 @@ std::vector<Entity*> QuadTreeNode::query(const math::rect& aabb) const
 	return result;
 }
 
-void QuadTreeNode::render(graphics::Renderer& renderer) const
+void QuadTreeNode::render(graphics::Renderer& renderer, const graphics::Color& color) const
 {
 	for (const QuadTreeNode& child : m_children)
 	{
-		child.render(renderer);
+		child.render(renderer, color);
 	}
-	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(m_aabb.x, m_aabb.y, 0.f), m_aabb.width * 2, m_aabb.height * 2, graphics::Color::Black);
+	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(m_aabb.x, m_aabb.y, 0.f), m_aabb.width * 2, m_aabb.height * 2, color);
 }
 
 /**
