@@ -14,7 +14,7 @@ public:
 	virtual void init() override;
 	virtual void update(double /*deltaTime*/) override;
 
-	const math::vec3& direction()const { return m_direction; }
+	const math::vec3& direction() const { return m_direction; }
 
 	void move(const math::vec2& amount);
 	void move(const math::vec3& amount);

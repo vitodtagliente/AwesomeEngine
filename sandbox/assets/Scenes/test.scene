@@ -58,9 +58,109 @@
     "speed": 0.050000,
     "zoomSpeed": 1.000000,
 },],
+},{
+    "type_id": "Entity",
+    "name": "96859316172900",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [{
+    "type_id": "Collider2dComponent",
+    "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "180798257443500",
+        "value": "96972349470900",
     },
+    "bounds": {
+        "type_id": "math::vec2",
+        "x": 1.000000,
+        "y": 1.000000,
+    },
+    "isTrigger": false,
+    "m_type": "Rect",
+},{
+    "type_id": "Body2dComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "97678639456300",
+    },
+},],
+},{
+    "type_id": "Entity",
+    "name": "96859832914400",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": 2.500000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [{
+    "type_id": "Collider2dComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "96876916787400",
+    },
+    "bounds": {
+        "type_id": "math::vec2",
+        "x": 1.000000,
+        "y": 1.000000,
+    },
+    "isTrigger": false,
+    "m_type": "Rect",
+},{
+    "type_id": "Body2dComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "97683422949400",
+    },
+},],
 },],
 }

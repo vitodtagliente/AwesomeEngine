@@ -22,23 +22,23 @@ void Body2dComponent::move(const math::vec2& amount)
 
 void Body2dComponent::move(const math::vec3& amount)
 {
+	if (m_collider == nullptr) return;
+
+	QuadTree& quadtree = QuadTree::instance();
 	math::vec3& position = getOwnerTransform().position;
-	math::vec3 future_position = position + amount;
-	if (m_collider)
+	const math::vec3 future_position = position + amount;
+
+	const math::rect region = math::rect(future_position.x, future_position.y, m_collider->bounds.x * 2, m_collider->bounds.y * 2);
+	for (const auto& entity : quadtree.query(region))
 	{
-		QuadTree& quadtree = QuadTree::instance();
-		// const math::vec3 futurePosition = position + amount;
-		// for (const auto& entity : World::instance().findNearestEntities(getOwner()))
-		// {
-		// 	Collider2dComponent* const collider = entity->findComponent<Collider2dComponent>();
-		// 	if (collider && collider->collide(*m_collider))
-		// 	{
-		// 		if (!m_collider->isTrigger)
-		// 		{
-		// 			position -= amount; // reset the position
-		// 		}
-		// 		return;
-		// 	}
-		// }
+		Collider2dComponent* const other_collider = entity->findComponent<Collider2dComponent>();
+		if (other_collider && m_collider->collide(*other_collider))
+		{
+			if (!m_collider->isTrigger)
+			{
+				position -= amount; // reset the position
+			}
+			return;
+		}
 	}
 }
