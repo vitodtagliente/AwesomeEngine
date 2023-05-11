@@ -12,6 +12,13 @@ void SettingsWindow::render()
 {
 	EngineSettings& settings = Engine::instance().settings;
 
+	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
+	{
+		settings.save();
+	}
+
+	EditorUI::separator();
+
 	if (EditorUI::collapsingHeader("Common"))
 	{
 		EditorUI::input("FPS", settings.fps);
@@ -33,12 +40,5 @@ void SettingsWindow::render()
 		EditorUI::input("Editor Starting Scene", scene.editor);
 		EditorUI::input("Server Starting Scene", scene.server);
 		EditorUI::input("Standalone Starting Scene", scene.standalone);
-	}
-
-	EditorUI::separator();
-
-	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
-	{
-		settings.save();
 	}
 }

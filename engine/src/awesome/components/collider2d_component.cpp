@@ -4,6 +4,27 @@
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
 
+bool intersect(const math::rect& rect, const math::circle& circle)
+{
+	// temporary variables to set edges for testing
+	float testX = circle.x;
+	float testY = circle.y;
+
+	// which edge is closest?
+	if (circle.x < rect.x - rect.width) testX = rect.x - rect.width;
+	else if (circle.x > rect.x + rect.width) testX = rect.x + rect.width;
+	if (circle.y < rect.y + rect.height) testY = rect.y + rect.height;
+	else if (circle.y > rect.y - rect.height) testY = rect.y - rect.height;
+
+	// get distance from closest edges
+	float distX = circle.x - testX;
+	float distY = circle.y - testY;
+	float distance = ::sqrt((distX * distX) + (distY * distY));
+
+	// if the distance is less than the radius, collision!
+	return distance <= circle.radius;
+}
+
 Collider2dComponent::Collider2dComponent()
 	: Component()
 	, m_renderSettings(Engine::instance().settings.renderer)
@@ -13,6 +34,8 @@ Collider2dComponent::Collider2dComponent()
 void Collider2dComponent::init()
 {
 	s_components.push_back(this);
+
+	update_aabb();
 }
 
 void Collider2dComponent::render(graphics::Renderer& renderer)
@@ -21,9 +44,19 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 	{
 		switch (m_type)
 		{
-		case Collision2DShapeType::Circle: renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor); break;
-		case Collision2DShapeType::Rect: renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_bounds.y, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor); break;
-		default: break;
+		case Collision2DShapeType::Circle:
+		{
+			const math::circle& circle = std::get<math::circle>(m_aabb);
+			renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(circle.x, circle.y, 0.f), circle.radius, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
+			break;
+		}
+		case Collision2DShapeType::Rect:
+		default:
+		{
+			const math::rect& rect = std::get<math::rect>(m_aabb);
+			renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(rect.x, rect.y, 0.f), rect.width, rect.height, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
+			break;
+		}
 		}
 		m_isColliding = false;
 	}
@@ -38,56 +71,33 @@ void Collider2dComponent::uninit()
 	}
 }
 
+void Collider2dComponent::update(const double)
+{
+	update_aabb();
+}
+
 bool Collider2dComponent::collide(const Collider2dComponent& other)
 {
 	if (m_type == other.m_type)
 	{
-		math::vec3 position = getOwnerTransform().position;
-		math::vec3 otherPosition = other.getOwnerTransform().position;
-		position.z = otherPosition.z = 0.0f;
-
 		if (m_type == Collision2DShapeType::Rect)
 		{
-			m_isColliding = position.x + m_bounds.x >= otherPosition.x - other.m_bounds.x
-				&& position.x - m_bounds.x <= otherPosition.x + other.m_bounds.x
-				&& position.y + m_bounds.y >= otherPosition.y - other.m_bounds.y
-				&& position.y - m_bounds.y <= otherPosition.y + other.m_bounds.y;
+			m_isColliding = std::get<math::rect>(m_aabb).intersects(std::get<math::rect>(other.m_aabb));
 		}
 		else // circle
 		{
-			m_isColliding = position.distance(otherPosition) <= m_bounds.x + other.m_bounds.x;
+			m_isColliding = std::get<math::circle>(m_aabb).intersects(std::get<math::circle>(other.m_aabb));
 		}
 	}
 	else
 	{
-		math::vec3 circlePosition, rectPosition;
-		math::vec2 rectSize;
-		float circleSize;
-		if (m_type == Collision2DShapeType::Circle)
-		{
-			circlePosition = getOwnerTransform().position;
-			circleSize = m_bounds.x;
-			rectPosition = other.getOwnerTransform().position;
-			rectSize = other.m_bounds;
-		}
-		else
-		{
-			circlePosition = other.getOwnerTransform().position;
-			circleSize = other.m_bounds.x;
-			rectPosition = getOwnerTransform().position;
-			rectSize = m_bounds / 2;
-		}
-
-		math::vec3 test = rectPosition;
-
-		if (circlePosition.x <= rectPosition.x - rectSize.x) test.x = rectPosition.x - rectSize.x;
-		else if (circlePosition.x >= rectPosition.x + rectSize.x) test.x = rectPosition.x + rectSize.x;
-
-		if (circlePosition.y >= rectPosition.y + rectSize.y) test.y = rectPosition.y + rectSize.y;
-		else if (circlePosition.y <= rectPosition.y - rectSize.y) test.y = rectPosition.y - rectSize.y;
-
-		const auto distance = circlePosition.distance(test);
-		m_isColliding = distance <= circleSize;
+		math::circle circle = m_type == Collision2DShapeType::Circle
+			? std::get<math::circle>(m_aabb)
+			: std::get<math::circle>(other.m_aabb);
+		math::rect rect = m_type == Collision2DShapeType::Circle
+			? std::get<math::rect>(m_aabb)
+			: std::get<math::rect>(other.m_aabb);
+		m_isColliding = intersect(rect, circle);
 	}
 
 	if (m_isColliding)
@@ -103,4 +113,22 @@ bool Collider2dComponent::collide(const Collider2dComponent& other)
 		}
 	}
 	return false;
+}
+
+void Collider2dComponent::update_aabb()
+{
+	switch (m_type)
+	{
+	case Collision2DShapeType::Circle:
+	{
+		m_aabb = math::circle(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x);
+		break;
+	}
+	case Collision2DShapeType::Rect:
+	default:
+	{
+		m_aabb = math::rect(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x, bounds.y);
+		break;
+	}
+	}
 }

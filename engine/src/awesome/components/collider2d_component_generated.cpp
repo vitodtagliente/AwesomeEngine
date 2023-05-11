@@ -29,9 +29,9 @@ const reflect::properties_t& Type<Collider2dComponent>::properties()
         { "enabled", reflect::Property{ offsetof(Collider2dComponent, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "m_id", reflect::Property{ offsetof(Collider2dComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
         // Properties
+        { "bounds", reflect::Property{ offsetof(Collider2dComponent, bounds), reflect::meta_t { }, "bounds", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
         { "isTrigger", reflect::Property{ offsetof(Collider2dComponent, isTrigger), reflect::meta_t { }, "isTrigger", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "m_type", reflect::Property{ offsetof(Collider2dComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "Collision2DShapeType", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Collision2DShapeType), reflect::PropertyType::Type::T_enum } } },
-        { "m_bounds", reflect::Property{ offsetof(Collider2dComponent, m_bounds), reflect::meta_t { }, "m_bounds", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
     };
     return s_properties;
 }
@@ -67,16 +67,16 @@ void reflect::Type<Collider2dComponent>::from_string(const std::string& str, Col
         type.m_id.from_string(pack);
     }
     // Properties
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<math::vec2>::from_string(pack, type.bounds);
+    }
     stream >> type.isTrigger;
     {
         int pack;
         stream >> pack;
         type.m_type = static_cast<Collision2DShapeType>(type.m_type);
-    }
-    {
-        std::string pack;
-        stream >> pack;
-        reflect::Type<math::vec2>::from_string(pack, type.m_bounds);
     }
 }
 
@@ -90,9 +90,9 @@ std::string reflect::Type<Collider2dComponent>::to_string(const Collider2dCompon
     stream << type.enabled;
     stream << static_cast<std::string>(type.m_id);
     // Properties
+    stream << reflect::Type<math::vec2>::to_string(type.bounds);
     stream << type.isTrigger;
     stream << static_cast<int>(type.m_type);
-    stream << reflect::Type<math::vec2>::to_string(type.m_bounds);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -115,6 +115,7 @@ void reflect::Type<Collider2dComponent>::from_json(const std::string& json, Coll
             if (key == "enabled") reflect::encoding::json::Deserializer::parse(value, type.enabled);
             if (key == "m_id") type.m_id.from_json(value);
             // Properties
+            if (key == "bounds") reflect::Type<math::vec2>::from_json(value, type.bounds);
             if (key == "isTrigger") reflect::encoding::json::Deserializer::parse(value, type.isTrigger);
             if (key == "m_type")
             {
@@ -122,7 +123,6 @@ void reflect::Type<Collider2dComponent>::from_json(const std::string& json, Coll
                 reflect::encoding::json::Deserializer::parse(value, temp);
                 stringToEnum(value, type.m_type);
             }
-            if (key == "m_bounds") reflect::Type<math::vec2>::from_json(value, type.m_bounds);
             src = src.substr(index + 1);
         }
         else break;
@@ -138,9 +138,9 @@ std::string reflect::Type<Collider2dComponent>::to_json(const Collider2dComponen
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
     stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     // Properties
+    stream << offset << "    " << "\"bounds\": " << reflect::Type<math::vec2>::to_json(type.bounds, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"isTrigger\": " << reflect::encoding::json::Serializer::to_string(type.isTrigger) << "," << std::endl;
     stream << offset << "    " << "\"m_type\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.m_type)) << "," << std::endl;
-    stream << offset << "    " << "\"m_bounds\": " << reflect::Type<math::vec2>::to_json(type.m_bounds, offset + "    ") << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

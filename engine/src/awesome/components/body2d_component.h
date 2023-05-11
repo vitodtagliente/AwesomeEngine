@@ -11,10 +11,10 @@ CLASS(Type = Component)
 class Body2dComponent : public Component
 {
 public:
-	Body2dComponent() = default;
-	virtual ~Body2dComponent() = default;
-
 	virtual void init() override;
+	virtual void update(double /*deltaTime*/) override;
+
+	const math::vec3& direction()const { return m_direction; }
 
 	void move(const math::vec2& amount);
 	void move(const math::vec3& amount);
@@ -23,4 +23,6 @@ public:
 
 private:
 	class Collider2dComponent* m_collider{ nullptr };
+	math::vec3 m_direction;
+	math::vec3 m_lastPosition;
 };
