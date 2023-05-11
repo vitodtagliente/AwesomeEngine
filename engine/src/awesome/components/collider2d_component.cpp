@@ -1,5 +1,6 @@
 #include "collider2d_component.h"
 
+#include <awesome/collision/quad_tree.h>
 #include <awesome/engine/engine.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
@@ -74,6 +75,18 @@ void Collider2dComponent::update(const double)
 {
 	update_aabb();
 	m_isColliding = false;
+
+	const math::rect region = math::rect(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x * 2, bounds.y * 2);
+	for (const auto& entity : QuadTree::instance().query(region))
+	{
+		if (entity == getOwner()) continue;
+
+		Collider2dComponent* const other = entity->findComponent<Collider2dComponent>();
+		if (other)
+		{
+			collide(*other);
+		}
+	}
 }
 
 bool Collider2dComponent::collide(const Collider2dComponent& other)
