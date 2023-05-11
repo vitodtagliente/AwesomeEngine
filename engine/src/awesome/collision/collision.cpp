@@ -11,7 +11,7 @@
 graphics::Renderer* renderer{ nullptr };
 
 Collision::Collision()
-	: m_settings(Engine::instance().settings)
+	: m_settings(Engine::instance().settings.renderer)
 {
 }
 
@@ -39,10 +39,9 @@ void Collision::render()
 		if (renderer == nullptr) return;
 	}
 
-	if (m_settings.mode == EngineMode::Editor
-		&& m_settings.renderer.renderQuadtree)
+	if (m_settings.debug && m_settings.renderQuadtree)
 	{
-		QuadTree::instance().render(*renderer, m_settings.renderer.quadtreeWireColor);
+		QuadTree::instance().render(*renderer, m_settings.quadtreeWireColor);
 	}
 }
 

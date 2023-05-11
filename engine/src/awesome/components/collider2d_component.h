@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include <awesome/engine/engine_settings.h>
 #include <awesome/math/vector2.h>
 #include <awesome/scene/component.h>
 
@@ -24,6 +25,8 @@ CLASS(Type = Component)
 class Collider2dComponent : public Component
 {
 public:
+	Collider2dComponent();
+
 	virtual void init() override;
 	virtual void render(graphics::Renderer& renderer) override;
 	virtual void uninit() override;
@@ -40,6 +43,7 @@ private:
 	PROPERTY() Collision2DShapeType m_type{ Collision2DShapeType::Rect };
 	PROPERTY() math::vec2 m_bounds{ 1.0f, 1.0f };
 	bool m_isColliding{ false };
+	const RendererSettings& m_renderSettings;
 
 	static inline std::vector<Collider2dComponent*> s_components;
 };

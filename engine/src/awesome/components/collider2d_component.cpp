@@ -1,7 +1,14 @@
 #include "collider2d_component.h"
 
+#include <awesome/engine/engine.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
+
+Collider2dComponent::Collider2dComponent()
+	: Component()
+	, m_renderSettings(Engine::instance().settings.renderer)
+{
+}
 
 void Collider2dComponent::init()
 {
@@ -10,13 +17,16 @@ void Collider2dComponent::init()
 
 void Collider2dComponent::render(graphics::Renderer& renderer)
 {
-	switch (m_type)
+	if (m_renderSettings.debug && m_renderSettings.renderCollisions)
 	{
-	case Collision2DShapeType::Circle: renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
-	case Collision2DShapeType::Rect: renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_bounds.y, m_isColliding ? graphics::Color::Red : graphics::Color::Green); break;
-	default: break;
+		switch (m_type)
+		{
+		case Collision2DShapeType::Circle: renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor); break;
+		case Collision2DShapeType::Rect: renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, getOwnerTransform().position, m_bounds.x, m_bounds.y, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor); break;
+		default: break;
+		}
+		m_isColliding = false;
 	}
-	m_isColliding = false;
 }
 
 void Collider2dComponent::uninit()

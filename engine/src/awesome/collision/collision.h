@@ -15,5 +15,5 @@ public:
 	virtual void update(double /*deltaTime*/) override;
 
 private:
-	const EngineSettings& m_settings;
+	const RendererSettings& m_settings;
 };
