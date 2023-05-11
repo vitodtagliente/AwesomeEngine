@@ -58,7 +58,6 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 			break;
 		}
 		}
-		m_isColliding = false;
 	}
 }
 
@@ -74,6 +73,7 @@ void Collider2dComponent::uninit()
 void Collider2dComponent::update(const double)
 {
 	update_aabb();
+	m_isColliding = false;
 }
 
 bool Collider2dComponent::collide(const Collider2dComponent& other)
