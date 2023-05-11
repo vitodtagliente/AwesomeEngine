@@ -40,9 +40,9 @@ void Collision::render()
 	}
 
 	if (m_settings.mode == EngineMode::Editor
-		&& m_settings.renderingSettings.renderQuadtree)
+		&& m_settings.renderer.renderQuadtree)
 	{
-		QuadTree::instance().render(*renderer, m_settings.renderingSettings.quadtreeWireColor);
+		QuadTree::instance().render(*renderer, m_settings.renderer.quadtreeWireColor);
 	}
 }
 

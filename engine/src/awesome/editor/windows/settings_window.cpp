@@ -12,24 +12,25 @@ void SettingsWindow::render()
 {
 	EngineSettings& settings = Engine::instance().settings;
 
-	if (EditorUI::collapsingHeader("General"))
+	if (EditorUI::collapsingHeader("Common"))
 	{
 		EditorUI::input("FPS", settings.fps);
 		EditorUI::input("Mode", settings.mode);
 	}
-	if (EditorUI::collapsingHeader("Rendering"))
+	if (EditorUI::collapsingHeader("Render"))
 	{
-		RenderingSettings& rsettings = settings.renderingSettings;
-		EditorUI::input("Render Collisions", rsettings.renderCollisions);
-		EditorUI::input("Collision Wire Color", rsettings.collisionWireColor);
-		EditorUI::input("Render QuadTree", rsettings.renderQuadtree);
-		EditorUI::input("QuadTree Wire Color", rsettings.quadtreeWireColor);
+		RendererSettings& renderer = settings.renderer;
+		EditorUI::input("Render Collisions", renderer.renderCollisions);
+		EditorUI::input("Collision Wire Color", renderer.collisionWireColor);
+		EditorUI::input("Render QuadTree", renderer.renderQuadtree);
+		EditorUI::input("QuadTree Wire Color", renderer.quadtreeWireColor);
 	}
 	if (EditorUI::collapsingHeader("Scene"))
 	{
-		EditorUI::input("Editor Starting Scene", settings.editorStartingScene);
-		EditorUI::input("Server Starting Scene", settings.serverStartingScene);
-		EditorUI::input("Standalone Starting Scene", settings.standaloneStartingScene);
+		SceneSettings& scene = settings.scene;
+		EditorUI::input("Editor Starting Scene", scene.editor);
+		EditorUI::input("Server Starting Scene", scene.server);
+		EditorUI::input("Standalone Starting Scene", scene.standalone);
 	}
 
 	EditorUI::separator();

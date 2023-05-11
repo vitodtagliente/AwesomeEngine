@@ -151,8 +151,8 @@ void Engine::initSettings()
 	// load the default scene
 	SceneGraph::instance().load(
 		mode == EngineMode::Editor
-		? settings.editorStartingScene
-		: mode == EngineMode::Standalone ? settings.standaloneStartingScene : settings.serverStartingScene
+		? settings.scene.editor
+		: mode == EngineMode::Standalone ? settings.scene.standalone : settings.scene.server
 	);
 }
 

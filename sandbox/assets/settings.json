@@ -2,28 +2,50 @@
     "type_id": "EngineSettings",
     "fps": "Fps60",
     "mode": "Editor",
-    "editorStartingScene": {
-        "type_id": "SceneAsset",
-        "id": {
-            "type_id": "uuid",
-            "value": "104751373499400",
+    "renderer": {
+        "type_id": "RendererSettings",
+        "renderCollisions": true,
+        "collisionWireColor": {
+            "type_id": "graphics::Color",
+            "red": 0.000000,
+            "green": 1.000000,
+            "blue": 0.000000,
+            "alpha": 1.000000,
         },
-        "type": 4,
+        "renderQuadtree": true,
+        "quadtreeWireColor": {
+            "type_id": "graphics::Color",
+            "red": 0.000000,
+            "green": 0.000000,
+            "blue": 0.000000,
+            "alpha": 1.000000,
+        },
     },
-    "standaloneStartingScene": {
-        "type_id": "SceneAsset",
-        "id": {
-            "type_id": "uuid",
-            "value": "",
+    "scene": {
+        "type_id": "SceneSettings",
+        "editor": {
+            "type_id": "SceneAsset",
+            "id": {
+                "type_id": "uuid",
+                "value": "104751373499400",
+            },
+            "type": 4,
         },
-        "type": 4,
-    },
-    "serverStartingScene": {
-        "type_id": "SceneAsset",
-        "id": {
-            "type_id": "uuid",
-            "value": "",
+        "server": {
+            "type_id": "SceneAsset",
+            "id": {
+                "type_id": "uuid",
+                "value": "",
+            },
+            "type": 4,
         },
-        "type": 4,
+        "standalone": {
+            "type_id": "SceneAsset",
+            "id": {
+                "type_id": "uuid",
+                "value": "",
+            },
+            "type": 4,
+        },
     },
 }

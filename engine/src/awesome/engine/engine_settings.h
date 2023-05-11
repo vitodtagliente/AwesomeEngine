@@ -29,12 +29,22 @@ enum class FpsMode : int
 };
 
 CLASS()
-struct RenderingSettings : public IType
+struct RendererSettings : public IType
 {
     PROPERTY() bool renderCollisions{ true };
     PROPERTY() graphics::Color collisionWireColor{ graphics::Color::Green };
     PROPERTY() bool renderQuadtree{ true };
     PROPERTY() graphics::Color quadtreeWireColor{ graphics::Color::Black };
+
+    GENERATED_BODY()
+};
+
+CLASS()
+struct SceneSettings : public IType
+{
+    PROPERTY() SceneAsset editor;
+    PROPERTY() SceneAsset server;
+    PROPERTY() SceneAsset standalone;
 
     GENERATED_BODY()
 };
@@ -48,11 +58,8 @@ struct EngineSettings : public IType
     PROPERTY() FpsMode fps { FpsMode::Fps60 };
     PROPERTY() EngineMode mode { EngineMode::Editor };
 
-    PROPERTY() SceneAsset editorStartingScene;
-    PROPERTY() SceneAsset serverStartingScene;
-    PROPERTY() SceneAsset standaloneStartingScene;
-
-    PROPERTY() RenderingSettings renderingSettings;
+    PROPERTY() RendererSettings renderer;
+    PROPERTY() SceneSettings scene;
 
     std::filesystem::path path;
 

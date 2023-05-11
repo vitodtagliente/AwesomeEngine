@@ -23,17 +23,33 @@ struct reflect::Enum<enum class FpsMode> : reflect::RegisteredInEnumFactory<enum
 };
 
 template <>
-struct reflect::Type<struct RenderingSettings> : reflect::RegisteredInTypeFactory<struct RenderingSettings>
+struct reflect::Type<struct RendererSettings> : reflect::RegisteredInTypeFactory<struct RendererSettings>
 {
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
     static std::size_t size();
 
-    static void from_string(const std::string& str, RenderingSettings& type);
-    static std::string to_string(const RenderingSettings& type);
-    static void from_json(const std::string& json, RenderingSettings& type);
-    static std::string to_json(const RenderingSettings& type, const std::string& offset = "");
+    static void from_string(const std::string& str, RendererSettings& type);
+    static std::string to_string(const RendererSettings& type);
+    static void from_json(const std::string& json, RendererSettings& type);
+    static std::string to_json(const RendererSettings& type, const std::string& offset = "");
+
+    static bool registered() { return type_registered; };
+};
+
+template <>
+struct reflect::Type<struct SceneSettings> : reflect::RegisteredInTypeFactory<struct SceneSettings>
+{
+    static const reflect::meta_t& meta();
+    static const char* const name();
+    static const reflect::properties_t& properties();
+    static std::size_t size();
+
+    static void from_string(const std::string& str, SceneSettings& type);
+    static std::string to_string(const SceneSettings& type);
+    static void from_json(const std::string& json, SceneSettings& type);
+    static std::string to_json(const SceneSettings& type, const std::string& offset = "");
 
     static bool registered() { return type_registered; };
 };
