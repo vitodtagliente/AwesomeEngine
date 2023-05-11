@@ -55,7 +55,7 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 		default:
 		{
 			const math::rect& rect = std::get<math::rect>(m_aabb);
-			renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(rect.x, rect.y, 0.f), rect.width, rect.height, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
+			renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(rect.x, rect.y, 0.f), rect.width * 2, rect.height * 2, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
 			break;
 		}
 		}
@@ -140,7 +140,7 @@ void Collider2dComponent::update_aabb()
 	case Collision2DShapeType::Rect:
 	default:
 	{
-		m_aabb = math::rect(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x, bounds.y);
+		m_aabb = math::rect(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x / 2, bounds.y / 2);
 		break;
 	}
 	}
