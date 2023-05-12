@@ -12,7 +12,13 @@ void Collider2dComponentInspector::inspect(Component& component)
 {
 	Collider2dComponent& collider = dynamic_cast<Collider2dComponent&>(component);
 	EditorUI::input("enabled", collider.enabled);
+	const Collision2DShapeType last_type = collider.m_type;
 	EditorUI::input("Type", collider.m_type);
+	if (last_type != collider.m_type)
+	{
+		collider.update_aabb();
+	}
+
 	if (collider.m_type == Collision2DShapeType::Circle)
 	{
 		EditorUI::input("Radius", collider.bounds.x);

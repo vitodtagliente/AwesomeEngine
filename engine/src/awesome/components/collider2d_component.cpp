@@ -7,23 +7,8 @@
 
 bool intersect(const math::rect& rect, const math::circle& circle)
 {
-	// temporary variables to set edges for testing
-	float testX = circle.x;
-	float testY = circle.y;
-
-	// which edge is closest?
-	if (circle.x < rect.x - rect.width) testX = rect.x - rect.width;
-	else if (circle.x > rect.x + rect.width) testX = rect.x + rect.width;
-	if (circle.y < rect.y + rect.height) testY = rect.y + rect.height;
-	else if (circle.y > rect.y - rect.height) testY = rect.y - rect.height;
-
-	// get distance from closest edges
-	float distX = circle.x - testX;
-	float distY = circle.y - testY;
-	float distance = ::sqrt((distX * distX) + (distY * distY));
-
-	// if the distance is less than the radius, collision!
-	return distance <= circle.radius;
+	const math::circle c2(rect.x, rect.y, rect.width);
+	return circle.intersects(c2);
 }
 
 Collider2dComponent::Collider2dComponent()
@@ -107,7 +92,7 @@ bool Collider2dComponent::collide(const Collider2dComponent& other)
 		math::circle circle = m_type == Collision2DShapeType::Circle
 			? std::get<math::circle>(m_aabb)
 			: std::get<math::circle>(other.m_aabb);
-		math::rect rect = m_type == Collision2DShapeType::Circle
+		math::rect rect = m_type == Collision2DShapeType::Rect
 			? std::get<math::rect>(m_aabb)
 			: std::get<math::rect>(other.m_aabb);
 		m_isColliding = intersect(rect, circle);
