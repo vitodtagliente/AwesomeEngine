@@ -321,12 +321,12 @@ void reflect::Type<EngineSettings>::from_string(const std::string& str, EngineSe
     {
         int pack;
         stream >> pack;
-        type.fps = static_cast<FpsMode>(type.fps);
+        type.fps = static_cast<FpsMode>(pack);
     }
     {
         int pack;
         stream >> pack;
-        type.mode = static_cast<EngineMode>(type.mode);
+        type.mode = static_cast<EngineMode>(pack);
     }
     {
         std::string pack;
@@ -372,13 +372,13 @@ void reflect::Type<EngineSettings>::from_json(const std::string& json, EngineSet
             {
                 std::string temp;
                 reflect::encoding::json::Deserializer::parse(value, temp);
-                stringToEnum(value, type.fps);
+                stringToEnum(temp, type.fps);
             }
             if (key == "mode")
             {
                 std::string temp;
                 reflect::encoding::json::Deserializer::parse(value, temp);
-                stringToEnum(value, type.mode);
+                stringToEnum(temp, type.mode);
             }
             if (key == "renderer") type.renderer.from_json(value);
             if (key == "scene") type.scene.from_json(value);

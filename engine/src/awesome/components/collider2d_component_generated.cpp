@@ -76,7 +76,7 @@ void reflect::Type<Collider2dComponent>::from_string(const std::string& str, Col
     {
         int pack;
         stream >> pack;
-        type.m_type = static_cast<Collision2DShapeType>(type.m_type);
+        type.m_type = static_cast<Collision2DShapeType>(pack);
     }
 }
 
@@ -121,7 +121,7 @@ void reflect::Type<Collider2dComponent>::from_json(const std::string& json, Coll
             {
                 std::string temp;
                 reflect::encoding::json::Deserializer::parse(value, temp);
-                stringToEnum(value, type.m_type);
+                stringToEnum(temp, type.m_type);
             }
             src = src.substr(index + 1);
         }
