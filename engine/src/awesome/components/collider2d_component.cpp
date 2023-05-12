@@ -19,8 +19,6 @@ Collider2dComponent::Collider2dComponent()
 
 void Collider2dComponent::init()
 {
-	s_components.push_back(this);
-
 	update_aabb();
 }
 
@@ -44,15 +42,6 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 			break;
 		}
 		}
-	}
-}
-
-void Collider2dComponent::uninit()
-{
-	const auto& it = std::find(s_components.begin(), s_components.end(), this);
-	if (it != s_components.end())
-	{
-		s_components.erase(it);
 	}
 }
 

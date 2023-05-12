@@ -112,6 +112,14 @@ public:
 	}
 
 	template <typename T = Component>
+	std::vector<T*> findComponentsInChildren() const
+	{
+		std::vector<T*> result;
+		findComponentsInChildren(result);
+		return result;
+	}
+
+	template <typename T = Component>
 	T* const addComponent()
 	{
 		T* const component = new T();
@@ -150,6 +158,24 @@ public:
 	GENERATED_BODY()
 
 private:
+	template <typename T = Component>
+	void findComponentsInChildren(std::vector<T*>& found_components) const
+	{
+		for (const auto& component : m_components)
+		{
+			if (T* const found_component = dynamic_cast<T*>(component.get()))
+			{
+				found_components.push_back(found_component);
+				break;
+			}
+		}
+
+		for (const auto& child : m_children)
+		{
+			child->findComponentsInChildren(found_components);
+		}
+	}
+
 	void prepareToDestroy();
 	void prepareToSpawn();
 

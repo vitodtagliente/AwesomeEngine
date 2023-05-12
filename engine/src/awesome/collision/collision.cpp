@@ -5,6 +5,7 @@
 #include <awesome/graphics/graphics.h>
 #include <awesome/graphics/renderer.h>
 #include <awesome/scene/entity.h>
+#include <awesome/scene/scene_graph.h>
 
 #include "quad_tree.h"
 
@@ -50,7 +51,7 @@ void Collision::update(const double)
 	QuadTree& qt = QuadTree::instance();
 	qt.clear();
 
-	for (Collider2dComponent* const collider : Collider2dComponent::components())
+	for (Collider2dComponent* const collider : SceneGraph::instance().root().findComponentsInChildren<Collider2dComponent>())
 	{
 		Entity* const entity = collider->getOwner();
 		if (entity->state() == Entity::State::Alive)
