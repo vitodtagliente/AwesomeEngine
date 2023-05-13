@@ -102,6 +102,11 @@ bool Collider2DComponent::collide(const Collider2DComponent& other)
 	return false;
 }
 
+bool Collider2DComponent::collideAt(const math::vec3& futurePosition, const Collider2DComponent& other)
+{
+	return false;
+}
+
 void Collider2DComponent::update_aabb()
 {
 	switch (m_type)

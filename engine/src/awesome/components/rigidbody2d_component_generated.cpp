@@ -30,6 +30,10 @@ const reflect::properties_t& Type<Rigidbody2DComponent>::properties()
         { "enabled", reflect::Property{ offsetof(Rigidbody2DComponent, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "m_id", reflect::Property{ offsetof(Rigidbody2DComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
         // Properties
+        { "freezeRotation", reflect::Property{ offsetof(Rigidbody2DComponent, freezeRotation), reflect::meta_t { }, "freezeRotation", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "gravityScale", reflect::Property{ offsetof(Rigidbody2DComponent, gravityScale), reflect::meta_t { }, "gravityScale", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "mass", reflect::Property{ offsetof(Rigidbody2DComponent, mass), reflect::meta_t { }, "mass", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "m_type", reflect::Property{ offsetof(Rigidbody2DComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "RigidbodyType2D", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(RigidbodyType2D), reflect::PropertyType::Type::T_enum } } },
     };
     return s_properties;
 }
@@ -65,6 +69,14 @@ void reflect::Type<Rigidbody2DComponent>::from_string(const std::string& str, Ri
         type.m_id.from_string(pack);
     }
     // Properties
+    stream >> type.freezeRotation;
+    stream >> type.gravityScale;
+    stream >> type.mass;
+    {
+        int pack;
+        stream >> pack;
+        type.m_type = static_cast<RigidbodyType2D>(pack);
+    }
 }
 
 std::string reflect::Type<Rigidbody2DComponent>::to_string(const Rigidbody2DComponent& type)
@@ -77,6 +89,10 @@ std::string reflect::Type<Rigidbody2DComponent>::to_string(const Rigidbody2DComp
     stream << type.enabled;
     stream << static_cast<std::string>(type.m_id);
     // Properties
+    stream << type.freezeRotation;
+    stream << type.gravityScale;
+    stream << type.mass;
+    stream << static_cast<int>(type.m_type);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -99,6 +115,15 @@ void reflect::Type<Rigidbody2DComponent>::from_json(const std::string& json, Rig
             if (key == "enabled") reflect::encoding::json::Deserializer::parse(value, type.enabled);
             if (key == "m_id") type.m_id.from_json(value);
             // Properties
+            if (key == "freezeRotation") reflect::encoding::json::Deserializer::parse(value, type.freezeRotation);
+            if (key == "gravityScale") reflect::encoding::json::Deserializer::parse(value, type.gravityScale);
+            if (key == "mass") reflect::encoding::json::Deserializer::parse(value, type.mass);
+            if (key == "m_type")
+            {
+                std::string temp;
+                reflect::encoding::json::Deserializer::parse(value, temp);
+                stringToEnum(temp, type.m_type);
+            }
             src = src.substr(index + 1);
         }
         else break;
@@ -114,6 +139,10 @@ std::string reflect::Type<Rigidbody2DComponent>::to_json(const Rigidbody2DCompon
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
     stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
     // Properties
+    stream << offset << "    " << "\"freezeRotation\": " << reflect::encoding::json::Serializer::to_string(type.freezeRotation) << "," << std::endl;
+    stream << offset << "    " << "\"gravityScale\": " << reflect::encoding::json::Serializer::to_string(type.gravityScale) << "," << std::endl;
+    stream << offset << "    " << "\"mass\": " << reflect::encoding::json::Serializer::to_string(type.mass) << "," << std::endl;
+    stream << offset << "    " << "\"m_type\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.m_type)) << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }

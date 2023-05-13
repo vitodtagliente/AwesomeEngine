@@ -39,6 +39,7 @@ public:
 	virtual void update(double) override;
 
 	bool collide(const Collider2DComponent& other);
+	bool collideAt(const math::vec3& futurePosition, const Collider2DComponent& other);
 
 	PROPERTY() math::vec2 bounds{ 1.0f, 1.0f };
 	PROPERTY() bool isTrigger{ false };
