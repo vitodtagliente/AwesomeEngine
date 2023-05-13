@@ -74,7 +74,7 @@ void EditorState::select(const AssetRecord& asset)
 		&& *selection.asset == asset) return;
 
 	selection.asset = asset;
-	onSelectedAssetChanged.broadcast(asset);
+	onSelectedAssetChanged.invoke(asset);
 }
 
 void EditorState::select(Entity* const entity)
@@ -82,7 +82,7 @@ void EditorState::select(Entity* const entity)
 	if (selection.entity == entity) return;
 
 	selection.entity = entity;
-	onSelectedEntityChanged.broadcast(entity);
+	onSelectedEntityChanged.invoke(entity);
 }
 
 void EditorState::select(const std::filesystem::path& folder)
@@ -90,7 +90,7 @@ void EditorState::select(const std::filesystem::path& folder)
 	if (folder == path) return;
 
 	path = folder;
-	onSelectedPathChanged.broadcast(folder);
+	onSelectedPathChanged.invoke(folder);
 }
 
 void EditorState::unselectAsset()

@@ -4,6 +4,7 @@
 #include <vector>
 #include <variant>
 
+#include <awesome/core/event.h>
 #include <awesome/engine/engine_settings.h>
 #include <awesome/math/circle.h>
 #include <awesome/math/rectangle.h>
@@ -39,10 +40,13 @@ public:
 	virtual void update(double) override;
 
 	bool collide(const Collider2DComponent& other);
-	bool collideAt(const math::vec3& futurePosition, const Collider2DComponent& other);
+	bool collideAt(const math::vec3& futurePosition, const Collider2DComponent& other) const;
 
 	PROPERTY() math::vec2 bounds{ 1.0f, 1.0f };
 	PROPERTY() bool isTrigger{ false };
+
+	event_t<const Collider2DComponent&> onCollision;
+	event_t<const Collider2DComponent&> onTrigger;
 
 	GENERATED_BODY()
 

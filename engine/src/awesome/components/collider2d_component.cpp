@@ -89,22 +89,59 @@ bool Collider2DComponent::collide(const Collider2DComponent& other)
 
 	if (m_isColliding)
 	{
-		if (!isTrigger)
+		if (isTrigger)
 		{
-			// onTrigger.broadcast(other);
+			onTrigger.invoke(other);
 		}
-		else if (!other.isTrigger)
+		else
 		{
-			// onCollision.broadcast(other);
-			return true;
+			onCollision.invoke(other);
 		}
+		return true;
 	}
 	return false;
 }
 
-bool Collider2DComponent::collideAt(const math::vec3& futurePosition, const Collider2DComponent& other)
+bool Collider2DComponent::collideAt(const math::vec3& futurePosition, const Collider2DComponent& other) const
 {
-	return false;
+	if (m_type == other.m_type)
+	{
+		if (m_type == ColliderType2D::Rect)
+		{
+			math::rect area = std::get<math::rect>(m_aabb);
+			area.x = futurePosition.x;
+			area.y = futurePosition.y;
+			return area.intersects(std::get<math::rect>(other.m_aabb));
+		}
+		else // circle
+		{
+			math::circle area = std::get<math::circle>(m_aabb);
+			area.x = futurePosition.x;
+			area.y = futurePosition.y;
+			return area.intersects(std::get<math::circle>(other.m_aabb));
+		}
+	}
+	else
+	{
+		math::circle circle = m_type == ColliderType2D::Circle
+			? std::get<math::circle>(m_aabb)
+			: std::get<math::circle>(other.m_aabb);
+		math::rect rect = m_type == ColliderType2D::Rect
+			? std::get<math::rect>(m_aabb)
+			: std::get<math::rect>(other.m_aabb);
+
+		if (m_type == ColliderType2D::Rect)
+		{
+			rect.x = futurePosition.x;
+			rect.y = futurePosition.y;
+		}
+		else
+		{
+			circle.x = futurePosition.x;
+			circle.y = futurePosition.y;
+		}
+		return intersect(rect, circle);
+	}
 }
 
 void Collider2DComponent::update_aabb()
