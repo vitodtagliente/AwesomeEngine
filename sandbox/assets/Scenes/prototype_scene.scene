@@ -60,7 +60,7 @@
 },],
 },{
     "type_id": "Entity",
-    "name": "221864335451100",
+    "name": "box1",
     "persistent": false,
     "replicate": false,
     "tag": "",
@@ -95,6 +95,10 @@
         "type_id": "uuid",
         "value": "221868635373500",
     },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 1.000000,
+    "m_type": "Dynamic",
 },{
     "type_id": "Collider2DComponent",
     "enabled": true,
@@ -112,7 +116,7 @@
 },],
 },{
     "type_id": "Entity",
-    "name": "221864818791700",
+    "name": "box2",
     "persistent": false,
     "replicate": false,
     "tag": "",
@@ -120,7 +124,7 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 1.000000,
+            "x": 2.000000,
             "y": 0.000000,
             "z": 0.000000,
         },
@@ -147,6 +151,10 @@
         "type_id": "uuid",
         "value": "221874641403200",
     },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 1.000000,
+    "m_type": "Kinematic",
 },{
     "type_id": "Collider2DComponent",
     "enabled": true,
@@ -161,6 +169,14 @@
     },
     "isTrigger": false,
     "m_type": "Rect",
+},{
+    "type_id": "TestComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "277223868901300",
+    },
+    "speed": 5.000000,
 },],
 },],
 }
