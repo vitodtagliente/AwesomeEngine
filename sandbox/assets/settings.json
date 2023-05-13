@@ -1,6 +1,6 @@
 {
     "type_id": "EngineSettings",
-    "fps": "Fps60",
+    "fps": "Unlimited",
     "mode": "Editor",
     "renderer": {
         "type_id": "RendererSettings",

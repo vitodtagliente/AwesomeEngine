@@ -2,10 +2,10 @@
     "type_id": "Prefab",
     "entity": {
         "type_id": "Entity",
-        "name": "Circle",
+        "name": "Potatoe",
         "persistent": false,
         "replicate": false,
-        "tag": "Test",
+        "tag": "",
         "transform": {
             "type_id": "math::transform",
             "position": {
@@ -24,7 +24,7 @@
                 "type_id": "math::vec3",
                 "x": 1.000000,
                 "y": 1.000000,
-                "z": 0.500000,
+                "z": 1.000000,
             },
             "isStatic": false,
         },
@@ -35,7 +35,7 @@
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "58892738961400",
+        "value": "240194970731200",
     },
     "color": {
         "type_id": "graphics::Color",
@@ -66,9 +66,9 @@
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "177770058120200",
+        "value": "240200098645600",
     },
-    "animations": {"Idle":{
+    "animations": {"idle":{
     "type_id": "SpriteAnimationAsset",
     "id": {
         "type_id": "uuid",
@@ -78,19 +78,19 @@
 }},
     "autoplay": true,
 },{
-    "type_id": "Collider2dComponent",
+    "type_id": "Collider2DComponent",
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "81870910186900",
+        "value": "240295402645600",
     },
-    "isTrigger": false,
-    "m_type": "Rect",
-    "m_bounds": {
+    "bounds": {
         "type_id": "math::vec2",
         "x": 1.000000,
         "y": 1.000000,
     },
+    "isTrigger": true,
+    "m_type": "Rect",
 },],
     },
 }
