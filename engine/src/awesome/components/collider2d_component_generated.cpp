@@ -3,12 +3,12 @@
 #include "collider2d_component.h"
 #pragma warning(disable: 4100)
 
-const char* const reflect::Enum<Collision2DShapeType>::name() { return "Collision2DShapeType"; }
-const reflect::enum_values_t& reflect::Enum<Collision2DShapeType>::values()
+const char* const reflect::Enum<ColliderType2D>::name() { return "ColliderType2D"; }
+const reflect::enum_values_t& reflect::Enum<ColliderType2D>::values()
 {
     static reflect::enum_values_t s_values{
-        { "Circle", static_cast<int>(Collision2DShapeType::Circle) }, 
-        { "Rect", static_cast<int>(Collision2DShapeType::Rect) }, 
+        { "Circle", static_cast<int>(ColliderType2D::Circle) }, 
+        { "Rect", static_cast<int>(ColliderType2D::Rect) }, 
     };
     return s_values;
 }
@@ -31,7 +31,7 @@ const reflect::properties_t& Type<Collider2DComponent>::properties()
         // Properties
         { "bounds", reflect::Property{ offsetof(Collider2DComponent, bounds), reflect::meta_t { }, "bounds", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
         { "isTrigger", reflect::Property{ offsetof(Collider2DComponent, isTrigger), reflect::meta_t { }, "isTrigger", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "m_type", reflect::Property{ offsetof(Collider2DComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "Collision2DShapeType", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Collision2DShapeType), reflect::PropertyType::Type::T_enum } } },
+        { "m_type", reflect::Property{ offsetof(Collider2DComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "ColliderType2D", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(ColliderType2D), reflect::PropertyType::Type::T_enum } } },
     };
     return s_properties;
 }
@@ -76,7 +76,7 @@ void reflect::Type<Collider2DComponent>::from_string(const std::string& str, Col
     {
         int pack;
         stream >> pack;
-        type.m_type = static_cast<Collision2DShapeType>(pack);
+        type.m_type = static_cast<ColliderType2D>(pack);
     }
 }
 

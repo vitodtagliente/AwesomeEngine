@@ -28,13 +28,13 @@ void Collider2DComponent::render(graphics::Renderer& renderer)
 	{
 		switch (m_type)
 		{
-		case Collision2DShapeType::Circle:
+		case ColliderType2D::Circle:
 		{
 			const math::circle& circle = std::get<math::circle>(m_aabb);
 			renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(circle.x, circle.y, 0.f), circle.radius, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
 			break;
 		}
-		case Collision2DShapeType::Rect:
+		case ColliderType2D::Rect:
 		default:
 		{
 			const math::rect& rect = std::get<math::rect>(m_aabb);
@@ -67,7 +67,7 @@ bool Collider2DComponent::collide(const Collider2DComponent& other)
 {
 	if (m_type == other.m_type)
 	{
-		if (m_type == Collision2DShapeType::Rect)
+		if (m_type == ColliderType2D::Rect)
 		{
 			m_isColliding = std::get<math::rect>(m_aabb).intersects(std::get<math::rect>(other.m_aabb));
 		}
@@ -78,10 +78,10 @@ bool Collider2DComponent::collide(const Collider2DComponent& other)
 	}
 	else
 	{
-		math::circle circle = m_type == Collision2DShapeType::Circle
+		math::circle circle = m_type == ColliderType2D::Circle
 			? std::get<math::circle>(m_aabb)
 			: std::get<math::circle>(other.m_aabb);
-		math::rect rect = m_type == Collision2DShapeType::Rect
+		math::rect rect = m_type == ColliderType2D::Rect
 			? std::get<math::rect>(m_aabb)
 			: std::get<math::rect>(other.m_aabb);
 		m_isColliding = intersect(rect, circle);
@@ -106,12 +106,12 @@ void Collider2DComponent::update_aabb()
 {
 	switch (m_type)
 	{
-	case Collision2DShapeType::Circle:
+	case ColliderType2D::Circle:
 	{
 		m_aabb = math::circle(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x);
 		break;
 	}
-	case Collision2DShapeType::Rect:
+	case ColliderType2D::Rect:
 	default:
 	{
 		m_aabb = math::rect(getOwnerTransform().position.x, getOwnerTransform().position.y, bounds.x / 2, bounds.y / 2);

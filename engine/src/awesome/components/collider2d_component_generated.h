@@ -5,7 +5,7 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct reflect::Enum<enum class Collision2DShapeType> : reflect::RegisteredInEnumFactory<enum class Collision2DShapeType>
+struct reflect::Enum<enum class ColliderType2D> : reflect::RegisteredInEnumFactory<enum class ColliderType2D>
 {
     static const char* const name();
     static const reflect::enum_values_t& values();

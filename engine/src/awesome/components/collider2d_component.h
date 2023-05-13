@@ -18,7 +18,7 @@ namespace graphics
 }
 
 ENUM()
-enum class Collision2DShapeType : int
+enum class ColliderType2D : int
 {
 	Circle = 0,
 	Rect
@@ -32,7 +32,7 @@ public:
 
 	Collider2DComponent();
 
-	const Collision2DShapeType type() const { return m_type; }
+	const ColliderType2D type() const { return m_type; }
 
 	virtual void init() override;
 	virtual void render(graphics::Renderer& renderer) override;
@@ -51,5 +51,5 @@ private:
 	std::variant<math::circle, math::rect> m_aabb;
 	bool m_isColliding{ false };
 	const RendererSettings& m_renderSettings;
-	PROPERTY() Collision2DShapeType m_type{ Collision2DShapeType::Rect };
+	PROPERTY() ColliderType2D m_type{ ColliderType2D::Rect };
 };
