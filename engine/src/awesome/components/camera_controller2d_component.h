@@ -6,10 +6,10 @@
 #include <awesome/math/vector2.h>
 #include <awesome/scene/component.h>
 
-#include "camera_controller_2d_component_generated.h"
+#include "camera_controller2d_component_generated.h"
 
 CLASS(Type = Component)
-class CameraController2dComponent : public Component
+class CameraController2DComponent : public Component
 {
 public:
 	void update(double deltaTime) override;

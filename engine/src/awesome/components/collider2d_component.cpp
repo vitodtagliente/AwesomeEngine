@@ -11,18 +11,18 @@ bool intersect(const math::rect& rect, const math::circle& circle)
 	return circle.intersects(c2);
 }
 
-Collider2dComponent::Collider2dComponent()
+Collider2DComponent::Collider2DComponent()
 	: Component()
 	, m_renderSettings(Engine::instance().settings.renderer)
 {
 }
 
-void Collider2dComponent::init()
+void Collider2DComponent::init()
 {
 	update_aabb();
 }
 
-void Collider2dComponent::render(graphics::Renderer& renderer)
+void Collider2DComponent::render(graphics::Renderer& renderer)
 {
 	if (m_renderSettings.debug && m_renderSettings.renderCollisions)
 	{
@@ -45,7 +45,7 @@ void Collider2dComponent::render(graphics::Renderer& renderer)
 	}
 }
 
-void Collider2dComponent::update(const double)
+void Collider2DComponent::update(const double)
 {
 	update_aabb();
 	m_isColliding = false;
@@ -55,7 +55,7 @@ void Collider2dComponent::update(const double)
 	{
 		if (entity == getOwner()) continue;
 
-		Collider2dComponent* const other = entity->findComponent<Collider2dComponent>();
+		Collider2DComponent* const other = entity->findComponent<Collider2DComponent>();
 		if (other)
 		{
 			collide(*other);
@@ -63,7 +63,7 @@ void Collider2dComponent::update(const double)
 	}
 }
 
-bool Collider2dComponent::collide(const Collider2dComponent& other)
+bool Collider2DComponent::collide(const Collider2DComponent& other)
 {
 	if (m_type == other.m_type)
 	{
@@ -102,7 +102,7 @@ bool Collider2dComponent::collide(const Collider2dComponent& other)
 	return false;
 }
 
-void Collider2dComponent::update_aabb()
+void Collider2DComponent::update_aabb()
 {
 	switch (m_type)
 	{

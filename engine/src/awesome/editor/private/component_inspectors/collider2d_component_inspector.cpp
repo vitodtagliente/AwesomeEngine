@@ -3,14 +3,14 @@
 #include <awesome/components/collider2d_component.h>
 #include <awesome/editor/editor_ui.h>
 
-bool Collider2dComponentInspector::canInspect(Component& component) const
+bool Collider2DComponentInspector::canInspect(Component& component) const
 {
-	return component.type_name() == reflect::Type<Collider2dComponent>::name();
+	return component.type_name() == reflect::Type<Collider2DComponent>::name();
 }
 
-void Collider2dComponentInspector::inspect(Component& component)
+void Collider2DComponentInspector::inspect(Component& component)
 {
-	Collider2dComponent& collider = dynamic_cast<Collider2dComponent&>(component);
+	Collider2DComponent& collider = dynamic_cast<Collider2DComponent&>(component);
 	EditorUI::input("enabled", collider.enabled);
 	const Collision2DShapeType last_type = collider.m_type;
 	EditorUI::input("Type", collider.m_type);

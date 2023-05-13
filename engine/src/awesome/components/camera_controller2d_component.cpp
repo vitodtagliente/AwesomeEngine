@@ -1,10 +1,10 @@
-#include "camera_controller_2d_component.h"
+#include "camera_controller2d_component.h"
 
 #include <awesome/engine/input.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 
-void CameraController2dComponent::update(double deltaTime)
+void CameraController2DComponent::update(double deltaTime)
 {
 	Input& input = Input::instance();
 	if (!m_dragPosition.has_value())

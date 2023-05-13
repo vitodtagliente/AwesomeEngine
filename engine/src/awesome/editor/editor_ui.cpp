@@ -240,7 +240,7 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	}
 
 	// component inspectors setup
-	componentInspectors.push_back(std::make_unique<Collider2dComponentInspector>());
+	componentInspectors.push_back(std::make_unique<Collider2DComponentInspector>());
 	componentInspectors.push_back(std::make_unique<SpriteAnimatorComponentInspector>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "ComponentInspector"))

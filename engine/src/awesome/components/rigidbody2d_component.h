@@ -5,10 +5,18 @@
 #include <awesome/math/vector3.h>
 #include <awesome/scene/component.h>
 
-#include "body2d_component_generated.h"
+#include "rigidbody2d_component_generated.h"
+
+ENUM()
+enum class RigidbodyType2D : int
+{
+	Dynamic,
+	Kinematic,
+	Static
+};
 
 CLASS(Type = Component)
-class Body2dComponent : public Component
+class Rigidbody2DComponent : public Component
 {
 public:
 	virtual void init() override;
@@ -22,7 +30,7 @@ public:
 	GENERATED_BODY()
 
 private:
-	class Collider2dComponent* m_collider{ nullptr };
+	class Collider2DComponent* m_collider{ nullptr };
 	math::vec3 m_direction;
 	math::vec3 m_lastPosition;
 };

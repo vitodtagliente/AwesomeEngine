@@ -51,7 +51,7 @@ void Collision::update(const double)
 	QuadTree& qt = QuadTree::instance();
 	qt.clear();
 
-	for (Collider2dComponent* const collider : SceneGraph::instance().root().findComponentsInChildren<Collider2dComponent>())
+	for (Collider2DComponent* const collider : SceneGraph::instance().root().findComponentsInChildren<Collider2DComponent>())
 	{
 		Entity* const entity = collider->getOwner();
 		if (entity->state() == Entity::State::Alive)

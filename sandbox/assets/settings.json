@@ -4,6 +4,7 @@
     "mode": "Editor",
     "renderer": {
         "type_id": "RendererSettings",
+        "debug": true,
         "renderCollisions": true,
         "collisionWireColor": {
             "type_id": "graphics::Color",
@@ -27,7 +28,7 @@
             "type_id": "SceneAsset",
             "id": {
                 "type_id": "uuid",
-                "value": "104751373499400",
+                "value": "221893677598200",
             },
             "type": 4,
         },

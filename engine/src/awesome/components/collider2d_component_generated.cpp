@@ -13,35 +13,35 @@ const reflect::enum_values_t& reflect::Enum<Collision2DShapeType>::values()
     return s_values;
 }
 
-const reflect::meta_t& reflect::Type<Collider2dComponent>::meta()
+const reflect::meta_t& reflect::Type<Collider2DComponent>::meta()
 {
     static reflect::meta_t s_meta {
         { "Type", "Component" },
     };
     return s_meta;
 }
-const char* const reflect::Type<Collider2dComponent>::name() { return "Collider2dComponent"; }
+const char* const reflect::Type<Collider2DComponent>::name() { return "Collider2DComponent"; }
 
-const reflect::properties_t& Type<Collider2dComponent>::properties()
+const reflect::properties_t& Type<Collider2DComponent>::properties()
 {
     static reflect::properties_t s_properties {
         // Parent class Component properties
-        { "enabled", reflect::Property{ offsetof(Collider2dComponent, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "m_id", reflect::Property{ offsetof(Collider2dComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
+        { "enabled", reflect::Property{ offsetof(Collider2DComponent, enabled), reflect::meta_t { }, "enabled", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "m_id", reflect::Property{ offsetof(Collider2DComponent, m_id), reflect::meta_t { }, "m_id", reflect::PropertyType{ "uuid", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(uuid), reflect::PropertyType::Type::T_type } } },
         // Properties
-        { "bounds", reflect::Property{ offsetof(Collider2dComponent, bounds), reflect::meta_t { }, "bounds", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
-        { "isTrigger", reflect::Property{ offsetof(Collider2dComponent, isTrigger), reflect::meta_t { }, "isTrigger", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
-        { "m_type", reflect::Property{ offsetof(Collider2dComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "Collision2DShapeType", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Collision2DShapeType), reflect::PropertyType::Type::T_enum } } },
+        { "bounds", reflect::Property{ offsetof(Collider2DComponent, bounds), reflect::meta_t { }, "bounds", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
+        { "isTrigger", reflect::Property{ offsetof(Collider2DComponent, isTrigger), reflect::meta_t { }, "isTrigger", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "m_type", reflect::Property{ offsetof(Collider2DComponent, m_type), reflect::meta_t { }, "m_type", reflect::PropertyType{ "Collision2DShapeType", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Collision2DShapeType), reflect::PropertyType::Type::T_enum } } },
     };
     return s_properties;
 }
 
-std::size_t reflect::Type<Collider2dComponent>::size()
+std::size_t reflect::Type<Collider2DComponent>::size()
 {
-    return sizeof(Collider2dComponent);
+    return sizeof(Collider2DComponent);
 }
 
-void reflect::Type<Collider2dComponent>::from_string(const std::string& str, Collider2dComponent& type)
+void reflect::Type<Collider2DComponent>::from_string(const std::string& str, Collider2DComponent& type)
 {
     reflect::encoding::ByteBuffer buffer;
     std::transform(
@@ -80,7 +80,7 @@ void reflect::Type<Collider2dComponent>::from_string(const std::string& str, Col
     }
 }
 
-std::string reflect::Type<Collider2dComponent>::to_string(const Collider2dComponent& type)
+std::string reflect::Type<Collider2DComponent>::to_string(const Collider2DComponent& type)
 {
     reflect::encoding::ByteBuffer buffer;
     reflect::encoding::OutputByteStream stream(buffer);
@@ -97,7 +97,7 @@ std::string reflect::Type<Collider2dComponent>::to_string(const Collider2dCompon
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
 
-void reflect::Type<Collider2dComponent>::from_json(const std::string& json, Collider2dComponent& type)
+void reflect::Type<Collider2DComponent>::from_json(const std::string& json, Collider2DComponent& type)
 {
     std::string src{ reflect::encoding::json::Deserializer::trim(json, reflect::encoding::json::Deserializer::space) };
     
@@ -129,11 +129,11 @@ void reflect::Type<Collider2dComponent>::from_json(const std::string& json, Coll
     };
 }
 
-std::string reflect::Type<Collider2dComponent>::to_json(const Collider2dComponent& type, const std::string& offset)
+std::string reflect::Type<Collider2DComponent>::to_json(const Collider2DComponent& type, const std::string& offset)
 {
     std::stringstream stream;
     stream << "{" << std::endl;
-    stream << offset << "    " << "\"type_id\": " << "\"Collider2dComponent\"" << "," << std::endl;
+    stream << offset << "    " << "\"type_id\": " << "\"Collider2DComponent\"" << "," << std::endl;
     // Parent class Component properties
     stream << offset << "    " << "\"enabled\": " << reflect::encoding::json::Serializer::to_string(type.enabled) << "," << std::endl;
     stream << offset << "    " << "\"m_id\": " << type.m_id.to_json(offset + "    ") << "," << std::endl;
@@ -145,18 +145,18 @@ std::string reflect::Type<Collider2dComponent>::to_json(const Collider2dComponen
     return stream.str();
 }
 
-const reflect::meta_t& Collider2dComponent::type_meta() const { return reflect::Type<Collider2dComponent>::meta(); }
-const char* const Collider2dComponent::type_name() const { return reflect::Type<Collider2dComponent>::name(); }
-const reflect::properties_t& Collider2dComponent::type_properties() const { return reflect::Type<Collider2dComponent>::properties(); }
-Collider2dComponent::operator std::string() const { return reflect::Type<Collider2dComponent>::to_string(*this); }
-void Collider2dComponent::from_string(const std::string& str)
+const reflect::meta_t& Collider2DComponent::type_meta() const { return reflect::Type<Collider2DComponent>::meta(); }
+const char* const Collider2DComponent::type_name() const { return reflect::Type<Collider2DComponent>::name(); }
+const reflect::properties_t& Collider2DComponent::type_properties() const { return reflect::Type<Collider2DComponent>::properties(); }
+Collider2DComponent::operator std::string() const { return reflect::Type<Collider2DComponent>::to_string(*this); }
+void Collider2DComponent::from_string(const std::string& str)
 {
-    reflect::Type<Collider2dComponent>::from_string(str, *this);
+    reflect::Type<Collider2DComponent>::from_string(str, *this);
     type_initialize();
 }
-void Collider2dComponent::from_json(const std::string& json)
+void Collider2DComponent::from_json(const std::string& json)
 {
-    reflect::Type<Collider2dComponent>::from_json(json, *this);
+    reflect::Type<Collider2DComponent>::from_json(json, *this);
     type_initialize();
 }
-std::string Collider2dComponent::to_json(const std::string& offset) const { return reflect::Type<Collider2dComponent>::to_json(*this, offset); }
+std::string Collider2DComponent::to_json(const std::string& offset) const { return reflect::Type<Collider2DComponent>::to_json(*this, offset); }

@@ -14,17 +14,17 @@ struct reflect::Enum<enum class Collision2DShapeType> : reflect::RegisteredInEnu
 };
 
 template <>
-struct reflect::Type<class Collider2dComponent> : reflect::RegisteredInTypeFactory<class Collider2dComponent>
+struct reflect::Type<class Collider2DComponent> : reflect::RegisteredInTypeFactory<class Collider2DComponent>
 {
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
     static std::size_t size();
 
-    static void from_string(const std::string& str, Collider2dComponent& type);
-    static std::string to_string(const Collider2dComponent& type);
-    static void from_json(const std::string& json, Collider2dComponent& type);
-    static std::string to_json(const Collider2dComponent& type, const std::string& offset = "");
+    static void from_string(const std::string& str, Collider2DComponent& type);
+    static std::string to_string(const Collider2DComponent& type);
+    static void from_json(const std::string& json, Collider2DComponent& type);
+    static std::string to_json(const Collider2DComponent& type, const std::string& offset = "");
 
     static bool registered() { return type_registered; };
 };

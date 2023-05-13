@@ -25,12 +25,12 @@ enum class Collision2DShapeType : int
 };
 
 CLASS(Type = Component)
-class Collider2dComponent : public Component
+class Collider2DComponent : public Component
 {
 public:
-	friend class Collider2dComponentInspector;
+	friend class Collider2DComponentInspector;
 
-	Collider2dComponent();
+	Collider2DComponent();
 
 	const Collision2DShapeType type() const { return m_type; }
 
@@ -38,7 +38,7 @@ public:
 	virtual void render(graphics::Renderer& renderer) override;
 	virtual void update(double) override;
 
-	bool collide(const Collider2dComponent& other);
+	bool collide(const Collider2DComponent& other);
 
 	PROPERTY() math::vec2 bounds{ 1.0f, 1.0f };
 	PROPERTY() bool isTrigger{ false };

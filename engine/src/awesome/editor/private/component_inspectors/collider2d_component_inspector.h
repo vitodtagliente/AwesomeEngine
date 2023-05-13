@@ -3,7 +3,7 @@
 
 #include <awesome/editor/component_inspector.h>
 
-class Collider2dComponentInspector : public ComponentInspector
+class Collider2DComponentInspector : public ComponentInspector
 {
 public:
 	virtual bool canInspect(Component& component) const override;

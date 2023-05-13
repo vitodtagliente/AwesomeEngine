@@ -34,33 +34,33 @@
     "type_id": "OrthographicCameraComponent",
     "color": {
         "type_id": "graphics::Color",
-        "red": 0.203648,
-        "green": 0.316972,
-        "blue": 0.553922,
+        "red": 0.118224,
+        "green": 0.351889,
+        "blue": 0.401961,
         "alpha": 1.000000,
     },
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "180808824160200",
+        "value": "221853235339500",
     },
     "nearPlane": -30.000000,
     "farPlane": 1000.000000,
     "pixelPerfect": true,
     "pixelsPerUnit": 32,
 },{
-    "type_id": "CameraController2dComponent",
+    "type_id": "CameraController2DComponent",
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "180810374173400",
+        "value": "221855035531200",
     },
     "speed": 0.050000,
     "zoomSpeed": 1.000000,
 },],
 },{
     "type_id": "Entity",
-    "name": "96859316172900",
+    "name": "221864335451100",
     "persistent": false,
     "replicate": false,
     "tag": "",
@@ -89,11 +89,18 @@
     "transient": false,
     "m_children": [],
     "m_components": [{
-    "type_id": "Collider2dComponent",
+    "type_id": "Rigidbody2DComponent",
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "96972349470900",
+        "value": "221868635373500",
+    },
+},{
+    "type_id": "Collider2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "221870791455300",
     },
     "bounds": {
         "type_id": "math::vec2",
@@ -102,17 +109,10 @@
     },
     "isTrigger": false,
     "m_type": "Rect",
-},{
-    "type_id": "Body2dComponent",
-    "enabled": true,
-    "m_id": {
-        "type_id": "uuid",
-        "value": "97678639456300",
-    },
 },],
 },{
     "type_id": "Entity",
-    "name": "96859832914400",
+    "name": "221864818791700",
     "persistent": false,
     "replicate": false,
     "tag": "",
@@ -141,26 +141,26 @@
     "transient": false,
     "m_children": [],
     "m_components": [{
-    "type_id": "Collider2dComponent",
+    "type_id": "Rigidbody2DComponent",
     "enabled": true,
     "m_id": {
         "type_id": "uuid",
-        "value": "96876916787400",
+        "value": "221874641403200",
+    },
+},{
+    "type_id": "Collider2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "221877141361900",
     },
     "bounds": {
         "type_id": "math::vec2",
-        "x": 0.500000,
+        "x": 1.000000,
         "y": 1.000000,
     },
     "isTrigger": false,
-    "m_type": "Circle",
-},{
-    "type_id": "Body2dComponent",
-    "enabled": true,
-    "m_id": {
-        "type_id": "uuid",
-        "value": "97683422949400",
-    },
+    "m_type": "Rect",
 },],
 },],
 }
