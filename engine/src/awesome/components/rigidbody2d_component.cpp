@@ -24,21 +24,23 @@ void Rigidbody2DComponent::move(const math::vec3& amount)
 {
 	if (m_collider == nullptr) return;
 
-	QuadTree& quadtree = QuadTree::instance();
 	math::vec3& position = getOwnerTransform().position;
 	const math::vec3 future_position = position + amount;
+	const math::vec3 direction = (future_position - position).normalize();
 
 	const math::rect region = math::rect(future_position.x, future_position.y, m_collider->bounds.x * 2, m_collider->bounds.y * 2);
+
+	QuadTree& quadtree = QuadTree::instance();
 	for (const auto& entity : quadtree.query(region))
 	{
 		Collider2DComponent* const other_collider = entity->findComponent<Collider2DComponent>();
-		if (other_collider && m_collider->collide(*other_collider))
+		if (other_collider && m_collider->collideAt(future_position, *other_collider))
 		{
-			if (!m_collider->isTrigger)
+			if (!m_collider->isTrigger && !other_collider->isTrigger)
 			{
 				position -= amount; // reset the position
+				return;
 			}
-			return;
 		}
 	}
 }
