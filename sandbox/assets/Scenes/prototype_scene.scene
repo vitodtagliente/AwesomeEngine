@@ -10,8 +10,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 0.000000,
-            "y": 0.000000,
+            "x": -0.148568,
+            "y": 0.219640,
             "z": 0.000000,
         },
         "rotation": {
@@ -22,8 +22,8 @@
         },
         "scale": {
             "type_id": "math::vec3",
-            "x": 1.000000,
-            "y": 1.000000,
+            "x": 1.525327,
+            "y": 1.525327,
             "z": 1.000000,
         },
         "isStatic": false,
@@ -55,8 +55,8 @@
         "type_id": "uuid",
         "value": "221855035531200",
     },
-    "speed": 0.050000,
-    "zoomSpeed": 1.000000,
+    "speed": 2.000000,
+    "zoomSpeed": 20.000000,
 },],
 },{
     "type_id": "Entity",
@@ -124,8 +124,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 2.000000,
-            "y": 0.000000,
+            "x": 4.874440,
+            "y": 1.192502,
             "z": 0.000000,
         },
         "rotation": {
