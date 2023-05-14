@@ -1,5 +1,8 @@
-#include <iostream>
 #include "engine.h"
+
+#include <iostream>
+#include <future>
+#include <queue>
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
@@ -16,6 +19,33 @@
 #include <awesome/editor/editor.h>
 #include <awesome/graphics/graphics.h>
 #include <awesome/ui/ui.h>
+
+class TaskList
+{
+public:
+	void push(std::future<void>& task)
+	{
+		m_tasks.push(std::move(task));
+	}
+
+	void push(std::future<void>&& task)
+	{
+		m_tasks.push(std::move(task));
+	}
+
+	void wait()
+	{
+		while (!m_tasks.empty())
+		{
+			std::future<void>& task = m_tasks.front();
+			task.wait();
+			m_tasks.pop();
+		}
+	}
+
+private:
+	std::queue<std::future<void>> m_tasks;
+};
 
 void Engine::init(const std::initializer_list<EngineModule*>& modules)
 {
@@ -77,9 +107,18 @@ int Engine::run()
 		}
 		canvas.update();
 
-		for (const auto& module : m_modules)
+		// update the modules
 		{
-			module->update(deltaTime);
+			TaskList tasks;
+			for (const auto& module : m_modules)
+			{
+				tasks.push(std::async(std::launch::async, [&module, deltaTime]() -> void
+					{
+						module->update(deltaTime);
+					}
+				));
+			}
+			tasks.wait();
 		}
 
 		input.update();
