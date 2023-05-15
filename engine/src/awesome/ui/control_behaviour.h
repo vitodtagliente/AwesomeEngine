@@ -12,12 +12,6 @@ CLASS()
 class ControlBehaviour : public IType
 {
 public:
-	struct Metrics
-	{
-		std::size_t count{ 0 };
-		std::size_t size{ 0 };
-	};
-
 	ControlBehaviour() = default;
 	ControlBehaviour(const ControlBehaviour& other);
 	virtual ~ControlBehaviour() = default;
@@ -38,8 +32,6 @@ public:
 	virtual void uninit() {}
 	virtual void update(double /*deltaTime*/) {}
 
-	static const Metrics& metrics() { return s_metrics; }
-
 	PROPERTY() bool enabled{ true };
 
 	GENERATED_BODY()
@@ -47,6 +39,4 @@ public:
 private:
 	PROPERTY() uuid m_id;
 	Control* m_owner{ nullptr };
-
-	static inline Metrics s_metrics;
 };

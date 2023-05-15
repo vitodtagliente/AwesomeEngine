@@ -14,14 +14,22 @@ const char* const reflect::Type<Control>::name() { return "Control"; }
 const reflect::properties_t& Type<Control>::properties()
 {
     static reflect::properties_t s_properties {
+        { "isFocusable", reflect::Property{ offsetof(Control, isFocusable), reflect::meta_t { }, "isFocusable", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "isInteractable", reflect::Property{ offsetof(Control, isInteractable), reflect::meta_t { }, "isInteractable", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "name", reflect::Property{ offsetof(Control, name), reflect::meta_t { }, "name", reflect::PropertyType{ "std::string", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::string), reflect::PropertyType::Type::T_string } } },
+        { "position", reflect::Property{ offsetof(Control, position), reflect::meta_t { }, "position", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
+        { "replicate", reflect::Property{ offsetof(Control, replicate), reflect::meta_t { }, "replicate", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "tag", reflect::Property{ offsetof(Control, tag), reflect::meta_t { }, "tag", reflect::PropertyType{ "std::string", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::string), reflect::PropertyType::Type::T_string } } },
-        { "localPosition", reflect::Property{ offsetof(Control, localPosition), reflect::meta_t { }, "localPosition", reflect::PropertyType{ "math::vec2", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(math::vec2), reflect::PropertyType::Type::T_native } } },
         { "m_children", reflect::Property{ offsetof(Control, m_children), reflect::meta_t { }, "m_children", reflect::PropertyType{ "std::vector<std::unique_ptr<Control>>", { 
             reflect::PropertyType{ "std::unique_ptr<Control>", { 
                 reflect::PropertyType{ "Control", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Control), reflect::PropertyType::Type::T_type },
             }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::unique_ptr<Control>), reflect::PropertyType::Type::T_template },
         }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::vector<std::unique_ptr<Control>>), reflect::PropertyType::Type::T_template } } },
+        { "m_behaviours", reflect::Property{ offsetof(Control, m_behaviours), reflect::meta_t { }, "m_behaviours", reflect::PropertyType{ "std::vector<std::unique_ptr<ControlBehaviour>>", { 
+            reflect::PropertyType{ "std::unique_ptr<ControlBehaviour>", { 
+                reflect::PropertyType{ "ControlBehaviour", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(ControlBehaviour), reflect::PropertyType::Type::T_type },
+            }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::unique_ptr<ControlBehaviour>), reflect::PropertyType::Type::T_template },
+        }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::vector<std::unique_ptr<ControlBehaviour>>), reflect::PropertyType::Type::T_template } } },
     };
     return s_properties;
 }
@@ -49,13 +57,16 @@ void reflect::Type<Control>::from_string(const std::string& str, Control& type)
     stream >> _name;
     if (_name != name()) return;
     
+    stream >> type.isFocusable;
+    stream >> type.isInteractable;
     stream >> type.name;
-    stream >> type.tag;
     {
         std::string pack;
         stream >> pack;
-        reflect::Type<math::vec2>::from_string(pack, type.localPosition);
+        reflect::Type<math::vec2>::from_string(pack, type.position);
     }
+    stream >> type.replicate;
+    stream >> type.tag;
     {
         type.m_children.clear();
         std::size_t size;
@@ -91,6 +102,41 @@ void reflect::Type<Control>::from_string(const std::string& str, Control& type)
             type.m_children.push_back(std::move(element));
         }
     }
+    {
+        type.m_behaviours.clear();
+        std::size_t size;
+        stream >> size;
+        for (int i = 0; i < size; ++i)
+        {
+            std::unique_ptr<ControlBehaviour> element;
+            {
+                bool valid = false;
+                stream >> valid;
+                if (valid)
+                {
+                    reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+                    std::size_t temp_element_size;
+                    temp_stream >> temp_element_size;
+                    std::string type_id;
+                    temp_stream >> type_id;
+                    if (type_id == Type<ControlBehaviour>::name())
+                    {
+                        element = std::make_unique<ControlBehaviour>();
+                    }
+                    else
+                    {
+                        element = std::unique_ptr<ControlBehaviour>(TypeFactory::instantiate<ControlBehaviour>(type_id));
+                    }
+                    {
+                        std::string pack;
+                        stream >> pack;
+                        element->from_string(pack);
+                    }
+                }
+            }
+            type.m_behaviours.push_back(std::move(element));
+        }
+    }
 }
 
 std::string reflect::Type<Control>::to_string(const Control& type)
@@ -99,12 +145,23 @@ std::string reflect::Type<Control>::to_string(const Control& type)
     reflect::encoding::OutputByteStream stream(buffer);
     stream << name();
     
+    stream << type.isFocusable;
+    stream << type.isInteractable;
     stream << type.name;
+    stream << reflect::Type<math::vec2>::to_string(type.position);
+    stream << type.replicate;
     stream << type.tag;
-    stream << reflect::Type<math::vec2>::to_string(type.localPosition);
     {
         stream << type.m_children.size();
         for (const auto& element : type.m_children)
+        {
+            stream << (element ? true : false); 
+            if(element) stream << static_cast<std::string>(*element);
+        }
+    }
+    {
+        stream << type.m_behaviours.size();
+        for (const auto& element : type.m_behaviours)
         {
             stream << (element ? true : false); 
             if(element) stream << static_cast<std::string>(*element);
@@ -128,10 +185,14 @@ void reflect::Type<Control>::from_json(const std::string& json, Control& type)
         index = reflect::encoding::json::Deserializer::next_value(src, value);
         if (index != std::string::npos)
         {
+            if (key == "isFocusable") reflect::encoding::json::Deserializer::parse(value, type.isFocusable);
+            if (key == "isInteractable") reflect::encoding::json::Deserializer::parse(value, type.isInteractable);
             if (key == "name") reflect::encoding::json::Deserializer::parse(value, type.name);
+            if (key == "position") reflect::Type<math::vec2>::from_json(value, type.position);
+            if (key == "replicate") reflect::encoding::json::Deserializer::parse(value, type.replicate);
             if (key == "tag") reflect::encoding::json::Deserializer::parse(value, type.tag);
-            if (key == "localPosition") reflect::Type<math::vec2>::from_json(value, type.localPosition);
             if (key == "m_children") reflect::encoding::json::Deserializer::parse(value, type.m_children);
+            if (key == "m_behaviours") reflect::encoding::json::Deserializer::parse(value, type.m_behaviours);
             src = src.substr(index + 1);
         }
         else break;
@@ -143,10 +204,14 @@ std::string reflect::Type<Control>::to_json(const Control& type, const std::stri
     std::stringstream stream;
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "\"Control\"" << "," << std::endl;
+    stream << offset << "    " << "\"isFocusable\": " << reflect::encoding::json::Serializer::to_string(type.isFocusable) << "," << std::endl;
+    stream << offset << "    " << "\"isInteractable\": " << reflect::encoding::json::Serializer::to_string(type.isInteractable) << "," << std::endl;
     stream << offset << "    " << "\"name\": " << reflect::encoding::json::Serializer::to_string(type.name) << "," << std::endl;
+    stream << offset << "    " << "\"position\": " << reflect::Type<math::vec2>::to_json(type.position, offset + "    ") << "," << std::endl;
+    stream << offset << "    " << "\"replicate\": " << reflect::encoding::json::Serializer::to_string(type.replicate) << "," << std::endl;
     stream << offset << "    " << "\"tag\": " << reflect::encoding::json::Serializer::to_string(type.tag) << "," << std::endl;
-    stream << offset << "    " << "\"localPosition\": " << reflect::Type<math::vec2>::to_json(type.localPosition, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"m_children\": " << reflect::encoding::json::Serializer::to_string(type.m_children) << "," << std::endl;
+    stream << offset << "    " << "\"m_behaviours\": " << reflect::encoding::json::Serializer::to_string(type.m_behaviours) << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }
