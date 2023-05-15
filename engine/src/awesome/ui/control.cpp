@@ -71,9 +71,9 @@ void Control::update(const double deltaTime)
 		{
 			return child->m_state == State::PendingDestroy;
 		}
-	),
+		),
 		m_children.end()
-			);
+	);
 
 	for (auto it = m_behaviours.begin(); it != m_behaviours.end(); ++it)
 	{
