@@ -15,6 +15,7 @@
 #include "windows/settings_window.h"
 #include "windows/sprite_editor_window.h"
 #include "windows/stress_window.h"
+#include "windows/user_interface_window.h"
 
 EditorState* EditorState::s_instance{ nullptr };
 
@@ -37,6 +38,7 @@ void EditorState::init()
 	m_windows.push_back(std::make_unique<SettingsWindow>());
 	m_windows.push_back(std::make_unique<SpriteEditorWindow>());
 	m_windows.push_back(std::make_unique<StressWindow>());
+	m_windows.push_back(std::make_unique<UserInterfaceWindow>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
 	{
@@ -79,6 +81,14 @@ void EditorState::select(const AssetRecord& asset)
 	onSelectedAssetChanged.invoke(asset);
 }
 
+void EditorState::select(Control* const control)
+{
+	if (selection.control == control) return;
+
+	selection.control = control;
+	onSelectedControlChanged.invoke(control);
+}
+
 void EditorState::select(Entity* const entity)
 {
 	if (selection.entity == entity) return;
@@ -100,6 +110,11 @@ void EditorState::unselectAsset()
 	selection.asset.reset();
 }
 
+void EditorState::unselectControl()
+{
+	selection.control = nullptr;
+}
+
 void EditorState::unselectEntity()
 {
 	selection.entity = nullptr;
@@ -108,5 +123,6 @@ void EditorState::unselectEntity()
 void EditorState::reset()
 {
 	selection.asset.reset();
+	selection.control = nullptr;
 	selection.entity = nullptr;
 }

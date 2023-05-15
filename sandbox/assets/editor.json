@@ -1,4 +1,4 @@
 {
     "type_id": "EditorSettings",
-    "windowsVisibility": {"Asset Inspector":true,"Content Browser":true,"Entity Inspector":true,"Game":false,"Performance":true,"Scene":true,"Settings":true,"Sprite Editor":false,"Stress":true},
+    "windowsVisibility": {"Asset Inspector":true,"Content Browser":true,"Entity Inspector":true,"Game":false,"Performance":true,"Scene":true,"Settings":true,"Sprite Editor":false,"Stress":true,"UI":true},
 }
