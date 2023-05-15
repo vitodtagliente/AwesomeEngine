@@ -42,6 +42,16 @@ void Rigidbody2DComponent::move(const math::vec3& amount)
 		{
 			if (!m_collider->isTrigger && !other_collider->isTrigger)
 			{
+				const math::vec3 future_position_h = position + math::vec3(amount.x, 0.f, 0.f);
+				const math::vec3 future_position_v = position + math::vec3(0.f, amount.y, 0.f);
+				if (!m_collider->collideAt(future_position_h, *other_collider))
+				{
+					position = future_position_h;
+				}
+				if (!m_collider->collideAt(future_position_v, *other_collider))
+				{
+					position = future_position_v;
+				}
 				return;
 			}
 		}
