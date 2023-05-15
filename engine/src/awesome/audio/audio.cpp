@@ -11,11 +11,6 @@ void Audio::shutdown()
 {
 }
 
-void Audio::render()
-{
-
-}
-
 void Audio::update(const double)
 {
 

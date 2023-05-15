@@ -14,9 +14,11 @@ const char* const reflect::Type<UserInterface>::name() { return "UserInterface";
 const reflect::properties_t& Type<UserInterface>::properties()
 {
     static reflect::properties_t s_properties {
-        { "controls", reflect::Property{ offsetof(UserInterface, controls), reflect::meta_t { }, "controls", reflect::PropertyType{ "std::vector<Control>", { 
-            reflect::PropertyType{ "Control", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Control), reflect::PropertyType::Type::T_type },
-        }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::vector<Control>), reflect::PropertyType::Type::T_template } } },
+        { "controls", reflect::Property{ offsetof(UserInterface, controls), reflect::meta_t { }, "controls", reflect::PropertyType{ "std::vector<std::unique_ptr<Control>>", { 
+            reflect::PropertyType{ "std::unique_ptr<Control>", { 
+                reflect::PropertyType{ "Control", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Control), reflect::PropertyType::Type::T_type },
+            }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::unique_ptr<Control>), reflect::PropertyType::Type::T_template },
+        }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::vector<std::unique_ptr<Control>>), reflect::PropertyType::Type::T_template } } },
     };
     return s_properties;
 }
@@ -50,11 +52,31 @@ void reflect::Type<UserInterface>::from_string(const std::string& str, UserInter
         stream >> size;
         for (int i = 0; i < size; ++i)
         {
-            Control element;
+            std::unique_ptr<Control> element;
             {
-                std::string pack;
-                stream >> pack;
-                element.from_string(pack);
+                bool valid = false;
+                stream >> valid;
+                if (valid)
+                {
+                    reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+                    std::size_t temp_element_size;
+                    temp_stream >> temp_element_size;
+                    std::string type_id;
+                    temp_stream >> type_id;
+                    if (type_id == Type<Control>::name())
+                    {
+                        element = std::make_unique<Control>();
+                    }
+                    else
+                    {
+                        element = std::unique_ptr<Control>(TypeFactory::instantiate<Control>(type_id));
+                    }
+                    {
+                        std::string pack;
+                        stream >> pack;
+                        element->from_string(pack);
+                    }
+                }
             }
             type.controls.push_back(std::move(element));
         }
@@ -71,7 +93,8 @@ std::string reflect::Type<UserInterface>::to_string(const UserInterface& type)
         stream << type.controls.size();
         for (const auto& element : type.controls)
         {
-            stream << static_cast<std::string>(element);
+            stream << (element ? true : false); 
+            if(element) stream << static_cast<std::string>(*element);
         }
     }
     

@@ -11,7 +11,7 @@
 CLASS()
 struct UserInterface : public IType
 {
-	PROPERTY() std::vector<Control> controls;
+	PROPERTY() std::vector<std::unique_ptr<Control>> controls;
 
 	GENERATED_BODY()
 };

@@ -1,5 +1,6 @@
 #include "editor_menu.h"
 
+#include <awesome/asset/sprite_animation_asset.h>
 #include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
 #include <awesome/engine/engine.h>
@@ -31,6 +32,19 @@ void EditorMenu::render()
 
 void EditorMenu::menuAssets()
 {
+	if (EditorUI::Menu::begin("Asset"))
+	{
+		if (EditorUI::Menu::item("Sprite Animation..."))
+		{
+			EditorUI::Dialog::save("Save Sprite Animation...", ".spriteanim", [](const std::filesystem::path& path) -> void
+				{
+					SpriteAnimation animation;
+					ResourcerWriter<SpriteAnimation>::write(animation, path);
+				}
+			);
+		}
+		EditorUI::Menu::end();
+	}
 }
 
 void EditorMenu::menuFile()
@@ -41,7 +55,6 @@ void EditorMenu::menuFile()
 		{
 			Engine::instance().exit();
 		}
-
 		EditorUI::Menu::end();
 	}
 }
@@ -83,7 +96,6 @@ void EditorMenu::menuScene()
 				}
 			);
 		}
-
 		EditorUI::Menu::end();
 	}
 }

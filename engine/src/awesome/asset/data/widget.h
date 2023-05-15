@@ -9,7 +9,7 @@
 CLASS()
 struct Widget : public IType
 {
-	PROPERTY() Control control;
+	PROPERTY() std::unique_ptr<Control> control;
 
 	GENERATED_BODY()
 };

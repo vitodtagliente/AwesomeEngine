@@ -24,10 +24,10 @@ bool UIGraph::load(const UserInterfaceAsset& ui)
 	m_state = State::Loading;
 	std::thread handler([this]()
 		{
-			for (const Control& control : m_ui.resource->controls)
-			{
-				m_root.addChild(std::make_unique<Control>(control));
-			}
+			// for (const auto& control : m_ui.resource->controls)
+			// {
+			// 	m_root.addChild(std::make_unique<Control>(control));
+			// }
 			m_state = State::Ready;
 		}
 	);
@@ -38,9 +38,9 @@ bool UIGraph::load(const UserInterfaceAsset& ui)
 bool UIGraph::save(const std::filesystem::path& path)
 {
 	UserInterface ui;
-	for (const auto& control : m_root.children())
-	{
-		ui.controls.push_back(*control);
-	}
+	// for (const auto& control : m_root.children())
+	// {
+	// 	ui.controls.push_back(*control);
+	// }
 	return ResourcerWriter<UserInterface>::write(ui, path);
 }

@@ -17,4 +17,6 @@ public:
 	GENERATED_BODY()
 private:
 	class Rigidbody2DComponent* m_body{ nullptr };
+	class SpriteAnimatorComponent* m_animator{ nullptr };
+	class SpriteRendererComponent* m_sprite{ nullptr };
 };

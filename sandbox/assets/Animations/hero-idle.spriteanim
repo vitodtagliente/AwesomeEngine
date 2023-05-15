@@ -1,0 +1,73 @@
+{
+    "type_id": "SpriteAnimation",
+    "image": {
+        "type_id": "ImageAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "118729828374800",
+        },
+        "type": 2,
+    },
+    "startingFrame": 0,
+    "frames": [{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.000000,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.035714,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.071429,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.107143,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.142857,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},{
+    "type_id": "SpriteAnimationFrame",
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.178571,
+        "y": 0.555556,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+    "duration": 0.200000,
+},],
+}

@@ -14,7 +14,9 @@ const char* const reflect::Type<Widget>::name() { return "Widget"; }
 const reflect::properties_t& Type<Widget>::properties()
 {
     static reflect::properties_t s_properties {
-        { "control", reflect::Property{ offsetof(Widget, control), reflect::meta_t { }, "control", reflect::PropertyType{ "Control", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Control), reflect::PropertyType::Type::T_type } } },
+        { "control", reflect::Property{ offsetof(Widget, control), reflect::meta_t { }, "control", reflect::PropertyType{ "std::unique_ptr<Control>", { 
+            reflect::PropertyType{ "Control", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(Control), reflect::PropertyType::Type::T_type },
+        }, reflect::PropertyType::DecoratorType::D_raw, sizeof(std::unique_ptr<Control>), reflect::PropertyType::Type::T_template } } },
     };
     return s_properties;
 }
@@ -43,9 +45,29 @@ void reflect::Type<Widget>::from_string(const std::string& str, Widget& type)
     if (_name != name()) return;
     
     {
-        std::string pack;
-        stream >> pack;
-        type.control.from_string(pack);
+        bool valid = false;
+        stream >> valid;
+        if (valid)
+        {
+            reflect::encoding::InputByteStream temp_stream(buffer, stream.getIndex());
+            std::size_t temp_element_size;
+            temp_stream >> temp_element_size;
+            std::string type_id;
+            temp_stream >> type_id;
+            if (type_id == Type<Control>::name())
+            {
+                type.control = std::make_unique<Control>();
+            }
+            else
+            {
+                type.control = std::unique_ptr<Control>(TypeFactory::instantiate<Control>(type_id));
+            }
+            {
+                std::string pack;
+                stream >> pack;
+                type.control->from_string(pack);
+            }
+        }
     }
 }
 
@@ -55,7 +77,8 @@ std::string reflect::Type<Widget>::to_string(const Widget& type)
     reflect::encoding::OutputByteStream stream(buffer);
     stream << name();
     
-    stream << static_cast<std::string>(type.control);
+    stream << (type.control ? true : false); 
+    if(type.control) stream << static_cast<std::string>(*type.control);
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
 }
@@ -74,7 +97,7 @@ void reflect::Type<Widget>::from_json(const std::string& json, Widget& type)
         index = reflect::encoding::json::Deserializer::next_value(src, value);
         if (index != std::string::npos)
         {
-            if (key == "control") type.control.from_json(value);
+            if (key == "control") reflect::encoding::json::Deserializer::parse(value, type.control);
             src = src.substr(index + 1);
         }
         else break;
@@ -86,7 +109,7 @@ std::string reflect::Type<Widget>::to_json(const Widget& type, const std::string
     std::stringstream stream;
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "\"Widget\"" << "," << std::endl;
-    stream << offset << "    " << "\"control\": " << type.control.to_json(offset + "    ") << "," << std::endl;
+    stream << offset << "    " << "\"control\": " << reflect::encoding::json::Serializer::to_string(type.control) << "," << std::endl;
     stream << offset << "}";
     return stream.str();
 }
