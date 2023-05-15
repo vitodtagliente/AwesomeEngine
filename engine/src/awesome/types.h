@@ -8,6 +8,8 @@
 #include "asset/prefab_asset.h"
 #include "asset/scene_asset.h"
 #include "asset/sprite_animation_asset.h"
+#include "asset/user_interface_asset.h"
+#include "asset/widget_asset.h"
 // components
 #include "components/rigidbody2d_component.h"
 #include "components/camera_component.h"

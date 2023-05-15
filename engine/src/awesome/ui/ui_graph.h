@@ -9,7 +9,7 @@
 
 #include "control.h"
 
-class Canvas final : public Singleton<Canvas>
+class UIGraph final : public Singleton<UIGraph>
 {
 public:
 	enum class State

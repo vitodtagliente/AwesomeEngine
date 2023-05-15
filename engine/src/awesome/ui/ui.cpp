@@ -2,7 +2,10 @@
 
 #include <awesome/engine/engine.h>
 
-#include "canvas.h"
+UI::UI()
+	: m_canvas(UIGraph::instance())
+{
+}
 
 bool UI::startup()
 {
@@ -20,5 +23,5 @@ void UI::render()
 
 void UI::update(const double deltaTime)
 {
-	Canvas::instance().update(deltaTime);
+	m_canvas.update(deltaTime);
 }

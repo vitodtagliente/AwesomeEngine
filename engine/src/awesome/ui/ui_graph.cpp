@@ -1,18 +1,18 @@
-#include "canvas.h"
+#include "ui_graph.h"
 
 #include <thread>
 
-void Canvas::clear()
+void UIGraph::clear()
 {
 	m_root.removeChildren();
 }
 
-void Canvas::update(const double deltaTime)
+void UIGraph::update(const double deltaTime)
 {
 	m_root.update(deltaTime);
 }
 
-bool Canvas::load(const UserInterfaceAsset& ui)
+bool UIGraph::load(const UserInterfaceAsset& ui)
 {
 	if (m_state == State::Loading || ui.state != Asset::State::Ready)
 	{
@@ -35,7 +35,7 @@ bool Canvas::load(const UserInterfaceAsset& ui)
 	return true;
 }
 
-bool Canvas::save(const std::filesystem::path& path)
+bool UIGraph::save(const std::filesystem::path& path)
 {
 	UserInterface ui;
 	for (const auto& control : m_root.children())
