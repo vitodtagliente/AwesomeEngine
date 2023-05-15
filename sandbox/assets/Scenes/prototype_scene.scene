@@ -10,8 +10,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": -0.148568,
-            "y": 0.219640,
+            "x": -0.101685,
+            "y": -0.041575,
             "z": 0.000000,
         },
         "rotation": {
@@ -22,8 +22,8 @@
         },
         "scale": {
             "type_id": "math::vec3",
-            "x": 1.525327,
-            "y": 1.525327,
+            "x": 2.000000,
+            "y": 2.000000,
             "z": 1.000000,
         },
         "isStatic": false,
@@ -57,6 +57,15 @@
     },
     "speed": 2.000000,
     "zoomSpeed": 20.000000,
+},{
+    "type_id": "CameraFollow2dComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "121023220099000",
+    },
+    "m_speed": 5.000000,
+    "m_targetTag": "Hero",
 },],
 },{
     "type_id": "Entity",
@@ -98,7 +107,7 @@
     "freezeRotation": false,
     "gravityScale": 9.800000,
     "mass": 1.000000,
-    "m_type": "Dynamic",
+    "m_type": "Static",
 },{
     "type_id": "Collider2DComponent",
     "enabled": true,
@@ -116,16 +125,16 @@
 },],
 },{
     "type_id": "Entity",
-    "name": "box2",
+    "name": "Hero",
     "persistent": false,
     "replicate": false,
-    "tag": "",
+    "tag": "Hero",
     "transform": {
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 2.717215,
-            "y": 1.536805,
+            "x": 3.253824,
+            "y": 1.330387,
             "z": 0.000000,
         },
         "rotation": {
@@ -203,7 +212,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.142857,
+        "x": 0.071429,
         "y": 0.555556,
         "width": 0.035714,
         "height": 0.111111,

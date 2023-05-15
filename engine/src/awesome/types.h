@@ -14,6 +14,7 @@
 #include "components/rigidbody2d_component.h"
 #include "components/camera_component.h"
 #include "components/camera_controller2d_component.h"
+#include "components/camera_follow2d_component.h"
 #include "components/collider2d_component.h"
 #include "components/lifetime_component.h"
 #include "components/orthographic_camera_component.h"
