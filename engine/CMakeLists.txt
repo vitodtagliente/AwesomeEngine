@@ -42,14 +42,14 @@ set(GENERATOR_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/tools/compiler/vdtreflect-
 
 function(generate_reflection EXECUTABLE SRC_DIR)
 	execute_process(
-		COMMAND ${EXECUTABLE} ${SRC_DIR}
+		COMMAND ${EXECUTABLE} ${SRC_DIR} ${ARGV}
 		RESULT_VARIABLE CMD_ERROR
-		OUTPUT_FILE CMD_OUTPUT
+		OUTPUT_VARIABLE CMD_OUTPUT
 	)
 	if(${CMD_ERROR} EQUAL 0)
-		message(STATUS "Generated C++ code for ${SRC_DIR}\n ${CMD_OUTPUT}")
+		message(STATUS "Generated C++ code for ${SRC_DIR}\n${CMD_OUTPUT}")
 	else()
-		message(STATUS "`${SRC_DIR}` failed to generate C++ code with error: ${CMD_ERROR}\n ${CMD_OUTPUT}")
+		message(STATUS "`${SRC_DIR}` failed to generate C++ code with error: ${CMD_ERROR}\n${CMD_OUTPUT}")
 	endif()
 endfunction()
 

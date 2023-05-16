@@ -20,7 +20,6 @@
 #include "components/orthographic_camera_component.h"
 #include "components/sprite_animator_component.h"
 #include "components/sprite_renderer_component.h"
-#include "components/test_component.h"
 // editor
 #include "editor/windows/asset_inspector_window.h"
 #include "editor/windows/content_browser_window.h"
