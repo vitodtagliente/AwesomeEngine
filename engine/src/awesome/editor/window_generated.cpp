@@ -3,6 +3,11 @@
 #include "window.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Window>::instantiate()
+{
+    return dynamic_cast<IType*>(new Window());
+}
+
 const reflect::meta_t& reflect::Type<Window>::meta()
 {
     static reflect::meta_t s_meta {

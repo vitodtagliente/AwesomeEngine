@@ -3,6 +3,11 @@
 #include "asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Asset>::instantiate()
+{
+    return dynamic_cast<IType*>(new Asset());
+}
+
 const reflect::meta_t& reflect::Type<Asset>::meta()
 {
     static reflect::meta_t s_meta {

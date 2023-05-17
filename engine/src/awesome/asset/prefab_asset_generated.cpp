@@ -3,6 +3,11 @@
 #include "prefab_asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<PrefabAsset>::instantiate()
+{
+    return dynamic_cast<IType*>(new PrefabAsset());
+}
+
 const reflect::meta_t& reflect::Type<PrefabAsset>::meta()
 {
     static reflect::meta_t s_meta {
@@ -122,6 +127,11 @@ void PrefabAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string PrefabAsset::to_json(const std::string& offset) const { return reflect::Type<PrefabAsset>::to_json(*this, offset); }
+
+IType* const reflect::Type<PrefabAssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new PrefabAssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<PrefabAssetLoader>::meta()
 {

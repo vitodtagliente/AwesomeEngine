@@ -3,6 +3,11 @@
 #include "scene_asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<SceneAsset>::instantiate()
+{
+    return dynamic_cast<IType*>(new SceneAsset());
+}
+
 const reflect::meta_t& reflect::Type<SceneAsset>::meta()
 {
     static reflect::meta_t s_meta {
@@ -122,6 +127,11 @@ void SceneAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string SceneAsset::to_json(const std::string& offset) const { return reflect::Type<SceneAsset>::to_json(*this, offset); }
+
+IType* const reflect::Type<SceneAssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new SceneAssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<SceneAssetLoader>::meta()
 {

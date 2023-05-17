@@ -3,6 +3,11 @@
 #include "user_interface.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<UserInterface>::instantiate()
+{
+    return dynamic_cast<IType*>(new UserInterface());
+}
+
 const reflect::meta_t& reflect::Type<UserInterface>::meta()
 {
     static reflect::meta_t s_meta {

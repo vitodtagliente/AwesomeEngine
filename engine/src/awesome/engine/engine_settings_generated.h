@@ -25,6 +25,7 @@ struct reflect::Enum<enum class FpsMode> : reflect::RegisteredInEnumFactory<enum
 template <>
 struct reflect::Type<struct RendererSettings> : reflect::RegisteredInTypeFactory<struct RendererSettings>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -41,6 +42,7 @@ struct reflect::Type<struct RendererSettings> : reflect::RegisteredInTypeFactory
 template <>
 struct reflect::Type<struct SceneSettings> : reflect::RegisteredInTypeFactory<struct SceneSettings>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -57,6 +59,7 @@ struct reflect::Type<struct SceneSettings> : reflect::RegisteredInTypeFactory<st
 template <>
 struct reflect::Type<struct EngineSettings> : reflect::RegisteredInTypeFactory<struct EngineSettings>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

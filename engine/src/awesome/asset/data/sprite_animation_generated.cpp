@@ -3,6 +3,11 @@
 #include "sprite_animation.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<SpriteAnimationFrame>::instantiate()
+{
+    return dynamic_cast<IType*>(new SpriteAnimationFrame());
+}
+
 const reflect::meta_t& reflect::Type<SpriteAnimationFrame>::meta()
 {
     static reflect::meta_t s_meta {
@@ -111,6 +116,11 @@ void SpriteAnimationFrame::from_json(const std::string& json)
     type_initialize();
 }
 std::string SpriteAnimationFrame::to_json(const std::string& offset) const { return reflect::Type<SpriteAnimationFrame>::to_json(*this, offset); }
+
+IType* const reflect::Type<SpriteAnimation>::instantiate()
+{
+    return dynamic_cast<IType*>(new SpriteAnimation());
+}
 
 const reflect::meta_t& reflect::Type<SpriteAnimation>::meta()
 {

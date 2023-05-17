@@ -3,6 +3,11 @@
 #include "lifetime_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<LifetimeComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new LifetimeComponent());
+}
+
 const reflect::meta_t& reflect::Type<LifetimeComponent>::meta()
 {
     static reflect::meta_t s_meta {

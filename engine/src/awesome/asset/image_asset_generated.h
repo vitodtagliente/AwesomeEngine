@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct ImageAsset> : reflect::RegisteredInTypeFactory<struct ImageAsset>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct ImageAsset> : reflect::RegisteredInTypeFactory<struc
 template <>
 struct reflect::Type<struct ImageAssetLoader> : reflect::RegisteredInTypeFactory<struct ImageAssetLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

@@ -3,6 +3,11 @@
 #include "sprite_animator_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<SpriteAnimatorComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new SpriteAnimatorComponent());
+}
+
 const reflect::meta_t& reflect::Type<SpriteAnimatorComponent>::meta()
 {
     static reflect::meta_t s_meta {

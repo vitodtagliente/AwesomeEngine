@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct AssetRecord> : reflect::RegisteredInTypeFactory<struct AssetRecord>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct AssetRecord> : reflect::RegisteredInTypeFactory<stru
 template <>
 struct reflect::Type<struct AssetDatabase> : reflect::RegisteredInTypeFactory<struct AssetDatabase>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -39,6 +41,7 @@ struct reflect::Type<struct AssetDatabase> : reflect::RegisteredInTypeFactory<st
 template <>
 struct reflect::Type<struct AssetLoader> : reflect::RegisteredInTypeFactory<struct AssetLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

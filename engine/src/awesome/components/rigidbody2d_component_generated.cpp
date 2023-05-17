@@ -14,6 +14,11 @@ const reflect::enum_values_t& reflect::Enum<RigidbodyType2D>::values()
     return s_values;
 }
 
+IType* const reflect::Type<Rigidbody2DComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new Rigidbody2DComponent());
+}
+
 const reflect::meta_t& reflect::Type<Rigidbody2DComponent>::meta()
 {
     static reflect::meta_t s_meta {

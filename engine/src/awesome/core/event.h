@@ -44,7 +44,7 @@ public:
 
 	inline void bind(const function_t& callback)
 	{
-		m_callbacks.push(callback);
+		m_callbacks.push_back(callback);
 	}
 
 	inline void clear()

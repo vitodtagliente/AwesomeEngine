@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct WidgetAsset> : reflect::RegisteredInTypeFactory<struct WidgetAsset>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct WidgetAsset> : reflect::RegisteredInTypeFactory<stru
 template <>
 struct reflect::Type<struct WidgetAssetLoader> : reflect::RegisteredInTypeFactory<struct WidgetAssetLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

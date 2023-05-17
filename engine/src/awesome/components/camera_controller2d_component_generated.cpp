@@ -3,6 +3,11 @@
 #include "camera_controller2d_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<CameraController2DComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new CameraController2DComponent());
+}
+
 const reflect::meta_t& reflect::Type<CameraController2DComponent>::meta()
 {
     static reflect::meta_t s_meta {

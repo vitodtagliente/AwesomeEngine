@@ -16,6 +16,7 @@ struct reflect::Enum<enum class ColliderType2D> : reflect::RegisteredInEnumFacto
 template <>
 struct reflect::Type<class Collider2DComponent> : reflect::RegisteredInTypeFactory<class Collider2DComponent>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

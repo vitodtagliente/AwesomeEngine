@@ -13,6 +13,11 @@ const reflect::enum_values_t& reflect::Enum<ColliderType2D>::values()
     return s_values;
 }
 
+IType* const reflect::Type<Collider2DComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new Collider2DComponent());
+}
+
 const reflect::meta_t& reflect::Type<Collider2DComponent>::meta()
 {
     static reflect::meta_t s_meta {

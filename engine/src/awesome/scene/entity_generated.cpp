@@ -3,6 +3,11 @@
 #include "entity.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Entity>::instantiate()
+{
+    return dynamic_cast<IType*>(new Entity());
+}
+
 const reflect::meta_t& reflect::Type<Entity>::meta()
 {
     static reflect::meta_t s_meta {

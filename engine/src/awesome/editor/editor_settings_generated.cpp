@@ -3,6 +3,11 @@
 #include "editor_settings.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<EditorSettings>::instantiate()
+{
+    return dynamic_cast<IType*>(new EditorSettings());
+}
+
 const reflect::meta_t& reflect::Type<EditorSettings>::meta()
 {
     static reflect::meta_t s_meta {

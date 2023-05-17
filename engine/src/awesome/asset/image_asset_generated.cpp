@@ -3,6 +3,11 @@
 #include "image_asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<ImageAsset>::instantiate()
+{
+    return dynamic_cast<IType*>(new ImageAsset());
+}
+
 const reflect::meta_t& reflect::Type<ImageAsset>::meta()
 {
     static reflect::meta_t s_meta {
@@ -122,6 +127,11 @@ void ImageAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string ImageAsset::to_json(const std::string& offset) const { return reflect::Type<ImageAsset>::to_json(*this, offset); }
+
+IType* const reflect::Type<ImageAssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new ImageAssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<ImageAssetLoader>::meta()
 {

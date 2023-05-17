@@ -3,6 +3,11 @@
 #include "widget.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Widget>::instantiate()
+{
+    return dynamic_cast<IType*>(new Widget());
+}
+
 const reflect::meta_t& reflect::Type<Widget>::meta()
 {
     static reflect::meta_t s_meta {

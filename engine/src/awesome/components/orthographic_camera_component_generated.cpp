@@ -3,6 +3,11 @@
 #include "orthographic_camera_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<OrthographicCameraComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new OrthographicCameraComponent());
+}
+
 const reflect::meta_t& reflect::Type<OrthographicCameraComponent>::meta()
 {
     static reflect::meta_t s_meta {

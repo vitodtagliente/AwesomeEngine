@@ -3,6 +3,11 @@
 #include "camera_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<CameraComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new CameraComponent());
+}
+
 const reflect::meta_t& reflect::Type<CameraComponent>::meta()
 {
     static reflect::meta_t s_meta {

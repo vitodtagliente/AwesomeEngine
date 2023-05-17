@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct SceneAsset> : reflect::RegisteredInTypeFactory<struct SceneAsset>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct SceneAsset> : reflect::RegisteredInTypeFactory<struc
 template <>
 struct reflect::Type<struct SceneAssetLoader> : reflect::RegisteredInTypeFactory<struct SceneAssetLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

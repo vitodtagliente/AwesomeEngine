@@ -3,6 +3,11 @@
 #include "control.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Control>::instantiate()
+{
+    return dynamic_cast<IType*>(new Control());
+}
+
 const reflect::meta_t& reflect::Type<Control>::meta()
 {
     static reflect::meta_t s_meta {

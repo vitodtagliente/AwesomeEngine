@@ -3,6 +3,11 @@
 #include "widget_asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<WidgetAsset>::instantiate()
+{
+    return dynamic_cast<IType*>(new WidgetAsset());
+}
+
 const reflect::meta_t& reflect::Type<WidgetAsset>::meta()
 {
     static reflect::meta_t s_meta {
@@ -122,6 +127,11 @@ void WidgetAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string WidgetAsset::to_json(const std::string& offset) const { return reflect::Type<WidgetAsset>::to_json(*this, offset); }
+
+IType* const reflect::Type<WidgetAssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new WidgetAssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<WidgetAssetLoader>::meta()
 {

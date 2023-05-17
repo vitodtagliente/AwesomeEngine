@@ -3,6 +3,11 @@
 #include "asset_inspector.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<AssetInspector>::instantiate()
+{
+    return dynamic_cast<IType*>(new AssetInspector());
+}
+
 const reflect::meta_t& reflect::Type<AssetInspector>::meta()
 {
     static reflect::meta_t s_meta {

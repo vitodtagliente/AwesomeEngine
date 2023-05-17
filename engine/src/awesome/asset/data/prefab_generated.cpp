@@ -3,6 +3,11 @@
 #include "prefab.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Prefab>::instantiate()
+{
+    return dynamic_cast<IType*>(new Prefab());
+}
+
 const reflect::meta_t& reflect::Type<Prefab>::meta()
 {
     static reflect::meta_t s_meta {

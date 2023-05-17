@@ -3,6 +3,11 @@
 #include "asset_database.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<AssetRecord>::instantiate()
+{
+    return dynamic_cast<IType*>(new AssetRecord());
+}
+
 const reflect::meta_t& reflect::Type<AssetRecord>::meta()
 {
     static reflect::meta_t s_meta {
@@ -111,6 +116,11 @@ void AssetRecord::from_json(const std::string& json)
     type_initialize();
 }
 std::string AssetRecord::to_json(const std::string& offset) const { return reflect::Type<AssetRecord>::to_json(*this, offset); }
+
+IType* const reflect::Type<AssetDatabase>::instantiate()
+{
+    return dynamic_cast<IType*>(new AssetDatabase());
+}
 
 const reflect::meta_t& reflect::Type<AssetDatabase>::meta()
 {
@@ -234,6 +244,11 @@ void AssetDatabase::from_json(const std::string& json)
     type_initialize();
 }
 std::string AssetDatabase::to_json(const std::string& offset) const { return reflect::Type<AssetDatabase>::to_json(*this, offset); }
+
+IType* const reflect::Type<AssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new AssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<AssetLoader>::meta()
 {

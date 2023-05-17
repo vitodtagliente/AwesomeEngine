@@ -3,6 +3,11 @@
 #include "component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Component>::instantiate()
+{
+    return dynamic_cast<IType*>(new Component());
+}
+
 const reflect::meta_t& reflect::Type<Component>::meta()
 {
     static reflect::meta_t s_meta {

@@ -5,7 +5,7 @@
 #include <vdtreflect/runtime.h>
 
 template <>
-struct reflect::Type<class LifetimeComponent> : reflect::RegisteredInTypeFactory<class LifetimeComponent>
+struct reflect::Type<class HealthComponent> : reflect::RegisteredInTypeFactory<class HealthComponent>
 {
     static IType* const instantiate();
     static const reflect::meta_t& meta();
@@ -13,10 +13,10 @@ struct reflect::Type<class LifetimeComponent> : reflect::RegisteredInTypeFactory
     static const reflect::properties_t& properties();
     static std::size_t size();
 
-    static void from_string(const std::string& str, LifetimeComponent& type);
-    static std::string to_string(const LifetimeComponent& type);
-    static void from_json(const std::string& json, LifetimeComponent& type);
-    static std::string to_json(const LifetimeComponent& type, const std::string& offset = "");
+    static void from_string(const std::string& str, HealthComponent& type);
+    static std::string to_string(const HealthComponent& type);
+    static void from_json(const std::string& json, HealthComponent& type);
+    static std::string to_json(const HealthComponent& type, const std::string& offset = "");
 
     static bool registered() { return type_registered; };
 };

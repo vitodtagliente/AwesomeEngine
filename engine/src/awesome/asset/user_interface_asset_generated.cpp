@@ -3,6 +3,11 @@
 #include "user_interface_asset.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<UserInterfaceAsset>::instantiate()
+{
+    return dynamic_cast<IType*>(new UserInterfaceAsset());
+}
+
 const reflect::meta_t& reflect::Type<UserInterfaceAsset>::meta()
 {
     static reflect::meta_t s_meta {
@@ -122,6 +127,11 @@ void UserInterfaceAsset::from_json(const std::string& json)
     type_initialize();
 }
 std::string UserInterfaceAsset::to_json(const std::string& offset) const { return reflect::Type<UserInterfaceAsset>::to_json(*this, offset); }
+
+IType* const reflect::Type<UserInterfaceAssetLoader>::instantiate()
+{
+    return dynamic_cast<IType*>(new UserInterfaceAssetLoader());
+}
 
 const reflect::meta_t& reflect::Type<UserInterfaceAssetLoader>::meta()
 {

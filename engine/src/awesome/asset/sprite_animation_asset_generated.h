@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct SpriteAnimationAsset> : reflect::RegisteredInTypeFactory<struct SpriteAnimationAsset>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct SpriteAnimationAsset> : reflect::RegisteredInTypeFac
 template <>
 struct reflect::Type<struct SpriteAnimationLoader> : reflect::RegisteredInTypeFactory<struct SpriteAnimationLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

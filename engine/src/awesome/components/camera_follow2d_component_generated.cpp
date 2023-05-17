@@ -3,6 +3,11 @@
 #include "camera_follow2d_component.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<CameraFollow2dComponent>::instantiate()
+{
+    return dynamic_cast<IType*>(new CameraFollow2dComponent());
+}
+
 const reflect::meta_t& reflect::Type<CameraFollow2dComponent>::meta()
 {
     static reflect::meta_t s_meta {

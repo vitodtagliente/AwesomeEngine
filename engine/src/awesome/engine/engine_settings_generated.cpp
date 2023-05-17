@@ -26,6 +26,11 @@ const reflect::enum_values_t& reflect::Enum<FpsMode>::values()
     return s_values;
 }
 
+IType* const reflect::Type<RendererSettings>::instantiate()
+{
+    return dynamic_cast<IType*>(new RendererSettings());
+}
+
 const reflect::meta_t& reflect::Type<RendererSettings>::meta()
 {
     static reflect::meta_t s_meta {
@@ -154,6 +159,11 @@ void RendererSettings::from_json(const std::string& json)
 }
 std::string RendererSettings::to_json(const std::string& offset) const { return reflect::Type<RendererSettings>::to_json(*this, offset); }
 
+IType* const reflect::Type<SceneSettings>::instantiate()
+{
+    return dynamic_cast<IType*>(new SceneSettings());
+}
+
 const reflect::meta_t& reflect::Type<SceneSettings>::meta()
 {
     static reflect::meta_t s_meta {
@@ -275,6 +285,11 @@ void SceneSettings::from_json(const std::string& json)
     type_initialize();
 }
 std::string SceneSettings::to_json(const std::string& offset) const { return reflect::Type<SceneSettings>::to_json(*this, offset); }
+
+IType* const reflect::Type<EngineSettings>::instantiate()
+{
+    return dynamic_cast<IType*>(new EngineSettings());
+}
 
 const reflect::meta_t& reflect::Type<EngineSettings>::meta()
 {

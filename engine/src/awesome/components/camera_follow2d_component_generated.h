@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<class CameraFollow2dComponent> : reflect::RegisteredInTypeFactory<class CameraFollow2dComponent>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

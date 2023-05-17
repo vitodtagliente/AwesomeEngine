@@ -7,6 +7,7 @@
 template <>
 struct reflect::Type<struct UserInterfaceAsset> : reflect::RegisteredInTypeFactory<struct UserInterfaceAsset>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();
@@ -23,6 +24,7 @@ struct reflect::Type<struct UserInterfaceAsset> : reflect::RegisteredInTypeFacto
 template <>
 struct reflect::Type<struct UserInterfaceAssetLoader> : reflect::RegisteredInTypeFactory<struct UserInterfaceAssetLoader>
 {
+    static IType* const instantiate();
     static const reflect::meta_t& meta();
     static const char* const name();
     static const reflect::properties_t& properties();

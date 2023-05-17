@@ -3,6 +3,11 @@
 #include "component_inspector.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<ComponentInspector>::instantiate()
+{
+    return dynamic_cast<IType*>(new ComponentInspector());
+}
+
 const reflect::meta_t& reflect::Type<ComponentInspector>::meta()
 {
     static reflect::meta_t s_meta {

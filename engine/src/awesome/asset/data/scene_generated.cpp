@@ -3,6 +3,11 @@
 #include "scene.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<Scene>::instantiate()
+{
+    return dynamic_cast<IType*>(new Scene());
+}
+
 const reflect::meta_t& reflect::Type<Scene>::meta()
 {
     static reflect::meta_t s_meta {

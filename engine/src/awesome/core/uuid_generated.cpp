@@ -3,6 +3,11 @@
 #include "uuid.h"
 #pragma warning(disable: 4100)
 
+IType* const reflect::Type<uuid>::instantiate()
+{
+    return dynamic_cast<IType*>(new uuid());
+}
+
 const reflect::meta_t& reflect::Type<uuid>::meta()
 {
     static reflect::meta_t s_meta {
