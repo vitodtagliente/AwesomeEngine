@@ -70,5 +70,12 @@
         "value": "104751374565300",
     },
     "type": 2,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "249702876581400",
+    },
+    "type": 3,
 },],
 }

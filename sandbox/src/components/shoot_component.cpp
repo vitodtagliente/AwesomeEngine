@@ -29,6 +29,8 @@ void ShootComponent::update(const double deltaTime)
 
 void ShootComponent::shoot()
 {
+	if (!m_bullet.ready()) return;
+
 	Entity* const entity = SceneGraph::instance().root().addChild(std::make_unique<Entity>(m_bullet.resource->entity));
 	entity->transform.position = m_aim->getPosition();
 	BulletComponent* const bullet = entity->findComponent<BulletComponent>();
