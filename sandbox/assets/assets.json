@@ -25,6 +25,13 @@
     "type_id": "AssetRecord",
     "id": {
         "type_id": "uuid",
+        "value": "249702876581400",
+    },
+    "type": 3,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
         "value": "240233915480700",
     },
     "type": 3,
@@ -74,8 +81,15 @@
     "type_id": "AssetRecord",
     "id": {
         "type_id": "uuid",
-        "value": "249702876581400",
+        "value": "294629116393600",
     },
     "type": 3,
+},{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "294698221171900",
+    },
+    "type": 5,
 },],
 }

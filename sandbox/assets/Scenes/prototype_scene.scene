@@ -10,8 +10,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 0.108626,
-            "y": -0.047932,
+            "x": 0.133067,
+            "y": -0.024032,
             "z": 0.000000,
         },
         "rotation": {
@@ -22,8 +22,8 @@
         },
         "scale": {
             "type_id": "math::vec3",
-            "x": 2.319208,
-            "y": 2.319208,
+            "x": 2.281384,
+            "y": 2.281384,
             "z": 1.000000,
         },
         "isStatic": false,
@@ -133,8 +133,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": -3.476038,
-            "y": 0.766907,
+            "x": -4.258152,
+            "y": 0.384508,
             "z": 0.000000,
         },
         "rotation": {
@@ -310,6 +310,109 @@
         "width": 1.000000,
         "height": 1.000000,
     },
+},],
+},{
+    "type_id": "Entity",
+    "name": "Slime",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": -5.000000,
+            "y": 3.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [{
+    "type_id": "Rigidbody2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "294635171653700",
+    },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 1.000000,
+    "m_type": "Kinematic",
+},{
+    "type_id": "Collider2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "294643964537500",
+    },
+    "bounds": {
+        "type_id": "math::vec2",
+        "x": 1.000000,
+        "y": 1.000000,
+    },
+    "isTrigger": false,
+    "m_type": "Rect",
+},{
+    "type_id": "SpriteRendererComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "294672075761200",
+    },
+    "color": {
+        "type_id": "graphics::Color",
+        "red": 1.000000,
+        "green": 1.000000,
+        "blue": 1.000000,
+        "alpha": 1.000000,
+    },
+    "flipX": false,
+    "flipY": false,
+    "image": {
+        "type_id": "ImageAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "118729828374800",
+        },
+        "type": 2,
+    },
+    "rect": {
+        "type_id": "graphics::TextureRect",
+        "x": 0.178571,
+        "y": 0.333333,
+        "width": 0.035714,
+        "height": 0.111111,
+    },
+},{
+    "type_id": "SpriteAnimatorComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "294825027500400",
+    },
+    "animations": {"idle":{
+    "type_id": "SpriteAnimationAsset",
+    "id": {
+        "type_id": "uuid",
+        "value": "294698221171900",
+    },
+    "type": 5,
+}},
+    "autoplay": true,
 },],
 },],
 }
