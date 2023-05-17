@@ -83,7 +83,7 @@
         "value": "249644747440500",
     },
     "damage": 1,
-    "speed": 1.000000,
+    "speed": 14.000000,
     "m_destroyOnCollision": true,
     "m_targetTag": "",
 },{
@@ -93,7 +93,18 @@
         "type_id": "uuid",
         "value": "249711371703000",
     },
-    "lifetime": 10.000000,
+    "lifetime": 4.000000,
+},{
+    "type_id": "Rigidbody2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "293718853628800",
+    },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 1.000000,
+    "m_type": "Kinematic",
 },],
     },
 }

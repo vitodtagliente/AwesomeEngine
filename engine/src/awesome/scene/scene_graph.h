@@ -23,13 +23,14 @@ public:
 		Ready
 	};
 
-	SceneGraph() = default;
+	SceneGraph();
 
 	Entity& root() { return m_root; }
 	inline const SceneAsset& scene() const { return m_scene; }
 	inline State state() const { return m_state; }
 
 	void clear();
+	void flush();
 	void render(graphics::Renderer& renderer);
 	void update(double deltaTime);
 

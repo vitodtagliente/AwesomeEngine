@@ -26,7 +26,7 @@ void AimComponent::render(graphics::Renderer& renderer)
 	}
 }
 
-void AimComponent::update(const double deltaTime)
+void AimComponent::update(const double)
 {
 	Input& input = Input::instance();
 	CameraComponent* const camera = CameraComponent::main();
@@ -35,17 +35,19 @@ void AimComponent::update(const double deltaTime)
 	m_visible = input.isMousePositionValid();
 	const math::vec3 inputPosition = camera->screenToWorldCoords(input.getMousePosition());
 	m_direction = (inputPosition - getOwnerTransform().position).normalize();
-	const float distance = inputPosition.distance(getOwnerTransform().position);
-	m_range = math::clamp(distance, m_minRange, m_maxRange);
-	m_position = getOwnerTransform().position + m_direction * m_range;
+	m_position = getOwnerTransform().position;
 
-	m_size = math::clamp(m_size + m_resizeSpeed * static_cast<float>(deltaTime) * (m_reduceSize ? -1.f : 1.f), m_minSize, m_maxSize);
-	if (m_reduceSize && m_size == m_minSize)
-	{
-		m_reduceSize = false;
-	}
-	else if (m_reduceSize == false && m_size == m_maxSize)
-	{
-		m_reduceSize = true;
-	}
+	// const float distance = inputPosition.distance(getOwnerTransform().position);
+	// m_range = math::clamp(distance, m_minRange, m_maxRange);
+	// m_position = getOwnerTransform().position + m_direction * m_range;
+	// 
+	// m_size = math::clamp(m_size + m_resizeSpeed * static_cast<float>(deltaTime) * (m_reduceSize ? -1.f : 1.f), m_minSize, m_maxSize);
+	// if (m_reduceSize && m_size == m_minSize)
+	// {
+	// 	m_reduceSize = false;
+	// }
+	// else if (m_reduceSize == false && m_size == m_maxSize)
+	// {
+	// 	m_reduceSize = true;
+	// }
 }

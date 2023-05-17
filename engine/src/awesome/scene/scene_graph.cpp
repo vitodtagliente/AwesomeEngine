@@ -4,9 +4,19 @@
 
 #include <awesome/graphics/renderer.h>
 
+SceneGraph::SceneGraph()
+{
+	m_root.name = "root";
+}
+
 void SceneGraph::clear()
 {
 	m_root.removeChildren();
+}
+
+void SceneGraph::flush()
+{
+	m_root.flush();
 }
 
 void SceneGraph::render(graphics::Renderer& renderer)

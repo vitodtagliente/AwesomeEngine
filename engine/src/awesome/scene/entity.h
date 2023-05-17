@@ -48,6 +48,7 @@ public:
 	std::size_t countChildren() const;
 	void moveChild(Entity* const parent, const uuid& childId);
 
+	void flush();
 	void queue_destroy();
 	void render(graphics::Renderer& renderer);
 	void update(double deltaTime);
@@ -183,5 +184,6 @@ private:
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
 	uuid m_id;
 	Entity* m_parent{ nullptr };
+	std::vector<std::unique_ptr<Entity>> m_pendingSpawnChildren;
 	State m_state{ State::PendingSpawn };
 };

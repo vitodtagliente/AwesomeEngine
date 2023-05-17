@@ -78,6 +78,8 @@ int Engine::run()
 		module->startup();
 	}
 
+	loadDefaultScene();
+
 	// initialize the local player
 	// there's always a player at index 0
 	// Player::initialize(
@@ -103,7 +105,7 @@ int Engine::run()
 
 		if (settings.mode == EngineMode::Editor)
 		{
-			// canvas.setTitle("[AwesomeEngine::Editor " + std::to_string(getStats().framerate) + " FPS] " + settings.name);
+			canvas.setTitle("[AwesomeEngine::Editor " + std::to_string(getStats().framerate) + " FPS]");
 		}
 		canvas.update();
 
@@ -142,7 +144,7 @@ int Engine::run()
 			}
 		}
 
-		// library.flush();
+		scenegraph.flush();
 		deltaTime = 0.0;
 
 		++m_stats.framerate;
@@ -187,6 +189,10 @@ void Engine::initSettings()
 	ComponentRegister::execute();
 
 	settings.load(workspace / EngineSettings::Filename);
+}
+
+void Engine::loadDefaultScene()
+{
 	const EngineMode mode = settings.mode;
 
 	// load the default scene

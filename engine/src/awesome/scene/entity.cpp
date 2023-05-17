@@ -52,6 +52,27 @@ void Entity::moveChild(Entity* const parent, const uuid& childId)
 	}
 }
 
+void Entity::flush()
+{
+	m_children.erase(std::remove_if(
+		m_children.begin(),
+		m_children.end(),
+		[](const std::unique_ptr<Entity>& child) -> bool
+		{
+			return child->m_state == State::PendingDestroy;
+		}
+		),
+		m_children.end()
+	);
+
+	m_children.insert(
+		m_children.end(), 
+		std::make_move_iterator(m_pendingSpawnChildren.begin()),
+		std::make_move_iterator(m_pendingSpawnChildren.end())
+	);
+	m_pendingSpawnChildren.clear();
+}
+
 void Entity::queue_destroy()
 {
 	m_state = State::PendingDestroy;
@@ -84,17 +105,6 @@ void Entity::update(const double deltaTime)
 		prepareToSpawn();
 	}
 	if (m_state == State::PendingDestroy) return;
-
-	m_children.erase(std::remove_if(
-		m_children.begin(),
-		m_children.end(),
-		[](const std::unique_ptr<Entity>& child) -> bool
-		{
-			return child->m_state == State::PendingDestroy;
-		}
-		),
-		m_children.end()
-	);
 
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
@@ -182,8 +192,8 @@ Entity* const Entity::addChild()
 	std::unique_ptr<Entity> child = std::make_unique<Entity>();
 	child->m_parent = this;
 	child->prepareToSpawn();
-	m_children.push_back(std::move(child));
-	return m_children.back().get();
+	m_pendingSpawnChildren.push_back(std::move(child));
+	return m_pendingSpawnChildren.back().get();
 }
 
 Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
@@ -192,8 +202,8 @@ Entity* const Entity::addChild(std::unique_ptr<Entity> entity)
 
 	entity->m_parent = this;
 	entity->prepareToSpawn();
-	m_children.push_back(std::move(entity));
-	return m_children.back().get();
+	m_pendingSpawnChildren.push_back(std::move(entity));
+	return m_pendingSpawnChildren.back().get();
 }
 
 bool Entity::removeChild(Entity* const entity)
@@ -226,6 +236,8 @@ void Entity::removeChildren()
 	{
 		child->queue_destroy();
 	}
+
+	m_pendingSpawnChildren.clear();
 }
 
 void Entity::removeComponent(Component* const component)

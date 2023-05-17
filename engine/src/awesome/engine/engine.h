@@ -54,6 +54,7 @@ public:
 
 private:
 	void initSettings();
+	void loadDefaultScene();
 	void registerDefaultModules();
 
 	std::vector<std::unique_ptr<EngineModule>> m_modules;
