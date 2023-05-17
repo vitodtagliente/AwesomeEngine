@@ -10,8 +10,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 0.133067,
-            "y": -0.024032,
+            "x": 0.080310,
+            "y": -0.058781,
             "z": 0.000000,
         },
         "rotation": {
@@ -133,8 +133,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": -4.258152,
-            "y": 0.384508,
+            "x": -2.569908,
+            "y": 0.940493,
             "z": 0.000000,
         },
         "rotation": {
@@ -179,14 +179,6 @@
     "isTrigger": false,
     "m_type": "Rect",
 },{
-    "type_id": "TestComponent",
-    "enabled": true,
-    "m_id": {
-        "type_id": "uuid",
-        "value": "277223868901300",
-    },
-    "speed": 5.000000,
-},{
     "type_id": "SpriteRendererComponent",
     "enabled": true,
     "m_id": {
@@ -212,7 +204,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.142857,
+        "x": 0.107143,
         "y": 0.555556,
         "width": 0.035714,
         "height": 0.111111,
@@ -310,6 +302,14 @@
         "width": 1.000000,
         "height": 1.000000,
     },
+},{
+    "type_id": "TestComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "297347944063500",
+    },
+    "speed": 5.000000,
 },],
 },{
     "type_id": "Entity",
@@ -392,7 +392,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.178571,
+        "x": 0.107143,
         "y": 0.333333,
         "width": 0.035714,
         "height": 0.111111,

@@ -10,6 +10,7 @@
 #include "windows/content_browser_window.h"
 #include "windows/entity_inspector_window.h"
 #include "windows/game_window.h"
+#include "windows/log_window.h"
 #include "windows/performance_window.h"
 #include "windows/scene_window.h"
 #include "windows/settings_window.h"
@@ -33,6 +34,7 @@ void EditorState::init()
 	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
 	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
 	m_windows.push_back(std::make_unique<GameWindow>());
+	m_windows.push_back(std::make_unique<LogWindow>());
 	m_windows.push_back(std::make_unique<PerformanceWindow>());
 	m_windows.push_back(std::make_unique<SceneWindow>());
 	m_windows.push_back(std::make_unique<SettingsWindow>());
