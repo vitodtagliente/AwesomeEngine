@@ -18,10 +18,10 @@ Entity::Entity(const Entity& other)
 	: storage_id(EntitiesCoordinator::instance().CreateEntity())
 {
 	from_string(other.to_string());
-	//for (const auto component : other.m_components_runtime)
-	//{
-	//	m_components.push_back(component->clone());
-	//}
+	for (const auto component : other.m_components_runtime)
+	{
+		m_components.push_back(component->clone());
+	}
 }
 
 Entity::~Entity()

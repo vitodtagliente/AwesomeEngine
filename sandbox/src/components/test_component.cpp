@@ -10,6 +10,7 @@
 void TestComponent::init()
 {
 	//m_body = getOwner()->findComponent<Rigidbody2DComponent>();
+	//m_body = &EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storage_id);
 	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
 	m_sprite = getOwner()->findComponent<SpriteRendererComponent>();
 }
