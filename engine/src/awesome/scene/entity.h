@@ -40,6 +40,8 @@ public:
 	inline const std::vector<std::unique_ptr<Entity>>& children() const { return m_children; }
 	//used by editor only
 	inline const std::vector<Component*>& components() const { return m_components_runtime; }
+	//used by editor only
+	inline std::vector<std::unique_ptr<Component>>& components_dead() { return m_components; }
 	inline const uuid& id() const { return m_id; }
 	inline Entity* const parent() const { return m_parent; }
 	inline State state() const { return m_state; }

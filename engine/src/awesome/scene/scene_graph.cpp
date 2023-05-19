@@ -59,7 +59,8 @@ bool SceneGraph::save(const std::filesystem::path& path)
 	{
 		if (entity->transient) continue;
 
-		scene.entities.push_back(*entity);
+		Entity persistEntity(*entity);
+		scene.entities.push_back(std::move(persistEntity));
 	}
 	return ResourcerWriter<Scene>::write(scene, path);
 }

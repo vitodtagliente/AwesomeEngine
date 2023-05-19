@@ -24,7 +24,10 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 #define ECS_STORAGE_COMPONENT_DECLARE(CLASS_NAME) \
 	virtual Component* attach(Entity* const entity) override; \
 	static Component* attach_static(Entity* const, CLASS_NAME&& rval); \
-	bool isStorageEnabled() const override { return true; }
+	bool isStorageEnabled() const override { return true; } \
+	virtual void detach() override; \
+	static void detach_static(Entity* const); \
+	virtual std::unique_ptr<Component> clone() override; \
 
 #define ECS_STORAGE_COMPONENT_DEFINE(CLASS_NAME) \
 	Component* CLASS_NAME::attach(Entity* const entity) \
@@ -36,4 +39,20 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 	Component* CLASS_NAME::attach_static(Entity* const entity, CLASS_NAME&& rval) \
 	{ \
 		return &EntitiesCoordinator::instance().AddComponent(entity->storage_id, std::move(rval)); \
+	} \
+	void CLASS_NAME::detach() \
+	{ \
+		static_assert(std::is_base_of_v<Component, CLASS_NAME>); \
+		Entity* const entity = getOwner(); \
+		Component::detach(); \
+		CLASS_NAME::detach_static(entity); \
+	} \
+	void CLASS_NAME::detach_static(Entity* const entity) \
+	{ \
+		entity->components_dead().push_back(std::make_unique<CLASS_NAME>(std::move(EntitiesCoordinator::instance().GetComponent<CLASS_NAME>(entity->storage_id)))); \
+		EntitiesCoordinator::instance().RemoveComponent<CLASS_NAME>(entity->storage_id); \
+	} \
+	std::unique_ptr<Component> CLASS_NAME::clone() \
+	{ \
+	 return std::make_unique<CLASS_NAME>(*this);\
 	}

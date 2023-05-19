@@ -41,7 +41,6 @@ Component* Component::attach(Entity* const entity)
 
 void Component::detach()
 {
-	uninit();
 	m_owner = nullptr;
 }
 

@@ -48,6 +48,7 @@ public:
 
 	virtual Component* attach(Entity* const entity);
 	virtual void detach();
+	virtual std::unique_ptr<Component> clone() { return std::make_unique<Component>(*this); }
 
 	virtual void init() {}
 	virtual void render(graphics::Renderer& /*renderer*/) {};

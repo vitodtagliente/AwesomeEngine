@@ -18,6 +18,10 @@ Entity::Entity(const Entity& other)
 	: storage_id(EntitiesCoordinator::instance().CreateEntity())
 {
 	from_string(other.to_string());
+	for (const auto component : other.m_components_runtime)
+	{
+		m_components.push_back(component->clone());
+	}
 }
 
 Entity::~Entity()
@@ -97,6 +101,15 @@ void Entity::render(class graphics::Renderer& renderer)
 {
 	if (m_state != State::Alive) return;
 
+	for (auto it = m_components_runtime.begin(); it != m_components_runtime.end(); ++it)
+	{
+		const auto& component = *it;
+		if (component->enabled)
+		{
+			component->render(renderer);
+		}
+	}
+
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
 		const auto& component = *it;
@@ -105,6 +118,7 @@ void Entity::render(class graphics::Renderer& renderer)
 			component->render(renderer);
 		}
 	}
+
 
 	for (auto it = m_children.begin(); it != m_children.end(); ++it)
 	{
@@ -270,6 +284,20 @@ void Entity::removeComponent(Component* const component)
 
 void Entity::removeComponent(const uuid& id)
 {
+	const auto& it2 = std::find_if(m_components_runtime.begin(), m_components_runtime.end(), [&id](const Component* component) -> bool
+	{
+		return component->getId() == id;
+	}
+	);
+
+	if (it2 != m_components_runtime.end())
+	{
+		const auto& component = *it2;
+		component->uninit();
+		component->detach();
+		m_components_runtime.erase(it2);
+	}
+
 	const auto& it = std::find_if(m_components.begin(), m_components.end(), [&id](const std::unique_ptr<Component>& component) -> bool
 		{
 			return component->getId() == id;
@@ -321,8 +349,16 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 
-	for (const auto& component : m_components_runtime)
+	auto it = m_components_runtime.begin();
+	while (it != m_components_runtime.end())
+	{
+		const auto& component = *it;
+		component->detach();
+		it = m_components_runtime.erase(it);
+	}
+
+	for (const auto& component : m_components)
 	{
 		component->uninit();
-	}	
+	}
 }

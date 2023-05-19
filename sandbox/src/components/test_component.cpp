@@ -10,20 +10,19 @@
 void TestComponent::init()
 {
 	//m_body = getOwner()->findComponent<Rigidbody2DComponent>();
-	m_body = &EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storage_id);
 	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
 	m_sprite = getOwner()->findComponent<SpriteRendererComponent>();
 }
 
 void TestComponent::update(const double deltaTime)
 {
-	if (m_body == nullptr) return;
-
+	//if (m_body == nullptr) return;
+	auto& body = EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storage_id);
 	Input& input = Input::instance();
 	const float h = input.getAxis(KeyCode::A, KeyCode::D);
 	const float v = input.getAxis(KeyCode::S, KeyCode::W);
 	const math::vec3 direction = math::vec3(h, v, 0.f);
-	m_body->move(direction * speed * static_cast<float>(deltaTime));
+	body.move(direction * speed * static_cast<float>(deltaTime));
 
 	m_animator->play(direction.magnitude() > 0.f ? "walk" : "idle");
 	m_sprite->flipX = h < 0.f;
