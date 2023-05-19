@@ -39,7 +39,7 @@ bool SceneGraph::load(const SceneAsset& scene)
 	clear();
 	m_scene = scene;
 	m_state = State::Loading;
-	std::thread handler([this]()
+	//std::thread handler([this]()
 		{
 			for (const Entity& entity : m_scene.resource->entities)
 			{
@@ -47,8 +47,8 @@ bool SceneGraph::load(const SceneAsset& scene)
 			}
 			m_state = State::Ready;
 		}
-	);
-	handler.detach();
+	//);
+	//handler.detach();
 	return true;
 }
 

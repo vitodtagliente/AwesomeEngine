@@ -27,7 +27,7 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 	bool isStorageEnabled() const override { return true; } \
 	virtual void detach() override; \
 	static void detach_static(Entity* const); \
-	virtual std::unique_ptr<Component> clone() override; \
+//	virtual std::unique_ptr<Component> clone() override; \
 
 #define ECS_STORAGE_COMPONENT_DEFINE(CLASS_NAME) \
 	Component* CLASS_NAME::attach(Entity* const entity) \
@@ -52,7 +52,7 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 		entity->components_dead().push_back(std::make_unique<CLASS_NAME>(std::move(EntitiesCoordinator::instance().GetComponent<CLASS_NAME>(entity->storage_id)))); \
 		EntitiesCoordinator::instance().RemoveComponent<CLASS_NAME>(entity->storage_id); \
 	} \
-	std::unique_ptr<Component> CLASS_NAME::clone() \
-	{ \
-	 return std::make_unique<CLASS_NAME>(*this);\
-	}
+	//std::unique_ptr<Component> CLASS_NAME::clone() \
+	//{ \
+	// return std::make_unique<CLASS_NAME>(*this);\
+	//}
