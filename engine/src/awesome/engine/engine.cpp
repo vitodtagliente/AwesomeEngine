@@ -153,7 +153,7 @@ int Engine::run()
 			}
 		}
 
-		// library.flush();
+		scenegraph.flush();
 		deltaTime = 0.0;
 
 		++m_stats.framerate;
