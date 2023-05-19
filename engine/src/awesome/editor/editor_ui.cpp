@@ -21,6 +21,7 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
+#include "private/component_inspectors/audio_source_component_inspector.h"
 #include "private/component_inspectors/rigidbody2d_component_inspector.h"
 #include "private/component_inspectors/collider2d_component_inspector.h"
 #include "private/component_inspectors/sprite_animator_component_inspector.h"
@@ -241,6 +242,7 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	}
 
 	// component inspectors setup
+	componentInspectors.push_back(std::make_unique<AudioSourceComponentInspector>());
 	componentInspectors.push_back(std::make_unique<Rigidbody2DComponentInspector>());
 	componentInspectors.push_back(std::make_unique<Collider2DComponentInspector>());
 	componentInspectors.push_back(std::make_unique<SpriteAnimatorComponentInspector>());
