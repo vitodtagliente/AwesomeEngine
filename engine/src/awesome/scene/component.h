@@ -3,6 +3,8 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
+#include <awesome/ecs/entities_coordinator.h>
+#include <awesome/ecs/types.h>
 #include <awesome/math/transform.h>
 
 #include "component_generated.h"
@@ -26,9 +28,12 @@ public:
 
 	Component() = default;
 	Component(const Component& other);
+	Component(Component&&) = default;
 	virtual ~Component() = default;
 
 	Component& operator= (const Component& other) = delete;
+	Component& operator= (Component&&) = default;
+
 	bool operator== (const Component& other) const;
 	bool operator!= (const Component& other) const;
 
@@ -39,9 +44,10 @@ public:
 	void queueOwnerDestroy();
 
 	inline bool isAttached() const { return m_owner != nullptr; }
+	virtual bool isStorageEnabled() const { return false; }
 
-	void attach(Entity* const entity);
-	void detach();
+	virtual Component* attach(Entity* const entity);
+	virtual void detach();
 
 	virtual void init() {}
 	virtual void render(graphics::Renderer& /*renderer*/) {};

@@ -28,17 +28,18 @@ public:
 		PendingDestroy
 	};
 
-	Entity() = default;
+	Entity();
 	Entity(const uuid& id);
 	Entity(const Entity& other);
-	virtual ~Entity() = default;
+	virtual ~Entity();
 
 	Entity& operator= (const Entity& other);
 	bool operator== (const Entity& other) const;
 	bool operator!= (const Entity& other) const;
 
 	inline const std::vector<std::unique_ptr<Entity>>& children() const { return m_children; }
-	inline const std::vector<std::unique_ptr<Component>>& components() const { return m_components; }
+	//used by editor only
+	inline const std::vector<Component*>& components() const { return m_components_runtime; }
 	inline const uuid& id() const { return m_id; }
 	inline Entity* const parent() const { return m_parent; }
 	inline State state() const { return m_state; }
@@ -149,6 +150,8 @@ public:
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
 
+	EntityStorageId storage_id;
+
 	PROPERTY() std::string name;
 	PROPERTY() bool persistent{ false };
 	PROPERTY() bool replicate{ false };
@@ -182,6 +185,7 @@ private:
 
 	PROPERTY() std::vector<std::unique_ptr<Entity>> m_children;
 	PROPERTY() std::vector<std::unique_ptr<Component>> m_components;
+	std::vector<Component*> m_components_runtime;
 	uuid m_id;
 	Entity* m_parent{ nullptr };
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnChildren;

@@ -1,20 +1,34 @@
 #include "entity.h"
 
+#include <awesome/ecs/entities_coordinator.h>
 #include <awesome/graphics/renderer.h>
+
+Entity::Entity()
+	: storage_id(EntitiesCoordinator::instance().CreateEntity())
+{
+}
 
 Entity::Entity(const uuid& id)
 	: m_id(id)
+	, storage_id(EntitiesCoordinator::instance().CreateEntity())
 {
 }
 
 Entity::Entity(const Entity& other)
+	: storage_id(EntitiesCoordinator::instance().CreateEntity())
 {
 	from_string(other.to_string());
+}
+
+Entity::~Entity()
+{
+	EntitiesCoordinator::instance().DestroyEntity(storage_id);
 }
 
 Entity& Entity::operator=(const Entity& other)
 {
 	from_string(other.to_string());
+	storage_id = EntitiesCoordinator::instance().CreateEntity();
 	return *this;
 }
 
@@ -105,6 +119,15 @@ void Entity::update(const double deltaTime)
 		prepareToSpawn();
 	}
 	if (m_state == State::PendingDestroy) return;
+
+	for (auto it = m_components_runtime.begin(); it != m_components_runtime.end(); ++it)
+	{
+		const auto& component = *it;
+		if (component->enabled)
+		{
+			component->update(deltaTime);
+		}
+	}
 
 	for (auto it = m_components.begin(); it != m_components.end(); ++it)
 	{
@@ -264,10 +287,23 @@ void Entity::removeComponent(const uuid& id)
 
 void Entity::prepareToSpawn()
 {
-	for (const auto& component : m_components)
+	auto it = m_components.begin();
+	while (it != m_components.end())
 	{
-		component->attach(this);
-		component->init();
+		auto& component = *it;
+		if (component->isStorageEnabled())
+		{
+			auto ptr = component.release();
+			m_components_runtime.push_back(ptr->attach(this));
+			m_components_runtime.back()->init();
+			it = m_components.erase(it);
+		}
+		else
+		{
+			component->attach(this);
+			component->init();
+			++it;
+		}
 	}
 
 	for (const auto& child : m_children)
@@ -285,7 +321,7 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 
-	for (const auto& component : m_components)
+	for (const auto& component : m_components_runtime)
 	{
 		component->uninit();
 	}	

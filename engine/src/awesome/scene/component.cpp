@@ -33,9 +33,10 @@ void Component::queueOwnerDestroy()
 	m_owner->queue_destroy();
 }
 
-void Component::attach(Entity* const entity)
+Component* Component::attach(Entity* const entity)
 {
 	m_owner = entity;
+	return this;
 }
 
 void Component::detach()

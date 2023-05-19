@@ -3,12 +3,14 @@
 #include <awesome/components/rigidbody2d_component.h>
 #include <awesome/components/sprite_animator_component.h>
 #include <awesome/components/sprite_renderer_component.h>
+#include <awesome\ecs\entities_coordinator.h>
 #include <awesome/engine/input.h>
 #include <awesome/scene/entity.h>
 
 void TestComponent::init()
 {
-	m_body = getOwner()->findComponent<Rigidbody2DComponent>();
+	//m_body = getOwner()->findComponent<Rigidbody2DComponent>();
+	m_body = &EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storage_id);
 	m_animator = getOwner()->findComponent<SpriteAnimatorComponent>();
 	m_sprite = getOwner()->findComponent<SpriteRendererComponent>();
 }

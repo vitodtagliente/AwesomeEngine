@@ -8,6 +8,7 @@
 #include <awesome/asset/asset_library.h>
 #include <awesome/asset/scene_asset.h>
 #include <awesome/components/component_register.h>
+#include <awesome/ecs/entities_coordinator.h>
 #include <awesome/engine/canvas.h>
 #include <awesome/engine/input.h>
 #include <awesome/engine/time.h>
@@ -58,6 +59,7 @@ void Engine::init(const std::initializer_list<EngineModule*>& modules)
 int Engine::run()
 {
 	// AssetLibrary& library = AssetLibrary::instance();
+	EntitiesCoordinator::instance().Init();
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
 	Time time;

@@ -2,6 +2,7 @@
 
 #include <awesome/core/reflection.h>
 #include "component_library.h"
+#include "rigidbody2d_component.h"
 
 void ComponentRegister::execute()
 {
@@ -17,4 +18,5 @@ void ComponentRegister::execute()
 		}
 		library.push_back({ name, category });
 	}
+	EntitiesCoordinator::instance().RegisterComponent<Rigidbody2DComponent>();
 }
