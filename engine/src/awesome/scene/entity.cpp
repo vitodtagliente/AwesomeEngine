@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include <iostream>
+
 #include <awesome/ecs/entities_coordinator.h>
 #include <awesome/graphics/renderer.h>
 
@@ -20,12 +22,19 @@ Entity::Entity(const Entity& other)
 	from_string(other.to_string());
 	for (const auto component : other.m_components_runtime)
 	{
-		m_components.push_back(component->clone());
+		m_components.push_back(component->clone(this));
 	}
 }
 
 Entity::~Entity()
 {
+	auto it = m_components_runtime.begin();
+	while (it != m_components_runtime.end())
+	{
+		const auto& component = *it;
+		component->detach();
+		it = m_components_runtime.erase(it);
+	}
 	EntitiesCoordinator::instance().DestroyEntity(storage_id);
 }
 
@@ -315,6 +324,7 @@ void Entity::removeComponent(const uuid& id)
 
 void Entity::prepareToSpawn()
 {
+	std::cout << "spawining... " << m_id.value << std::endl;
 	auto it = m_components.begin();
 	while (it != m_components.end())
 	{
@@ -349,15 +359,12 @@ void Entity::prepareToDestroy()
 		child->prepareToDestroy();
 	}
 
-	auto it = m_components_runtime.begin();
-	while (it != m_components_runtime.end())
+	for (const auto& component : m_components)
 	{
-		const auto& component = *it;
-		component->detach();
-		it = m_components_runtime.erase(it);
+		component->uninit();
 	}
 
-	for (const auto& component : m_components)
+	for (const auto& component : m_components_runtime)
 	{
 		component->uninit();
 	}

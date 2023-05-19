@@ -120,16 +120,16 @@ int Engine::run()
 
 		// update the modules
 		{
-			TaskList tasks;
+			//TaskList tasks;
 			for (const auto& module : m_modules)
 			{
-				tasks.push(std::async(std::launch::async, [&module, deltaTime]() -> void
-					{
+				//tasks.push(std::async(std::launch::async, [&module, deltaTime]() -> void
+					//{
 						module->update(deltaTime);
-					}
-				));
+					//}
+				//));
 			}
-			tasks.wait();
+			//tasks.wait();
 		}
 
 		input.update();

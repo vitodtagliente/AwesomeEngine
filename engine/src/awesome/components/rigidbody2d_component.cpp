@@ -59,4 +59,33 @@ void Rigidbody2DComponent::move(const math::vec3& amount)
 	position = future_position;
 }
 
-ECS_STORAGE_COMPONENT_DEFINE(Rigidbody2DComponent);
+//ECS_STORAGE_COMPONENT_DEFINE(Rigidbody2DComponent);
+
+Component* Rigidbody2DComponent::attach(Entity* const entity)
+{ 
+static_assert(std::is_base_of_v<Component, Rigidbody2DComponent>);
+Component::attach(entity); 
+return Rigidbody2DComponent::attach_static(entity, std::move(*this));
+} 
+Component* Rigidbody2DComponent::attach_static(Entity* const entity, Rigidbody2DComponent&& rval)
+{ 
+return &EntitiesCoordinator::instance().AddComponent(entity->storage_id, std::move(rval)); 
+} 
+void Rigidbody2DComponent::detach()
+{ 
+static_assert(std::is_base_of_v<Component, Rigidbody2DComponent>);
+Entity* const entity = getOwner(); 
+Component::detach(); 
+Rigidbody2DComponent::detach_static(entity);
+} 
+void Rigidbody2DComponent::detach_static(Entity* const entity)
+{ 
+entity->components_dead().push_back(std::make_unique<Rigidbody2DComponent>(std::move(EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(entity->storage_id))));
+EntitiesCoordinator::instance().RemoveComponent<Rigidbody2DComponent>(entity->storage_id);
+} 
+std::unique_ptr<Component> Rigidbody2DComponent::clone(Entity* const entity)
+{ 
+auto tmp = std::make_unique<Rigidbody2DComponent>(*this); \
+tmp->m_owner = entity; 
+return tmp; 
+}

@@ -48,7 +48,7 @@ public:
 
 	virtual Component* attach(Entity* const entity);
 	virtual void detach();
-	virtual std::unique_ptr<Component> clone() { return std::make_unique<Component>(*this); }
+	virtual std::unique_ptr<Component> clone(Entity* const) { return std::make_unique<Component>(*this); }
 
 	virtual void init() {}
 	virtual void render(graphics::Renderer& /*renderer*/) {};
@@ -64,7 +64,7 @@ public:
 
 	GENERATED_BODY()
 
-private:
+protected:
 	PROPERTY() uuid m_id;
 	Entity* m_owner{ nullptr };
 

@@ -10,8 +10,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": 0.108626,
-            "y": -0.047932,
+            "x": 0.031251,
+            "y": -0.036396,
             "z": 0.000000,
         },
         "rotation": {
@@ -98,17 +98,6 @@
     "transient": false,
     "m_children": [],
     "m_components": [{
-    "type_id": "Rigidbody2DComponent",
-    "enabled": true,
-    "m_id": {
-        "type_id": "uuid",
-        "value": "221868635373500",
-    },
-    "freezeRotation": false,
-    "gravityScale": 9.800000,
-    "mass": 1.000000,
-    "m_type": "Static",
-},{
     "type_id": "Collider2DComponent",
     "enabled": true,
     "m_id": {
@@ -122,6 +111,17 @@
     },
     "isTrigger": false,
     "m_type": "Rect",
+},{
+    "type_id": "Rigidbody2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "271137350598000",
+    },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 1.000000,
+    "m_type": "Static",
 },],
 },{
     "type_id": "Entity",
@@ -133,8 +133,8 @@
         "type_id": "math::transform",
         "position": {
             "type_id": "math::vec3",
-            "x": -3.476038,
-            "y": 0.766907,
+            "x": -1.000017,
+            "y": 0.582337,
             "z": 0.000000,
         },
         "rotation": {
@@ -154,17 +154,6 @@
     "transient": false,
     "m_children": [],
     "m_components": [{
-    "type_id": "Rigidbody2DComponent",
-    "enabled": true,
-    "m_id": {
-        "type_id": "uuid",
-        "value": "221874641403200",
-    },
-    "freezeRotation": false,
-    "gravityScale": 9.800000,
-    "mass": 1.000000,
-    "m_type": "Kinematic",
-},{
     "type_id": "Collider2DComponent",
     "enabled": true,
     "m_id": {
@@ -212,7 +201,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.142857,
+        "x": 0.178571,
         "y": 0.555556,
         "width": 0.035714,
         "height": 0.111111,
@@ -310,6 +299,17 @@
         "width": 1.000000,
         "height": 1.000000,
     },
+},{
+    "type_id": "Rigidbody2DComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "271137352037500",
+    },
+    "freezeRotation": false,
+    "gravityScale": 9.800000,
+    "mass": 2.000000,
+    "m_type": "Kinematic",
 },],
 },],
 }
