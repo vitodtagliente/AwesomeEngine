@@ -58,3 +58,5 @@ void Rigidbody2DComponent::move(const math::vec3& amount)
 	}
 	position = future_position;
 }
+
+ECS_STORAGE_COMPONENT_DEFINE(Rigidbody2DComponent);

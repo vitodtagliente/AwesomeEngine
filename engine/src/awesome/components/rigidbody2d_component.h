@@ -21,6 +21,10 @@ class Rigidbody2DComponent : public Component
 public:
 	friend class Rigidbody2DComponentInspector;
 
+	Rigidbody2DComponent() = default;
+	Rigidbody2DComponent(Rigidbody2DComponent&&) = default;
+	Rigidbody2DComponent& operator=(Rigidbody2DComponent&&) = default;
+
 	virtual void init() override;
 	virtual void update(double /*deltaTime*/) override;
 
@@ -34,6 +38,8 @@ public:
 	PROPERTY() float mass{ 1.f };
 
 	GENERATED_BODY()
+
+	ECS_STORAGE_COMPONENT_DECLARE(Rigidbody2DComponent)
 
 private:
 	class Collider2DComponent* m_collider{ nullptr };

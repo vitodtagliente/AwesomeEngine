@@ -756,7 +756,7 @@ void EditorUI::input(Entity& entity)
 		const auto& it = std::find_if(
 			entity.components().begin(),
 			entity.components().end(),
-			[&name](const std::unique_ptr<Component>& component) -> bool
+			[&name](const Component* component) -> bool
 			{
 				return component->type_name() == name;
 			}
