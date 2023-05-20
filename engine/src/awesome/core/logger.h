@@ -13,9 +13,12 @@ public:
 	class IListener
 	{
 	public:
+		friend class Logger;
+
 		IListener();
 		virtual ~IListener();
 
+	protected:
 		virtual void onLog(const std::string& time, const std::string& category, const std::string& level, const std::string& message) = 0;
 	};
 	friend IListener;

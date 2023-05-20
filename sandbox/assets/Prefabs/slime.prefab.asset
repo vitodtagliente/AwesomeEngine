@@ -1,0 +1,8 @@
+{
+    "type_id": "AssetRecord",
+    "id": {
+        "type_id": "uuid",
+        "value": "294629116393600",
+    },
+    "type": 3,
+}
