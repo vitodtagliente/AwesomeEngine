@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.2)
 project(Sandbox)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -12,13 +12,17 @@ else()
     endif()
 endif()
 
+if(ASAN_ENABLED)
+	string(REGEX REPLACE "/RTC(su|[1su])" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+	message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
+	add_compile_options(-fsanitize=address -fsanitize=fuzzer)
+endif()
+
 include_directories( 
 	src/
 )
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine ${CMAKE_CURRENT_BINARY_DIR}/engine)
-
-set(GENERATOR_EXECUTABLE "${CMAKE_CURRENT_SOURCE_DIR}/../engine/tools/compiler/vdtreflect-compiler.exe")
 
 # generate reflection data
 generate_reflection(${GENERATOR_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src -include ${CMAKE_CURRENT_SOURCE_DIR}/../engine/src)
@@ -38,12 +42,18 @@ add_executable(
     ${PROJECT_SOURCE_FILES} 
 )
 
+if(MSVC)
+	target_compile_options(${PROJECT_NAME} PRIVATE "/MP")
+endif()
+
 SET(CMAKE_DEFAULT_STARTUP_PROJECT Sandbox)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES 
     LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:WINDOWS")
 
+target_precompile_headers(${PROJECT_NAME} REUSE_FROM ${ENGINE_PROJECT_NAME})
+
 target_link_libraries(
     ${PROJECT_NAME} 
-    AwesomeEngine
+    ${ENGINE_PROJECT_NAME}
 )
