@@ -7,6 +7,7 @@
 #include <awesome/core/reflection.h>
 
 #include <awesome/asset/image_asset.h>
+#include <awesome/audio/audio_stream.h>
 #include <awesome/engine/keycode.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/texture_coords.h>
@@ -22,6 +23,13 @@
 struct EditorUI final
 {
 	EditorUI() = delete;
+
+	struct Audio final
+	{
+		Audio() = delete;
+
+		static void player(const AudioStreamPtr& stream);
+	};
 
 	struct Child final
 	{

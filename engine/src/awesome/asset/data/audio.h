@@ -1,6 +1,19 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <miniaudio.h>
+#include <awesome/core/reflection.h>
 
-using Audio = ma_sound;
+#include "audio_generated.h"
+
+ENUM()
+enum class AudioType : int
+{
+	flac,
+	mp3,
+	wav
+};
+
+struct Audio
+{
+	AudioType type;
+};

@@ -5,12 +5,10 @@
 
 #include <awesome/core/logger.h>
 
-ma_engine* audio_context{ nullptr };
+#include "audio_engine.h"
 
-AudioModule::AudioModule()
-{
-	s_instance = this;
-}
+extern ma_engine* audio_context{ nullptr };
+AudioEngine* audio_engine{ nullptr };
 
 bool AudioModule::startup()
 {
@@ -18,21 +16,17 @@ bool AudioModule::startup()
 	config.listenerCount = 1;
 
 	audio_context = new ma_engine();
-	const bool result = ma_engine_init(&config, audio_context) == MA_SUCCESS;
-	if (!result)
+	if (ma_engine_init(&config, audio_context) != MA_SUCCESS)
 	{
 		ERR_LOG("Audio", "Failed to initialize the audio module");
+		return false;
 	}
-	return result;
+	return audio_engine = new AudioEngine(), true;
 }
 
 void AudioModule::shutdown()
 {
+	delete audio_engine;
 	ma_engine_uninit(audio_context);
 	delete audio_context;
-}
-
-void* const AudioModule::context() const
-{
-	return static_cast<void*>(audio_context);
 }

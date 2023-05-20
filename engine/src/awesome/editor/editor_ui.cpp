@@ -68,6 +68,54 @@ const std::string EditorUI::Icon::tree{ ICON_FA_TREE };
 const std::string EditorUI::Icon::upload{ ICON_FA_UPLOAD };
 const std::string EditorUI::Icon::video{ ICON_FA_VIDEO };
 
+void EditorUI::Audio::player(const AudioStreamPtr& stream)
+{
+	if (stream == nullptr) return;
+
+	separatorText("Audio Player");
+	text(stream->path().filename().string().c_str());
+	sameLine();
+
+	switch (stream->state())
+	{
+	case AudioStream::State::Stopped:
+	{
+		if (button(Icon::play.c_str()))
+		{
+			stream->play();
+		}
+		break;
+	}
+	case AudioStream::State::Paused:
+	{
+		if (button(Icon::pause.c_str()))
+		{
+			stream->resume();
+		}
+		sameLine();
+		if (button(Icon::stop.c_str()))
+		{
+			stream->stop();
+		}
+		break;
+	}
+	case AudioStream::State::Playing:
+	default:
+	{
+		if (button(Icon::pause.c_str()))
+		{
+			stream->pause();
+		}
+		sameLine();
+		if (button(Icon::stop.c_str()))
+		{
+			stream->stop();
+		}
+		break;
+	}
+	}
+}
+
 void EditorUI::Child::begin(const char* const name)
 {
 	ImGui::BeginChild(name, ImVec2(0.f, 0.f), false, ImGuiWindowFlags_AlwaysUseWindowPadding);

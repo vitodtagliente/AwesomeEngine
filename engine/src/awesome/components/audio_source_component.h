@@ -2,6 +2,7 @@
 #pragma once
 
 #include <awesome/asset/audio_asset.h>
+#include <awesome/audio/audio_engine.h>
 #include <awesome/scene/component.h>
 
 #include "audio_source_component_generated.h"
@@ -10,23 +11,9 @@ CLASS(Type = Component, Category = Audio)
 class AudioSourceComponent : public Component
 {
 public:	
-	enum class State
-	{
-		Paused,
-		Playing, 
-		Stopped
-	};
-
 	friend class AudioSourceComponentInspector;
 
 	void init() override;
-
-	void pause();
-	void play();
-	void resume();
-	void stop();
-
-	State state() const { return m_state; }
 
 	void apply();
 
@@ -35,9 +22,11 @@ public:
 	PROPERTY() float pitch{ 1.0f };
 	PROPERTY() float volume{ 1.0f };
 
+	AudioStreamPtr stream() const { return m_stream; }
+
 	GENERATED_BODY()
 
 private:
 	PROPERTY() bool m_playOnAwake{ false };
-	State m_state{ State::Stopped };
+	AudioStreamPtr m_stream{ nullptr };
 };

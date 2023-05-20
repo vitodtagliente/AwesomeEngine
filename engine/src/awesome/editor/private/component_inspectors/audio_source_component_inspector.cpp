@@ -35,44 +35,5 @@ void AudioSourceComponentInspector::inspect(Component& component)
 		audio_source.apply();
 	}
 
-	EditorUI::separatorText("Player");
-
-	switch (audio_source.state())
-	{
-	case AudioSourceComponent::State::Stopped:
-	{
-		if (EditorUI::button(EditorUI::Icon::play.c_str()))
-		{
-			audio_source.play();
-		}
-		break;
-	}
-	case AudioSourceComponent::State::Paused:
-	{
-		if (EditorUI::button(EditorUI::Icon::play.c_str()))
-		{
-			audio_source.resume();
-		}
-		EditorUI::sameLine();
-		if (EditorUI::button(EditorUI::Icon::stop.c_str()))
-		{
-			audio_source.stop();
-		}
-		break;
-	}
-	case AudioSourceComponent::State::Playing:
-	default:
-	{
-		if (EditorUI::button(EditorUI::Icon::pause.c_str()))
-		{
-			audio_source.pause();
-		}
-		EditorUI::sameLine();
-		if (EditorUI::button(EditorUI::Icon::stop.c_str()))
-		{
-			audio_source.stop();
-		}
-		break;
-	}
-	}
+	EditorUI::Audio::player(audio_source.stream());
 }

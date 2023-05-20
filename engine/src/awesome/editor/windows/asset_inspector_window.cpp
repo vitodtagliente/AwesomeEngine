@@ -4,6 +4,7 @@
 #include <awesome/editor/editor_ui.h>
 #include <awesome/graphics/color.h>
 
+#include <awesome/editor/private/asset_inspectors/audio_asset_inspector.h>
 #include <awesome/editor/private/asset_inspectors/image_asset_inspector.h>
 #include <awesome/editor/private/asset_inspectors/prefab_asset_inspector.h>
 #include <awesome/editor/private/asset_inspectors/scene_asset_inspector.h>
@@ -22,6 +23,7 @@ char* const AssetInspectorWindow::getTitle() const
 
 void AssetInspectorWindow::init()
 {
+	m_inspectors.push_back(std::make_unique<AudioAssetInspector>());
 	m_inspectors.push_back(std::make_unique<ImageAssetInspector>());
 	m_inspectors.push_back(std::make_unique<PrefabAssetInspector>());
 	m_inspectors.push_back(std::make_unique<SceneAssetInspector>());

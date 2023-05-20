@@ -1,7 +1,6 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
-#include <awesome/audio/audio_loader.h>
 #include <awesome/core/reflection.h>
 
 #include "asset.h"
@@ -18,11 +17,11 @@ struct ResourceReader<Audio>
 	static result_type read(const std::filesystem::path& path, Args&&... args)
 	{
 		result_type audio = std::make_shared<Audio>();
-		if (AudioLoader::load(path, *audio))
-		{
-			return audio;
-		}
-		return nullptr;
+
+		const std::string extension = path.extension().string();
+		stringToEnum(extension, audio->type);
+
+		return audio;
 	};
 };
 
