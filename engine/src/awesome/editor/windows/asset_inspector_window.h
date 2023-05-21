@@ -16,6 +16,7 @@ public:
 	virtual char* const getTitle() const override;
 
 	virtual void init() override;
+	virtual void uninit() override;
 	virtual void render() override;
 	virtual void update(double deltaTime) override;
 

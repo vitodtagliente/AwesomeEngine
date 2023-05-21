@@ -159,9 +159,9 @@ int Engine::run()
 	scenegraph.clear();
 	scenegraph.flush();
 
-	for (const auto& module : m_modules)
+	for (std::vector<std::unique_ptr<EngineModule>>::reverse_iterator it = m_modules.rbegin(); it != m_modules.rend(); ++it) 
 	{
-		module->shutdown();
+		(*it)->shutdown();
 	}
 
 	return 0;

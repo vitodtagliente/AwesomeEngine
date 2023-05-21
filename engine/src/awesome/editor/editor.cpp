@@ -37,6 +37,7 @@ bool Editor::startup()
 
 void Editor::shutdown()
 {
+	state.uninit();
 	EditorUI::Runtime::shutdown();
 	delete menu;
 }

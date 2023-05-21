@@ -39,6 +39,11 @@ void AssetInspectorWindow::init()
 	}
 }
 
+void AssetInspectorWindow::uninit()
+{
+	m_inspectors.clear();
+}
+
 void AssetInspectorWindow::render()
 {
 	static const graphics::Color s_filenameColor(0.f, 0.6f, 0.6f);

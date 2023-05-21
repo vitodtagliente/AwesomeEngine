@@ -74,6 +74,16 @@ void EditorState::init()
 	settings.save();
 }
 
+void EditorState::uninit()
+{
+	reset();
+	for (std::vector<std::unique_ptr<Window>>::reverse_iterator it = m_windows.rbegin(); it != m_windows.rend(); ++it)
+	{
+		(*it)->uninit();
+	}
+	m_windows.clear();
+}
+
 void EditorState::select(const AssetRecord& asset)
 {
 	if (selection.asset.has_value()

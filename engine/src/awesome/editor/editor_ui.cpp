@@ -332,6 +332,8 @@ void EditorUI::Runtime::update()
 
 void EditorUI::Runtime::shutdown()
 {
+	componentInspectors.clear();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();

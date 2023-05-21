@@ -6,7 +6,6 @@
 AudioStream::AudioStream(const AudioAsset& asset)
 {
 	m_data = new ma_sound();
-	m_id = asset.id;
 	m_path = asset.path;
 }
 

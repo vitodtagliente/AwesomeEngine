@@ -22,6 +22,7 @@ public:
 	void setIsHovered(bool isHovered);
 
 	virtual void init() {}
+	virtual void uninit() {}
 	virtual void render() {}
 	virtual void update(double /*deltaTime*/) {}
 

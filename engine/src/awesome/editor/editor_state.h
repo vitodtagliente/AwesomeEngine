@@ -26,6 +26,7 @@ public:
 	EditorState();
 
 	void init();
+	void uninit();
 
 	static EditorState* const instance() { return s_instance; }
 

@@ -204,7 +204,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.178571,
+        "x": 0.142857,
         "y": 0.555556,
         "width": 0.035714,
         "height": 0.111111,
@@ -399,7 +399,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.107143,
+        "x": 0.142857,
         "y": 0.333333,
         "width": 0.035714,
         "height": 0.111111,

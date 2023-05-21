@@ -18,7 +18,6 @@ AudioEngine::AudioEngine()
 
 void AudioEngine::clean()
 {
-	m_streams.clear();
 	audio_engine_temps.clear();
 }
 
@@ -38,18 +37,6 @@ void AudioEngine::flush()
 
 void AudioEngine::play(const AudioAsset& asset, const float volume)
 {
-	AudioStreamPtr audio_stream = stream(asset);
-	if (audio_stream)
-	{
-		audio_stream->stop();
-		audio_stream->setLooping(false);
-		audio_stream->setVolume(volume);
-		audio_stream->play();
-	}
-}
-
-void AudioEngine::playOneShot(const AudioAsset& asset, const float volume)
-{
 	std::unique_ptr<AudioStream> audio_stream = std::make_unique<AudioStream>(asset);
 	if (ma_sound_init_from_file(audio_context, asset.path.string().c_str(), MA_SOUND_FLAG_NO_SPATIALIZATION, nullptr, nullptr, audio_stream->data()) != MA_SUCCESS)
 	{
@@ -57,6 +44,7 @@ void AudioEngine::playOneShot(const AudioAsset& asset, const float volume)
 		return;
 	}
 
+	audio_stream->setLooping(false);
 	audio_stream->setVolume(volume);
 	audio_stream->play();
 	audio_engine_temps.push_back(std::move(audio_stream));
@@ -64,21 +52,11 @@ void AudioEngine::playOneShot(const AudioAsset& asset, const float volume)
 
 AudioStreamPtr AudioEngine::stream(const AudioAsset& asset)
 {
-	const auto& it = m_streams.find(asset.id);
-	if (it != m_streams.end())
-	{
-		return it->second.lock();
-	}
-
-	if (audio_context == nullptr)
-		return nullptr;
-
 	AudioStreamPtr audio_stream = std::make_shared<AudioStream>(asset);
 	if (ma_sound_init_from_file(audio_context, asset.path.string().c_str(), MA_SOUND_FLAG_NO_SPATIALIZATION, nullptr, nullptr, audio_stream->data()) != MA_SUCCESS)
 	{
 		ERR_LOG("Audio", "Failed to load the audio asset");
 		return nullptr;
 	}
-	m_streams.insert(std::make_pair(asset.id, audio_stream));
 	return audio_stream;
 }
