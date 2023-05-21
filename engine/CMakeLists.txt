@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.2)
 project(AwesomeEngine)
 set(ENGINE_PROJECT_NAME AwesomeEngine PARENT_SCOPE)
 
-# enable the C++ 11 standard
 set(CMAKE_CXX_STANDARD 17)
 
 if(MSVC)
@@ -143,6 +142,8 @@ if(NOT TARGET vdtmath)
 endif()
 if(NOT TARGET vdtgraphics)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtgraphics)
+	file(GLOB_RECURSE _PRECOMPILED_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtgraphics/include/vdtgraphics/*.h)
+	list (APPEND PRECOMPILED_HEADERS ${_PRECOMPILED_HEADERS})
 endif()
 if(NOT TARGET vdtjson)
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtjson)
@@ -174,5 +175,4 @@ target_link_libraries(
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
     src/
-	vendor/miniaudio/
 )
