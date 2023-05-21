@@ -26,6 +26,7 @@ bool AudioModule::startup()
 
 void AudioModule::shutdown()
 {
+	audio_engine->clean();
 	delete audio_engine;
 	ma_engine_uninit(audio_context);
 	delete audio_context;

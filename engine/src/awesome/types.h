@@ -12,6 +12,7 @@
 #include "asset/user_interface_asset.h"
 #include "asset/widget_asset.h"
 // components
+#include "components/audio_listener_component.h"
 #include "components/audio_source_component.h"
 #include "components/rigidbody2d_component.h"
 #include "components/camera_component.h"

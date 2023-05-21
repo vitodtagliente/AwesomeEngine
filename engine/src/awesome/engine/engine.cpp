@@ -156,6 +156,9 @@ int Engine::run()
 		}
 	}
 
+	scenegraph.clear();
+	scenegraph.flush();
+
 	for (const auto& module : m_modules)
 	{
 		module->shutdown();

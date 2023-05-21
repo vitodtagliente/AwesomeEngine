@@ -16,6 +16,12 @@ AudioEngine::AudioEngine()
 	s_instance = this;
 }
 
+void AudioEngine::clean()
+{
+	m_streams.clear();
+	audio_engine_temps.clear();
+}
+
 void AudioEngine::flush()
 {
 	audio_engine_temps.erase(std::remove_if(
@@ -23,12 +29,11 @@ void AudioEngine::flush()
 		audio_engine_temps.end(),
 		[](const std::unique_ptr<AudioStream>& audio_stream) -> bool
 		{
-			return !audio_stream->isPlaying();
+			return !ma_sound_is_playing(audio_stream->data());
 		}
 		),
 		audio_engine_temps.end()
 	);
-
 }
 
 void AudioEngine::play(const AudioAsset& asset, const float volume)
@@ -74,5 +79,6 @@ AudioStreamPtr AudioEngine::stream(const AudioAsset& asset)
 		ERR_LOG("Audio", "Failed to load the audio asset");
 		return nullptr;
 	}
+	m_streams.insert(std::make_pair(asset.id, audio_stream));
 	return audio_stream;
 }

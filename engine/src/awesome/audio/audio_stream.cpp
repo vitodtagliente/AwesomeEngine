@@ -13,6 +13,7 @@ AudioStream::AudioStream(const AudioAsset& asset)
 AudioStream::~AudioStream()
 {
 	stop();
+	ma_sound_uninit(m_data);
 	delete m_data;
 }
 
@@ -43,11 +44,6 @@ void AudioStream::stop()
 	ma_sound_stop(m_data);
 	ma_sound_seek_to_pcm_frame(m_data, 0);
 	m_state = State::Stopped;
-}
-
-bool AudioStream::isPlaying() const
-{
-	return ma_sound_is_playing(m_data);
 }
 
 void AudioStream::setLooping(const bool value)

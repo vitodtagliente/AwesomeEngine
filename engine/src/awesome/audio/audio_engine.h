@@ -17,6 +17,7 @@ public:
 
 	static AudioEngine* const instance() { return s_instance; }
 
+	void clean();
 	void flush();
 	void play(const AudioAsset& asset, float volume = 1.f);
 	void playOneShot(const AudioAsset& asset, float volume = 1.f);
