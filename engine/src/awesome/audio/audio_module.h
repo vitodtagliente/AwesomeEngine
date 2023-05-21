@@ -8,4 +8,5 @@ class AudioModule : public EngineModule
 public:
 	virtual bool startup() override;
 	virtual void shutdown() override;
+	virtual void update(double /*deltaTime*/) override;
 };

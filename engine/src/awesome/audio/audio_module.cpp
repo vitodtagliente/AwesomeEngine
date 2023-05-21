@@ -30,3 +30,8 @@ void AudioModule::shutdown()
 	ma_engine_uninit(audio_context);
 	delete audio_context;
 }
+
+void AudioModule::update(double)
+{
+	audio_engine->flush();
+}

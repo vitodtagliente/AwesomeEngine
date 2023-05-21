@@ -45,6 +45,11 @@ void AudioStream::stop()
 	m_state = State::Stopped;
 }
 
+bool AudioStream::isPlaying() const
+{
+	return ma_sound_is_playing(m_data);
+}
+
 void AudioStream::setLooping(const bool value)
 {
 	ma_sound_set_looping(m_data, static_cast<ma_bool32>(value));

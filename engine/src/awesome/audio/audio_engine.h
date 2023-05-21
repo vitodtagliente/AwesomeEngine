@@ -14,9 +14,13 @@ class AudioEngine
 {
 public:
 	AudioEngine();
-	AudioStreamPtr stream(const AudioAsset& asset);
 
 	static AudioEngine* const instance() { return s_instance; }
+
+	void flush();
+	void play(const AudioAsset& asset, float volume = 1.f);
+	void playOneShot(const AudioAsset& asset, float volume = 1.f);
+	AudioStreamPtr stream(const AudioAsset& asset);
 
 private:	
 	std::map<uuid, std::weak_ptr<AudioStream>> m_streams;

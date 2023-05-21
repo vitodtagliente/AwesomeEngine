@@ -32,6 +32,8 @@ public:
 	const std::filesystem::path& path() const { return m_path; }
 	State state() const { return m_state; }
 
+	bool isPlaying() const;
+
 	void setLooping(bool value);
 	void setPitch(float value);
 	void setVolume(float value);
