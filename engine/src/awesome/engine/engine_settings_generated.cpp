@@ -43,6 +43,8 @@ const reflect::properties_t& Type<RendererSettings>::properties()
 {
     static reflect::properties_t s_properties {
         { "debug", reflect::Property{ offsetof(RendererSettings, debug), reflect::meta_t { }, "debug", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "renderAudioSources", reflect::Property{ offsetof(RendererSettings, renderAudioSources), reflect::meta_t { }, "renderAudioSources", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
+        { "audioSourceWireColor", reflect::Property{ offsetof(RendererSettings, audioSourceWireColor), reflect::meta_t { }, "audioSourceWireColor", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
         { "renderCollisions", reflect::Property{ offsetof(RendererSettings, renderCollisions), reflect::meta_t { }, "renderCollisions", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "collisionWireColor", reflect::Property{ offsetof(RendererSettings, collisionWireColor), reflect::meta_t { }, "collisionWireColor", reflect::PropertyType{ "graphics::Color", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(graphics::Color), reflect::PropertyType::Type::T_native } } },
         { "renderQuadtree", reflect::Property{ offsetof(RendererSettings, renderQuadtree), reflect::meta_t { }, "renderQuadtree", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
@@ -75,6 +77,12 @@ void reflect::Type<RendererSettings>::from_string(const std::string& str, Render
     if (_name != name()) return;
     
     stream >> type.debug;
+    stream >> type.renderAudioSources;
+    {
+        std::string pack;
+        stream >> pack;
+        reflect::Type<graphics::Color>::from_string(pack, type.audioSourceWireColor);
+    }
     stream >> type.renderCollisions;
     {
         std::string pack;
@@ -96,6 +104,8 @@ std::string reflect::Type<RendererSettings>::to_string(const RendererSettings& t
     stream << name();
     
     stream << type.debug;
+    stream << type.renderAudioSources;
+    stream << reflect::Type<graphics::Color>::to_string(type.audioSourceWireColor);
     stream << type.renderCollisions;
     stream << reflect::Type<graphics::Color>::to_string(type.collisionWireColor);
     stream << type.renderQuadtree;
@@ -119,6 +129,8 @@ void reflect::Type<RendererSettings>::from_json(const std::string& json, Rendere
         if (index != std::string::npos)
         {
             if (key == "debug") reflect::encoding::json::Deserializer::parse(value, type.debug);
+            if (key == "renderAudioSources") reflect::encoding::json::Deserializer::parse(value, type.renderAudioSources);
+            if (key == "audioSourceWireColor") reflect::Type<graphics::Color>::from_json(value, type.audioSourceWireColor);
             if (key == "renderCollisions") reflect::encoding::json::Deserializer::parse(value, type.renderCollisions);
             if (key == "collisionWireColor") reflect::Type<graphics::Color>::from_json(value, type.collisionWireColor);
             if (key == "renderQuadtree") reflect::encoding::json::Deserializer::parse(value, type.renderQuadtree);
@@ -135,6 +147,8 @@ std::string reflect::Type<RendererSettings>::to_json(const RendererSettings& typ
     stream << "{" << std::endl;
     stream << offset << "    " << "\"type_id\": " << "\"RendererSettings\"" << "," << std::endl;
     stream << offset << "    " << "\"debug\": " << reflect::encoding::json::Serializer::to_string(type.debug) << "," << std::endl;
+    stream << offset << "    " << "\"renderAudioSources\": " << reflect::encoding::json::Serializer::to_string(type.renderAudioSources) << "," << std::endl;
+    stream << offset << "    " << "\"audioSourceWireColor\": " << reflect::Type<graphics::Color>::to_json(type.audioSourceWireColor, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"renderCollisions\": " << reflect::encoding::json::Serializer::to_string(type.renderCollisions) << "," << std::endl;
     stream << offset << "    " << "\"collisionWireColor\": " << reflect::Type<graphics::Color>::to_json(type.collisionWireColor, offset + "    ") << "," << std::endl;
     stream << offset << "    " << "\"renderQuadtree\": " << reflect::encoding::json::Serializer::to_string(type.renderQuadtree) << "," << std::endl;

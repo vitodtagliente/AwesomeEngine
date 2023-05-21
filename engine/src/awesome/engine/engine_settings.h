@@ -32,6 +32,8 @@ CLASS()
 struct RendererSettings : public IType
 {
     PROPERTY() bool debug{ true };
+    PROPERTY() bool renderAudioSources{ true };
+    PROPERTY() graphics::Color audioSourceWireColor{ graphics::Color::Yellow };
     PROPERTY() bool renderCollisions{ true };
     PROPERTY() graphics::Color collisionWireColor{ graphics::Color::Green };
     PROPERTY() bool renderQuadtree{ true };

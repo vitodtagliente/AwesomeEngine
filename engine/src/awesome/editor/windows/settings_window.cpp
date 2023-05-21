@@ -29,6 +29,8 @@ void SettingsWindow::render()
 		RendererSettings& renderer = settings.renderer;
 		EditorUI::input("Debug", renderer.debug);
 		EditorUI::separator();
+		EditorUI::input("Render Audio Sources", renderer.renderAudioSources);
+		EditorUI::input("Audio Source Wire Color", renderer.audioSourceWireColor);
 		EditorUI::input("Render Collisions", renderer.renderCollisions);
 		EditorUI::input("Collision Wire Color", renderer.collisionWireColor);
 		EditorUI::input("Render QuadTree", renderer.renderQuadtree);

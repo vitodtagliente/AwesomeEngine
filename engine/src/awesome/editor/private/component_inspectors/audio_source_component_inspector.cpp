@@ -30,6 +30,32 @@ void AudioSourceComponentInspector::inspect(Component& component)
 	EditorUI::slider("Volume", 0.f, 1.f, audio_source.volume);
 	apply |= (previousVolume != audio_source.volume);
 
+	EditorUI::separatorText("Spatialization");
+
+	AudioRolloffMode previousRolloffMode = audio_source.rolloffMode;
+	EditorUI::input("Rolloff Mode", audio_source.rolloffMode);
+	apply |= (previousRolloffMode != audio_source.rolloffMode);
+
+	float previousRolloff = audio_source.rolloff;
+	EditorUI::slider("Rolloff", 0.f, 1.f, audio_source.rolloff);
+	apply |= (previousRolloff != audio_source.rolloff);
+
+	float previousMinDistance = audio_source.minDistance;
+	EditorUI::input("Min Distance", audio_source.minDistance);
+	apply |= (previousMinDistance != audio_source.minDistance);
+
+	float previousMaxDistance = audio_source.maxDistance;
+	EditorUI::input("Max Distance", audio_source.maxDistance);
+	apply |= (previousMaxDistance != audio_source.maxDistance);
+
+	float previousMinGain = audio_source.minGain;
+	EditorUI::slider("Min Gain", 0.f, 1.f, audio_source.minGain);
+	apply |= (previousMinGain != audio_source.minGain);
+
+	float previousMaxGain = audio_source.maxGain;
+	EditorUI::slider("Max Gain", 0.f, 1.f, audio_source.maxGain);
+	apply |= (previousMaxGain != audio_source.maxGain);
+
 	if (apply)
 	{
 		audio_source.apply();

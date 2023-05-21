@@ -21,6 +21,9 @@ bool AudioModule::startup()
 		ERR_LOG("Audio", "Failed to initialize the audio module");
 		return false;
 	}
+
+	constexpr int local_listener_index = 0;
+	ma_engine_listener_set_world_up(audio_context, local_listener_index, 0.f, 1.f, 0.f);
 	return audio_engine = new AudioEngine(), true;
 }
 

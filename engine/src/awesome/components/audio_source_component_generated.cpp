@@ -3,6 +3,18 @@
 #include "audio_source_component.h"
 #pragma warning(disable: 4100)
 
+const char* const reflect::Enum<AudioRolloffMode>::name() { return "AudioRolloffMode"; }
+const reflect::enum_values_t& reflect::Enum<AudioRolloffMode>::values()
+{
+    static reflect::enum_values_t s_values{
+        { "None", static_cast<int>(AudioRolloffMode::None) }, 
+        { "Inverse", static_cast<int>(AudioRolloffMode::Inverse) }, 
+        { "Linear", static_cast<int>(AudioRolloffMode::Linear) }, 
+        { "Exponential", static_cast<int>(AudioRolloffMode::Exponential) }, 
+    };
+    return s_values;
+}
+
 IType* const reflect::Type<AudioSourceComponent>::instantiate()
 {
     return dynamic_cast<IType*>(new AudioSourceComponent());
@@ -29,6 +41,13 @@ const reflect::properties_t& Type<AudioSourceComponent>::properties()
         { "loop", reflect::Property{ offsetof(AudioSourceComponent, loop), reflect::meta_t { }, "loop", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "pitch", reflect::Property{ offsetof(AudioSourceComponent, pitch), reflect::meta_t { }, "pitch", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
         { "volume", reflect::Property{ offsetof(AudioSourceComponent, volume), reflect::meta_t { }, "volume", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "maxDistance", reflect::Property{ offsetof(AudioSourceComponent, maxDistance), reflect::meta_t { }, "maxDistance", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "maxGain", reflect::Property{ offsetof(AudioSourceComponent, maxGain), reflect::meta_t { }, "maxGain", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "minDistance", reflect::Property{ offsetof(AudioSourceComponent, minDistance), reflect::meta_t { }, "minDistance", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "minGain", reflect::Property{ offsetof(AudioSourceComponent, minGain), reflect::meta_t { }, "minGain", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "rolloff", reflect::Property{ offsetof(AudioSourceComponent, rolloff), reflect::meta_t { }, "rolloff", reflect::PropertyType{ "float", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(float), reflect::PropertyType::Type::T_float } } },
+        { "rolloffMode", reflect::Property{ offsetof(AudioSourceComponent, rolloffMode), reflect::meta_t { }, "rolloffMode", reflect::PropertyType{ "AudioRolloffMode", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(AudioRolloffMode), reflect::PropertyType::Type::T_enum } } },
+        { "useSpatialization", reflect::Property{ offsetof(AudioSourceComponent, useSpatialization), reflect::meta_t { }, "useSpatialization", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
         { "m_playOnAwake", reflect::Property{ offsetof(AudioSourceComponent, m_playOnAwake), reflect::meta_t { }, "m_playOnAwake", reflect::PropertyType{ "bool", {  }, reflect::PropertyType::DecoratorType::D_raw, sizeof(bool), reflect::PropertyType::Type::T_bool } } },
     };
     return s_properties;
@@ -73,6 +92,17 @@ void reflect::Type<AudioSourceComponent>::from_string(const std::string& str, Au
     stream >> type.loop;
     stream >> type.pitch;
     stream >> type.volume;
+    stream >> type.maxDistance;
+    stream >> type.maxGain;
+    stream >> type.minDistance;
+    stream >> type.minGain;
+    stream >> type.rolloff;
+    {
+        int pack;
+        stream >> pack;
+        type.rolloffMode = static_cast<AudioRolloffMode>(pack);
+    }
+    stream >> type.useSpatialization;
     stream >> type.m_playOnAwake;
 }
 
@@ -90,6 +120,13 @@ std::string reflect::Type<AudioSourceComponent>::to_string(const AudioSourceComp
     stream << type.loop;
     stream << type.pitch;
     stream << type.volume;
+    stream << type.maxDistance;
+    stream << type.maxGain;
+    stream << type.minDistance;
+    stream << type.minGain;
+    stream << type.rolloff;
+    stream << static_cast<int>(type.rolloffMode);
+    stream << type.useSpatialization;
     stream << type.m_playOnAwake;
     
     return std::string(reinterpret_cast<const char*>(&stream.getBuffer()[0]), stream.getBuffer().size());
@@ -117,6 +154,18 @@ void reflect::Type<AudioSourceComponent>::from_json(const std::string& json, Aud
             if (key == "loop") reflect::encoding::json::Deserializer::parse(value, type.loop);
             if (key == "pitch") reflect::encoding::json::Deserializer::parse(value, type.pitch);
             if (key == "volume") reflect::encoding::json::Deserializer::parse(value, type.volume);
+            if (key == "maxDistance") reflect::encoding::json::Deserializer::parse(value, type.maxDistance);
+            if (key == "maxGain") reflect::encoding::json::Deserializer::parse(value, type.maxGain);
+            if (key == "minDistance") reflect::encoding::json::Deserializer::parse(value, type.minDistance);
+            if (key == "minGain") reflect::encoding::json::Deserializer::parse(value, type.minGain);
+            if (key == "rolloff") reflect::encoding::json::Deserializer::parse(value, type.rolloff);
+            if (key == "rolloffMode")
+            {
+                std::string temp;
+                reflect::encoding::json::Deserializer::parse(value, temp);
+                stringToEnum(temp, type.rolloffMode);
+            }
+            if (key == "useSpatialization") reflect::encoding::json::Deserializer::parse(value, type.useSpatialization);
             if (key == "m_playOnAwake") reflect::encoding::json::Deserializer::parse(value, type.m_playOnAwake);
             src = src.substr(index + 1);
         }
@@ -137,6 +186,13 @@ std::string reflect::Type<AudioSourceComponent>::to_json(const AudioSourceCompon
     stream << offset << "    " << "\"loop\": " << reflect::encoding::json::Serializer::to_string(type.loop) << "," << std::endl;
     stream << offset << "    " << "\"pitch\": " << reflect::encoding::json::Serializer::to_string(type.pitch) << "," << std::endl;
     stream << offset << "    " << "\"volume\": " << reflect::encoding::json::Serializer::to_string(type.volume) << "," << std::endl;
+    stream << offset << "    " << "\"maxDistance\": " << reflect::encoding::json::Serializer::to_string(type.maxDistance) << "," << std::endl;
+    stream << offset << "    " << "\"maxGain\": " << reflect::encoding::json::Serializer::to_string(type.maxGain) << "," << std::endl;
+    stream << offset << "    " << "\"minDistance\": " << reflect::encoding::json::Serializer::to_string(type.minDistance) << "," << std::endl;
+    stream << offset << "    " << "\"minGain\": " << reflect::encoding::json::Serializer::to_string(type.minGain) << "," << std::endl;
+    stream << offset << "    " << "\"rolloff\": " << reflect::encoding::json::Serializer::to_string(type.rolloff) << "," << std::endl;
+    stream << offset << "    " << "\"rolloffMode\": " << reflect::encoding::json::Serializer::to_string(enumToString(type.rolloffMode)) << "," << std::endl;
+    stream << offset << "    " << "\"useSpatialization\": " << reflect::encoding::json::Serializer::to_string(type.useSpatialization) << "," << std::endl;
     stream << offset << "    " << "\"m_playOnAwake\": " << reflect::encoding::json::Serializer::to_string(type.m_playOnAwake) << "," << std::endl;
     stream << offset << "}";
     return stream.str();

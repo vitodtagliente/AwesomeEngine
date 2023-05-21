@@ -5,6 +5,15 @@
 #include <vdtreflect/runtime.h>
 
 template <>
+struct reflect::Enum<enum class AudioRolloffMode> : reflect::RegisteredInEnumFactory<enum class AudioRolloffMode>
+{
+    static const char* const name();
+    static const reflect::enum_values_t& values();
+    
+    static bool registered() { return value; };
+};
+
+template <>
 struct reflect::Type<class AudioSourceComponent> : reflect::RegisteredInTypeFactory<class AudioSourceComponent>
 {
     static IType* const instantiate();

@@ -11,6 +11,7 @@ class AudioListenerComponent : public Component
 public:	
 	void init() override;
 	void uninit() override;
+	void update(double deltaTime) override;
 
 	static AudioListenerComponent* const instance() { return s_instance; }
 
