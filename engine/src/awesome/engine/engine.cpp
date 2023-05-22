@@ -50,6 +50,7 @@ private:
 
 void Engine::init(const std::initializer_list<EngineModule*>& modules)
 {
+	EntitiesCoordinator::instance().Init();
 	for (EngineModule* const module : modules)
 	{
 		m_modules.push_back(std::unique_ptr<EngineModule>(module));
@@ -59,7 +60,6 @@ void Engine::init(const std::initializer_list<EngineModule*>& modules)
 int Engine::run()
 {
 	// AssetLibrary& library = AssetLibrary::instance();
-	EntitiesCoordinator::instance().Init();
 	Canvas& canvas = Canvas::instance();
 	Input& input = Input::instance();
 	Time time;

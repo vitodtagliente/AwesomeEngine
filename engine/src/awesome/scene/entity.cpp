@@ -4,26 +4,26 @@
 
 #include <awesome/ecs/entities_coordinator.h>
 #include <awesome/graphics/renderer.h>
+#include <awesome/ecs/storagable_entity.h>
 
 Entity::Entity()
-	: storage_id(EntitiesCoordinator::instance().CreateEntity())
+	: storageRef(EntitiesCoordinator::instance().CreateEntity())
 {
+	storageRef.assignEntity(*this);
 }
 
 Entity::Entity(const uuid& id)
 	: m_id(id)
-	, storage_id(EntitiesCoordinator::instance().CreateEntity())
+	, storageRef(EntitiesCoordinator::instance().CreateEntity())
 {
+	storageRef.assignEntity(*this);
 }
 
 Entity::Entity(const Entity& other)
-	: storage_id(EntitiesCoordinator::instance().CreateEntity())
+	: storageRef(EntitiesCoordinator::instance().CreateEntity())
 {
 	from_string(other.to_string());
-	for (const auto component : other.m_components_runtime)
-	{
-		m_components.push_back(component->clone(this));
-	}
+	storageRef.assignEntity(*this);
 }
 
 Entity::~Entity()
@@ -35,13 +35,37 @@ Entity::~Entity()
 		component->detach();
 		it = m_components_runtime.erase(it);
 	}
-	EntitiesCoordinator::instance().DestroyEntity(storage_id);
+
+	EntitiesCoordinator::instance().DestroyEntity(storageRef);
+}
+
+Entity Entity::persistentCopy() const
+{
+	Entity other(*this);
+	for (const auto component : m_components_runtime)
+	{
+		other.m_components.push_back(component->persistentCopy(&other));
+	}
+	return other;
+}
+
+void Entity::handleRelocation(Component* const component)
+{
+	for (auto& component_ptr : m_components_runtime)
+	{
+		if (component_ptr->getId() == component->getId())
+		{
+			component_ptr = component;
+			component_ptr->setOwner(this);
+		}
+	}
 }
 
 Entity& Entity::operator=(const Entity& other)
 {
 	from_string(other.to_string());
-	storage_id = EntitiesCoordinator::instance().CreateEntity();
+	storageRef = EntitiesCoordinator::instance().CreateEntity();
+	storageRef.assignEntity(*this);
 	return *this;
 }
 
@@ -293,18 +317,18 @@ void Entity::removeComponent(Component* const component)
 
 void Entity::removeComponent(const uuid& id)
 {
-	const auto& it2 = std::find_if(m_components_runtime.begin(), m_components_runtime.end(), [&id](const Component* component) -> bool
+	const auto& it_rt = std::find_if(m_components_runtime.begin(), m_components_runtime.end(), [&id](const Component* component) -> bool
 	{
 		return component->getId() == id;
 	}
 	);
 
-	if (it2 != m_components_runtime.end())
+	if (it_rt != m_components_runtime.end())
 	{
-		const auto& component = *it2;
+		const auto& component = *it_rt;
 		component->uninit();
 		component->detach();
-		m_components_runtime.erase(it2);
+		m_components_runtime.erase(it_rt);
 	}
 
 	const auto& it = std::find_if(m_components.begin(), m_components.end(), [&id](const std::unique_ptr<Component>& component) -> bool
@@ -324,14 +348,14 @@ void Entity::removeComponent(const uuid& id)
 
 void Entity::prepareToSpawn()
 {
-	std::cout << "spawining... " << m_id.value << std::endl;
+	INFO_LOG("Entity", THIS_FUNC + std::string("prepare to spawn entity:") + std::to_string(storageRef.getStorageId()));
 	auto it = m_components.begin();
 	while (it != m_components.end())
 	{
 		auto& component = *it;
 		if (component->isStorageEnabled())
 		{
-			auto ptr = component.release();
+			auto ptr = component.get();
 			m_components_runtime.push_back(ptr->attach(this));
 			m_components_runtime.back()->init();
 			it = m_components.erase(it);

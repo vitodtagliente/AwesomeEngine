@@ -718,50 +718,66 @@ void EditorUI::input(Entity& entity)
 		return StringUtil::replace(name, "Component", "");
 	};
 
-	for (const auto& component : entity.components())
+	static const auto processComponents = [&](const auto getComponents)
 	{
-		const std::string componentName = component->type_name();
-		begin(componentName.c_str());
-		if (collapsingHeader(decorateComponentName(componentName).c_str()))
+		const auto& components = getComponents();
+		for (const auto& component : components)
 		{
-			bool inspected = false;
-			for (const std::unique_ptr<ComponentInspector>& inspector : componentInspectors)
+			const std::string componentName = component->type_name();
+			begin(componentName.c_str());
+			if (collapsingHeader(decorateComponentName(componentName).c_str()))
 			{
-				if (inspector->canInspect(*component))
+				bool inspected = false;
+				for (const std::unique_ptr<ComponentInspector>& inspector : componentInspectors)
 				{
-					inspector->inspect(*component);
-					inspected = true;
+					if (inspector->canInspect(*component))
+					{
+						inspector->inspect(*component);
+						inspected = true;
+						break;
+					}
+				}
+
+				if (!inspected)
+				{
+					input(*component);
+				}
+
+				separator();
+				if (button((Icon::minus + " Remove Component").c_str()))
+				{
+					entity.removeComponent(component->getId());
+					end();
 					break;
 				}
 			}
-
-			if (!inspected)
-			{
-				input(*component);
-			}
-
-			separator();
-			if (button((Icon::minus + " Remove Component").c_str()))
-			{
-				entity.removeComponent(component->getId());
-				end();
-				break;
-			}
+			end();
 		}
-		end();
-	}
+	};
 
+
+	processComponents([&]() -> const std::vector<Component*>& {return entity.components(); });
+	processComponents([&]() -> const std::vector<std::unique_ptr<Component>>& {return entity.components_dead(); });
+		
 	static const auto& hasComponent = [](const Entity& entity, const std::string& name) -> bool
 	{
 		const auto& it = std::find_if(
+			entity.components_dead().begin(),
+			entity.components_dead().end(),
+			[&name](const std::unique_ptr<Component>& component) -> bool
+		{
+			return component->type_name() == name;
+		}
+		);
+		const auto& it_rt = std::find_if(
 			entity.components().begin(),
 			entity.components().end(),
 			[&name](const Component* component) -> bool
-			{
-				return component->type_name() == name;
-			}
+		{
+			return component->type_name() == name;
+		}
 		);
-		return it != entity.components().end();
+		return it != entity.components_dead().end() || it_rt != entity.components().end();
 	};
 
 	static std::string component_filter;

@@ -2,6 +2,7 @@
 
 #include <awesome/components/collider2d_component.h>
 #include <awesome/components/rigidbody2d_component.h>
+#include <awesome/ecs/entities_coordinator.h>
 #include <awesome/core/logger.h>
 #include <awesome/scene/entity.h>
 
@@ -9,8 +10,8 @@
 
 void BulletComponent::init()
 {
-	m_body = getOwner()->findComponent<Rigidbody2DComponent>();
-	enabled = m_body != nullptr;
+	//m_body = getOwner()->findComponent<Rigidbody2DComponent>();
+	enabled = true;
 	m_collider = getOwner()->findComponent<Collider2DComponent>();
 	if (m_collider)
 	{
@@ -39,14 +40,15 @@ void BulletComponent::init()
 
 void BulletComponent::update(const double deltaTime)
 {
+	auto& body = EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storageRef);
 	if (m_target != nullptr)
 	{
 		const auto direction = (m_target->transform.position - getOwner()->transform.position).normalize();
-		m_body->move(direction * speed * static_cast<float>(deltaTime));
+		body.move(direction * speed * static_cast<float>(deltaTime));
 	}
 	else if (m_direction != math::vec3::zero)
 	{
-		m_body->move(m_direction * speed * static_cast<float>(deltaTime));
+		body.move(m_direction * speed * static_cast<float>(deltaTime));
 	}
 }
 

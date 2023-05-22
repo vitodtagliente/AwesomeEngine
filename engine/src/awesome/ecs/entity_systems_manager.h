@@ -4,6 +4,8 @@
 #include "entity_system.h"
 #include "types.h"
 
+#include <awesome/scene/entity.h>
+
 #include <cassert>
 #include <memory>
 #include <unordered_map>
@@ -33,7 +35,7 @@ public:
 		m_signatures.insert({ typeName, signature });
 	}
 
-	void EntityDestroyed(EntityStorageId entity)
+	void EntityDestroyed(StoragableEntity<Entity>& entity)
 	{
 		for (auto const& pair : m_systems)
 		{
@@ -42,7 +44,7 @@ public:
 		}
 	}
 
-	void EntitySignatureChanged(EntityStorageId entity, Signature entitySignature)
+	void EntitySignatureChanged(StoragableEntity<Entity>& entity, Signature entitySignature)
 	{
 		for (auto const& pair : m_systems)
 		{

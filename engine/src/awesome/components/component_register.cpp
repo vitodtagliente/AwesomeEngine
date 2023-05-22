@@ -1,8 +1,11 @@
 #include "component_register.h"
-
-#include <awesome/core/reflection.h>
 #include "component_library.h"
 #include "rigidbody2d_component.h"
+
+#include <awesome/core/reflection.h>
+#include <awesome/ecs/entities_coordinator.h>
+
+
 
 void ComponentRegister::execute()
 {

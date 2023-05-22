@@ -3,8 +3,6 @@
 
 #include <awesome/core/reflection.h>
 #include <awesome/core/uuid.h>
-#include <awesome/ecs/entities_coordinator.h>
-#include <awesome/ecs/types.h>
 #include <awesome/math/transform.h>
 
 #include "component_generated.h"
@@ -31,7 +29,7 @@ public:
 	Component(Component&&) = default;
 	virtual ~Component() = default;
 
-	Component& operator= (const Component& other) = delete;
+	Component& operator= (const Component& other) = default;
 	Component& operator= (Component&&) = default;
 
 	bool operator== (const Component& other) const;
@@ -39,6 +37,7 @@ public:
 
 	inline const uuid& getId() const { return m_id; }
 	inline Entity* const getOwner() const { return m_owner; }
+	void setOwner(Entity* const entity) { m_owner = entity; }
 	const math::transform& getOwnerTransform() const;
 	math::transform& getOwnerTransform();
 	void queueOwnerDestroy();
@@ -48,7 +47,8 @@ public:
 
 	virtual Component* attach(Entity* const entity);
 	virtual void detach();
-	virtual std::unique_ptr<Component> clone(Entity* const) { return std::make_unique<Component>(*this); }
+	//TODO make it pure virtual
+	virtual std::unique_ptr<Component> persistentCopy(Entity* const) const { return std::make_unique<Component>(*this); }
 
 	virtual void init() {}
 	virtual void render(graphics::Renderer& /*renderer*/) {};

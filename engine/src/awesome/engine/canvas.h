@@ -31,7 +31,7 @@ public:
 	void setTitle(const std::string& title);
 
 private:
-	void* m_handler;
+	void* m_handler{ nullptr };
 	int m_width{ 1080 };
 	int m_height{ 720 };
 	bool m_isOpen{ false };

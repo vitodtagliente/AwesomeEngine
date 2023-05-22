@@ -2,6 +2,7 @@
 #pragma once
 
 #include <awesome/core/timer.h>
+#include <awesome/ecs/types.h>
 #include <awesome/graphics/color.h>
 #include <awesome/scene/component.h>
 
@@ -28,6 +29,7 @@ public:
 
 	GENERATED_BODY()
 
+	ECS_STORAGE_COMPONENT_DECLARE(HealthComponent)
 private:
 	PROPERTY() graphics::Color m_colorToRestore{ graphics::Color::White };
 	PROPERTY() bool m_destroyOnDeath{ false };

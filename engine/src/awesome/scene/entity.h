@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <awesome/core/reflection.h>
+#include <awesome/ecs/storagable_entity.h>
 #include <awesome/core/uuid.h>
 #include <awesome/math/transform.h>
 
@@ -33,6 +34,10 @@ public:
 	Entity(const Entity& other);
 	virtual ~Entity();
 
+	Entity persistentCopy() const;
+
+	void handleRelocation(Component* const);
+
 	Entity& operator= (const Entity& other);
 	bool operator== (const Entity& other) const;
 	bool operator!= (const Entity& other) const;
@@ -41,7 +46,7 @@ public:
 	//used by editor only
 	inline const std::vector<Component*>& components() const { return m_components_runtime; }
 	//used by editor only
-	inline std::vector<std::unique_ptr<Component>>& components_dead() { return m_components; }
+	inline const std::vector<std::unique_ptr<Component>>& components_dead() const { return m_components; }
 	inline const uuid& id() const { return m_id; }
 	inline Entity* const parent() const { return m_parent; }
 	inline State state() const { return m_state; }
@@ -127,32 +132,68 @@ public:
 	T* const addComponent()
 	{
 		T* const component = new T();
+		const bool storageEnabled = component->isStorageEnabled();
 		m_components.push_back(std::unique_ptr<Component>(component));
 		if (m_state == State::Alive)
 		{
-			component->attach(this);
-			component->init();
+			if (storageEnabled)
+			{
+				auto ptr = m_components.back().get();
+				m_components_runtime.push_back(ptr->attach(this));
+				m_components_runtime.back()->init();
+				m_components.pop_back();
+			}
+			else
+			{
+				m_components.back()->attach(this);
+				m_components.back()->init();
+			}
 		}
-		return component;
+		if (storageEnabled)
+		{
+			return m_components_runtime.back();
+		}
+		else
+		{
+			return m_components.back().get();
+		}
 	}
 
 	Component* const addComponent(std::unique_ptr<Component> component)
 	{
 		if (component == nullptr) return nullptr;
 
+		const bool storageEnabled = component->isStorageEnabled();
+		m_components.push_back(std::move(component));
 		if (m_state == State::Alive)
 		{
-			component->attach(this);
-			component->init();
+			if (storageEnabled)
+			{
+				auto ptr = m_components.back().get();
+				m_components_runtime.push_back(ptr->attach(this));
+				m_components_runtime.back()->init();
+				m_components.pop_back();
+			}
+			else
+			{
+				m_components.back()->attach(this);
+				m_components.back()->init();
+			}
 		}
-		m_components.push_back(std::move(component));
-		return m_components.back().get();
+		if (storageEnabled)
+		{
+			return m_components_runtime.back();
+		}
+		else
+		{
+			return m_components.back().get();
+		}
 	}
 
 	void removeComponent(Component* const component);
 	void removeComponent(const uuid& id);
 
-	EntityStorageId storage_id;
+	StoragableEntity<Entity> storageRef;
 
 	PROPERTY() std::string name;
 	PROPERTY() bool persistent{ false };
@@ -193,3 +234,15 @@ private:
 	std::vector<std::unique_ptr<Entity>> m_pendingSpawnChildren;
 	State m_state{ State::PendingSpawn };
 };
+
+namespace std {
+	template <>
+	struct hash<StoragableEntity<Entity>>
+	{
+		std::size_t operator()(const StoragableEntity<Entity>& k) const
+		{
+			return hash<std::string>()(k.getId());
+		}
+	};
+
+}

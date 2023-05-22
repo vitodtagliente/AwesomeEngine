@@ -4,6 +4,8 @@
 #include "component_array.h"
 #include "types.h"
 
+#include <awesome/scene/entity.h>
+
 #include <any>
 #include <memory>
 #include <unordered_map>
@@ -35,24 +37,24 @@ public:
 	}
 
 	template<typename T>
-	T& AddComponent(EntityStorageId entity, T component)
+	T& AddComponent(StoragableEntity<Entity>& entity, T component)
 	{
 		return GetComponentArray<T>()->InsertData(entity, std::move(component));
 	}
 
 	template<typename T>
-	void RemoveComponent(EntityStorageId entity)
+	void RemoveComponent(StoragableEntity<Entity>& entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
 	}
 
 	template<typename T>
-	T& GetComponent(EntityStorageId entity)
+	T& GetComponent(StoragableEntity<Entity>& entity)
 	{
 		return GetComponentArray<T>()->GetData(entity);
 	}
 
-	void EntityDestroyed(EntityStorageId entity)
+	void EntityDestroyed(StoragableEntity<Entity>& entity)
 	{
 		for (auto const& pair : m_componentArrays)
 		{

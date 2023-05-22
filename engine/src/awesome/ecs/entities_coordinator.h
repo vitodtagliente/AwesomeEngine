@@ -7,6 +7,7 @@
 #include "types.h"
 
 #include <awesome/core/singleton.h>
+#include <awesome/scene/entity.h>
 
 #include <memory>
 
@@ -23,14 +24,14 @@ public:
 	}
 
 	// EntityStorageId methods
-	EntityStorageId CreateEntity()
+	StoragableEntity<Entity> CreateEntity()
 	{
-		return m_entityManager->CreateEntity();
+		return StoragableEntity<Entity>(m_entityManager->CreateEntity());
 	}
 
-	void DestroyEntity(EntityStorageId entity)
+	void DestroyEntity(StoragableEntity<Entity>& entity)
 	{
-		m_entityManager->DestroyEntity(entity);
+		m_entityManager->DestroyEntity(entity.getStorageId());
 		m_componentManager->EntityDestroyed(entity);
 		m_systemManager->EntityDestroyed(entity);
 	}
@@ -43,13 +44,13 @@ public:
 	}
 
 	template<typename T>
-	T& AddComponent(EntityStorageId entity, T component)
+	T& AddComponent(StoragableEntity<Entity>& entity, T component)
 	{
 		auto& tmp = m_componentManager->AddComponent<T>(entity, std::move(component));
 
-		auto signature = m_entityManager->GetSignature(entity);
+		auto signature = m_entityManager->GetSignature(entity.getStorageId());
 		signature.set(m_componentManager->GetComponentType<T>(), true);
-		m_entityManager->SetSignature(entity, signature);
+		m_entityManager->SetSignature(entity.getStorageId(), signature);
 
 		m_systemManager->EntitySignatureChanged(entity, signature);
 
@@ -57,19 +58,19 @@ public:
 	}
 
 	template<typename T>
-	void RemoveComponent(EntityStorageId entity)
+	void RemoveComponent(StoragableEntity<Entity>& entity)
 	{
 		m_componentManager->RemoveComponent<T>(entity);
 
-		auto signature = m_entityManager->GetSignature(entity);
+		auto signature = m_entityManager->GetSignature(entity.getStorageId());
 		signature.set(m_componentManager->GetComponentType<T>(), false);
-		m_entityManager->SetSignature(entity, signature);
+		m_entityManager->SetSignature(entity.getStorageId(), signature);
 
 		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
-	T& GetComponent(EntityStorageId entity)
+	T& GetComponent(StoragableEntity<Entity>& entity)
 	{
 		return m_componentManager->GetComponent<T>(entity);
 	}

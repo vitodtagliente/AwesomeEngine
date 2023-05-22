@@ -3,12 +3,9 @@
 
 #include "types.h"
 
-#include <awesome/scene/component.h>
-
 #include <array>
 #include <cassert>
 #include <queue>
-
 
 class EntityManager
 {
@@ -58,5 +55,5 @@ public:
 private:
 	std::queue<EntityStorageId> m_availableEntities{};
 	std::array<Signature, MAX_ENTITIES> m_signatures{};
-	uint32_t m_livingEntityCount{};
+	uint32_t m_livingEntityCount{ 0 };
 };

@@ -2,11 +2,14 @@
 #pragma once
 
 #include "types.h"
+
+#include <awesome/scene/entity.h>
+
 #include <set>
 
 
 class EntitySystem
 {
 public:
-	std::set<EntityStorageId> m_entities;
+	std::set<StoragableEntity<Entity>> m_entities;
 };

@@ -18,7 +18,7 @@ void TestComponent::init()
 void TestComponent::update(const double deltaTime)
 {
 	//if (m_body == nullptr) return;
-	auto& body = EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storage_id);
+	auto& body = EntitiesCoordinator::instance().GetComponent<Rigidbody2DComponent>(getOwner()->storageRef);
 	Input& input = Input::instance();
 	const float h = input.getAxis(KeyCode::A, KeyCode::D);
 	const float v = input.getAxis(KeyCode::S, KeyCode::W);

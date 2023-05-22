@@ -1,6 +1,7 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <awesome/ecs/types.h>
 #include <awesome/math/vector2.h>
 #include <awesome/math/vector3.h>
 #include <awesome/scene/component.h>

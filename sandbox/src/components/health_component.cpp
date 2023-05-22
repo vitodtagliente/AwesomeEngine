@@ -1,6 +1,7 @@
 #include "health_component.h"
 
 #include <awesome/components/sprite_renderer_component.h>
+#include <awesome/ecs/entities_coordinator.h>
 #include <awesome/math/algorithm.h>
 #include <awesome/scene/entity.h>
 
@@ -58,3 +59,5 @@ HealthComponent& HealthComponent::operator-=(const int value)
 	setValue(m_value - value);
 	return *this;
 }
+
+ECS_STORAGE_COMPONENT_DEFINE(HealthComponent)
