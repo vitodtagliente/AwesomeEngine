@@ -16,30 +16,15 @@ void StressWindow::render()
 
 	if (!m_prefab.ready()) return;
 
-	EditorUI::separator();
 	EditorUI::input("Quantity", m_quantity);
-	EditorUI::input("Random Position", m_randomPosition);
-	EditorUI::hint("True to spawn the prefabs in random positions");
-	if (m_randomPosition)
-	{
-		EditorUI::input("Min Position", m_minPosition);
-		EditorUI::input("Max Position", m_maxPosition);
-	}
-	EditorUI::newLine();
+	EditorUI::slider("Range", 0.f, 90.f, m_range);
 	if (EditorUI::button("Spawn"))
 	{
 		Entity& root = SceneGraph::instance().root();
 		for (int i = 0; i < m_quantity; ++i)
 		{
 			std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_prefab.resource->entity);
-			if (m_randomPosition)
-			{
-				entity->transform.position = math::vec3(
-					math::random(m_minPosition.x, m_maxPosition.x),
-					math::random(m_minPosition.y, m_maxPosition.y),
-					math::random(m_minPosition.z, m_maxPosition.z)
-				);
-			}
+			entity->transform.position = math::vec3(math::random(-m_range, m_range), math::random(-m_range, m_range), 0.f);
 			root.addChild(std::move(entity));
 		}
 	}

@@ -12,9 +12,7 @@ public:
 	virtual void render() override;
 
 protected:
-	math::vec3 m_maxPosition{ 1.f, 1.f, 0.f };
-	math::vec3 m_minPosition{ -1.f, -1.f, 0.f };
 	PrefabAsset m_prefab;
 	int m_quantity{ 100 };
-	bool m_randomPosition{ true };
+	float m_range{ 10.f };
 };
