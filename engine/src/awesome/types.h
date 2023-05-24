@@ -4,6 +4,7 @@
 // Force the types registration from a static library
 
 // assets
+#include "asset/audio_asset.h"
 #include "asset/image_asset.h"
 #include "asset/prefab_asset.h"
 #include "asset/scene_asset.h"
@@ -11,6 +12,7 @@
 #include "asset/user_interface_asset.h"
 #include "asset/widget_asset.h"
 // components
+#include "components/audio_source_component.h"
 #include "components/rigidbody2d_component.h"
 #include "components/camera_component.h"
 #include "components/camera_controller2d_component.h"

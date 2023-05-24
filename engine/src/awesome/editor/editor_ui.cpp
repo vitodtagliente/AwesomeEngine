@@ -21,6 +21,7 @@
 #include <awesome/graphics/texture.h>
 #include <awesome/graphics/texture_library.h>
 
+#include "private/component_inspectors/audio_source_component_inspector.h"
 #include "private/component_inspectors/rigidbody2d_component_inspector.h"
 #include "private/component_inspectors/collider2d_component_inspector.h"
 #include "private/component_inspectors/sprite_animator_component_inspector.h"
@@ -66,6 +67,54 @@ const std::string EditorUI::Icon::stop{ ICON_FA_STOP };
 const std::string EditorUI::Icon::tree{ ICON_FA_TREE };
 const std::string EditorUI::Icon::upload{ ICON_FA_UPLOAD };
 const std::string EditorUI::Icon::video{ ICON_FA_VIDEO };
+
+void EditorUI::Audio::player(const AudioStreamPtr& stream)
+{
+	if (stream == nullptr) return;
+
+	separatorText("Audio Player");
+	text(stream->path().filename().string().c_str());
+	sameLine();
+
+	switch (stream->state())
+	{
+	case AudioStream::State::Stopped:
+	{
+		if (button(Icon::play.c_str()))
+		{
+			stream->play();
+		}
+		break;
+	}
+	case AudioStream::State::Paused:
+	{
+		if (button(Icon::pause.c_str()))
+		{
+			stream->resume();
+		}
+		sameLine();
+		if (button(Icon::stop.c_str()))
+		{
+			stream->stop();
+		}
+		break;
+	}
+	case AudioStream::State::Playing:
+	default:
+	{
+		if (button(Icon::pause.c_str()))
+		{
+			stream->pause();
+		}
+		sameLine();
+		if (button(Icon::stop.c_str()))
+		{
+			stream->stop();
+		}
+		break;
+	}
+	}
+}
 
 void EditorUI::Child::begin(const char* const name)
 {
@@ -241,6 +290,7 @@ void EditorUI::Runtime::startup(void* const windowHandler)
 	}
 
 	// component inspectors setup
+	componentInspectors.push_back(std::make_unique<AudioSourceComponentInspector>());
 	componentInspectors.push_back(std::make_unique<Rigidbody2DComponentInspector>());
 	componentInspectors.push_back(std::make_unique<Collider2DComponentInspector>());
 	componentInspectors.push_back(std::make_unique<SpriteAnimatorComponentInspector>());

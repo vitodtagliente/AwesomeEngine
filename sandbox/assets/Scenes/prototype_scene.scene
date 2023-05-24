@@ -204,7 +204,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.107143,
+        "x": 0.142857,
         "y": 0.555556,
         "width": 0.035714,
         "height": 0.111111,
@@ -392,7 +392,7 @@
     },
     "rect": {
         "type_id": "graphics::TextureRect",
-        "x": 0.107143,
+        "x": 0.142857,
         "y": 0.333333,
         "width": 0.035714,
         "height": 0.111111,
@@ -413,6 +413,56 @@
     "type": 5,
 }},
     "autoplay": true,
+},],
+},{
+    "type_id": "Entity",
+    "name": "AudioSource",
+    "persistent": false,
+    "replicate": false,
+    "tag": "",
+    "transform": {
+        "type_id": "math::transform",
+        "position": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "rotation": {
+            "type_id": "math::vec3",
+            "x": 0.000000,
+            "y": 0.000000,
+            "z": 0.000000,
+        },
+        "scale": {
+            "type_id": "math::vec3",
+            "x": 1.000000,
+            "y": 1.000000,
+            "z": 1.000000,
+        },
+        "isStatic": false,
+    },
+    "transient": false,
+    "m_children": [],
+    "m_components": [{
+    "type_id": "AudioSourceComponent",
+    "enabled": true,
+    "m_id": {
+        "type_id": "uuid",
+        "value": "3680788446400",
+    },
+    "audio": {
+        "type_id": "AudioAsset",
+        "id": {
+            "type_id": "uuid",
+            "value": "3452796849400",
+        },
+        "type": 10,
+    },
+    "loop": false,
+    "pitch": 1.000000,
+    "volume": 0.109000,
+    "m_playOnAwake": true,
 },],
 },],
 }

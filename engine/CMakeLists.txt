@@ -33,8 +33,6 @@ include_directories(
 	vendor/imgui/
 	vendor/imgui/misc/cpp/
 	vendor/miniaudio/
-	vendor/stb/
-	vendor/vdtproto/include/
 )
 
 # GLFW options
@@ -174,4 +172,7 @@ target_link_libraries(
 	PUBLIC vdtreflect
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC src vendor/vdtproto/include)
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    src/
+	vendor/miniaudio/
+)
