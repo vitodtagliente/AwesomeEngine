@@ -57,5 +57,7 @@ void GraphicsPipeline::render()
 void GraphicsPipeline::postRendering()
 {
 	sceneRenderer->draw();
+	uiRenderer->draw();
+	stats.drawCalls = sceneRenderer->stats.drawCalls + uiRenderer->stats.drawCalls;
 }
 
