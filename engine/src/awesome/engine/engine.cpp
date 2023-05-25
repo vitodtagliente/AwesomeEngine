@@ -17,7 +17,7 @@
 #include <awesome/audio/audio_module.h>
 #include <awesome/collision/collision.h>
 #include <awesome/editor/editor.h>
-#include <awesome/graphics/graphics.h>
+#include <awesome/graphics/graphics_module.h>
 #include <awesome/ui/ui.h>
 
 class TaskList
@@ -211,7 +211,7 @@ void Engine::registerDefaultModules()
 	if (settings.mode != Mode::Server)
 	{
 		registerModule<AudioModule>();
-		registerModule<Graphics>();
+		registerModule<GraphicsModule>();
 		registerModule<UI>();
 	}
 

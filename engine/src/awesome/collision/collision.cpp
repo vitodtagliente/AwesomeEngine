@@ -2,8 +2,7 @@
 
 #include <awesome/components/collider2d_component.h>
 #include <awesome/engine/engine.h>
-#include <awesome/graphics/graphics.h>
-#include <awesome/graphics/renderer.h>
+#include <awesome/graphics/graphics_pipeline.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
 
@@ -18,10 +17,10 @@ Collision::Collision()
 
 bool Collision::startup()
 {
-	Graphics* const gfx = Graphics::instance();
+	GraphicsPipeline* const gfx = GraphicsPipeline::instance();
 	if (gfx != nullptr)
 	{
-		renderer = gfx->renderer.get();
+		renderer = gfx->sceneRenderer.get();
 	}
 	return true;
 }
@@ -34,9 +33,9 @@ void Collision::render()
 {
 	if (renderer == nullptr)
 	{
-		Graphics* const gfx = Graphics::instance();
+		GraphicsPipeline* const gfx = GraphicsPipeline::instance();
 		if (gfx == nullptr) return;
-		renderer = gfx->renderer.get();
+		renderer = gfx->sceneRenderer.get();
 		if (renderer == nullptr) return;
 	}
 

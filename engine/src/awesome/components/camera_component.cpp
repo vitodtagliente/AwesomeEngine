@@ -2,15 +2,14 @@
 
 #include <awesome/engine/canvas.h>
 #include <awesome/graphics/camera.h>
-#include <awesome/graphics/graphics.h>
-#include <awesome/graphics/renderer.h>
+#include <awesome/graphics/graphics_pipeline.h>
 
 CameraComponent* CameraComponent::s_instance{ nullptr };
 
 void CameraComponent::init()
 {
 	s_instance = this;
-	m_renderer = Graphics::instance()->renderer.get();
+	m_renderer = GraphicsPipeline::instance()->sceneRenderer.get();
 }
 
 void CameraComponent::update(const double)

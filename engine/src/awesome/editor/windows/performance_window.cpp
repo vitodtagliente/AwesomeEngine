@@ -6,7 +6,7 @@
 
 #include <awesome/editor/editor_ui.h>
 #include <awesome/engine/engine.h>
-#include <awesome/graphics/graphics.h>
+#include <awesome/graphics/graphics_pipeline.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
 
@@ -69,7 +69,7 @@ void PerformanceWindow::render()
 	// Renderer
 	{
 		std::ostringstream s;
-		s << "Graphics::DrawCalls: " << Graphics::instance()->performances.drawCalls;
+		s << "Graphics::DrawCalls: " << GraphicsPipeline::instance()->stats.drawCalls;
 		EditorUI::text(s.str().c_str());
 	}
 }
