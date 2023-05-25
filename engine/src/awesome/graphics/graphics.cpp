@@ -41,10 +41,10 @@ void Graphics::shutdown()
 void Graphics::preRendering()
 {
 	const auto& canvas = Canvas::instance();
-	renderer->setViewport(canvas.getWidth(), canvas.getHeight());
+	renderer->submitSetViewport(canvas.getWidth(), canvas.getHeight());
 
 	CameraComponent* const camera = CameraComponent::main();
-	renderer->clear(camera ? camera->color : graphics::Color::Black);
+	renderer->submitClear(camera ? camera->color : graphics::Color::Black);
 }
 
 void Graphics::render()
@@ -54,6 +54,6 @@ void Graphics::render()
 
 void Graphics::postRendering()
 {	
-	renderer->flush();
+	renderer->draw();
 	performances.drawCalls = renderer->stats.drawCalls;
 }
