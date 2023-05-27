@@ -20,12 +20,12 @@ bool EditorModule::startup()
 
 	EditorUI::Style::apply(EditorStyle{});
 
-	menu = new EditorMenu();
-	menu->init();
-
 	editor_state = new EditorState();
 	editor_state->path = AssetLibrary::instance().path();
 	editor_state->init();
+
+	menu = new EditorMenu();
+	menu->init();
 
 	return true;
 }
