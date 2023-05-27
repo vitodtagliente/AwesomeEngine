@@ -316,10 +316,14 @@ void EditorUI::Runtime::preRendering()
 
 void EditorUI::Runtime::postRendering()
 {
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void EditorUI::Runtime::render()
+{
 	saveFileDialog.render();
 
 	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void EditorUI::Runtime::update()

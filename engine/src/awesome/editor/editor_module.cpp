@@ -56,6 +56,8 @@ void EditorModule::render()
 		EditorUI::Window::end();
 	}
 	menu->render();
+
+	EditorUI::Runtime::render();
 }
 
 void EditorModule::postRendering()

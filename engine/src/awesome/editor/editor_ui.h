@@ -139,6 +139,7 @@ struct EditorUI final
 		static void startup(void* const windowHandler);
 		static void preRendering();
 		static void postRendering();
+		static void render();
 		static void update();
 		static void shutdown();
 	};
