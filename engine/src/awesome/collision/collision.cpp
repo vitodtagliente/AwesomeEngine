@@ -20,7 +20,7 @@ bool Collision::startup()
 	GraphicsPipeline* const gfx = GraphicsPipeline::instance();
 	if (gfx != nullptr)
 	{
-		renderer = gfx->sceneRenderer.get();
+		renderer = gfx->renderer(GraphicsPipeline::RenderStage::Name::Scene);
 	}
 	return true;
 }
@@ -35,7 +35,7 @@ void Collision::render()
 	{
 		GraphicsPipeline* const gfx = GraphicsPipeline::instance();
 		if (gfx == nullptr) return;
-		renderer = gfx->sceneRenderer.get();
+		renderer = gfx->renderer(GraphicsPipeline::RenderStage::Name::Scene);
 		if (renderer == nullptr) return;
 	}
 

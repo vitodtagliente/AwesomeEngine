@@ -9,7 +9,7 @@ CameraComponent* CameraComponent::s_instance{ nullptr };
 void CameraComponent::init()
 {
 	s_instance = this;
-	m_renderer = GraphicsPipeline::instance()->sceneRenderer.get();
+	m_renderer = GraphicsPipeline::instance()->renderer(GraphicsPipeline::RenderStage::Name::Scene);
 }
 
 void CameraComponent::update(const double)
