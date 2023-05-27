@@ -1,7 +1,6 @@
 #include "collider2d_component.h"
 
 #include <awesome/collision/quad_tree.h>
-#include <awesome/engine/engine.h>
 #include <awesome/graphics/color.h>
 #include <awesome/graphics/renderer.h>
 
@@ -13,7 +12,7 @@ bool intersect(const math::rect& rect, const math::circle& circle)
 
 Collider2DComponent::Collider2DComponent()
 	: Component()
-	, m_renderSettings(Engine::instance().settings.renderer)
+	, m_renderSettings(EngineSettings::instance().renderer)
 {
 }
 

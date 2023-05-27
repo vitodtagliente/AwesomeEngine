@@ -1,26 +1,20 @@
-#include "editor.h"
+#include "editor_module.h"
 
 #include <assert.h>
 
 #include <awesome/asset/asset_library.h>
 #include <awesome/engine/canvas.h>
 
+#include "editor_state.h"
 #include "editor_style.h"
 #include "editor_ui.h"
 
 #include "private/editor_menu.h"
 
-Editor* Editor::s_instance{ nullptr };
 EditorMenu* menu{ nullptr };
+extern EditorState* editor_state{ nullptr };
 
-Editor::Editor()
-	: EngineModule()
-{
-	assert(s_instance == nullptr);
-	s_instance = this;
-}
-
-bool Editor::startup()
+bool EditorModule::startup()
 {
 	EditorUI::Runtime::startup(Canvas::instance().getHandler());
 
@@ -29,27 +23,29 @@ bool Editor::startup()
 	menu = new EditorMenu();
 	menu->init();
 
-	state.path = AssetLibrary::instance().path();
-	state.init();
+	editor_state = new EditorState();
+	editor_state->path = AssetLibrary::instance().path();
+	editor_state->init();
 
 	return true;
 }
 
-void Editor::shutdown()
+void EditorModule::shutdown()
 {
-	state.uninit();
+	editor_state->uninit();
+	delete editor_state;
 	EditorUI::Runtime::shutdown();
 	delete menu;
 }
 
-void Editor::preRendering()
+void EditorModule::preRendering()
 {
 	EditorUI::Runtime::preRendering();
 }
 
-void Editor::render()
+void EditorModule::render()
 {
-	for (const auto& window : state.getWindows())
+	for (const auto& window : editor_state->getWindows())
 	{
 		if (!window->visible) continue;
 
@@ -62,16 +58,16 @@ void Editor::render()
 	menu->render();
 }
 
-void Editor::postRendering()
+void EditorModule::postRendering()
 {
 	EditorUI::Runtime::postRendering();
 }
 
-void Editor::update(const double deltaTime)
+void EditorModule::update(const double deltaTime)
 {
 	EditorUI::Runtime::update();
 
-	for (const auto& window : state.getWindows())
+	for (const auto& window : editor_state->getWindows())
 	{
 		window->update(deltaTime);
 	}

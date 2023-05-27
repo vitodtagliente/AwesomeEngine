@@ -1,7 +1,7 @@
 #include "settings_window.h"
 
 #include <awesome/editor/editor_ui.h>
-#include <awesome/engine/engine.h>
+#include <awesome/engine/engine_settings.h>
 
 char* const SettingsWindow::getTitle() const
 {
@@ -10,7 +10,7 @@ char* const SettingsWindow::getTitle() const
 
 void SettingsWindow::render()
 {
-	EngineSettings& settings = Engine::instance().settings;
+	EngineSettings& settings = EngineSettings::instance();
 
 	if (EditorUI::button((EditorUI::Icon::save + " Save").c_str()))
 	{

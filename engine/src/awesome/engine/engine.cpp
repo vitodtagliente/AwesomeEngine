@@ -9,6 +9,7 @@
 #include <awesome/asset/scene_asset.h>
 #include <awesome/components/component_register.h>
 #include <awesome/engine/canvas.h>
+#include <awesome/engine/engine_settings.h>
 #include <awesome/engine/input.h>
 #include <awesome/engine/time.h>
 #include <awesome/core/timer.h>
@@ -16,7 +17,7 @@
 
 #include <awesome/audio/audio_module.h>
 #include <awesome/collision/collision.h>
-#include <awesome/editor/editor.h>
+#include <awesome/editor/editor_module.h>
 #include <awesome/graphics/graphics_module.h>
 #include <awesome/ui/ui.h>
 
@@ -59,6 +60,7 @@ int Engine::run()
 {
 	// AssetLibrary& library = AssetLibrary::instance();
 	Canvas& canvas = Canvas::instance();
+	EngineSettings& settings = EngineSettings::instance();
 	Input& input = Input::instance();
 	Time time;
 	SceneGraph& scenegraph = SceneGraph::instance();
@@ -191,11 +193,12 @@ void Engine::initSettings()
 
 	ComponentRegister::execute();
 
-	settings.load(workspace / EngineSettings::Filename);
+	EngineSettings::instance().load(workspace / EngineSettings::Filename);
 }
 
 void Engine::loadDefaultScene()
 {
+	const EngineSettings& settings = EngineSettings::instance();
 	const EngineMode mode = settings.mode;
 
 	// load the default scene
@@ -208,16 +211,17 @@ void Engine::loadDefaultScene()
 
 void Engine::registerDefaultModules()
 {
-	if (settings.mode != Mode::Server)
+	const EngineSettings& settings = EngineSettings::instance();
+	if (settings.mode != EngineMode::Server)
 	{
 		registerModule<AudioModule>();
 		registerModule<GraphicsModule>();
 		registerModule<UI>();
 	}
 
-	if (settings.mode == Mode::Editor)
+	if (settings.mode == EngineMode::Editor)
 	{
-		registerModule<Editor>();
+		registerModule<EditorModule>();
 	}
 
 	registerModule<Collision>();

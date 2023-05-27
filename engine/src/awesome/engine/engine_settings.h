@@ -7,6 +7,7 @@
 
 #include <awesome/asset/scene_asset.h>
 #include <awesome/core/reflection.h>
+#include <awesome/core/singleton.h>
 #include <awesome/graphics/color.h>
 
 #include "engine_settings_generated.h"
@@ -53,7 +54,7 @@ struct SceneSettings : public IType
 };
 
 CLASS()
-struct EngineSettings : public IType
+struct EngineSettings : public IType, public Singleton<EngineSettings>
 {
     void save() const;
     bool load(const std::filesystem::path& _path);

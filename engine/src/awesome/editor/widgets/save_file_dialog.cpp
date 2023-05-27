@@ -6,7 +6,7 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
-#include <awesome/editor/editor.h>
+#include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
 #include <awesome/editor/windows/content_browser_window.h>
 
@@ -28,7 +28,7 @@ void SaveFileDialog::close()
 
 void SaveFileDialog::open(const std::string& title, const std::string& extension, const std::function<void(const std::filesystem::path&)>& handler)
 {
-	m_directory = Directory::scan(Editor::instance()->state.path, Directory::ScanSettings(Asset::Extension, false));
+	m_directory = Directory::scan(EditorState::instance()->path, Directory::ScanSettings(Asset::Extension, false));
 	m_extension = extension;
 	m_handler = handler;
 	m_title = title;

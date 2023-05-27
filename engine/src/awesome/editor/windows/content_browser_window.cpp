@@ -3,7 +3,7 @@
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
 #include <awesome/core/string_util.h>
-#include <awesome/editor/editor.h>
+#include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
 
 ContentBrowserWindow::ContentBrowserWindow()

@@ -1,6 +1,6 @@
 #include <awesome/editor/windows/asset_inspector_window.h>
 
-#include <awesome/editor/editor.h>
+#include <awesome/editor/editor_state.h>
 #include <awesome/editor/editor_ui.h>
 #include <awesome/graphics/color.h>
 

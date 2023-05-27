@@ -3,24 +3,13 @@
 
 #include <awesome/engine/engine_module.h>
 
-#include "editor_state.h"
-
-class Editor : public EngineModule
+class EditorModule : public EngineModule
 {
 public:
-	Editor();
-
 	virtual bool startup() override;
 	virtual void shutdown() override;
 	virtual void preRendering() override;
 	virtual void render() override;
 	virtual void postRendering() override;
 	virtual void update(double deltaTime) override;
-
-	static Editor* const instance() { return s_instance; }
-
-	EditorState state;
-
-private:	
-	static Editor* s_instance;
 };

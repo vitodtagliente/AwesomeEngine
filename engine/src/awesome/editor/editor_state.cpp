@@ -18,8 +18,6 @@
 #include "windows/stress_window.h"
 #include "windows/user_interface_window.h"
 
-EditorState* EditorState::s_instance{ nullptr };
-
 EditorState::EditorState()
 {
 	assert(s_instance == nullptr);

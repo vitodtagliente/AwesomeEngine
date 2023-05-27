@@ -54,5 +54,5 @@ public:
 private:
 	std::vector<std::unique_ptr<Window>> m_windows;
 
-	static EditorState* s_instance;
+	static inline EditorState* s_instance{ nullptr };
 };

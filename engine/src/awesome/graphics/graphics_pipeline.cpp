@@ -5,7 +5,7 @@
 #include <awesome/core/logger.h>
 #include <awesome/components/camera_component.h>
 #include <awesome/engine/canvas.h>
-#include <awesome/engine/engine.h>
+#include <awesome/engine/engine_settings.h>
 #include <awesome/scene/scene_graph.h>
 
 #include "graphics_context.h"
@@ -35,7 +35,7 @@ bool GraphicsPipeline::RenderStage::init()
 }
 
 GraphicsPipeline::GraphicsPipeline()
-	: m_mode(Engine::instance().settings.mode)
+	: m_mode(EngineSettings::instance().mode)
 {
 	assert(s_instance == nullptr);
 	s_instance = this;

@@ -8,13 +8,10 @@
 #include <awesome/core/singleton.h>
 
 #include "engine_module.h"
-#include "engine_settings.h"
 
 class Engine : public Singleton<Engine>
 {
 public:
-	typedef EngineMode Mode;
-
 	struct Stats
 	{
 		unsigned int framerate{ 0 };
@@ -49,8 +46,6 @@ public:
 		}
 		return nullptr;
 	}
-
-	EngineSettings settings;
 
 private:
 	void initSettings();

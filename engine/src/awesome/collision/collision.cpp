@@ -1,7 +1,6 @@
 #include "collision.h"
 
 #include <awesome/components/collider2d_component.h>
-#include <awesome/engine/engine.h>
 #include <awesome/graphics/graphics_pipeline.h>
 #include <awesome/scene/entity.h>
 #include <awesome/scene/scene_graph.h>
@@ -11,7 +10,7 @@
 graphics::Renderer* renderer{ nullptr };
 
 Collision::Collision()
-	: m_settings(Engine::instance().settings.renderer)
+	: m_settings(EngineSettings::instance().renderer)
 {
 }
 
