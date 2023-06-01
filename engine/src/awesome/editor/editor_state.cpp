@@ -9,14 +9,12 @@
 #include "windows/asset_inspector_window.h"
 #include "windows/content_browser_window.h"
 #include "windows/entity_inspector_window.h"
-#include "windows/game_window.h"
 #include "windows/log_window.h"
 #include "windows/performance_window.h"
 #include "windows/scene_window.h"
 #include "windows/settings_window.h"
 #include "windows/sprite_editor_window.h"
 #include "windows/stress_window.h"
-#include "windows/user_interface_window.h"
 
 EditorState::EditorState()
 {
@@ -31,14 +29,12 @@ void EditorState::init()
 	m_windows.push_back(std::make_unique<AssetInspectorWindow>());
 	m_windows.push_back(std::make_unique<ContentBrowserWindow>());
 	m_windows.push_back(std::make_unique<EntityInspectorWindow>());
-	m_windows.push_back(std::make_unique<GameWindow>());
 	m_windows.push_back(std::make_unique<LogWindow>());
 	m_windows.push_back(std::make_unique<PerformanceWindow>());
 	m_windows.push_back(std::make_unique<SceneWindow>());
 	m_windows.push_back(std::make_unique<SettingsWindow>());
 	m_windows.push_back(std::make_unique<SpriteEditorWindow>());
 	m_windows.push_back(std::make_unique<StressWindow>());
-	m_windows.push_back(std::make_unique<UserInterfaceWindow>());
 
 	for (const auto& [name, options] : TypeFactory::list("Type", "Window"))
 	{

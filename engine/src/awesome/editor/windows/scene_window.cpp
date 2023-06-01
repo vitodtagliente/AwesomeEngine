@@ -49,7 +49,7 @@ void SceneWindow::render()
 	EditorUI::Child::begin("SceneContent");
 
 	EditorUI::Tree::openNextItem();
-	const bool open = EditorUI::Tree::begin("root", false);
+	const bool open = EditorUI::Tree::begin("Scene", false);
 	EditorUI::DragDrop::end("Entity::ChangeParent", [this, &root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, &root); });
 
 	if (open)

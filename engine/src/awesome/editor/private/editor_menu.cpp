@@ -115,6 +115,17 @@ void EditorMenu::menuView()
 				m_editorState->settings.save();
 			}
 		}
+
+		EditorUI::separator();
+
+		if (EditorUI::Menu::item("Hide all"))
+		{
+			for (const auto& window : m_editorState->getWindows())
+			{
+				window->visible = false;
+			}
+		}
+
 		EditorUI::Menu::end();
 	}
 }
