@@ -49,16 +49,26 @@ void SceneWindow::render()
 	EditorUI::Child::begin("SceneContent");
 
 	EditorUI::Tree::openNextItem();
-	const bool open = EditorUI::Tree::begin("Scene", false);
+	const bool open_scene = EditorUI::Tree::begin("Scene", false);
 	EditorUI::DragDrop::end("Entity::ChangeParent", [this, &root](void* const data, const size_t) -> void { reparentEntity(*(const uuid*)data, &root); });
 
-	if (open)
+	if (open_scene)
 	{
 		for (auto it = root.children().begin(); it != root.children().end(); ++it)
 		{
 			const auto& entity = *it;
 			renderEntity(entity.get(), selectedEntity);
 		}
+		EditorUI::Tree::end();
+	}
+
+	EditorUI::Tree::openNextItem();
+	const bool open_canvas = EditorUI::Tree::begin("Canvas", false);
+	EditorUI::DragDrop::end("Control::ChangeParent", [this](void* const, const size_t) -> void {  });
+
+	if (open_canvas)
+	{
+		
 		EditorUI::Tree::end();
 	}
 
