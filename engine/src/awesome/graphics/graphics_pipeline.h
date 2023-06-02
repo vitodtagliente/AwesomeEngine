@@ -26,6 +26,7 @@ public:
 		{
 			static const std::string Scene;
 			static const std::string UI;
+			static const std::string Wireframes;
 		};
 
 		RenderStage(const std::string& name);

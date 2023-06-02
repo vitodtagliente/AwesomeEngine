@@ -4,6 +4,7 @@
 
 #include "graphics_context.h"
 #include "graphics_pipeline.h"
+#include "texture_library.h"
 
 extern graphics::Context* graphics_context{ nullptr };
 GraphicsPipeline* graphics_pipeline{ nullptr };
@@ -33,6 +34,9 @@ void GraphicsModule::shutdown()
 
 void GraphicsModule::preRendering()
 {
+	// must be executed in the main thread
+	TextureLibrary::instance().flush();
+
 	graphics_pipeline->preRendering();
 }
 

@@ -135,10 +135,16 @@ int Engine::run()
 				module->preRendering();
 			}
 
+			TaskList tasks;
 			for (const auto& module : m_modules)
 			{
-				module->render();
+				tasks.push(std::async(std::launch::async, [&module]() -> void
+					{
+						module->render();
+					}
+				));
 			}
+			tasks.wait();
 
 			for (const auto& module : m_modules)
 			{

@@ -14,6 +14,7 @@ extern graphics::Context* graphics_context;
 
 const std::string GraphicsPipeline::RenderStage::Name::Scene = "scene";
 const std::string GraphicsPipeline::RenderStage::Name::UI = "ui";
+const std::string GraphicsPipeline::RenderStage::Name::Wireframes = "wireframes";
 
 GraphicsPipeline::RenderStage::RenderStage(const std::string& name)
 	: name(name)
@@ -73,7 +74,8 @@ GraphicsPipeline::RenderStage* const GraphicsPipeline::stage(const std::string& 
 bool GraphicsPipeline::init()
 {
 	m_stages.push_back(RenderStage(RenderStage::Name::Scene));
-	// m_stages.push_back(RenderStage(RenderStage::Name::UI));
+	m_stages.push_back(RenderStage(RenderStage::Name::UI));
+	m_stages.push_back(RenderStage(RenderStage::Name::Wireframes));
 
 	for (auto& stage : m_stages)
 	{
@@ -89,10 +91,10 @@ void GraphicsPipeline::uninit()
 void GraphicsPipeline::preRendering()
 {
 	CameraComponent* const camera = CameraComponent::main();
-	for (auto& stage : m_stages)
+	if (!m_stages.empty())
 	{
-		stage.renderer->submitClear(camera ? camera->color : graphics::Color::Black);
-		stage.renderer->submitSetViewport(viewport.width, viewport.height);
+		m_stages.front().renderer->submitClear(camera ? camera->color : graphics::Color::Black);
+		m_stages.front().renderer->submitSetViewport(viewport.width, viewport.height);
 	}
 }
 
