@@ -29,3 +29,6 @@
 [submodule "engine/vendor/SDL_ttf"]
 	path = engine/vendor/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf
+[submodule "engine/vendor/freetype"]
+	path = engine/vendor/freetype
+	url = https://github.com/freetype/freetype
