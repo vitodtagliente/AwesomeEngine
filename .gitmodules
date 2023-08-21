@@ -20,3 +20,12 @@
 	path = engine/vendor/imgui
 	url = https://github.com/ocornut/imgui
 	branch = docking
+[submodule "engine/vendor/SDL"]
+	path = engine/vendor/SDL
+	url = https://github.com/libsdl-org/SDL
+[submodule "engine/vendor/SDL_image"]
+	path = engine/vendor/SDL_image
+	url = https://github.com/libsdl-org/SDL_image
+[submodule "engine/vendor/SDL_ttf"]
+	path = engine/vendor/SDL_ttf
+	url = https://github.com/libsdl-org/SDL_ttf
