@@ -22,38 +22,6 @@
 #include "components/systems/rigidbody2d_system.h"
 #include "components/systems/sprite_animator_system.h"
 
-struct ExecutionContext
-{
-
-} context;
-
-void render(Canvas& canvas, std::vector<std::unique_ptr<EngineModule>>& modules, SystemRegistry& registry)
-{
-	while (canvas.isOpen())
-	{
-		for (const auto& module : modules)
-		{
-			module->preRendering();
-		}
-
-		std::for_each(
-			std::execution::par_unseq,
-			modules.begin(),
-			modules.end(),
-			[](const std::unique_ptr<EngineModule>& module) -> void { module->render(); }
-		);
-
-		registry.run(0);
-
-		for (const auto& module : modules)
-		{
-			module->postRendering();
-		}
-
-		// std::this_thread::sleep_for()
-	}
-}
-
 void Engine::init(const std::initializer_list<EngineModule*>& modules)
 {
 	for (EngineModule* const module : modules)
@@ -90,8 +58,6 @@ int Engine::run()
 	Timer statsTimer(1.f);
 	double deltaTime = 0.0;
 
-	std::thread render_thread(render, std::ref(canvas), std::ref(m_modules), std::ref(m_render_systems));
-
 	while (canvas.isOpen())
 	{
 		time.tick();
@@ -115,6 +81,28 @@ int Engine::run()
 			);
 
 			m_update_systems.run(deltaTime);
+		}
+
+		// render
+		{
+			for (const auto& module : m_modules)
+			{
+				module->preRendering();
+			}
+
+			std::for_each(
+				std::execution::par_unseq,
+				m_modules.begin(),
+				m_modules.end(),
+				[](const std::unique_ptr<EngineModule>& module) -> void { module->render(); }
+			);
+
+			m_render_systems.run(0);
+
+			for (const auto& module : m_modules)
+			{
+				module->postRendering();
+			}
 		}
 
 		EntityManager::flush();
@@ -142,7 +130,6 @@ int Engine::run()
 			canvas.wait(fps_time);
 		}
 	}
-	render_thread.join();
 
 	EntityManager::clear();
 
