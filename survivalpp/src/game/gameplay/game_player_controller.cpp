@@ -20,5 +20,14 @@ void GamePlayerController::update(const double delta_time)
 	if (pawn)
 	{
 		pawn->move(move_direction);
+
+		const math::vec2& mouse_position = input.getMousePosition();
+		math::vec2 aim_direction = (mouse_position - m_entity->transform.position).normalize();
+		pawn->aim(aim_direction);
+
+		if (input.isKeyDown(KeyCode::MouseLeftButton))
+		{
+			pawn->attack();
+		}
 	}
 }

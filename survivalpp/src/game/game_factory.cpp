@@ -8,6 +8,7 @@
 
 #include "components/health.h"
 #include "components/pawn.h"
+#include "components/weapon.h"
 
 Entity& GameFactory::pawn(const PawnDefinition& definition)
 {
@@ -43,12 +44,28 @@ Entity& GameFactory::pawn(const PawnDefinition& definition)
 	}
 	animator.animations.insert(std::make_pair("idle", idle));
 	animator.animations.insert(std::make_pair("walk", walk));
+		
+	Health& health = entity.addComponent<Health>();
+	health.max = health.value = definition.stats.hp;
+
+	entity.addComponent<Weapon>();
 
 	Pawn& pawn = entity.addComponent<Pawn>();
 	pawn.stats = definition.stats;
-	
-	Health& health = entity.addComponent<Health>();
-	health.max = health.value = definition.stats.hp;
+
+	return entity;
+}
+
+Entity& GameFactory::bullet(const EntityPtr& owner, const math::vec2& direction)
+{
+	Entity& entity = EntityManager::spawn();
+	entity.name = "bullet";
+
+	Sprite& sprite = entity.addComponent<Sprite>();
+	sprite.texture = "../data/circle.png";
+
+	Bullet& bullet = entity.addComponent<Bullet>();
+	bullet.shoot(owner, direction);
 
 	return entity;
 }

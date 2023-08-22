@@ -9,8 +9,10 @@
 
 void EnemySpawner::update(const double delta_time)
 {
+	static int s_counter = 0;
+
 	m_spawn_timer.tick(delta_time);
-	if (m_spawn_timer.isExpired())
+	if (m_spawn_timer.isExpired() && s_counter++ == 0)
 	{
 		Player& player = PlayerManager::local();
 		const math::vec2& pivot = player.controller->entity()->transform.position;

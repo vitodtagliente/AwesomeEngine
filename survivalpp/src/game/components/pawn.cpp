@@ -10,11 +10,17 @@ void Pawn::init()
 	m_health = e.findComponent<Health>();
 	m_sprite = e.findComponent<Sprite>();
 	m_sprite_animator = e.findComponent<SpriteAnimator>();
+	m_weapon = e.findComponent<Weapon>();
 }
 
 void Pawn::aim(const math::vec2& direction)
 {
-	// m_aim_direction = direction;
+	m_weapon->aim(direction);
+}
+
+void Pawn::attack()
+{
+	m_weapon->attack();
 }
 
 void Pawn::move(const math::vec2& direction)
