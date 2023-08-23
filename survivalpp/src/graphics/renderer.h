@@ -21,12 +21,17 @@ namespace graphics
 			int drawCalls{ 0 };
 		};
 
+		void submitClear();
 		void submitSetViewport(int width, int height);
 		void submitDrawCircle(ShapeRenderStyle style, const math::vec2& position, float radius, const Color& color);
 		void submitDrawLine(const math::vec2& point1, const math::vec2& point2, const Color& color);
 		void submitDrawRect(ShapeRenderStyle style, const math::vec2& position, float width, float height, const Color& color);
-		void submitDrawTexture(Texture& texture, const math::vec2& position, float angle, const math::vec2& scale, const TextureRect& rect = {}, TextureFlipMode flip = TextureFlipMode::None, const Color& color = Color::White);
-		void submitDrawTexture(Texture& texture, const TextureRect& rect = {}, const Color& color = Color::White);
+		void submitDrawTexture(Texture* const texture, const math::vec2& position, float angle, const math::vec2& scale, const TextureRect& rect = {}, TextureFlipMode flip = TextureFlipMode::None, const Color& color = Color::White);
+
+		void flush();
+		void next_frame();
+
+		math::vec2 screenToWorld(const math::vec2& position);
 
 		Camera camera;
 		graphics::Color color;
@@ -34,6 +39,17 @@ namespace graphics
 		Stats stats;
 
 	private:
+		struct SpriteRenderData
+		{
+			Texture* texture{ nullptr };
+			SDL_FRect clip;
+			SDL_FRect dest;
+			double angle{ 0 };
+			int flip{ 0 };
+		};
+
 		math::vec2 m_viewport;
+		std::vector<SpriteRenderData> m_sprites;
+		std::vector<SpriteRenderData> m_next_sprites;
 	};
 }

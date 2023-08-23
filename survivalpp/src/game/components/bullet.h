@@ -17,7 +17,7 @@ public:
 	}
 
 	std::size_t damage{ 1 };
-	float speed{ 20.f };
+	float speed{ 40.f };
 
 private:
 	math::vec2 m_direction;

@@ -4,7 +4,7 @@
 
 void BulletSystem::process(const double delta_time, Bullet& bullet)
 {
-	bullet.entity()->transform.position += static_cast<float>(delta_time) * bullet.speed;
+	bullet.entity()->transform.position += bullet.m_direction * static_cast<float>(delta_time) * bullet.speed;
 
 	bullet.m_lifetime.tick(delta_time);
 	if (bullet.m_lifetime.isExpired())

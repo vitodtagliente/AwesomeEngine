@@ -4,8 +4,6 @@
 #include "graphics/renderer.h"
 #include "graphics/texture_library.h"
 
-extern graphics::Renderer* g_renderer;
-
 void SpriteSystem::process(const double, Sprite& sprite)
 {
 	graphics::TextureFlipMode flip = graphics::TextureFlipMode::None;
@@ -21,6 +19,6 @@ void SpriteSystem::process(const double, Sprite& sprite)
 	if (texture)
 	{
 		math::transform2 transform = sprite.entity()->transform;
-		g_renderer->submitDrawTexture(*texture, transform.position, transform.rotation, transform.scale, sprite.rect, flip);
+		graphics::Renderer::instance().submitDrawTexture(texture, transform.position, transform.rotation, transform.scale, sprite.rect, flip);
 	}
 }

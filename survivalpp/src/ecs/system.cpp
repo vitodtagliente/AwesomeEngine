@@ -19,7 +19,7 @@ void SystemRegistry::run(const double delta_time)
 	if (m_settings.multithreading)
 	{
 		std::for_each(
-			std::execution::par_unseq,
+			std::execution::seq,
 			m_systems.begin(),
 			m_systems.end(),
 			[delta_time](const std::unique_ptr<ISystem>& system) -> void { system->run(delta_time); }

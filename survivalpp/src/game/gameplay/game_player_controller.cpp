@@ -1,7 +1,10 @@
 #include "game_player_controller.h"
 
+#include <iostream>
+
 #include "ecs/entity.h"
 #include "engine/input.h"
+#include "graphics/renderer.h"
 
 #include "game/components/pawn.h"
 
@@ -22,7 +25,9 @@ void GamePlayerController::update(const double delta_time)
 		pawn->move(move_direction);
 
 		const math::vec2& mouse_position = input.getMousePosition();
-		math::vec2 aim_direction = (mouse_position - m_entity->transform.position).normalize();
+		const math::vec2& world_mouse_position = graphics::Renderer::instance().screenToWorld(mouse_position);
+		const math::vec2& entity_position = m_entity->transform.position;
+		math::vec2 aim_direction = (world_mouse_position - entity_position).normalize();
 		pawn->aim(aim_direction);
 
 		if (input.isKeyDown(KeyCode::MouseLeftButton))
