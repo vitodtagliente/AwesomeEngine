@@ -82,17 +82,14 @@ namespace graphics
 			SDL_RenderTextureRotated(sdl_renderer, data.texture->data(), &data.clip, &data.dest, data.angle, nullptr, static_cast<SDL_RendererFlip>(data.flip));
 		}
 
-		SDL_RenderPresent(sdl_renderer);
-	}
-
-	void Renderer::next_frame()
-	{
 		m_sprites.clear();
 		for (auto data : m_next_sprites)
 		{
 			m_sprites.push_back(std::move(data));
 		}
 		m_next_sprites.clear();
+
+		SDL_RenderPresent(sdl_renderer);
 	}
 
 	math::vec2 Renderer::screenToWorld(const math::vec2& position)

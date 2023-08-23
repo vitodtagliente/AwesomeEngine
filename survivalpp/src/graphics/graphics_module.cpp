@@ -53,7 +53,6 @@ graphics::Texture* arthur;
 void GraphicsModule::preRendering()
 {
 	Renderer& renderer = Renderer::instance();
-	renderer.next_frame();
 	renderer.submitClear();
 	
 	Canvas& canvas = Canvas::instance();
@@ -68,5 +67,6 @@ void GraphicsModule::render()
 
 void GraphicsModule::postRendering()
 {
-	Renderer::instance().flush();
+	Renderer& renderer = Renderer::instance();
+	renderer.flush();
 }

@@ -29,7 +29,6 @@ namespace graphics
 		void submitDrawTexture(Texture* const texture, const math::vec2& position, float angle, const math::vec2& scale, const TextureRect& rect = {}, TextureFlipMode flip = TextureFlipMode::None, const Color& color = Color::White);
 
 		void flush();
-		void next_frame();
 
 		math::vec2 screenToWorld(const math::vec2& position);
 
