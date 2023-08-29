@@ -1,8 +1,6 @@
 #include "texture_library.h"
 
-#include <SDL3/SDL_image.h>
-
-extern SDL_Renderer* sdl_renderer;
+#include <vdtgraphics/image.h>
 
 namespace graphics
 {
@@ -15,8 +13,9 @@ namespace graphics
 		}
 		else
 		{
-			std::unique_ptr<Texture> texture = std::make_unique<Texture>(path);
-			if (*texture)
+			Image img = Image::load(path);
+			std::unique_ptr<Texture> texture = std::make_unique<Texture>(img.data.get(), img.width, img.height, img.channels);
+			if (texture != nullptr)
 			{
 				const auto& pair = m_textures.insert(std::make_pair(path, std::move(texture))).first;
 				return pair->second.get();

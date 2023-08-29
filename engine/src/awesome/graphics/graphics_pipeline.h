@@ -34,7 +34,6 @@ public:
 		bool init();
 
 		std::unique_ptr<graphics::Renderer> renderer;
-		std::unique_ptr<graphics::RenderTarget> renderTarget;
 		std::string name;
 	};
 

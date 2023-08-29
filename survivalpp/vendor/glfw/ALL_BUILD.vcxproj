@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AF01F1DE-3E6F-3EB5-A3C6-C0D0ECAAD6B9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\src;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glad\include;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\src;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glad\include;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\src;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glad\include;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\src;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glad\include;C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\..\engine\vendor\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/vitod/Desktop/AwesomeEngine/engine/vendor/glfw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/vitod/Desktop/AwesomeEngine/survivalpp -BC:/Users/vitod/Desktop/AwesomeEngine/survivalpp/solution --check-stamp-file C:/Users/vitod/Desktop/AwesomeEngine/survivalpp/vendor/glfw/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMake\modules\FindVulkan.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\cmake_uninstall.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3.pc.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3Config.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/vitod/Desktop/AwesomeEngine/engine/vendor/glfw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/vitod/Desktop/AwesomeEngine/survivalpp -BC:/Users/vitod/Desktop/AwesomeEngine/survivalpp/solution --check-stamp-file C:/Users/vitod/Desktop/AwesomeEngine/survivalpp/vendor/glfw/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMake\modules\FindVulkan.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\cmake_uninstall.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3.pc.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3Config.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/vitod/Desktop/AwesomeEngine/engine/vendor/glfw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/vitod/Desktop/AwesomeEngine/survivalpp -BC:/Users/vitod/Desktop/AwesomeEngine/survivalpp/solution --check-stamp-file C:/Users/vitod/Desktop/AwesomeEngine/survivalpp/vendor/glfw/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMake\modules\FindVulkan.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\cmake_uninstall.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3.pc.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3Config.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/vitod/Desktop/AwesomeEngine/engine/vendor/glfw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/vitod/Desktop/AwesomeEngine/survivalpp -BC:/Users/vitod/Desktop/AwesomeEngine/survivalpp/solution --check-stamp-file C:/Users/vitod/Desktop/AwesomeEngine/survivalpp/vendor/glfw/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.27\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.27\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindDoxygen.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.27\Modules\WriteBasicConfigVersionFile.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMake\modules\FindVulkan.cmake;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\cmake_uninstall.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3.pc.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw3Config.cmake.in;C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\src\glfw_config.h.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\solution\ZERO_CHECK.vcxproj">
+      <Project>{3CFBE1A0-5DC0-327C-9D38-7324BC0A7064}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\boing.vcxproj">
+      <Project>{CF4BCFA4-D3E7-3DC9-94C8-5C591EF0EFA2}</Project>
+      <Name>boing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\clipboard.vcxproj">
+      <Project>{E1D919AA-F2B6-30AF-9F66-B28E785FCC62}</Project>
+      <Name>clipboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\cursor.vcxproj">
+      <Project>{23C6F5D8-2D85-3E6F-9EBE-6825BEB73B0C}</Project>
+      <Name>cursor</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\empty.vcxproj">
+      <Project>{A503F9A8-3FDD-3D3A-8677-2E0B065042D4}</Project>
+      <Name>empty</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\events.vcxproj">
+      <Project>{DA74C13A-6973-34B5-83B7-4D0F6D6C489B}</Project>
+      <Name>events</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\gamma.vcxproj">
+      <Project>{8A12DADD-7B04-3E00-AB5F-43A951796A3E}</Project>
+      <Name>gamma</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\gears.vcxproj">
+      <Project>{22A413D3-74E2-3194-9178-BF443A44F84D}</Project>
+      <Name>gears</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\src\glfw.vcxproj">
+      <Project>{B6159A53-51C7-39BF-9790-074457F2DF90}</Project>
+      <Name>glfw</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\glfwinfo.vcxproj">
+      <Project>{AABBDE5D-9932-3BB5-B15F-BF6D74A8832F}</Project>
+      <Name>glfwinfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\heightmap.vcxproj">
+      <Project>{48A07502-42F5-303F-BE0C-EF1509C25EC8}</Project>
+      <Name>heightmap</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\icon.vcxproj">
+      <Project>{82145F43-07B9-3847-8FE6-2811F01DDC49}</Project>
+      <Name>icon</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\iconify.vcxproj">
+      <Project>{08F936E7-7397-37E1-A6B4-812330F19333}</Project>
+      <Name>iconify</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\joysticks.vcxproj">
+      <Project>{7702BDD7-9FB4-3C70-982D-1231AB189061}</Project>
+      <Name>joysticks</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\monitors.vcxproj">
+      <Project>{16D2CAD6-2B06-3C27-AF64-48DD1A6BA2F8}</Project>
+      <Name>monitors</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\msaa.vcxproj">
+      <Project>{FBC95717-81D1-3482-A951-B39A63ED7CDC}</Project>
+      <Name>msaa</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\particles.vcxproj">
+      <Project>{5C6E6531-DD3F-3502-9739-92A6973AD7FB}</Project>
+      <Name>particles</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\reopen.vcxproj">
+      <Project>{9A551912-F3A3-3577-B1FA-EB4DE6AA032F}</Project>
+      <Name>reopen</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\sharing.vcxproj">
+      <Project>{D93736A8-C574-3E98-81A0-8D674980E683}</Project>
+      <Name>sharing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\simple.vcxproj">
+      <Project>{FA5F7C1A-9A92-30A2-A946-2617EFA2D2F4}</Project>
+      <Name>simple</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\splitview.vcxproj">
+      <Project>{E48E44EA-D810-3524-AE0C-5F71B625C2EE}</Project>
+      <Name>splitview</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\tearing.vcxproj">
+      <Project>{2CC16857-008D-33ED-A3ED-3E2E8702F1B8}</Project>
+      <Name>tearing</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\threads.vcxproj">
+      <Project>{6FDB8A03-478B-3FE8-A573-A133BE94B1F4}</Project>
+      <Name>threads</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\timeout.vcxproj">
+      <Project>{810FE08B-B08A-3015-A94F-AD74C9043A4A}</Project>
+      <Name>timeout</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\title.vcxproj">
+      <Project>{AF72B69D-515E-3F74-BFF4-332B08C41B8E}</Project>
+      <Name>title</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\examples\wave.vcxproj">
+      <Project>{5570BA7A-9387-3720-B3B2-6CFDCC8684B0}</Project>
+      <Name>wave</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\tests\windows.vcxproj">
+      <Project>{28BD87EA-5C14-3F0D-9AE5-5D885D3BFB94}</Project>
+      <Name>windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

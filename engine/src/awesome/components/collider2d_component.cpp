@@ -30,14 +30,14 @@ void Collider2DComponent::render(graphics::Renderer& renderer)
 		case ColliderType2D::Circle:
 		{
 			const math::circle& circle = std::get<math::circle>(m_aabb);
-			renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(circle.x, circle.y, 0.f), circle.radius, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
+			renderer.drawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(circle.x, circle.y, 0.f), circle.radius, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
 			break;
 		}
 		case ColliderType2D::Rect:
 		default:
 		{
 			const math::rect& rect = std::get<math::rect>(m_aabb);
-			renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec3(rect.x, rect.y, 0.f), rect.width * 2, rect.height * 2, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
+			renderer.drawRect(graphics::ShapeRenderStyle::stroke, math::vec3(rect.x, rect.y, 0.f), rect.width * 2, rect.height * 2, m_isColliding ? graphics::Color::Red : m_renderSettings.collisionWireColor);
 			break;
 		}
 		}

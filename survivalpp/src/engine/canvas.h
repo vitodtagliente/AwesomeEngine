@@ -9,9 +9,6 @@
 class Canvas : public Singleton<Canvas>
 {
 public:
-	Canvas() = default;
-	~Canvas();
-
 	struct Settings
 	{
 		unsigned int width = 1080;
@@ -23,8 +20,6 @@ public:
 	bool open(Settings settings = {});
 	void update();
 	void close();
-	
-	void wait(std::size_t ms);
 
 	inline void* getHandler() const { return m_handler; }
 	inline unsigned int getHeight() const { return static_cast<unsigned int>(m_height); }
@@ -36,7 +31,7 @@ public:
 	void setTitle(const std::string& title);
 
 private:
-	void* m_handler{ nullptr };
+	void* m_handler;
 	int m_width{ 1080 };
 	int m_height{ 720 };
 	bool m_isOpen{ false };

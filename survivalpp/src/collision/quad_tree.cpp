@@ -73,7 +73,7 @@ void QuadTreeNode::render(graphics::Renderer& renderer, const graphics::Color& c
 	{
 		child.render(renderer, color);
 	}
-	renderer.submitDrawRect(graphics::ShapeRenderStyle::stroke, math::vec2(m_aabb.x, m_aabb.y), m_aabb.width * 2, m_aabb.height * 2, color);
+	renderer.primitives->drawRect(graphics::ShapeRenderStyle::stroke, math::vec3(m_aabb.x, m_aabb.y, 0.f), m_aabb.width * 2, m_aabb.height * 2, color);
 }
 
 /**

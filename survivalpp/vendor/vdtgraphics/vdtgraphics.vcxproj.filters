@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\camera.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\color.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\context.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\image.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\index_buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\primitive_batch.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\render_target.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\renderable.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\shader_library.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\shader_program.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\sprite_batch.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\text_batch.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\texture.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\texture_coords.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\texture_rect.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\vertex_buffer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\glad\src\glad.c">
+      <Filter>Vendors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\blend_state.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\buffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\color.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\common.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\context.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\font.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\graphics.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\image.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\index_buffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\primitive_batch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\render_command.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\render_target.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\renderable.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\shader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\shader_library.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\shader_program.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\sprite_batch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\stb_image.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\stb_image_write.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\text_batch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\texture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\texture_coords.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\texture_rect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics\vertex_buffer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{31475CA1-9CAC-3551-B708-88C040F326D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{1218D392-8CBB-35E4-A0BC-D297937A1DF4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors">
+      <UniqueIdentifier>{52770321-89B6-3BC2-B768-1D36A82F03B8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

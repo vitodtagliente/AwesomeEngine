@@ -128,7 +128,6 @@ int Engine::run()
 		if (settings.fps != FpsMode::Unlimited)
 		{
 			const std::size_t fps_time = static_cast<std::size_t>(1000.f / static_cast<int>(settings.fps));
-			canvas.wait(fps_time);
 		}
 	}
 

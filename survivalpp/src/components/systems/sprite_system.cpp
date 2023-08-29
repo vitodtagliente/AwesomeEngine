@@ -6,19 +6,10 @@
 
 void SpriteSystem::process(const double, Sprite& sprite)
 {
-	graphics::TextureFlipMode flip = graphics::TextureFlipMode::None;
-	if (sprite.flipX) flip = graphics::TextureFlipMode::Horizontal;
-	if (sprite.flipY)
-	{
-		if (flip == graphics::TextureFlipMode::Horizontal)
-			flip = graphics::TextureFlipMode::Both;
-		else flip = graphics::TextureFlipMode::Vertical;
-	}
-
 	graphics::Texture* const texture = graphics::TextureLibrary::instance().find(sprite.texture);
 	if (texture)
 	{
 		math::transform2 transform = sprite.entity()->transform;
-		graphics::Renderer::instance().submitDrawTexture(texture, transform.position, transform.rotation, transform.scale, sprite.rect, flip);
+		graphics::Renderer::instance().sprites->draw(texture, math::vec3(transform.position.x, transform.position.y, 0.f), sprite.rect);
 	}
 }

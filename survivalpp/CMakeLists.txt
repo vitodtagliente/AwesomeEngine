@@ -3,8 +3,6 @@ project(Survivalpp)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options("-DSDL_STATIC=1")
-
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
@@ -16,12 +14,15 @@ endif()
 
 include_directories( 
 	src/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/plf
+    ${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/glad/include/
+	${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/glfw/include/
 )
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SDL EXCLUDE_FROM_ALL)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SDL_image EXCLUDE_FROM_ALL)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/SDL_ttf EXCLUDE_FROM_ALL)
+# include vendors files
+file(GLOB VENDORS_SOURCES 
+	${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/glad/src/glad.c
+) 	
+source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 # recursively include all source files
 file(GLOB_RECURSE PROJECT_SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -33,16 +34,26 @@ foreach(_source IN ITEMS ${PROJECT_SOURCE_FILES})
     source_group("${_group_path}" FILES "${_source}")
 endforeach()
 
+if(NOT TARGET glfw)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/glfw ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+endif()
+
+if(NOT TARGET vdtgraphics)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../engine/vendor/vdtgraphics ${CMAKE_CURRENT_SOURCE_DIR}/vendor/vdtgraphics)
+endif()
+
 add_executable(
     ${PROJECT_NAME} 
     ${PROJECT_SOURCE_FILES} 
+    ${VENDORS_SOURCES}
 )
 
 target_link_libraries(
     ${PROJECT_NAME} 
-	PRIVATE SDL3::SDL3-shared
-    PRIVATE SDL3_image::SDL3_image
-    PRIVATE SDL3_ttf::SDL3_ttf
+    PRIVATE ${GLAD_LIBRARIES}
+	PRIVATE glfw
+	PRIVATE ${GLFW_LIBRARIES}
+	PUBLIC vdtgraphics
 )
 
 if(MSVC)

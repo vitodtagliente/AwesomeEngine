@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\solution\CMakeFiles\60eaa009575248b844bbe497613a46d8\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\glfw\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\glfw\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{42A7760D-6D18-3BF8-A17B-EB8F53387EE9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,41 @@
+﻿  Building Custom Rule C:/Users/vitod/Desktop/AwesomeEngine/engine/vendor/vdtgraphics/CMakeLists.txt
+  buffer.cpp
+  camera.cpp
+  color.cpp
+  context.cpp
+  font.cpp
+  image.cpp
+  index_buffer.cpp
+  primitive_batch.cpp
+  render_target.cpp
+  renderable.cpp
+  shader.cpp
+  shader_library.cpp
+  shader_program.cpp
+  sprite_batch.cpp
+  text_batch.cpp
+  texture.cpp
+  texture_coords.cpp
+  texture_rect.cpp
+  vertex_buffer.cpp
+C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp(66,35): warning C4267: 'argument': conversion from 'size_t' to 'FT_UInt', possible loss of data
+C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\include\vdtgraphics/stb_image_write.h(776,13): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. (compiling source file C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\image.cpp)
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(268): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data (compiling source file C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp)
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\memory(1983): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,nullptr,int&,int&,const size_t&,graphics::Texture::Options&>(_Ty &,nullptr &&,int &,int &,const size_t &,graphics::Texture::Options &) noexcept(false)' being compiled
+          with
+          [
+              _Ty=graphics::Texture
+          ] (compiling source file C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp)
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\memory(2663): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<nullptr,int&,int&,const size_t&,graphics::Texture::Options&>(nullptr &&,int &,int &,const size_t &,graphics::Texture::Options &)' being compiled
+          with
+          [
+              _Ty=graphics::Texture
+          ] (compiling source file C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp)
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\memory(2664,20): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<nullptr,int&,int&,const size_t&,graphics::Texture::Options&>(nullptr &&,int &,int &,const size_t &,graphics::Texture::Options &)' being compiled
+          with
+          [
+              _Ty=graphics::Texture
+          ] (compiling source file C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp)
+C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\source\font.cpp(91,103): message : see reference to function template instantiation 'std::shared_ptr<graphics::Texture> std::make_shared<graphics::Texture,nullptr,int&,int&,const size_t&,graphics::Texture::Options&>(nullptr &&,int &,int &,const size_t &,graphics::Texture::Options &)' being compiled
+  glad.c
+  vdtgraphics.vcxproj -> C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\vendor\vdtgraphics\Debug\vdtgraphics.lib

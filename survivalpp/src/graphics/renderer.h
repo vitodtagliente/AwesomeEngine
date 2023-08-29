@@ -1,13 +1,15 @@
 /// Copyright (c) Vito Domenico Tagliente
 #pragma once
 
+#include <memory>
+
+#include <vdtgraphics/graphics.h>
+
 #include "core/singleton.h"
 #include "math/vector2.h"
 
-#include "camera.h"
 #include "common.h"
 #include "color.h"
-#include "render_target.h"
 #include "texture.h"
 #include "texture_rect.h"
 
@@ -18,16 +20,12 @@ namespace graphics
 	public:
 		struct Stats
 		{
-			int drawCalls{ 0 };
+			int draw_calls{ 0 };
 		};
 
-		void submitClear();
-		void submitSetViewport(int width, int height);
-		void submitDrawCircle(ShapeRenderStyle style, const math::vec2& position, float radius, const Color& color);
-		void submitDrawLine(const math::vec2& point1, const math::vec2& point2, const Color& color);
-		void submitDrawRect(ShapeRenderStyle style, const math::vec2& position, float width, float height, const Color& color);
-		void submitDrawTexture(Texture* const texture, const math::vec2& position, float angle, const math::vec2& scale, const TextureRect& rect = {}, TextureFlipMode flip = TextureFlipMode::None, const Color& color = Color::White);
-
+		void init(Context* const context);
+		
+		void begin();
 		void flush();
 
 		math::vec2 screenToWorld(const math::vec2& position);
@@ -37,18 +35,11 @@ namespace graphics
 		int pixelsPerUnit{ 32 };
 		Stats stats;
 
-	private:
-		struct SpriteRenderData
-		{
-			Texture* texture{ nullptr };
-			SDL_FRect clip;
-			SDL_FRect dest;
-			double angle{ 0 };
-			int flip{ 0 };
-		};
+		std::unique_ptr<PrimitiveBatch> primitives;
+		std::unique_ptr<SpriteBatch> sprites;
+		std::unique_ptr<TextBatch> text;
 
-		math::vec2 m_viewport;
-		std::vector<SpriteRenderData> m_sprites;
-		std::vector<SpriteRenderData> m_next_sprites;
+	private:
+		Context* m_context{ nullptr };
 	};
 }

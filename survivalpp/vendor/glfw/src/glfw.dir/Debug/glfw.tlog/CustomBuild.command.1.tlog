@@ -1,0 +1,10 @@
+^C:\USERS\VITOD\DESKTOP\AWESOMEENGINE\ENGINE\VENDOR\GLFW\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/vitod/Desktop/AwesomeEngine/survivalpp -BC:/Users/vitod/Desktop/AwesomeEngine/survivalpp/solution --check-stamp-file C:/Users/vitod/Desktop/AwesomeEngine/survivalpp/vendor/glfw/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

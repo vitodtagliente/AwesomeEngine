@@ -15,7 +15,7 @@ void SpriteRendererComponent::render(graphics::Renderer& renderer)
 	std::shared_ptr<graphics::Texture> texture = graphics::TextureLibrary::instance().find(image);
 	if (texture != nullptr)
 	{
-		renderer.submitDrawTexture(texture.get(), getOwnerTransform().matrix(), rect, color);
+		renderer.drawTexture(texture.get(), getOwnerTransform().matrix(), rect, color);
 	}
 }
 

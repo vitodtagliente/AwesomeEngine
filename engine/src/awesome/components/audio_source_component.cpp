@@ -23,10 +23,10 @@ void AudioSourceComponent::render(graphics::Renderer& renderer)
 	if (m_renderSettings.debug && m_renderSettings.renderAudioSources)
 	{
 		const math::vec3& position = getOwnerTransform().position;
-		renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(position.x, position.y, 0.f), minDistance, m_renderSettings.audioSourceWireColor);
+		renderer.drawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(position.x, position.y, 0.f), minDistance, m_renderSettings.audioSourceWireColor);
 		auto max_distance_color = m_renderSettings.audioSourceWireColor;
 		max_distance_color.alpha = 0.5f;
-		renderer.submitDrawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(position.x, position.y, 0.f), maxDistance, max_distance_color);
+		renderer.drawCircle(graphics::ShapeRenderStyle::stroke, math::vec3(position.x, position.y, 0.f), maxDistance, max_distance_color);
 	}
 }
 

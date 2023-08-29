@@ -1,104 +1,165 @@
 #include "canvas.h"
 
-#include <SDL3/SDL.h>
+#include <GLFW/glfw3.h>
 
 #include "input.h"
 #include "keycode.h"
 
-Canvas::~Canvas()
-{
-	if (SDL_Window* const handler = reinterpret_cast<SDL_Window*>(m_handler))
-	{
-		SDL_DestroyWindow(handler);
-		SDL_Quit();
-	}
-}
-
 bool Canvas::open(Settings settings)
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		SDL_Log("SDL_Init failed (%s)", SDL_GetError());
+	if (!glfwInit())
+	{
 		return false;
 	}
 
-	SDL_Window* handler = SDL_CreateWindow(
-		settings.title.c_str(),
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	const unsigned int adaptiveWidth = static_cast<unsigned int>(mode->width - static_cast<int>(static_cast<double>(mode->width) * 0.25));
+	const unsigned int adaptiveHeight = static_cast<unsigned int>(mode->height - static_cast<int>(static_cast<double>(mode->height) * 0.25));
+
+	if (adaptiveWidth > settings.width)
+	{
+		settings.width = adaptiveWidth;
+	}
+	if (adaptiveHeight > settings.height)
+	{
+		settings.height = adaptiveHeight;
+	}
+
+	GLFWwindow* const handler = glfwCreateWindow(
 		settings.width,
 		settings.height,
-		SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY
+		settings.title.c_str(),
+		nullptr,
+		nullptr
 	);
 
 	if (handler == nullptr)
 	{
-		SDL_Log("SDL_CreateWindow failed (%s)", SDL_GetError());
 		return false;
 	}
 
-	m_handler = reinterpret_cast<void*>(handler);
+	glfwMakeContextCurrent(handler);
 	m_width = settings.width;
 	m_height = settings.height;
 	m_isOpen = true;
 
+	glfwSetKeyCallback(
+		handler,
+		[](GLFWwindow*, const int key, const int, const int action, const int)
+		{
+			auto key_state = KeyState::Down;
+			if (action == GLFW_PRESS)
+			{
+				key_state = KeyState::Pressed;
+			}
+			else if (action == GLFW_RELEASE)
+			{
+				key_state = KeyState::Released;
+			}
+
+			Input::instance().setKeyState(key, key_state);
+		}
+	);
+
+	glfwSetMouseButtonCallback(
+		handler,
+		[](GLFWwindow*, const int button, const int action, int)
+		{
+			auto key_state = KeyState::Down;
+			if (action == GLFW_PRESS)
+			{
+				key_state = KeyState::Pressed;
+			}
+			else if (action == GLFW_RELEASE)
+			{
+				key_state = KeyState::Released;
+			}
+
+			Input::instance().setKeyState(button, key_state);
+		}
+	);
+
+	glfwSetCursorPosCallback(
+		handler,
+		[](GLFWwindow*, const double x, const double y)
+		{
+			Input::instance().setMousePosition(static_cast<float>(x), static_cast<float>(y));
+		}
+	);
+
+	glfwSetCursorEnterCallback(
+		handler,
+		[](GLFWwindow*, const int entered)
+		{
+			Input::instance().setMousePositionValid(entered);
+		}
+	);
+
+	// mouse wheel
+	glfwSetScrollCallback(
+		handler,
+		[](GLFWwindow*, const double xoffset, const double yoffset)
+		{
+			Input::instance().setMouseWheelPosition(static_cast<float>(xoffset), static_cast<float>(yoffset));
+		}
+	);
+
+	// remove the fps cap
+	glfwSwapInterval(0);
+	m_handler = reinterpret_cast<void*>(handler);
 	return true;
 }
 
 void Canvas::update()
 {
-	if (SDL_Window* const handler = reinterpret_cast<SDL_Window*>(m_handler))
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		SDL_GetWindowSize(handler, &m_width, &m_height);
-	}
+		glfwPollEvents();
 
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
+		// get the size of the window
+		glfwGetWindowSize(handler, &m_width, &m_height);
+
+		// check for closing window
+		if (glfwWindowShouldClose(handler))
 		{
-		case SDL_EVENT_QUIT: m_isOpen = false; break;
-		case SDL_EVENT_KEY_DOWN: Input::instance().setKeyState(event.key.keysym.sym, KeyState::Down); break;
-		case SDL_EVENT_KEY_UP: Input::instance().setKeyState(event.key.keysym.sym, KeyState::Released); break;
-		case SDL_EVENT_MOUSE_MOTION: 
-			Input::instance().setMousePosition(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
-			break;
-		case SDL_EVENT_MOUSE_BUTTON_DOWN: Input::instance().setKeyState(event.button.button, KeyState::Down); break;
-		case SDL_EVENT_MOUSE_BUTTON_UP:Input::instance().setKeyState(event.button.button, KeyState::Released); break;
-		case SDL_EVENT_MOUSE_WHEEL:
-			Input::instance().setMouseWheelPosition(static_cast<float>(event.wheel.x), static_cast<float>(event.wheel.y));
-			break;
+			m_isOpen = false;
 		}
+		glfwSwapBuffers(handler);
 	}
 }
 
 void Canvas::close()
 {
-	m_isOpen = false;
-}
-
-void Canvas::wait(const std::size_t ms)
-{
-	SDL_Delay(static_cast<Uint32>(ms));
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
+	{
+		glfwSetWindowShouldClose(handler, true);
+	}
 }
 
 void Canvas::maximize()
 {
-	if (SDL_Window* const handler = reinterpret_cast<SDL_Window*>(m_handler))
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		SDL_MaximizeWindow(handler);
+		glfwMaximizeWindow(handler);
 	}
 }
 
 void Canvas::resize(unsigned int width, unsigned int height)
 {
-	if (SDL_Window* const handler = reinterpret_cast<SDL_Window*>(m_handler))
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		SDL_SetWindowSize(handler, static_cast<int>(width), static_cast<int>(height));
+		glfwSetWindowSize(handler, static_cast<int>(width), static_cast<int>(height));
 	}
 }
 
 void Canvas::setTitle(const std::string& title)
 {
-	if (SDL_Window* const handler = reinterpret_cast<SDL_Window*>(m_handler))
+	if (GLFWwindow* const handler = reinterpret_cast<GLFWwindow*>(m_handler))
 	{
-		SDL_SetWindowTitle(handler, title.c_str());
+		glfwSetWindowTitle(handler, title.c_str());
 	}
 }

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\survivalpp\solution\CMakeFiles\f9d2ff0e376e0a03f2c058e7a8bbe28c\PACKAGE_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{42A7760D-6D18-3BF8-A17B-EB8F53387EE9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

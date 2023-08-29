@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\source\quaternion.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\source\transform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\algorithm.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\circle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\math.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\matrix.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\matrix2.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\matrix3.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\matrix4.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\quaternion.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\rectangle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\transform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\vector.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\vector2.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\vector3.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\include\vdtmath\vector4.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\vitod\Desktop\AwesomeEngine\engine\vendor\vdtgraphics\vendor\vdtmath\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{31475CA1-9CAC-3551-B708-88C040F326D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{1218D392-8CBB-35E4-A0BC-D297937A1DF4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -24,14 +24,7 @@ GraphicsPipeline::RenderStage::RenderStage(const std::string& name)
 
 bool GraphicsPipeline::RenderStage::init()
 {
-	renderer = std::make_unique<graphics::Renderer>();
-	if (!renderer->init(graphics_context))
-	{
-		ERR_LOG(THIS_FUNC, "Unable to initialize the " + name + " renderer");
-		return false;
-	}
-	renderTarget = std::make_unique<graphics::RenderTarget>(1080, 720);
-	// renderer->setRenderTarget(renderTarget.get());
+	renderer = std::make_unique<graphics::Renderer>(graphics_context);
 	return true;
 }
 
@@ -90,20 +83,19 @@ void GraphicsPipeline::uninit()
 
 void GraphicsPipeline::preRendering()
 {
+	Canvas& canvas = Canvas::instance();
+	viewport.width = canvas.getWidth();
+	viewport.height = canvas.getHeight();
+
 	CameraComponent* const camera = CameraComponent::main();
 	if (!m_stages.empty())
 	{
-		m_stages.front().renderer->submitClear(camera ? camera->color : graphics::Color::Black);
-		m_stages.front().renderer->submitSetViewport(viewport.width, viewport.height);
+		m_stages.front().renderer->begin(viewport.width, viewport.height, camera ? camera->color : graphics::Color::Black);
 	}
 }
 
 void GraphicsPipeline::render()
 {
-	Canvas& canvas = Canvas::instance();
-	viewport.width = canvas.getWidth();
-	viewport.height = canvas.getHeight();
-
 	SceneGraph::instance().render(*renderer(RenderStage::Name::Scene));
 }
 
@@ -113,8 +105,8 @@ void GraphicsPipeline::postRendering()
 	for (auto& stage : m_stages)
 	{
 		graphics::Renderer& stage_renderer = *stage.renderer;
-		stage_renderer.draw();
-		stats.drawCalls += stage.renderer->stats.drawCalls;
+		stage_renderer.flush();
+		stats.drawCalls += stage.renderer->stats.draw_calls;
 	}
 }
 

@@ -22,7 +22,7 @@ void AimComponent::render(graphics::Renderer& renderer)
 		transform.position = m_position;
 		transform.scale.x = transform.scale.y = m_size;
 		transform.update();
-		renderer.submitDrawTexture(texture.get(), getOwnerTransform().matrix(), m_rect, graphics::Color::White);
+		renderer.drawTexture(texture.get(), getOwnerTransform().matrix(), m_rect, graphics::Color::White);
 	}
 }
 
