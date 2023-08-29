@@ -51,6 +51,7 @@ public:
 private:
 	void registerDefaultModules();
 	void registerDefaultSystems();
+	void render();
 
 	std::vector<std::unique_ptr<EngineModule>> m_modules;
 	Stats m_previousStats;

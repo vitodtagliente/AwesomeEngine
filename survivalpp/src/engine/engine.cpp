@@ -39,6 +39,8 @@ int Engine::run()
 
 	QuadTree& quadtree = QuadTree::instance();
 
+	std::thread render_thread(&Engine::render, this);
+
 	if (!canvas.open())
 	{
 		return -1;
@@ -98,7 +100,6 @@ int Engine::run()
 			);
 
 			m_render_systems.run(0);
-
 			for (const auto& module : m_modules)
 			{
 				module->postRendering();
@@ -131,6 +132,8 @@ int Engine::run()
 		}
 	}
 
+	render_thread.join();
+
 	EntityManager::clear();
 
 	for (std::vector<std::unique_ptr<EngineModule>>::reverse_iterator it = m_modules.rbegin(); it != m_modules.rend(); ++it)
@@ -156,6 +159,17 @@ void Engine::registerDefaultSystems()
 	m_update_systems.push_back<Collider2DSystem>();
 	m_update_systems.push_back<Rigidbody2DSystem>();
 	m_update_systems.push_back<SpriteAnimatorSystem>();
+}
+
+void Engine::render()
+{
+	Canvas& canvas = Canvas::instance();
+
+	// render
+	while (canvas.isOpen())
+	{
+		
+	}
 }
 
 void Engine::Stats::clear()

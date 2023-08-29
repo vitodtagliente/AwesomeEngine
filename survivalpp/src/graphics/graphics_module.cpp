@@ -21,7 +21,7 @@ bool GraphicsModule::startup(SystemRegistry& render_systems, SystemRegistry& upd
 	SDL_Window* const handler = reinterpret_cast<SDL_Window*>(Canvas::instance().getHandler());
 	if (handler == nullptr) return false;
 
-	sdl_renderer = SDL_CreateRenderer(handler, nullptr, 0);
+	sdl_renderer = SDL_CreateRenderer(handler, nullptr, SDL_RENDERER_ACCELERATED);
 	if (sdl_renderer == nullptr)
 	{
 		SDL_Log("SDL_CreateRenderer failed (%s)", SDL_GetError());
