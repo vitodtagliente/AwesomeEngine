@@ -25,7 +25,8 @@ enum class FpsMode : int
 {
     Fps30 = 30,
     Fps60 = 60,
-    Fps90 = 90,
+    Fps120 = 120,
+    Fps240 = 240,
     Unlimited,
 };
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <future>
 #include <queue>
+#include <thread>
 
 #include <awesome/asset/asset_importer.h>
 #include <awesome/asset/asset_library.h>
@@ -90,20 +91,14 @@ int Engine::run()
 	// 	settings.player->playerStateType.value.empty() ? "PlayerState" : settings.player->playerStateType.value
 	// );
 
-	Timer fpsTimer(1.f / static_cast<int>(settings.fps));
 	Timer statsTimer(1.f);
 	double deltaTime = 0.0;
 
 	while (canvas.isOpen())
 	{
 		time.tick();
-		fpsTimer.tick(time.getDeltaTime());
 		statsTimer.tick(time.getDeltaTime());
 		deltaTime += time.getDeltaTime();
-
-		if (!fpsTimer.isExpired() && settings.fps != FpsMode::Unlimited) continue;
-
-		fpsTimer.reset();
 
 		if (settings.mode == EngineMode::Editor)
 		{
@@ -161,6 +156,11 @@ int Engine::run()
 			m_previousStats = m_stats;
 			m_stats.clear();
 			statsTimer.reset();
+		}
+
+		if (settings.fps != FpsMode::Unlimited)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000 / static_cast<int>(settings.fps)));
 		}
 	}
 

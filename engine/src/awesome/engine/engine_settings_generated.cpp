@@ -20,7 +20,8 @@ const reflect::enum_values_t& reflect::Enum<FpsMode>::values()
     static reflect::enum_values_t s_values{
         { "Fps30", static_cast<int>(FpsMode::Fps30) }, 
         { "Fps60", static_cast<int>(FpsMode::Fps60) }, 
-        { "Fps90", static_cast<int>(FpsMode::Fps90) }, 
+        { "Fps120", static_cast<int>(FpsMode::Fps120) }, 
+        { "Fps240", static_cast<int>(FpsMode::Fps240) }, 
         { "Unlimited", static_cast<int>(FpsMode::Unlimited) }, 
     };
     return s_values;
