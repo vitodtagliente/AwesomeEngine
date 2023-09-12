@@ -8,6 +8,8 @@
 
 void Collider2DSystem::process(const double delta_time, Collider2D& collider)
 {
+	return;
+
 	math::vec2& position = collider.entity()->transform.position;
 	const math::rect region = math::rect(position.x, position.y, collider.shape.bounds.x, collider.shape.bounds.y);
 	const float radius = collider.shape.bounds.x * .5f;

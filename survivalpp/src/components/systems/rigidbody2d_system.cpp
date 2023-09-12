@@ -8,6 +8,8 @@
 
 void Rigidbody2DSystem::process(const double delta_time, Rigidbody2D& body)
 {
+	return;
+
 	if (body.type == RigidbodyType2D::Static
 		|| body.velocity == math::vec2::zero) return;
 
