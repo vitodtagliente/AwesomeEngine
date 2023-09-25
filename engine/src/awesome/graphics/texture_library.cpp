@@ -26,7 +26,10 @@ namespace graphics
 				if (!image.ready()) return false;
 
 				const Image& image_data = *image.resource;
-				TexturePtr texture = std::make_shared<Texture>(image_data.data.get(), image_data.width, image_data.height, image_data.channels);
+				Texture::Options options;
+				options.filter = Texture::Options::Filter::Nearest;
+				options.repeat = Texture::Options::Repeat::Disabled;
+				TexturePtr texture = std::make_shared<Texture>(image_data.data.get(), image_data.width, image_data.height, image_data.channels, options);
 				m_textures.insert(std::make_pair(image.id, texture));
 				return true;
 			}

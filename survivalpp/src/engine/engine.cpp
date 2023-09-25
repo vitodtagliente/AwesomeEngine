@@ -76,7 +76,7 @@ int Engine::run()
 		// update the modules
 		{
 			std::for_each(
-				std::execution::par_unseq,
+				std::execution::seq,
 				m_modules.begin(),
 				m_modules.end(),
 				[deltaTime](const std::unique_ptr<EngineModule>& engine_module) -> void { engine_module->update(deltaTime); }
@@ -93,7 +93,7 @@ int Engine::run()
 			}
 
 			std::for_each(
-				std::execution::par_unseq,
+				std::execution::seq,
 				m_modules.begin(),
 				m_modules.end(),
 				[](const std::unique_ptr<EngineModule>& module) -> void { module->render(); }
